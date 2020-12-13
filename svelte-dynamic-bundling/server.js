@@ -4,7 +4,6 @@ const app = express();
 const svelte = require('svelte/compiler');
 
 const rollup = require('rollup');
-const commonjs = require('@rollup/plugin-commonjs');
 
 // our svelte component - could be pulled from db 
 let dynamicComponentSource = `
@@ -55,7 +54,6 @@ const renderPage = () => { return `
 <!doctype html>
 <html>
   <head>
-    <script src="/meteor-client.js"></script>
     <script type="module"> 
       ${outputBundle} 
       new Component({ target: document.body })
