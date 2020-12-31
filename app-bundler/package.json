@@ -2,9 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "node server.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
@@ -18,6 +16,7 @@
   },
   "dependencies": {
     "copy": "^0.3.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "sirv-cli": "^1.0.0"
   }

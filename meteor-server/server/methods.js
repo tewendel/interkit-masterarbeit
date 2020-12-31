@@ -24,7 +24,6 @@ Meteor.methods({
         try {
           if (!fs.existsSync(repoPath)) {
             await fs.promises.mkdir(repoPath);
-            console.log("Directory is created.");
             await git.init({fs, dir: repoPath});
             await fse.copySync(starterPath, repoPath)
 
@@ -43,17 +42,28 @@ Meteor.methods({
 
   'project.list': async ({ projectId }) => {
       const files = await fs.promises.readdir(getRepoPath(projectId))
-      console.log(files);
       return files;
   },
 
   // add a file to a project
-  'file.create': async ({ projectId, filename}) => {
+  'file.create': async ({ filename, projectId }) => {
+      const filePath = getRepoPath(projectId) + "/" + filename;
+      if (!fs.existsSync(filePath)) {
+        await fs.promises.writeFile(filePath, "")      
+      } else {
+         console.log("File already exists.");
+      }
+  },
 
-      const repoPath = process.env.REPOSITORIES_PATH + "/projects/" + projectId
-      const filePath = repoPath + "/" + filename;
+  'file.load': async ({filename, projectId}) => {
+      const filePath = getRepoPath(projectId) + "/" + filename;
+      const data = await fs.promises.readFile(filePath)
+      return {filename, content: data.toString()};
+  },
 
-      await fs.promises.writeFile(filename, "")
-      await git.add({ fs, dir: repoPath, filename })
+  'file.save': async ({file, projectId})  => {
+    const filePath = getRepoPath(projectId) + "/" + file.filename;
+    await fs.promises.writeFile(filePath, file.content)      
   }
+  
 });
