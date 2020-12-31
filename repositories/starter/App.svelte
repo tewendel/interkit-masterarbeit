@@ -1,5 +1,6 @@
 <script>
-	export let name;
+	/*interkit:editable:string*/
+  const name = "foo bar"
 </script>
 
 <main>
