@@ -9,7 +9,7 @@
 # API
 
 - GET /compile/project/id attempts to compile and bundle the project into public/build/id
-- GET /app/id servers the project from public/build/id
+- GET /app/id serves the project from public/build/id
 
 # notes
 
