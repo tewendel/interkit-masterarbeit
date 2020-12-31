@@ -1,8 +1,0 @@
-{
-  "runtime": {
-    "DDP_DEFAULT_CONNECTION_URL": "http://localhost:3000"
-  },
-  "import": [  
-    "meteor-base@1.4.0"
-  ]
-}
