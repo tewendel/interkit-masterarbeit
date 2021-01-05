@@ -3,11 +3,14 @@ import { Projects } from '../imports/collections.js';
 const git = require('isomorphic-git')
 const fs = require('fs')
 const fse = require('fs-extra');
+const dotenv = require('dotenv')
+dotenv.config({
+  path: `${process.env.PWD}/.env`
+})
 
 const getRepoPath = (projectId) => {
    return process.env.REPOSITORIES_PATH + "/projects/" + projectId
 }
-
 
 Meteor.methods({
 
@@ -51,7 +54,7 @@ Meteor.methods({
       if (!fs.existsSync(filePath)) {
         await fs.promises.writeFile(filePath, "")      
       } else {
-         console.log("File already exists.");
+        console.log("File already exists.");
       }
   },
 
@@ -64,6 +67,10 @@ Meteor.methods({
   'file.save': async ({file, projectId})  => {
     const filePath = getRepoPath(projectId) + "/" + file.filename;
     await fs.promises.writeFile(filePath, file.content)      
+  },
+
+  'bundler.getUrl': async () => {
+    return process.env.BUNDLER_URL
   }
   
 });

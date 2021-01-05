@@ -16,8 +16,13 @@
   let currentProject = null;
   let files = [];
   let currentFile = null;
+  let bundleServerURL
 
-  const bundleServerURL = "http://localhost:4000"
+  onMount( async () => {
+    bundleServerURL = await Meteor.callAsync("bundler.getUrl")
+    console.log(`BUNDLER_URL: ${bundleServerURL}`)
+  })
+  
 
   $: previewURL = currentProject ? bundleServerURL + "/app/" + currentProject._id : null
 
