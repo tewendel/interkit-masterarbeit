@@ -13,5 +13,5 @@
 
 # notes
 
-- needs node 12 or higher 
+- needs node 15 or higher 
 
