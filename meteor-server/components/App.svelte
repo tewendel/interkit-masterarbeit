@@ -2,6 +2,7 @@
 
   import { onMount } from 'svelte'
   import { Projects } from '../imports/collections.js';
+  import Sheets from './Sheets.svelte';
 
   Meteor.subscribe('projects.public')
   // use mongo cursor as svelte store
@@ -82,6 +83,8 @@
 
 {#if currentProject}
   <h1>project: {currentProject.name}</h1>
+  <Sheets projectId={currentProject._id}/>
+  <h2>Components</h2>
   <ul>
   {#each files as file}
     <li on:click={()=>{openFile(file)}}>{file}</li>
@@ -94,14 +97,14 @@
 {/if}
 
 {#if currentFile}
-  <h1>file: {currentFile.filename}</h1>
+  <h2>file: {currentFile.filename}</h2>
   <textarea bind:value={currentFile.content}></textarea><br>
   <button on:click={saveFile}>save</button>
   <button on:click={closeFile}>close</button>
 {/if}
 
 {#if currentProject} 
-  <h1>preview</h1><br>
+  <h2>preview</h2><br>
   <button on:click={reloadPreview}>reload</button><br>
   <iframe id="app-preview" src={previewURL}></iframe><br>
   <a target="_blank" href="{previewURL}">link to app</a>

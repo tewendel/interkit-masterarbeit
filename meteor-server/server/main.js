@@ -8,6 +8,7 @@ dotenv.config( {
 import '../imports/collections.js';
 import './publications.js';
 import './methods.js';
+import '../imports/methods.js';
 
 Meteor.startup(() => {
   // code to run on server at startup
