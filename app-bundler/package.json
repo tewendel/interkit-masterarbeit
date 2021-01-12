@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node --experimental-modules server.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
@@ -19,5 +19,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "sirv-cli": "^1.0.0"
+  },
+  "engines": {
+    "node": "12"
   }
 }
