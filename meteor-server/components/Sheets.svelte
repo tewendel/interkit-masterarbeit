@@ -43,7 +43,7 @@
 <button on:click={createSheet}>Create Sheet</button>
 
 {#if currentSheetId}
-  <Sheet id={currentSheetId}/>
+  <Sheet id={currentSheetId} close={()=>{currentSheetId=null}}/>
 {/if}
 
   

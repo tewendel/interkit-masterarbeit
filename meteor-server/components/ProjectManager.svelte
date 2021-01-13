@@ -20,7 +20,7 @@
   $: currentProjectId = params.projectId
       
   const removeProject = (projectId) => {
-    if(confirm("really?")) {
+    if(confirm("really delete project?")) {
       Meteor.call("project.remove", {projectId})
       currentProject = null;
     }

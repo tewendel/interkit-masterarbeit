@@ -37,6 +37,13 @@ Meteor.methods({
        value[col.name] = newVal
        Rows.update({_id: row._id}, {$set: {value}});
      }
-   }
+   },
+
+   'sheet.rename': ({sheetId, name}) => {
+     let sheet = Sheets.findOne(sheetId);
+     if(sheet) {
+       Sheets.update({_id: sheet._id}, {$set: {name: name}});
+     }
+   },
 
 });

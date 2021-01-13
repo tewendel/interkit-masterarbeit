@@ -2,6 +2,7 @@
   import { Sheets, Rows } from '../imports/collections.js';
   import { useTracker } from 'meteor/rdb:svelte-meteor-data';
   export let id;
+  export let close;
 
   let rowsSubHandle;
   let rows;
@@ -35,10 +36,15 @@
     Meteor.call('sheet.updateValue', {col, row, newVal})
   }
 
+  const rename = () => {
+    let newName = prompt("Rename sheet", $currentSheet.name)
+    Meteor.call('sheet.rename', {sheetId: id, name: newName})
+  }
+
 </script>
 
 {#if $currentSheet}
-  <h4>{$currentSheet.name} {id}</h4>
+  <h4>{$currentSheet.name} <small>{$currentSheet._id}</small> <button on:click={rename}>rename</button> <button on:click={close}>close</button></h4>
   
   <table>
   
@@ -71,4 +77,7 @@
 
 <style>
   .sheet-cell:hover {cursor: pointer}
+  small {
+    font-weight: normal;
+  }
 </style>
