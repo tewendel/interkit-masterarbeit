@@ -29,7 +29,6 @@
 
 </script>
 
-<h2>Sheets</h2>
 {#if sheets}
   <ul>
   <!-- we need to use $sheets here to get the reactive value of the store -->
