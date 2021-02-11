@@ -49,6 +49,7 @@
 
   const configUpdate = (newConfig) => {
     currentFile.content = YAML.stringify(newConfig)
+    saveFile();
   }
 
   const closeFile = () => {
@@ -75,15 +76,16 @@
 <button on:click={createFile}>create file</button><br>
   
 {#if currentFile}
-  <h2>file: {currentFile.filename}</h2>
+  <h2>file: {currentFile.filename} <button on:click={closeFile}>close</button></h2>
   <textarea bind:value={currentFile.content}></textarea><br>
   <button on:click={saveFile}>save</button>
-  <button on:click={closeFile}>close</button>
+
+  {#if configObj}
+    <ConfigForm {configObj} {configUpdate}/>
+  {/if}
+
 {/if}
 
-{#if currentFile && configObj}
-  <ConfigForm {configObj} {configUpdate}/>
-{/if}
 
 
 <style>
