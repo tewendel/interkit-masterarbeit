@@ -23,5 +23,9 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "carbon-components-svelte": "^0.28.0",
+    "carbon-icons-svelte": "^10.23.0"
   }
 }
