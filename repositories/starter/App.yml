@@ -1,0 +1,4 @@
+title:
+ name: Title
+ type: string
+ value: hello
