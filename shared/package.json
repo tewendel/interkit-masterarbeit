@@ -1,0 +1,7 @@
+{
+ "name": "interkit-shared",
+ "dependencies": {
+  "isomorphic-ws": "^4.0.1",
+  "simpleddp": "^2.2.4"
+ }
+}

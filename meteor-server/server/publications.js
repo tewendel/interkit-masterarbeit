@@ -1,6 +1,6 @@
 import { Projects, Sheets, Rows } from '../imports/collections.js';
 
-Meteor.publish('projects.public', function() {
+Meteor.publish('projects', function() {
   return Projects.find({});
 });
 
