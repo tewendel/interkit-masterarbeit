@@ -4,6 +4,19 @@
   import { onMount } from 'svelte'
   import InterkitClient from '../../shared/interkit-client.js'
 
+  import { 
+    Grid,
+    Row,
+    Column,
+
+    UnorderedList,
+    ListItem,
+    Tile,
+
+    DataTable, Link
+  } from "carbon-components-svelte";
+  import Delete16 from "carbon-icons-svelte/lib/Delete16";
+
   export let params = {}
 
   let sub;
@@ -22,6 +35,9 @@
   }
 
   $: currentProjectId = params.projectId
+
+  // add "id" for carbon table
+  $: projectRows = projects ? $projects.map( p => ({...p, id: p.id})) : []
       
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
@@ -32,39 +48,46 @@
 
 </script>
 
-{#if currentProjectId}
-  
-  <span class="clickable" on:click={()=> {replace('/')}}>close project</span><br>
-  <ProjectWorkspace projectId={currentProjectId}/>
 
-{:else}
+<Grid>
+  <Row>
+    <Column lg="{16}">
+    
+      {#if currentProjectId}
+        <span class="clickable" on:click={()=> {replace('/')}}>close project</span><br>
+        <ProjectWorkspace projectId={currentProjectId}/>
+      {:else}
 
-  {#if projects}
+        <h1>Projects</h1>
 
-    <h1>projects</h1>
+        <DataTable
+          headers={[{ key: 'name', value: 'Project' }, { key: 'action', value: 'Action', empty: true }]}
+          rows={projectRows}
+          size="tall"
+        >
+          <span slot="cell" let:row let:cell>
+            {#if cell.key === 'action'}
+                <span on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
+            {:else}
+              
+              <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
 
-    <ul>
-    <!-- we need to use $projects here to get the reactive value of the store -->
-    {#each $projects as project}
-      <li>
-        <span on:click={()=>{console.log(project); push('/'+project.id)}} class="clickable">{project.name}</span>
-        <span on:click={()=>removeProject(project.id)} class="clickable">x</span>
-      </li>
-    {/each}
-    </ul>
+            {/if}
+          </span>
+        </DataTable>
 
-    <h2>new project</h2>
-    <input bind:value={newProjectName}>
-    <button on:click={createProject}>create project</button>
+        <h2>new project</h2>
+        <input bind:value={newProjectName}>
+        <button on:click={createProject}>create project</button>
 
-  {/if}
+      {/if}
 
-{/if}
-
+    </Column>
+  </Row>
+</Grid>
 
 <style>
   .clickable:hover {
     cursor: pointer;
   }
 </style>
-
