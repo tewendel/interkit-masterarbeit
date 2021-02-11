@@ -15,7 +15,7 @@
   }
 
   const compileProject = async () => {
-    const res = await fetch(bundleServerURL + "/compile/" + currentProject._id)
+    const res = await fetch(bundleServerURL + "/compile/" + projectId)
     console.log(res)
   }
 
