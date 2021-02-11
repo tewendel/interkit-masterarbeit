@@ -1,9 +1,13 @@
 <script>
 
+  import YAML from "yaml"
+  import ConfigForm from './ConfigForm';
+
   export let projectId
 
   let files = [];
   let currentFile = null;
+  let configObj = null;
   
   const loadFiles =  async () => {
     files = await Meteor.callAsync("project.list", {projectId})  
@@ -24,12 +28,38 @@
   const openFile = async (filename) => {
     currentFile = await Meteor.callAsync("file.load", {filename, projectId})  
     console.log(currentFile)
+
+    if(filename.includes(".yml")) {
+      initConfig(currentFile.content) 
+    } else {
+      configObj = null;
+    }
   }
+
+  const initConfig = (fileContent) => {
+    try {
+        configObj = YAML.parse(fileContent)  
+    } 
+    catch(e) {
+        console.log(e)
+    }
+      
+    console.log(configObj)
+  }
+
+  const configUpdate = (newConfig) => {
+    currentFile.content = YAML.stringify(newConfig)
+  }
+
   const closeFile = () => {
     currentFile = null;
+    configObj = null;
   }
   const saveFile = async () => {
     await Meteor.callAsync("file.save", {file: currentFile, projectId})
+    if(configObj) {
+      initConfig(currentFile.content)
+    }
   }
 
 
@@ -49,6 +79,10 @@
   <textarea bind:value={currentFile.content}></textarea><br>
   <button on:click={saveFile}>save</button>
   <button on:click={closeFile}>close</button>
+{/if}
+
+{#if currentFile && configObj}
+  <ConfigForm {configObj} {configUpdate}/>
 {/if}
 
 
