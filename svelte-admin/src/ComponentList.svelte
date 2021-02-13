@@ -4,6 +4,7 @@
   import InterkitClient from '../../shared/interkit-client.js'
 
   export let selectComponent;
+  export let currentComponent;
   export let projectId;
   
   let files = [];
@@ -40,7 +41,7 @@
       <TabContent>
         <ul>
           {#each components as component}
-            <li on:click={()=>{selectComponent(component)}}>{component}</li>
+            <li class="{currentComponent == component ? 'active' : ''}" on:click={()=>{selectComponent(component)}}>{component}</li>
           {/each}
           </ul>
       </TabContent>
@@ -64,5 +65,9 @@
 <style>
   li:hover {
     cursor: pointer;
+  }
+
+  li.active {
+    font-weight: bold;
   }
 </style>

@@ -24,7 +24,7 @@
   
 </script>
 
-<ComponentList {selectComponent} {projectId}/>
+<ComponentList {selectComponent} {currentComponent} {projectId}/>
   
 {#if currentComponent}
   <h2>component: {currentComponent} <button on:click={close}>close</button></h2>
