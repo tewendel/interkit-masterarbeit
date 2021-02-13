@@ -1,99 +1,47 @@
 <script>
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
-  import YAML from "yaml"
-  import ConfigForm from './ConfigForm.svelte';
   import InterkitClient from '../../shared/interkit-client.js'
+  import ComponentList from './ComponentList.svelte';
+  import FileEditor from './FileEditor.svelte';
 
   export let projectId
 
-  let files = [];
-  let currentFile = null;
-  let configObj = null;
+  let currentComponent = null;
   
-  const loadFiles =  async () => {
-    files = await InterkitClient.call("project.list", {projectId})  
+  const close = () => {
+    currentComponent = null;
   }
 
-  $: setup(projectId)
-  const setup = async (projectId) => {
-    await loadFiles()  
+  const selectComponent = (component) => {
+    currentComponent = component;
+  }
+
+  let shared;
+  const updateShared = (yaml) => {
+    console.log("update")
+    shared = yaml
   }
   
-  let newFilename;
-  const createFile = async (filename) => {
-    await InterkitClient.call("file.create", {filename: newFilename, projectId})
-    await loadFiles();  
-    newFilename = null;
-  }
-
-  const openFile = async (filename) => {
-    currentFile = await InterkitClient.call("file.load", {filename, projectId})  
-    console.log(currentFile)
-
-    if(filename.includes(".yml")) {
-      initConfig(currentFile.content) 
-    } else {
-      configObj = null;
-    }
-  }
-
-  const initConfig = (fileContent) => {
-    try {
-      console.log(fileContent)
-      configObj = YAML.parse(fileContent)  
-    } 
-    catch(e) {
-      console.log(e)
-    }
-      
-    console.log(configObj)
-  }
-
-  const configUpdate = (newConfig) => {
-    currentFile.content = YAML.stringify(newConfig)
-    saveFile();
-  }
-
-  const closeFile = () => {
-    currentFile = null;
-    configObj = null;
-  }
-  const saveFile = async () => {
-    await InterkitClient.call("file.save", {file: currentFile, projectId})
-    if(configObj) {
-      initConfig(currentFile.content)
-    }
-  }
-
-
 </script>
 
-
-<ul>
-{#each files as file}
-  <li on:click={()=>{openFile(file)}}>{file}</li>
-{/each}
-</ul>
-<input bind:value={newFilename}>
-<button on:click={createFile}>create file</button><br>
+<ComponentList {selectComponent} {projectId}/>
   
-{#if currentFile}
-  <h2>file: {currentFile.filename} <button on:click={closeFile}>close</button></h2>
+{#if currentComponent}
+  <h2>component: {currentComponent} <button on:click={close}>close</button></h2>
 
   <Tabs>
       <Tab label="config form" />
-      <Tab label="file editor" />
+      <Tab label="yml editor" />
+      <Tab label="svelte editor" />
     <div slot="content">
       <TabContent>
-      {#if configObj}
-        <ConfigForm {configObj} {configUpdate}/>
-      {:else}
-        <div>no config available, use file editor</div>
-      {/if}
+        <FileEditor file={currentComponent + ".yml"} config {projectId} {updateShared} {shared}/>
       </TabContent>
       <TabContent>
-        <textarea bind:value={currentFile.content}></textarea><br>
-        <button on:click={saveFile}>save</button>
+        <FileEditor file={currentComponent + ".yml"} {projectId} {updateShared} {shared}/>
+      </TabContent>
+      <TabContent>
+        <FileEditor file={currentComponent + ".svelte"} {projectId}/>
       </TabContent>
     </div>
   </Tabs>
@@ -107,8 +55,5 @@
     width: 400px;
     height: 150px;
   }
-  li:hover {
-    cursor: pointer;
-  }
-
+  
 </style>

@@ -60,8 +60,19 @@ Meteor.methods({
 
   'file.load': async ({filename, projectId}) => {
       const filePath = getRepoPath(projectId) + "/" + filename;
-      const data = await fs.promises.readFile(filePath)
-      return {filename, content: data.toString()};
+      let data;
+      let error;
+
+      try {
+        // check if file exists
+        await fs.promises.access(filePath, fs.constants.F_OK)
+        // read data
+        data = await fs.promises.readFile(filePath)
+      } catch(e) {
+        error = e;
+      }
+
+      return {filename, content: data ? data.toString() : null, error};
   },
 
   'file.save': async ({file, projectId})  => {

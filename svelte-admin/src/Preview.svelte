@@ -25,7 +25,9 @@
 
 <button on:click={compileProject}>compile project</button><br>
 <button on:click={reloadPreview}>reload</button><br>
-<iframe id="app-preview" src={previewURL}></iframe><br>
+{#if bundleServerURL}
+  <iframe id="app-preview" src={previewURL}></iframe><br>
+{/if}
 <a target="_blank" href="{previewURL}">link to app</a>
 
 
