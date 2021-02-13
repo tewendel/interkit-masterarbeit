@@ -2,6 +2,8 @@
   import YAML from "yaml"
   import ConfigForm from './ConfigForm.svelte'; 
   import InterkitClient from '../../shared/interkit-client.js'
+  import BundleServer from './BundleServer.js'
+
 
   export let file = null;
   export let config = false;
@@ -64,6 +66,7 @@
       initConfig(currentFile.content)
     }
     updateShared(currentFile.content);
+    BundleServer.compileReloadPreview();
   }
 
 

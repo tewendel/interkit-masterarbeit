@@ -1,30 +1,22 @@
 <script>
   import InterkitClient from '../../shared/interkit-client.js'
+  import BundleServer from './BundleServer.js'
   import { onMount } from 'svelte'
+
+  export let projectId
 
   let bundleServerURL
   onMount( async () => {
     bundleServerURL = await InterkitClient.call("bundler.getUrl")
     console.log(`BUNDLER_URL: ${bundleServerURL}`)
+    BundleServer.init(projectId, bundleServerURL)
   })
 
-  export let projectId
   $: previewURL = projectId ? bundleServerURL + "/app/" + projectId : null
-
-  const reloadPreview = () => {
-    document.getElementById('app-preview').src = document.getElementById('app-preview').src
-  }
-
-  const compileProject = async () => {
-    const res = await fetch(bundleServerURL + "/compile/" + projectId)
-    console.log(res)
-  }
-
 
 </script>
 
-<button on:click={compileProject}>compile project</button><br>
-<button on:click={reloadPreview}>reload</button><br>
+<button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br>
 {#if bundleServerURL}
   <iframe id="app-preview" src={previewURL}></iframe><br>
 {/if}
