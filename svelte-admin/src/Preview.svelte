@@ -19,6 +19,7 @@
 <!--button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br-->
 {#if bundleServerURL && !$compileError}
   <iframe id="app-preview" src={previewURL}></iframe><br>
+  <button on:click={BundleServer.reloadPreview}>reload</button>
   <a target="_blank" href="{previewURL}">link to app</a><br><br>
 {/if}
 
@@ -27,7 +28,7 @@
 {/if}
 
 {#if $runtimeError}
-  <div class="error">uncaught runtime error: {$runtimeError}</div>
+  <div class="error">uncaught {$runtimeError}</div>
 {/if}
 
 <style>
