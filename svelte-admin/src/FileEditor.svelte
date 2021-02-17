@@ -34,18 +34,18 @@
       currentFile.content = ""
     }
 
-    loadedContent = currentFile.content;
-
     if(filename.includes(".yml") && config) {
       initConfig(currentFile.content) 
     } else {
       configObj = null;
     }
+
+    loadedContent = currentFile.content
   }
 
   const initConfig = (fileContent) => {
     try {
-      console.log(fileContent)
+      //console.log(fileContent)
       configObj = YAML.parse(fileContent)  
     } 
     catch(e) {

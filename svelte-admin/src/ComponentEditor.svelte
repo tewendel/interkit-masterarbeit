@@ -14,6 +14,7 @@
 
   const selectComponent = (component) => {
     currentComponent = component;
+    shared = null;
   }
 
   let shared;
