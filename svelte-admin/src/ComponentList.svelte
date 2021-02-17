@@ -52,6 +52,7 @@
             <li on:click={()=>{selectComponent(file.split(".")[0])}}>{file}</li>
           {/each}
         </ul>
+        <br>
         <input bind:value={newFilename}>
         <button on:click={createFile}>create file</button><br>
 

@@ -58,10 +58,8 @@
         <ProjectWorkspace projectId={currentProjectId}/>
       {:else}
 
-        <h1>Projects</h1>
-
         <DataTable
-          headers={[{ key: 'name', value: 'Project' }, { key: 'action', value: 'Action', empty: true }]}
+          headers={[{ key: 'name', value: 'projects' }, { key: 'action', value: 'Action', empty: true }]}
           rows={projectRows}
           size="tall"
         >
@@ -76,7 +74,7 @@
           </span>
         </DataTable>
 
-        <h2>new project</h2>
+        <br><br>
         <input bind:value={newProjectName}>
         <button on:click={createProject}>create project</button>
 

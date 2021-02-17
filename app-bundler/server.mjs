@@ -57,9 +57,10 @@ app.get('/compile/:projectId', async (req, res) => {
   if(bundle) {
     const outputOptions = {
       sourcemap: true,
-      format: 'iife',
+      format: 'es',
       name: 'app',
-      file: 'public/build/' + projectId + '/bundle.js'
+      //file: 'public/build/' + projectId
+      dir: 'public/build/' + projectId
     }
     await bundle.write(outputOptions).catch((writeError)=> {
       console.log("bundle write error", writeError)
@@ -96,7 +97,7 @@ app.get('/app/:projectId', (req, res) => {
          return false
       }
     </script>
-    <script src='/build/${projectId}/bundle.js'></script>
+    <script type='module' src='/build/${projectId}/main.js'></script>
   </body>
   </html>
   ` }

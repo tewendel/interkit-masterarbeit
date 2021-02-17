@@ -16,10 +16,10 @@
 
 </script>
 
-<!--button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br-->
 {#if bundleServerURL && !$compileError}
   <iframe id="app-preview" src={previewURL}></iframe><br>
   <button on:click={BundleServer.reloadPreview}>reload</button>
+  <button on:click={BundleServer.compileReloadPreview}>compile & relaod</button>
   <a target="_blank" href="{previewURL}">link to app</a><br><br>
 {/if}
 

@@ -28,7 +28,7 @@
 </script>
 
 {#if $currentProject}
-  <h1>Project: {$currentProject.name}</h1>
+  <h1>project: {$currentProject.name}</h1>
   <div class="left-pane">
     <WorkArea name="database"><Sheets {projectId}/></WorkArea>
     <WorkArea name="components"><ComponentEditor {projectId}/></WorkArea>

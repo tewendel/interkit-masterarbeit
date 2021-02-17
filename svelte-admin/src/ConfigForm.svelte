@@ -9,7 +9,7 @@
 
 {#each Object.keys(configObj) as key}
 
-  <div>
+  <div class="field">
     <label>{configObj[key].name}</label><br>
     <input type="text" bind:value={configObj[key].value}/>
   </div>
@@ -20,3 +20,10 @@
 <button on:click={()=>{configUpdate(configObj)}}>save</button>
 
 {/if}
+
+
+<style>
+  .field {
+    margin-bottom: 10px;
+  }
+</style>
