@@ -1,12 +1,14 @@
 import { writable } from 'svelte/store';
 
 export const compileError = writable(null);
+export const runtimeError = writable(null);
 
 let bundleServerURL;
 let projectId;
 
 const reloadPreview = () => {
     document.getElementById('app-preview').src = document.getElementById('app-preview').src
+    runtimeError.set(null)
 };
 
 const compileProject = async () => {
@@ -30,6 +32,11 @@ export const BundleServer = {
     bundleServerURL = url;
     projectId = _projectId;
     console.log(bundleServerURL, projectId)
+
+    window.addEventListener("message", (event) => {
+      console.log(event.data)
+      runtimeError.set(event.data.msg + " (check browser console for details)")
+    }, false);
   },
   
   compileReloadPreview: async () => {

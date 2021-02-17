@@ -1,6 +1,6 @@
 <script>
   import InterkitClient from '../../shared/interkit-client.js'
-  import { BundleServer, compileError } from './BundleServer.js'
+  import { BundleServer, compileError, runtimeError } from './BundleServer.js'
   import { onMount } from 'svelte'
 
   export let projectId
@@ -19,11 +19,15 @@
 <!--button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br-->
 {#if bundleServerURL && !$compileError}
   <iframe id="app-preview" src={previewURL}></iframe><br>
+  <a target="_blank" href="{previewURL}">link to app</a><br><br>
 {/if}
-<a target="_blank" href="{previewURL}">link to app</a><br><br>
 
 {#if $compileError}
   <div class="error">compile error: {$compileError}</div>
+{/if}
+
+{#if $runtimeError}
+  <div class="error">uncaught runtime error: {$runtimeError}</div>
 {/if}
 
 <style>

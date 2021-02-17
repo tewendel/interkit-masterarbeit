@@ -89,6 +89,13 @@ app.get('/app/:projectId', (req, res) => {
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      window.onerror = function (msg, source, lineNo, columnNo, error) {
+         // function to execute error handling
+         window.parent.postMessage({msg, source, lineNo, columnNo}, "*")
+         return false
+      }
+    </script>
     <script src='/build/${projectId}/bundle.js'></script>
   </body>
   </html>
