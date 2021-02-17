@@ -29,9 +29,26 @@
 
 {#if $currentProject}
   <h1>Project: {$currentProject.name}</h1>
-  <WorkArea name="sheets"><Sheets {projectId}/></WorkArea>
-  <WorkArea name="components"><ComponentEditor {projectId}/></WorkArea>
-  <WorkArea name="preview"><Preview {projectId}/></WorkArea>
+  <div class="left-pane">
+    <WorkArea name="sheets"><Sheets {projectId}/></WorkArea>
+    <WorkArea name="components"><ComponentEditor {projectId}/></WorkArea>
+  </div>
+  <div class="right-pane">
+    <WorkArea name="preview"><Preview {projectId}/></WorkArea>
+  </div>
 {:else}
   loading...
 {/if}
+
+
+<style>
+  .left-pane {
+    width: 50%;
+    float: left;
+  }
+
+  .right-pane {
+    width: 50%;
+    float: right;
+  }
+</style>
