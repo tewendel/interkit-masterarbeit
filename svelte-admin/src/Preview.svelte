@@ -27,6 +27,11 @@
 {/if}
 
 <style>
+  iframe {
+    width: 100%;
+    border: 1px solid lightgray;
+    margin: 10px 0px 10px 0px;
+  }
   .error {
      white-space: pre-wrap;
      font-family: courier;

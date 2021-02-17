@@ -81,7 +81,7 @@
       <textarea bind:value={currentFile.content}></textarea><br>
       <button on:click={saveFile}>save</button>
   {/if}
-  <small>{currentFile.filename}</small>
+  <!--small>{currentFile.filename}</small-->
 
 {/if}
       

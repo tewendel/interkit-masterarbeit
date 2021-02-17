@@ -54,7 +54,7 @@
     <Column lg="{16}">
     
       {#if currentProjectId}
-        <span class="clickable" on:click={()=> {replace('/')}}>close project</span><br>
+        <button on:click={()=> {replace('/')}}>close</button><br>
         <ProjectWorkspace projectId={currentProjectId}/>
       {:else}
 
