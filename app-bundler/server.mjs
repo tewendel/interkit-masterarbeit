@@ -7,10 +7,13 @@ app.use(cors())
 import { rollup } from 'rollup';
 import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import yaml from '@rollup/plugin-yaml';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+
+import { promises as fs } from 'fs';
+import * as path from 'path';
 
 app.use(express.static('public', {index: false}))
 
@@ -40,9 +43,10 @@ app.get('/compile/:projectId', async (req, res) => {
       // some cases you'll need additional configuration -
       // consult the documentation for details:
       // https://github.com/rollup/plugins/tree/master/packages/commonjs
-      resolve({
+      nodeResolve({
         browser: true,
-        dedupe: ['svelte']
+        //dedupe: ['svelte'],
+        moduleDirectories: ['../../app-bundler/node_modules'] // relative to input file!
       }),
       commonjs(),
       terser(),
@@ -55,13 +59,18 @@ app.get('/compile/:projectId', async (req, res) => {
   })
 
   if(bundle) {
+
+    const directory = 'public/build/' + projectId
+    await fs.rmdir(directory, { recursive: true })
+
     const outputOptions = {
       sourcemap: true,
-      format: 'es',
+      format: 'es', //iife
       name: 'app',
       //file: 'public/build/' + projectId
       dir: 'public/build/' + projectId
     }
+
     await bundle.write(outputOptions).catch((writeError)=> {
       console.log("bundle write error", writeError)
       error = writeError
