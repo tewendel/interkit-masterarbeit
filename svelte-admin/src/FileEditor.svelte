@@ -85,3 +85,9 @@
 
 {/if}
       
+<style>
+  textarea {
+    width: 100%;
+    min-height: 200px;
+  }
+</style>

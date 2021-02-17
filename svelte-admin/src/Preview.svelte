@@ -16,7 +16,7 @@
 
 </script>
 
-<button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br>
+<!--button on:click={BundleServer.compileReloadPreview}>compile & relaod</button><br-->
 {#if bundleServerURL && !$compileError}
   <iframe id="app-preview" src={previewURL}></iframe><br>
 {/if}
@@ -29,5 +29,6 @@
 <style>
   .error {
      white-space: pre-wrap;
+     font-family: courier;
   }
 </style>

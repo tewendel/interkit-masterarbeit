@@ -16,6 +16,7 @@
 
 {/each}
 
+<br><br>
 <button on:click={()=>{configUpdate(configObj)}}>save</button>
 
 {/if}
