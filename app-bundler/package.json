@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon --experimental-modules server.mjs",
+    "dev": "nodemon --experimental-modules server.mjs --ignore 'public/*'",
     "start": "node --experimental-modules server.mjs"
   },
   "devDependencies": {
