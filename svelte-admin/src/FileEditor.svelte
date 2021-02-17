@@ -78,8 +78,12 @@
   {#if configObj}
     <ConfigForm {configObj} {configUpdate}/>
   {:else}  
-      <textarea bind:value={currentFile.content}></textarea><br>
-      <button on:click={saveFile}>save</button>
+      {#if !config}
+        <textarea bind:value={currentFile.content}></textarea><br>
+        <button on:click={saveFile}>save</button>
+      {:else}
+        <span>no config form set up</span>
+      {/if}
   {/if}
   <!--small>{currentFile.filename}</small-->
 
