@@ -10,11 +10,13 @@
   
   const close = () => {
     currentComponent = null;
+    currentFile = null;
   }
 
   const selectComponent = (component) => {
     currentComponent = component;
     shared = null;
+    currentFile = null;
   }
 
   let shared;
@@ -22,10 +24,20 @@
     console.log("update")
     shared = yaml
   }
+
+  // for single file mode
+  let currentFile = null;
+
+  const selectFile = (file) => {
+    currentFile = file;
+    shared = null;
+    currentComponent = null;
+  }
+
   
 </script>
 
-<ComponentList {selectComponent} {currentComponent} {projectId}/>
+<ComponentList {selectComponent} {currentComponent} {selectFile} {currentFile} {projectId}/>
   
 {#if currentComponent}
   <h2>component: {currentComponent} <button on:click={close}>close</button></h2>
@@ -47,6 +59,11 @@
     </div>
   </Tabs>
 
+{/if}
+
+{#if currentFile} 
+  <h2>file: {currentFile} <button on:click={close}>close</button></h2>
+  <FileEditor file={currentFile} {projectId}/>
 {/if}
 
 

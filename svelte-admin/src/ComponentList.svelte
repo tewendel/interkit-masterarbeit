@@ -5,6 +5,10 @@
 
   export let selectComponent;
   export let currentComponent;
+
+  export let selectFile;
+  export let currentFile;
+
   export let projectId;
   
   let files = [];
@@ -49,7 +53,7 @@
       <TabContent>
         <ul>
           {#each files as file}
-            <li on:click={()=>{selectComponent(file.split(".")[0])}}>{file}</li>
+            <li class="{currentFile == file ? 'active' : ''}" on:click={()=>{selectFile(file)}}>{file}</li>
           {/each}
         </ul>
         <br>
