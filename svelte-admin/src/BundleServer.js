@@ -1,3 +1,7 @@
+import { writable } from 'svelte/store';
+
+export const compileError = writable(null);
+
 let bundleServerURL;
 let projectId;
 
@@ -7,10 +11,21 @@ const reloadPreview = () => {
 
 const compileProject = async () => {
   const res = await fetch(bundleServerURL + "/compile/" + projectId)
-  console.log(res)
+  const resJSON = await res.json()
+  console.log(resJSON)
+  if(resJSON.status == "error") {
+    compileError.set(
+      resJSON.data.name + " at " + resJSON.data.filename + "\n" 
+      + resJSON.data.message + " \n" 
+      + resJSON.data.frame
+    )
+  } else {
+    compileError.set(null)
+  }
+
 };
 
-const BundleServer = {
+export const BundleServer = {
   init: async (_projectId, url) => {
     bundleServerURL = url;
     projectId = _projectId;
@@ -22,7 +37,5 @@ const BundleServer = {
     reloadPreview();
   }
 }
-
-export default BundleServer;
 
 

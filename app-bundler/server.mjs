@@ -19,7 +19,7 @@ app.get('/compile/:projectId', async (req, res) => {
 
   const projectId = req.params.projectId;
 
-  // todo: add options to check out repo at different stages
+  let error;
   
   // make the bundle (adapted from rollup.config.js in svelte template)
   const bundle = await rollup({
@@ -48,17 +48,31 @@ app.get('/compile/:projectId', async (req, res) => {
       terser(),
       yaml()
     ]      
+  }).catch((compileError) => {
+    console.log("rollup compile error", compileError);
+    console.log("message", compileError.message);
+    error = compileError;
   })
 
-  const outputOptions = {
-    sourcemap: true,
-    format: 'iife',
-    name: 'app',
-    file: 'public/build/' + projectId + '/bundle.js'
+  if(bundle) {
+    const outputOptions = {
+      sourcemap: true,
+      format: 'iife',
+      name: 'app',
+      file: 'public/build/' + projectId + '/bundle.js'
+    }
+    await bundle.write(outputOptions).catch((writeError)=> {
+      console.log("bundle write error", writeError)
+      error = writeError
+    })
+    
   }
-  await bundle.write(outputOptions)
 
-  res.send("ok")
+  if(!error) {
+    res.send({status: "ok"})
+  } else {
+    res.send({status: "error", data: {...error, message: error.message}})
+  }
 
 });
 
