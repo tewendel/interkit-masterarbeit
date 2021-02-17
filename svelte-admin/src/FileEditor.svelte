@@ -79,7 +79,7 @@
     <ConfigForm {configObj} {configUpdate}/>
   {:else}  
       {#if !config}
-        <textarea bind:value={currentFile.content}></textarea><br>
+        <textarea bind:value={currentFile.content}></textarea><br><br>
         <button on:click={saveFile}>save</button>
       {:else}
         <span>no config form set up</span>
