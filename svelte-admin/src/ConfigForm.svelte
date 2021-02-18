@@ -9,13 +9,29 @@
 
 {#each Object.keys(configObj) as key}
 
-  <div>
+  <div class="field">
     <label>{configObj[key].name}</label><br>
-    <input type="text" bind:value={configObj[key].value}/>
+
+    {#if configObj[key].type == "string"}
+      <input type="text" bind:value={configObj[key].value}/>
+    {/if}
+
+    {#if configObj[key].type == "boolean"}
+      <input type=checkbox bind:checked={configObj[key].value}/>
+    {/if}
+
   </div>
 
 {/each}
 
+<br><br>
 <button on:click={()=>{configUpdate(configObj)}}>save</button>
 
 {/if}
+
+
+<style>
+  .field {
+    margin-bottom: 10px;
+  }
+</style>
