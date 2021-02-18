@@ -5,7 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import yaml from '@rollup/plugin-yaml';
-
+import auto from '@rollup/plugin-auto-install'
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -54,6 +54,7 @@ export default {
 		// some cases you'll need additional configuration -
 		// consult the documentation for details:
 		// https://github.com/rollup/plugins/tree/master/packages/commonjs
+    auto(),
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],

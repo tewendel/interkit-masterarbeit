@@ -11,6 +11,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import yaml from '@rollup/plugin-yaml';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import auto from '@rollup/plugin-auto-install'
 
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -43,6 +44,7 @@ app.get('/compile/:projectId', async (req, res) => {
       // some cases you'll need additional configuration -
       // consult the documentation for details:
       // https://github.com/rollup/plugins/tree/master/packages/commonjs
+      auto(),
       nodeResolve({
         browser: true,
         //dedupe: ['svelte'],
