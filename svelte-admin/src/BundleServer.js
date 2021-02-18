@@ -42,7 +42,9 @@ export const BundleServer = {
   compileReloadPreview: async () => {
     await compileProject();
     reloadPreview();
-  }
+  },
+  
+  reloadPreview
 }
 
 
