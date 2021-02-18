@@ -1,5 +1,5 @@
 <script>
-  import InterkitClient from '../../shared/interkit-client.js'
+  import { InterkitClient } from 'interkit-shared'
   import { onMount } from 'svelte'
 
   let bundleServerURL

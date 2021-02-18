@@ -18,7 +18,7 @@
 
   import InterkitClient from '../../shared/interkit-client.js'
   onMount(async ()=>{
-    await InterkitClient.connect("localhost:3000");
+    await InterkitClient.connect(process.env.INTERKIT_SERVER_HOST);
   })
 
 </script>

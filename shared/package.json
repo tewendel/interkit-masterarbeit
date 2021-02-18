@@ -1,7 +1,9 @@
 {
- "name": "interkit-shared",
- "dependencies": {
-  "isomorphic-ws": "^4.0.1",
-  "simpleddp": "^2.2.4"
- }
+  "name": "interkit-shared",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "isomorphic-ws": "^4.0.1",
+    "simpleddp": "^2.2.4"
+  }
 }

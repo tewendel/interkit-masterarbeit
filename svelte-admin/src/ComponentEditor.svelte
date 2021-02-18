@@ -2,7 +2,7 @@
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import YAML from "yaml"
   import ConfigForm from './ConfigForm.svelte';
-  import InterkitClient from '../../shared/interkit-client.js'
+  import { InterkitClient } from 'interkit-shared'
 
   export let projectId
 

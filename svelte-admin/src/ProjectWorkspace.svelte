@@ -4,7 +4,7 @@
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
   import Preview from './Preview.svelte'
-  import InterkitClient from '../../shared/interkit-client.js'
+  import { InterkitClient } from 'interkit-shared'
 
   export let projectId
   $: setup(projectId)

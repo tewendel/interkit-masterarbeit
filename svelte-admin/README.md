@@ -1,7 +1,14 @@
 # interkit admin
 
 Based on [Svelte](https://svelte.dev) / https://github.com/sveltejs/template.
-## Get started
+## develop
+
+### requirements
+
+- npm >= 7 to use workspaces
+- node >= 12
+
+### setup
 
 Copy `.env.example` to `.env`
 
