@@ -42,7 +42,6 @@
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
       await InterkitClient.call("project.remove", {projectId})
-      currentProject = null;
     }
   }
 

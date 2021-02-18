@@ -1,4 +1,37 @@
-title:
- name: Title
+menu1_component:
+ name: Menu1 Component
  type: string
- value: hello
+ value: Dashboard
+menu1_label:
+ name: Menu1 Text
+ type: string
+ value: Willkommenn
+menu1_icon:
+ name: Menu1 Icon
+ type: string
+ value: home
+menu2_component:
+ name: Menu2 Component
+ type: string
+ value: Archive
+menu2_label:
+ name: Menu2 Text
+ type: string
+ value: Archiv
+menu2_icon:
+ name: Menu2 Icon
+ type: string
+ value: grid
+menu3_component:
+ name: Menu2 Component
+ type: string
+ value: Map
+menu3_label:
+ name: Menu3 Text
+ type: string
+ value: Karte
+menu3_icon:
+ name: Menu3 Icon
+ type: string
+ value: map
+
