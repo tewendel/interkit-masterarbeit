@@ -1,4 +1,5 @@
 import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const git = require('isomorphic-git')
 const fs = require('fs')
@@ -10,6 +11,22 @@ dotenv.config({
 
 const getRepoPath = (projectId) => {
    return process.env.REPOSITORIES_PATH + "/projects/" + projectId
+}
+
+const addColumn = async (sheetId) => {
+  let sheet = Sheets.findOne(sheetId);
+   if(sheet) {
+     let cols = sheet.columns;
+     if(!cols) cols = [];
+     colKey = uuidv4();
+     cols.push({
+       key: colKey,
+       name: "unnamed column",
+       type: "string"
+     })
+     sheet.columns = cols;
+     Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
+   }
 }
 
 Meteor.methods({
@@ -84,23 +101,26 @@ Meteor.methods({
     return process.env.BUNDLER_URL
   },
 
-  'sheet.create': ({projectId}) => {
+  'sheet.create': async ({projectId}) => {
       console.log('sheet.create')
-      let sheetId = Sheets.insert({name: "untitled", columns: [], projectId});
+      let sheetId = await Sheets.insert({name: "untitled sheet", columns: [], projectId});
+      await addColumn(sheetId)
+      Rows.insert({
+         sheetId: sheetId,
+         value: {}
+       })       
+      console.log(sheetId);
+      return sheetId;
    },
 
-   'sheet.addColumn': ({sheetId}) => {
-     let sheet = Sheets.findOne(sheetId);
-     if(sheet) {
-       let cols = sheet.columns;
-       if(!cols) cols = [];
-       cols.push({
-         name: "col" + cols.length,
-         type: "string"
-       })
-       sheet.columns = cols;
-       Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
-     }
+   'sheet.remove': ({sheetId}) => {
+      console.log('sheet.remove', sheetId)
+      Sheets.remove({_id: sheetId});
+      Rows.remove({sheetId: sheetId});
+   },
+
+   'sheet.addColumn': async ({sheetId}) => {
+     await addColumn(sheetId);
    },
 
    'sheet.addRow': ({sheetId}) => {
@@ -113,12 +133,33 @@ Meteor.methods({
      }
    },
 
-   'sheet.updateValue': ({col, row, newVal}) => {
-     if(col && row) {
-       let value = row.value
-       value[col.name] = newVal
-       Rows.update({_id: row.id}, {$set: {value}});
-       //console.log("updated sheet value", col, row, newVal)
+   'sheet.updateValue': ({key, rowId, newVal}) => {
+     console.log(key, rowId, newVal);
+     if(key && rowId) {
+       let row = Rows.findOne(rowId)
+       if(row) {
+         let value = row.value
+         value[key] = newVal 
+         console.log(value)
+         Rows.update({_id: rowId}, {$set: {value}});
+       } else {
+         console.log("updateValue: row not found")
+       }
+     }
+   },
+
+   'sheet.updateHeader': ({sheetId, key, newVal}) => {
+     let sheet = Sheets.findOne(sheetId);
+     if(sheet) {
+       let cols = sheet.columns;
+       let newCols = cols.map(c => {
+         if(c.key == key) {
+           return {...c, name: newVal}
+         } else {
+           return c
+         }
+       })
+       Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
      }
    },
 

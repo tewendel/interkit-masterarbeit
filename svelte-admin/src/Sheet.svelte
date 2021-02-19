@@ -1,6 +1,8 @@
 <script>
   import InterkitClient from '../../shared/interkit-client.js'
 
+  import { DataTable } from "carbon-components-svelte";
+
   export let id;
   export let projectId;
   export let close;
@@ -33,9 +35,16 @@
     InterkitClient.call('sheet.addRow', {sheetId: id})
   }
 
-  const updateValue = (col, row) => {
-    let newVal = prompt("Update " + col.name, row.value[col.name])
-    InterkitClient.call('sheet.updateValue', {col, row, newVal})
+  const updateValue = (row, cell) => {
+    let columnName = headers.filter(h => h.key == cell.key)?.[0]?.value
+    let newVal = prompt("Update " + columnName, cell.value)
+    InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+  }
+
+  const updateHeader = (header) => {
+    console.log(header);
+    let newVal = prompt("Update column name");
+    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: header.key, newVal})
   }
 
   const rename = () => {
@@ -43,43 +52,42 @@
     InterkitClient.call('sheet.rename', {sheetId: id, name: newName})
   }
 
+  const remove = async () => {
+    if(confirm("permanently remove sheet and all data within?")) {
+      await InterkitClient.call('sheet.remove', {sheetId: id})
+      close();
+    }
+  }
+  
+  $: headers = $currentSheet ? $currentSheet?.columns.map(c=>{return {key: c.key, value: c.name}}) : []
+  $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
+
+
 </script>
 
 {#if $currentSheet}
-  <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={close}>close</button></h4>
+  <h4>{$currentSheet.name} <button on:click={rename}>rename</button> <button on:click={remove}>remove</button><button on:click={close}>close</button></h4>
   
-  <table>
-  
-  {#if $currentSheet.columns}
-  <tr>
-    {#each $currentSheet.columns as col}
-      <th>{col.name}</th>
-    {/each}      
-    <th><button on:click={createColumn}>+</button></th>
-  </tr>    
-  {/if}
-  
-  {#if $rows}
-    <!-- we need to use $projects here to get the reactive value of the store -->
-    {#each $rows as row}
-    <tr>
-      {#each $currentSheet.columns as col}
-        <td class="sheet-cell" on:click={()=>{updateValue(col, row)}}>{row.value[col.name]}</td>
-      {/each}      
-    </tr>
-    {/each}
-    <button on:click={createRow}>+</button>
-  {:else}
-    loading...
-  {/if}
+  <DataTable
+    {headers}
+    rows={carbonRows}
+  >
+    <span slot="cell-header" let:header>
+      <span on:click={()=>{updateHeader(header)}}>{header.value}</span>
+    </span>
+    <span slot="cell" let:row let:cell>
+      <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
+        {cell.value}
+      </span>
+    </span>
+  </DataTable>
 
-  </table>
+  <button on:click={createRow}>add row</button>
+  <button on:click={createColumn}>add column</button>
+
 
 {/if}
 
 <style>
   .sheet-cell:hover {cursor: pointer}
-  small {
-    font-weight: normal;
-  }
 </style>
