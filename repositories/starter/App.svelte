@@ -1,6 +1,8 @@
 <script>
   import config from './App.yml'
 
+  import Style from './Style.svelte'
+
   let Test;
   let myTabs = [];
 
@@ -40,7 +42,9 @@
 </script>
 
 <ion-app>
-  <IonTab tabs={myTabs} />
+  <Style>
+    <IonTab tabs={myTabs} />
+  </Style>
 </ion-app>
 
 <svelte:head>
