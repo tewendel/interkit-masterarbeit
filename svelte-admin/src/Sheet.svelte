@@ -3,9 +3,21 @@
 
   import { DataTable } from "carbon-components-svelte";
 
+  import {
+    ComposedModal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    TextInput,
+    Select, SelectItem, FormGroup
+
+  } from "carbon-components-svelte";
+
   export let id;
   export let projectId;
   export let close;
+
+  export let composeModalOpen = false;
 
   let rowsSubHandle;
   let rows;
@@ -41,10 +53,15 @@
     InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
   }
 
-  const updateHeader = (header) => {
-    console.log(header);
-    let newVal = prompt("Update column name");
-    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: header.key, newVal})
+  let updateHeader = {}
+  const openUpdateHeaderModal = (header) => {
+    composeModalOpen = true;
+    updateHeader = header;
+  }
+
+  const submitHeaderColumnUpdate = () => {
+    console.log("submit", updateHeader)
+    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type})
   }
 
   const rename = () => {
@@ -59,9 +76,8 @@
     }
   }
   
-  $: headers = $currentSheet ? $currentSheet?.columns.map(c=>{return {key: c.key, value: c.name}}) : []
+  $: headers = $currentSheet ? $currentSheet?.columns.map(c=>{return {key: c.key, value: c.name, type: c.type}}) : []
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
-
 
 </script>
 
@@ -73,7 +89,7 @@
     rows={carbonRows}
   >
     <span slot="cell-header" let:header>
-      <span on:click={()=>{updateHeader(header)}}>{header.value}</span>
+      <span class="sheet-header" on:click={()=>{openUpdateHeaderModal(header)}}>{header.value}</span>
     </span>
     <span slot="cell" let:row let:cell>
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
@@ -84,10 +100,29 @@
 
   <button on:click={createRow}>add row</button>
   <button on:click={createColumn}>add column</button>
-
-
 {/if}
+
+<ComposedModal open={composeModalOpen}
+  on:submit={()=>{composeModalOpen = false; submitHeaderColumnUpdate();}}
+  on:close={()=>composeModalOpen = false}
+  >
+  <ModalHeader label="Column" title="Update" />
+  <ModalBody hasForm>
+    <FormGroup>
+      <TextInput labelText="Name" placeholder="Enter column name..." bind:value={updateHeader.value} />
+    </FormGroup>
+    <FormGroup>
+      <Select labelText="Type" bind:selected={updateHeader.type}>
+        <SelectItem value="string" text="String" />
+        <SelectItem value="location" text="Location" />
+      </Select>
+    </FormGroup>
+  </ModalBody>
+  <ModalFooter primaryButtonText="Save"/>
+</ComposedModal>
+
 
 <style>
   .sheet-cell:hover {cursor: pointer}
+  .sheet-header:hover {cursor: pointer}
 </style>
