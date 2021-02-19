@@ -33,6 +33,7 @@
     "the-answer": "^1.0.0"
   },
   "engines": {
-    "node": "12"
+    "node": "15",
+    "npm": "7"
   }
 }

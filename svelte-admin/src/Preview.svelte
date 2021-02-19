@@ -38,7 +38,7 @@
     margin: 10px 0px 10px 0px;
   }
   .error {
-     white-space: pre-wrap;
-     font-family: courier;
+    white-space: pre-wrap;
+    font-family: courier;
   }
 </style>
