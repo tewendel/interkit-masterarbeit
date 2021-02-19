@@ -1,5 +1,5 @@
 <script>
-  import InterkitClient from '../../shared/interkit-client.js'
+  import { InterkitClient } from 'interkit-shared'
 
   export let id;
   export let projectId;
