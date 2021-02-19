@@ -50,7 +50,9 @@
   const updateValue = (row, cell) => {
     let columnName = headers.filter(h => h.key == cell.key)?.[0]?.value
     let newVal = prompt("Update " + columnName, cell.value)
-    InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+    if(newVal != null) {
+      InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+    }
   }
 
   let updateHeader = {}
