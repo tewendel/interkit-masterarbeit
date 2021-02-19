@@ -24,7 +24,7 @@
   }
 
   // show only components with .svelte
-  $: components = files.filter(f=>f.includes(".svelte")).map(f=>f.replace(".svelte", ""))
+  $: components = files.filter(f=>f.includes(".yml")).map(f=>f.replace(".yml", ""))
 
   $: setup(projectId)
   
