@@ -6,7 +6,7 @@
   onMount(async () => {
   })
 
-  const fontFamily = (config.font_family.value ? config.font_family.value + ", " : "") +  -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+  const fontFamily = (config.font_family.value ? config.font_family.value + ", " : "") +  '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   
 </script>
 
