@@ -127,7 +127,7 @@
     </span>
     <span slot="cell" let:row let:cell>
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
-        {#if cell.value.lat}
+        {#if cell.value?.lat}
           <img class="marker-icon" src="leaflet/marker-icon.png"/>
         {:else}
           {cell.value}
