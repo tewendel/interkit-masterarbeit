@@ -26,8 +26,11 @@
   })
 
 
-  const createSheet = ()=>{
-    InterkitClient.call('sheet.create', {projectId});
+  const createSheet = async ()=>{
+    let id = await InterkitClient.call('sheet.create', {projectId});
+    if(id) {
+      currentSheetId = id;
+    }
   }
 
   const openSheet = (sheet)=> {
@@ -40,14 +43,16 @@
   <ul>
   <!-- we need to use $sheets here to get the reactive value of the store -->
   {#each $sheets as sheet}
-    <li on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
+    <li class:active="{currentSheetId == sheet.id}" on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
   {/each}
   </ul>
 {:else}
   loading...
 {/if}
 
+<br>
 <button on:click={createSheet}>Create Sheet</button>
+<br><br>
 
 {#if currentSheetId}
   <Sheet id={currentSheetId} {projectId} close={()=>{currentSheetId=null}}/>
@@ -56,6 +61,10 @@
   
 <style>
   li:hover {cursor: pointer}
+
+  .active {
+    font-weight: bold;
+  }
 
 </style>
 
