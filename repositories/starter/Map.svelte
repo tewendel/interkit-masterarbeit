@@ -46,9 +46,11 @@
 
         // setup new markers
         for(let markerLocation of locations) {
-          console.log(markerLocation)
-          let marker = L.marker(markerLocation).addTo(map)
-          markers.push(marker);  
+          if(markerLocation) {
+            console.log(markerLocation)
+            let marker = L.marker(markerLocation).addTo(map)
+            markers.push(marker);  
+          }
         }
 
         // just for demo purposes, this needs to be much more efficient        
