@@ -1,4 +1,4 @@
-import simpleDDP from 'simpleDDP';
+import simpleDDP from 'simpleddp';
 import ws from 'isomorphic-ws';
 import { writable } from 'svelte/store';
 

@@ -16,9 +16,9 @@
       '/:projectId?': ProjectManager,
   }
 
-  import InterkitClient from '../../shared/interkit-client.js'
+  import { InterkitClient } from 'interkit-shared'
   onMount(async ()=>{
-    await InterkitClient.connect(process.env.INTERKIT_SERVER_HOST);
+    await InterkitClient.connect(INTERKIT_SERVER_HOST);
   })
 
 </script>

@@ -16,6 +16,9 @@ import auto from '@rollup/plugin-auto-install'
 import { promises as fs } from 'fs';
 import * as path from 'path';
 
+const PORT = process.env.PORT
+const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
+
 app.use(express.static('public', {index: false}))
 
 // compile a bundle for a given app
@@ -27,7 +30,7 @@ app.get('/compile/:projectId', async (req, res) => {
   
   // make the bundle (adapted from rollup.config.js in svelte template)
   const bundle = await rollup({
-    input: '../repositories/projects/' + projectId + '/main.js',
+    input: REPOSITORIES_PATH + '/projects/' + projectId + '/main.js',
     plugins: [
       svelte({
         compilerOptions: {
@@ -48,7 +51,7 @@ app.get('/compile/:projectId', async (req, res) => {
       nodeResolve({
         browser: true,
         //dedupe: ['svelte'],
-        moduleDirectories: ['../../app-bundler/node_modules'] // relative to input file!
+        moduleDirectories: [process.env.PWD + '/node_modules'] // relative to input file!
       }),
       commonjs(),
       terser(),
@@ -116,5 +119,5 @@ app.get('/app/:projectId', (req, res) => {
     res.send(renderPage(req.params.projectId));
 });
 
-app.listen(4000, () => console.log('listening on port 4000')); 
+app.listen(PORT, () => console.log('listening on port ' + PORT)); 
 

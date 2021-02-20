@@ -38,3 +38,8 @@ To create an optimised version of the app:
 ```bash
 npm run build
 ```
+## Environment Variable substitution
+
+Global variables are defined in `src/globals.envsub.js`. When the webserver is started, `$VAR` get substituted by the variable in .env (development) or in the environment (production).
+
+(Maybe put them in index.html and get rid of globals.envsub.js)

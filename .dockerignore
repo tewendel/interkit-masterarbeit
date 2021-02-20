@@ -1,0 +1,13 @@
+# all apps
+**/node_modules/
+*/.env
+
+# meteor-admin
+meteor-server/.meteor/local
+repositories/projects/*
+
+# svelte-admin
+public/build/
+
+# app-bundler
+

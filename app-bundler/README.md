@@ -2,13 +2,17 @@
 
 `npm install`
 
+`cp .env.example .env`
+
+Add the absolute path to the `repositores` directory to `REPOSITORIES_PATH` in `.env`
+
 # run
 
 `npm start`
 
 # develop app-bundler (watches for file change and reloads bundler)
 
-`npm dev`
+`npm run dev`
 
 # develop starter project directly
 

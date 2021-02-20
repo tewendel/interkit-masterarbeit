@@ -4,9 +4,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
-import injectProcessEnv from 'rollup-plugin-inject-process-env';
-
-require('dotenv').config()
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -20,7 +17,7 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+			server = require('child_process').spawn('npm', ['run', 'serve:dev'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});
@@ -61,11 +58,6 @@ export default {
 		}),
 		commonjs(),
 
-		injectProcessEnv({
-			NODE_ENV: production ? 'production' : 'development',
-			INTERKIT_SERVER_HOST: process.env.INTERKIT_SERVER_HOST,
-		}),
-
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
 		!production && serve(),
@@ -76,7 +68,7 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
 	],
 	watch: {
 		clearScreen: false
