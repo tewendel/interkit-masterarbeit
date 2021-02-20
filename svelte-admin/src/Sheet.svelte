@@ -113,7 +113,7 @@
 </script>
 
 {#if $currentSheet}
-  <h4>{$currentSheet.name} <button on:click={rename}>rename</button> <button on:click={remove}>remove</button> <button on:click={close}>close</button></h4>
+  <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button> <button on:click={close}>close</button></h4>
   
   <DataTable
     {headers}
@@ -144,7 +144,7 @@
   on:submit={()=>{composeModalOpen = false; submitHeaderColumnUpdate();}}
   on:close={()=>composeModalOpen = false}
   >
-  <ModalHeader title="Update Column" />
+  <ModalHeader label="{updateHeader.key}" title="Update Column" />
   <ModalBody hasForm>
     <FormGroup>
       <TextInput data-modal-primary-focus labelText="Name" placeholder="Enter column name..." bind:value={updateHeader.value} />
@@ -170,5 +170,9 @@
   .header-type {font-weight: normal; margin-bottom: 5px;}
   .sheet-cell:hover {cursor: pointer}
   .marker-icon { height: 30px; }
+
+  small {
+    font-size: 50%;
+  }
     
 </style>

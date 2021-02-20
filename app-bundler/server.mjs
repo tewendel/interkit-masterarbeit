@@ -47,7 +47,7 @@ app.get('/compile/:projectId', async (req, res) => {
       // some cases you'll need additional configuration -
       // consult the documentation for details:
       // https://github.com/rollup/plugins/tree/master/packages/commonjs
-      auto(),
+      // auto(),
       nodeResolve({
         browser: true,
         //dedupe: ['svelte'],

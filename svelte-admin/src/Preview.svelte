@@ -34,6 +34,7 @@
 <style>
   iframe {
     width: 100%;
+    height: 400px;
     border: 1px solid lightgray;
     margin: 10px 0px 10px 0px;
   }

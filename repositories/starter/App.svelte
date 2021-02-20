@@ -1,6 +1,8 @@
 <script>
-  import config from './App.yml'
+  import { InterkitClient } from 'interkit-shared'
+  const INTERKIT_SERVER_HOST = "localhost:3000"; // todo: figure our how to configure this for the app
 
+  import config from './App.yml'
   import Style from './Style.svelte'
 
   let Test;
@@ -9,6 +11,9 @@
   import { onMount } from 'svelte'
 
   onMount(async () => {
+
+    await InterkitClient.connect(INTERKIT_SERVER_HOST);
+
     let tabs = [];
 
     const loadComponent = async (component) => {
@@ -23,7 +28,7 @@
       if(config[key + "_label"]?.value) {
         tabs.push({
           label: config[key + "_label"]?.value,
-          tab: config[key + "_label"]?.value,
+          tab: config[key + "_component"]?.value,
           icon: config[key + "_icon"]?.value,
           component: await loadComponent(config[key + "_component"]?.value)
         })

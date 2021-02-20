@@ -1,12 +1,13 @@
 <script>
   export let tabs;
+  let activeTab;
 </script>
 
-<ion-tabs>
+<ion-tabs on:ionTabsDidChange={(e)=>{activeTab = e?.detail?.tab}}>
 
   {#each tabs as tab}
     <ion-tab tab={tab.tab}>
-      <svelte:component this={tab.component} />
+      <svelte:component this={tab.component} {activeTab} />
     </ion-tab>
   {/each}
 

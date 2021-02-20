@@ -23,17 +23,32 @@
   },
   "dependencies": {
     "@rollup/plugin-yaml": "^3.0.0",
+    "clone-deep": "^4.0.1",
     "copy": "^0.3.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "ejson": "^2.2.1",
     "express": "^4.17.1",
+    "interkit-shared": "*",
+    "is-plain-object": "^2.0.4",
+    "isarray": "^1.0.0",
+    "isobject": "^2.1.0",
+    "isomorphic-ws": "^4.0.1",
+    "kind-of": "^5.1.0",
+    "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "rollup-plugin-inject-process-env": "^1.3.1",
+    "simpleddp": "^2.2.4",
+    "simpleddp-core": "^1.0.6",
     "sirv-cli": "^1.0.0",
     "svelte": "^3.32.3",
     "svelte-error-boundary": "^1.0.1",
-    "the-answer": "^1.0.0"
+    "the-answer": "^1.0.0",
+    "wolfy87-eventemitter": "^5.2.9"
   },
+  "workspaces": [
+    "../shared"
+  ],
   "engines": {
     "node": "15",
     "npm": "7"
