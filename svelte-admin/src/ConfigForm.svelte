@@ -1,7 +1,10 @@
 <script>
+
+  import SheetColumnSelect from './SheetColumnSelect.svelte'
   
   export let configObj
   export let configUpdate
+  export let projectId
 
 </script>
 
@@ -14,6 +17,10 @@
 
     {#if configObj[key].type == "string"}
       <input type="text" bind:value={configObj[key].value}/>
+    {/if}
+
+    {#if configObj[key].type == "sheetColumn"}
+      <SheetColumnSelect {projectId} bind:sheetColumn={configObj[key].value}/>
     {/if}
 
     {#if configObj[key].type == "boolean"}

@@ -28,14 +28,18 @@
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    let sheedId = config?.sheetId?.value;
-    let columnKey = config?.columnKey?.value;
-    console.log(sheedId, columnKey)
-    if(sheedId) {
-      subHandle = await InterkitClient.getSub('rows', 'rows', [sheedId]);
+    let sheetId;
+    let columnKey;
+    if(config?.sheetColumn.value) {
+      sheetId = config.sheetColumn.value.split("/")?.[0]
+      columnKey = config.sheetColumn.value.split("/")?.[1]
+    }
+    console.log(sheetId, columnKey)
+    if(sheetId) {
+      subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
-        let locations = rowsArray.map(r=>r.value[columnKey])
+        let locations = rowsArray.filter(r=>r?.lat && r?.lng).map(r=>r.value[columnKey])
         console.log(locations);  
 
         // clear old markers

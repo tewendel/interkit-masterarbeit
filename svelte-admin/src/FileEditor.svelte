@@ -52,7 +52,7 @@
       console.log(e)
     }
       
-    console.log(configObj)
+    //console.log(configObj)
   }
 
   const configUpdate = (newConfig) => {
@@ -76,7 +76,7 @@
 {#if currentFile}
 
   {#if configObj}
-    <ConfigForm {configObj} {configUpdate}/>
+    <ConfigForm {configObj} {configUpdate} {projectId}/>
   {:else}  
       {#if !config}
         <textarea bind:value={currentFile.content}></textarea><br><br>

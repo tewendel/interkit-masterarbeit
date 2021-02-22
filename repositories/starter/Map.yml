@@ -1,9 +1,4 @@
-sheetId:
- name: sheetId
- type: string
- value: Lz5QyyEiXeQSE83Lz
-columnKey:
-  nname: columnKey
-  type: string
-  value: 859cc917-fe28-4bff-9230-71a224fdb825
-
+sheetColumn:
+ name: sheetColumn
+ type: sheetColumn
+ value: bJq5DeAAfqr4zaNGe/2d70f2a5-ade1-47e4-8d48-458fc2efcc12
