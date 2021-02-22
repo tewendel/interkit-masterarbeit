@@ -1,0 +1,7 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="Basis-Komponenten">
+    <block type="bottom_menu"></block>
+    <block type="dashboard"></block>
+    <block type="map"></block>
+  </category>
+</xml>
