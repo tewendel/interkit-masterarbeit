@@ -16,7 +16,8 @@
 
   const updateColums = (sheetId, resetSelected=false) => {
     console.log("updateColums", resetSelected)
-    columns = $sheets ? $sheets.filter(s=>s.id == sheetId)?.[0]?.columns : []
+    columns = $sheets ? ($sheets.filter(s=>s.id == sheetId)?.[0]?.columns) : []
+    console.log(columns)
     if(resetSelected)
       selectedColumnKey = columns?.[0]?.key
   }
@@ -34,6 +35,12 @@
 
     if(sheetColumn) {
       selectedSheetId = sheetColumn.split("/")?.[0]
+
+      // if sheet not found reset to first one in list
+      if(!$sheets.filter(s=>s.id == selectedSheetId).length) {
+        selectedSheetId = $sheets[0].id;        
+      }
+
       selectedColumnKey = sheetColumn.split("/")?.[1]
       updateColums(selectedSheetId, false)
     }
@@ -62,7 +69,7 @@
     {/each}
   </select>
 
-  {#if selectedSheetId && $sheets}
+  {#if columns && selectedSheetId && $sheets}
     <select bind:value={selectedColumnKey}>
       {#each columns as column}
         <option value={column.key}>

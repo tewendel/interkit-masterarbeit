@@ -29,18 +29,33 @@
     }).addTo(map);
 
     let sheetId;
-    let columnKey;
-    if(config?.sheetColumn.value) {
-      sheetId = config.sheetColumn.value.split("/")?.[0]
-      columnKey = config.sheetColumn.value.split("/")?.[1]
+    let positionColumnKey;
+    if(config?.markerPositions.value) {
+      sheetId = config.markerPositions.value.split("/")?.[0]
+      positionColumnKey = config.markerPositions.value.split("/")?.[1]
     }
-    console.log(sheetId, columnKey)
+    let labelColumnKey;
+    if(config?.markerLabels.value) {
+      let sheetIdLabels = config.markerLabels.value.split("/")?.[0]
+      if(sheetId != sheetIdLabels) {
+        alert("marker positions and labels must be on the same sheet")
+      }
+      labelColumnKey = config.markerLabels.value.split("/")?.[1]
+    }
+    
+    console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetId) {
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
-        let locations = rowsArray.filter(r=>r.value[columnKey]?.lat && r.value[columnKey]?.lng).map(r=>r.value[columnKey])
-        console.log(locations);  
+        
+        let markerValues = rowsArray.map(r=> {return {
+          location: (r.value[positionColumnKey]?.lat && r.value[positionColumnKey]?.lng) ?
+            r.value[positionColumnKey] : undefined,
+          title: r.value[labelColumnKey]                    
+        }})
+
+        console.log(markerValues);
 
         // clear old markers
         for(let marker of markers) {
@@ -49,10 +64,9 @@
         markers = [];
 
         // setup new markers
-        for(let markerLocation of locations) {
-          if(markerLocation) {
-            console.log(markerLocation)
-            let marker = L.marker(markerLocation).addTo(map)
+        for(let markerValue of markerValues) {
+          if(markerValue.location) {
+            let marker = L.marker(markerValue.location, {title: markerValue.title}).addTo(map)
             markers.push(marker);  
           }
         }

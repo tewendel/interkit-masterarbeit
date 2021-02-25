@@ -1,4 +1,9 @@
-sheetColumn:
- name: sheetColumn
+markerPositions:
+ name: Marker-Positionen
  type: sheetColumn
- value: bJq5DeAAfqr4zaNGe/2d70f2a5-ade1-47e4-8d48-458fc2efcc12
+ value: werQ8CW7yRXj6LGi8/0962a3ed-54d3-4500-846a-e1d7cbdd43e9
+
+markerLabels:
+ name: Marker-Label
+ type: sheetColumn
+ value: werQ8CW7yRXj6LGi8/df36dc7e-bfb8-4a5f-a37e-0eee79e11491
