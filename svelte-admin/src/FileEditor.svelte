@@ -45,7 +45,7 @@
 
   const initConfig = (fileContent) => {
     try {
-      //console.log(fileContent)
+      console.log(fileContent)
       configObj = YAML.parse(fileContent)  
     } 
     catch(e) {
@@ -56,6 +56,7 @@
   }
 
   const configUpdate = (newConfig) => {
+    console.log(newConfig)
     currentFile.content = YAML.stringify(newConfig)
     saveFile();
   }

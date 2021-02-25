@@ -39,7 +39,7 @@
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
-        let locations = rowsArray.filter(r=>r?.lat && r?.lng).map(r=>r.value[columnKey])
+        let locations = rowsArray.filter(r=>r.value[columnKey]?.lat && r.value[columnKey]?.lng).map(r=>r.value[columnKey])
         console.log(locations);  
 
         // clear old markers
