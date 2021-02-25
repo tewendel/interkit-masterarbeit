@@ -7,7 +7,7 @@
   let rows;
   
   onMount(async ()=>{
-    await InterkitClient.connect("localhost:3000");
+    await InterkitClient.connect("ws://localhost:3000/websocket");
   })
 
   const getRows = async ()=>{

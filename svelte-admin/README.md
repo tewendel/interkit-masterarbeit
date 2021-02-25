@@ -43,3 +43,10 @@ npm run build
 Global variables are defined in `src/globals.envsub.js`. When the webserver is started, `$VAR` get substituted by the variable in .env (development) or in the environment (production).
 
 (Maybe put them in index.html and get rid of globals.envsub.js)
+
+## deploy with docker-compose
+
+`cp docker-compose.env.example` and adjust values
+
+`docker-compose up` should create a local test deployment
+

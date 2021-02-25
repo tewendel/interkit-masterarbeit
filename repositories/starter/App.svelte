@@ -1,6 +1,6 @@
 <script>
   import { InterkitClient } from 'interkit-shared'
-  const INTERKIT_SERVER_HOST = "localhost:3000"; // todo: figure our how to configure this for the app
+  const INTERKIT_SERVER_WEBSOCKETS_URL = "ws://localhost:3000"; // todo: figure our how to configure this for the app
 
   import config from './App.yml'
   import Style from './Style.svelte'
@@ -12,7 +12,7 @@
 
   onMount(async () => {
 
-    await InterkitClient.connect(INTERKIT_SERVER_HOST);
+    await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
 
     let tabs = [];
 

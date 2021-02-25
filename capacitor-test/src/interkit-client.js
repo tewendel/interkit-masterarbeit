@@ -12,7 +12,7 @@ const InterkitClient = {
       return
     }
     let opts = {
-      endpoint: `ws://${url}/websocket`,
+      endpoint: url,
       SocketConstructor: ws,
       reconnectInterval: 5000
     };
