@@ -6,44 +6,66 @@
   export let projectId
   export let sheetColumn
 
+  console.log(sheetColumn)
+
   let sheets;
   let subHandle;
+  let selectedSheetId;
+  let selectedColumnKey;
+  let columns = [];
+
+  const updateColums = (sheetId, resetSelected=false) => {
+    console.log("updateColums", resetSelected)
+    columns = $sheets ? $sheets.filter(s=>s.id == sheetId)?.[0]?.columns : []
+    if(resetSelected)
+      selectedColumnKey = columns?.[0]?.key
+  }
+
+  const updateSheet = () => {
+    updateColums(selectedSheetId, true)
+  }
 
   onMount(async ()=> {
     subHandle = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.projectId == projectId);
-    sheets = subHandle.data
+    sheets = subHandle.data    
+
+    // initial values coming in through sheetColumn
+    console.log(sheetColumn)
+
+    if(sheetColumn) {
+      selectedSheetId = sheetColumn.split("/")?.[0]
+      selectedColumnKey = sheetColumn.split("/")?.[1]
+      updateColums(selectedSheetId, false)
+    }
   })
 
   onDestroy(()=>{
     subHandle.stop()
   })
 
-  let selectedSheet;
-  let selectedColumn;
-
+  // assemble sheetColumn when selection changes
   $: {
-    if(selectedSheet && selectedColumn)
-      sheetColumn = selectedSheet.id + "/" + selectedColumn.key
-    else
-      sheetColumn = undefined
+    console.log("updating sheetColumn...")
+    if(selectedSheetId && selectedColumnKey)
+      sheetColumn = selectedSheetId + "/" + selectedColumnKey
     console.log(sheetColumn)
   }
-
+    
 </script>
 
 {#if $sheets}
-  <select bind:value={selectedSheet}>
+  <select bind:value={selectedSheetId} on:change={updateSheet}>
     {#each $sheets as sheet}
-      <option value={sheet}>
+      <option value={sheet.id}>
         {sheet.name}
       </option>
     {/each}
   </select>
 
-  {#if selectedSheet}
-    <select bind:value={selectedColumn}>
-      {#each selectedSheet.columns as column}
-        <option value={column}>
+  {#if selectedSheetId && $sheets}
+    <select bind:value={selectedColumnKey}>
+      {#each columns as column}
+        <option value={column.key}>
           {column.name}
         </option>
       {/each}
