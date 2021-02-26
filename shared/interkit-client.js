@@ -4,6 +4,8 @@ import { writable } from 'svelte/store';
 
 let server;
 
+let subscriptionCounter = {};
+
 const InterkitClient = {
   connect: async (url) => {
     if(server) {
@@ -45,6 +47,9 @@ const InterkitClient = {
     await sub.sub.ready();
     console.log("sub ready", pub)
 
+    if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
+    subscriptionCounter[pub] += 1;
+
     let collection = server.collection(col).filter(cFilter)
     let data = single ? collection.fetch()[0] : collection.fetch()
     console.log("data", data)
@@ -60,8 +65,15 @@ const InterkitClient = {
     })
 
     sub.stop = async () => {
-      console.log("stopping", pub)
-      await sub.sub.remove()
+      if(subscriptionCounter[pub] > 0) {
+        subscriptionCounter[pub] -= 1
+        console.log("subscriptionCounter", pub, subscriptionCounter[pub])
+      }
+      
+      if(subscriptionCounter[pub] == 0) {
+        console.log("stopping subscription to", pub)
+        await sub.sub.remove()
+      }
     } 
 
     return sub;
