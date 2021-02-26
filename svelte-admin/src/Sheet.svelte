@@ -3,6 +3,7 @@
   import { DataTable } from "carbon-components-svelte";
   import InputModal from './InputModals/InputModal.svelte';
   import { columnTypes } from './baseConfig.js';
+  import { onDestroy } from 'svelte';
 
   export let id;
   export let projectId;
@@ -24,19 +25,81 @@
   let currentSheet;
 
   const setup = async (newId) => {
-    if(rowsSubHandle) rowsSubHandle.stop()
     if(newId) {
+      // subscribe to the rows of the current sheet
+      if(rowsSubHandle) rowsSubHandle.stop()
       rowsSubHandle = await InterkitClient.getSub('rows', 'rows', [newId], (r)=>r.sheetId == newId);
       rows = rowsSubHandle.data;
 
+      // subscribe to the current sheet itself
+      if(currentSheetSub) currentSheetSub.stop()
       currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.id == id, true);
-      currentSheet = currentSheetSub.data;
+      currentSheet = currentSheetSub.data;      
     }
   }
 
-  // update the row subscriptions when id prop changes
+  // initialize the row subscriptions when id prop changes
   $: setup(id)
+
+  let refSubs = {};
+  let refData = {};
+  let refDataUnsubscribe = {};
   
+  // setup subscriptions for other sheets referenced in columns
+  const updateReferenceSubscriptions = async (sheet) => {
+    if(sheet) {
+      for(let column of sheet.columns.filter(c=>c.type == "sheetRef")) {
+        let refSheetId = column.reference
+
+        if(refSubs[refSheetId]) refSubs[refSheetId].stop()
+        refSubs[refSheetId] = await InterkitClient.getSub('rows', 'rows', [refSheetId], (r)=>r.sheetId == refSheetId);
+        
+        // manually (un)subscribe to the store to update data
+        if(refDataUnsubscribe[refSheetId]) refDataUnsubscribe[refSheetId]()
+        refDataUnsubscribe[refSheetId] = refSubs[refSheetId].data.subscribe(data => {
+          //console.log("ref data Update")
+          refData[refSheetId] = data;
+        })
+      }
+    }
+  }
+  
+  // watch updates on currentSheet to adjust subscriptions for reference columns
+  $: {
+    //console.log("currentSheet updated", $currentSheet)
+    updateReferenceSubscriptions($currentSheet)
+  }
+
+  // some cleanup
+  onDestroy(()=>{
+    if(currentSheetSub)
+      currentSheetSub.stop();
+
+    if(rowsSubHandle) 
+      rowsSubHandle.stop()
+
+    for(let sub of Object.values(refSubs)) {
+      sub.stop();
+    }
+
+    for(let unsub of Object.values(refDataUnsubscribe)) {
+      unsub();
+    }
+  })
+
+
+  const rename = () => {
+    let newName = prompt("Rename sheet", $currentSheet.name)
+    InterkitClient.call('sheet.rename', {sheetId: id, name: newName})
+  }
+
+  const remove = async () => {
+    if(confirm("permanently remove sheet and all data within?")) {
+      await InterkitClient.call('sheet.remove', {sheetId: id})
+      close();
+    }
+  }
+
   const createColumn = ()=> {
     InterkitClient.call('sheet.addColumn', {sheetId: id})
   }
@@ -47,7 +110,7 @@
   
   // called when user clicks on a cell in the data table
   const updateValue = (row, cell) => {
-    let column = headers.filter(h => h.key == cell.key)?.[0]
+    let column = headers.find(h => h.key == cell.key)
     let columnName = column?.value
     let columnType = column?.type
     console.log(columnType)
@@ -67,7 +130,7 @@
       openInputModal = columnType;
       if(columnType == "sheetRef") {
         // get id of sheet that is referenced in column
-        let currentColumn = $currentSheet.columns.filter(c=>c.key == updateCell.key)?.[0]
+        let currentColumn = $currentSheet.columns.find(c=>c.key == updateCell.key)
         modalParams = {reference: currentColumn.reference}
       }
     }
@@ -92,19 +155,8 @@
     console.log("submit", updateHeader)
     InterkitClient.call('sheet.updateHeader', {sheetId: id, key: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
   }
-
-  const rename = () => {
-    let newName = prompt("Rename sheet", $currentSheet.name)
-    InterkitClient.call('sheet.rename', {sheetId: id, name: newName})
-  }
-
-  const remove = async () => {
-    if(confirm("permanently remove sheet and all data within?")) {
-      await InterkitClient.call('sheet.remove', {sheetId: id})
-      close();
-    }
-  }
   
+  // transform headers and rows for use with carbon DataTable
   let headers = []
   $: {
     if($currentSheet) 
@@ -122,25 +174,27 @@
     {headers}
     rows={carbonRows}
   >
+    
     <span slot="cell-header" let:header>
       <div class="sheet-header" on:click={()=>{openUpdateHeaderModal(header)}}>
         <span>{header.value}</span>
         <span class="header-type">({header.type})</span>
       </div>
     </span>
+    
     <span slot="cell" let:row let:cell>
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
         {#if cell.value?.lat}
           <img class="marker-icon" src="leaflet/marker-icon.png"/>
-        {:else if cell.value?.name}
-          {cell.value.name}  
+        {:else if cell.value?.rowId}
+          {refData[cell.value.sheetId]?.find(r=>r.id == cell.value.rowId)?.value[cell.value.columnKey]}
         {:else}
           {cell.value}
         {/if}
       </span>
     </span>
+  
   </DataTable>
-
   <button on:click={createRow}>add row</button>
   <button on:click={createColumn}>add column</button>
 {/if}
@@ -167,9 +221,7 @@
   .header-type {font-weight: normal; margin-bottom: 5px;}
   .sheet-cell:hover {cursor: pointer}
   .marker-icon { height: 30px; }
-
   small {
     font-size: 50%;
-  }
-    
+  } 
 </style>

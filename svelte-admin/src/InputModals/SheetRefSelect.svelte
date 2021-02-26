@@ -34,12 +34,12 @@ import {
   console.log(selectedRowId)
 
   const change = ()=> {
-    let row = rows.filter(r => r._id == selectedRowId)[0]
+    let row = rows.find(r => r._id == selectedRowId)
     if(!row) {
       row = rows[0];
       selectedRowId = row._id;
     }
-    value = {rowId: selectedRowId, name: row?.value[sheet?.columns?.[0]?.key]}
+    value = {rowId: selectedRowId, sheetId: sheet._id, columnKey: sheet.columns[0].key}
     console.log("change", value)
   }
 

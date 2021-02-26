@@ -19,11 +19,12 @@
   export let submit;
   export let close;
   export let projectId;
+  export let params;
 
   let sheets;
 
   onMount(async ()=>{
-    console.log("mount columntypeselect")
+    //console.log("mount columntypeselect")
     /*if(value.type == "sheetRef") {
       await initSheets();
     }*/
@@ -31,11 +32,11 @@
 
   const initSheets = async () => {
     sheets = await InterkitClient.call("sheets.get", projectId)
-    console.log(sheets)
+    //console.log(sheets)
   }
 
   const typeChange = async (event) => {
-    console.log("typeChange", event.detail)
+    //console.log("typeChange", event.detail)
     if(event.detail == "sheetRef") {     
       await initSheets();  
     }

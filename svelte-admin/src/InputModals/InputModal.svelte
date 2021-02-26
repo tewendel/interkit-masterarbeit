@@ -4,15 +4,15 @@
   import ColumnTypeSelect from './ColumnTypeSelect.svelte';
   
   export let type = null
-  export let value
+  export let value = {}
   export let submit
   export let close
   export let projectId
-  export let params
+  export let params = {}
 
-  $: {
+  /*$: {
     console.log("new input modal type", type)
-  }
+  }*/
 
   const components = {
     "columnType": ColumnTypeSelect,
