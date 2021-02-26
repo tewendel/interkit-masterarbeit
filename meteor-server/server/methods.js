@@ -148,14 +148,14 @@ Meteor.methods({
      }
    },
 
-   'sheet.updateHeader': ({sheetId, key, newVal, newType}) => {
+   'sheet.updateHeader': ({sheetId, key, newVal, newType, newReference}) => {
      console.log('sheet.updateHeader', newType)
      let sheet = Sheets.findOne(sheetId);
      if(sheet) {
        let cols = sheet.columns;
        let newCols = cols.map(c => {
          if(c.key == key) {
-           return {...c, name: newVal, type: newType}
+           return {...c, name: newVal, type: newType, reference: newReference}
          } else {
            return c
          }

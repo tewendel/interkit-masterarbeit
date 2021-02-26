@@ -15,6 +15,7 @@
   let updateRow;  // the row being edited in modal
   let updateCell; // the cell being edited in modal
   let inputModalValue; // value edited in input modal
+  let modalParams; // object of optional params passed to input modal
 
   let rowsSubHandle;
   let rows;
@@ -58,12 +59,17 @@
       }
     }
 
-    if(columnType == "location" || columnType == "sheetRefSingle") {
+    if(columnType == "location" || columnType == "sheetRef") {
       console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;
       inputModalValue = cell.value;
       openInputModal = columnType;
+      if(columnType == "sheetRef") {
+        // get id of sheet that is referenced in column
+        let currentColumn = $currentSheet.columns.filter(c=>c.key == updateCell.key)?.[0]
+        modalParams = {reference: currentColumn.reference}
+      }
     }
   }
 
@@ -84,7 +90,7 @@
 
   const submitHeaderColumnUpdate = () => {
     console.log("submit", updateHeader)
-    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type})
+    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
   }
 
   const rename = () => {
@@ -103,7 +109,7 @@
   $: {
     if($currentSheet) 
       if($currentSheet.columns) 
-        headers = $currentSheet.columns.map(c=>{return {key: c.key, value: c.name, type: c.type}})
+        headers = $currentSheet.columns.map(c=>{return {key: c.key, value: c.name, type: c.type, reference: c.reference}})
   }
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
 
@@ -126,6 +132,8 @@
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
         {#if cell.value?.lat}
           <img class="marker-icon" src="leaflet/marker-icon.png"/>
+        {:else if cell.value?.name}
+          {cell.value.name}  
         {:else}
           {cell.value}
         {/if}
@@ -142,6 +150,7 @@
   bind:value={updateHeader}
   submit={submitHeaderColumnUpdate}  
   close={()=>{headerTypeModal = null}}
+  {projectId}
 />
 
 <InputModal
@@ -149,6 +158,8 @@
   bind:value={inputModalValue}
   submit={()=>submitValue(inputModalValue)}
   close={()=>{openInputModal = null}}
+  {projectId}
+  params={modalParams}
 />
 
 <style>

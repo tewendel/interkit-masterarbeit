@@ -4,6 +4,6 @@
 export const columnTypes = {
   string: "String",
   location: "Location",
-  sheetRefSingle: "SheetRefSingle",
+  sheetRef: "SheetRef",
 }
   
