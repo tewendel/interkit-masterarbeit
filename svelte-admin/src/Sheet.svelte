@@ -2,6 +2,7 @@
   import { InterkitClient } from 'interkit-shared'
   import { DataTable } from "carbon-components-svelte";
   import InputModal from './InputModals/InputModal.svelte';
+  import ReferenceCell from './ReferenceCell.svelte';
   import { columnTypes } from './baseConfig.js';
   import { onDestroy } from 'svelte';
 
@@ -63,7 +64,7 @@
       }
     }
   }
-  
+
   // watch updates on currentSheet to adjust subscriptions for reference columns
   $: {
     //console.log("currentSheet updated", $currentSheet)
@@ -187,9 +188,9 @@
         {#if cell.value?.lat}
           <img class="marker-icon" src="leaflet/marker-icon.png"/>
         {:else if cell.value?.rowId}
-          {refData[cell.value.sheetId]?.find(r=>r.id == cell.value.rowId)?.value[cell.value.columnKey]}
+          <ReferenceCell {refData} value={cell.value}/>
         {:else}
-          {cell.value}
+          {cell.value ? cell.value : ""}
         {/if}
       </span>
     </span>
@@ -220,6 +221,11 @@
   .sheet-header:hover {cursor: pointer}
   .header-type {font-weight: normal; margin-bottom: 5px;}
   .sheet-cell:hover {cursor: pointer}
+  .sheet-cell {
+    width: 100%;
+    height: 1.5em;
+    display: block;
+  }
   .marker-icon { height: 30px; }
   small {
     font-size: 50%;
