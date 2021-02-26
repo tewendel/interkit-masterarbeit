@@ -15,10 +15,10 @@ services:
     depends_on:
       - mongo
     environment:
-      ROOT_URL: ${INTERKIT_SERVER_ROOT_URL:-http://localhost:3000}
+      ROOT_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
       MONGO_URL: mongodb://mongo:27017/meteor
       PORT: 3000
-      BUNDLER_URL: http://localhost:4000
+      BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
 
   mongo:
     image: mongo:4.2
@@ -36,7 +36,7 @@ services:
     ports:
       - '5000:5000'
     environment:
-      INTERKIT_SERVER_HOST: localhost:3000
+      INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
 
   bundler:
     build:

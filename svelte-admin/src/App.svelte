@@ -18,7 +18,7 @@
 
   import { InterkitClient } from 'interkit-shared'
   onMount(async ()=>{
-    await InterkitClient.connect(INTERKIT_SERVER_HOST);
+    await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
   })
 
 </script>
