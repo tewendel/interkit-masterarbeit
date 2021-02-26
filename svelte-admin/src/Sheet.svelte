@@ -1,29 +1,20 @@
 <script>
   import { InterkitClient } from 'interkit-shared'
   import { DataTable } from "carbon-components-svelte";
-  import LocationPicker from './LocationPicker.svelte';
-
-  import {
-    ComposedModal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    TextInput,
-    Select, SelectItem, FormGroup
-
-  } from "carbon-components-svelte";
+  import InputModal from './InputModals/InputModal.svelte';
+  import { columnTypes } from './baseConfig.js';
 
   export let id;
   export let projectId;
   export let close;
 
-  let composeModalOpen = false;
-  let updateHeader = {}
+  let headerTypeModal = null; // set to "columnType" when open
+  let updateHeader = {} // the value of the column being changed
 
-  let openLocationPicker = false;
-  let updateRow;
-  let updateCell;
-  let updateLatLng;
+  let openInputModal = null; // the type of the input modal to open
+  let updateRow;  // the row being edited in modal
+  let updateCell; // the cell being edited in modal
+  let inputModalValue; // value edited in input modal
 
   let rowsSubHandle;
   let rows;
@@ -52,7 +43,8 @@
   const createRow = ()=> {
     InterkitClient.call('sheet.addRow', {sheetId: id})
   }
-
+  
+  // called when user clicks on a cell in the data table
   const updateValue = (row, cell) => {
     let column = headers.filter(h => h.key == cell.key)?.[0]
     let columnName = column?.value
@@ -66,22 +58,27 @@
       }
     }
 
-    if(columnType == "location") {
-      console.log("opening location picker", cell)
+    if(columnType == "location" || columnType == "sheetRefSingle") {
+      console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;
-      updateLatLng = cell.value;
-      openLocationPicker = true;
+      inputModalValue = cell.value;
+      openInputModal = columnType;
     }
   }
 
-  const submitLatLng = () => {
-    let newVal = updateLatLng;
-    InterkitClient.call('sheet.updateValue', {key: updateCell.key, rowId: updateRow.id, newVal})
+  // submits the value retrieved from the input modal to the database
+  const submitValue = (value) => {
+    console.log("submitting", value)
+    InterkitClient.call('sheet.updateValue', {
+      key: updateCell.key, 
+      rowId: updateRow.id, 
+      newVal: value
+    })
   }
 
   const openUpdateHeaderModal = (header) => {
-    composeModalOpen = true;
+    headerTypeModal = "columnType";
     updateHeader = header;
   }
 
@@ -139,30 +136,19 @@
   <button on:click={createRow}>add row</button>
   <button on:click={createColumn}>add column</button>
 {/if}
+    
+<InputModal
+  type={headerTypeModal}
+  bind:value={updateHeader}
+  submit={submitHeaderColumnUpdate}  
+  close={()=>{headerTypeModal = null}}
+/>
 
-<ComposedModal open={composeModalOpen}
-  on:submit={()=>{composeModalOpen = false; submitHeaderColumnUpdate();}}
-  on:close={()=>composeModalOpen = false}
-  >
-  <ModalHeader label="{updateHeader.key}" title="Update Column" />
-  <ModalBody hasForm>
-    <FormGroup>
-      <TextInput data-modal-primary-focus labelText="Name" placeholder="Enter column name..." bind:value={updateHeader.value} />
-    </FormGroup>
-    <FormGroup>
-      <Select labelText="Type" bind:selected={updateHeader.type}>
-        <SelectItem value="string" text="String" />
-        <SelectItem value="location" text="Location" />
-      </Select>
-    </FormGroup>
-  </ModalBody>
-  <ModalFooter primaryButtonText="Save"/>
-</ComposedModal>
-
-<LocationPicker 
-  bind:open={openLocationPicker} 
-  bind:latlng={updateLatLng}
-  submit={submitLatLng}
+<InputModal
+  type={openInputModal}
+  bind:value={inputModalValue}
+  submit={()=>submitValue(inputModalValue)}
+  close={()=>{openInputModal = null}}
 />
 
 <style>

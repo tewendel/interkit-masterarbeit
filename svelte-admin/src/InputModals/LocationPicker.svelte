@@ -13,9 +13,10 @@ import {
   import 'leaflet/dist/leaflet.css';
 
   export let open = false;
-  export let latlng = {lat: 51.505, lng: -0.09};
+  export let value = {lat: 51.505, lng: -0.09};
 
   export let submit;
+  export let close;
 
   let map;
   let marker;
@@ -23,7 +24,7 @@ import {
   onMount(()=>{
     L.Icon.Default.imagePath = 'leaflet/'
 
-    map = L.map('mapid').setView([latlng.lat, latlng.lng], 13);  
+    map = L.map('mapid').setView([value.lat, value.lng], 13);  
 
     L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
       maxZoom: 20,
@@ -33,25 +34,25 @@ import {
     marker = L.marker([51.5, -0.09], {draggable: true}).addTo(map)
 
     marker.on('dragend', function(event) {
-      latlng = event.target.getLatLng();
-      console.log(latlng.lat, latlng.lng)
+      value = event.target.getLatLng();
+      console.log(value.lat, value.lng)
     });
   
   })
 
   $: {
-    if(latlng && marker) {
-      marker.setLatLng(latlng)
-      map.setView(latlng)
+    if(value && marker) {
+      marker.setLatLng(value)
+      map.setView(value)
     }
   }
   
 </script>
 
 
-<ComposedModal {open}
+<ComposedModal open
   on:submit={()=>{open = false; submit()}}
-  on:close={()=>open = false}
+  on:close={close}
   >
   <ModalHeader title="Drag the marker to choose a location" />
   <ModalBody>
