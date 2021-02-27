@@ -3,32 +3,21 @@
   import { InterkitClient } from 'interkit-shared'
   import { onMount } from 'svelte'
 
-  export let categorySheetId;
+  export let categorySheet;
   export let categoryColumnKey;
-  let categoryName;
-
   export let openCategory;
-  
+
   let categorySub
   let categories
 
-  let categorySheet;
-
-  onMount(async ()=>{
-    
-    let categorySheet = await InterkitClient.call('sheet.get', categorySheetId)
-    console.log(categorySheet)
-    categoryName = categorySheet.name
-
-    categorySub = await InterkitClient.getSub('rows', 'rows', [categorySheetId], r=>r.sheetId==categorySheetId);
+  onMount(async ()=>{    
+    categorySub = await InterkitClient.getSub('rows', 'rows', [categorySheet._id], r=>r.sheetId==categorySheet._id);
     categories = categorySub.data;  
-    //console.log($categories)
   })
 
 </script>
 
-<h2>{categoryName}</h2>
-{#if $categories}
+{#if $categories && open}
 <ul>
   {#each $categories as category}
   <li on:click={()=>openCategory({
