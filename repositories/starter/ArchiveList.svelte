@@ -28,7 +28,7 @@
     // function to check if a row belongs to this category
     const check = (dataRow) => {
       //console.log(dataRow?.value?.[refKey]?.rowId, category.id)
-      return dataRow?.value?.[refKey]?.rowId == category.id
+      return dataRow?.value?.[refKey]?.rowIds.includes(category.id)
     }
 
     // subscribe to the data

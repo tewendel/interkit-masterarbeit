@@ -7,7 +7,8 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-    Select, SelectItem
+    Select, SelectItem,
+    MultiSelect
   } from "carbon-components-svelte";
 
   import { onMount, onDestroy } from 'svelte'
@@ -30,7 +31,7 @@ import {
     }
   })
 
-  let selectedRowId = value?.rowId;
+  /*let selectedRowId = value?.rowId;
   console.log(selectedRowId)
 
   const change = ()=> {
@@ -42,6 +43,19 @@ import {
       value = {rowId: selectedRowId, sheetId: sheet._id, columnKey: sheet.columns[0].key}
     }
     console.log("change", value)
+  }*/
+
+  $: multiSelectItems = rows ? rows.map(r=>{return {id: r._id, text: r.value[sheet.columns[0].key]}}) : []
+
+  let selectedIds = value.rowIds;
+  const multiChange = ()=>{
+    console.log(selectedIds)
+    value = {
+      type: "sheetRef",
+      sheetId: sheet._id, 
+      columnKey: sheet.columns[0].key,
+      rowIds: selectedIds
+    }
   }
 
 </script>
@@ -50,17 +64,26 @@ import {
   on:submit={submit}
   on:close={close}
   >
-  <ModalHeader title="Select a row" />
-  <ModalBody>
+  <ModalHeader title="Multiselect" />
+  <ModalBody style="height: 200px">
 
     {#if rows && sheet.columns}
-      <Select labelText="Rows" bind:selected={selectedRowId} on:change={change}>
+      <!--Select labelText="Rows" bind:selected={selectedRowId} on:change={change}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each rows as row}
             <SelectItem value={row._id} text={row.value[sheet.columns[0].key]} />
             }
           {/each}
-      </Select>
+      </Select-->
+
+      <MultiSelect
+        titleText="Rows"
+        label="Select Rows..."
+        items={multiSelectItems}
+        bind:selectedIds={selectedIds}
+        on:select={multiChange}
+      />
+
     {/if}
      
   </ModalBody>

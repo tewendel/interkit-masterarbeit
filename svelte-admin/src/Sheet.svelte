@@ -188,7 +188,7 @@
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
         {#if cell.value?.lat}
           <img class="marker-icon" src="leaflet/marker-icon.png"/>
-        {:else if cell.value?.rowId}
+        {:else if cell.value?.type == "sheetRef"}
           <ReferenceCell {refData} value={cell.value}/>
         {:else}
           {cell.value ? cell.value : ""}
