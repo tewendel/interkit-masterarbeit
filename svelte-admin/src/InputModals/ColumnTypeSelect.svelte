@@ -33,6 +33,7 @@
   const initSheets = async () => {
     sheets = await InterkitClient.call("sheets.get", projectId)
     //console.log(sheets)
+    value.reference = sheets[0]._id;
   }
 
   const typeChange = async (event) => {
