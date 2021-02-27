@@ -57,6 +57,7 @@
         
         // manually (un)subscribe to the store to update data
         if(refDataUnsubscribe[refSheetId]) refDataUnsubscribe[refSheetId]()
+        
         refDataUnsubscribe[refSheetId] = refSubs[refSheetId].data.subscribe(data => {
           //console.log("ref data Update")
           refData[refSheetId] = data;
@@ -164,7 +165,9 @@
       if($currentSheet.columns) 
         headers = $currentSheet.columns.map(c=>{return {key: c.key, value: c.name, type: c.type, reference: c.reference}})
   }
+  $: { console.log("rows update", $rows) }
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
+  $: { console.log("carbonRows update", carbonRows) }
 
 </script>
 

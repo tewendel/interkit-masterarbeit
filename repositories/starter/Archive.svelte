@@ -38,6 +38,8 @@
 
 <h1>Archive</h1>
 
+{#if config.categorySheet1.value || config.categorySheet2.value}
+
   <div class:hide={selectedCategory != null}>
 
   <Tabs>
@@ -77,6 +79,7 @@
   />
   {/if}
 
+{/if}
 
 </div>
 

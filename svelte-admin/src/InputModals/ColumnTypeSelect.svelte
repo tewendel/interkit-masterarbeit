@@ -24,24 +24,8 @@
   let sheets;
 
   onMount(async ()=>{
-    //console.log("mount columntypeselect")
-    /*if(value.type == "sheetRef") {
-      await initSheets();
-    }*/
-  })
-
-  const initSheets = async () => {
     sheets = await InterkitClient.call("sheets.get", projectId)
-    //console.log(sheets)
-    value.reference = sheets[0]._id;
-  }
-
-  const typeChange = async (event) => {
-    //console.log("typeChange", event.detail)
-    if(event.detail == "sheetRef") {     
-      await initSheets();  
-    }
-  }
+  })
 
 </script>
 
@@ -55,7 +39,7 @@
       <TextInput data-modal-primary-focus labelText="Name" placeholder="Enter column name..." bind:value={value.value} />
     </FormGroup>
     <FormGroup>
-      <Select labelText="Type" bind:selected={value.type} on:change={typeChange}>
+      <Select labelText="Type" bind:selected={value.type}>
         {#each Object.keys(columnTypes) as key}
           <SelectItem value={key} text={columnTypes[key]} />
         {/each}
@@ -64,6 +48,7 @@
     {#if value.type == "sheetRef" && sheets}
       <FormGroup>
         <Select labelText="Sheet" bind:selected={value.reference}>
+          <SelectItem value={undefined} text={"nicht zugeordnet"} />
           {#each sheets as sheet}
             <SelectItem value={sheet._id} text={sheet.name} />
           {/each}
