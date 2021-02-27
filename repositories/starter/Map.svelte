@@ -43,7 +43,7 @@
       labelColumnKey = config.markerLabels.value.split("/")?.[1]
     }
     
-    console.log(sheetId, positionColumnKey, labelColumnKey)
+    //console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetId) {
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
@@ -55,7 +55,7 @@
           title: r.value[labelColumnKey]                    
         }})
 
-        console.log(markerValues);
+        //console.log(markerValues);
 
         // clear old markers
         for(let marker of markers) {
@@ -79,7 +79,7 @@
   })
 
   $: {
-    console.log(activeTab)
+    //console.log(activeTab)
     if(activeTab == "Map" && map) {
       setTimeout(()=>{
         map.invalidateSize()  

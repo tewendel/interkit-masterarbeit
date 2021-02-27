@@ -35,11 +35,12 @@ import {
 
   const change = ()=> {
     let row = rows.find(r => r._id == selectedRowId)
-    if(!row) {
-      row = rows[0];
-      selectedRowId = row._id;
+    if(selectedRowId == "empty" || !row) {
+      value = null
+      selectedRowId = "empty"
+    } else {
+      value = {rowId: selectedRowId, sheetId: sheet._id, columnKey: sheet.columns[0].key}
     }
-    value = {rowId: selectedRowId, sheetId: sheet._id, columnKey: sheet.columns[0].key}
     console.log("change", value)
   }
 
@@ -54,6 +55,7 @@ import {
 
     {#if rows && sheet.columns}
       <Select labelText="Rows" bind:selected={selectedRowId} on:change={change}>
+          <SelectItem value="empty" text="nicht zugeordnet" />
           {#each rows as row}
             <SelectItem value={row._id} text={row.value[sheet.columns[0].key]} />
             }

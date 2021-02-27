@@ -26,7 +26,7 @@
   }
   
   const openFile = async (filename) => {
-    console.log("open file", filename)
+    //console.log("open file", filename)
     currentFile = await InterkitClient.call("file.load", {filename, projectId})  
     
     // file wasn't found
@@ -45,7 +45,7 @@
 
   const initConfig = (fileContent) => {
     try {
-      console.log(fileContent)
+      //console.log(fileContent)
       configObj = YAML.parse(fileContent)  
     } 
     catch(e) {
@@ -56,7 +56,7 @@
   }
 
   const configUpdate = (newConfig) => {
-    console.log(newConfig)
+    //console.log(newConfig)
     currentFile.content = YAML.stringify(newConfig)
     saveFile();
   }

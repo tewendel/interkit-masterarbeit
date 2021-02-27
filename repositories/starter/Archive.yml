@@ -1,0 +1,13 @@
+dataSheet:
+ name: Daten
+ type: sheetColumn
+ value: 
+categorySheet1:
+ name: Kategorie 1 - Sheet
+ type: sheetColumn
+ value: 
+categorySheet2:
+ name: Kategorie 2 - Sheet
+ type: sheetColumn
+ value: 
+

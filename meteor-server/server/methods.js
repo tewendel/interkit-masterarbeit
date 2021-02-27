@@ -134,13 +134,13 @@ Meteor.methods({
    },
 
    'sheet.updateValue': ({key, rowId, newVal}) => {
-     console.log(key, rowId, newVal);
+     //console.log(key, rowId, newVal);
      if(key && rowId) {
        let row = Rows.findOne(rowId)
        if(row) {
          let value = row.value
          value[key] = newVal 
-         console.log(value)
+         //console.log(value)
          Rows.update({_id: rowId}, {$set: {value}});
        } else {
          console.log("updateValue: row not found")
@@ -149,7 +149,7 @@ Meteor.methods({
    },
 
    'sheet.updateHeader': ({sheetId, key, newVal, newType, newReference}) => {
-     console.log('sheet.updateHeader', newType)
+     //console.log('sheet.updateHeader', newType)
      let sheet = Sheets.findOne(sheetId);
      if(sheet) {
        let cols = sheet.columns;

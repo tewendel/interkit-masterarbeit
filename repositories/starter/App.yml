@@ -5,7 +5,7 @@ menu1_component:
 menu1_label:
  name: Menu1 Text
  type: string
- value: Willkommenn
+ value: Willkommen
 menu1_icon:
  name: Menu1 Icon
  type: string

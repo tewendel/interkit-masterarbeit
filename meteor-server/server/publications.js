@@ -13,13 +13,13 @@ const getSheets = (projectId) => {
 Meteor.publish('sheets', getSheets);
 
 Meteor.methods({'sheets.get': (projectId)=>{
-  console.log("sheets.get"); 
+  //console.log("sheets.get"); 
   let sheets = getSheets(projectId);
   return sheets.fetch();
 }});
 
 Meteor.methods({'sheet.get': (sheetId)=>{
-  console.log("sheet.get"); 
+  //console.log("sheet.get"); 
   let sheet = Sheets.findOne(sheetId)
   return sheet;
 }});

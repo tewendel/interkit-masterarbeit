@@ -174,6 +174,7 @@
   <DataTable
     {headers}
     rows={carbonRows}
+    style="overflow-x: scroll"
   >
     
     <span slot="cell-header" let:header>
