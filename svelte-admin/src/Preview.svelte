@@ -1,4 +1,5 @@
 <script>
+  import QrCode from "svelte-qrcode"
   import { InterkitClient } from 'interkit-shared'
   import { BundleServer, compileError, runtimeError } from './BundleServer.js'
   import { onMount } from 'svelte'
@@ -21,7 +22,14 @@
 {/if}
   <button on:click={BundleServer.reloadPreview}>reload</button>
   <button on:click={BundleServer.compileReloadPreview}>compile & relaod</button>
-  <a target="_blank" href="{previewURL}">link to app</a><br><br>
+  
+  <br><br>
+  
+  <a target="_blank" href="{previewURL}">
+    <QrCode value={previewURL} />
+    <br>
+    link to app
+  </a>
 
 {#if $compileError}
   <div class="error">compile error: {$compileError}</div>
