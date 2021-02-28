@@ -6,7 +6,7 @@ FROM geoffreybooth/meteor-base:1.12
 
 ARG BUILD_SOURCE_PATH
 ARG BUILD_REPOSITORIES_PATH
-
+ARG BUILD_CONTAINER_REPOSITORIES_PATH
 # Copy app package.json and package-lock.json into container
 COPY ${BUILD_SOURCE_PATH}/package*.json $APP_SOURCE_FOLDER/
 
@@ -37,12 +37,8 @@ COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 
-# set repositories path in container
-ENV REPOSITORIES_PATH=/var/repositories
 # Copy repositories folder
-COPY ${BUILD_REPOSITORIES_PATH} ${REPOSITORIES_PATH}
-# set REPOSITORIES_PATH at runtime
-RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $APP_BUNDLE_FOLDER/bundle/.env
+COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
 
 # Start app
 ENTRYPOINT ["/docker/entrypoint.sh"]
