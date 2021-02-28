@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 
 export const compileError = writable(null);
 export const runtimeError = writable(null);
+export const bundleProcessing = writable(false);
 
 let bundleServerURL;
 let projectId;
@@ -40,7 +41,9 @@ export const BundleServer = {
   },
   
   compileReloadPreview: async () => {
+    bundleProcessing.set(true)
     await compileProject();
+    bundleProcessing.set(false)
     reloadPreview();
   },
   

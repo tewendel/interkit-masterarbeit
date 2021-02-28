@@ -53,7 +53,7 @@
     <Column lg="{16}">
     
       {#if currentProjectId}
-        <button on:click={()=> {replace('/')}}>close</button><br>
+        <button on:click={()=> {replace('/')}}>&lt;&lt;</button><br>
         <ProjectWorkspace projectId={currentProjectId}/>
       {:else}
 
