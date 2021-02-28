@@ -50,7 +50,7 @@ app.get('/compile/:projectId', async (req, res) => {
       // auto(),
       nodeResolve({
         browser: true,
-        //dedupe: ['svelte'],
+        dedupe: ['svelte'],
         moduleDirectories: [process.env.PWD + '/node_modules'] // relative to input file!
       }),
       commonjs(),

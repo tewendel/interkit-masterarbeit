@@ -4,8 +4,11 @@ import { writable } from 'svelte/store';
 
 let server;
 
+let subscriptionCounter = {};
+
 const InterkitClient = {
   connect: async (url) => {
+    console.log(url)
     if(server) {
       console.log("server already initialized, ignoring")
       return
@@ -34,7 +37,7 @@ const InterkitClient = {
   */
 
   getSub: async (col, pub, pubArgs=[], cFilter=(a)=>true, single=false) => {
-    console.log("getSub", pub)
+    //console.log("getSub", pub)
     
     // setup the store
     let sub = {};
@@ -43,11 +46,15 @@ const InterkitClient = {
     // setup the subscription
     sub.sub = server.sub(pub, pubArgs);
     await sub.sub.ready();
-    console.log("sub ready", pub)
+    //console.log("sub ready", pub)
+
+    if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
+    subscriptionCounter[pub] += 1;
+    //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
 
     let collection = server.collection(col).filter(cFilter)
     let data = single ? collection.fetch()[0] : collection.fetch()
-    console.log("data", data)
+    //console.log("data", data)
 
     // write an initial fetch of the collection into the store
     sub.data.set(data);
@@ -60,8 +67,15 @@ const InterkitClient = {
     })
 
     sub.stop = async () => {
-      console.log("stopping", pub)
-      await sub.sub.remove()
+      if(subscriptionCounter[pub] > 0) {
+        subscriptionCounter[pub] -= 1
+        //console.log("reduced subscriptionCounter", pub, subscriptionCounter[pub])
+      }
+      
+      if(subscriptionCounter[pub] == 0) {
+        console.log("stopping subscription to", pub)
+        await sub.sub.remove()
+      }
     } 
 
     return sub;

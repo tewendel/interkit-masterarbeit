@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@rollup/plugin-yaml": "^3.0.0",
+    "carbon-components-svelte": "^0.29.1",
     "clone-deep": "^4.0.1",
     "copy": "^0.3.2",
     "cors": "^2.8.5",

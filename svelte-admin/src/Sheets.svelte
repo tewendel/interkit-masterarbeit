@@ -13,7 +13,7 @@
   $: resetSub(projectId)
 
   const resetSub = async (projectId) => {
-    if(subHandle) subHandle.stop()
+    if(subHandle) await subHandle.stop()
     subHandle = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.projectId == projectId);
     sheets = subHandle.data
   }
@@ -24,7 +24,6 @@
       subHandle = null;
     }
   })
-
 
   const createSheet = async ()=>{
     let id = await InterkitClient.call('sheet.create', {projectId});

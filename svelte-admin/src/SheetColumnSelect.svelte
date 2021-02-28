@@ -6,7 +6,7 @@
   export let projectId
   export let sheetColumn
 
-  console.log(sheetColumn)
+  //console.log(sheetColumn)
 
   let sheets;
   let subHandle;
@@ -15,9 +15,9 @@
   let columns = [];
 
   const updateColums = (sheetId, resetSelected=false) => {
-    console.log("updateColums", resetSelected)
+    //console.log("updateColums", resetSelected)
     columns = $sheets ? ($sheets.filter(s=>s.id == sheetId)?.[0]?.columns) : []
-    console.log(columns)
+    //console.log(columns)
     if(resetSelected)
       selectedColumnKey = columns?.[0]?.key
   }
@@ -31,14 +31,14 @@
     sheets = subHandle.data    
 
     // initial values coming in through sheetColumn
-    console.log(sheetColumn)
+    //console.log(sheetColumn)
 
     if(sheetColumn) {
       selectedSheetId = sheetColumn.split("/")?.[0]
 
       // if sheet not found reset to first one in list
       if(!$sheets.filter(s=>s.id == selectedSheetId).length) {
-        selectedSheetId = $sheets[0].id;        
+        selectedSheetId = $sheets?.[0]?.id;        
       }
 
       selectedColumnKey = sheetColumn.split("/")?.[1]
@@ -52,16 +52,17 @@
 
   // assemble sheetColumn when selection changes
   $: {
-    console.log("updating sheetColumn...")
+    //console.log("updating sheetColumn...")
     if(selectedSheetId && selectedColumnKey)
       sheetColumn = selectedSheetId + "/" + selectedColumnKey
-    console.log(sheetColumn)
+    //console.log(sheetColumn)
   }
     
 </script>
 
 {#if $sheets}
   <select bind:value={selectedSheetId} on:change={updateSheet}>
+    <option value={undefined}>nicht zugeordnet</option>
     {#each $sheets as sheet}
       <option value={sheet.id}>
         {sheet.name}
@@ -71,6 +72,7 @@
 
   {#if columns && selectedSheetId && $sheets}
     <select bind:value={selectedColumnKey}>
+      <option value={undefined}>nicht zugeordnet</option>
       {#each columns as column}
         <option value={column.key}>
           {column.name}
