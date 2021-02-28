@@ -1,6 +1,6 @@
 primary_color:
   name: Primary Color
-  type: string
+  type: color
   value: "#27EBBC"
 font_family:
   name: Font Family
