@@ -19,6 +19,10 @@
       <input type="text" bind:value={configObj[key].value}/>
     {/if}
 
+    {#if configObj[key].type == "color"}
+      <input type="color" bind:value={configObj[key].value}/>
+    {/if}
+
     {#if configObj[key].type == "sheetColumn"}
       <SheetColumnSelect {projectId} bind:sheetColumn={configObj[key].value}/>
     {/if}
