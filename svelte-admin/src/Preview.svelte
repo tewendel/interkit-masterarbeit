@@ -37,7 +37,6 @@
   <br><br>
   
   <a target="_blank" href="{previewURL}">
-    {previewURL}
       {#key previewURL}
         <QrCode value={previewURL} />
       {/key}
