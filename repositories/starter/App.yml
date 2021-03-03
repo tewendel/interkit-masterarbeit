@@ -1,37 +1,66 @@
 menu1_component:
  name: Menu1 Component
- type: string
- value: Dashboard
+ type: select
+ value: leer
+ options:
+  - leer
+  - Dashboard
+  - Archive
+  - Map
 menu1_label:
  name: Menu1 Text
  type: string
- value: Willkommen
+ value: 
 menu1_icon:
  name: Menu1 Icon
- type: string
+ type: select
  value: home
+ options:
+  - home
+  - grid
+  - map
+  - airplane
 menu2_component:
  name: Menu2 Component
- type: string
- value: Archive
+ type: select
+ value: leer
+ options:
+  - leer
+  - Dashboard
+  - Archive
+  - Map
 menu2_label:
  name: Menu2 Text
  type: string
- value: Archiv
+ value: 
 menu2_icon:
  name: Menu2 Icon
- type: string
- value: grid
+ type: select
+ value: home
+ options:
+  - home
+  - grid
+  - map
+  - airplane
 menu3_component:
  name: Menu3 Component
- type: string
- value: Map
+ type: select
+ value: leer
+ options:
+  - leer
+  - Dashboard
+  - Archive
+  - Map
 menu3_label:
  name: Menu3 Text
  type: string
- value: Karte
+ value: 
 menu3_icon:
  name: Menu3 Icon
- type: string
- value: map
-
+ type: select
+ value: home
+ options:
+  - home
+  - grid
+  - map
+  - airplane

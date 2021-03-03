@@ -25,13 +25,16 @@
     }
 
     const addMenuItem = async (key) => {
-      if(config[key + "_label"]?.value) {
-        tabs.push({
-          label: config[key + "_label"]?.value,
-          tab: config[key + "_component"]?.value,
-          icon: config[key + "_icon"]?.value,
-          component: await loadComponent(config[key + "_component"]?.value)
-        })
+      if(config[key + "_component"]?.value) {
+        let component = await loadComponent(config[key + "_component"]?.value)
+        if(component) {
+          tabs.push({
+            label: config[key + "_label"]?.value ? config[key + "_label"].value : config[key + "_component"]?.value,
+            tab: config[key + "_component"]?.value,
+            icon: config[key + "_icon"]?.value,
+            component
+          })
+        }
       }
     }
 
