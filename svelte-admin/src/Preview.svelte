@@ -5,7 +5,7 @@
   import { BundleServer, compileError, runtimeError, bundleProcessing } from './BundleServer.js'
   import { onMount } from 'svelte'
 
-  export let projectId
+  export let projectId, previewURL = ""
 
   let bundleServerURL
   onMount( async () => {
@@ -14,7 +14,10 @@
     BundleServer.init(projectId, bundleServerURL)
   })
 
-  $: previewURL = projectId ? bundleServerURL + "/app/" + projectId : null
+  $: {
+    previewURL = projectId ? bundleServerURL + "/app/" + projectId : null
+    console.log(previewURL)
+  }
 
 </script>
 
@@ -34,7 +37,10 @@
   <br><br>
   
   <a target="_blank" href="{previewURL}">
-    <QrCode value={previewURL} />
+    {previewURL}
+      {#key previewURL}
+        <QrCode value={previewURL} />
+      {/key}
     <br>
     link to app
   </a>
