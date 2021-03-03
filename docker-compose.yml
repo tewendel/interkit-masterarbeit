@@ -1,6 +1,33 @@
 version: '3'
 
 services:
+
+  proxy:
+    image: jwilder/nginx-proxy
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"    
+    ports:
+      - "80:80"
+      - "443:443"    
+  
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam:ro
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      NGINX_PROXY_CONTAINER: proxy
+
   server:
     build:
       context: ./
@@ -8,6 +35,7 @@ services:
       args:
         BUILD_SOURCE_PATH: ./meteor-server
         BUILD_REPOSITORIES_PATH: ./repositories
+        BUILD_CONTAINER_REPOSITORIES_PATH: /var/repositories
     ports:
       - '3000:3000'
     volumes:
@@ -17,8 +45,14 @@ services:
     environment:
       ROOT_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
       MONGO_URL: mongodb://mongo:27017/meteor
+      REPOSITORIES_PATH: /var/repositories
       PORT: 3000
       BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
+      LETSENCRYPT_HOST: $INTERKIT_SERVER_HOST
+      LETSENCRYPT_EMAIL: info@interkit.app
+      VIRTUAL_HOST: $INTERKIT_SERVER_HOST
+      VIRTUAL_PORT: 3000
+
 
   mongo:
     image: mongo:4.2
@@ -37,6 +71,10 @@ services:
       - '5000:5000'
     environment:
       INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
+      LETSENCRYPT_HOST: $INTERKIT_ADMIN_HOST
+      LETSENCRYPT_EMAIL: info@interkit.app
+      VIRTUAL_HOST: $INTERKIT_ADMIN_HOST
+      VIRTUAL_PORT: 5000
 
   bundler:
     build:
@@ -51,8 +89,21 @@ services:
       - repositories:/var/repositories
     environment:
       PORT: 4000
+      LETSENCRYPT_HOST: $INTERKIT_BUNDLER_HOST
+      LETSENCRYPT_EMAIL: info@interkit.app
+      VIRTUAL_HOST: $INTERKIT_BUNDLER_HOST
+      VIRTUAL_PORT: 4000
     
 
 volumes:
   db-data:
   repositories:
+#      driver_opts:
+#      type: none
+#      device: /root/data/repositories
+#      o: bind
+  certs:
+  html:
+  vhost:
+  conf:
+  dhparam:

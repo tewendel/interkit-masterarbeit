@@ -31,10 +31,10 @@
   <h1>project: {$currentProject.name}</h1>
   <div class="left-pane">
     <WorkArea name="database"><Sheets {projectId}/></WorkArea>
-    <WorkArea name="components"><ComponentEditor {projectId}/></WorkArea>
+    <WorkArea name="app components"><ComponentEditor {projectId}/></WorkArea>
   </div>
   <div class="right-pane">
-    <WorkArea name="preview"><Preview {projectId}/></WorkArea>
+    <WorkArea name="app preview"><Preview {projectId}/></WorkArea>
   </div>
 {:else}
   loading...
@@ -42,6 +42,10 @@
 
 
 <style>
+
+  h1 {
+    margin-bottom: 10px;
+  }
   .left-pane {
     width: 50%;
     float: left;
