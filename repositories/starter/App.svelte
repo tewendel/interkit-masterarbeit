@@ -56,6 +56,7 @@
 </ion-app>
 
 <svelte:head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script
     type="module"
     src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js">
