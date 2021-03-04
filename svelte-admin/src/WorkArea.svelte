@@ -12,7 +12,7 @@ const toggle = () => {
 <div class="area">
   <h2>{name}<button on:click={toggle}>{open ? "close panel" : "open panel"}</button></h2>
   <div class="content" style="display: {open ? 'block' : 'none'}">
-    <slot></slot>
+    <slot {open}></slot>
   </div>
 </div>
 

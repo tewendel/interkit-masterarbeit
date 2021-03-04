@@ -6,6 +6,7 @@
   import './code_generator.js'
 
   import block_definitions from './block_definitions.json'
+  import toolbox from './toolbox.json'
 
   console.log(block_definitions)
 
@@ -15,7 +16,7 @@
 
   onMount(()=> {
     workspace = Blockly.inject('blocklyDiv', {
-      toolbox: document.getElementById("toolbox")
+      toolbox
     });
 
     workspace.addChangeListener(myUpdateFunction);
@@ -36,11 +37,3 @@
 
 </main>  
 
-
-<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox">
-  <category name="Basis-Komponenten">
-    <block type="bottom_menu"></block>
-    <block type="dashboard"></block>
-    <block type="map"></block>
-  </category>
-</xml>

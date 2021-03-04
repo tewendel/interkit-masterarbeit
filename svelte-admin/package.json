@@ -22,6 +22,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "blockly": "^4.20201217.0",
     "carbon-components-svelte": "^0.28.0",
     "envsub": "^4.0.7",
     "leaflet": "^1.7.1",

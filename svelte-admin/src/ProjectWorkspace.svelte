@@ -4,6 +4,7 @@
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
   import Preview from './Preview.svelte'
+  import BlocklyEditor from './BlocklyEditor.svelte'
   import { InterkitClient } from 'interkit-shared'
 
   export let projectId
@@ -32,6 +33,7 @@
   <div class="left-pane">
     <WorkArea name="database"><Sheets {projectId}/></WorkArea>
     <WorkArea name="app components"><ComponentEditor {projectId}/></WorkArea>
+    <WorkArea name="blockly" let:open={open}><BlocklyEditor {projectId} {open}/></WorkArea>
   </div>
   <div class="right-pane">
     <WorkArea name="app preview"><Preview {projectId}/></WorkArea>

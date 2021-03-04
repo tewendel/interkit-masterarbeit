@@ -3,6 +3,7 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "blockly": "^4.20201217.0",
     "isomorphic-ws": "^4.0.1",
     "simpleddp": "^2.2.4"
   }
