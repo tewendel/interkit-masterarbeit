@@ -30,7 +30,7 @@
     
     let imports = "<script>\n";
     for(let type of allBlocksUnique) {
-      imports += `import ${type} from "interkit-shared";\n`
+      imports += `import { ${type} } from "interkit-shared";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
