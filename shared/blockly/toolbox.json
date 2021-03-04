@@ -7,15 +7,15 @@
       "contents": [
         {
           "kind": "block",
-          "type": "bottom_menu"
+          "type": "BottomMenu"
         },
         {
           "kind": "block",
-          "type": "dashboard"
+          "type": "Dashboard"
         },
         {
           "kind": "block",
-          "type": "map"
+          "type": "Map"
         }
       ]
     }

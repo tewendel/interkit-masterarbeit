@@ -23,7 +23,18 @@
 
   const myUpdateFunction = (event) => {
     var code = Blockly.JavaScript.workspaceToCode(workspace);
-    document.getElementById('textarea').value = code;
+    
+    // add import statements
+    let allBlocks = workspace.getAllBlocks().map(b=>b.type)
+    let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.indexOf(e) === i)
+    
+    let imports = "<script>\n";
+    for(let type of allBlocksUnique) {
+      imports += `import ${type} from "interkit-shared";\n`
+    }
+    imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
+
+    document.getElementById('textarea').value = imports + code;
   }
 
   $: {
@@ -38,7 +49,7 @@
 </script>
 
 <div class="wrapper">  
-  <div id="blocklyDiv" style="height: 480px; width: 100%;"></div>
+  <div id="blocklyDiv" style="height: 350px; width: 100%;"></div>
   <textarea id="textarea"></textarea>
 </div>  
 
@@ -46,5 +57,6 @@
 <style>
   textarea {
     width: 100%;
+    height: 150px;
   }
 </style>

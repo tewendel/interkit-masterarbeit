@@ -2,14 +2,14 @@ export const initCodeGenerator = (Blockly) => {
 
   console.log("initCodeGenerator");
 
-  Blockly.JavaScript['bottom_menu'] = function(block) {
+  Blockly.JavaScript['BottomMenu'] = function(block) {
     var statements_components = Blockly.JavaScript.statementToCode(block, 'components');
     // TODO: Assemble JavaScript into code variable.
     var code = '<Menu>\n' + statements_components + '\n</Menu>\n';  
     return code;
   };
 
-  Blockly.JavaScript['dashboard'] = function(block) {
+  Blockly.JavaScript['Dashboard'] = function(block) {
     var statements_components = Blockly.JavaScript.statementToCode(block, 'components');
     // TODO: Assemble JavaScript into code variable.
 
@@ -20,7 +20,7 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
-  Blockly.JavaScript['map'] = function(block) {
+  Blockly.JavaScript['Map'] = function(block) {
     var statements_components = Blockly.JavaScript.statementToCode(block, 'components');
     // TODO: Assemble JavaScript into code variable.
     var code = '<Map>\n' + statements_components + '\n</Map>\n';  

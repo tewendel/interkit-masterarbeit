@@ -1,5 +1,5 @@
 [{
-  "type": "bottom_menu",
+  "type": "BottomMenu",
   "message0": "%1 %2 Komponenten %3",
   "args0": [
     {
@@ -20,8 +20,8 @@
   "helpUrl": ""
 },
 {
-  "type": "dashboard",
-  "message0": "Dashboard %1 Inhalte %2 Farbe %3",
+  "type": "Dashboard",
+  "message0": "<Dashboard> %1 Inhalte %2 Farbe %3",
   "args0": [
     {
       "type": "input_dummy"
@@ -44,7 +44,7 @@
 },
 
 {
-  "type": "map",
+  "type": "Map",
   "message0": "<Map> %1 Ebenen %2",
   "args0": [
     {
