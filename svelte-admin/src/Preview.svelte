@@ -23,7 +23,7 @@
 
   <div class="frame">
     {#if bundleServerURL && !$compileError}
-      {#key buildHash}
+      {#key $buildHash}
         <iframe title="embedded app preview" src={previewURL}></iframe><br>
       {/key}
     {/if}
