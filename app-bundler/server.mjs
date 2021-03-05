@@ -12,6 +12,7 @@ import yaml from '@rollup/plugin-yaml';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import auto from '@rollup/plugin-auto-install'
+import json from '@rollup/plugin-json'
 
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -55,7 +56,8 @@ app.get('/compile/:projectId', async (req, res) => {
       }),
       commonjs(),
       terser(),
-      yaml()
+      yaml(),
+      json(),
     ]      
   }).catch((compileError) => {
     console.log("rollup compile error", compileError);
