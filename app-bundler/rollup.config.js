@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import yaml from '@rollup/plugin-yaml';
 import auto from '@rollup/plugin-auto-install'
+import json from '@rollup/plugin-json'
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -62,6 +63,7 @@ export default {
 		}),
 		commonjs(),
     yaml(),
+    json(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
