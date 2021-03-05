@@ -3,12 +3,13 @@ import { writable } from 'svelte/store';
 export const compileError = writable(null);
 export const runtimeError = writable(null);
 export const bundleProcessing = writable(false);
+export const buildHash = writable("0");
 
 let bundleServerURL;
 let projectId;
 
 const reloadPreview = () => {
-    document.getElementById('app-preview').src = document.getElementById('app-preview').src
+    buildHash.set(Date.now()+"")
     runtimeError.set(null)
 };
 
