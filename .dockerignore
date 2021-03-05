@@ -1,3 +1,7 @@
+# root
+node_modules/
+.env
+
 # all apps
 **/node_modules/
 */.env

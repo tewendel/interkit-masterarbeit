@@ -5,3 +5,20 @@ proof of concept for creating, editing, compiling and bundling svelte apps with 
 
 - check the readmes in individual components for setup and running
 
+### quick start
+
+install all packages
+
+````
+npm run install:all
+````
+
+run the relevant systems in one shell
+
+````
+npm run dev
+````
+
+````
+open http://localhost:5000
+````
