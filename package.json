@@ -2,14 +2,17 @@
   "name": "interkit-monorepo",
   "private": true,
   "scripts": {
-    "install:server": "cd meteor-server && meteor npm install",
+    "install:server": "cd meteor-server && npm install",
     "install:admin": "cd svelte-admin && npm install",
     "install:bundler": "cd app-bundler && npm install",
-    "install:shared": "cd packages/interkit && npm install",
-    "install:all": "npm run install:shared && npm run install:server && npm run install:admin && npm run install:bundler",
+    "install:packages": "cd packages/interkit && npm install",
+    "install:all": "npm run install:packages && npm run install:server && npm run install:admin && npm run install:bundler",
     "dev:server": "cd meteor-server && npm start",
     "dev:admin": "cd svelte-admin && npm run dev",
     "dev:bundler": "cd app-bundler && npm run dev",
     "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\""
+  },
+  "engines": {
+    "npm": "7"
   }
 }

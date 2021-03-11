@@ -29,5 +29,8 @@
   "devDependencies": {},
   "workspaces": [
     "../packages/*"
-  ]
+  ],
+  "engines": {
+    "npm": "7"
+  }
 }
