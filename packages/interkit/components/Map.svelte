@@ -4,7 +4,8 @@
 
   import { InterkitClient } from 'interkit'
 
-  import config from './Map.yml';
+  export let markerPositions; // type sheetColumn: "sheetId/columnId"
+  export let markerLabels; // type sheetColumn: "sheetId/columnId"
 
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
@@ -30,17 +31,17 @@
 
     let sheetId;
     let positionColumnKey;
-    if(config?.markerPositions.value) {
-      sheetId = config.markerPositions.value.split("/")?.[0]
-      positionColumnKey = config.markerPositions.value.split("/")?.[1]
+    if(markerPositions) {
+      sheetId = markerPositions.split("/")?.[0]
+      positionColumnKey = markerPositions.split("/")?.[1]
     }
     let labelColumnKey;
-    if(config?.markerLabels.value) {
-      let sheetIdLabels = config.markerLabels.value.split("/")?.[0]
+    if(markerLabels) {
+      let sheetIdLabels = markerLabels.split("/")?.[0]
       if(sheetId != sheetIdLabels) {
         alert("marker positions and labels must be on the same sheet")
       }
-      labelColumnKey = config.markerLabels.value.split("/")?.[1]
+      labelColumnKey = markerLabels.split("/")?.[1]
     }
     
     //console.log(sheetId, positionColumnKey, labelColumnKey)

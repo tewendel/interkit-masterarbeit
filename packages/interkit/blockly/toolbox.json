@@ -3,7 +3,7 @@
   "contents": [
     {
       "kind": "category",
-      "name": "Komponenten",
+      "name": "Menu",
       "contents": [
         {
           "kind": "block",
@@ -16,7 +16,13 @@
         {
           "kind": "block",
           "type": "BottomMenuButton"
-        },
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Seiten",
+      "contents": [
         {
           "kind": "block",
           "type": "HeadlinePage"
@@ -24,6 +30,10 @@
         {
           "kind": "block",
           "type": "Dashboard"
+        },
+        {
+          "kind": "block",
+          "type": "Archive"
         },
         {
           "kind": "block",

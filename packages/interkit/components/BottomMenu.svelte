@@ -51,4 +51,22 @@
 
 
 <slot name="pages"></slot>
-<slot name="buttons"></slot>
+
+<div class="bottom-menu">
+  <slot name="buttons"></slot>
+</div>
+
+<style>
+
+  .bottom-menu {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    z-index: 1000;
+  }
+
+
+</style>

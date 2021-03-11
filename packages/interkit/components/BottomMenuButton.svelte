@@ -17,7 +17,13 @@
 
 
 <style>
+  button {
+    font-family: var(--font-family);
+    color: var(--color-primary);
+  }
+
   button.selected {
     font-weight: bold;
   }
 </style>
+

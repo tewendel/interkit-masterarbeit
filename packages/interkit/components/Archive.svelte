@@ -6,7 +6,11 @@
   import "carbon-components-svelte/css/g10.css"; // all g10 g100 g90 white
 
   import { InterkitClient } from 'interkit'
-  import config from './Archive.yml'
+  
+  export let data_sheet // type sheetColumn
+  export let category_sheet1 // type sheetColumn
+  export let category_sheet2 // type sheetColumn
+
   import ArchiveCategory from './ArchiveCategory.svelte'
   import ArchiveList from './ArchiveList.svelte'
 
@@ -28,8 +32,8 @@
   let categorySheet1;
   let categorySheet2;
   onMount(async ()=>{
-    categorySheet1 = await getSheet(config.categorySheet1.value)
-    categorySheet2 = await getSheet(config.categorySheet2.value)
+    categorySheet1 = await getSheet(category_sheet1)
+    categorySheet2 = await getSheet(category_sheet2)
   })
 
 </script>
@@ -38,7 +42,7 @@
 
 <h1>Archive</h1>
 
-{#if config.categorySheet1.value || config.categorySheet2.value}
+{#if category_sheet1 || category_sheet2}
 
   <div class:hide={selectedCategory != null}>
 
@@ -50,7 +54,7 @@
       <TabContent>
         <ArchiveCategory
           categorySheet={categorySheet1}
-          categoryColumnKey={config.categorySheet1.value.split("/")[1]}
+          categoryColumnKey={category_sheet1.split("/")[1]}
           {openCategory}
         />
       </TabContent>
@@ -59,7 +63,7 @@
       <TabContent>
         <ArchiveCategory
           categorySheet={categorySheet2}
-          categoryColumnKey={config.categorySheet2.value.split("/")[1]}
+          categoryColumnKey={category_sheet2.split("/")[1]}
           {openCategory}
         />
       </TabContent>
@@ -73,8 +77,8 @@
   <ArchiveList
     category={selectedCategory.row}
     categoryName={selectedCategory.name}
-    dataSheetId={config.dataSheet.value.split("/")[0]}
-    dataSheetColumnKey={config.dataSheet.value.split("/")[1]}
+    dataSheetId={category_sheet1.split("/")[0]}
+    dataSheetColumnKey={data_sheet.split("/")[1]}
     close={()=>{selectedCategory = null}}
   />
   {/if}

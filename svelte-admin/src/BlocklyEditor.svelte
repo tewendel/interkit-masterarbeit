@@ -2,22 +2,40 @@
 
   import {onMount} from 'svelte'
   
-  import Blockly from 'blockly'
+  import Blockly from 'blockly';
+
   import { blocklyConfig, InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
 
+  import initSheetColumnField from 'interkit/blockly/sheetColumnField.js'
+
   export let open;
   export let projectId;
-  
-  blocklyConfig.initCodeGenerator(Blockly);
 
-  Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
+  // let CustomFields = {}; // save blockly custom fields here
   
   let workspace;
   let blocklyXMLFile = "blocklyState.xml";
   let generatedCode = "";
 
   const initBlockly = async () => {
+
+    console.log("initBlockly")
+
+    const CustomFields = initSheetColumnField(Blockly);
+    //console.log(CustomFields)
+    
+    blocklyConfig.initCodeGenerator(Blockly);
+    
+    /*Blockly.Extensions.register('sheetColumn_extension',
+    function() {
+      this.appendDummyInput()
+        .appendField('sheetColumn')
+        .appendField(new CustomFields.SheetColumnField(), 'sheetColumn');
+    });*/
+
+    Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
+    
     workspace = Blockly.inject('blocklyDiv', {
       toolbox: blocklyConfig.toolbox
     });
@@ -29,10 +47,18 @@
       let xml = Blockly.Xml.textToDom(blocklyXML.content);
       Blockly.Xml.domToWorkspace(xml, workspace);
     }
+
+
   }
 
   const myUpdateFunction = (event) => {
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    console.log("myUpdateFunction")
+    let code;
+    try {
+      code = Blockly.JavaScript.workspaceToCode(workspace);
+    } catch(e) {
+      console.log(e)
+    }
     
     // add import statements
     let allBlocks = workspace.getAllBlocks().map(b=>b.type)

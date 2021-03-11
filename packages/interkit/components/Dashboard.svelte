@@ -1,17 +1,18 @@
 <script>
 
-  import config from './Dashboard.yml';
+  export let sectionTitles;
+  export let sectionRefs;
 
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
 
   let sectionSub;
   let sectionRows;
-  let sectionSheetId = config.sectionTitles.value?.split("/")?.[0]
-  let titleColumKey = config.sectionTitles.value?.split("/")?.[1]
-  let refsColumnKey = config.sectionRefs.value?.split("/")?.[1]
+  let sectionSheetId = sectionTitles?.split("/")?.[0]
+  let titleColumKey = sectionTitles?.split("/")?.[1]
+  let refsColumnKey = sectionRefs?.split("/")?.[1]
 
-  if(sectionSheetId != config.sectionRefs.value?.split("/")?.[0])
+  if(sectionSheetId != sectionRefs?.split("/")?.[0])
     alert("bad config: sectionTitles and sectionRegs must be from same sheet")
 
   let referenceSheetId;
