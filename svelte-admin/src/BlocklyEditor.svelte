@@ -3,22 +3,30 @@
   import {onMount} from 'svelte'
   
   import Blockly from 'blockly'
-  import { blocklyConfig } from 'interkit-shared'
-
+  import { blocklyConfig, InterkitClient } from 'interkit-shared'
+  
   export let open;
-
+  export let projectId;
   
   blocklyConfig.initCodeGenerator(Blockly);
 
   Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
   
   let workspace;
+  let blocklyXMLFile = "blocklyState.xml";
 
-  const initBlockly = () => {
+  const initBlockly = async () => {
     workspace = Blockly.inject('blocklyDiv', {
       toolbox: blocklyConfig.toolbox
     });
     workspace.addChangeListener(myUpdateFunction);
+
+    let blocklyXML = await InterkitClient.call("file.load", {filename: blocklyXMLFile, projectId})  
+    if(blocklyXML.content) {
+      console.log(blocklyXML.content)
+      let xml = Blockly.Xml.textToDom(blocklyXML.content);
+      Blockly.Xml.domToWorkspace(xml, workspace);
+    }
   }
 
   const myUpdateFunction = (event) => {
@@ -44,15 +52,27 @@
     }
   }
 
-  
+  const saveAndCompile = async ()=>{
+
+    let xml = Blockly.Xml.workspaceToDom(workspace);
+    let xml_text = Blockly.Xml.domToPrettyText(xml);
+
+    console.log(xml_text)
+
+    let file = {
+      filename: blocklyXMLFile,
+      content: xml_text
+    }
+    await InterkitClient.call("file.save", {file, projectId})
+  }
+
 
 </script>
 
-<div class="wrapper">  
   <div id="blocklyDiv" style="height: 350px; width: 100%;"></div>
   <textarea id="textarea"></textarea>
-</div>  
 
+  <button on:click={saveAndCompile}>save & compile</button>
 
 <style>
   textarea {
