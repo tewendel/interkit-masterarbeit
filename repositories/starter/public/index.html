@@ -10,7 +10,16 @@
 	<link rel='stylesheet' href='global.css'>
 	<link rel='stylesheet' href='build/bundle.css'>
 
+	<script>
+		window.onerror = function (msg, source, lineNo, columnNo, error) {
+			// function to execute error handling
+			window.parent.postMessage({ msg, source, lineNo, columnNo }, "*")
+			return false
+		}
+	</script>
+
 	<script defer src='build/bundle.js'></script>
+
 </head>
 
 <body>
