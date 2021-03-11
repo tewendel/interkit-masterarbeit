@@ -53,6 +53,7 @@
   <Style>
     <IonTab tabs={myTabs} />
   </Style>
+  <div class="info">interkit app</div>
 </ion-app>
 
 <svelte:head>
@@ -65,3 +66,11 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
 </svelte:head>
+
+<style>
+  .info {
+    position: fixed;
+    left:0;
+    top:0;
+  }
+</style>

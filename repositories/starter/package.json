@@ -19,5 +19,12 @@
   },
   "dependencies": {
     "sirv-cli": "^1.0.0"
+  },
+  "workspaces": [
+    "../../packages/*"
+  ],
+  "engines": {
+    "node": "15",
+    "npm": "7"
   }
 }
