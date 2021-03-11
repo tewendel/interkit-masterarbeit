@@ -5,7 +5,7 @@
   import ComponentEditor from './ComponentEditor.svelte'
   import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
 
   export let projectId
   $: setup(projectId)

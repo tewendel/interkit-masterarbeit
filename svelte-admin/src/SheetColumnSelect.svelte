@@ -1,7 +1,7 @@
 <script>
 
   import { onMount, onDestroy } from 'svelte'
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
   
   export let projectId
   export let sheetColumn

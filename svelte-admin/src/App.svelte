@@ -16,7 +16,7 @@
       '/:projectId?': ProjectManager,
   }
 
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
   onMount(async ()=>{
     await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
   })

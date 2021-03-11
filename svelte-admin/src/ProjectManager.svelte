@@ -2,7 +2,7 @@
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
   import { onMount } from 'svelte'
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
 
   import { 
     Grid,

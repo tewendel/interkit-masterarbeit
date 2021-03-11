@@ -1,6 +1,6 @@
 <script>
 
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
 
   import {
     ComposedModal,

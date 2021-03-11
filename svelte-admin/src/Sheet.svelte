@@ -1,5 +1,5 @@
 <script>
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
   import { DataTable } from "carbon-components-svelte";
   import InputModal from './InputModals/InputModal.svelte';
   import ReferenceCell from './ReferenceCell.svelte';

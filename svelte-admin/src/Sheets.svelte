@@ -2,7 +2,7 @@
 
   import { onDestroy } from 'svelte'
   import Sheet from './Sheet.svelte'
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
 
   export let projectId
 

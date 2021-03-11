@@ -31,7 +31,7 @@
     "dotenv": "^8.2.0",
     "ejson": "^2.2.1",
     "express": "^4.17.1",
-    "interkit-shared": "*",
+    "interkit": "*",
     "is-plain-object": "^2.0.4",
     "isarray": "^1.0.0",
     "isobject": "^2.1.0",
@@ -49,7 +49,7 @@
     "wolfy87-eventemitter": "^5.2.9"
   },
   "workspaces": [
-    "../shared"
+    "../packages/*"
   ],
   "engines": {
     "node": "15",
