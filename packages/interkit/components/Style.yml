@@ -1,0 +1,13 @@
+primary_color:
+  name: Primary Color
+  type: color
+  value: "#27EBBC"
+font_family:
+  name: Font Family
+  type: string
+  value: inter
+google_font:
+  name: Google Font
+  description: "Google font string, e.g.: Inter:wght@100"
+  type: string
+  value: Inter:wght@100

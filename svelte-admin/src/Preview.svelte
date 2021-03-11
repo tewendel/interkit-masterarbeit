@@ -1,7 +1,7 @@
 <script>
   import QrCode from "svelte-qrcode"
   import { Loading } from 'carbon-components-svelte'
-  import { InterkitClient } from 'interkit-shared'
+  import { InterkitClient } from 'interkit'
   import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
 

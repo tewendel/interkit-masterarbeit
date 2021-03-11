@@ -1,7 +1,7 @@
 <script>
 
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
-  import InterkitClient from '../../shared/interkit-client.js'
+  import {InterkitClient} from 'interkit'
 
   export let selectComponent;
   export let currentComponent;

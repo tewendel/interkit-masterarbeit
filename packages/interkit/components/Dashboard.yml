@@ -1,0 +1,11 @@
+sectionTitles:
+ name: Überschriften
+ type: sheetColumn
+ #value: 3emTocCg8P54yZhtJ/cc3ac547-07b4-4e6f-b457-d786f31469d9
+ value:
+
+sectionRefs:
+ name: Inhalte
+ type: sheetColumn
+ #value: 3emTocCg8P54yZhtJ/4e51217e-652b-41e5-b1db-ee3a9aa5424d
+ value:

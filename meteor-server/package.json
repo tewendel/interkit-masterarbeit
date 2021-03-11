@@ -26,5 +26,8 @@
     },
     "testModule": "tests/main.js"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "workspaces": [
+    "../packages/*"
+  ]
 }

@@ -1,0 +1,9 @@
+markerPositions:
+ name: Marker-Positionen
+ type: sheetColumn
+ value: 
+
+markerLabels:
+ name: Marker-Label
+ type: sheetColumn
+ value: 

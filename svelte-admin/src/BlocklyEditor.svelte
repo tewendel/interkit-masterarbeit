@@ -3,7 +3,7 @@
   import {onMount} from 'svelte'
   
   import Blockly from 'blockly'
-  import { blocklyConfig, InterkitClient } from 'interkit-shared'
+  import { blocklyConfig, InterkitClient } from 'interkit'
   
   export let open;
   export let projectId;
@@ -38,7 +38,7 @@
     
     let imports = "<script>\n";
     for(let type of allBlocksUnique) {
-      imports += `import { ${type} } from "interkit-shared";\n`
+      imports += `import { ${type} } from "interkit";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
