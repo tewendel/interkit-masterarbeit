@@ -11,6 +11,18 @@
         },
         {
           "kind": "block",
+          "type": "BottomMenuPage"
+        },
+        {
+          "kind": "block",
+          "type": "BottomMenuButton"
+        },
+        {
+          "kind": "block",
+          "type": "HeadlinePage"
+        },
+        {
+          "kind": "block",
           "type": "Dashboard"
         },
         {

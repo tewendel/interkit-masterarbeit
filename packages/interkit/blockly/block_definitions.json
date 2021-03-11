@@ -1,24 +1,85 @@
-[{
-  "type": "BottomMenu",
-  "message0": "%1 %2 Komponenten %3",
+[
+  {
+  "type": "HeadlinePage",
+  "message0": "<HeadlinePage> %1 Headline %2",
   "args0": [
     {
-      "type": "field_label_serializable",
-      "name": "",
-      "text": "<Menu>"
+      "type": "input_dummy"
     },
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "default"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+  },
+  {
+  "type": "BottomMenu",
+  "message0": "<BottomMenu> %1 Pages %2 Buttons %3",
+  "args0": [
     {
       "type": "input_dummy"
     },
     {
       "type": "input_statement",
-      "name": "components"
+      "name": "pages"
+    },
+    {
+      "type": "input_statement",
+      "name": "buttons"
     }
   ],
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
+  },
+
+  {
+  "type": "BottomMenuPage",
+  "message0": "<BottomMenuPage> %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "NAME"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
 },
+
+{
+  "type": "BottomMenuButton",
+  "message0": "BottomMenuButton %1 label %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "label",
+      "text": "default"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+
+
+
 {
   "type": "Dashboard",
   "message0": "<Dashboard> %1 Inhalte %2 Farbe %3",

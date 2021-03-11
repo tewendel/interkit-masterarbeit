@@ -2,7 +2,7 @@
   import { InterkitClient } from 'interkit'
   const INTERKIT_SERVER_WEBSOCKETS_URL = "ws://localhost:3000/websocket"; // todo: figure our how to configure this for the app
 
-  import config from './App.yml'
+  import config from './BottomMenu.yml'
   import Style from 'interkit/components/Style.svelte'
 
   let Test;

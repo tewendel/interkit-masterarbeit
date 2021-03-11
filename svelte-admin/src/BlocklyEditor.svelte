@@ -4,7 +4,8 @@
   
   import Blockly from 'blockly'
   import { blocklyConfig, InterkitClient } from 'interkit'
-  
+  import { BundleServer } from './BundleServer.js'
+
   export let open;
   export let projectId;
   
@@ -14,6 +15,7 @@
   
   let workspace;
   let blocklyXMLFile = "blocklyState.xml";
+  let generatedCode = "";
 
   const initBlockly = async () => {
     workspace = Blockly.inject('blocklyDiv', {
@@ -38,17 +40,20 @@
     
     let imports = "<script>\n";
     for(let type of allBlocksUnique) {
-      imports += `import { ${type} } from "interkit";\n`
+      imports += `import ${type} from "interkit/components/${type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    document.getElementById('textarea').value = imports + code;
+    generatedCode = imports + code;
+
+    document.getElementById('textarea').value = generatedCode;
   }
 
   $: {
     console.log("blockly open", open)
     if(open && !workspace) {
       initBlockly();      
+      myUpdateFunction();
     }
   }
 
@@ -57,13 +62,22 @@
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
 
-    console.log(xml_text)
+    //console.log(xml_text)
 
     let file = {
       filename: blocklyXMLFile,
       content: xml_text
     }
     await InterkitClient.call("file.save", {file, projectId})
+
+    let appSvelteFile = {
+      filename: "App.svelte",
+      content: generatedCode
+    }
+
+    await InterkitClient.call("file.save", {file: appSvelteFile, projectId})
+    BundleServer.compileReloadPreview();
+    
   }
 
 
