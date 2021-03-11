@@ -5,17 +5,15 @@ import cors from 'cors';
 app.use(cors())
 
 import { rollup } from 'rollup';
-import svelte from 'rollup-plugin-svelte';
-import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import yaml from '@rollup/plugin-yaml';
-import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
-import auto from '@rollup/plugin-auto-install'
-import json from '@rollup/plugin-json'
 
 import { promises as fs } from 'fs';
 import * as path from 'path';
+
+import { promisify } from 'util';
+import {exec} from 'child_process'
+
+
+const execPromise = promisify(exec)
 
 const PORT = process.env.PORT
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
@@ -27,99 +25,91 @@ app.get('/compile/:projectId', async (req, res) => {
 
   const projectId = req.params.projectId;
 
-  let error;
-  
-  // make the bundle (adapted from rollup.config.js in svelte template)
-  const bundle = await rollup({
-    input: REPOSITORIES_PATH + '/projects/' + projectId + '/main.js',
-    plugins: [
-      svelte({
-        compilerOptions: {
-          // enable run-time checks when not in production
-          dev: false
-        }
-      }),
-      // we'll extract any component CSS out into
-      // a separate file - better for performance
-      css({ output: 'bundle.css' }),
+  const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
-      // If you have external dependencies installed from
-      // npm, you'll most likely need these plugins. In
-      // some cases you'll need additional configuration -
-      // consult the documentation for details:
-      // https://github.com/rollup/plugins/tree/master/packages/commonjs
-      // auto(),
-      nodeResolve({
-        browser: true,
-        dedupe: ['svelte'],
-        moduleDirectories: [process.env.PWD + '/node_modules'] // relative to input file!
-      }),
-      commonjs(),
-      terser(),
-      yaml(),
-      json(),
-    ]      
-  }).catch((compileError) => {
-    console.log("rollup compile error", compileError);
-    console.log("message", compileError.message);
-    error = compileError;
-  })
-
-  if(bundle) {
-
-    const directory = 'public/build/' + projectId
-    await fs.rmdir(directory, { recursive: true })
-
-    const outputOptions = {
-      sourcemap: true,
-      format: 'es', //iife
-      name: 'app',
-      //file: 'public/build/' + projectId
-      dir: 'public/build/' + projectId
-    }
-
-    await bundle.write(outputOptions).catch((writeError)=> {
-      console.log("bundle write error", writeError)
-      error = writeError
-    })
-    
+  let code, message
+  try {
+    const result = await execPromise(`cd ${projectPath} && npm install && npm run build`);
+    code = 0
+    message = result.stdout + result.stderr
+  } catch(error) {
+    console.log("caught error", error)
+    code = error.code
+    message = error.stdout + error.stderr
   }
 
-  if(!error) {
-    res.send({status: "ok"})
+  console.log('message:', message);
+  console.log('code:', code);
+
+  if ( code == 0 ) {
+    res.send({status: "ok", data: {message}})
   } else {
-    res.send({status: "error", data: {...error, message: error.message}})
+    res.send({status: "error", data: {message}})
   }
 
 });
 
+//app.use(express.static('public', { index: false }))
 
+
+app.use(async (req, res, next) => {
+  console.log(req.url)
+
+  // TODO this is too easy to exploit
+
+  const match = req.url.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
+  //console.log("url, match", req.url, match)
+  const projectId = match?.[1]
+  let subpath = match?.[2]
+
+  if (match == null || !projectId) res.send(404)
+
+  // console.log(match)
+
+  const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
+
+  //console.log(req.url, projectId, subpath, projectPublicPath)
+
+  if (subpath == "/" || subpath == "") {
+    subpath = "/index.html"
+  }
+
+  const subpathArray = subpath.split("/")
+
+  const filePath = path.join(projectPublicPath, ...subpathArray)
+
+  console.log(filePath)
+
+  try {
+    const file = await fs.readFile(filePath)
+    res.contentType(path.basename(filePath));
+    res.send(file)
+  } catch(error) {
+    res.send(404)
+  }
+
+  
+
+  next();
+});
+
+
+/*
 // serve a bundle for a given app
-app.get('/app/:projectId', (req, res) => {
+app.get('/app/:projectId', async (req, res) => {
 
   // wrap it in html page
-  const renderPage = (projectId) => { return `
-  <!doctype html>
-  <html>
-  <head>
-    <link rel='stylesheet' href='/build/${projectId}/bundle.css'>  
-  </head>
-  <body>
-    <div id="app"></div>
-    <script>
-      window.onerror = function (msg, source, lineNo, columnNo, error) {
-         // function to execute error handling
-         window.parent.postMessage({msg, source, lineNo, columnNo}, "*")
-         return false
-      }
-    </script>
-    <script type='module' src='/build/${projectId}/main.js'></script>
-  </body>
-  </html>
-  ` }
+  const renderPage = async (projectId) => { 
+    const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
+    const htmlPath = path.join(projectPath, "public", "index.html")
+    const html = await fs.readFile(htmlPath)
+    console.log(projectPath, htmlPath, html)
+    return  html
+  }
 
-    res.send(renderPage(req.params.projectId));
+    res.send(await renderPage(req.params.projectId));
 });
+*/
 
 app.listen(PORT, () => console.log('listening on port ' + PORT)); 
 

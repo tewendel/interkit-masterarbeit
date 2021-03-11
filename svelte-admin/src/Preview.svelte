@@ -16,7 +16,7 @@
   })
 
   $: {
-    previewURL = projectId ? bundleServerURL + "/app/" + projectId : null
+    previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" : null
   }
 
 </script>

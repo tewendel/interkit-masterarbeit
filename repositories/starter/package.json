@@ -21,7 +21,7 @@
     "sirv-cli": "^1.0.0"
   },
   "workspaces": [
-    "../../packages/*"
+    "../../../packages/*"
   ],
   "engines": {
     "node": "15",
