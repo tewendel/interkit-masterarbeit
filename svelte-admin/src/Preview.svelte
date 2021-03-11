@@ -2,12 +2,13 @@
   import QrCode from "svelte-qrcode"
   import { Loading } from 'carbon-components-svelte'
   import { InterkitClient } from 'interkit-shared'
-  import { BundleServer, compileError, runtimeError, bundleProcessing } from './BundleServer.js'
+  import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
 
   export let projectId, previewURL = ""
 
   let bundleServerURL
+
   onMount( async () => {
     bundleServerURL = await InterkitClient.call("bundler.getUrl")
     console.log(`BUNDLER_URL: ${bundleServerURL}`)
@@ -16,14 +17,15 @@
 
   $: {
     previewURL = projectId ? bundleServerURL + "/app/" + projectId : null
-    console.log(previewURL)
   }
 
 </script>
 
   <div class="frame">
     {#if bundleServerURL && !$compileError}
-      <iframe id="app-preview" src={previewURL}></iframe><br>
+      {#key $buildHash}
+        <iframe title="embedded app preview" src={previewURL}></iframe><br>
+      {/key}
     {/if}
     {#if $bundleProcessing}
       <div class="loader">

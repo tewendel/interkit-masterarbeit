@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "interkit-bundler",
   "version": "1.0.0",
   "scripts": {
     "preinstall": "check-engine",
