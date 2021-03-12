@@ -3,11 +3,12 @@
   import {onMount} from 'svelte'
   
   import Blockly from 'blockly';
-
-  import { blocklyConfig, InterkitClient } from 'interkit'
+  import { blocklyConfig } from 'interkit-dev'
+  
+  import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
 
-  import initSheetColumnField from 'interkit/blockly/sheetColumnField.js'
+  import initSheetColumnField from 'interkit-dev/blockly/sheetColumnField.js'
 
   import InputModal from './InputModals/InputModal.svelte';
 

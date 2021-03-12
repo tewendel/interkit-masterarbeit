@@ -26,6 +26,7 @@
     "blockly": "^4.20201217.0",
     "carbon-components-svelte": "^0.28.0",
     "envsub": "^4.0.7",
+    "interkit-dev": "*",
     "leaflet": "^1.7.1",
     "sirv-cli": "^1.0.0",
     "svelte-qrcode": "^0.0.2",
