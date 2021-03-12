@@ -3,8 +3,8 @@ export const initCodeGenerator = (Blockly) => {
   console.log("initCodeGenerator");
 
   Blockly.JavaScript['Dashboard'] = function(block) {
-    var text_sectiontitles = block.getFieldValue('sectionTitles');
-    var text_sectionrefs = block.getFieldValue('sectionRefs');
+    var text_sectiontitles = block.getFieldValue('sectionTitles')?.value;
+    var text_sectionrefs = block.getFieldValue('sectionRefs')?.value;
     // TODO: Assemble JavaScript into code variable.
     let code = `<Dashboard 
       sectionTitles="${text_sectiontitles}"
@@ -15,8 +15,8 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['Archive'] = function(block) {
     var text_datasheet = block.getFieldValue('dataSheet');
-    var text_categorysheet1 = block.getFieldValue('categorySheet1');
-    var text_categorysheet2 = block.getFieldValue('categorySheet2');
+    var text_categorysheet1 = block.getFieldValue('categorySheet1')?.value;
+    var text_categorysheet2 = block.getFieldValue('categorySheet2')?.value;
     
     let code = `<Archive 
       dataSheet="${text_datasheet}"
@@ -28,8 +28,8 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['Map'] = function(block) {
     
-    var text_markerpositions = block.getFieldValue('markerPositions');
-    var text_markerlabels = block.getFieldValue('markerLabels');
+    var text_markerpositions = block.getFieldValue('markerPositions')?.value;
+    var text_markerlabels = block.getFieldValue('markerLabels')?.value;
     
     let code = `<Map 
       markerPositions="${text_markerpositions}"

@@ -25,6 +25,7 @@
 </script>
 
 {#if type}
+
   <svelte:component this={components[type]}
     bind:value={value}
     submit = {()=>{submit(); close();}}
@@ -32,4 +33,10 @@
     {projectId}
     {params}
   />
+
 {/if}
+
+<style>
+
+
+</style>

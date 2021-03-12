@@ -32,6 +32,10 @@ export default (Blockly, update) => {
      }
   }
 
+  CustomFields.SheetColumnField.prototype.getDisplayText_ = function() {
+    return this.getValue()?.text
+  }
+
   Blockly.fieldRegistry.register('sheetColumn', CustomFields.SheetColumnField);
 
   console.log("Blockly.fieldRegistry done")

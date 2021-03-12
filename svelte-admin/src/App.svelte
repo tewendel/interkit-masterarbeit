@@ -25,7 +25,8 @@
 
 <Header company="interkit" platformName="Rekationssystem" href="/"></Header>
 
-<Content style="background: none; padding: 1rem">
+<!-- set transform: none; to allow modal to be position fixed -->
+<Content style="background: none; padding: 1rem; transform: none;">
 
     <Router {routes} />
 

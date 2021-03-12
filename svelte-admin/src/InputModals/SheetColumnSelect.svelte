@@ -34,6 +34,13 @@ import {
     columns = sheet?.columns;
     console.log(sheet)
   }
+
+  const updateHumanReadable = () => {
+    value.text = 
+      sheets.find(s=>s._id == value.sheetId)?.name + 
+      "/" + 
+      columns.find(c=>c.key == value?.columnKey)?.name;
+  }
   
 </script>
 
@@ -54,7 +61,7 @@ import {
     {/if}
 
     {#if columns}
-      <Select labelText="Columns" bind:selected={value.columnKey}>
+      <Select labelText="Columns" bind:selected={value.columnKey} on:change={updateHumanReadable}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each columns as column}
             <SelectItem value={column.key} text={column.name} />

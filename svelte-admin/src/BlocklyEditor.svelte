@@ -32,8 +32,8 @@
   const updateSheetColumn = (previousValue, notice) => {
     console.log("notice", notice)
     inputModalValue = {
-      sheetId: previousValue?.split("/")[0], 
-      columnKey: previousValue?.split("/")[1]
+      sheetId: previousValue?.value?.split("/")[0], 
+      columnKey: previousValue?.value?.split("/")[1]
     };
     inputModalParams = { notice }
     openInputModal = "sheetColumn";
@@ -42,7 +42,10 @@
     return new Promise((resolve, reject) => {
         submitInputModal = () => {
           console.log("submitInputModal", inputModalValue)
-          resolve(inputModalValue.sheetId + "/" + inputModalValue.columnKey);  
+          resolve({
+            value: inputModalValue.sheetId + "/" + inputModalValue.columnKey, 
+            text: inputModalValue.text
+          });  
         }
         cancelInputModal = () => {
           reject("cancelled")
