@@ -1,6 +1,8 @@
 <script>
 
   import {onMount} from 'svelte'
+
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   
   import Blockly from 'blockly';
   import { blocklyConfig } from 'interkit-dev'
@@ -25,12 +27,15 @@
   let inputModalValue;
   let submitInputModal;
   let cancelInputModal;
+  let inputModalParams;
 
-  const updateSheetColumn = (previousValue) => {
+  const updateSheetColumn = (previousValue, notice) => {
+    console.log("notice", notice)
     inputModalValue = {
       sheetId: previousValue?.split("/")[0], 
       columnKey: previousValue?.split("/")[1]
     };
+    inputModalParams = { notice }
     openInputModal = "sheetColumn";
     console.log("updateSheetColumn", inputModalValue)
 
@@ -136,8 +141,22 @@
 
 </script>
 
-  <div id="blocklyDiv" style="height: 350px; width: 100%;"></div>
-  <textarea id="textarea"></textarea>
+  <Tabs>
+      <Tab label="blockly" />
+      <Tab label="App.svelte" />
+    <div slot="content">
+      <TabContent>
+          <div id="blocklyDiv" style="height: 350px; width: 100%;"></div>
+      </TabContent>
+      <TabContent>
+          <textarea id="textarea"></textarea>
+      </TabContent>
+      
+    </div>
+  </Tabs>
+
+
+
 
   <button on:click={saveAndCompile}>save & compile</button>
 
@@ -146,12 +165,13 @@
     bind:value={inputModalValue}
     submit={()=>{submitInputModal()}}
     close={()=>{openInputModal = null; cancelInputModal()}}
+    params={inputModalParams}
     {projectId}
   />
 
 <style>
   textarea {
     width: 100%;
-    height: 150px;
+    height: 350px;
   }
 </style>

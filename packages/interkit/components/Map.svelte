@@ -7,6 +7,8 @@
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
 
+  console.log(markerPositions, markerLabels)
+
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
@@ -56,7 +58,7 @@
           title: r.value[labelColumnKey]                    
         }})
 
-        //console.log(markerValues);
+        console.log(markerValues);
 
         // clear old markers
         for(let marker of markers) {

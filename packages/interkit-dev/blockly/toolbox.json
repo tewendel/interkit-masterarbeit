@@ -40,6 +40,16 @@
           "type": "Map"
         }
       ]
+    },
+    {
+      "kind": "category",
+      "name": "Styling",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "Styling"
+        }
+      ]
     }
   ]
 }

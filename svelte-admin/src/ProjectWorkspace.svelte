@@ -32,8 +32,8 @@
   <h1>project: {$currentProject.name}</h1>
   <div class="left-pane">
     <WorkArea name="database"><Sheets {projectId}/></WorkArea>
-    <WorkArea name="app components"><ComponentEditor {projectId}/></WorkArea>
-    <WorkArea name="blockly" let:open={open}><BlocklyEditor {projectId} {open}/></WorkArea>
+    <!--WorkArea name="app components"><ComponentEditor {projectId}/></WorkArea-->
+    <WorkArea name="components" let:open={open}><BlocklyEditor {projectId} {open}/></WorkArea>
   </div>
   <div class="right-pane">
     <WorkArea name="app preview"><Preview {projectId}/></WorkArea>

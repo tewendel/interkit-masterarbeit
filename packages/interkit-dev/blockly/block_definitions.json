@@ -2,13 +2,13 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4",
+  "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4 %5",
   "args0": [
     {
       "type": "input_dummy"
     },
     {
-      "type": "field_input",
+      "type": "sheetColumn",
       "name": "sectionTitles",
       "text": ""
     },
@@ -16,9 +16,12 @@
       "type": "input_dummy"
     },
     {
-      "type": "field_input",
+      "type": "sheetColumn",
       "name": "sectionRefs",
       "text": ""
+    },
+    {
+      "type": "input_dummy"
     }
   ],
   "previousStatement": null,
@@ -29,13 +32,13 @@
   },
   {
   "type": "Archive",
-  "message0": "<Archive> %1 dataSheet %2 %3 categorySheet1 %4 %5 categorySheet2 %6",
+  "message0": "<Archive> %1 dataSheet %2 %3 categorySheet1 %4 %5 categorySheet2 %6 %7",
   "args0": [
     {
       "type": "input_dummy"
     },
     {
-      "type": "field_input",
+      "type": "sheetColumn",
       "name": "dataSheet",
       "text": ""
     },
@@ -43,7 +46,7 @@
       "type": "input_dummy"
     },
     {
-      "type": "field_input",
+      "type": "sheetColumn",
       "name": "categorySheet1",
       "text": ""
     },
@@ -51,11 +54,16 @@
       "type": "input_dummy"
     },
     {
-      "type": "field_input",
+      "type": "sheetColumn",
       "name": "categorySheet2",
       "text": ""
+    },
+    {
+      "type": "input_dummy"
     }
   ],
+  "previousStatement": null,
+  "nextStatement": null,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
@@ -91,8 +99,8 @@
   "helpUrl": ""
 },
   {
-  "type": "Style",
-  "message0": "<Style> %1 %2 primary_color %3 %4 font_family %5 %6 google_font %7",
+  "type": "Styling",
+  "message0": "<Styling> %1 %2 primary_color %3 %4 font_family %5 %6 google_font %7",
   "args0": [
     {
       "type": "input_dummy"
@@ -166,6 +174,8 @@
       "name": "buttons"
     }
   ],
+  "previousStatement": null,
+  "nextStatement": null,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""

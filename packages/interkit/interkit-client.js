@@ -8,7 +8,7 @@ let subscriptionCounter = {};
 
 const InterkitClient = {
   connect: async (url) => {
-    console.log(url)
+    console.log("InterkitClient.connect", url)
     if(server) {
       console.log("server already initialized, ignoring")
       return

@@ -38,7 +38,7 @@ Meteor.methods({
       let projectId = await Projects.insert({ name });
 
       if(projectId) {  
-        const starterPath = process.env.REPOSITORIES_PATH + "/starter"
+        const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
         const repoPath = getRepoPath(projectId)
         
         // create new directory and initialize repo

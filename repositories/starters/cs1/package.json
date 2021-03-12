@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public"
+    "build": "npm run sub-globals-from-dotenv && rollup -c",
+    "start": "npm run sub-globals-from-dotenv && sirv public",
+    "sub-globals-from-dotenv": "envsub -s dollar-basic -f .env src/globals.envsub.js public/build/globals.js",
+    "dev": "npm run sub-globals-from-dotenv && rollup -c -w"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -18,8 +19,9 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0",
-    "leaflet": "^1.7.1"
+    "envsub": "^4.0.7",
+    "leaflet": "^1.7.1",
+    "sirv-cli": "^1.0.0"
   },
   "workspaces": [
     "../../../packages/*"

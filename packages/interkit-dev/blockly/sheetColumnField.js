@@ -24,7 +24,7 @@ export default (Blockly, update) => {
 
   CustomFields.SheetColumnField.prototype.showEditor_ = async function() {
     try {
-      let value = await update(this.getValue());
+      let value = await update(this.getValue(), this.name);
       console.log("got value", value)
       this.setValue(value);
      } catch(e) {

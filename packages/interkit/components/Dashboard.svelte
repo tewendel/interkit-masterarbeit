@@ -13,31 +13,37 @@
   let refsColumnKey = sectionRefs?.split("/")?.[1]
 
   if(sectionSheetId != sectionRefs?.split("/")?.[0])
-    alert("bad config: sectionTitles and sectionRegs must be from same sheet")
+    alert("bad config: sectionTitles and sectionRefs must be from same sheet")
 
   let referenceSheetId;
   let elementSub;
   let elementRows = [];
     
   onMount(async ()=>{
-    sectionSub = await InterkitClient.getSub('rows', 'rows', [sectionSheetId], r=>r.sheetId==sectionSheetId);
-    sectionRows = sectionSub.data;
-    console.log($sectionRows)
 
-    // for now we assume all references are to the same sheet!
-    let aRefRow = $sectionRows.find(r => r.value?.[refsColumnKey]?.sheetId)
-    console.log(aRefRow)
+    if(sectionSheetId) {
+      sectionSub = await InterkitClient.getSub('rows', 'rows', [sectionSheetId], r=>r.sheetId==sectionSheetId);
+      sectionRows = sectionSub.data;
+      console.log("sectionRows", $sectionRows)
 
-    referenceSheetId = aRefRow.value[refsColumnKey].sheetId;
+      if(refsColumnKey) {
 
-    console.log("referenceSheetId", referenceSheetId)
+        // for now we assume all references are to the same sheet!
+        let aRefRow = $sectionRows.find(r => r.value?.[refsColumnKey]?.sheetId)
+        console.log(aRefRow)
 
-    elementSub = await InterkitClient.getSub('rows', 'rows', [referenceSheetId], r=>r.sheetId==referenceSheetId);
-    elementSub.data.subscribe(data=>{
-      elementRows = data;
-    })
+        referenceSheetId = aRefRow.value[refsColumnKey].sheetId;
 
-    console.log(elementRows)
+        console.log("referenceSheetId", referenceSheetId)
+
+        elementSub = await InterkitClient.getSub('rows', 'rows', [referenceSheetId], r=>r.sheetId==referenceSheetId);
+        elementSub.data.subscribe(data=>{
+          elementRows = data;
+        })
+
+        console.log(elementRows)
+      }
+    }
   })
 
   // todo: onDestroy

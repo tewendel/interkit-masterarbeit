@@ -7,9 +7,9 @@
 
   import { InterkitClient } from '../'
   
-  export let data_sheet // type sheetColumn
-  export let category_sheet1 // type sheetColumn
-  export let category_sheet2 // type sheetColumn
+  export let dataSheet // type sheetColumn
+  export let categorySheet1 // type sheetColumn
+  export let categorySheet2 // type sheetColumn
 
   import ArchiveCategory from './ArchiveCategory.svelte'
   import ArchiveList from './ArchiveList.svelte'
@@ -25,15 +25,19 @@
     let sheet;
     if(sheetColumn) {
       sheet = await InterkitClient.call('sheet.get', sheetColumn.split("/")[0])
+      console.log(sheet)
     }
     return sheet;
   }
 
-  let categorySheet1;
-  let categorySheet2;
+  let categorySheetObj1;
+  let categorySheetObj2;
   onMount(async ()=>{
-    categorySheet1 = await getSheet(category_sheet1)
-    categorySheet2 = await getSheet(category_sheet2)
+    console.log("archive", categorySheet1, categorySheet2)
+
+    categorySheetObj1 = await getSheet(categorySheet1)
+    categorySheetObj2 = await getSheet(categorySheet2)
+    console.log(categorySheetObj1)
   })
 
 </script>
@@ -42,28 +46,28 @@
 
 <h1>Archive</h1>
 
-{#if category_sheet1 || category_sheet2}
+{#if categorySheet1 || categorySheet2}
 
   <div class:hide={selectedCategory != null}>
 
   <Tabs>
-    {#if categorySheet1}<Tab label={categorySheet1.name}/>{/if}
-    {#if categorySheet2}<Tab label={categorySheet2.name}/>{/if}
+    {#if categorySheetObj1}<Tab label={categorySheetObj1.name}/>{/if}
+    {#if categorySheetObj2}<Tab label={categorySheetObj2.name}/>{/if}
     <div slot="content">
-      {#if categorySheet1}
+      {#if categorySheetObj1}
       <TabContent>
         <ArchiveCategory
-          categorySheet={categorySheet1}
-          categoryColumnKey={category_sheet1.split("/")[1]}
+          categorySheet={categorySheetObj1}
+          categoryColumnKey={categorySheet1.split("/")[1]}
           {openCategory}
         />
       </TabContent>
       {/if}
-      {#if categorySheet2}
+      {#if categorySheetObj2}
       <TabContent>
         <ArchiveCategory
-          categorySheet={categorySheet2}
-          categoryColumnKey={category_sheet2.split("/")[1]}
+          categorySheet={categorySheetObj2}
+          categoryColumnKey={categorySheet2.split("/")[1]}
           {openCategory}
         />
       </TabContent>
@@ -77,8 +81,8 @@
   <ArchiveList
     category={selectedCategory.row}
     categoryName={selectedCategory.name}
-    dataSheetId={category_sheet1.split("/")[0]}
-    dataSheetColumnKey={data_sheet.split("/")[1]}
+    dataSheetId={categorySheet1.split("/")[0]}
+    dataSheetColumnKey={dataSheet.split("/")[1]}
     close={()=>{selectedCategory = null}}
   />
   {/if}

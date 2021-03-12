@@ -53,7 +53,7 @@ app.get('/compile/:projectId', async (req, res) => {
 
 
 app.use(async (req, res, next) => {
-  console.log(req.url)
+  console.log("request", req.url)
 
   // TODO this is too easy to exploit
 
@@ -65,6 +65,8 @@ app.use(async (req, res, next) => {
   if (match == null || !projectId) res.send(404)
 
   // console.log(match)
+
+  console.log("foo", REPOSITORIES_PATH, projectId)
 
   const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
 

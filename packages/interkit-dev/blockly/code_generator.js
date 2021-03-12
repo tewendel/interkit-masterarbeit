@@ -2,12 +2,7 @@ export const initCodeGenerator = (Blockly) => {
 
   console.log("initCodeGenerator");
 
-  Blockly.JavaScript['sheetColumn'] = function(block) {
-    var value = block.getFieldValue('sheetColumn');
-    return value;
-  };
-
-  Blockly.JavaScript['dashboard'] = function(block) {
+  Blockly.JavaScript['Dashboard'] = function(block) {
     var text_sectiontitles = block.getFieldValue('sectionTitles');
     var text_sectionrefs = block.getFieldValue('sectionRefs');
     // TODO: Assemble JavaScript into code variable.
@@ -18,7 +13,7 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
-  Blockly.JavaScript['archive'] = function(block) {
+  Blockly.JavaScript['Archive'] = function(block) {
     var text_datasheet = block.getFieldValue('dataSheet');
     var text_categorysheet1 = block.getFieldValue('categorySheet1');
     var text_categorysheet2 = block.getFieldValue('categorySheet2');
@@ -44,17 +39,17 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
-  Blockly.JavaScript['Style'] = function(block) {
+  Blockly.JavaScript['Styling'] = function(block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
     var colour_primary_color = block.getFieldValue('primary_color');
     var text_font_family = block.getFieldValue('font_family');
     var text_google_font = block.getFieldValue('google_font');
     
-    let code = `<Style 
+    let code = `<Styling 
       primary_color="${colour_primary_color}"
       font_family="${text_font_family}"
       google_font="${text_google_font}"
-      />\n${statements_name}\n</Style>`
+      >\n${statements_name}\n</Styling>`
 
     return code;
   };
@@ -91,13 +86,4 @@ export const initCodeGenerator = (Blockly) => {
     var text_label = block.getFieldValue('NAME');
     return `<HeadlinePage headline="${text_label}"/>`
   };
-
-  Blockly.JavaScript['Dashboard'] = function(block) {
-    var statements_components = Blockly.JavaScript.statementToCode(block, 'components');
-    var colour_color = block.getFieldValue('color');
-    var code = `<Dashboard color="${colour_color}">` + statements_components + '\n</Dashboard>\n';  
-
-    return code;
-  };
-
 }

@@ -41,11 +41,11 @@ import {
   on:submit={submit}
   on:close={close}
   >
-  <ModalHeader title="Select" />
+  <ModalHeader title="Select Sheet and Column for {params?.notice}" />
   <ModalBody style="height: 200px">
 
     {#if sheets}
-      <Select labelText="Sheets" bind:selected={value.sheetId} on:change={updateColumns}>
+      <Select labelText="First pick a sheet, then the column" bind:selected={value.sheetId} on:change={updateColumns}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each sheets as sheet}
             <SelectItem value={sheet._id} text={sheet.name} />
