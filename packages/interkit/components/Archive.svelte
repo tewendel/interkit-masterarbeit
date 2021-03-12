@@ -5,7 +5,7 @@
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import "carbon-components-svelte/css/g10.css"; // all g10 g100 g90 white
 
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
   
   export let data_sheet // type sheetColumn
   export let category_sheet1 // type sheetColumn

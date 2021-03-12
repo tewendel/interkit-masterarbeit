@@ -1,5 +1,5 @@
 <script>
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
   import { onMount, onDestroy } from 'svelte'
 
   export let category

@@ -5,7 +5,7 @@
     "install:server": "cd meteor-server && npm install",
     "install:admin": "cd svelte-admin && npm install",
     "install:bundler": "cd app-bundler && npm install",
-    "install:packages": "cd packages/interkit && npm install",
+    "install:packages": "cd packages/interkit && npm install && cd ../interkit-dev && npm install",
     "install:all": "npm run install:packages && npm run install:server && npm run install:admin && npm run install:bundler",
     "dev:server": "cd meteor-server && npm start",
     "dev:admin": "cd svelte-admin && npm run dev",

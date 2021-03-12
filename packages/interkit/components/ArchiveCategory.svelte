@@ -1,6 +1,6 @@
 <script>
 
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
   import { onMount } from 'svelte'
 
   export let categorySheet;

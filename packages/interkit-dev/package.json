@@ -1,8 +1,5 @@
 {
   "name": "interkit-dev",
   "private": true,
-  "main": "index.js",
-  "dependencies": {
-
-  }
+  "main": "index.js"
 }

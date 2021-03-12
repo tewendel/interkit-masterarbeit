@@ -3,7 +3,12 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "carbon-components-svelte": "^0.29.2",
     "isomorphic-ws": "^4.0.1",
+    "leaflet": "^1.7.1",
     "simpleddp": "^2.2.4"
+  },
+  "peerDependencies": {
+    "svelte": "^3.35.0"
   }
 }

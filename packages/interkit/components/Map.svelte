@@ -2,7 +2,7 @@
 
   import { onMount } from 'svelte'
 
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"

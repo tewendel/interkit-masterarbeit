@@ -4,7 +4,7 @@
   export let sectionRefs;
 
   import { onMount, onDestroy } from 'svelte'
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
 
   let sectionSub;
   let sectionRows;
