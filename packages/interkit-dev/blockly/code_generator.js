@@ -27,6 +27,8 @@ export const initCodeGenerator = (Blockly) => {
   };
 
   Blockly.JavaScript['Map'] = function(block) {
+
+    console.log("test", block.getFieldValue('markerPositions'))
     
     var text_markerpositions = block.getFieldValue('markerPositions')?.value;
     var text_markerlabels = block.getFieldValue('markerLabels')?.value;

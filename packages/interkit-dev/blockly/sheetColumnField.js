@@ -22,6 +22,21 @@ export default (Blockly, update) => {
 
   CustomFields.SheetColumnField.prototype.SERIALIZABLE = true;
 
+  CustomFields.SheetColumnField.prototype.toXml = function(fieldElement) {
+    fieldElement.setAttribute('value', this.value_.value);
+    fieldElement.setAttribute('text', this.value_.text);
+    return fieldElement;
+  };
+
+  CustomFields.SheetColumnField.prototype.fromXml = function(fieldElement) {
+    var value = {};
+
+    value.value = fieldElement.getAttribute('value');
+    value.text = fieldElement.getAttribute('text');
+    this.setValue(value);
+  };
+
+
   CustomFields.SheetColumnField.prototype.showEditor_ = async function() {
     try {
       let value = await update(this.getValue(), this.name);
