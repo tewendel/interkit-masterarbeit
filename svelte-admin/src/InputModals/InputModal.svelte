@@ -2,6 +2,7 @@
   import LocationPicker from './LocationPicker.svelte';
   import SheetRefSelect from './SheetRefSelect.svelte';
   import ColumnTypeSelect from './ColumnTypeSelect.svelte';
+  import SheetColumnSelect from './SheetColumnSelect.svelte';
   
   export let type = null
   export let value = {}
@@ -17,7 +18,8 @@
   const components = {
     "columnType": ColumnTypeSelect,
     "location": LocationPicker,
-    "sheetRef": SheetRefSelect
+    "sheetRef": SheetRefSelect,
+    "sheetColumn": SheetColumnSelect
   }
 
 </script>
@@ -25,7 +27,7 @@
 {#if type}
   <svelte:component this={components[type]}
     bind:value={value}
-    submit = {()=>{close(); submit();}}
+    submit = {()=>{submit(); close();}}
     {close}
     {projectId}
     {params}

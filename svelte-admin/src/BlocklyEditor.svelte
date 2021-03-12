@@ -9,6 +9,8 @@
 
   import initSheetColumnField from 'interkit/blockly/sheetColumnField.js'
 
+  import InputModal from './InputModals/InputModal.svelte';
+
   export let open;
   export let projectId;
 
@@ -17,12 +19,36 @@
   let workspace;
   let blocklyXMLFile = "blocklyState.xml";
   let generatedCode = "";
+  
+  let openInputModal = null;
+  let inputModalValue;
+  let submitInputModal;
+  let cancelInputModal;
+
+  const updateSheetColumn = (previousValue) => {
+    inputModalValue = {
+      sheetId: previousValue?.split("/")[0], 
+      columnKey: previousValue?.split("/")[1]
+    };
+    openInputModal = "sheetColumn";
+    console.log("updateSheetColumn", inputModalValue)
+
+    return new Promise((resolve, reject) => {
+        submitInputModal = () => {
+          console.log("submitInputModal", inputModalValue)
+          resolve(inputModalValue.sheetId + "/" + inputModalValue.columnKey);  
+        }
+        cancelInputModal = () => {
+          reject("cancelled")
+        }  
+    });
+  }
 
   const initBlockly = async () => {
 
     console.log("initBlockly")
 
-    const CustomFields = initSheetColumnField(Blockly);
+    const CustomFields = initSheetColumnField(Blockly, updateSheetColumn);
     //console.log(CustomFields)
     
     blocklyConfig.initCodeGenerator(Blockly);
@@ -52,7 +78,7 @@
   }
 
   const myUpdateFunction = (event) => {
-    console.log("myUpdateFunction")
+    //console.log("myUpdateFunction")
     let code;
     try {
       code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -113,6 +139,14 @@
   <textarea id="textarea"></textarea>
 
   <button on:click={saveAndCompile}>save & compile</button>
+
+  <InputModal
+    type={openInputModal}
+    bind:value={inputModalValue}
+    submit={()=>{submitInputModal()}}
+    close={()=>{openInputModal = null; cancelInputModal()}}
+    {projectId}
+  />
 
 <style>
   textarea {

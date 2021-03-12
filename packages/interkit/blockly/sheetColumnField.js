@@ -1,4 +1,4 @@
-export default (Blockly) => {
+export default (Blockly, update) => {
 
   console.log("init sheetColumnField")
   const CustomFields = {}
@@ -22,9 +22,14 @@ export default (Blockly) => {
 
   CustomFields.SheetColumnField.prototype.SERIALIZABLE = true;
 
-  CustomFields.SheetColumnField.prototype.showEditor_ = function() {
-    let value = prompt("new value", this.getValue())
-    this.setValue(value);
+  CustomFields.SheetColumnField.prototype.showEditor_ = async function() {
+    try {
+      let value = await update(this.getValue());
+      console.log("got value", value)
+      this.setValue(value);
+     } catch(e) {
+       console.log("error:", e)
+     }
   }
 
   Blockly.fieldRegistry.register('sheetColumn', CustomFields.SheetColumnField);
