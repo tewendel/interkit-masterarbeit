@@ -77,7 +77,7 @@ Meteor.methods({
   },
 
   'file.load': async ({filename, projectId}) => {
-      const filePath = getRepoPath(projectId) + "/" + filename;
+      const filePath = getRepoPath(projectId) + "/src/" + filename;
       let data;
       let error;
 
@@ -94,7 +94,7 @@ Meteor.methods({
   },
 
   'file.save': async ({file, projectId})  => {
-    const filePath = getRepoPath(projectId) + "/" + file.filename;
+    const filePath = getRepoPath(projectId) + "/src/" + file.filename;
     await fs.promises.writeFile(filePath, file.content)      
   },
 
