@@ -13,7 +13,7 @@
   
 </script>
 
-<div class="syle" style={`
+<div class="style" style={`
     --font-family: ${fontFamily}; 
     --color-primary: ${primary_color};
     --ion-font-family: ${fontFamily};
@@ -28,3 +28,9 @@
     <link href={`https://fonts.googleapis.com/css2?family=${google_font}&display=swap`} rel="stylesheet">
   {/if}
 </svelte:head>
+
+<style>
+  .style {
+    display: contents;
+  }
+</style>
