@@ -14,7 +14,7 @@ export const initCodeGenerator = (Blockly) => {
   };
 
   Blockly.JavaScript['Archive'] = function(block) {
-    var text_datasheet = block.getFieldValue('dataSheet');
+    var text_datasheet = block.getFieldValue('dataSheet')?.value;
     var text_categorysheet1 = block.getFieldValue('categorySheet1')?.value;
     var text_categorysheet2 = block.getFieldValue('categorySheet2')?.value;
     
@@ -28,7 +28,7 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['Map'] = function(block) {
 
-    console.log("test", block.getFieldValue('markerPositions'))
+    //console.log("test", block.getFieldValue('markerPositions'))
     
     var text_markerpositions = block.getFieldValue('markerPositions')?.value;
     var text_markerlabels = block.getFieldValue('markerLabels')?.value;

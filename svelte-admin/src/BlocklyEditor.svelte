@@ -42,8 +42,12 @@
     return new Promise((resolve, reject) => {
         submitInputModal = () => {
           console.log("submitInputModal", inputModalValue)
+          let value = ""
+          if(inputModalValue.sheetId && inputModalValue.sheetId != "empty" && inputModalValue.columnKey && inputModalValue.columnKey != "empty") {
+            value = inputModalValue.sheetId + "/" + inputModalValue.columnKey; 
+          }
           resolve({
-            value: inputModalValue.sheetId + "/" + inputModalValue.columnKey, 
+            value, 
             text: inputModalValue.text
           });  
         }

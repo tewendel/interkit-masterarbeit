@@ -29,17 +29,24 @@ import {
   let columns;
 
   const updateColumns = () => {
-    console.log(value?.sheetId, sheets)
+    //console.log(value?.sheetId, sheets)
     let sheet = sheets.find(s=>s._id == value?.sheetId)
     columns = sheet?.columns;
     console.log(sheet)
+
+    if(value.sheetId == "empty") value.text = "";
   }
 
   const updateHumanReadable = () => {
-    value.text = 
-      sheets.find(s=>s._id == value.sheetId)?.name + 
-      "/" + 
-      columns.find(c=>c.key == value?.columnKey)?.name;
+    console.log(value)
+    if(value.columnKey == "empty") {
+      value.text = "";
+    } else {
+      value.text = 
+        sheets.find(s=>s._id == value.sheetId)?.name + 
+        "/" + 
+        columns.find(c=>c.key == value?.columnKey)?.name;
+    }
   }
   
 </script>
