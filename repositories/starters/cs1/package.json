@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run sub-globals-from-dotenv && rollup -c",
     "start": "npm run sub-globals-from-dotenv && sirv public",
-    "sub-globals-from-dotenv": "envsub -s dollar-basic -f .env src/globals.envsub.js public/build/globals.js",
+    "sub-globals-from-dotenv": "mkdir -p public/build && envsub -s dollar-basic -f .env src/globals.envsub.js public/build/globals.js",
     "dev": "npm run sub-globals-from-dotenv && rollup -c -w"
   },
   "devDependencies": {
