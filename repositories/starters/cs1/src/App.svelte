@@ -15,7 +15,7 @@ import Map from "interkit/components/Map.svelte";
       >
 
         <BottomMenu>
-          <div slot="pages">
+          <svelte:fragment slot="pages">
               <BottomMenuPage>  <Dashboard
             sectionTitles=""
             sectionRefs=""
@@ -27,10 +27,10 @@ import Map from "interkit/components/Map.svelte";
             markerPositions=""
             markerLabels=""
             /></BottomMenuPage>
-          </div>
-          <div slot="buttons">
+          </svelte:fragment>
+          <svelte:fragment slot="buttons">
               <BottomMenuButton label="Home"/><BottomMenuButton label="Archive"/><BottomMenuButton label="Map"/>
-          </div>
+          </svelte:fragment>
 
         </BottomMenu>
 

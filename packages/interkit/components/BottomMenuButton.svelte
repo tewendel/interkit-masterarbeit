@@ -18,6 +18,8 @@
 
 <style>
   button {
+    flex:1;
+    height: 3em;
     font-family: var(--font-family);
     color: var(--color-primary);
   }

@@ -1,6 +1,16 @@
 [
 
   {
+    "type": "AppBase",
+    "message0": "<AppBase> %1 ",
+    "args0": [
+      {
+        "type": "input_dummy"
+      }
+    ]
+  },
+
+  {
   "type": "Dashboard",
   "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4 %5",
   "args0": [

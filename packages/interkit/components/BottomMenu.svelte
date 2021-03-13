@@ -51,23 +51,34 @@
 
 </script>
 
+<div class="BottomMenu container">
+  <div class="BottomMenu__Pages pages">
+    <slot name="pages"></slot>
+  </div>
 
-<slot name="pages"></slot>
-
-<div class="bottom-menu">
-  <slot name="buttons"></slot>
+  <div class="BottomMemu__Buttons buttons">
+    <slot name="buttons"></slot>
+  </div>
 </div>
 
 <style>
 
-  .bottom-menu {
-    position: fixed;
-    bottom: 10px;
-    width: 100%;
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pages {
+    flex: 1;
+    background: green;
+  }
+
+  .buttons {
     display: flex;
     justify-content: center;
-
-    z-index: 1000;
+    background: red;
+    display: flex;
   }
 
 

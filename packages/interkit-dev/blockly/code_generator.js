@@ -2,6 +2,15 @@ export const initCodeGenerator = (Blockly) => {
 
   console.log("initCodeGenerator");
 
+  Blockly.JavaScript['AppBase'] = function (block) {
+    var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    let code = `<AppBase
+      sectionTitles="${text_sectiontitles}"
+      sectionRefs="${text_sectionrefs}"
+      >\n${statements_name}\n</AppBase>`
+    return code;
+  };
+
   Blockly.JavaScript['Dashboard'] = function(block) {
     var text_sectiontitles = block.getFieldValue('sectionTitles')?.value;
     var text_sectionrefs = block.getFieldValue('sectionRefs')?.value;
@@ -62,12 +71,12 @@ export const initCodeGenerator = (Blockly) => {
     
     let code = `
       <BottomMenu>
-        <div slot="pages">
+        <svelte:fragment slot="pages">
           ${statements_pages}
-        </div>
-        <div slot="buttons">
+        </svelte:fragment>
+        <svelte:fragment slot="buttons">
           ${statements_buttons}
-        </div>
+        </svelte:fragment>
         
       </BottomMenu>
     `
