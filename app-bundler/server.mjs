@@ -1,11 +1,25 @@
 import express from 'express';
+import cors from 'cors';
+import * as io from 'socket.io';
+import http from 'http';
+
 import { get_compile } from './src/get_compile.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
-import cors from 'cors';
+import { setup_cloudcmd } from './src/cloudcmd.mjs'
 
 const PORT = process.env.PORT
 
+const cloudcmd_prefix = '/fs/';
+
 const app = express();
+
+const server = http.createServer(app);
+const socket = new io.Server(server, {
+  path: `${cloudcmd_prefix}socket.io`,
+});
+
+app.use(cloudcmd_prefix, setup_cloudcmd(socket));
+
 
 app.use(cors())
 
@@ -17,6 +31,7 @@ app.get('/compile/:projectId', get_compile)
 //app.use(express.static('public', { index: false }))
 
 app.use(get_app_files);
+
 
 app.listen(PORT, () => console.log('listening on port ' + PORT)); 
 
