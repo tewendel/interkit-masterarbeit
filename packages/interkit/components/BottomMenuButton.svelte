@@ -11,20 +11,39 @@
 </script>
 
 
-<button class:selected="{$selectedTab === tab}" on:click="{() => selectTab(tab)}">
-  {label}
+<button 
+    class="BottomMenuButton button"
+    class:selected="{$selectedTab === tab}"  
+    on:click="{() => selectTab(tab)}"
+  >
+  <span class="BottomMenuButton__Text text">
+    {label}
+  </span>
 </button>
 
 
 <style>
-  button {
+  .button {
     flex:1;
-    height: 3em;
+    /*height: 3em;*/
     font-family: var(--font-family);
-    color: var(--color-primary);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    outline: none;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    border-color: var(--text-color);
   }
 
-  button.selected {
+  .button:not(:first-child) {
+    border-left-width: 1px;
+  }
+
+  .button:active {
+    filter: brightness(90%);
+  }
+
+  .button.selected {
     font-weight: bold;
   }
 </style>

@@ -1,8 +1,10 @@
 <script>
   
   export let primary_color = "#27EBBC"
+  export let text_color = "#000000"
   export let font_family = "inter"
   export let google_font = "Inter:wght@100"
+  export let background_color = "#FFFFFF"
 
   import { onMount } from 'svelte'
 
@@ -16,8 +18,10 @@
 <div class="style" style={`
     --font-family: ${fontFamily}; 
     --color-primary: ${primary_color};
+    --color-text: ${text_color};
     --ion-font-family: ${fontFamily};
     --ion-color-primary: ${primary_color};
+    --color-background: ${background_color};
   `} >
   <slot />
 </div>

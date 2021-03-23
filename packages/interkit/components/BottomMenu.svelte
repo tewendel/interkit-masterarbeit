@@ -67,17 +67,16 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: var(--background-color);
   }
 
   .pages {
     flex: 1;
-    background: green;
   }
 
   .buttons {
     display: flex;
     justify-content: center;
-    background: red;
     display: flex;
   }
 
