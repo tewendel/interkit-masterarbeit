@@ -35,7 +35,7 @@
         });
       },
 
-      selectTab: tab => {
+      selectTab: (tab) => {
         const i = tabs.indexOf(tab);
         console.log(i)
         

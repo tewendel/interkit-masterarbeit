@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.app",
+  "appName": "interkit-starter",
+  "webDir": "public",
+  "bundledWebRuntime": false
+}

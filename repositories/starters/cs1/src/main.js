@@ -1,3 +1,4 @@
+import '@capacitor/core';
 import App from './App.svelte';
 
 import { InterkitClient } from 'interkit'

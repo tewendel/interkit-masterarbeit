@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import babel from '@rollup/plugin-babel';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -58,7 +59,6 @@ export default {
 		}),
 		commonjs(),
 
-
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
 		!production && serve(),
@@ -69,7 +69,29 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
+
+    production && babel({
+      extensions: ['.js', '.mjs', '.html', '.svelte'],
+      babelHelpers: 'bundled',
+      comments: false,
+      presets: [
+        ["@babel/preset-env", {
+          loose: false,
+          modules: false,
+          targets: {
+            esmodules: true,
+            ios: "12"
+          }
+        }]
+      ],
+      plugins: [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-optional-chaining",
+      ]
+    }),
+
 	],
 	watch: {
 		clearScreen: false

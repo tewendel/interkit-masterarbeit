@@ -7,13 +7,13 @@
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
 
+  export let activeTab; // this was to know if tab is active, but we can't pass dynamic props like this with blockly
+
   console.log(markerPositions, markerLabels)
 
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
-  export let activeTab
-  
   let latlng = {lat: 51.505, lng: -0.09};
 
   let map;
@@ -30,7 +30,7 @@
       maxZoom: 20,
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
-
+  
     let sheetId;
     let positionColumnKey;
     if(markerPositions) {
@@ -46,7 +46,7 @@
       labelColumnKey = markerLabels.split("/")?.[1]
     }
     
-    //console.log(sheetId, positionColumnKey, labelColumnKey)
+    console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetId) {
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
@@ -81,12 +81,13 @@
 
   })
 
+  // we need to invalidateSize when map becomes visible for the first time - how??
   $: {
-    //console.log(activeTab)
+    console.log(activeTab)
     if(activeTab == "Map" && map) {
       setTimeout(()=>{
-        map.invalidateSize()  
-      }, 100);
+        map.invalidateSize()
+      }, 200);
     }
   }
 
