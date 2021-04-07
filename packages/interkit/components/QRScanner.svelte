@@ -27,6 +27,8 @@ const init = ()=> {
       canvas.stroke();
     }
 
+    // WARNING: this currently does not work in capacitor on ios (need https!)
+    
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
       mediaStream = stream;
