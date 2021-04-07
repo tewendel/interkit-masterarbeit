@@ -5,7 +5,9 @@
   import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
 
-  export let projectId, previewURL = ""
+  export let projectId, previewURL = "";
+
+  let bundlezipURL = "";
 
   let bundleServerURL
 
@@ -17,6 +19,7 @@
 
   $: {
     previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" : null
+    bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }
 
 </script>
@@ -38,13 +41,25 @@
   
   <br><br>
   
-  <a target="_blank" href="{previewURL}">
-      {#key previewURL}
-        <QrCode value={previewURL} />
-      {/key}
-    <br>
-    link to app
-  </a>
+  <div>
+    <a target="_blank" href="{previewURL}">
+        {#key previewURL}
+          <QrCode value={previewURL} />
+        {/key}
+      <br>
+      link to app
+    </a>
+  </div>
+
+  <div>
+    <a target="_blank" href="{bundlezipURL}">
+        {#key bundlezipURL}
+          <QrCode value={bundlezipURL} />
+        {/key}
+      <br>
+      bundle zip
+    </a>
+  </div>
 
 {#if $compileError}
   <div class="error">compile error: {$compileError}</div>

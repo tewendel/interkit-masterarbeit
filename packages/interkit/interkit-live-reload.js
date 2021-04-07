@@ -78,7 +78,7 @@ const unzipBundle = async () => {
   
 const activateBundle = async () => {
   
-  Plugins.WebView.setServerBasePath({ path: codePath.replace("file://", "") + "/bundle/" })
+  Plugins.WebView.setServerBasePath({ path: codePath.replace("file://", "") })
   
   let serverBasePath = await Plugins.WebView.getServerBasePath()  
   console.log("serverBasePath", serverBasePath)    

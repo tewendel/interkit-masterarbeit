@@ -17,7 +17,7 @@ const get_app_files = async (req, res, next) => {
 
   // console.log(match)
 
-  console.log("foo", REPOSITORIES_PATH, projectId)
+  // console.log("foo", REPOSITORIES_PATH, projectId)
 
   const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
 

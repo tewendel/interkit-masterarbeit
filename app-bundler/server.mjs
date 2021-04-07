@@ -4,6 +4,7 @@ import * as io from 'socket.io';
 import http from 'http';
 
 import { get_compile } from './src/get_compile.mjs'
+import { get_bundle_zip } from './src/get_bundle_zip.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 
@@ -27,6 +28,10 @@ app.use(express.static('public', {index: false}))
 
 // compile a bundle for a given app
 app.get('/compile/:projectId', get_compile)
+
+// get a zip file of the bundle for a given app
+app.get('/bundlezip/:projectId', get_bundle_zip)
+
 
 //app.use(express.static('public', { index: false }))
 
