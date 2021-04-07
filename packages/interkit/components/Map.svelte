@@ -7,9 +7,7 @@
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
 
-  export let activeTab; // this was to know if tab is active, but we can't pass dynamic props like this with blockly
-
-  console.log(markerPositions, markerLabels)
+  //console.log(markerPositions, markerLabels)
 
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
@@ -17,18 +15,30 @@
   let latlng = {lat: 51.505, lng: -0.09};
 
   let map;
+  let mapElement; 
   let markers = [];
 
   let subHandle;
 
   onMount(async ()=>{
+    console.log("onMount map")
+
     L.Icon.Default.imagePath = '/leaflet/'
 
-    map = L.map('mapid').setView([latlng.lat, latlng.lng], 13);  
+    map = L.map('mapid', {zoomControl: false}).setView([latlng.lat, latlng.lng], 13);  
 
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+    // these tiles fail to load on ios - not sure why
+    /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
       maxZoom: 20,
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+    }).addTo(map);*/
+
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
   
     let sheetId;
@@ -46,7 +56,7 @@
       labelColumnKey = markerLabels.split("/")?.[1]
     }
     
-    console.log(sheetId, positionColumnKey, labelColumnKey)
+    //console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetId) {
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
@@ -78,22 +88,30 @@
       })
     }
 
-
   })
 
-  // we need to invalidateSize when map becomes visible for the first time - how??
-  $: {
-    console.log(activeTab)
-    if(activeTab == "Map" && map) {
-      setTimeout(()=>{
-        map.invalidateSize()
-      }, 200);
-    }
-  }
+  let visible = false;
 
+  // there must be a better way to react to map becoming visible
+  setInterval(()=>{
+    if(mapElement) {
+      if(mapElement.offsetParent) {
+        if(!visible) {
+          setTimeout(()=>{
+            console.log("map.invalidateSize");
+            map.invalidateSize();  
+          }, 200);        
+          visible = true;
+        } 
+      } else {
+        visible = false;
+      }
+    }
+  }, 1000);
+     
 </script>
 
-<div id="mapid"></div>
+<div id="mapid" bind:this={mapElement}></div>
     
 <style>
   #mapid { 

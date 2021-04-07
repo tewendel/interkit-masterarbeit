@@ -25,7 +25,7 @@
     let sheet;
     if(sheetColumn) {
       sheet = await InterkitClient.call('sheet.get', sheetColumn.split("/")[0])
-      console.log(sheet)
+      //console.log(sheet)
     }
     return sheet;
   }
@@ -33,11 +33,11 @@
   let categorySheetObj1;
   let categorySheetObj2;
   onMount(async ()=>{
-    console.log("archive", categorySheet1, categorySheet2)
+    //console.log("archive", categorySheet1, categorySheet2)
 
     categorySheetObj1 = await getSheet(categorySheet1)
     categorySheetObj2 = await getSheet(categorySheet2)
-    console.log(categorySheetObj1)
+    //console.log(categorySheetObj1)
   })
 
 </script>

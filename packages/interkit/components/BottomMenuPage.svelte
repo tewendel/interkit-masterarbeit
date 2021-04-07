@@ -8,6 +8,18 @@
   registerPanel(panel);
 </script>
 
-{#if $selectedPanel === panel}
+
+<div class="page" class:visible="{$selectedPanel === panel}">
   <slot></slot>
-{/if}
+</div>
+
+<style>
+  .page {
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
+  .visible {
+    display: block;
+  }
+</style>
