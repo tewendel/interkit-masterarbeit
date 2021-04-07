@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.app",
+  "appName": "interkit bundle viewer",
+  "webDir": "public",
+  "bundledWebRuntime": false
+}
