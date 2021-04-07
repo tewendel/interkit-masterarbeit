@@ -22,3 +22,11 @@ npm run dev
 ````
 open http://localhost:5000
 ````
+
+### deploy
+
+````
+cp docker-compose.env.live.example .env
+vi .env
+docker-compose up -d
+````

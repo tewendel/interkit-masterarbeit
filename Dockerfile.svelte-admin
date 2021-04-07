@@ -5,8 +5,9 @@ ARG BUILD_SOURCE_PATH
 WORKDIR /app
 
 # copy shared files and install dependencies
-COPY /shared /shared
-RUN cd /shared && npm ci
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-dev && npm ci
 
 # copy app files and install dependencies
 COPY ${BUILD_SOURCE_PATH} ./

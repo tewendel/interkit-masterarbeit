@@ -5,6 +5,10 @@ import App from './App.svelte';
 // import { InterkitLiveReload } from 'interkit'
 // InterkitLiveReload.activateInstalledBundle();
 
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
+SplashScreen.hide()
+
 const app = new App({
 	target: document.body
 });

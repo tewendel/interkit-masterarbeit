@@ -1,6 +1,7 @@
 <script>
   import InterkitLiveReload from '../interkit-live-reload'
-  import QRScanner from './QRScanner.svelte'
+  //import QRScanner from './QRScanner.svelte'
+  import QRScannerCap from './QRScannerCap.svelte'
 
   let bundleZipUrl = `https://sebquack.uber.space/bundle.zip`;
   let doingUpdate = false;
@@ -17,7 +18,15 @@
 <button on:click={doUpdate}>Do Update</button>
 
 {#if !doingUpdate}
-  <QRScanner
+  <!--QRScanner
     onScan={(url)=>{bundleZipUrl = url}}
+  /-->
+  <QRScannerCap
+    onScan={(url)=>{
+      bundleZipUrl = url;
+      doUpdate();
+    }}
   />
 {/if}
+
+

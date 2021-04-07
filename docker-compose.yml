@@ -39,7 +39,8 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - repositories:/var/repositories
+      - ./repositories/starters:/var/repositories/starters:ro
+      - projects:/var/repositories/projects
     depends_on:
       - mongo
     environment:
@@ -86,7 +87,7 @@ services:
     ports:
       - '4000:4000'
     volumes:
-      - repositories:/var/repositories
+    - projects:/var/repositories/projects
     environment:
       PORT: 4000
       LETSENCRYPT_HOST: $INTERKIT_BUNDLER_HOST
@@ -97,11 +98,12 @@ services:
 
 volumes:
   db-data:
-  repositories:
-#      driver_opts:
-#      type: none
-#      device: /root/data/repositories
-#      o: bind
+  #repositories:
+  #  driver_opts:
+  #    type: none
+  #    device: ./repositories
+  #    o: bind
+  projects:
   certs:
   html:
   vhost:
