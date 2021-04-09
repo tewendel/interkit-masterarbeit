@@ -6,6 +6,15 @@ let server;
 
 let subscriptionCounter = {};
 
+// restores the meteor style _id attribute on all elements in array or single object
+const restore_ids = (data) => {
+  if(Array.isArray(data))
+    return data.map((e)=>{return {...e, _id: e.id}})
+  if(typeof data == "object")
+    return {...data, _id: data.id}
+  return data;
+}
+
 const InterkitClient = {
   connect: async (url) => {
     console.log("InterkitClient.connect", url)
@@ -57,13 +66,13 @@ const InterkitClient = {
     //console.log("data", pub, data)
 
     // write an initial fetch of the collection into the store
-    sub.data.set(data);
+    sub.data.set(restore_ids(data));
     
     // update the store through simpleDDP's onChange listener
     sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
     sub.reactiveCollection.onChange((newData)=>{
       //console.log("onChange", newData)
-      sub.data.set(newData)
+      sub.data.set(restore_ids(newData))
     })
 
     sub.stop = async () => {

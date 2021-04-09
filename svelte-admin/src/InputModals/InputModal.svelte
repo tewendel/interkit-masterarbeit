@@ -3,6 +3,7 @@
   import SheetRefSelect from './SheetRefSelect.svelte';
   import ColumnTypeSelect from './ColumnTypeSelect.svelte';
   import SheetColumnSelect from './SheetColumnSelect.svelte';
+  import MediaFileSelect from './MediaFileSelect.svelte';
   
   export let type = null
   export let value = {}
@@ -19,7 +20,8 @@
     "columnType": ColumnTypeSelect,
     "location": LocationPicker,
     "sheetRef": SheetRefSelect,
-    "sheetColumn": SheetColumnSelect
+    "sheetColumn": SheetColumnSelect,
+    "mediaFile": MediaFileSelect
   }
 
 </script>
