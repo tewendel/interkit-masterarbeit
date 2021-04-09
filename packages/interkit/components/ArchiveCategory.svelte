@@ -17,7 +17,7 @@
 
 </script>
 
-{#if $categories && open}
+{#if $categories}
 <ul>
   {#each $categories as category}
   <li on:click={()=>openCategory({

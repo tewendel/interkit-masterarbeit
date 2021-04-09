@@ -6,6 +6,7 @@
   import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
   import RepositoryEditor from "./RepositoryEditor.svelte"
+  import MediaManager from "./MediaManager.svelte"
   import { InterkitClient } from 'interkit'
 
   export let projectId
@@ -41,6 +42,9 @@
     </WorkArea>
     <WorkArea name="repository" let:open={open}>
       <RepositoryEditor {projectId} />
+    </WorkArea>
+    <WorkArea name="media" let:open={open}>
+      <MediaManager {projectId} />
     </WorkArea>
   </div>
   <div class="right-pane">
