@@ -38,5 +38,5 @@ app.get('/bundlezip/:projectId', get_bundle_zip)
 app.use(get_app_files);
 
 
-app.listen(PORT, () => console.log('listening on port ' + PORT)); 
+server.listen(PORT, () => console.log('listening on port ' + PORT)); 
 
