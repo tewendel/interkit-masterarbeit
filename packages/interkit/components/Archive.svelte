@@ -33,7 +33,7 @@
   let categorySheetObj1;
   let categorySheetObj2;
   onMount(async ()=>{
-    //console.log("archive", categorySheet1, categorySheet2)
+    console.log("archive" + (typeof categorySheet1) + (typeof categorySheet2))
 
     categorySheetObj1 = await getSheet(categorySheet1)
     categorySheetObj2 = await getSheet(categorySheet2)
@@ -85,6 +85,15 @@
     dataSheetColumnKey={dataSheet.split("/")[1]}
     close={()=>{selectedCategory = null}}
   />
+  {/if}
+
+{:else}
+  
+  {#if dataSheet}
+    <ArchiveList
+      dataSheetId={dataSheet.split("/")[0]}
+      dataSheetColumnKey={dataSheet.split("/")[1]}
+    />
   {/if}
 
 {/if}

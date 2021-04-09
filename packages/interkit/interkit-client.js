@@ -6,6 +6,8 @@ let server;
 
 let subscriptionCounter = {};
 
+let globalStores = {};
+
 // restores the meteor style _id attribute on all elements in array or single object
 const restore_ids = (data) => {
   if(Array.isArray(data))
@@ -89,7 +91,13 @@ const InterkitClient = {
 
     return sub;
   },
-  
+
+  getGlobalStore: (key) => {
+    if(!globalStores[key])
+      globalStores[key] = writable(null);   
+    return globalStores[key]
+  }
 }
+
 
 export default InterkitClient;

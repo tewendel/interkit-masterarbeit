@@ -11,7 +11,8 @@
   import { BundleServer } from './BundleServer.js'
 
   import initSheetColumnField from 'interkit-dev/blockly/sheetColumnField.js'
-
+  import initSheetIdField from 'interkit-dev/blockly/sheetIdField.js'
+  
   import InputModal from './InputModals/InputModal.svelte';
 
   export let open;
@@ -57,22 +58,42 @@
     });
   }
 
+  const updateSheetId = (previousValue, notice) => {
+    console.log("notice", notice)
+    inputModalValue = {
+      sheetId: previousValue?.value
+    };
+    inputModalParams = { notice }
+    openInputModal = "sheetId";
+    console.log("updateSheetId", inputModalValue)
+
+    return new Promise((resolve, reject) => {
+        submitInputModal = () => {
+          console.log("submitInputModal", inputModalValue)
+          let value = ""
+          if(inputModalValue.sheetId && inputModalValue.sheetId != "empty") {
+            value = inputModalValue.sheetId;
+          }
+          resolve({
+            value, 
+            text: inputModalValue.text
+          });  
+        }
+        cancelInputModal = () => {
+          reject("cancelled")
+        }  
+    });
+  }
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
 
-    const CustomFields = initSheetColumnField(Blockly, updateSheetColumn);
-    //console.log(CustomFields)
+    const CustomFields1 = initSheetColumnField(Blockly, updateSheetColumn);
+    const CustomFields2 = initSheetIdField(Blockly, updateSheetId);
     
     blocklyConfig.initCodeGenerator(Blockly);
     
-    /*Blockly.Extensions.register('sheetColumn_extension',
-    function() {
-      this.appendDummyInput()
-        .appendField('sheetColumn')
-        .appendField(new CustomFields.SheetColumnField(), 'sheetColumn');
-    });*/
-
     Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
     
     workspace = Blockly.inject('blocklyDiv', {
@@ -104,12 +125,13 @@
     let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.indexOf(e) === i)
     
     let imports = "<script>\n";
+    imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     for(let type of allBlocksUnique) {
       imports += `import ${type} from "interkit/components/${type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    generatedCode = imports + code;
+    generatedCode = imports + "<AppBase>\n" + code + "\n</AppBase>";
 
     document.getElementById('textarea').value = generatedCode;
   }

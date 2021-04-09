@@ -33,7 +33,7 @@
         },
         {
           "kind": "block",
-          "type": "Archive"
+          "type": "ArchiveList"
         },
         {
           "kind": "block",
@@ -48,6 +48,20 @@
         {
           "kind": "block",
           "type": "Styling"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Elements",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "ContentElementAudio"
+        },
+        {
+          "kind": "block",
+          "type": "AudioPlayer"
         }
       ]
     }

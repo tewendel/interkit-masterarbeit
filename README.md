@@ -30,3 +30,10 @@ cp docker-compose.env.live.example .env
 vi .env
 docker-compose up -d
 ````
+
+### update
+
+````
+git pull
+docker-compose up -d --build
+````

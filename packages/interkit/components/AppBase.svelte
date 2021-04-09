@@ -3,6 +3,9 @@
 </div>
 
 <style>
+  .AppBase {
+    height: 100%;
+  }
   :global(html),
   :global(body) {
     height: 100%;

@@ -1,5 +1,25 @@
 export const initCodeGenerator = (Blockly) => {
 
+  /* helper functions */
+  const attribute = (block, attributeName, blocklyAttributeName) => {
+    if(!blocklyAttributeName) blocklyAttributeName = attributeName;
+    var value = block.getFieldValue(blocklyAttributeName)?.value
+
+    if(value == "undefined" || value == "null") value = null;
+
+    return value ? `${attributeName}="${value}"\n` : "";
+  }
+
+  const slot = (block, slotName, slotProp) => {
+    var value = Blockly.JavaScript.statementToCode(block, slotName)
+    return value ? 
+        (`<svelte:fragment slot="${slotName}" `
+        + (slotProp ? `let:${slotProp}={${slotProp}} >` : '>')
+        + `\n${value}\n
+        </svelte:fragment>\n`) : "";
+  }
+
+  /* code generators for each block */
   console.log("initCodeGenerator");
 
   Blockly.JavaScript['AppBase'] = function (block) {
@@ -15,23 +35,32 @@ export const initCodeGenerator = (Blockly) => {
     var text_sectiontitles = block.getFieldValue('sectionTitles')?.value;
     var text_sectionrefs = block.getFieldValue('sectionRefs')?.value;
     // TODO: Assemble JavaScript into code variable.
-    let code = `<Dashboard 
+    var code = `<Dashboard 
       sectionTitles="${text_sectiontitles}"
       sectionRefs="${text_sectionrefs}"
       />`
     return code;
   };
 
+  
   Blockly.JavaScript['Archive'] = function(block) {
-    var text_datasheet = block.getFieldValue('dataSheet')?.value;
-    var text_categorysheet1 = block.getFieldValue('categorySheet1')?.value;
-    var text_categorysheet2 = block.getFieldValue('categorySheet2')?.value;
     
-    let code = `<Archive 
-      dataSheet="${text_datasheet}"
-      categorySheet1="${text_categorysheet1}"
-      categorySheet2="${text_categorysheet2}"
-      />`
+    var code = "<Archive \n";
+    code += attribute(block, "dataSheet")
+    code += attribute(block, "categorySheet1")
+    code += attribute(block, "categorySheet2")
+    code += ">\n"
+    code += "</Archive>"
+    return code;
+  };
+
+  Blockly.JavaScript['ArchiveList'] = function(block) {
+    
+    var code = "<ArchiveList \n";
+    code += attribute(block, "dataSheetId", "dataSheet")
+    code += ">\n"
+    code += slot(block, "contentElement", "element") 
+    code += "</ArchiveList>"
     return code;
   };
 
@@ -68,11 +97,15 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['BottomMenu'] = function(block) {
     var statements_pages = Blockly.JavaScript.statementToCode(block, 'pages');
     var statements_buttons = Blockly.JavaScript.statementToCode(block, 'buttons');
+    var statements_media_player = Blockly.JavaScript.statementToCode(block, 'media_player');
     
     let code = `
       <BottomMenu>
         <svelte:fragment slot="pages">
           ${statements_pages}
+        </svelte:fragment>
+        <svelte:fragment slot="media_player">
+          ${statements_media_player}
         </svelte:fragment>
         <svelte:fragment slot="buttons">
           ${statements_buttons}
@@ -97,4 +130,23 @@ export const initCodeGenerator = (Blockly) => {
     var text_label = block.getFieldValue('NAME');
     return `<HeadlinePage headline="${text_label}"/>`
   };
+
+  Blockly.JavaScript['ContentElementAudio'] = function(block) {
+
+    var code = "<ContentElementAudio {element} \n";
+    code += attribute(block, "nameColumn", "name")
+    code += attribute(block, "audioColumn", "audio")
+    code += "\n/>"
+
+    return code;
+  };
+
+  Blockly.JavaScript['AudioPlayer'] = function(block) {
+    var text_label = block.getFieldValue('NAME');
+    return `<AudioPlayer/>`
+  };
+
+
+  
+  
 }

@@ -56,6 +56,10 @@
     <slot name="pages"></slot>
   </div>
 
+  <div>
+    <slot name="media_player"></slot>
+  </div>
+
   <div class="BottomMemu__Buttons buttons">
     <slot name="buttons"></slot>
   </div>
