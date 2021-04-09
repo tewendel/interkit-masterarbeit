@@ -5,7 +5,7 @@
   export let refData;
 </script>
 
-{#if cell.value?.type == "location"}
+{#if cell.value?.lat}
 
   <img class="marker-icon" src="leaflet/marker-icon.png"/>
 
