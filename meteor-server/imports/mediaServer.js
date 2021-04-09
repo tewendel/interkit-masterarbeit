@@ -14,12 +14,30 @@ const MediaFiles = new FilesCollection({
   }
 });
 
-if (Meteor.isServer) {
-  Meteor.publish('mediafiles', function (projectId) {
-    console.log("subscribe mediafiles", projectId)
+const getMediaFiles = (projectId) => {
+  if(projectId)
     return MediaFiles.find({ "meta.projectId": projectId }).cursor;
-    //return MediaFiles.find({}).cursor
-  });
+  else 
+    return null;
+}
+
+if (Meteor.isServer) {
+  Meteor.publish('mediafiles', getMediaFiles);
+  Meteor.methods({
+    "mediafiles.get": (projectId)=>{
+      let cursor = getMediaFiles(projectId)
+      return cursor?.fetch();
+    },
+    "mediafile.get": (mediafileId) => {
+      console.log("getMediaFile", mediafileId)
+      let mediafileInstance = MediaFiles.findOne(mediafileId)
+      let mediafileObj = {
+        ...mediafileInstance.get(),
+        link: mediafileInstance.link()
+      }
+      return mediafileObj;
+    }
+  })
 }
 
 

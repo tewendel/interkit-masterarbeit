@@ -1,28 +1,28 @@
 <script>
 
+  import { onDestroy } from 'svelte';
   import { InterkitClient } from 'interkit'
+  import MediaFileList from './MediaFileList.svelte'
   export let projectId
 
-  let mediafiles;
-  let mediafilesWithLinks = [];
+  let mediafilesStore;
+  let unsubscribe;
+  let mediafilesArray;
+  
   let subHandle;  
   $: resetSub(projectId)
 
   const resetSub = async (projectId) => {
     if(subHandle) await subHandle.stop()
     subHandle = await InterkitClient.getSub('mediafiles', 'mediafiles', [projectId]);
-    mediafiles = subHandle.data
-    console.log($mediafiles)
-
-    mediafiles.subscribe(data => {
-      mediafilesWithLinks = data.map(mediafile => {
-        return {
-          ...mediafile,
-          link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile.id + "/original/" + mediafile.id + mediafile.extensionWithDot
-        }
-      })
-    })
+    mediafilesStore = subHandle.data
+    unsubscribe = mediafilesStore.subscribe((data)=>{
+      console.log("new mediafiles", data)
+      mediafilesArray = data;
+    })    
   }
+
+  onDestroy(unsubscribe);
 
   const uploadEndpoint = INTERKIT_SERVER_URL + "/mediaUpload"
 
@@ -60,20 +60,5 @@
 
 <h3> media in this project </h3>
 
-{#if mediafiles}
-  <ul>
-  {#each mediafilesWithLinks as mediafile}
+<MediaFileList mediafiles={mediafilesArray}/>
 
-    <li>{mediafile.name} <a target="_blank" href="{mediafile.link}">link</a>
-    {#if mediafile.isAudio}
-      <audio controls>
-        <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
-      </audio>        
-    {/if}
-    </li>
-          
-  {/each}
-  </ul>
-{:else}
-  loading...
-{/if}

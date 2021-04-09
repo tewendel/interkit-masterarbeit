@@ -2,7 +2,7 @@
   import { InterkitClient } from 'interkit'
   import { DataTable } from "carbon-components-svelte";
   import InputModal from './InputModals/InputModal.svelte';
-  import ReferenceCell from './ReferenceCell.svelte';
+  import SheetCell from './SheetCell.svelte';
   import { columnTypes } from './baseConfig.js';
   import { onDestroy } from 'svelte';
 
@@ -124,7 +124,7 @@
       }
     }
 
-    if(columnType == "location" || columnType == "sheetRef") {
+    if(columnType == "location" || columnType == "sheetRef" || columnType == "mediaFile") {
       console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;
@@ -189,13 +189,7 @@
     
     <span slot="cell" let:row let:cell>
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
-        {#if cell.value?.lat}
-          <img class="marker-icon" src="leaflet/marker-icon.png"/>
-        {:else if cell.value?.type == "sheetRef"}
-          <ReferenceCell {refData} value={cell.value}/>
-        {:else}
-          {cell.value ? cell.value : ""}
-        {/if}
+        <SheetCell {cell} {refData}/>
       </span>
     </span>
   
