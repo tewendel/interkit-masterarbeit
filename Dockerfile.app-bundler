@@ -28,4 +28,8 @@ COPY ${BUILD_REPOSITORIES_PATH} ${REPOSITORIES_PATH}
 # set REPOSITORIES_PATH at runtime
 RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > .env
 
+# npm install starter
+RUN cd ${REPOSITORIES_PATH}/starters/cs1 && npm ci
+
+
 CMD ["npm", "start"]
