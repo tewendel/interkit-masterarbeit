@@ -2,14 +2,22 @@
 # source: https://github.com/disney/meteor-base/blob/master/example/default.dockerfile
 
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:1.12
+FROM geoffreybooth/meteor-base:2.1
 
 ARG BUILD_SOURCE_PATH
-ARG BUILD_REPOSITORIES_PATH
-ARG BUILD_CONTAINER_REPOSITORIES_PATH
+
 # Copy app package.json and package-lock.json into container
 COPY ${BUILD_SOURCE_PATH}/package*.json $APP_SOURCE_FOLDER/
 
+# npm >= 7 required for workspaces
+RUN meteor npm install -g npm@7
+
+# copy shared files and install dependencies
+COPY /packages ${APP_SOURCE_FOLDER}/../packages
+RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit && meteor npm ci
+RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit-dev && meteor npm ci
+
+# install meteor app dependencies
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
 # Copy app source into container
@@ -17,9 +25,8 @@ COPY ${BUILD_SOURCE_PATH} $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
-
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.0
-FROM node:12.18.4-alpine
+FROM node:12.21-alpine
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
@@ -35,10 +42,14 @@ COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 # Copy in app bundle
 COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
-RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
-
 # Copy repositories folder
+ARG BUILD_REPOSITORIES_PATH
+ARG BUILD_CONTAINER_REPOSITORIES_PATH
+RUN echo COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
 COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
+
+
+RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 
 # Start app
 ENTRYPOINT ["/docker/entrypoint.sh"]

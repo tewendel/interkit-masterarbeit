@@ -39,13 +39,15 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - repositories:/var/repositories
+      - projects:/var/repositories/projects
+      - mediafiles:/var/mediafiles
     depends_on:
       - mongo
     environment:
       ROOT_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
       MONGO_URL: mongodb://mongo:27017/meteor
       REPOSITORIES_PATH: /var/repositories
+      MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
       BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
       LETSENCRYPT_HOST: $INTERKIT_SERVER_HOST
@@ -71,6 +73,7 @@ services:
       - '5000:5000'
     environment:
       INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
+      INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
       LETSENCRYPT_HOST: $INTERKIT_ADMIN_HOST
       LETSENCRYPT_EMAIL: info@interkit.app
       VIRTUAL_HOST: $INTERKIT_ADMIN_HOST
@@ -86,7 +89,7 @@ services:
     ports:
       - '4000:4000'
     volumes:
-      - repositories:/var/repositories
+    - projects:/var/repositories/projects
     environment:
       PORT: 4000
       LETSENCRYPT_HOST: $INTERKIT_BUNDLER_HOST
@@ -97,11 +100,13 @@ services:
 
 volumes:
   db-data:
-  repositories:
-#      driver_opts:
-#      type: none
-#      device: /root/data/repositories
-#      o: bind
+  #repositories:
+  #  driver_opts:
+  #    type: none
+  #    device: ./repositories
+  #    o: bind
+  projects:
+  mediafiles:
   certs:
   html:
   vhost:

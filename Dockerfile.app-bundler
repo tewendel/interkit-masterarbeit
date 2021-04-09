@@ -1,4 +1,4 @@
-FROM node:15-alpine
+FROM node:15
 
 ARG BUILD_SOURCE_PATH
 ARG BUILD_REPOSITORIES_PATH
@@ -6,12 +6,20 @@ ARG BUILD_REPOSITORIES_PATH
 WORKDIR /app
 
 # copy shared files and install dependencies
-COPY /shared /shared
-RUN cd /shared && npm ci
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-dev && npm ci
 
 # copy app files and install dependencies
 COPY ${BUILD_SOURCE_PATH} ./
+#RUN npm i @node-rs/bcrypt-linux-musl
+#RUN apt-get update && apt-get install musl
 RUN npm ci
+
+# copy shared files and install dependencies AGAIN for starters
+COPY /packages /var/packages
+RUN cd /var/packages/interkit && npm ci
+RUN cd /var/packages/interkit-dev && npm ci
 
 # set repositories path in container
 ENV REPOSITORIES_PATH=/var/repositories
@@ -19,5 +27,9 @@ ENV REPOSITORIES_PATH=/var/repositories
 COPY ${BUILD_REPOSITORIES_PATH} ${REPOSITORIES_PATH}
 # set REPOSITORIES_PATH at runtime
 RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > .env
+
+# npm install starter
+RUN cd ${REPOSITORIES_PATH}/starters/cs1 && npm ci
+
 
 CMD ["npm", "start"]
