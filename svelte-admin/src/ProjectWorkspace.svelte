@@ -1,5 +1,5 @@
 <script>
-  import { onDestroy } from 'svelte'
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import WorkArea from './WorkArea.svelte';
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
@@ -9,46 +9,40 @@
   import MediaManager from "./MediaManager.svelte"
   import { InterkitClient } from 'interkit'
 
-  export let projectId
-  $: setup(projectId)
-  let sub;
-  let currentProject;
-  
-  const setup = async (projectId) => {
-    console.log("workspace", projectId)
-    sub = await InterkitClient.getSub('projects', 'projects', [], (p)=>p.id == projectId, true);
-    currentProject = sub.data;
-  }
 
-  onDestroy(async ()=>{
-    if(sub) {
-      /* if you do this, it will also stop the projects subscription on the parent compoment! */
-      //await sub.stop();
-      //sub = null;
-    }
-  })
+  export let projectId
+  export let currentProject
+  export let selected
 
 </script>
 
 {#if $currentProject}
-  <h1>project: {$currentProject.name}</h1>
-  <div class="left-pane">
-    <WorkArea name="database">
-      <Sheets {projectId}/>
-    </WorkArea>
-    <!--WorkArea name="app components"><ComponentEditor {projectId}/></WorkArea-->
-    <WorkArea name="components" let:open={open}>
-      <BlocklyEditor {projectId} {open}/>
-    </WorkArea>
-    <WorkArea name="repository" let:open={open}>
-      <RepositoryEditor {projectId} />
-    </WorkArea>
-    <WorkArea name="media" let:open={open}>
-      <MediaManager {projectId} />
-    </WorkArea>
-  </div>
-  <div class="right-pane">
-    <WorkArea name="app preview"><Preview {projectId}/></WorkArea>
+  <div class="panes">
+    <div class="left-pane">
+      <Tabs type="container" bind:selected>
+        <Tab label="Database" />
+        <Tab label="Components" />
+        <Tab label="Repo" />
+        <Tab label="Media" />
+        <div slot="content">
+          <TabContent>
+            <Sheets {projectId}/>
+          </TabContent>
+          <TabContent>
+            <BlocklyEditor {projectId} open={selected === 1}/>
+          </TabContent>
+          <TabContent>
+            <RepositoryEditor {projectId} />
+          </TabContent>
+          <TabContent>
+            <MediaManager {projectId} />
+          </TabContent>
+        </div>
+      </Tabs>
+    </div>
+    <div class="right-pane">
+      <Preview {projectId}/>
+    </div>
   </div>
 {:else}
   loading...
@@ -60,13 +54,15 @@
   h1 {
     margin-bottom: 10px;
   }
+  .panes {
+    display: flex;
+  }
   .left-pane {
-    width: 50%;
-    float: left;
+    flex: 1;
   }
 
   .right-pane {
-    width: 50%;
-    float: right;
+    flex: 0.5;
+    min-width: 320px;
   }
 </style>
