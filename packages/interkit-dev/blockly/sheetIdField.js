@@ -1,36 +1,37 @@
 export default (Blockly, update) => {
 
-  console.log("init sheetColumnField")
+  /* sheetId field */ 
+
   const CustomFields = {}
 
-  /* sheetColumn field */
+  console.log("init sheetIdField")
 
-  CustomFields.SheetColumnField = function(opt_value, opt_validator) {
+  CustomFields.SheetIdField = function(opt_value, opt_validator) {
     opt_value = this.doClassValidation_(opt_value);
     if (opt_value === null) {
       opt_value = "not specified";
     }  // Else the original value is fine.
 
-    CustomFields.SheetColumnField.superClass_.constructor.call(
+    CustomFields.SheetIdField.superClass_.constructor.call(
         this, opt_value, opt_validator);
   };
-  Blockly.utils.object.inherits(CustomFields.SheetColumnField, Blockly.Field);
+  Blockly.utils.object.inherits(CustomFields.SheetIdField, Blockly.Field);
 
-  CustomFields.SheetColumnField.fromJson = function(options) {
+  CustomFields.SheetIdField.fromJson = function(options) {
     var value = Blockly.utils.replaceMessageReferences(
       options['value']);
-    return new CustomFields.SheetColumnField(value);
+    return new CustomFields.SheetIdField(value);
   };
 
-  CustomFields.SheetColumnField.prototype.SERIALIZABLE = true;
+  CustomFields.SheetIdField.prototype.SERIALIZABLE = true;
 
-  CustomFields.SheetColumnField.prototype.toXml = function(fieldElement) {
+  CustomFields.SheetIdField.prototype.toXml = function(fieldElement) {
     fieldElement.setAttribute('value', this.value_.value);
     fieldElement.setAttribute('text', this.value_.text);
     return fieldElement;
   };
 
-  CustomFields.SheetColumnField.prototype.fromXml = function(fieldElement) {
+  CustomFields.SheetIdField.prototype.fromXml = function(fieldElement) {
     var value = {};
 
     value.value = fieldElement.getAttribute('value');
@@ -39,7 +40,7 @@ export default (Blockly, update) => {
   };
 
 
-  CustomFields.SheetColumnField.prototype.showEditor_ = async function() {
+  CustomFields.SheetIdField.prototype.showEditor_ = async function() {
     try {
       let value = await update(this.getValue(), this.name);
       console.log("got value", value)
@@ -49,14 +50,11 @@ export default (Blockly, update) => {
      }
   }
 
-  CustomFields.SheetColumnField.prototype.getDisplayText_ = function() {
+  CustomFields.SheetIdField.prototype.getDisplayText_ = function() {
     return this.getValue()?.text
   }
 
-  Blockly.fieldRegistry.register('sheetColumn', CustomFields.SheetColumnField);
-
-
-  console.log("Blockly.fieldRegistry done")
-
+  Blockly.fieldRegistry.register('sheetId', CustomFields.SheetIdField);
+  
   return CustomFields;
 }

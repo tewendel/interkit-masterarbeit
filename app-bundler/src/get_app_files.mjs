@@ -17,11 +17,11 @@ const get_app_files = async (req, res, next) => {
 
   // console.log(match)
 
-  // console.log("foo", REPOSITORIES_PATH, projectId)
+  console.log("build projectPublicPath", REPOSITORIES_PATH, projectId)
 
   const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
 
-  //console.log(req.url, projectId, subpath, projectPublicPath)
+  console.log(req.url, projectId, subpath, projectPublicPath)
 
   if (subpath == "/" || subpath == "") {
     subpath = "/index.html"

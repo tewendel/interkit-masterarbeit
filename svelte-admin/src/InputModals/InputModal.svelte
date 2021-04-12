@@ -3,6 +3,7 @@
   import SheetRefSelect from './SheetRefSelect.svelte';
   import ColumnTypeSelect from './ColumnTypeSelect.svelte';
   import SheetColumnSelect from './SheetColumnSelect.svelte';
+  import SheetIdSelect from './SheetIdSelect.svelte'
   import MediaFileSelect from './MediaFileSelect.svelte';
   
   export let type = null
@@ -21,7 +22,8 @@
     "location": LocationPicker,
     "sheetRef": SheetRefSelect,
     "sheetColumn": SheetColumnSelect,
-    "mediaFile": MediaFileSelect
+    "sheetId": SheetIdSelect,
+    "mediaFile": MediaFileSelect,
   }
 
 </script>

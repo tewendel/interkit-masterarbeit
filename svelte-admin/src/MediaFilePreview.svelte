@@ -14,8 +14,8 @@
 
 </script>
 
-select
 {#if mediafile?.isAudio}
+  {mediafile.name}
   {#key mediafile}
   <audio controls>
     <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>

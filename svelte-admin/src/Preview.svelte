@@ -4,6 +4,8 @@
   import { InterkitClient } from 'interkit'
   import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+
 
   export let projectId, previewURL = "";
 
@@ -40,27 +42,40 @@
   <button on:click={BundleServer.compileReloadPreview}>compile & relaod</button>
   
   <br><br>
+
+  <Tabs>
+      <Tab label="web preview" />
+      <Tab label="app preview" />
+    <div slot="content">
+      <TabContent>
+        <div>
+          <a target="_blank" href="{previewURL}">
+              {#key previewURL}
+                <QrCode value={previewURL} />
+              {/key}
+            <br>
+            link to app
+          </a>
+        </div>          
+      </TabContent>
+      <TabContent>
+        <div>
+          <a target="_blank" href="{bundlezipURL}">
+              {#key bundlezipURL}
+                <QrCode value={bundlezipURL} />
+              {/key}
+            <br>
+            bundle zip
+          </a>
+        </div>
+          
+      </TabContent>
+      
+    </div>
+  </Tabs>
   
-  <div>
-    <a target="_blank" href="{previewURL}">
-        {#key previewURL}
-          <QrCode value={previewURL} />
-        {/key}
-      <br>
-      link to app
-    </a>
-  </div>
-
-  <div>
-    <a target="_blank" href="{bundlezipURL}">
-        {#key bundlezipURL}
-          <QrCode value={bundlezipURL} />
-        {/key}
-      <br>
-      bundle zip
-    </a>
-  </div>
-
+  
+  
 {#if $compileError}
   <div class="error">compile error: {$compileError}</div>
 {/if}
