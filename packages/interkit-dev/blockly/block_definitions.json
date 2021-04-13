@@ -41,15 +41,15 @@
   "helpUrl": ""
   },
   {
-  "type": "Archive",
-  "message0": "<Archive> %1 dataSheet %2 %3 categorySheet1 %4 %5 categorySheet2 %6 %7",
+  "type": "CategoryList",
+  "message0": "<CategoryList> %1 categorySheetId %2 %3 nameKey %4 %5 imageKey %6 %7 descriptionKey %8 %9",
   "args0": [
     {
       "type": "input_dummy"
     },
     {
-      "type": "sheetColumn",
-      "name": "dataSheet",
+      "type": "sheetId",
+      "name": "categorySheetId",
       "text": ""
     },
     {
@@ -57,7 +57,7 @@
     },
     {
       "type": "sheetColumn",
-      "name": "categorySheet1",
+      "name": "nameKey",
       "text": ""
     },
     {
@@ -65,7 +65,15 @@
     },
     {
       "type": "sheetColumn",
-      "name": "categorySheet2",
+      "name": "imageKey",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "descriptionKey",
       "text": ""
     },
     {
@@ -81,8 +89,8 @@
 
 
 {
-  "type": "ArchiveList",
-  "message0": "<ArchiveList> %1 dataSheet %2 %3 contentElement %4",
+  "type": "ElementList",
+  "message0": "<ElementList> %1 dataSheet %2 %3 contentElement %4",
   "args0": [
     {
       "type": "input_dummy"
@@ -308,7 +316,93 @@
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
+},
+
+{
+  "type": "ListNav",
+  "message0": "<ListNav> %1 listView %2 singleView %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "listView"
+    },
+    {
+      "type": "input_statement",
+      "name": "singleView"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+
+{
+  "type": "Tabs",
+  "message0": "<Tabs> %1 Tabs %2 TabPanels %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "tabList"
+    },
+    {
+      "type": "input_statement",
+      "name": "tabPanels"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+  },
+
+  {
+  "type": "TabPanel",
+  "message0": "<TabPanel> %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "default"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+
+{
+  "type": "Tab",
+  "message0": "Tab %1 label %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "label",
+      "text": "default"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
 }
+
 
 ]
 

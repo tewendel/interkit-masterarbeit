@@ -22,3 +22,11 @@
   {cell.value ? cell.value : ""}
 
 {/if}
+
+<style>
+
+  img {
+    max-height: 1.5rem;
+  }
+
+</style>

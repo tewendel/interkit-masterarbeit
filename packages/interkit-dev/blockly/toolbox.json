@@ -21,7 +21,7 @@
     },
     {
       "kind": "category",
-      "name": "Seiten",
+      "name": "Pages",
       "contents": [
         {
           "kind": "block",
@@ -30,10 +30,6 @@
         {
           "kind": "block",
           "type": "Dashboard"
-        },
-        {
-          "kind": "block",
-          "type": "ArchiveList"
         },
         {
           "kind": "block",
@@ -53,6 +49,24 @@
     },
     {
       "kind": "category",
+      "name": "Lists",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "ListNav"
+        },
+        {
+          "kind": "block",
+          "type": "CategoryList"
+        },
+        {
+          "kind": "block",
+          "type": "ElementList"
+        }
+      ]
+    },
+    {
+      "kind": "category",
       "name": "Elements",
       "contents": [
         {
@@ -62,6 +76,24 @@
         {
           "kind": "block",
           "type": "AudioPlayer"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Tabs",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "Tabs"
+        },
+        {
+          "kind": "block",
+          "type": "Tab"
+        },
+        {
+          "kind": "block",
+          "type": "TabPanel"
         }
       ]
     }

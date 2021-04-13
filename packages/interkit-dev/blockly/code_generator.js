@@ -19,6 +19,12 @@ export const initCodeGenerator = (Blockly) => {
         </svelte:fragment>\n`) : "";
   }
 
+  const statements = (block, blocklyAttributeName) => {
+    var statements_name = Blockly.JavaScript.statementToCode(block, blocklyAttributeName);    
+    return `${statements_name}`  
+  }
+  
+
   /* code generators for each block */
   console.log("initCodeGenerator");
 
@@ -42,25 +48,67 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
-  
-  Blockly.JavaScript['Archive'] = function(block) {
+  /*Blockly.JavaScript['Tab'] = function(block) {
     
-    var code = "<Archive \n";
-    code += attribute(block, "dataSheet")
-    code += attribute(block, "categorySheet1")
-    code += attribute(block, "categorySheet2")
-    code += ">\n"
-    code += "</Archive>"
+    var code = "<Tab\n";
+    code += attribute(block, "name") 
+    code += block.getFieldValue("name")?.value
+    code += "/>"
+    return code;
+  };*/
+
+  Blockly.JavaScript['Tab'] = function(block) {
+    var text_label = block.getFieldValue('label');
+    return `<Tab label="${text_label}"/>`
+  };
+
+
+  Blockly.JavaScript['TabPanel'] = function(block) {
+    
+    var code = "<TabPanel>";
+    code += statements("default");
+    code += "</TabPanel>"
     return code;
   };
 
-  Blockly.JavaScript['ArchiveList'] = function(block) {
+  Blockly.JavaScript['Tabs'] = function(block) {
     
-    var code = "<ArchiveList \n";
+    var code = "<Tabs>\n";
+    code += slot(block, "tabList") 
+    code += slot(block, "tabPanels") 
+    code += "</Tabs>"
+    return code;
+  };
+
+
+  Blockly.JavaScript['ListNav'] = function(block) {
+    
+    var code = "<ListNav>\n";
+    code += slot(block, "listView") 
+    code += slot(block, "singleView") 
+    code += "</ListNav>"
+    return code;
+  };
+
+  
+  Blockly.JavaScript['CategoryList'] = function(block) {
+    
+    var code = "<CategoryList \n";
+    code += attribute(block, "categorySheetId")
+    code += attribute(block, "nameKey")
+    code += attribute(block, "imageKey")
+    code += attribute(block, "descriptionKey")
+    code += "/>\n"
+    return code;
+  };
+
+  Blockly.JavaScript['ElementList'] = function(block) {
+    
+    var code = "<ElementList \n";
     code += attribute(block, "dataSheetId", "dataSheet")
     code += ">\n"
     code += slot(block, "contentElement", "element") 
-    code += "</ArchiveList>"
+    code += "</ElementList>"
     return code;
   };
 

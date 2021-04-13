@@ -2,6 +2,7 @@
 
   import { onDestroy } from 'svelte'
   import { DataTable } from "carbon-components-svelte";
+  import MediaFilePreview from './MediaFilePreview.svelte';
 
   export let mediafiles; // this should be an array, not a store
   export let radio = false;
@@ -44,10 +45,8 @@
   <DataTable {radio} bind:selectedRowIds {headers} {rows}>
 
     <span slot="cell" let:row let:cell>
-      {#if cell.key === 'preview' && row.isAudio}
-        <audio controls>
-          <source src={encodeURI(row.link)} type={row["mime-type"]}>
-        </audio>        
+      {#if cell.key === 'preview'}
+        <MediaFilePreview id={row._id} mediaManager/>
       {:else}{cell.value}{/if}
     </span>
 

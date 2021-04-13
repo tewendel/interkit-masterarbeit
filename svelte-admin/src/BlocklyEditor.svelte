@@ -105,7 +105,11 @@
     if(blocklyXML.content) {
       console.log(blocklyXML.content)
       let xml = Blockly.Xml.textToDom(blocklyXML.content);
-      Blockly.Xml.domToWorkspace(xml, workspace);
+      try {
+        Blockly.Xml.domToWorkspace(xml, workspace);
+      } catch(e) {
+        alert("error importing blockly xml")
+      }
     }
 
 

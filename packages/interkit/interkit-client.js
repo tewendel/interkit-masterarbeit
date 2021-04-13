@@ -1,6 +1,6 @@
 import simpleDDP from 'simpleddp';
 import ws from 'isomorphic-ws';
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 
 let server;
 
@@ -65,7 +65,7 @@ const InterkitClient = {
 
     let collection = server.collection(col).filter(cFilter)
     let data = single ? collection.fetch()[0] : collection.fetch()
-    //console.log("data", pub, data)
+    console.log("data", pub, data)
 
     // write an initial fetch of the collection into the store
     sub.data.set(restore_ids(data));
@@ -73,8 +73,11 @@ const InterkitClient = {
     // update the store through simpleDDP's onChange listener
     sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
     sub.reactiveCollection.onChange((newData)=>{
-      //console.log("onChange", newData)
-      sub.data.set(restore_ids(newData))
+      
+      // this is called way too often! -> todo: optimize 
+      // console.log("onChange", newData)
+      sub.data.set(restore_ids(newData))      
+      
     })
 
     sub.stop = async () => {

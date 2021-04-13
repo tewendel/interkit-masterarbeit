@@ -8,15 +8,14 @@
   export let nameColumn;
   export let audioColumn;
 
-  let mediafileId;
-  let title = element.value[nameColumn.split("/")[1]]
+  $: mediafileId = element.value[audioColumn.split("/")[1]].value
+  $: title = element.value[nameColumn.split("/")[1]]
   
   const playAudio = async () => {
-    mediafileId = element.value[audioColumn.split("/")[1]].value;
     let mediafile = await InterkitClient.call("mediafile.get", mediafileId)
     console.log(mediafile)
     audioPlayerStatus.set({
-      mediafileId, 
+      mediafileId: mediafile._id, 
       src: mediafile.link,
       title
     })
@@ -25,8 +24,8 @@
 </script>
 
 <span>{title}</span>
-{#if !$audioPlayerStatus?.mediafileId || mediafileId !== $audioPlayerStatus?.mediafileId}
-  <button on:click={playAudio}>play</button>
-{:else}
+{#if mediafileId && (mediafileId == $audioPlayerStatus?.mediafileId)}
   (playing)
+{:else}
+  <button on:click={playAudio}>play</button>
 {/if}
