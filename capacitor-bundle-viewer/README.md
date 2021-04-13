@@ -1,5 +1,12 @@
 #### Building native app containers from this project
 
+Setup
+```
+npm install
+gem install cocoapods
+```
+
+
 Update the native projects with the current bundle from /public
 ```bash
 npx cap sync

@@ -1,14 +1,17 @@
 <script>
   import "carbon-components-svelte/css/g10.css"; // all g10 g100 g90 white
 
-  import Router from 'svelte-spa-router'
-  import ProjectManager from './ProjectManager.svelte'
+  import Router, { querystring } from 'svelte-spa-router'
+  import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
 
   import { onMount } from 'svelte'
   
   import { 
     Header,
     Content,
+    HeaderNav,
+    HeaderNavMenu,
+    HeaderNavItem
   } from "carbon-components-svelte";
   
   // see https://github.com/ItalyPaleAle/svelte-spa-router/blob/master/README.md
@@ -23,11 +26,22 @@
 
 </script>
 
-<Header company="interkit" platformName="Rekationssystem" href="/"></Header>
+<Header company="interkit" platformName={$currentProjectName || "Redaktionssystem"} href="/">
+  <!--HeaderNav>
+    <HeaderNavItem text="Projekt" />
+    <HeaderNavItem href="/" text="Link 2" />
+    <HeaderNavItem href="/" text="Link 3" />
+    <HeaderNavMenu text="Menu">
+      <HeaderNavItem href="/" text="Link 1" />
+      <HeaderNavItem href="/" text="Link 2" />
+      <HeaderNavItem href="/" text="Link 3" />
+    </HeaderNavMenu>
+  </HeaderNav-->
+</Header>
 
 <!-- set transform: none; to allow modal to be position fixed -->
-<Content style="background: none; padding: 1rem; transform: none;">
-
-    <Router {routes} />
+<Content style="background: none; transform: none; padding: 0;">  
+  
+  <Router {routes} />
 
 </Content>

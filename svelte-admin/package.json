@@ -24,7 +24,7 @@
   "dependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "blockly": "^4.20201217.0",
-    "carbon-components-svelte": "^0.28.0",
+    "carbon-components-svelte": "^0.32.1",
     "envsub": "^4.0.7",
     "interkit-dev": "*",
     "leaflet": "^1.7.1",

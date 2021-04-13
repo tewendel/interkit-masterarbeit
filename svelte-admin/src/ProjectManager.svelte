@@ -1,7 +1,16 @@
+<script context="module">
+  import { writable } from 'svelte/store';
+  export let currentProjectName = writable(null);
+</script>
+
 <script>
+  import { 
+    Header,
+    Content,
+  } from "carbon-components-svelte";
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
 
   import { 
@@ -21,20 +30,42 @@
 
   let sub;
   let projects;
-
-  onMount(async ()=>{
-    console.log("onMount")
-    sub = await InterkitClient.getSub('projects', 'projects')  
-    projects = sub.data;
-  })
-
+  let currentProject;
   let newProjectName;
+
+  const destroyProjectsSub = async () => {
+    if (sub) {
+      await sub.stop();
+      sub = null;
+    }
+  }
+
+  const manageProjectsSub = async (projectId)=>{
+    console.log("project subscription " + projectId)
+    destroyProjectsSub() // not sure if nessesary
+    if (projectId) {
+      sub = await InterkitClient.getSub('projects', 'projects',[], (p)=>p.id == projectId, true)
+      currentProject = sub.data
+    } else {
+      sub = await InterkitClient.getSub('projects', 'projects') 
+      projects = sub.data;
+    }
+  }
+
   const createProject = async () => {
     await InterkitClient.call("project.create", {name: newProjectName})
     newProjectName = null;
   }
 
+  onDestroy(destroyProjectsSub)
+
   $: currentProjectId = params.projectId
+
+  $: manageProjectsSub(currentProjectId)
+
+  $: {
+    currentProjectName.set($currentProject ? $currentProject.name : null)
+  }
 
   // add "id" for carbon table
   $: projectRows = projects ? $projects.map( p => ({...p, id: p.id})) : []
@@ -47,18 +78,16 @@
 
 </script>
 
-
-<Grid>
+<Grid style="padding:0;">
   <Row>
     <Column lg="{16}">
     
       {#if currentProjectId}
-        <button on:click={()=> {replace('/')}}>&lt;&lt;</button><br>
-        <ProjectWorkspace projectId={currentProjectId}/>
+        <ProjectWorkspace projectId={currentProjectId} {currentProject}/>
       {:else}
 
         <DataTable
-          headers={[{ key: 'name', value: 'projects' }, { key: 'action', value: 'Action', empty: true }]}
+          headers={[{ key: 'name', value: 'Projects' }, { key: 'action', value: 'Action', empty: true }]}
           rows={projectRows}
           size="tall"
         >
