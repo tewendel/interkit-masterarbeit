@@ -179,7 +179,7 @@
       <Tab label="App.svelte" />
     <div slot="content">
       <TabContent>
-          <div id="blocklyDiv" style="height: 350px; width: 100%;"></div>
+          <div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
       </TabContent>
       <TabContent>
           <textarea id="textarea"></textarea>
@@ -205,6 +205,6 @@
 <style>
   textarea {
     width: 100%;
-    height: 350px;
+    height: 500px;
   }
 </style>

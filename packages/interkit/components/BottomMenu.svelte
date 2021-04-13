@@ -56,12 +56,14 @@
     <slot name="pages"></slot>
   </div>
 
-  <div>
+  <div class="media-player">
     <slot name="media_player"></slot>
   </div>
 
   <div class="BottomMemu__Buttons buttons">
-    <slot name="buttons"></slot>
+    <div class="button-container">
+      <slot name="buttons"></slot>
+    </div>
   </div>
 </div>
 
@@ -78,10 +80,23 @@
     flex: 1;
   }
 
+  .media-player {
+    position: fixed;
+    left: 0;
+    bottom: 50px;
+  }
+
   .buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+  }
+
+  .button-container {
     display: flex;
-    justify-content: center;
-    display: flex;
+    width: 100%;
   }
 
 
