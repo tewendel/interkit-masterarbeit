@@ -26,11 +26,11 @@
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
-    await playAudio(e.target?.payload?.audio, e.target?.payload?.title)
+    await playAudio(e.target?.payload?.audio, e.target?.payload?.title, false)
   }
 
   onMount(async ()=>{
-    console.log("onMount map")
+    //console.log("onMount map")
 
     L.Icon.Default.imagePath = '/leaflet/'
 
@@ -78,7 +78,7 @@
           audio: r.value[util.colKey(audioColumn)]?.value
         }})
 
-        console.log(markerValues);
+        //console.log(markerValues);
 
         // clear old markers
         for(let marker of markers) {

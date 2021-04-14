@@ -66,7 +66,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['TabPanel'] = function(block) {
     
     var code = "<TabPanel>";
-    code += statements("default");
+    code += statements(block, "default");
     code += "</TabPanel>"
     return code;
   };

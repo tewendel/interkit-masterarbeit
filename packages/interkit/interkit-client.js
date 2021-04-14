@@ -65,7 +65,7 @@ const InterkitClient = {
 
     let collection = server.collection(col).filter(cFilter)
     let data = single ? collection.fetch()[0] : collection.fetch()
-    console.log("data", pub, data)
+    //console.log("data", pub, data)
 
     // write an initial fetch of the collection into the store
     sub.data.set(restore_ids(data));

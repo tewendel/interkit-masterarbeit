@@ -148,7 +148,7 @@
     }
   }
 
-  const saveAndCompile = async ()=>{
+  const save = async ()=>{
 
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
@@ -167,6 +167,11 @@
     }
 
     await InterkitClient.call("file.save", {file: appSvelteFile, projectId})
+  }
+
+  const saveAndCompile = async ()=>{
+
+    await save();
     BundleServer.compileReloadPreview();
     
   }
@@ -191,8 +196,9 @@
 
 
 
+  <button on:click={save}>save</button>
   <button on:click={saveAndCompile}>save & compile</button>
-
+  
   <InputModal
     type={openInputModal}
     bind:value={inputModalValue}

@@ -6,7 +6,7 @@
   import { playAudio } from './AudioPlayer.svelte'
 
   export let element;
-  console.log(element)
+  //console.log(element)
   export let nameColumn;
   export let audioColumn;
 
