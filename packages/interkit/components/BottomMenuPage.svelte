@@ -17,9 +17,9 @@
   .page {
     height: 100%;
     width: 100%;
-    display: none;
+    visibility: hidden
   }
   .visible {
-    display: block;
+    visibility: visible
   }
 </style>

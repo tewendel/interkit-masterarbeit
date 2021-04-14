@@ -9,6 +9,8 @@
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
   export let audioColumn; // type sheetColumn: "sheetId/columnId"
 
+  
+
   //console.log(markerPositions, markerLabels)
 
   import L from 'leaflet';
@@ -100,26 +102,7 @@
     }
 
   })
-
-  let visible = false;
-
-  // there must be a better way to react to map becoming visible
-  setInterval(()=>{
-    if(mapElement) {
-      if(mapElement.offsetParent) {
-        if(!visible) {
-          setTimeout(()=>{
-            console.log("map.invalidateSize");
-            map.invalidateSize();  
-          }, 200);        
-          visible = true;
-        } 
-      } else {
-        visible = false;
-      }
-    }
-  }, 1000);
-     
+   
 </script>
 
 <div id="mapid" bind:this={mapElement}></div>
