@@ -84,6 +84,7 @@
     position: fixed;
     left: 0;
     bottom: 50px;
+    z-index: 1000;
   }
 
   .buttons {
@@ -92,6 +93,7 @@
     left: 0;
     width: 100%;
     background: white;
+    z-index: 1000;
   }
 
   .button-container {

@@ -119,7 +119,7 @@
 
   {
   "type": "Map",
-  "message0": "<Map> %1 markerPositions %2 %3 markerLabels %4 %5",
+  "message0": "<Map> %1 markerPositions %2 %3 markerLabels %4 %5 audio %6 %7",
   "args0": [
     {
       "type": "input_dummy"
@@ -135,6 +135,14 @@
     {
       "type": "sheetColumn",
       "name": "markerLabels",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "audio",
       "text": ""
     },
     {

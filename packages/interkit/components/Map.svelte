@@ -2,10 +2,12 @@
 
   import { onMount } from 'svelte'
 
-  import { InterkitClient } from '../'
-
+  import { InterkitClient, util } from '../'
+  import { playAudio } from './AudioPlayer.svelte'
+  
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
+  export let audioColumn; // type sheetColumn: "sheetId/columnId"
 
   //console.log(markerPositions, markerLabels)
 
@@ -19,6 +21,11 @@
   let markers = [];
 
   let subHandle;
+
+  const markerClick = async (e) => {
+    console.log("marker clicked", e.target?.payload);
+    await playAudio(e.target?.payload?.audio, e.target?.payload?.title)
+  }
 
   onMount(async ()=>{
     console.log("onMount map")
@@ -65,7 +72,8 @@
         let markerValues = rowsArray.map(r=> {return {
           location: (r.value[positionColumnKey]?.lat && r.value[positionColumnKey]?.lng) ?
             r.value[positionColumnKey] : undefined,
-          title: r.value[labelColumnKey]                    
+          title: r.value[labelColumnKey],                    
+          audio: r.value[util.colKey(audioColumn)]?.value
         }})
 
         console.log(markerValues);
@@ -80,7 +88,10 @@
         for(let markerValue of markerValues) {
           if(markerValue.location) {
             let marker = L.marker(markerValue.location, {title: markerValue.title}).addTo(map)
+            marker.payload = markerValue;
+            marker.on('click', markerClick);
             markers.push(marker);  
+
           }
         }
 
@@ -115,7 +126,10 @@
     
 <style>
   #mapid { 
-    height: 100%; 
-    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50px;
   }
 </style>

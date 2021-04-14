@@ -1,8 +1,19 @@
-<script>
-
+<script context="module">
   import { InterkitClient } from '../'
-  let audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  export const playAudio = async (mediafileId, title) => {
+    let mediafile = await InterkitClient.call("mediafile.get", mediafileId)
+    console.log(mediafile)
+    audioPlayerStatus.set({
+      mediafileId: mediafile._id, 
+      src: mediafile.link,
+      title
+    })
+  }
 
+  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+</script>
+
+<script>
   const closePlayer = () => {
     audioPlayerStatus.set(null)
   }

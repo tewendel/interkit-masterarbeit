@@ -114,15 +114,11 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['Map'] = function(block) {
 
-    //console.log("test", block.getFieldValue('markerPositions'))
-    
-    var text_markerpositions = block.getFieldValue('markerPositions')?.value;
-    var text_markerlabels = block.getFieldValue('markerLabels')?.value;
-    
-    let code = `<Map 
-      markerPositions="${text_markerpositions}"
-      markerLabels="${text_markerlabels}"
-      />`
+    let code = "<Map \n"
+    code += attribute(block, "markerPositions");
+    code += attribute(block, "markerLabels");
+    code += attribute(block, "audioColumn", "audio");   
+    code += "/>\n";
 
     return code;
   };
