@@ -1,6 +1,6 @@
 <script>
 
-import { InterkitClient } from 'interkit'
+import { InterkitClient, util } from 'interkit'
 
 import {
     ComposedModal,
@@ -20,12 +20,17 @@ import {
   export let params;
 
   let sheet;
+  let labelColumnKey;
   let rows;
 
   onMount(async ()=>{
     console.log("mount sheetrefselect", params)
     if(params?.reference) {
-      sheet = await InterkitClient.call("sheet.get", params.reference)         
+      sheet = await InterkitClient.call("sheet.get", params.reference)
+      labelColumnKey = util.firstTextColKey(sheet);
+      console.log("labelColumnKey", labelColumnKey)
+      if(!labelColumnKey) console.log("warning: no text column in sheet")
+
       rows = await InterkitClient.call("rows.get", params.reference)        
       console.log(sheet, rows);
     }
@@ -45,7 +50,7 @@ import {
     console.log("change", value)
   }*/
 
-  $: multiSelectItems = rows ? rows.map(r=>{return {id: r._id, text: r.value[sheet.columns[0].key]}}) : []
+  $: multiSelectItems = rows ? rows.map(r=>{return {id: r._id, text: (labelColumnKey ? r.value[labelColumnKey] : r._id)}}) : []
 
   let selectedIds = value.rowIds;
   const multiChange = ()=>{
@@ -53,7 +58,7 @@ import {
     value = {
       type: "sheetRef",
       sheetId: sheet._id, 
-      columnKey: sheet.columns[0].key,
+      columnKey: labelColumnKey,
       rowIds: selectedIds
     }
   }

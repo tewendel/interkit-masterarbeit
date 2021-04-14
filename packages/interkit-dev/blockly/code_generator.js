@@ -10,6 +10,10 @@ export const initCodeGenerator = (Blockly) => {
     return value ? `${attributeName}="${value}"\n` : "";
   }
 
+  const attributes = (block, attributeNames) => {
+    return attributeNames.map(a => attribute(block, a)).join(" ")
+  }
+
   const slot = (block, slotName, slotProp) => {
     var value = Blockly.JavaScript.statementToCode(block, slotName)
     return value ? 
@@ -38,30 +42,24 @@ export const initCodeGenerator = (Blockly) => {
   };
 
   Blockly.JavaScript['Dashboard'] = function(block) {
-    var text_sectiontitles = block.getFieldValue('sectionTitles')?.value;
-    var text_sectionrefs = block.getFieldValue('sectionRefs')?.value;
-    // TODO: Assemble JavaScript into code variable.
-    var code = `<Dashboard 
-      sectionTitles="${text_sectiontitles}"
-      sectionRefs="${text_sectionrefs}"
-      />`
+    var code = "<Dashboard \n"
+    code += attributes(block, [
+      "sectionTitles", 
+      "sectionRefs",
+      "sectionTypes",
+      "elementTitleColumn",
+      "elementDescriptionColumn",      
+      "elementAudioColumn",
+      "elementImageColumn"
+      ])
+    code += " />\n"
     return code;
   };
-
-  /*Blockly.JavaScript['Tab'] = function(block) {
-    
-    var code = "<Tab\n";
-    code += attribute(block, "name") 
-    code += block.getFieldValue("name")?.value
-    code += "/>"
-    return code;
-  };*/
 
   Blockly.JavaScript['Tab'] = function(block) {
     var text_label = block.getFieldValue('label');
     return `<Tab label="${text_label}"/>`
   };
-
 
   Blockly.JavaScript['TabPanel'] = function(block) {
     

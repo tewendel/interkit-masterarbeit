@@ -14,7 +14,7 @@
   // name of the category
 
   $: {
-    console.log("singleViewData changed", $singleViewData);
+    //console.log("singleViewData changed", $singleViewData);
     categorySheetId = $singleViewData?.categorySheetId;
     filterCategoryId = $singleViewData?.filterCategoryId;
     filterCategoryName = $singleViewData?.filterCategoryName;
@@ -30,7 +30,7 @@
 
   const setupSub = async ()=> {
 
-    console.log(dataSheet)
+    //console.log(dataSheet)
     if(!dataSheet) return
     
     if(filterCategoryId) {
@@ -50,7 +50,7 @@
     // subscribe to the data
     dataSub = await InterkitClient.getSub('rows', 'rows', [dataSheetId], r=>{return (r.sheetId==dataSheetId) && check(r)});
     dataRows = dataSub.data;  
-    console.log($dataRows)
+    //console.log($dataRows)
 
   }
 

@@ -4,7 +4,7 @@
   import { onMount, getContext } from 'svelte'
   import MediaFileImage from './MediaFileImage.svelte';
 
-  const { setSingleView } = getContext("listNav");
+  let listNavContext = getContext("listNav");
 
   export let categorySheetId;
   export let nameKey;
@@ -20,14 +20,17 @@
   let filterCategoryId
 
   onMount(async ()=>{    
-    console.log("mount archive category")
+    //console.log("mount archive category")
     categorySub = await InterkitClient.getSub('rows', 'rows', [categorySheetId], r=>r.sheetId==categorySheetId);
     categories = categorySub.data;  
   })
 
   const openCategory = (category)=> {
     filterCategoryId = category._id;
-    setSingleView({categorySheetId, filterCategoryId, filterCategoryName: getValue(category, nameKey)});
+    if(listNavContext) {
+      listNavContext.setSingleView({categorySheetId, filterCategoryId, filterCategoryName: getValue(category, nameKey)});  
+    }
+    
   }
 
 </script>

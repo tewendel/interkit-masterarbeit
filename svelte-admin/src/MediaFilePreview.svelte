@@ -10,7 +10,7 @@
   }
   const lookupMediafile = async (id) => {
     mediafile = await InterkitClient.call("mediafile.get", id);
-    console.log("loaded new mediafile for preview", mediafile)
+    //console.log("loaded new mediafile for preview", mediafile)
   }
 
 </script>

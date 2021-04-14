@@ -12,7 +12,7 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4 %5",
+  "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4 %5 sectionTypes %6 %7 elementTitleColumn %8 %9 elementDescriptionColumn %10 %11 elementAudioColumn %12 %13 elementImageColumn %14 %15",
   "args0": [
     {
       "type": "input_dummy"
@@ -28,6 +28,46 @@
     {
       "type": "sheetColumn",
       "name": "sectionRefs",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "sectionTypes",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "elementTitleColumn",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "elementDescriptionColumn",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "elementAudioColumn",
+      "text": ""
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "elementImageColumn",
       "text": ""
     },
     {
