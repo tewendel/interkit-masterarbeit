@@ -1,17 +1,25 @@
 <script>
   import QrCode from "svelte-qrcode"
-  import { Loading } from 'carbon-components-svelte'
   import { InterkitClient } from 'interkit'
   import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
-
+  import { 
+    Tabs, 
+    Tab, 
+    TabContent, 
+    Toggle,
+    Button, 
+    Loading } from "carbon-components-svelte";
+  import ReloadIcon from "carbon-icons-svelte/lib/Play20";
+  import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
 
   export let projectId, previewURL = "";
 
-  let bundlezipURL = "";
+  const query = new URLSearchParams(); // modify app configuration on request
 
+  let bundlezipURL = "";
   let bundleServerURL
+  let themed = true
 
   onMount( async () => {
     bundleServerURL = await InterkitClient.call("bundler.getUrl")
@@ -20,7 +28,9 @@
   })
 
   $: {
-    previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" : null
+    console.log(themed)
+    query.set("loadTheme", themed)
+    previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }
 
@@ -38,9 +48,13 @@
       </div>
     {/if}
   </div>
-  <button on:click={BundleServer.reloadPreview}>reload</button>
-  <button on:click={BundleServer.compileReloadPreview}>compile & relaod</button>
+  <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
   
+  <Button icon={ReloadCompileIcon} kind="tertiary" on:click={BundleServer.compileReloadPreview}>compile & relaod</Button>
+
+  <br><br>
+  <Toggle size="sm" labelText="Apply Theme" toggled on:toggle={(e) => themed = e.detail.toggled}/>
+
   <br><br>
 
   <Tabs>
