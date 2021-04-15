@@ -42,7 +42,7 @@ export const initCodeGenerator = (Blockly) => {
     let code = `<AppBase
       sectionTitles="${text_sectiontitles}"
       sectionRefs="${text_sectionrefs}"
-      >\n${statements_name}\n</AppBase>`
+      >\n${statements_name}\n</AppBase>\n`
     return code;
   };
 
@@ -69,7 +69,7 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['Tab'] = function(block) {
     var text_label = block.getFieldValue('label');
-    return `<Tab label="${text_label}"/>`
+    return `<Tab label="${text_label}"/>\n`
   };
 
   Blockly.JavaScript['TabPanel'] = function(block) {
@@ -78,7 +78,7 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "path");
     code += " >\n";
     code += statements(block, "default");
-    code += "</TabPanel>"
+    code += "</TabPanel>\n"
     return code;
   };
 
@@ -87,7 +87,7 @@ export const initCodeGenerator = (Blockly) => {
     var code = "<Tabs>\n";
     code += slot(block, "tabList") 
     code += slot(block, "tabPanels") 
-    code += "</Tabs>"
+    code += "</Tabs>\n"
     return code;
   };
 
@@ -97,7 +97,7 @@ export const initCodeGenerator = (Blockly) => {
     var code = "<ListNav>\n";
     code += slot(block, "listView") 
     code += slot(block, "singleView") 
-    code += "</ListNav>"
+    code += "</ListNav>\n"
     return code;
   };
 
@@ -119,7 +119,7 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "dataSheetId", "dataSheet")
     code += ">\n"
     code += slot(block, "contentElement", "element") 
-    code += "</ElementList>"
+    code += "</ElementList>\n"
     return code;
   };
 
@@ -129,10 +129,24 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "markerPositions");
     code += attribute(block, "markerLabels");
     code += attribute(block, "audioColumn", "audio");   
+    code += ">\n";
+    code += slot(block, "filters");
+    code += slot(block, "layers");
+    code += "</Map>"
+
+    return code;
+  };
+
+  Blockly.JavaScript['MapCategoryFilter'] = function(block) {
+
+    let code = "<MapCategoryFilter \n"
+    code += attributes(block, ["name", "categoryNameColumn", "elementRefColumn"])
     code += "/>\n";
 
     return code;
   };
+
+
 
   Blockly.JavaScript['Styling'] = function(block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
@@ -144,7 +158,7 @@ export const initCodeGenerator = (Blockly) => {
       primary_color="${colour_primary_color}"
       font_family="${text_font_family}"
       google_font="${text_google_font}"
-      >\n${statements_name}\n</Styling>`
+      >\n${statements_name}\n</Styling>\n`
 
     return code;
   };
@@ -166,7 +180,7 @@ export const initCodeGenerator = (Blockly) => {
           ${statements_buttons}
         </svelte:fragment>
         
-      </BottomMenu>
+      </BottomMenu>\n
     `
     return code;
   };
@@ -175,20 +189,20 @@ export const initCodeGenerator = (Blockly) => {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');    
     var code = "<BottomMenuPage "
     code += attribute(block, "path");
-    code += ">"
+    code += ">\n"
     code += `${statements_name}`
-    code +=`</BottomMenuPage>`
+    code +=`\n</BottomMenuPage>\n`
     return code
   };
 
   Blockly.JavaScript['BottomMenuButton'] = function(block) {
     var text_label = block.getFieldValue('label');
-    return `<BottomMenuButton label="${text_label}"/>`
+    return `<BottomMenuButton label="${text_label}"/>\n`
   };
 
   Blockly.JavaScript['HeadlinePage'] = function(block) {
     var text_label = block.getFieldValue('NAME');
-    return `<HeadlinePage headline="${text_label}"/>`
+    return `<HeadlinePage headline="${text_label}"/>\n`
   };
 
   Blockly.JavaScript['ContentElementAudio'] = function(block) {
@@ -196,14 +210,14 @@ export const initCodeGenerator = (Blockly) => {
     var code = "<ContentElementAudio {element} \n";
     code += attribute(block, "nameColumn", "name")
     code += attribute(block, "audioColumn", "audio")
-    code += "\n/>"
+    code += "\n/>\n"
 
     return code;
   };
 
   Blockly.JavaScript['AudioPlayer'] = function(block) {
     var text_label = block.getFieldValue('NAME');
-    return `<AudioPlayer/>`
+    return `<AudioPlayer/>\n`
   };
 
   Blockly.JavaScript['Theming'] = function (block) {

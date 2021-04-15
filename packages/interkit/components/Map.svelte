@@ -1,15 +1,42 @@
+<script context="module">
+  export const MAP = {}; // context identifier
+</script>
+
 <script>
 
-  import { onMount } from 'svelte'
-
+  import { onMount, setContext } from 'svelte'
+  
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
+
+  import MapFilterControls from './MapFilterControls.svelte'
   
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
   export let audioColumn; // type sheetColumn: "sheetId/columnId"
 
+  let filterLists = [];
+  let activeFilter;
   
+  // context for MapCategoryFilter components to register themselves
+  setContext(MAP, {
+    registerFilter: async (name, categoryNameColumn, elementRefColumn) => {
+      // get the sheetId of the sheet with the categories
+      let filterCategorySheetId = util.getSheetId(categoryNameColumn);
+      
+      // get the categories that we can filter for with this filter
+      let categoryRows = await InterkitClient.call("rows.get", filterCategorySheetId)
+
+      // add the filter to our collection
+      filterLists.push({
+        name,
+        filterCategorySheetId,
+        categoryRows,
+        categoryNameColumn,
+        elementRefColumn 
+      })
+    }
+  });
 
   //console.log(markerPositions, markerLabels)
 
@@ -23,10 +50,48 @@
   let markers = [];
 
   let subHandle;
+  let markerRows;
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
     await playAudio(e.target?.payload?.audio, e.target?.payload?.title, false)
+  }
+
+  const updateMarkers = () => {
+
+    //console.log("activeFilter", activeFilter, markerRows);
+
+    // filter rows
+    let rowsFiltered = markerRows.filter(r => 
+      !activeFilter ||
+      util.rowVal(r, activeFilter.elementRefColumn)?.rowIds?.includes(activeFilter.row._id)
+    )
+
+    // prepare data for marker production
+    let markerValues = rowsFiltered.map(r=> {return {
+      location: (util.rowVal(r, markerPositions)?.lat
+                && util.rowVal(r, markerPositions)?.lng ?
+                util.rowVal(r, markerPositions) : undefined),
+      title: util.rowVal(r, markerLabels),
+      audio: util.rowVal(r, audioColumn)?.value
+    }})
+
+    // clear old markers
+    for(let marker of markers) {
+      map.removeLayer(marker)
+    }
+    markers = [];
+
+    // setup new markers
+    for(let markerValue of markerValues) {
+      if(markerValue.location) {
+        let marker = L.marker(markerValue.location, {title: markerValue.title}).addTo(map)
+        marker.payload = markerValue;
+        marker.on('click', markerClick);
+        markers.push(marker);  
+      }
+    }
+    // this probably needs to be much more efficient
   }
 
   onMount(async ()=>{
@@ -51,18 +116,8 @@
     }).addTo(map);
   
     let sheetId;
-    let positionColumnKey;
     if(markerPositions) {
-      sheetId = markerPositions.split("/")?.[0]
-      positionColumnKey = markerPositions.split("/")?.[1]
-    }
-    let labelColumnKey;
-    if(markerLabels) {
-      let sheetIdLabels = markerLabels.split("/")?.[0]
-      if(sheetId != sheetIdLabels) {
-        alert("marker positions and labels must be on the same sheet")
-      }
-      labelColumnKey = markerLabels.split("/")?.[1]
+      sheetId = util.getSheetId(markerPositions)
     }
     
     //console.log(sheetId, positionColumnKey, labelColumnKey)
@@ -70,43 +125,31 @@
       subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
-        
-        let markerValues = rowsArray.map(r=> {return {
-          location: (r.value[positionColumnKey]?.lat && r.value[positionColumnKey]?.lng) ?
-            r.value[positionColumnKey] : undefined,
-          title: r.value[labelColumnKey],                    
-          audio: r.value[util.colKey(audioColumn)]?.value
-        }})
-
-        //console.log(markerValues);
-
-        // clear old markers
-        for(let marker of markers) {
-          map.removeLayer(marker)
-        }
-        markers = [];
-
-        // setup new markers
-        for(let markerValue of markerValues) {
-          if(markerValue.location) {
-            let marker = L.marker(markerValue.location, {title: markerValue.title}).addTo(map)
-            marker.payload = markerValue;
-            marker.on('click', markerClick);
-            markers.push(marker);  
-
-          }
-        }
-
-        // just for demo purposes, this needs to be much more efficient        
+        markerRows = rowsArray;
+        updateMarkers();
       })
     }
 
   })
+
+  const setFilter = (filter) => {
+    activeFilter = filter;
+    updateMarkers();
+  }
    
 </script>
 
+<slot name="filters"></slot>
+<slot name="layers"></slot>
+
 <div id="mapid" bind:this={mapElement}></div>
-    
+
+<MapFilterControls
+  {filterLists}
+  {setFilter}
+  {activeFilter}
+/>
+
 <style>
   #mapid { 
     position: fixed;

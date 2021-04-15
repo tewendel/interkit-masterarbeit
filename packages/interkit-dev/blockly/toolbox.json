@@ -80,6 +80,10 @@
         {
           "kind": "block",
           "type": "AudioPlayer"
+        },
+        {
+          "kind": "block",
+          "type": "MapCategoryFilter"
         }
       ]
     },

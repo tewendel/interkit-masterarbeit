@@ -10,6 +10,10 @@ export default {
     return row?.value[colKey(sheetColumn)]
   },
 
+  getSheetId: (sheetColumn) => {
+    return sheetColumn?.split("/")?.[0];
+  },
+
   // finds the column key of the first text column in a sheet
   firstTextColKey: (sheet) => {
     //console.log(sheet)
