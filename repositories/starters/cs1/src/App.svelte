@@ -6,6 +6,7 @@ import BottomMenuButton from "interkit/components/BottomMenuButton.svelte";
 import Dashboard from "interkit/components/Dashboard.svelte";
 import Archive from "interkit/components/Archive.svelte";
 import Map from "interkit/components/Map.svelte";
+import Theming from "interkit/components/Theming.svelte";
 </script>
 
 <Styling
@@ -35,3 +36,4 @@ import Map from "interkit/components/Map.svelte";
         </BottomMenu>
 
 </Styling>
+<Theming cssFile="global.css" />

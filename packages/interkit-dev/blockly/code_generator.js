@@ -188,7 +188,12 @@ export const initCodeGenerator = (Blockly) => {
     return `<AudioPlayer/>`
   };
 
-
+  Blockly.JavaScript['Theming'] = function (block) {
+    var code = "<Theming \n"
+    code += attribute(block,"cssFile")
+    code += " />\n"
+    return code;
+  };
   
   
 }
