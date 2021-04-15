@@ -11,9 +11,6 @@
   export let imageKey;
   export let descriptionKey;
 
-  // todo: register a method into the global namespace to switch to an item in this category
-  /* InterkitClient.registerGlobalMethod("setCategoryFilter", (filterId)=>{setSingleView({categorySheetId, filterId, filterCategoryName: getValue(category, nameKey)});  )}) */
-  
   let categorySub
   let categories
   let filterCategoryId
@@ -32,7 +29,7 @@
   }
 
   // register a global function to open the listNav to this category
-  InterkitClient.registerGlobalMethod("openCategory", ({category}) => {
+  InterkitClient.registerGlobalMethod("featuredCategoryView", ({category}) => {
     console.log(category)
     if(categorySheetId == category.sheetId)
       openCategory(category)

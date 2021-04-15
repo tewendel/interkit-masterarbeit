@@ -187,8 +187,12 @@
 </script>
 
 {#if $currentSheet}
-  <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button> <button on:click={close}>close</button></h4>
+  <button on:click={close}>{"<<"} back</button><br><br>
+  <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button></h4>
   
+
+  <br><br>
+  <button on:click={createColumn}>add column</button>
   <DataTable
     sortable
     {headers}
@@ -211,7 +215,6 @@
   
   </DataTable>
   <button on:click={createRow}>add row</button>
-  <button on:click={createColumn}>add column</button>
 {/if}
     
 <InputModal

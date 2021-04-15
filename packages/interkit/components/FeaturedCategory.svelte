@@ -23,9 +23,9 @@
   }
 
   const openCategory = ()=>{
-    InterkitClient.callGlobalMethod("openArchivePage")
-    InterkitClient.callGlobalMethod("openGatesTab")
-    InterkitClient.callGlobalMethod("openCategory", {category: categoryRow})
+    InterkitClient.callGlobalMethod("featuredCategoryPage")
+    InterkitClient.callGlobalMethod("featuredCategoryTab")
+    InterkitClient.callGlobalMethod("featuredCategoryView", {category: categoryRow})
   }
 
 </script>

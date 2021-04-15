@@ -6,7 +6,7 @@
   export let image;
 
   const doSwitch = ()=> {
-    InterkitClient.callGlobalMethod("menuSwitcher")
+    InterkitClient.callGlobalMethod("menuSwitcherTarget")
   }
 
 </script>

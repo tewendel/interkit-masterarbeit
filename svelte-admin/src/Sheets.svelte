@@ -38,20 +38,23 @@
 
 </script>
 
-{#if sheets}
-  <ul>
-  <!-- we need to use $sheets here to get the reactive value of the store -->
-  {#each $sheets as sheet}
-    <li class:active="{currentSheetId == sheet.id}" on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
-  {/each}
-  </ul>
-{:else}
-  loading...
-{/if}
+{#if !currentSheetId}
 
-<br>
-<button on:click={createSheet}>Create Sheet</button>
-<br><br>
+  {#if sheets}
+    <ul>
+    <!-- we need to use $sheets here to get the reactive value of the store -->
+    {#each $sheets as sheet}
+      <li class:active="{currentSheetId == sheet.id}" on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
+    {/each}
+    </ul>
+  {:else}
+    loading...
+  {/if}
+
+  <br>
+  <button on:click={createSheet}>Create Sheet</button>
+
+{/if}
 
 {#if currentSheetId}
   <Sheet id={currentSheetId} {projectId} close={()=>{currentSheetId=null}}/>
