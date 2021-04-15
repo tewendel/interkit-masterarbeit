@@ -8,15 +8,17 @@ const get_app_files = async (req, res, next) => {
 
   // TODO this is too easy to exploit
 
-  const match = req.url.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
-  //console.log("url, match", req.url, match)
+  const match = req.path.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
+
+  
+  // console.log("url, match", req.url, match)
   const projectId = match?.[1]
-  let subpath = match?.[2]
+  let subpath = match?.[2] 
 
   if (match == null || !projectId) res.send(404)
 
   if(projectId) {  
-    // console.log(match)
+    // console.log("projectId: " + projectId, "subpath: " + subpath)
 
     console.log("build projectPublicPath", REPOSITORIES_PATH, projectId)
 
