@@ -1,6 +1,7 @@
 <script>
   import QrCode from "svelte-qrcode"
   import { InterkitClient } from 'interkit'
+  import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
   import { 
@@ -15,6 +16,7 @@
 
   export let projectId, previewURL = "";
 
+  const convert = new Convert();
   const query = new URLSearchParams(); // modify app configuration on request
 
   let bundlezipURL = "";
@@ -91,7 +93,7 @@
   
   
 {#if $compileError}
-  <div class="error">compile error: {$compileError}</div>
+  <div class="error">compile error: {@html convert.toHtml($compileError)}</div>
 {/if}
 
 {#if $runtimeError}
@@ -126,5 +128,9 @@
   .error {
     white-space: pre-wrap;
     font-family: courier;
+    background-color: #333;
+    color: #f0f0f0;
+    padding: 1ex;
+    overflow: scroll;
   }
 </style>
