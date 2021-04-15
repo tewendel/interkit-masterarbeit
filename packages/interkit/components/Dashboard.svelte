@@ -5,6 +5,7 @@
   export let sectionCategoryRef; // column of references to category
   export let sectionTypes; // column that tells us which component to use per section
   export let sectionImage; // column that gives us an image for the section
+  export let sectionOrder; // column that tells us in which order the sections should be rendered
 
   // columns for the individual elements eg in sliders
   export let elementTitleColumn;
@@ -73,7 +74,17 @@
 
   // todo: onDestroy
 
-  $: sections = $sectionRows ? $sectionRows.map(r=>{return {
+  const sort = (r1, r2) => {
+    if (util.rowVal(r1, sectionOrder) < util.rowVal(r2, sectionOrder)) {
+      return -1;
+    }
+    if (util.rowVal(r1, sectionOrder) > util.rowVal(r2, sectionOrder)) {
+      return 1;
+    }
+    return 0;
+  }
+
+  $: sections = $sectionRows ? $sectionRows.sort(sort).map(r=>{return {
     title: util.rowVal(r, sectionTitles), 
     refs: util.rowVal(r, sectionRefs),
     type: util.rowVal(r, sectionTypes),
