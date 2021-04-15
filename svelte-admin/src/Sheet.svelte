@@ -171,7 +171,14 @@
   $: {
     if($currentSheet) 
       if($currentSheet.columns) 
-        headers = $currentSheet.columns.map(c=>{return {key: c.key, value: c.name, type: c.type, reference: c.reference}})
+        headers = $currentSheet.columns.map(c=>{return {
+          key: c.key, 
+          value: c.name, 
+          type: c.type, 
+          reference: c.reference,
+          // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
+          sort: !(c.type == "number" || c.type == "string") ? false : undefined  
+        }})
   }
   $: { console.log("rows update", $rows) }
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
@@ -183,6 +190,7 @@
   <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button> <button on:click={close}>close</button></h4>
   
   <DataTable
+    sortable
     {headers}
     rows={carbonRows}
     style="overflow-x: scroll"
