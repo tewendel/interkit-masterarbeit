@@ -124,6 +124,14 @@
       }
     }
 
+    if(columnType == "number") {
+      let newVal = prompt("Update " + columnName, (cell.value && typeof cell.value == "number") ? cell.value : "")
+      newVal = parseFloat(newVal);
+      if(newVal != null) {
+        InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+      }
+    }
+
     if(columnType == "location" || columnType == "sheetRef" || columnType == "mediaFile") {
       console.log("opening input modal", columnType)
       updateCell = cell;

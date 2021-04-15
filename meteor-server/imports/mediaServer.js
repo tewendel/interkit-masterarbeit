@@ -29,7 +29,7 @@ if (Meteor.isServer) {
       return cursor?.fetch();
     },
     "mediafile.get": (mediafileId) => {
-      console.log("getMediaFile", mediafileId)
+      //console.log("getMediaFile", mediafileId)
       let mediafileInstance = MediaFiles.findOne(mediafileId)
       let mediafileObj = {
         ...mediafileInstance.get(),
