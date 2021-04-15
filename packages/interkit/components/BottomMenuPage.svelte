@@ -26,7 +26,8 @@
 
 <style>
   .page {
-    position: absolute;
+    position: fixed;
+    overflow-y: auto;
     top: 0;
     left: 0;
     height: 100%;
