@@ -44,6 +44,10 @@
         {
           "kind": "block",
           "type": "Styling"
+        },
+        {
+          "kind": "block",
+          "type": "Theming"
         }
       ]
     },
