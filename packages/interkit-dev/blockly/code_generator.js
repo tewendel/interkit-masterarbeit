@@ -3,7 +3,12 @@ export const initCodeGenerator = (Blockly) => {
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
-    var value = block.getFieldValue(blocklyAttributeName)?.value
+    
+    // if fieldValue is an object with value attribute, use that (eg special field sheetColumn)
+    // otherwise use fieldValue directly (eg vanilla string field)
+    var value = block.getFieldValue(blocklyAttributeName)?.value ?
+      block.getFieldValue(blocklyAttributeName)?.value
+      : block.getFieldValue(blocklyAttributeName)
 
     if(value == "undefined" || value == "null") value = null;
 
@@ -46,11 +51,15 @@ export const initCodeGenerator = (Blockly) => {
     code += attributes(block, [
       "sectionTitles", 
       "sectionRefs",
+      "sectionCategoryRef",
       "sectionTypes",
       "elementTitleColumn",
       "elementDescriptionColumn",      
       "elementAudioColumn",
-      "elementImageColumn"
+      "elementImageColumn",
+      "categoryTitleColumn",
+      "categoryDescriptionColumn",
+      "categoryImageColumn"
       ])
     code += " />\n"
     return code;
