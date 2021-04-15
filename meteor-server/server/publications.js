@@ -37,3 +37,16 @@ Meteor.methods({'rows.get': (sheetId)=>{
   let rows = getRows(sheetId)
   return rows.fetch();
 }})
+
+const getRow = (rowId) => {
+  if(rowId)
+    return Rows.findOne(rowId)
+  else 
+    return null;
+}
+
+Meteor.methods({'row.get': (rowId)=>{
+  let row = getRow(rowId)
+  return row;
+}})
+

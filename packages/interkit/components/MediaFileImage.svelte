@@ -8,7 +8,7 @@
   
   let mediafile;
   $: {
-    lookupMediafile(mediafileRef.value)
+    lookupMediafile(mediafileRef?.value)
   }
   const lookupMediafile = async (id) => {
     if(id) {

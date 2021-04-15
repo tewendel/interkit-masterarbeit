@@ -43,6 +43,12 @@
         selectedPanel.set(panels[i]);
       },
 
+      selectPanel: (panel) => {
+        const i = panels.indexOf(panel);  
+        selectedPanel.set(panel)
+        selectedTab.set(tabs[i])      
+      },
+
       selectedTab,
       selectedPanel
     });

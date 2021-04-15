@@ -8,7 +8,7 @@
   export let titleColumn;
   export let descriptionColumn;
   export let audioColumn;
-  export let imageColumn;
+  //export let imageColumn;
 
   const play = async () => {
     await playAudio(util.rowVal(elementRow, audioColumn).value, util.rowVal(elementRow, titleColumn))

@@ -1,13 +1,21 @@
 <script>
 
   export let sectionTitles; // column of the section title
-  export let sectionRefs;
+  export let sectionRefs; // column of references to elements
+  export let sectionCategoryRef; // column of references to category
   export let sectionTypes; // column that tells us which component to use per section
+  export let sectionImage; // column that gives us an image for the section
 
+  // columns for the individual elements eg in sliders
   export let elementTitleColumn;
   export let elementDescriptionColumn;
   export let elementAudioColumn;
   export let elementImageColumn;
+
+  // columns for the category in featured category
+  export let categoryTitleColumn;
+  export let categoryDescriptionColumn;
+  export let categoryImageColumn;
 
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient, util } from '../'
@@ -15,6 +23,8 @@
   import ElementSlider from './ElementSlider.svelte';
   import ElementSingle from './ElementSingle.svelte';
   import ElementRandom from './ElementRandom.svelte';
+  import FeaturedCategory from './FeaturedCategory.svelte';
+  import MenuSwitcher from './MenuSwitcher.svelte';
 
   let sectionSheetId = sectionTitles?.split("/")?.[0] // id of the sheet with the dashboard structure  
   let refsColumnKey = util.colKey(sectionRefs) // column of the element references
@@ -34,13 +44,13 @@
     if(sectionSheetId) {
       sectionSub = await InterkitClient.getSub('rows', 'rows', [sectionSheetId], r=>r.sheetId==sectionSheetId);
       sectionRows = sectionSub.data;
-      console.log("sectionRows", $sectionRows)
+      //console.log("sectionRows", $sectionRows)
 
       if(refsColumnKey) {
 
         // for now we assume all references are to the same sheet!
         let aRefRow = $sectionRows.find(r => r.value?.[refsColumnKey]?.sheetId)
-        console.log(aRefRow)
+        //console.log(aRefRow)
 
         if(!aRefRow) {
           console.log("dashboard empty: no element selected in reference column, aborting subscribe")
@@ -66,7 +76,9 @@
   $: sections = $sectionRows ? $sectionRows.map(r=>{return {
     title: util.rowVal(r, sectionTitles), 
     refs: util.rowVal(r, sectionRefs),
-    type: util.rowVal(r, sectionTypes)
+    type: util.rowVal(r, sectionTypes),
+    categoryRef: util.rowVal(r, sectionCategoryRef),
+    image: util.rowVal(r, sectionImage)
   }}) : []
 
 </script>
@@ -99,27 +111,25 @@
       titleColumn={elementTitleColumn}
       descriptionColumn={elementDescriptionColumn}
       audioColumn={elementAudioColumn}
+      image={section.image}
+      title={section.title}
     />
   {:else if section.type == "FeaturedCategory"}
 
-    <!--
-        FeaturedCategory would have to
-        - access the BottomMenuContext 
-          - should be ok, we are child component of BottomMenu
-        - switch to a specific MenuPage ("podcasts")
-          - problem: how to configure? maybe via the label
+    <FeaturedCategory
+      title={section.title}
+      categoryRef={section.categoryRef}
+      {categoryTitleColumn}
+      {categoryDescriptionColumn}
+      {categoryImageColumn}
+    />
 
-        - access the Tabs context 
-          - problem: we are not a child component of Tabs
-          - problem: which Tab context?
-        - switch to a specific Tab
-          - problem: how to configure which tab?
+  {:else if section.type == "MenuSwitcher"}
 
-        - access the ListNav context
-          - problem: we are not a child component of ListNav
-          - problem: which ListNav?
-        - select the single view for a specific list element (the category)
-    -->
+    <MenuSwitcher
+      title={section.title}
+      image={section.image}
+    />
 
   {:else}
     <div>Dashboard Component {section.type} not implenented yet.</div>

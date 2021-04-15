@@ -1,6 +1,6 @@
 <script>
 
-  import { InterkitClient } from '../'
+  import { InterkitClient, util } from '../'
   import { onMount, getContext } from 'svelte'
   import MediaFileImage from './MediaFileImage.svelte';
 
@@ -11,9 +11,8 @@
   export let imageKey;
   export let descriptionKey;
 
-  const getValue = (row, columnKey) => {
-    return row.value[columnKey.split("/")[1]]
-  }
+  // todo: register a method into the global namespace to switch to an item in this category
+  /* InterkitClient.registerGlobalMethod("setCategoryFilter", (filterId)=>{setSingleView({categorySheetId, filterId, filterCategoryName: getValue(category, nameKey)});  )}) */
   
   let categorySub
   let categories
@@ -28,10 +27,16 @@
   const openCategory = (category)=> {
     filterCategoryId = category._id;
     if(listNavContext) {
-      listNavContext.setSingleView({categorySheetId, filterCategoryId, filterCategoryName: getValue(category, nameKey)});  
+      listNavContext.setSingleView({categorySheetId, filterCategoryId, filterCategoryName: util.rowVal(category, nameKey)});  
     }
-    
   }
+
+  // register a global function to open the listNav to this category
+  InterkitClient.registerGlobalMethod("openCategory", ({category}) => {
+    console.log(category)
+    if(categorySheetId == category.sheetId)
+      openCategory(category)
+  });
 
 </script>
 
@@ -39,9 +44,9 @@
 <ul>
   {#each $categories as category}
   <li on:click={()=>{openCategory(category)}}>
-    <h3>{getValue(category, nameKey)}</h3>
-    <MediaFileImage mediafileRef={getValue(category, imageKey)} />    
-    <div>{getValue(category, descriptionKey)}</div>
+    <h3>{util.rowVal(category, nameKey)}</h3>
+    <MediaFileImage mediafileRef={util.rowVal(category, imageKey)} />    
+    <div>{util.rowVal(category, descriptionKey)}</div>
   </li>
   {/each}
 </ul>

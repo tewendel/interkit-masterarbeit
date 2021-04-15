@@ -7,6 +7,7 @@ let server;
 let subscriptionCounter = {};
 
 let globalStores = {};
+let globalMethods = {};
 
 // restores the meteor style _id attribute on all elements in array or single object
 const restore_ids = (data) => {
@@ -99,6 +100,19 @@ const InterkitClient = {
     if(!globalStores[key])
       globalStores[key] = writable(null);   
     return globalStores[key]
+  },
+
+  registerGlobalMethod: (key, method) => {
+    console.log("registerGlobalMethod", key)
+    globalMethods[key] = method;
+  },
+  callGlobalMethod: (key, options) => {    
+    if(globalMethods[key]) {
+      console.log("callGlobalMethod", key)
+      globalMethods[key](options);
+    } else {
+      console.log("global method not fouund", key);
+    }
   }
 }
 

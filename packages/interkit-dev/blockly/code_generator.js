@@ -53,6 +53,7 @@ export const initCodeGenerator = (Blockly) => {
       "sectionRefs",
       "sectionCategoryRef",
       "sectionTypes",
+      "sectionImage",
       "elementTitleColumn",
       "elementDescriptionColumn",      
       "elementAudioColumn",
@@ -72,7 +73,9 @@ export const initCodeGenerator = (Blockly) => {
 
   Blockly.JavaScript['TabPanel'] = function(block) {
     
-    var code = "<TabPanel>";
+    var code = "<TabPanel "
+    code += attribute(block, "path");
+    code += " >\n";
     code += statements(block, "default");
     code += "</TabPanel>"
     return code;
@@ -169,7 +172,12 @@ export const initCodeGenerator = (Blockly) => {
   
   Blockly.JavaScript['BottomMenuPage'] = function(block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');    
-    return `<BottomMenuPage>${statements_name}</BottomMenuPage>`
+    var code = "<BottomMenuPage "
+    code += attribute(block, "path");
+    code += ">"
+    code += `${statements_name}`
+    code +=`</BottomMenuPage>`
+    return code
   };
 
   Blockly.JavaScript['BottomMenuButton'] = function(block) {
