@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { FilesCollection } from 'meteor/ostrio:files';
+import { v4 as uuidv4 } from 'uuid';
 
 const MediaFiles = new FilesCollection({
   collectionName: 'mediafiles',
@@ -28,14 +29,16 @@ if (Meteor.isServer) {
       let cursor = getMediaFiles(projectId)
       return cursor?.fetch();
     },
-    "mediafile.get": (mediafileId) => {
+    "mediafile.get": ({key, projectId}) => {
       //console.log("getMediaFile", mediafileId)
-      let mediafileInstance = MediaFiles.findOne(mediafileId)
-      let mediafileObj = {
-        ...mediafileInstance.get(),
-        link: mediafileInstance.link()
+      if(key && projectId) {
+        let mediafileInstance = MediaFiles.findOne({'meta.key': key, 'meta.projectId': projectId})
+        let mediafileObj = {
+          ...mediafileInstance.get(),
+          link: mediafileInstance.link()
+        }
+        return mediafileObj;
       }
-      return mediafileObj;
     }
   })
 }
@@ -57,7 +60,8 @@ export const setupMediaServer = (app) => {
             type: req.file.mimetype,
             size: req.file.size,
             meta: {
-              projectId: req.body.projectId
+              projectId: req.body.projectId,
+              key: uuidv4()
             }
           };
 

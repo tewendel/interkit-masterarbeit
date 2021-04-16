@@ -7,10 +7,15 @@ export default {
   colKey,
 
   rowVal: (row, sheetColumn) => {
-    return row?.value[colKey(sheetColumn)]
+    return row?.values[colKey(sheetColumn)]
+  },
+
+  getSheetKey: (sheetColumn) => {
+    return sheetColumn?.split("/")?.[0];
   },
 
   getSheetId: (sheetColumn) => {
+    alert("deprecated use of getSheetId")
     return sheetColumn?.split("/")?.[0];
   },
 

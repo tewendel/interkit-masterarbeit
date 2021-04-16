@@ -1,9 +1,13 @@
 import { Projects, Sheets, Rows } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
-  return Projects.find({});
+  console.log("projects sub")
+  let projects = Projects.find({});
+  console.log(projects.fetch())
+  return projects;
 });
 
+// get all the sheets in a project
 const getSheets = (projectId) => {
   if(projectId)
     return Sheets.find({projectId})
@@ -11,42 +15,41 @@ const getSheets = (projectId) => {
     return null;
 }
 Meteor.publish('sheets', getSheets);
-
 Meteor.methods({'sheets.get': (projectId)=>{
   //console.log("sheets.get"); 
   let sheets = getSheets(projectId);
   return sheets.fetch();
 }});
 
-Meteor.methods({'sheet.get': (sheetId)=>{
-  //console.log("sheet.get"); 
-  let sheet = Sheets.findOne(sheetId)
+// get a specific sheet
+Meteor.methods({'sheet.get': ({key, projectId})=>{
+  let sheet = Sheets.findOne({key, projectId})
   return sheet;
 }});
 
-const getRows = (sheetId) => {
-  if(sheetId)
-    return Rows.find({sheetId})
+const getRows = ({sheetKey, projectId}) => {
+  if(sheetKey && projectId)
+    return Rows.find({sheetKey, projectId})
   else 
     return null;
 }
 
 Meteor.publish('rows', getRows)
 
-Meteor.methods({'rows.get': (sheetId)=>{
-  let rows = getRows(sheetId)
+Meteor.methods({'rows.get': ({sheetKey, projectId})=>{
+  let rows = getRows({sheetKey, projectId})
   return rows.fetch();
 }})
 
-const getRow = (rowId) => {
-  if(rowId)
-    return Rows.findOne(rowId)
+const getRow = ({key, projectId}) => {
+  if(key && projectId)
+    return Rows.findOne({key, projectId})
   else 
     return null;
 }
 
-Meteor.methods({'row.get': (rowId)=>{
-  let row = getRow(rowId)
+Meteor.methods({'row.get': ({key, projectId})=>{
+  let row = getRow({key, projectId})
   return row;
 }})
 

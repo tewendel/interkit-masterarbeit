@@ -60,5 +60,5 @@
 
 <h3> media in this project </h3>
 
-<MediaFileList mediafiles={mediafilesArray}/>
+<MediaFileList mediafiles={mediafilesArray} {projectId}/>
 

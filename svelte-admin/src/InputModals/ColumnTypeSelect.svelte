@@ -50,7 +50,7 @@
         <Select labelText="Sheet" bind:selected={value.reference}>
           <SelectItem value={undefined} text={"nicht zugeordnet"} />
           {#each sheets as sheet}
-            <SelectItem value={sheet._id} text={sheet.name} />
+            <SelectItem value={sheet.key} text={sheet.name} />
           {/each}
         </Select>
       </FormGroup>

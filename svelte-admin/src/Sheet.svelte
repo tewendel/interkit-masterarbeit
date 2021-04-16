@@ -6,7 +6,7 @@
   import { columnTypes } from './baseConfig.js';
   import { onDestroy } from 'svelte';
 
-  export let id;
+  export let sheetKey;
   export let projectId;
   export let close;
 
@@ -25,22 +25,22 @@
   let currentSheetSub;
   let currentSheet;
 
-  const setup = async (newId) => {
-    if(newId) {
+  const setup = async (newKey) => {
+    if(newKey) {
       // subscribe to the rows of the current sheet
       if(rowsSubHandle) rowsSubHandle.stop()
-      rowsSubHandle = await InterkitClient.getSub('rows', 'rows', [newId], (r)=>r.sheetId == newId);
+      rowsSubHandle = await InterkitClient.getSub('rows', 'rows', [{sheetKey, projectId}], (r)=>r.sheetKey == newKey);
       rows = rowsSubHandle.data;
 
       // subscribe to the current sheet itself
       if(currentSheetSub) currentSheetSub.stop()
-      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.id == id, true);
+      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', [{key: sheetKey, projectId}], (s)=>s.key == sheetKey, true);
       currentSheet = currentSheetSub.data;      
     }
   }
 
   // initialize the row subscriptions when id prop changes
-  $: setup(id)
+  $: setup(sheetKey)
 
   let refSubs = {};
   let refData = {};
@@ -48,19 +48,19 @@
   
   // setup subscriptions for other sheets referenced in columns
   const updateReferenceSubscriptions = async (sheet) => {
-    if(sheet) {
+    if(sheet?.columns) {
       for(let column of sheet.columns.filter(c=>c.type == "sheetRef")) {
-        let refSheetId = column.reference
+        let refSheetKey = column.reference
 
-        if(refSubs[refSheetId]) refSubs[refSheetId].stop()
-        refSubs[refSheetId] = await InterkitClient.getSub('rows', 'rows', [refSheetId], (r)=>r.sheetId == refSheetId);
+        if(refSubs[refSheetKey]) refSubs[refSheetKey].stop()
+        refSubs[refSheetKey] = await InterkitClient.getSub('rows', 'rows', [{sheetKey: refSheetKey, projectId}], (r)=>r.sheetKey == refSheetKey);
         
         // manually (un)subscribe to the store to update data
-        if(refDataUnsubscribe[refSheetId]) refDataUnsubscribe[refSheetId]()
+        if(refDataUnsubscribe[refSheetKey]) refDataUnsubscribe[refSheetKey]()
         
-        refDataUnsubscribe[refSheetId] = refSubs[refSheetId].data.subscribe(data => {
+        refDataUnsubscribe[refSheetKey] = refSubs[refSheetKey].data.subscribe(data => {
           //console.log("ref data Update")
-          refData[refSheetId] = data;
+          refData[refSheetKey] = data;
         })
       }
     }
@@ -92,26 +92,27 @@
 
   const rename = () => {
     let newName = prompt("Rename sheet", $currentSheet.name)
-    InterkitClient.call('sheet.rename', {sheetId: id, name: newName})
+    InterkitClient.call('sheet.rename', {key: sheetKey, projectId, name: newName})
   }
 
   const remove = async () => {
     if(confirm("permanently remove sheet and all data within?")) {
-      await InterkitClient.call('sheet.remove', {sheetId: id})
+      await InterkitClient.call('sheet.remove', {sheetKey, projectId})
       close();
     }
   }
 
   const createColumn = ()=> {
-    InterkitClient.call('sheet.addColumn', {sheetId: id})
+    InterkitClient.call('sheet.addColumn', {sheetKey, projectId})
   }
 
   const createRow = ()=> {
-    InterkitClient.call('sheet.addRow', {sheetId: id})
+    InterkitClient.call('sheet.addRow', {sheetKey, projectId})
   }
   
   // called when user clicks on a cell in the data table
   const updateValue = (row, cell) => {
+    console.log(row)
     let column = headers.find(h => h.key == cell.key)
     let columnName = column?.value
     let columnType = column?.type
@@ -120,7 +121,7 @@
     if(columnType == "string") {
       let newVal = prompt("Update " + columnName, cell.value)
       if(newVal != null) {
-        InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+        InterkitClient.call('row.updateValue', {rowKey: row.key, colKey: column.key, newVal, projectId})
       }
     }
 
@@ -128,7 +129,7 @@
       let newVal = prompt("Update " + columnName, (cell.value && typeof cell.value == "number") ? cell.value : "")
       newVal = parseFloat(newVal);
       if(newVal != null) {
-        InterkitClient.call('sheet.updateValue', {key: cell.key, rowId: row.id, newVal})
+        InterkitClient.call('row.updateValue', {rowKey: row.key, colKey: column.key, newVal, projectId})
       }
     }
 
@@ -139,8 +140,9 @@
       inputModalValue = cell.value;
       openInputModal = columnType;
       if(columnType == "sheetRef") {
-        // get id of sheet that is referenced in column
+        // get key of sheet that is referenced in column
         let currentColumn = $currentSheet.columns.find(c=>c.key == updateCell.key)
+        console.log(currentColumn)
         modalParams = {reference: currentColumn.reference}
       }
     }
@@ -149,24 +151,32 @@
   // submits the value retrieved from the input modal to the database
   const submitValue = (value) => {
     console.log("submitting", value)
-    InterkitClient.call('sheet.updateValue', {
-      key: updateCell.key, 
-      rowId: updateRow.id, 
-      newVal: value
+    InterkitClient.call('row.updateValue', {
+      colKey: updateCell.key, 
+      rowKey: updateRow.key, 
+      newVal: value,
+      projectId
     })
   }
 
   const openUpdateHeaderModal = (header) => {
+    console.log(header)
     headerTypeModal = "columnType";
     updateHeader = header;
   }
 
   const submitHeaderColumnUpdate = () => {
     console.log("submit", updateHeader)
-    InterkitClient.call('sheet.updateHeader', {sheetId: id, key: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
+    InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
   }
   
   // transform headers and rows for use with carbon DataTable
+  const sortFunction = (a, b) => {
+    if (a < b || !a) return -1;
+    if (a > b || !b) return 1;
+    return 0;
+  }
+
   let headers = []
   $: {
     if($currentSheet) 
@@ -177,18 +187,19 @@
           type: c.type, 
           reference: c.reference,
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
-          sort: !(c.type == "number" || c.type == "string") ? false : undefined  
+          sort: (c.type == "number" || c.type == "string") ? 
+            sortFunction : false
         }})
   }
   $: { console.log("rows update", $rows) }
-  $: carbonRows = $rows ? $rows.map(r=>{return {...r.value, id: r.id}}) : []
+  $: carbonRows = $rows ? $rows.map(r=>{return {...r.values, key: r.key, id: r._id}}) : []
   $: { console.log("carbonRows update", carbonRows) }
 
 </script>
 
 {#if $currentSheet}
   <button on:click={close}>{"<<"} back</button><br><br>
-  <h4>{$currentSheet.name} <small>{$currentSheet.id}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button></h4>
+  <h4>{$currentSheet.name} <small>{$currentSheet.key}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button></h4>
   
 
   <br><br>
@@ -209,7 +220,7 @@
     
     <span slot="cell" let:row let:cell>
       <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
-        <SheetCell {cell} {refData}/>
+        <SheetCell {cell} {refData} {projectId}/>
       </span>
     </span>
   
