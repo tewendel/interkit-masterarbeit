@@ -2,6 +2,9 @@
 
 let params = (new URL(document.location)).searchParams;
 
+INTERKIT_PROJECT_ID = params.get("projectId")
+console.log(`INTERKIT_PROJECT_ID=${INTERKIT_PROJECT_ID}`)
+
 INTERKIT_APP_LOAD_THEME = params.get("loadTheme") === "true";
 INTERKIT_SERVER_WEBSOCKETS_URL = "$INTERKIT_SERVER_WEBSOCKETS_URL"
 
