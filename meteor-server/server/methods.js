@@ -10,16 +10,20 @@ const getRepoPath = (projectId) => {
    return process.env.REPOSITORIES_PATH + "/projects/" + projectId
 }
 
-const addColumn = async ({sheetKey, projectId}) => {
+const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
+
+  if(!name) name = "unnamed column";
+  if(!colKey) colKey = uuidv4();
+  if(!type) type = "string";
+
   let sheet = Sheets.findOne({key: sheetKey, projectId});
    if(sheet) {
      let cols = sheet.columns;
      if(!cols) cols = [];
-     colKey = uuidv4();
      cols.push({
        key: colKey,
-       name: "unnamed column",
-       type: "string"
+       name,
+       type,
      })
      sheet.columns = cols;
      Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
@@ -111,21 +115,25 @@ Meteor.methods({
     return process.env.BUNDLER_URL
   },
 
-  'sheet.create': async ({projectId}) => {
+  'sheet.create': async ({projectId, name, sheetKey}) => {
       console.log('sheet.create')
 
-      let sheetKey = uuidv4(); // create a new key for this sheet
+      if(!name) name = "untitled sheet"
+      if(!sheetKey) sheetKey = uuidv4(); // create a new key for this sheet
       
-      let sheetId = await Sheets.insert({
-        name: "untitled sheet",
-        key: sheetKey, 
-        columns: [], 
-        projectId
-      });
-      
-      await addColumn({sheetKey, projectId})
-      await addRow({sheetKey, projectId})
-      return sheetKey;
+      if(projectId) {
+
+        let sheetId = await Sheets.insert({
+          name,
+          key: sheetKey, 
+          columns: [], 
+          projectId
+        });
+        
+        //await addColumn({sheetKey, projectId})
+        //await addRow({sheetKey, projectId})
+        return sheetKey;
+      }
    },
 
    'sheet.remove': ({sheetKey, projectId}) => {
@@ -139,8 +147,8 @@ Meteor.methods({
       }
    },
 
-   'sheet.addColumn': async ({sheetKey, projectId}) => {
-     await addColumn({sheetKey, projectId});
+   'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
+     await addColumn({sheetKey, projectId, colKey, name, type});
    },
 
    'sheet.addRow': ({sheetKey, projectId}) => {

@@ -1,11 +1,12 @@
 <script>
 
   import {onMount} from 'svelte'
-
+  
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   
   import Blockly from 'blockly';
   import { blocklyConfig } from 'interkit-dev'
+  import parseBlocklyXML from './parseBlocklyXML.js';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
@@ -22,6 +23,7 @@
   
   let workspace;
   let blocklyXMLFile = "blocklyState.xml";
+  let blocklyXML;
   let generatedCode = "";
   
   let openInputModal = null;
@@ -31,7 +33,8 @@
   let inputModalParams;
 
   const updateSheetColumn = (previousValue, notice) => {
-    console.log("notice", notice)
+    console.log("notice", notice, previousValue)
+
     inputModalValue = {
       sheetKey: previousValue?.value?.split("/")[0], 
       columnKey: previousValue?.value?.split("/")[1]
@@ -49,7 +52,8 @@
           }
           resolve({
             value, 
-            text: inputModalValue.text
+            text: inputModalValue.text,
+            fieldType: inputModalValue.fieldType
           });  
         }
         cancelInputModal = () => {
@@ -101,9 +105,9 @@
     });
     workspace.addChangeListener(myUpdateFunction);
 
-    let blocklyXML = await InterkitClient.call("file.load", {filename: blocklyXMLFile, projectId})  
+    blocklyXML = await InterkitClient.call("file.load", {filename: blocklyXMLFile, projectId})  
     if(blocklyXML.content) {
-      console.log(blocklyXML.content)
+      //console.log("blocklyXML", blocklyXML.content)
       let xml = Blockly.Xml.textToDom(blocklyXML.content);
       try {
         Blockly.Xml.domToWorkspace(xml, workspace);
@@ -111,8 +115,10 @@
         alert("error importing blockly xml")
       }
     }
+  }
 
-
+  const createDatabase = () => {
+    parseBlocklyXML(blocklyXML.content, projectId);
   }
 
   const myUpdateFunction = (event) => {
@@ -152,6 +158,7 @@
 
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
+    blocklyXML = {content: xml_text}
 
     //console.log(xml_text)
 
@@ -198,6 +205,7 @@
 
   <button on:click={save}>save</button>
   <button on:click={saveAndCompile}>save & compile</button>
+  <button on:click={createDatabase}>create database</button>
   
   <InputModal
     type={openInputModal}

@@ -27,6 +27,7 @@ export default (Blockly, update) => {
   CustomFields.SheetColumnField.prototype.toXml = function(fieldElement) {
     fieldElement.setAttribute('value', this.value_.value);
     fieldElement.setAttribute('text', this.value_.text);
+    fieldElement.setAttribute('fieldType', this.value_.fieldType);
     return fieldElement;
   };
 
@@ -35,6 +36,7 @@ export default (Blockly, update) => {
 
     value.value = fieldElement.getAttribute('value');
     value.text = fieldElement.getAttribute('text');
+    value.fieldType = fieldElement.getAttribute('fieldType');
     this.setValue(value);
   };
 
