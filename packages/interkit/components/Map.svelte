@@ -17,20 +17,22 @@
 
   let filterLists = [];
   let activeFilter;
+
+  let projectId = INTERKIT_PROJECT_ID;
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
     registerFilter: async (name, categoryNameColumn, elementRefColumn) => {
       // get the sheetId of the sheet with the categories
-      let filterCategorySheetId = util.getSheetId(categoryNameColumn);
+      let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
       
       // get the categories that we can filter for with this filter
-      let categoryRows = await InterkitClient.call("rows.get", filterCategorySheetId)
+      let categoryRows = await InterkitClient.call("rows.get", {sheetKey: filterCategorySheetKey, projectId})
 
       // add the filter to our collection
       filterLists.push({
         name,
-        filterCategorySheetId,
+        filterCategorySheetKey,
         categoryRows,
         categoryNameColumn,
         elementRefColumn 
@@ -54,7 +56,11 @@
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
-    await playAudio(e.target?.payload?.audio, e.target?.payload?.title, false)
+    await playAudio(
+      e.target?.payload?.audio,
+      e.target?.payload?.title, 
+      false
+    )
   }
 
   const updateMarkers = () => {
@@ -64,7 +70,7 @@
     // filter rows
     let rowsFiltered = markerRows.filter(r => 
       !activeFilter ||
-      util.rowVal(r, activeFilter.elementRefColumn)?.rowIds?.includes(activeFilter.row._id)
+      util.rowVal(r, activeFilter.elementRefColumn)?.rowKeys?.includes(activeFilter.row.key)
     )
 
     // prepare data for marker production
@@ -115,14 +121,14 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
   
-    let sheetId;
+    let sheetKey;
     if(markerPositions) {
-      sheetId = util.getSheetId(markerPositions)
+      sheetKey = util.getSheetKey(markerPositions)
     }
     
     //console.log(sheetId, positionColumnKey, labelColumnKey)
-    if(sheetId) {
-      subHandle = await InterkitClient.getSub('rows', 'rows', [sheetId]);
+    if(sheetKey) {
+      subHandle = await InterkitClient.getSub('rows', 'rows', [{sheetKey, projectId}]);
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
         markerRows = rowsArray;

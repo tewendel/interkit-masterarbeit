@@ -32,6 +32,7 @@
   $: {
     console.log(themed)
     query.set("loadTheme", themed)
+    query.set("projectId", projectId)
     previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }

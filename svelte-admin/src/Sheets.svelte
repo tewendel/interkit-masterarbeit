@@ -8,7 +8,7 @@
 
   let sheets;
   let subHandle;
-  let currentSheetId;
+  let currentSheetKey;
   
   $: resetSub(projectId)
 
@@ -26,25 +26,25 @@
   })
 
   const createSheet = async ()=>{
-    let id = await InterkitClient.call('sheet.create', {projectId});
-    if(id) {
-      currentSheetId = id;
+    let key = await InterkitClient.call('sheet.create', {projectId});
+    if(key) {
+      currentSheetKey = key;
     }
   }
 
   const openSheet = (sheet)=> {
-    currentSheetId = sheet.id;
+    currentSheetKey = sheet.key;
   }
 
 </script>
 
-{#if !currentSheetId}
+{#if !currentSheetKey}
 
   {#if sheets}
     <ul>
     <!-- we need to use $sheets here to get the reactive value of the store -->
     {#each $sheets as sheet}
-      <li class:active="{currentSheetId == sheet.id}" on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
+      <li class:active="{currentSheetKey == sheet.key}" on:click={()=>{openSheet(sheet)}}>{sheet.name}</li>
     {/each}
     </ul>
   {:else}
@@ -56,8 +56,8 @@
 
 {/if}
 
-{#if currentSheetId}
-  <Sheet id={currentSheetId} {projectId} close={()=>{currentSheetId=null}}/>
+{#if currentSheetKey}
+  <Sheet sheetKey={currentSheetKey} {projectId} close={()=>{currentSheetKey=null}}/>
 {/if}
 
   

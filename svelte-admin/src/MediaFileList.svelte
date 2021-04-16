@@ -7,6 +7,7 @@
   export let mediafiles; // this should be an array, not a store
   export let radio = false;
   export let value;
+  export let projectId;
 
   const headers = [
     { key: "name", value: "name" },
@@ -21,7 +22,7 @@
     rows = mediafiles ? mediafiles.map(mediafile => {
         return {
           ...mediafile,
-          id: mediafile._id,
+          id: mediafile.meta.key,          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot
         }
     })
@@ -46,7 +47,7 @@
 
     <span slot="cell" let:row let:cell>
       {#if cell.key === 'preview'}
-        <MediaFilePreview id={row._id} mediaManager/>
+        <MediaFilePreview key={row.meta.key} {projectId} mediaManager/>
       {:else}{cell.value}{/if}
     </span>
 

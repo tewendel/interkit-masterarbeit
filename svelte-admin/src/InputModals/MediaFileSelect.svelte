@@ -36,7 +36,7 @@
 >
   <ModalHeader label="{value.key}" title="Update Column" />
   <ModalBody>
-    <MediaFileList radio mediafiles={files} bind:value={value}/>
+    <MediaFileList radio mediafiles={files} bind:value={value} {projectId}/>
   </ModalBody>
   <ModalFooter primaryButtonText="Save"/>
 </ComposedModal>

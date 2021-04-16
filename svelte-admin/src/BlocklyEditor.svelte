@@ -33,7 +33,7 @@
   const updateSheetColumn = (previousValue, notice) => {
     console.log("notice", notice)
     inputModalValue = {
-      sheetId: previousValue?.value?.split("/")[0], 
+      sheetKey: previousValue?.value?.split("/")[0], 
       columnKey: previousValue?.value?.split("/")[1]
     };
     inputModalParams = { notice }
@@ -44,8 +44,8 @@
         submitInputModal = () => {
           console.log("submitInputModal", inputModalValue)
           let value = ""
-          if(inputModalValue.sheetId && inputModalValue.sheetId != "empty" && inputModalValue.columnKey && inputModalValue.columnKey != "empty") {
-            value = inputModalValue.sheetId + "/" + inputModalValue.columnKey; 
+          if(inputModalValue.sheetKey && inputModalValue.sheetKey != "empty" && inputModalValue.columnKey && inputModalValue.columnKey != "empty") {
+            value = inputModalValue.sheetKey + "/" + inputModalValue.columnKey; 
           }
           resolve({
             value, 
@@ -61,7 +61,7 @@
   const updateSheetId = (previousValue, notice) => {
     console.log("notice", notice)
     inputModalValue = {
-      sheetId: previousValue?.value
+      sheetKey: previousValue?.value
     };
     inputModalParams = { notice }
     openInputModal = "sheetId";
@@ -71,8 +71,8 @@
         submitInputModal = () => {
           console.log("submitInputModal", inputModalValue)
           let value = ""
-          if(inputModalValue.sheetId && inputModalValue.sheetId != "empty") {
-            value = inputModalValue.sheetId;
+          if(inputModalValue.sheetKey && inputModalValue.sheetKey != "empty") {
+            value = inputModalValue.sheetKey;
           }
           resolve({
             value, 

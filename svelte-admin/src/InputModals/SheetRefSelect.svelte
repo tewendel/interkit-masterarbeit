@@ -26,12 +26,12 @@ import {
   onMount(async ()=>{
     console.log("mount sheetrefselect", params)
     if(params?.reference) {
-      sheet = await InterkitClient.call("sheet.get", params.reference)
+      sheet = await InterkitClient.call("sheet.get", {key: params.reference, projectId})
       labelColumnKey = util.firstTextColKey(sheet);
       console.log("labelColumnKey", labelColumnKey)
       if(!labelColumnKey) console.log("warning: no text column in sheet")
 
-      rows = await InterkitClient.call("rows.get", params.reference)        
+      rows = await InterkitClient.call("rows.get", {sheetKey: params.reference, projectId})        
       console.log(sheet, rows);
     }
   })
@@ -50,16 +50,20 @@ import {
     console.log("change", value)
   }*/
 
-  $: multiSelectItems = rows ? rows.map(r=>{return {id: r._id, text: (labelColumnKey ? r.value[labelColumnKey] : r._id)}}) : []
+  // saving the row keys in the id field for Carbon multiselect
+  $: multiSelectItems = rows ? rows.map(r=>{return {
+    id: r.key, 
+    text: (labelColumnKey ? (r.values[labelColumnKey] ? r.values[labelColumnKey] : "") : r.key)
+  }}) : []
 
-  let selectedIds = value.rowIds;
+  let selectedIds = value.rowKeys;
   const multiChange = ()=>{
     console.log(selectedIds)
     value = {
       type: "sheetRef",
-      sheetId: sheet._id, 
+      sheetKey: sheet.key, 
       columnKey: labelColumnKey,
-      rowIds: selectedIds
+      rowKeys: selectedIds // writing the selected keys back to rowKeys
     }
   }
 

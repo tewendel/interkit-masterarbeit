@@ -29,7 +29,7 @@ import {
   const updateHumanReadable = () => {
     console.log(value)
     value.text = 
-      sheets.find(s=>s._id == value.sheetId)?.name
+      sheets.find(s=>s.key == value.sheetKey)?.name
   }
   
 </script>
@@ -42,10 +42,10 @@ import {
   <ModalBody style="height: 200px">
 
     {#if sheets}
-      <Select labelText="Pick a sheet" bind:selected={value.sheetId} on:change={updateHumanReadable}>
+      <Select labelText="Pick a sheet" bind:selected={value.sheetKey} on:change={updateHumanReadable}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each sheets as sheet}
-            <SelectItem value={sheet._id} text={sheet.name} />
+            <SelectItem value={sheet.key} text={sheet.name} />
           {/each}
       </Select>
     {/if}

@@ -6,32 +6,34 @@
 
   let listNavContext = getContext("listNav");
 
-  export let categorySheetId;
+  export let categorySheetKey;
   export let nameKey;
   export let imageKey;
   export let descriptionKey;
 
+  let projectId = INTERKIT_PROJECT_ID
+
   let categorySub
   let categories
-  let filterCategoryId
+  let filterCategoryKey
 
   onMount(async ()=>{    
     //console.log("mount archive category")
-    categorySub = await InterkitClient.getSub('rows', 'rows', [categorySheetId], r=>r.sheetId==categorySheetId);
+    categorySub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: categorySheetKey, projectId}], r=>r.sheetKey==categorySheetKey);
     categories = categorySub.data;  
   })
 
   const openCategory = (category)=> {
-    filterCategoryId = category._id;
+    filterCategoryKey = category.key;
     if(listNavContext) {
-      listNavContext.setSingleView({categorySheetId, filterCategoryId, filterCategoryName: util.rowVal(category, nameKey)});  
+      listNavContext.setSingleView({categorySheetKey, filterCategoryKey, filterCategoryName: util.rowVal(category, nameKey)});  
     }
   }
 
   // register a global function to open the listNav to this category
   InterkitClient.registerGlobalMethod("featuredCategoryView", ({category}) => {
     console.log(category)
-    if(categorySheetId == category.sheetId)
+    if(categorySheetKey == category.sheetKey)
       openCategory(category)
   });
 

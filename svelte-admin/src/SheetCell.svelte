@@ -3,6 +3,7 @@
   import MediaFilePreview from './MediaFilePreview.svelte';
   export let cell;
   export let refData;
+  export let projectId;
 </script>
 
 {#if cell.value?.lat}
@@ -15,7 +16,7 @@
 
 {:else if cell.value?.type == "mediaFile"}
 
-  <MediaFilePreview id={cell.value.value}/>
+  <MediaFilePreview key={cell.value.value} {projectId}/>
 
 {:else}
 

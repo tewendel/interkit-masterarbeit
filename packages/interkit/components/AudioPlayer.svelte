@@ -1,10 +1,11 @@
 <script context="module">
   import { InterkitClient } from '../'
-  export const playAudio = async (mediafileId, title, autoplay=true) => {
-    let mediafile = await InterkitClient.call("mediafile.get", mediafileId)
+  let projectId = INTERKIT_PROJECT_ID
+  export const playAudio = async (key, title, autoplay=true) => {
+    let mediafile = await InterkitClient.call("mediafile.get", {key, projectId})
     console.log(mediafile)
     audioPlayerStatus.set({
-      mediafileId: mediafile._id, 
+      mediafileKey: mediafile.meta.key,
       src: mediafile.link,
       title,
       autoplay
@@ -44,6 +45,7 @@
   .audioplayer-container {
     background-color: white;
     padding: 5px;
+    position: relative;
   }
 
 </style>

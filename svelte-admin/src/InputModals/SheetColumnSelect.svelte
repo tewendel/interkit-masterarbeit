@@ -30,11 +30,11 @@ import {
 
   const updateColumns = () => {
     //console.log(value?.sheetId, sheets)
-    let sheet = sheets.find(s=>s._id == value?.sheetId)
+    let sheet = sheets.find(s=>s.key == value?.sheetKey)
     columns = sheet?.columns;
     console.log(sheet)
 
-    if(value.sheetId == "empty") value.text = "";
+    if(value.sheetKey == "empty") value.text = "";
   }
 
   const updateHumanReadable = () => {
@@ -43,7 +43,7 @@ import {
       value.text = "";
     } else {
       value.text = 
-        sheets.find(s=>s._id == value.sheetId)?.name + 
+        sheets.find(s=>s.key == value?.sheetKey)?.name + 
         "/" + 
         columns.find(c=>c.key == value?.columnKey)?.name;
     }
@@ -59,10 +59,10 @@ import {
   <ModalBody style="height: 200px">
 
     {#if sheets}
-      <Select labelText="First pick a sheet, then the column" bind:selected={value.sheetId} on:change={updateColumns}>
+      <Select labelText="First pick a sheet, then the column" bind:selected={value.sheetKey} on:change={updateColumns}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each sheets as sheet}
-            <SelectItem value={sheet._id} text={sheet.name} />
+            <SelectItem value={sheet.key} text={sheet.name} />
           {/each}
       </Select>
     {/if}
