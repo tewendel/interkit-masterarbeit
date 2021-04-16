@@ -1,7 +1,15 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random'
 import { FilesCollection } from 'meteor/ostrio:files';
+const _fs = require('fs');
+const multer = require('multer');
+const upload = multer({ dest: '/tmp' }) // Temp dir for multer
 
-const MediaFiles = new FilesCollection({
+require('dotenv').config({
+  path: `${process.env.PWD}/.env`
+})
+
+export const MediaFiles = new FilesCollection({
   collectionName: 'mediafiles',
   allowClientCode: false, // Disallow remove files from Client
   storagePath: `${process.env.MEDIAFILES_PATH}`,
@@ -14,11 +22,40 @@ const MediaFiles = new FilesCollection({
   }
 });
 
-const getMediaFiles = (projectId) => {
+MediaFiles.writeSync = Meteor.wrapAsync(MediaFiles.write, MediaFiles.writeSync);
+
+export const getMediaFiles = (projectId) => {
   if(projectId)
     return MediaFiles.find({ "meta.projectId": projectId }).cursor;
   else 
     return null;
+}
+
+export const duplicateProjectFile = async function(fileId, newProjectId=false) {
+  const file = MediaFiles.findOne({_id: fileId})
+  const projectId = file.meta.projectId
+
+  console.log("duplicating file \"" + file.name + "\"" + (newProjectId ? " to new projectId " + newProjectId : " in project " + projectId))
+
+  const data =  _fs.readFileSync(file.path);
+
+  const newFile = MediaFiles.writeSync(data, {
+    fileName: file.name,
+    type: file.type,
+
+    meta: {
+      ...file.meta,
+      projectId: newProjectId || projectId
+    }
+  }/*, (writeError, fileRef) => {
+    if (writeError) {
+      throw writeError;
+    } else {
+      console.log(`${fileRef.name} is successfully saved to FS. _id: ${fileRef._id}`);
+    }
+  }*/);
+
+  return newFile
 }
 
 if (Meteor.isServer) {
@@ -39,11 +76,6 @@ if (Meteor.isServer) {
     }
   })
 }
-
-
-const _fs = require('fs');
-const multer  = require('multer');
-const upload = multer({ dest: '/tmp' }) // Temp dir for multer
 
 export const setupMediaServer = (app) => {
 

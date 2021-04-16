@@ -1,13 +1,10 @@
 import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { duplicateProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
 const git = require('isomorphic-git')
 const fs = require('fs')
 const fse = require('fs-extra');
-const dotenv = require('dotenv')
-dotenv.config({
-  path: `${process.env.PWD}/.env`
-})
 
 const getRepoPath = (projectId) => {
    return process.env.REPOSITORIES_PATH + "/projects/" + projectId
@@ -58,6 +55,10 @@ Meteor.methods({
 
   'project.remove': async ({ projectId }) => {
       Projects.remove(projectId);
+  },
+
+  'project.duplicate': async ({ projectId }) => {
+      duplicateProject(projectId)
   },
 
   'project.list': async ({ projectId }) => {

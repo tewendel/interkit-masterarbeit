@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 
-const dotenv = require('dotenv')
-dotenv.config( {
+require('dotenv').config( {
   path: `${process.env.PWD}/.env`
-} )
+})
 
 import '../imports/collections.js';
 import './publications.js';

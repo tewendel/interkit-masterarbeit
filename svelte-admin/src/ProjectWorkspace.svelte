@@ -12,7 +12,8 @@
 
   export let projectId
   export let currentProject
-  export let selected
+  
+  let selected
 
 </script>
 
