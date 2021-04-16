@@ -49,7 +49,7 @@ const InterkitClient = {
   */
 
   getSub: async (col, pub, pubArgs=[], cFilter=(a)=>true, single=false) => {
-    console.log("getSub", pub)
+    //console.log("getSub", pub)
     
     // setup the store
     let sub = {};
@@ -58,7 +58,7 @@ const InterkitClient = {
     // setup the subscription
     sub.sub = server.sub(pub, pubArgs);
     await sub.sub.ready();
-    console.log("sub ready", pub)
+    //console.log("sub ready", pub)
 
     if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
     subscriptionCounter[pub] += 1;
@@ -66,7 +66,7 @@ const InterkitClient = {
 
     let collection = server.collection(col).filter(cFilter)
     let data = single ? collection.fetch()[0] : collection.fetch()
-    console.log("data", pub, data)
+    //console.log("data", pub, data)
 
     // write an initial fetch of the collection into the store
     sub.data.set(restore_ids(data));

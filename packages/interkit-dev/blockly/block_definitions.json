@@ -131,14 +131,14 @@
 
   {
     "type": "CategoryList",
-    "message0": "<CategoryList> %1 categorySheetId %2 %3 nameKey %4 %5 imageKey %6 %7 descriptionKey %8 %9",
+    "message0": "<CategoryList> %1 categorySheetKey %2 %3 nameKey %4 %5 imageKey %6 %7 descriptionKey %8 %9",
     "args0": [
       {
         "type": "input_dummy"
       },
       {
         "type": "sheetId",
-        "name": "categorySheetId",
+        "name": "categorySheetKey",
         "text": ""
       },
       {
@@ -179,14 +179,14 @@
 
   {
     "type": "ElementList",
-    "message0": "<ElementList> %1 dataSheet %2 %3 contentElement %4",
+    "message0": "<ElementList> %1 dataSheetKey %2 %3 contentElement %4",
     "args0": [
       {
         "type": "input_dummy"
       },
       {
         "type": "sheetId",
-        "name": "dataSheet",
+        "name": "dataSheetKey",
         "text": ""
       },
       {

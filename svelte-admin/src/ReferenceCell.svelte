@@ -2,7 +2,7 @@
 
   export let refData
   export let value
-  $: { console.log("ReferenceCell", value, refData) }
+  //$: { console.log("ReferenceCell", value, refData) }
 
   let result;
   $: {

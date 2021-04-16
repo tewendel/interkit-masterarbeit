@@ -27,30 +27,33 @@
   import FeaturedCategory from './FeaturedCategory.svelte';
   import MenuSwitcher from './MenuSwitcher.svelte';
 
-  let sectionSheetId = sectionTitles?.split("/")?.[0] // id of the sheet with the dashboard structure  
+  let projectId = INTERKIT_PROJECT_ID;
+
+  let sectionSheetKey = util.getSheetKey(sectionTitles) // key of the sheet with the dashboard structure  
+
   let refsColumnKey = util.colKey(sectionRefs) // column of the element references
 
   let sectionSub; // sub to the dashboard structure sheet
   let sectionRows; // the rows from the sheet that specify the dashboard structure
   
-  if(sectionSheetId != sectionRefs?.split("/")?.[0])
+  if(sectionSheetKey != util.getSheetKey(sectionRefs))
     alert("bad config: sectionTitles and sectionRefs must be from same sheet")
 
-  let referenceSheetId; // is of the sheet containing the elements
+  let referenceSheetKey; // is of the sheet containing the elements
   let elementSub;
   let elementRows = [];
     
   onMount(async ()=>{
 
-    if(sectionSheetId) {
-      sectionSub = await InterkitClient.getSub('rows', 'rows', [sectionSheetId], r=>r.sheetId==sectionSheetId);
+    if(sectionSheetKey) {
+      sectionSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: sectionSheetKey, projectId}], r=>r.sheetKey==sectionSheetKey);
       sectionRows = sectionSub.data;
       //console.log("sectionRows", $sectionRows)
 
       if(refsColumnKey) {
 
         // for now we assume all references are to the same sheet!
-        let aRefRow = $sectionRows.find(r => r.value?.[refsColumnKey]?.sheetId)
+        let aRefRow = $sectionRows.find(r => r.values?.[refsColumnKey]?.sheetKey)
         //console.log(aRefRow)
 
         if(!aRefRow) {
@@ -58,11 +61,11 @@
           return
         }
 
-        referenceSheetId = aRefRow.value[refsColumnKey].sheetId;
+        referenceSheetKey = aRefRow.values[refsColumnKey].sheetKey;
 
         //console.log("referenceSheetId", referenceSheetId)
 
-        elementSub = await InterkitClient.getSub('rows', 'rows', [referenceSheetId], r=>r.sheetId==referenceSheetId);
+        elementSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: referenceSheetKey, projectId}], r=>r.sheetKey==referenceSheetKey);
         elementSub.data.subscribe(data=>{
           elementRows = data;
         })
@@ -103,7 +106,7 @@
   {#if section.type == "ElementSlider"}
     <ElementSlider 
       title={section.title}
-      elementRows={elementRows.filter(r=>section.refs?.rowIds.includes(r._id))}
+      elementRows={elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))}
       titleColumn={elementTitleColumn}
       descriptionColumn={elementDescriptionColumn}
       audioColumn={elementAudioColumn}
@@ -111,7 +114,7 @@
     />
   {:else if section.type == "ElementSingle"}
     <ElementSingle
-      elementRow={elementRows.find(r=>section.refs?.rowIds[0] == r._id)}
+      elementRow={elementRows.find(r=>section.refs?.rowKeys[0] == r.key)}
       titleColumn={elementTitleColumn}
       descriptionColumn={elementDescriptionColumn}
       audioColumn={elementAudioColumn}

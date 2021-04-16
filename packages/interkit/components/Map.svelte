@@ -32,7 +32,7 @@
       // add the filter to our collection
       filterLists.push({
         name,
-        filterCategorySheetId,
+        filterCategorySheetKey,
         categoryRows,
         categoryNameColumn,
         elementRefColumn 
@@ -56,7 +56,11 @@
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
-    await playAudio(e.target?.payload?.audio, e.target?.payload?.title, false)
+    await playAudio(
+      e.target?.payload?.audio,
+      e.target?.payload?.title, 
+      false
+    )
   }
 
   const updateMarkers = () => {
@@ -66,7 +70,7 @@
     // filter rows
     let rowsFiltered = markerRows.filter(r => 
       !activeFilter ||
-      util.rowVal(r, activeFilter.elementRefColumn)?.rowIds?.includes(activeFilter.row._id)
+      util.rowVal(r, activeFilter.elementRefColumn)?.rowKeys?.includes(activeFilter.row.key)
     )
 
     // prepare data for marker production

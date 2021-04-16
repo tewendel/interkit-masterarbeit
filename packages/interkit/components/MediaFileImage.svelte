@@ -1,18 +1,20 @@
 <script>
 
-  import { InterkitClient } from '../'
-  export let mediafileRef; // {type: "mediafile", value: id}
   import { onMount } from 'svelte'
-
+  import { InterkitClient } from '../'
+  
+  export let mediafileRef; // {type: "mediafile", value: id}
+  let projectId = INTERKIT_PROJECT_ID;
+  
   //onMount(()=>{ console.log("mount", mediafileRef) })
   
   let mediafile;
   $: {
     lookupMediafile(mediafileRef?.value)
   }
-  const lookupMediafile = async (id) => {
-    if(id) {
-      mediafile = await InterkitClient.call("mediafile.get", id);
+  const lookupMediafile = async (key) => {
+    if(key) {
+      mediafile = await InterkitClient.call("mediafile.get", {key, projectId});
     }
   }
 

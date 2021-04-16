@@ -51,7 +51,10 @@ import {
   }*/
 
   // saving the row keys in the id field for Carbon multiselect
-  $: multiSelectItems = rows ? rows.map(r=>{return {id: r.key, text: (labelColumnKey ? r.values[labelColumnKey] : r._id)}}) : []
+  $: multiSelectItems = rows ? rows.map(r=>{return {
+    id: r.key, 
+    text: (labelColumnKey ? (r.values[labelColumnKey] ? r.values[labelColumnKey] : "") : r.key)
+  }}) : []
 
   let selectedIds = value.rowKeys;
   const multiChange = ()=>{

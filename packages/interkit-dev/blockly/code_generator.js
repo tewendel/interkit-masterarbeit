@@ -105,7 +105,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['CategoryList'] = function(block) {
     
     var code = "<CategoryList \n";
-    code += attribute(block, "categorySheetId")
+    code += attribute(block, "categorySheetKey")
     code += attribute(block, "nameKey")
     code += attribute(block, "imageKey")
     code += attribute(block, "descriptionKey")
@@ -116,7 +116,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['ElementList'] = function(block) {
     
     var code = "<ElementList \n";
-    code += attribute(block, "dataSheetId", "dataSheet")
+    code += attribute(block, "dataSheetKey")
     code += ">\n"
     code += slot(block, "contentElement", "element") 
     code += "</ElementList>\n"

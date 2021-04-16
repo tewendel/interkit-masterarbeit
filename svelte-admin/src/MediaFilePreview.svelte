@@ -9,9 +9,9 @@
   $: {
     lookupMediafile(key)
   }
-  const lookupMediafile = async (id) => {
+  const lookupMediafile = async (key) => {
     mediafile = await InterkitClient.call("mediafile.get", {key, projectId});
-    console.log("loaded new mediafile for preview", mediafile)
+    //console.log("loaded new mediafile for preview", mediafile)
   }
 
 </script>

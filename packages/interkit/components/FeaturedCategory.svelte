@@ -10,11 +10,13 @@
   export let categoryDescriptionColumn;
   export let categoryImageColumn;
 
+  let projectId = INTERKIT_PROJECT_ID;
+
   let categoryRow;
 
   const loadCategoryRow = async (categoryRef) => {
-    if(categoryRef?.rowIds?.[0])
-      categoryRow = await InterkitClient.call("row.get", categoryRef.rowIds[0])
+    if(categoryRef?.rowKeys?.[0])
+      categoryRow = await InterkitClient.call("row.get", {key: categoryRef.rowKeys[0], projectId})
   }
 
   // load categoryRow when ref changes

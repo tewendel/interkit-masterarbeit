@@ -61,7 +61,7 @@
   const updateSheetId = (previousValue, notice) => {
     console.log("notice", notice)
     inputModalValue = {
-      sheetId: previousValue?.value
+      sheetKey: previousValue?.value
     };
     inputModalParams = { notice }
     openInputModal = "sheetId";
@@ -71,8 +71,8 @@
         submitInputModal = () => {
           console.log("submitInputModal", inputModalValue)
           let value = ""
-          if(inputModalValue.sheetId && inputModalValue.sheetId != "empty") {
-            value = inputModalValue.sheetId;
+          if(inputModalValue.sheetKey && inputModalValue.sheetKey != "empty") {
+            value = inputModalValue.sheetKey;
           }
           resolve({
             value, 
