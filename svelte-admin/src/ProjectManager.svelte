@@ -25,6 +25,7 @@
     DataTable, Link
   } from "carbon-components-svelte";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
+  import Copy16 from "carbon-icons-svelte/lib/Copy16";
 
   export let params = {}
 
@@ -76,6 +77,10 @@
     }
   }
 
+  const duplicateProject = async (projectId) => {
+    await InterkitClient.call("project.duplicate", {projectId})
+  }
+
 </script>
 
 <Grid style="padding:0;">
@@ -93,7 +98,10 @@
         >
           <span slot="cell" let:row let:cell>
             {#if cell.key === 'action'}
-                <span on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
+              <div class="actions">
+                <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy16 /></span>
+                <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
+              </div>
             {:else}
               
               <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
@@ -113,6 +121,12 @@
 </Grid>
 
 <style>
+  .actions {
+    text-align: right;
+  }
+  .clickable {
+    padding: 0 0.5em;
+  }
   .clickable:hover {
     cursor: pointer;
   }
