@@ -12,6 +12,8 @@
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
+  import { BundleServer } from './BundleServer.js'
+
 
   import { 
     Grid,
@@ -78,7 +80,10 @@
   }
 
   const duplicateProject = async (projectId) => {
-    await InterkitClient.call("project.duplicate", {projectId})
+    console.log("duplicating database")
+    const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
+    console.log(newProjectId, "duplicating bundle")
+    await BundleServer.duplicateProject(projectId, newProjectId)
   }
 
 </script>

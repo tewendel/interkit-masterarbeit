@@ -33,6 +33,7 @@
     "dotenv": "^8.2.0",
     "ejson": "^2.2.1",
     "express": "^4.17.1",
+    "fs-extra": "^9.1.0",
     "interkit": "*",
     "is-plain-object": "^2.0.4",
     "isarray": "^1.0.0",

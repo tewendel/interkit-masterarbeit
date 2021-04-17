@@ -3,6 +3,7 @@
 
   import Router, { querystring } from 'svelte-spa-router'
   import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
+  import { BundleServer } from './BundleServer'
 
   import { onMount } from 'svelte'
   
@@ -22,6 +23,7 @@
   import { InterkitClient } from 'interkit'
   onMount(async ()=>{
     await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
+    await BundleServer.connect(await InterkitClient.call("bundler.getUrl"))
   })
 
 </script>

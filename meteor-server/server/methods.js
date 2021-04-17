@@ -71,7 +71,7 @@ Meteor.methods({
   },
 
   'project.duplicate': async ({ projectId }) => {
-      duplicateProject(projectId)
+      return duplicateProject(projectId)
   },
 
   'project.list': async ({ projectId }) => {

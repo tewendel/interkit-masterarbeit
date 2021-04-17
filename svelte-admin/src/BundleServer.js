@@ -26,29 +26,47 @@ const compileProject = async () => {
   } else {
     compileError.set(null)
   }
-
 };
 
-export const BundleServer = {
-  init: async (_projectId, url) => {
-    bundleServerURL = url;
-    projectId = _projectId;
-    console.log(bundleServerURL, projectId)
-
-    window.addEventListener("message", (event) => {
-      console.log(event.data)
-      runtimeError.set(event.data.msg + " (check browser console for details)")
-    }, false);
-  },
-  
-  compileReloadPreview: async () => {
-    bundleProcessing.set(true)
-    await compileProject();
-    bundleProcessing.set(false)
-    reloadPreview();
-  },
-  
-  reloadPreview
+const connect = async (url) => {
+  if(!bundleServerURL) {
+    bundleServerURL = url
+    console.log("Bundle Server connected to " + bundleServerURL)
+    // TODO maybe test connection and return result
+  }
 }
 
+const duplicateProject = async (projectId, newProjectId) => {
+  // TODO sending the newProjectId here is a possible attack vector, maybe the other server should do this
+  const res = await fetch(bundleServerURL + "/app/" + newProjectId + "/?from=" + projectId, { method: "PUT"})
+  const resJSON = await res.json()
+  console.log(resJSON)
+}
+
+const initProject = async (_projectId) => {
+
+  projectId = _projectId;
+  console.log(bundleServerURL, projectId)
+
+  window.addEventListener("message", (event) => {
+    console.log(event.data)
+    runtimeError.set(event.data.msg + " (check browser console for details)")
+  }, false);
+}
+
+const compileReloadPreview = async () => {
+  bundleProcessing.set(true)
+  await compileProject();
+  bundleProcessing.set(false)
+  reloadPreview();
+}
+
+export const BundleServer = {
+  connect,
+  getServerURL: () => bundleServerURL,
+  initProject,
+  compileReloadPreview,
+  reloadPreview,
+  duplicateProject,
+}
 

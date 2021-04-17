@@ -24,9 +24,9 @@
   let themed = true
 
   onMount( async () => {
-    bundleServerURL = await InterkitClient.call("bundler.getUrl")
+    bundleServerURL = BundleServer.getServerURL()
     console.log(`BUNDLER_URL: ${bundleServerURL}`)
-    BundleServer.init(projectId, bundleServerURL)
+    BundleServer.initProject(projectId)
   })
 
   $: {
