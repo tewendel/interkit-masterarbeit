@@ -7,7 +7,7 @@ const fs = require('fs')
 const fse = require('fs-extra');
 
 const getRepoPath = (projectId) => {
-   return process.env.REPOSITORIES_PATH + "/projects/" + projectId
+  return process.env.REPOSITORIES_PATH + "/projects/" + projectId
 }
 
 const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
@@ -17,26 +17,26 @@ const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
   if(!type) type = "string";
 
   let sheet = Sheets.findOne({key: sheetKey, projectId});
-   if(sheet) {
-     let cols = sheet.columns;
-     if(!cols) cols = [];
-     cols.push({
-       key: colKey,
-       name,
-       type,
-     })
-     sheet.columns = cols;
-     Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
-   }
+    if(sheet) {
+      let cols = sheet.columns;
+      if(!cols) cols = [];
+      cols.push({
+        key: colKey,
+        name,
+        type,
+      })
+      sheet.columns = cols;
+      Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
+    }
 }
 
 const addRow = async ({sheetKey, projectId})  => {
-   Rows.insert({
-     key: uuidv4(),
-     sheetKey: sheetKey,
-     values: {},
-     projectId
-   })           
+    Rows.insert({
+      key: uuidv4(),
+      sheetKey: sheetKey,
+      values: {},
+      projectId
+    })           
 }
 
 Meteor.methods({
@@ -134,9 +134,9 @@ Meteor.methods({
         //await addRow({sheetKey, projectId})
         return sheetKey;
       }
-   },
+  },
 
-   'sheet.remove': ({sheetKey, projectId}) => {
+  'sheet.remove': ({sheetKey, projectId}) => {
       console.log('sheet.remove', sheetKey, projectId)
       if(sheetKey && projectId) {
         let sheet = Sheets.findOne({key: sheetKey, projectId})
@@ -145,52 +145,52 @@ Meteor.methods({
           Rows.remove({sheetKey: sheetKey, projectId});
         }
       }
-   },
+  },
 
-   'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
-     await addColumn({sheetKey, projectId, colKey, name, type});
-   },
+    'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
+      await addColumn({sheetKey, projectId, colKey, name, type});
+    },
 
-   'sheet.addRow': ({sheetKey, projectId}) => {
-     addRow({sheetKey, projectId})
-   },
+    'sheet.addRow': ({sheetKey, projectId}) => {
+      addRow({sheetKey, projectId})
+    },
 
-   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
-     console.log(rowKey, projectId, colKey, newVal);
-     if(rowKey && projectId && colKey) {
-       let row = Rows.findOne({key: rowKey, projectId})
-       if(row) {
-         let values = row.values
-         values[colKey] = newVal 
+    'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
+      console.log(rowKey, projectId, colKey, newVal);
+      if(rowKey && projectId && colKey) {
+        let row = Rows.findOne({key: rowKey, projectId})
+        if(row) {
+          let values = row.values
+          values[colKey] = newVal 
          //console.log(value)
-         Rows.update({_id: row._id}, {$set: {values}});
-       } else {
-         console.log("updateValue: row not found")
-       }
-     }
-   },
+          Rows.update({_id: row._id}, {$set: {values}});
+        } else {
+          console.log("updateValue: row not found")
+        }
+      }
+    },
 
-   'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference}) => {
-     console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
-     let sheet = Sheets.findOne({key: sheetKey, projectId});
-     if(sheet) {
-       let cols = sheet.columns;
-       let newCols = cols.map(c => {
-         if(c.key == colKey) {
-           return {...c, name: newVal, type: newType, reference: newReference}
-         } else {
-           return c
-         }
-       })
-       Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
-     }
-   },
+    'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference}) => {
+      console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
+      let sheet = Sheets.findOne({key: sheetKey, projectId});
+      if(sheet) {
+        let cols = sheet.columns;
+        let newCols = cols.map(c => {
+          if(c.key == colKey) {
+            return {...c, name: newVal, type: newType, reference: newReference}
+          } else {
+            return c
+          }
+        })
+        Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
+      }
+    },
 
-   'sheet.rename': ({key, projectId, name}) => {
-     let sheet = Sheets.findOne({key, projectId});
-     if(sheet) {
-       Sheets.update({_id: sheet._id}, {$set: {name: name}});
-     }
-   },
+    'sheet.rename': ({key, projectId, name}) => {
+      let sheet = Sheets.findOne({key, projectId});
+      if(sheet) {
+        Sheets.update({_id: sheet._id}, {$set: {name: name}});
+      }
+    },
   
 });
