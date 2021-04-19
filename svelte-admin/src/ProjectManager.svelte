@@ -12,6 +12,9 @@
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
+  import Logout from './Logout.svelte';
+
+  let userId = InterkitClient.userId;
 
   import { 
     Grid,
@@ -110,9 +113,12 @@
           </span>
         </DataTable>
 
-        <br><br>
-        <input bind:value={newProjectName}>
-        <button on:click={createProject}>create project</button>
+        <div class="project-create-form">
+          <input bind:value={newProjectName}>
+          <button on:click={createProject}>create project</button>
+        </div>
+
+        {#if $userId} <Logout/> {/if}
 
       {/if}
 
@@ -121,6 +127,11 @@
 </Grid>
 
 <style>
+  .project-create-form {
+    margin-top: 10px;
+    padding: 15px;
+  }
+
   .actions {
     text-align: right;
   }

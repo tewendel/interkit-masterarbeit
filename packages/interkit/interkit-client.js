@@ -1,8 +1,12 @@
 import simpleDDP from 'simpleddp';
+import { simpleDDPLogin } from 'simpleddp-plugin-login';
+
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
 let server;
+
+let userId = writable(localStorage.getItem('userId'));
 
 let subscriptionCounter = {};
 
@@ -19,6 +23,7 @@ const restore_ids = (data) => {
 }
 
 const InterkitClient = {
+  userId,
   connect: async (url) => {
     console.log("InterkitClient.connect", url)
     if(server) {
@@ -30,15 +35,38 @@ const InterkitClient = {
       SocketConstructor: ws,
       reconnectInterval: 5000
     };
-    server = new simpleDDP(opts);
+    server = new simpleDDP(opts, [simpleDDPLogin]);
     // this needs to be done once in the client app
     await server.connect();
     console.log("connected")
   },
+
+  login: async ({username, password}) => {
+    console.log(server)
+    let userAuth = await server.login({
+      password,
+      user: {
+        username
+      }
+    });
+    userId.set(userAuth.id);
+    localStorage.setItem('userId', userAuth.id);
+
+    console.log(userAuth)
+  },
+
+  logout: async () => {
+    await server.logout();
+    userId.set(null);
+    localStorage.setItem('userId', null);
+  },
+
+  // call a meteor method
   call: async (method, params) => {
     let response = await server.call(method, params);
     return response
   },
+
 
   /*
     col: the meteor collection 

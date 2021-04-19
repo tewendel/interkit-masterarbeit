@@ -1,9 +1,9 @@
 import { Projects, Sheets, Rows } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
-  console.log("projects sub")
+  //console.log("projects sub")
   let projects = Projects.find({});
-  console.log(projects.fetch())
+  //console.log(projects.fetch())
   return projects;
 });
 

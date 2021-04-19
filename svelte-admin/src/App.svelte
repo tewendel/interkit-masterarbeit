@@ -3,9 +3,10 @@
 
   import Router, { querystring } from 'svelte-spa-router'
   import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
+  import Login from './Login.svelte';
 
   import { onMount } from 'svelte'
-  
+
   import { 
     Header,
     Content,
@@ -24,6 +25,8 @@
     await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
   })
 
+  let userId = InterkitClient.userId;
+
 </script>
 
 <Header company="interkit" platformName={$currentProjectName || "Redaktionssystem"} href="/">
@@ -41,7 +44,11 @@
 
 <!-- set transform: none; to allow modal to be position fixed -->
 <Content style="background: none; transform: none; padding: 0;">  
-  
-  <Router {routes} />
+
+  {#if $userId}
+    <Router {routes} />
+  {:else}
+    <Login/>
+  {/if}
 
 </Content>
