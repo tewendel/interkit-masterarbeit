@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows } from '../imports/collections.js';
 import { duplicateProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
@@ -40,6 +41,21 @@ const addRow = async ({sheetKey, projectId})  => {
 }
 
 Meteor.methods({
+
+  'resumeUserSession': async function (userAuth) {
+     
+    let hashedToken = Accounts._hashLoginToken(userAuth.token)
+    let query = { 'services.resume.loginTokens.hashedToken': hashedToken }    
+    let user = Meteor.users.findOne(query);
+
+    if(user) {
+      // user found by token, logging user in on server
+      this.setUserId(user._id);
+      return true;
+    }
+
+    return false;
+  },
 
   // create repo  
   'project.create': async ({ name }) => {
@@ -166,6 +182,15 @@ Meteor.methods({
           Rows.update({_id: row._id}, {$set: {values}});
         } else {
           console.log("updateValue: row not found")
+        }
+      }
+    },
+
+    'row.delete': ({key, projectId}) => {
+      if(key && projectId && Meteor.userId()) {
+        if (Meteor.isServer) {
+          console.log("row.delete", key, projectId)
+          Rows.remove({key, projectId})
         }
       }
     },

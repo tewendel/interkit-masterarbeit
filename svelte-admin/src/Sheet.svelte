@@ -1,6 +1,6 @@
 <script>
   import { InterkitClient } from 'interkit'
-  import { DataTable } from "carbon-components-svelte";
+  import { DataTable, OverflowMenu, OverflowMenuItem } from "carbon-components-svelte";
   import InputModal from './InputModals/InputModal.svelte';
   import SheetCell from './SheetCell.svelte';
   import { columnTypes } from './baseConfig.js';
@@ -109,6 +109,12 @@
   const createRow = ()=> {
     InterkitClient.call('sheet.addRow', {sheetKey, projectId})
   }
+
+  const removeRow = (row)=> {
+    if(confirm("permanently delete row?")) {
+      InterkitClient.call('row.delete', {key: row.key, projectId})   
+    }
+  }
   
   // called when user clicks on a cell in the data table
   const updateValue = (row, cell) => {
@@ -189,7 +195,10 @@
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
           sort: (c.type == "number" || c.type == "string") ? 
             sortFunction : false
-        }})
+        }}).concat({ 
+          key: "overflow", 
+          empty: true 
+        }) // add overflow column
   }
   $: { console.log("rows update", $rows) }
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.values, key: r.key, id: r._id}}) : []
@@ -219,9 +228,15 @@
     </span>
     
     <span slot="cell" let:row let:cell>
-      <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
-        <SheetCell {cell} {refData} {projectId}/>
-      </span>
+      {#if cell.key === 'overflow'}
+        <OverflowMenu flipped>
+          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="Remove" />
+        </OverflowMenu>
+      {:else}
+        <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
+          <SheetCell {cell} {refData} {projectId}/>
+        </span>
+      {/if}
     </span>
   
   </DataTable>

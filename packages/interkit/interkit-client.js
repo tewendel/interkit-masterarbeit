@@ -1,8 +1,22 @@
 import simpleDDP from 'simpleddp';
+import { simpleDDPLogin } from 'simpleddp-plugin-login';
+
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
 let server;
+
+// get auth token from local storage if available
+let userAuth;
+try {
+  let userAuthObj = JSON.parse(localStorage.getItem('userAuth'))
+  userAuth = writable(userAuthObj);
+} catch(e) {
+  console.log(e)
+}
+console.log(get(userAuth))
+// this is set only after user logs in sucessfully / or continues user sessio
+let userId = writable(null); 
 
 let subscriptionCounter = {};
 
@@ -19,6 +33,7 @@ const restore_ids = (data) => {
 }
 
 const InterkitClient = {
+  userId,
   connect: async (url) => {
     console.log("InterkitClient.connect", url)
     if(server) {
@@ -30,15 +45,46 @@ const InterkitClient = {
       SocketConstructor: ws,
       reconnectInterval: 5000
     };
-    server = new simpleDDP(opts);
+    server = new simpleDDP(opts, [simpleDDPLogin]);
     // this needs to be done once in the client app
     await server.connect();
     console.log("connected")
+
+    let result = await server.call("resumeUserSession", get(userAuth))
+    console.log("resumeUserSession result", result)
+    if(result) {
+      // login again
+      userId.set(get(userAuth)?.id);
+    }
   },
+
+  login: async ({username, password}) => {
+    console.log(server)
+    let userAuthData = await server.login({
+      password,
+      user: {
+        username
+      }
+    });
+    console.log(userAuthData)
+    userId.set(userAuthData.id);
+    localStorage.setItem('userId', userAuthData.id);
+    localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+  },
+
+  logout: async () => {
+    await server.logout();
+    userId.set(null);
+    localStorage.setItem('userId', null);
+    localStorage.setItem('userAuth', null);
+  },
+
+  // call a meteor method
   call: async (method, params) => {
     let response = await server.call(method, params);
     return response
   },
+
 
   /*
     col: the meteor collection 

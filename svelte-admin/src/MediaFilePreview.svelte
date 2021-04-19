@@ -18,7 +18,7 @@
 
 {#if mediafile?.isAudio}
   {#key mediafile}
-  <a href="{mediafile.link}" target="_blank">{mediafile.name}</a> 
+  <a href="{mediafile.link}" target="_blank">link</a> 
     {#if !mediaManager}[change]{/if}
   <!--audio controls>
     <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>

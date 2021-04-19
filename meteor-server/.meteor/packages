@@ -25,3 +25,5 @@ grove:call-async
 svelte:compiler
 ostrio:files
 mikowals:batch-insert
+accounts-password
+accounts-base
