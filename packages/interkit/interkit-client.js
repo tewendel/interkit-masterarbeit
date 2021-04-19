@@ -6,7 +6,17 @@ import { writable, get } from 'svelte/store';
 
 let server;
 
-let userId = writable(localStorage.getItem('userId'));
+// get auth token from local storage if available
+let userAuth;
+try {
+  let userAuthObj = JSON.parse(localStorage.getItem('userAuth'))
+  userAuth = writable(userAuthObj);
+} catch(e) {
+  console.log(e)
+}
+console.log(get(userAuth))
+// this is set only after user logs in sucessfully / or continues user sessio
+let userId = writable(null); 
 
 let subscriptionCounter = {};
 
@@ -39,26 +49,34 @@ const InterkitClient = {
     // this needs to be done once in the client app
     await server.connect();
     console.log("connected")
+
+    let result = await server.call("resumeUserSession", get(userAuth))
+    console.log("resumeUserSession result", result)
+    if(result) {
+      // login again
+      userId.set(get(userAuth)?.id);
+    }
   },
 
   login: async ({username, password}) => {
     console.log(server)
-    let userAuth = await server.login({
+    let userAuthData = await server.login({
       password,
       user: {
         username
       }
     });
-    userId.set(userAuth.id);
-    localStorage.setItem('userId', userAuth.id);
-
-    console.log(userAuth)
+    console.log(userAuthData)
+    userId.set(userAuthData.id);
+    localStorage.setItem('userId', userAuthData.id);
+    localStorage.setItem('userAuth', JSON.stringify(userAuthData))
   },
 
   logout: async () => {
     await server.logout();
     userId.set(null);
     localStorage.setItem('userId', null);
+    localStorage.setItem('userAuth', null);
   },
 
   // call a meteor method
