@@ -31,6 +31,56 @@ const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
     }
 }
 
+const removeColumn = async ({sheetKey, projectId, colKey}) => {
+  if(sheetKey && projectId && colKey) {
+    let sheet = Sheets.findOne({key: sheetKey, projectId});
+    if(sheet) {
+      let cols = sheet.columns;
+      let removeIndex = cols.findIndex(c=>c.key == colKey)
+      cols.splice(removeIndex, 1)
+      Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
+
+      // todo: test integrity of references?
+    }
+  }
+}
+
+// move an element in an array to a new index
+const array_move = (arr, old_index, new_index) => {
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+};
+
+
+const moveColumn = async ({sheetKey, projectId, colKey, direction}) => {
+  //console.log("moveColumn")
+  if(sheetKey && projectId && colKey) {
+    let sheet = Sheets.findOne({key: sheetKey, projectId});
+    if(sheet) {
+      let cols = sheet.columns;
+      let moveIndex = cols.findIndex(c=>c.key == colKey)
+      let changed = false;
+      if(direction == -1 && moveIndex > 0) {
+        array_move(cols, moveIndex, moveIndex - 1);
+        changed = true;
+      }
+      if(direction == 1 && moveIndex < cols.length - 1) {
+        array_move(cols, moveIndex, moveIndex + 1);
+        changed = true;
+      }
+      //console.log(changed, cols);  
+      if(changed)
+        Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
+    }
+  }
+}
+
 const addRow = async ({sheetKey, projectId})  => {
     Rows.insert({
       key: uuidv4(),
@@ -163,59 +213,72 @@ Meteor.methods({
       }
   },
 
-    'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
-      await addColumn({sheetKey, projectId, colKey, name, type});
-    },
+  'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
+    await addColumn({sheetKey, projectId, colKey, name, type});
+  },
 
-    'sheet.addRow': ({sheetKey, projectId}) => {
-      addRow({sheetKey, projectId})
-    },
+  'sheet.moveColumn': async ({sheetKey, projectId, colKey, direction}) => {
+    console.log("sheet.moveColumn")
+    if(Meteor.userId()) {
+      await moveColumn({sheetKey, projectId, colKey, direction});
+    }
+  },
 
-    'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
-      console.log(rowKey, projectId, colKey, newVal);
-      if(rowKey && projectId && colKey) {
-        let row = Rows.findOne({key: rowKey, projectId})
-        if(row) {
-          let values = row.values
-          values[colKey] = newVal 
-         //console.log(value)
-          Rows.update({_id: row._id}, {$set: {values}});
+  'sheet.removeColumn': async ({sheetKey, projectId, colKey}) => {
+    if(Meteor.userId()) {
+      await removeColumn({sheetKey, projectId, colKey});
+    }
+  },
+
+  'sheet.addRow': ({sheetKey, projectId}) => {
+    addRow({sheetKey, projectId})
+  },
+
+  'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
+    console.log(rowKey, projectId, colKey, newVal);
+    if(rowKey && projectId && colKey) {
+      let row = Rows.findOne({key: rowKey, projectId})
+      if(row) {
+        let values = row.values
+        values[colKey] = newVal 
+       //console.log(value)
+        Rows.update({_id: row._id}, {$set: {values}});
+      } else {
+        console.log("updateValue: row not found")
+      }
+    }
+  },
+
+  'row.delete': ({key, projectId}) => {
+    if(key && projectId && Meteor.userId()) {
+      if (Meteor.isServer) {
+        console.log("row.delete", key, projectId)
+        Rows.remove({key, projectId})
+      }
+    }
+  },
+
+  'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference}) => {
+    console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
+    let sheet = Sheets.findOne({key: sheetKey, projectId});
+    if(sheet) {
+      let cols = sheet.columns;
+      let newCols = cols.map(c => {
+        if(c.key == colKey) {
+          return {...c, name: newVal, type: newType, reference: newReference}
         } else {
-          console.log("updateValue: row not found")
+          return c
         }
-      }
-    },
+      })
+      Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
+    }
+  },
 
-    'row.delete': ({key, projectId}) => {
-      if(key && projectId && Meteor.userId()) {
-        if (Meteor.isServer) {
-          console.log("row.delete", key, projectId)
-          Rows.remove({key, projectId})
-        }
-      }
-    },
-
-    'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference}) => {
-      console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
-      let sheet = Sheets.findOne({key: sheetKey, projectId});
-      if(sheet) {
-        let cols = sheet.columns;
-        let newCols = cols.map(c => {
-          if(c.key == colKey) {
-            return {...c, name: newVal, type: newType, reference: newReference}
-          } else {
-            return c
-          }
-        })
-        Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
-      }
-    },
-
-    'sheet.rename': ({key, projectId, name}) => {
-      let sheet = Sheets.findOne({key, projectId});
-      if(sheet) {
-        Sheets.update({_id: sheet._id}, {$set: {name: name}});
-      }
-    },
+  'sheet.rename': ({key, projectId, name}) => {
+    let sheet = Sheets.findOne({key, projectId});
+    if(sheet) {
+      Sheets.update({_id: sheet._id}, {$set: {name: name}});
+    }
+  },
   
 });
