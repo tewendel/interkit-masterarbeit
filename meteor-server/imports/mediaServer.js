@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Random } from 'meteor/random'
 import { FilesCollection } from 'meteor/ostrio:files';
 const _fs = require('fs');
 const multer = require('multer');
@@ -32,6 +31,13 @@ export const getMediaFiles = (projectId) => {
     return null;
 }
 
+export const removeProjectMedia = projectId => {
+  if (projectId)
+    return MediaFiles.remove({ "meta.projectId": projectId });
+  else
+    return null;
+}
+
 export const duplicateProjectFile = async function(fileId, newProjectId=false) {
   const file = MediaFiles.findOne({_id: fileId})
   const projectId = file.meta.projectId
@@ -59,6 +65,24 @@ export const duplicateProjectFile = async function(fileId, newProjectId=false) {
   return newFile
 }
 
+export const importProjectMediaFile = async function(fileBuffer, fileName, fileType,  projectId, fileMeta) {
+  const newFile = MediaFiles.writeSync(fileBuffer, {
+    fileName,
+    type: fileType,
+    meta: {
+      ...fileMeta,
+      projectId,
+    }
+  }, (writeError, fileRef) => {
+    if (writeError) {
+      throw writeError;
+    } else {
+      console.log(`${fileRef.name} is successfully saved to FS. _id: ${fileRef._id}`);
+    }
+  });
+  return newFile
+}
+
 if (Meteor.isServer) {
   Meteor.publish('mediafiles', getMediaFiles);
   Meteor.methods({
@@ -83,9 +107,9 @@ if (Meteor.isServer) {
 export const setupMediaServer = (app) => {
 
   app.post('/mediaUpload', upload.single('mediafile'), async (req, res) => {
-       
+
     if (req.file !== undefined /*&& req.file.mimetype.substr(0, 6) == 'image/'*/) {
-     
+    
         _fs.stat(req.file.path, function (_statError, _statData) { 
           const _addFileMeta = {
             fileName: req.file.originalname,

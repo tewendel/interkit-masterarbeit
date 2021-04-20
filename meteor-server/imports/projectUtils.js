@@ -38,14 +38,49 @@ duplicateProject = async function (projectId) {
   return newProjectId
 }
 
-const transformProjectData = function(projectData, newProjectId, newProjectName) {
+const transformProjectData = function(projectData, newProjectId, newProjectName=false) {
   // transform ids and assemble new data object
+  if (!newProjectName) newProjectName = projectData.project.name
   const newProjectData = {
     project: { ...projectData.project, _id: newProjectId, name: newProjectName },
     sheets: projectData.sheets.map(sheet => ({ ...sheet, projectId: newProjectId, _id: Random.id() })),
     rows: projectData.rows.map(row => ({ ...row, projectId: newProjectId, _id: Random.id() })),
   }
   return newProjectData
+}
+
+export const addImportHistoryToProject = (projectId, meta) => {
+
+}
+
+export const replaceProjectData = function (projectData, projectId, meta) {
+  const newProjectData = transformProjectData(projectData, projectId)
+
+  // remove existing stuff
+  Sheets.remove({ projectId })
+  Rows.remove({ projectId })
+
+  // inset docs
+  // uses https://github.com/mikowals/batch-insert
+  if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
+  if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
+  addImportHistoryToProject(projectId, meta)
+}
+
+export const importProjectData = function (projectData, newProjectName, newProjectId, meta) {
+  const newProjectData = transformProjectData(projectData, newProjectId, newProjectName)
+  // add meta
+  newProjectData.project.importHistory = newProjectData.project.importHistory ? [
+    ...newProjectData.project.imports,
+    meta
+  ] : [meta]
+
+  // inset docs
+  // uses https://github.com/mikowals/batch-insert
+  if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
+  if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
+  Projects.insert(newProjectData.project)
+  addImportHistoryToProject(newProjectId, meta)
 }
 
 const getAllOfProject = async function (projectId)  {

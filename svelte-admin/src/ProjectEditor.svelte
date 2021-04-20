@@ -1,22 +1,31 @@
 <script>
-  import { InterkitClient } from 'interkit'
-  import { onMount } from 'svelte'
   import { 
       Button,
     } from "carbon-components-svelte";
+  import ImportProject from './ImportProject.svelte'
 
   export let projectId
 
+  const exportEndpoint = `${INTERKIT_SERVER_URL}export/`
+
 </script>
 
-<h3>Info</h3>
+<h4>Info</h4>
 <p>
   Project ID: {projectId}
 </p>
 
-<Button href={`${INTERKIT_SERVER_URL}export/?projectId=${projectId}`}>Export current Database & Media</Button>
+<h4>Import/Export Database & Media</h4>
 
-<h3>Snapshots (coming soon)</h3>
+<ImportProject {projectId} />
+
+<Button size="small" href={exportEndpoint + `?projectId=${projectId}`}>Export DB & Media (.zip)</Button>
+
+
+<h4>Snapshots (coming soon)</h4>
 
 <style>
+  h4 {
+    margin-top: 1em;
+  }
 </style>

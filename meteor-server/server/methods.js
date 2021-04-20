@@ -44,7 +44,7 @@ Meteor.methods({
 
   'resumeUserSession': async function (userAuth) {
      
-    let hashedToken = Accounts._hashLoginToken(userAuth.token)
+    let hashedToken = Accounts._hashLoginToken(userAuth?.token)
     let query = { 'services.resume.loginTokens.hashedToken': hashedToken }    
     let user = Meteor.users.findOne(query);
 

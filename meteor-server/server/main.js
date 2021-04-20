@@ -5,6 +5,7 @@ require('dotenv').config( {
   path: `${process.env.PWD}/.env`
 })
 
+
 import '../imports/collections.js';
 import './publications.js';
 import './methods.js';
@@ -29,8 +30,12 @@ Meteor.startup(() => {
 import { WebApp } from 'meteor/webapp';
 import express from 'express';
 import { setupMediaServer } from '../imports/mediaServer.js';
-import { setupExportServer } from '../imports/importExportServer.js';
+import { setupExportServer } from '../imports/exportServer.js'
+import { setupImportServer } from '../imports/importServer.js'
 const app = express();
 setupMediaServer(app);
 setupExportServer(app);
+setupImportServer(app);
+//WebApp.connectHandlers.use(cors({origin:false}));
+//WebApp.accessRule('*');
 WebApp.connectHandlers.use(app);
