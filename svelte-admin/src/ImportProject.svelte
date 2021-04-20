@@ -14,15 +14,15 @@
   
   const triggerUpload = event => {
     console.log(uploadFiles)
-    //if (!confirm("Discard all current DB data & media files and replace by imports?")) {
-    //  setTimeout(() => uploadFiles = [], 100)
-    //} else {
+    if (!confirm("Discard all current DB data & media files and replace by imports?")) {
+      setTimeout(() => uploadFiles = [], 100)
+    } else {
       const file = uploadFiles[0]
       if (uploadStatus === "idle" && file) {
         uploadStatus="uploading"
         upload(file)
       }
-    //}
+    }
   }
 
   const upload = async file => {
