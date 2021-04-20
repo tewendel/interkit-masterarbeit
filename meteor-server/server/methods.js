@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows } from '../imports/collections.js';
-import { duplicateProject } from '../imports/projectUtils.js'
+import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
 const git = require('isomorphic-git')

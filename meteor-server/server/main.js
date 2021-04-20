@@ -29,6 +29,8 @@ Meteor.startup(() => {
 import { WebApp } from 'meteor/webapp';
 import express from 'express';
 import { setupMediaServer } from '../imports/mediaServer.js';
+import { setupExportServer } from '../imports/importExportServer.js';
 const app = express();
 setupMediaServer(app);
+setupExportServer(app);
 WebApp.connectHandlers.use(app);

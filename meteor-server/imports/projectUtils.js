@@ -72,5 +72,6 @@ const transformProjectIds = function(projectData, newProjectId) {
 //insertProjectData(data, doUpdates = false)
 
 export {
-  duplicateProject
+  duplicateProject,
+  getAllOfProject,
 }

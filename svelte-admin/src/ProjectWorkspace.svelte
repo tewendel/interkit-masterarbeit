@@ -7,6 +7,7 @@
   import BlocklyEditor from './BlocklyEditor.svelte'
   import RepositoryEditor from "./RepositoryEditor.svelte"
   import MediaManager from "./MediaManager.svelte"
+  import ProjectEditor from "./ProjectEditor.svelte"
   import { InterkitClient } from 'interkit'
 
 
@@ -22,12 +23,16 @@
     <div class="left-pane">
       <Tabs type="container" bind:selected>
         <Tab label="Database" />
+        <Tab label="Media" />
         <Tab label="Components" />
         <Tab label="Repo" />
-        <Tab label="Media" />
+        <Tab label="Project" />
         <div slot="content">
           <TabContent>
             <Sheets {projectId}/>
+          </TabContent>
+          <TabContent>
+            <MediaManager {projectId} />
           </TabContent>
           <TabContent>
             <BlocklyEditor {projectId} open={selected === 1}/>
@@ -36,7 +41,7 @@
             <RepositoryEditor {projectId} />
           </TabContent>
           <TabContent>
-            <MediaManager {projectId} />
+            <ProjectEditor {projectId} />
           </TabContent>
         </div>
       </Tabs>
