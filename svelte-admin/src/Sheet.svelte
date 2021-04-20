@@ -171,6 +171,15 @@
     updateHeader = header;
   }
 
+  const moveCol = (header, direction) => {
+    InterkitClient.call('sheet.moveColumn', {sheetKey, projectId, colKey: header.key, direction}) 
+  }
+
+  const deleteCol = (header) => {
+    if(confirm("permanently delete column?"))
+      InterkitClient.call('sheet.removeColumn', {sheetKey, projectId, colKey: header.key}) 
+  }
+
   const submitHeaderColumnUpdate = () => {
     console.log("submit", updateHeader)
     InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
@@ -197,7 +206,8 @@
             sortFunction : false
         }}).concat({ 
           key: "overflow", 
-          empty: true 
+          sort: false,
+          //empty: true 
         }) // add overflow column
   }
   $: { console.log("rows update", $rows) }
@@ -212,25 +222,35 @@
   
 
   <br><br>
-  <button on:click={createColumn}>add column</button>
   <DataTable
     sortable
     {headers}
     rows={carbonRows}
-    style="overflow-x: scroll"
+    style="min-height: 100px; padding-bottom: 100px; overflow-x: scroll"
   >
     
     <span slot="cell-header" let:header>
-      <div class="sheet-header" on:click={()=>{openUpdateHeaderModal(header)}}>
-        <span>{header.value}</span>
-        <span class="header-type">({header.type})</span>
-      </div>
+      {#if header.key == "overflow"}
+        <OverflowMenu flipped>
+            <OverflowMenuItem on:click={createColumn} text="add column" />    
+        </OverflowMenu>   
+      {:else}
+        <div class="sheet-header" >
+          <OverflowMenu size="sm">
+            <div slot="menu" style="font-size: 1rem; padding: 5px;">{header.value}</div>
+            <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
+            <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
+            <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
+            <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+          </OverflowMenu>
+        </div>
+      {/if}
     </span>
     
     <span slot="cell" let:row let:cell>
       {#if cell.key === 'overflow'}
         <OverflowMenu flipped>
-          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="Remove" />
+          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
         </OverflowMenu>
       {:else}
         <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
