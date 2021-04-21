@@ -118,7 +118,10 @@
   }
 
   const createDatabase = () => {
-    parseBlocklyXML(blocklyXML.content, projectId);
+
+    let xml = Blockly.Xml.workspaceToDom(workspace);
+    let xml_text = Blockly.Xml.domToPrettyText(xml);
+    parseBlocklyXML(xml_text, projectId);
   }
 
   const myUpdateFunction = async (event) => {

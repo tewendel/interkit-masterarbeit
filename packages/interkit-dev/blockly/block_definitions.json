@@ -44,7 +44,7 @@
       "columnType": "optionSelect",
       "text": "dashboard/type",
       "value": "dashboard/type",
-      "options": "ElementSlider, ElementSingle"
+      "options": "ElementSlider, ElementSingle, ElementRandom, FeaturedCategory, MenuSwitcher"
     },
     {
       "type": "input_dummy"
@@ -168,31 +168,38 @@
       {
         "type": "sheetId",
         "name": "categorySheetKey",
-        "text": ""
+        "text": "categories",
+        "value": "categories"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "nameKey",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "categories/name",
+        "value": "categories/name"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "imageKey",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "categories/image",
+        "value": "categories/image"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "descriptionKey",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "categories/description",
+        "value": "categories/description"
       },
       {
         "type": "input_dummy"
@@ -244,25 +251,31 @@
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "markerPositions",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "location",
+        "text": "elements/position",
+        "value": "elements/position"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "markerLabels",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "elements/title",
+        "value": "elements/title"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "audio",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "elements/audio",
+        "value": "elements/audio"
       },
       {
         "type": "input_dummy"
@@ -441,17 +454,21 @@
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "name",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "elements/title",
+        "value": "elements/title"
       },
       {
         "type": "input_dummy"
       },
       {
-        "type": "sheetColumn",
         "name": "audio",
-        "text": ""
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "elements/audio",
+        "value": "elements/audio"
       },
       {
         "type": "input_dummy"
@@ -580,22 +597,29 @@
           "type": "input_dummy"
         },
         {
-          "type": "field_input",
-          "name": "name"
+          "name": "name",
+          "type": "field_input"
         },
         {
           "type": "input_dummy"
         },
         {
+          "name": "categoryNameColumn",
           "type": "sheetColumn",
-          "name": "categoryNameColumn"
+          "columnType": "string",
+          "text": "categories/name",
+          "value": "categories/name"
         },
         {
           "type": "input_dummy"
         },
         {
+          "name": "elementRefColumn",
           "type": "sheetColumn",
-          "name": "elementRefColumn"
+          "columnType": "sheetRef",
+          "refKey": "categories",
+          "text": "elements/category",
+          "value": "elements/category"
         },
         {
           "type": "input_dummy"
