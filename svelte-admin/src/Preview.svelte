@@ -10,6 +10,11 @@
     TabContent, 
     Toggle,
     Button, 
+    AspectRatio,
+    Dropdown,
+    Grid,
+    Row,
+    Column,
     Loading } from "carbon-components-svelte";
   import ReloadIcon from "carbon-icons-svelte/lib/Play20";
   import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
@@ -22,6 +27,15 @@
   let bundlezipURL = "";
   let bundleServerURL
   let themed = true
+  let w, h
+
+  const dropdown_AR_items = [
+    { id: "4x3" },  
+    { id: "1x1" },
+    { id: "3x4" },
+    { id: "9x16" },
+  ];
+  let dropdown_AR_selectedIndex = 2;
 
   onMount( async () => {
     bundleServerURL = BundleServer.getServerURL()
@@ -39,24 +53,43 @@
 
 </script>
 
-  <div class="frame">
-    {#if bundleServerURL && !$compileError}
-      {#key $buildHash}
-        <iframe title="embedded app preview" src={previewURL}></iframe><br>
-      {/key}
-    {/if}
-    {#if $bundleProcessing}
-      <div class="loader">
-        <Loading withOverlay={false}  />
-      </div>
-    {/if}
+  
+  <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
+    <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
+      {#if bundleServerURL && !$compileError}
+        {#key $buildHash}
+          <iframe title="embedded app preview" src={previewURL}></iframe><br>
+        {/key}
+      {/if}
+      {#if $bundleProcessing}
+        <div class="loader">
+          <Loading withOverlay={false}  />
+        </div>
+      {/if}
+    </AspectRatio>
   </div>
+
   <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
   
   <Button icon={ReloadCompileIcon} kind="tertiary" on:click={BundleServer.compileReloadPreview}>compile & relaod</Button>
 
   <br><br>
-  <Toggle size="sm" labelText="Apply Theme" toggled on:toggle={(e) => themed = e.detail.toggled}/>
+  <Grid>
+    <Row>
+      <Column>
+        <Toggle size="sm" labelText="Apply Theme" toggled on:toggle={(e) => themed = e.detail.toggled}/>
+      </Column>
+      <Column>
+        Frame: {w} x {h} px
+        <Dropdown
+          type="inline"
+          titleText="Aspec Ratio"
+          bind:selectedIndex={dropdown_AR_selectedIndex}
+          items={dropdown_AR_items}
+        />
+      </Column>
+    </Row>
+  </Grid>
 
   <br><br>
 
@@ -105,7 +138,6 @@
   
   .frame {
     width: 100%;
-    height: 400px;
     border: 1px solid lightgray;
     margin: 10px 0px 10px 0px;
     position: relative;
