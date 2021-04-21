@@ -25,8 +25,13 @@
     return util.rowVal(categoryRow, openFilterList.categoryNameColumn)
   }
 
+  $: {
+    console.log(filterLists)  
+  }
+  
 </script>
 
+{#if filterLists?.length}
 <div id="filterControls">
   <span on:click={toggleFilters}>filter</span>
   {#if filterSelectOpen}
@@ -53,6 +58,7 @@
   {/if}
 
 </div>
+{/if}
 
 
 <style>

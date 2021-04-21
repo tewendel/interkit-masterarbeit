@@ -23,6 +23,9 @@
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
     registerFilter: async (name, categoryNameColumn, elementRefColumn) => {
+
+      console.log("registerFilter", name, categoryNameColumn, elementRefColumn)
+
       // get the sheetId of the sheet with the categories
       let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
       
@@ -37,6 +40,9 @@
         categoryNameColumn,
         elementRefColumn 
       })
+
+      filterLists = filterLists;
+      console.log(filterLists);
     }
   });
 
