@@ -46,7 +46,7 @@ import {
         sheets.find(s=>s.key == value?.sheetKey)?.name + 
         "/" + 
         columns.find(c=>c.key == value?.columnKey)?.name;
-      value.fieldType = columns.find(c=>c.key == value?.columnKey)?.type;
+      value.columnType = columns.find(c=>c.key == value?.columnKey)?.type;
     }
   }
   

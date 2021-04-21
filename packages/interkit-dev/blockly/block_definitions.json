@@ -20,7 +20,9 @@
     {
       "type": "sheetColumn",
       "name": "sectionTitles",
-      "text": ""
+      "columnType": "string",
+      "text": "dashboard/title",
+      "value": "dashboard/title"
     },
     {
       "type": "input_dummy"
@@ -28,7 +30,10 @@
     {
       "type": "sheetColumn",
       "name": "sectionRefs",
-      "text": ""
+      "columnType": "sheetRef",
+      "refKey": "elements",
+      "text": "dashboard/elements",
+      "value": "dashboard/elements"
     },
     {
       "type": "input_dummy"
@@ -36,7 +41,9 @@
     {
       "type": "sheetColumn",
       "name": "sectionTypes",
-      "text": ""
+      "columnType": "string",
+      "text": "dashboard/type",
+      "value": "dashboard/type"
     },
     {
       "type": "input_dummy"
@@ -44,7 +51,9 @@
     {
       "type": "sheetColumn",
       "name": "elementTitleColumn",
-      "text": ""
+      "columnType": "string",
+      "text": "elements/title",
+      "value": "elements/title"
     },
     {
       "type": "input_dummy"
@@ -52,7 +61,9 @@
     {
       "type": "sheetColumn",
       "name": "elementDescriptionColumn",
-      "text": ""
+      "columnType": "string",
+      "text": "elements/description",
+      "value": "elements/description"
     },
     {
       "type": "input_dummy"
@@ -60,7 +71,9 @@
     {
       "type": "sheetColumn",
       "name": "elementAudioColumn",
-      "text": ""
+      "columnType": "mediaFile",
+      "text": "elements/audio",
+      "value": "elements/audio"
     },
     {
       "type": "input_dummy"
@@ -68,7 +81,9 @@
     {
       "type": "sheetColumn",
       "name": "elementImageColumn",
-      "text": ""
+      "columnType": "mediaFile",
+      "text": "elements/image",
+      "value": "elements/image"
     },
     {
       "type": "input_dummy"
@@ -76,7 +91,9 @@
     {
       "type": "sheetColumn",
       "name": "categoryTitleColumn",
-      "text": ""
+      "columnType": "string",
+      "text": "categories/title",
+      "value": "categories/title"
     },
     {
       "type": "input_dummy"
@@ -84,7 +101,9 @@
     {
       "type": "sheetColumn",
       "name": "categoryDescriptionColumn",
-      "text": ""
+      "columnType": "string",
+      "text": "categories/description",
+      "value": "categories/description"
     },
     {
       "type": "input_dummy"
@@ -92,7 +111,9 @@
     {
       "type": "sheetColumn",
       "name": "categoryImageColumn",
-      "text": ""
+      "columnType": "mediaFile",
+      "text": "categories/image",
+      "value": "categories/image"
     },
     {
       "type": "input_dummy"
@@ -100,7 +121,10 @@
     {
       "type": "sheetColumn",
       "name": "sectionCategoryRef",
-      "text": ""
+      "columnType": "sheetRef",
+      "text": "dashboard/category",
+      "value": "dashboard/category",
+      "refKey": "categories"
     },
     {
       "type": "input_dummy"
@@ -108,7 +132,9 @@
     {
       "type": "sheetColumn",
       "name": "sectionImage",
-      "text": ""
+      "columnType": "mediaFile",
+      "text": "dashboard/image",
+      "value": "dashboard/image"
     },
     {
       "type": "input_dummy"
@@ -116,7 +142,9 @@
     {
       "type": "sheetColumn",
       "name": "sectionOrder",
-      "text": ""
+      "columnType": "number",
+      "text": "dashboard/order",
+      "value": "dashboard/order"
     },
     {
       "type": "input_dummy"
@@ -187,7 +215,8 @@
       {
         "type": "sheetId",
         "name": "dataSheetKey",
-        "text": ""
+        "value": "elements",
+        "text": "elements"
       },
       {
         "type": "input_dummy"

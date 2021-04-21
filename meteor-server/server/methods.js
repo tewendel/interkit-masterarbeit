@@ -11,7 +11,9 @@ const getRepoPath = (projectId) => {
   return process.env.REPOSITORIES_PATH + "/projects/" + projectId
 }
 
-const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
+const addColumn = async ({sheetKey, projectId, colKey, name, type, reference}) => {
+
+  console.log("addColumn with reference", reference)
 
   if(!name) name = "unnamed column";
   if(!colKey) colKey = uuidv4();
@@ -25,6 +27,7 @@ const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
         key: colKey,
         name,
         type,
+        reference
       }
       cols.push(newCol)
       sheet.columns = cols;
@@ -217,8 +220,8 @@ Meteor.methods({
       }
   },
 
-  'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
-    return await addColumn({sheetKey, projectId, colKey, name, type});
+  'sheet.addColumn': async (options) => {
+    return await addColumn(options);
   },
 
   'sheet.moveColumn': async ({sheetKey, projectId, colKey, direction}) => {

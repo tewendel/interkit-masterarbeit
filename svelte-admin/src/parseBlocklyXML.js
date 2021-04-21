@@ -11,45 +11,76 @@ const parseBlocklyXML = async (xml, projectId) => {
   let xmlDoc = parser.parseFromString(xml, "text/xml");
   let fields = Array.from(xmlDoc.getElementsByTagName("field"))
   let refs = fields.map(f=>{return {
-    field: f.getAttribute("value"), 
+    value: f.getAttribute("value"), 
     text: f.getAttribute("text"),
-    colType: f.getAttribute("fieldType")
+    colType: f.getAttribute("columnType"),
+    fieldType: f.getAttribute("fieldType"),
+    refKey: f.getAttribute("refKey")
   }})
   for(let ref of refs) {
-    if(ref.field && ref.text) {
-      let sheetKey = ref.field.split("/")[0]
-      let columnKey = ref.field.split("/")[1]
-      let sheetName = ref.text.split("/")[0]
-      let columnName = ref.text.split("/")[1]
-      
-      // check if sheet exists
-      if(verifyValue(sheetKey)) {
 
-        let sheet = await InterkitClient.call("sheet.get", {key: sheetKey, projectId});
-        if(!sheet) {
-          prompted = true;
+    let sheetKey;
+    let columnKey;
+    let sheetName;
+    let columnName;
 
-          if(confirm("create sheet " + sheetName + " (" + sheetKey + ") ?")) {
-            await InterkitClient.call("sheet.create", {projectId, sheetKey, name: sheetName})
+    if(ref.fieldType == "sheetId") {
+      sheetKey = ref.value;
+      sheetName = ref.text;
+    }
 
-            sheet = await InterkitClient.call("sheet.get", {key: sheetKey, projectId});
-          }
-        } else {
-          console.log("sheet exists", sheetKey, sheetName)
+    if(ref.fieldType == "sheetColumn") {
+      sheetKey = ref.value.split("/")[0]
+      columnKey = ref.value.split("/")[1]
+      sheetName = ref.text.split("/")[0]
+      columnName = ref.text.split("/")[1]
+    }
+
+    // check if sheet exists
+    if(verifyValue(sheetKey)) {
+
+      let sheet = await InterkitClient.call("sheet.get", {key: sheetKey, projectId});
+      if(!sheet) {
+        prompted = true;
+
+        if(confirm("create sheet " + sheetName + " (" + sheetKey + ") ?")) {
+          await InterkitClient.call("sheet.create", {projectId, sheetKey, name: sheetName})
+
+          sheet = await InterkitClient.call("sheet.get", {key: sheetKey, projectId});
         }
+      } else {
+        console.log("sheet exists", sheetKey, sheetName)
+      }
 
-        if(sheet) {
-          console.log("checking column ", columnKey, columnName)
+      if(sheet) {
+        console.log("checking column ", columnKey, columnName)
 
-          if(verifyValue(columnKey)) {
+        if(verifyValue(columnKey)) {
 
-            if(sheet.columns.find(c => c.key == columnKey)) {
-              console.log("column exists", columnKey, columnName)            
-            } else {
+          if(sheet.columns.find(c => c.key == columnKey)) {
+            console.log("column exists", columnKey, columnName)            
+          } else {
 
-              prompted = true;
-              if(confirm("create column " + columnName + " (" + columnKey + ") type "+ ref.colType +"?")) {
-                await InterkitClient.call("sheet.addColumn", {projectId, sheetKey, colKey: columnKey, name: columnName, type: ref.colType})
+            prompted = true;
+            if(confirm("create column " + columnName + " (" + columnKey + ") type "+ ref.colType +"?")) {
+              console.log("reference", ref.refKey)
+              await InterkitClient.call("sheet.addColumn", {
+                projectId, 
+                sheetKey, 
+                colKey: columnKey, 
+                name: columnName, 
+                type: ref.colType, 
+                reference: ref.refKey
+              })
+
+              if(ref.colType == "sheetRef")  {
+                console.log(ref);
+                let refSheet = await InterkitClient.call("sheet.get", {key: ref.refKey, projectId});
+                if(!refSheet) {
+                  if(confirm(`create sheet ${ref.refKey} referenced in column ${columnName}?`)) {
+                    await InterkitClient.call("sheet.create", {projectId, sheetKey: ref.refKey, name: ref.refKey}) 
+                  }
+                }
               }
             }
           }

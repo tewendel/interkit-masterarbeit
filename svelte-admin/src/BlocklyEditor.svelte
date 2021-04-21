@@ -121,7 +121,7 @@
     parseBlocklyXML(blocklyXML.content, projectId);
   }
 
-  const myUpdateFunction = (event) => {
+  const myUpdateFunction = async (event) => {
     //console.log("myUpdateFunction")
     let code;
     try {
@@ -133,7 +133,7 @@
     // add import statements
     let allBlocks = workspace.getAllBlocks().map(b=>b.type)
     let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.indexOf(e) === i)
-    
+
     let imports = "<script>\n";
     imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     for(let type of allBlocksUnique) {
@@ -144,6 +144,7 @@
     generatedCode = imports + "<AppBase>\n" + code + "\n</AppBase>";
 
     document.getElementById('textarea').value = generatedCode;
+
   }
 
   $: {

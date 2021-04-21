@@ -6,19 +6,27 @@ export default (Blockly, update) => {
   /* sheetColumn field */
 
   CustomFields.SheetColumnField = function(opt_value, opt_validator) {
-    opt_value = this.doClassValidation_(opt_value);
+    /*opt_value = this.doClassValidation_(opt_value);
     if (opt_value === null) {
       opt_value = "not specified";
-    }  // Else the original value is fine.
+    }  // Else the original value is fine.*/
 
     CustomFields.SheetColumnField.superClass_.constructor.call(
         this, opt_value, opt_validator);
+
+    this.setValue(opt_value);
   };
   Blockly.utils.object.inherits(CustomFields.SheetColumnField, Blockly.Field);
 
   CustomFields.SheetColumnField.fromJson = function(options) {
-    var value = Blockly.utils.replaceMessageReferences(
-      options['value']);
+    /*var value = Blockly.utils.replaceMessageReferences(
+      options['value']);*/
+    let value = {
+      columnType: options.columnType,
+      refKey: options.refKey,
+      value: options.value,
+      text: options.value
+    }  
     return new CustomFields.SheetColumnField(value);
   };
 
@@ -27,7 +35,10 @@ export default (Blockly, update) => {
   CustomFields.SheetColumnField.prototype.toXml = function(fieldElement) {
     fieldElement.setAttribute('value', this.value_.value);
     fieldElement.setAttribute('text', this.value_.text);
-    fieldElement.setAttribute('fieldType', this.value_.fieldType);
+    fieldElement.setAttribute('columnType', this.value_.columnType);
+    fieldElement.setAttribute('refKey', this.value_.refKey);
+    fieldElement.setAttribute('fieldType', 'sheetColumn');
+
     return fieldElement;
   };
 
@@ -36,7 +47,8 @@ export default (Blockly, update) => {
 
     value.value = fieldElement.getAttribute('value');
     value.text = fieldElement.getAttribute('text');
-    value.fieldType = fieldElement.getAttribute('fieldType');
+    value.columnType = fieldElement.getAttribute('columnType');
+    value.refKey = fieldElement.getAttribute('refKey');
     this.setValue(value);
   };
 
