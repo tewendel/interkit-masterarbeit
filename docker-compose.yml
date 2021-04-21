@@ -57,7 +57,7 @@ services:
       LETSENCRYPT_EMAIL: info@interkit.app
       VIRTUAL_HOST: $INTERKIT_SERVER_HOST
       VIRTUAL_PORT: 3000
-
+      ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
 
   mongo:
     image: mongo:4.2

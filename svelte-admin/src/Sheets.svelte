@@ -46,7 +46,7 @@
     <!-- we need to use $sheets here to get the reactive value of the store -->
     {#each $sheets as sheet}
       <li on:click={()=>{openSheet(sheet)}}>
-        <img src="images/sheet_icon.png"/><br/>
+        <img class="icon" src="images/sheet_icon.png"/><br/>
         <div>{sheet.name}</div>
       </li>
     {/each}
@@ -80,7 +80,7 @@
     align-items: center;
   }
 
-  li img {
+  li img.icon {
     width: 100px;
   }
 
