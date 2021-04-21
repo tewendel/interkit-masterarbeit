@@ -35,7 +35,7 @@
             <MediaManager {projectId} />
           </TabContent>
           <TabContent>
-            <BlocklyEditor {projectId} open={selected === 1}/>
+            <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
             <RepositoryEditor {projectId} />

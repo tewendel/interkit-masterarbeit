@@ -20,11 +20,11 @@ const get_app_files = async (req, res, next) => {
   if(projectId) {  
     // console.log("projectId: " + projectId, "subpath: " + subpath)
 
-    console.log("build projectPublicPath", REPOSITORIES_PATH, projectId)
+    //console.log("build projectPublicPath", REPOSITORIES_PATH, projectId)
 
     const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
 
-    console.log(req.url, projectId, subpath, projectPublicPath)
+    //console.log(req.url, projectId, subpath, projectPublicPath)
 
     if (subpath == "/" || subpath == "") {
       subpath = "/index.html"
@@ -34,7 +34,7 @@ const get_app_files = async (req, res, next) => {
 
     const filePath = path.join(projectPublicPath, ...subpathArray)
 
-    console.log(filePath)
+    //console.log(filePath)
 
     try {
       const file = await fs.readFile(filePath)
