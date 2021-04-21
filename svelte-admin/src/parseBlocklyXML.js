@@ -6,7 +6,7 @@ const verifyValue = (v) => {
 
 const parseBlocklyXML = async (xml, projectId) => {
 
-  
+  let prompted = false;
   let parser = new DOMParser();
   let xmlDoc = parser.parseFromString(xml, "text/xml");
   let fields = Array.from(xmlDoc.getElementsByTagName("field"))
@@ -27,6 +27,7 @@ const parseBlocklyXML = async (xml, projectId) => {
 
         let sheet = await InterkitClient.call("sheet.get", {key: sheetKey, projectId});
         if(!sheet) {
+          prompted = true;
 
           if(confirm("create sheet " + sheetName + " (" + sheetKey + ") ?")) {
             await InterkitClient.call("sheet.create", {projectId, sheetKey, name: sheetName})
@@ -46,6 +47,7 @@ const parseBlocklyXML = async (xml, projectId) => {
               console.log("column exists", columnKey, columnName)            
             } else {
 
+              prompted = true;
               if(confirm("create column " + columnName + " (" + columnKey + ") type "+ ref.colType +"?")) {
                 await InterkitClient.call("sheet.addColumn", {projectId, sheetKey, colKey: columnKey, name: columnName, type: ref.colType})
               }
@@ -55,6 +57,7 @@ const parseBlocklyXML = async (xml, projectId) => {
       }
     }
   }
+  alert("check completed." + (!prompted ? " looks good!" : ""));
 }
 
 export default parseBlocklyXML;

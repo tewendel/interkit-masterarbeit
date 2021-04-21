@@ -12,7 +12,7 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitles %2 %3 sectionRefs %4 %5 sectionTypes %6 %7 elementTitleColumn %8 %9 elementDescriptionColumn %10 %11 elementAudioColumn %12 %13 elementImageColumn %14 %15 categoryTitleColumn %16 %17 categoryDescriptionColumn %18 %19 categoryImageColumn %20 %21 sectionCategoryRef %22 %23 sectionImage %24 %25 sectionOrder %26 %27",
+  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementAudio %12 %13 elementImage %14 %15 categoryTitle %16 %17 categoryDescription %18 %19 categoryImage %20 %21",
   "args0": [
     {
       "type": "input_dummy"

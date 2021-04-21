@@ -205,7 +205,7 @@
 
   <button on:click={save}>save</button>
   <button on:click={saveAndCompile}>save & compile</button>
-  <button on:click={createDatabase}>create database</button>
+  <button on:click={createDatabase}>check database</button>
   
   <InputModal
     type={openInputModal}
