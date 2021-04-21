@@ -36,7 +36,7 @@
   <ModalHeader label="{value.key}" title="Update Column" />
   <ModalBody hasForm>
     <FormGroup>
-      <TextInput data-modal-primary-focus labelText="Name" placeholder="Enter column name..." bind:value={value.value} />
+      <TextInput labelText="Name" placeholder="Enter column name..." bind:value={value.value} />
     </FormGroup>
     <FormGroup>
       <Select labelText="Type" bind:selected={value.type}>
@@ -53,6 +53,11 @@
             <SelectItem value={sheet.key} text={sheet.name} />
           {/each}
         </Select>
+      </FormGroup>
+    {/if}
+    {#if value.type == "optionSelect" && sheets}
+      <FormGroup>
+        <TextInput labelText="Options" placeholder="Option 1, Option 2" bind:value={value.options} />
       </FormGroup>
     {/if}
   </ModalBody>

@@ -15,7 +15,8 @@ const parseBlocklyXML = async (xml, projectId) => {
     text: f.getAttribute("text"),
     colType: f.getAttribute("columnType"),
     fieldType: f.getAttribute("fieldType"),
-    refKey: f.getAttribute("refKey")
+    refKey: f.getAttribute("refKey"),
+    options: f.getAttribute("options")
   }})
   for(let ref of refs) {
 
@@ -63,14 +64,14 @@ const parseBlocklyXML = async (xml, projectId) => {
 
             prompted = true;
             if(confirm("create column " + columnName + " (" + columnKey + ") type "+ ref.colType +"?")) {
-              console.log("reference", ref.refKey)
               await InterkitClient.call("sheet.addColumn", {
                 projectId, 
                 sheetKey, 
                 colKey: columnKey, 
                 name: columnName, 
                 type: ref.colType, 
-                reference: ref.refKey
+                reference: ref.refKey,
+                options: ref.options
               })
 
               if(ref.colType == "sheetRef")  {

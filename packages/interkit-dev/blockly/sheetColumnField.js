@@ -21,11 +21,13 @@ export default (Blockly, update) => {
   CustomFields.SheetColumnField.fromJson = function(options) {
     /*var value = Blockly.utils.replaceMessageReferences(
       options['value']);*/
+    console.log(options)
     let value = {
       columnType: options.columnType,
       refKey: options.refKey,
       value: options.value,
-      text: options.value
+      text: options.value,
+      options: options.options
     }  
     return new CustomFields.SheetColumnField(value);
   };
@@ -37,7 +39,9 @@ export default (Blockly, update) => {
     fieldElement.setAttribute('text', this.value_.text);
     fieldElement.setAttribute('columnType', this.value_.columnType);
     fieldElement.setAttribute('refKey', this.value_.refKey);
+    fieldElement.setAttribute('options', this.value_.options);
     fieldElement.setAttribute('fieldType', 'sheetColumn');
+
 
     return fieldElement;
   };
@@ -49,6 +53,7 @@ export default (Blockly, update) => {
     value.text = fieldElement.getAttribute('text');
     value.columnType = fieldElement.getAttribute('columnType');
     value.refKey = fieldElement.getAttribute('refKey');
+    value.options = fieldElement.getAttribute('options');
     this.setValue(value);
   };
 

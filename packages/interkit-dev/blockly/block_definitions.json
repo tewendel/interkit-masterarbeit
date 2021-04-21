@@ -41,9 +41,10 @@
     {
       "type": "sheetColumn",
       "name": "sectionTypes",
-      "columnType": "string",
+      "columnType": "optionSelect",
       "text": "dashboard/type",
-      "value": "dashboard/type"
+      "value": "dashboard/type",
+      "options": "ElementSlider, ElementSingle"
     },
     {
       "type": "input_dummy"

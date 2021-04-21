@@ -140,17 +140,21 @@
       }
     }
 
-    if(columnType == "location" || columnType == "sheetRef" || columnType == "mediaFile") {
+    if(columnType == "location" || columnType == "sheetRef" || columnType == "mediaFile" || columnType == "optionSelect") {
       console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;
       inputModalValue = cell.value;
       openInputModal = columnType;
+      
+      let currentColumn = $currentSheet.columns.find(c=>c.key == updateCell.key)
+      modalParams = {
+        currentColumn
+      }
       if(columnType == "sheetRef") {
         // get key of sheet that is referenced in column
-        let currentColumn = $currentSheet.columns.find(c=>c.key == updateCell.key)
         console.log(currentColumn)
-        modalParams = {reference: currentColumn.reference}
+        modalParams.reference = currentColumn.reference
       }
     }
   }
@@ -183,7 +187,7 @@
 
   const submitHeaderColumnUpdate = () => {
     console.log("submit", updateHeader)
-    InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference})
+    InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference, options: updateHeader.options})
   }
   
   // transform headers and rows for use with carbon DataTable
@@ -202,6 +206,7 @@
           value: c.name, 
           type: c.type, 
           reference: c.reference,
+          options: c.options,
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
           sort: (c.type == "number" || c.type == "string") ? 
             sortFunction : false

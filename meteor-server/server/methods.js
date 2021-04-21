@@ -11,7 +11,7 @@ const getRepoPath = (projectId) => {
   return process.env.REPOSITORIES_PATH + "/projects/" + projectId
 }
 
-const addColumn = async ({sheetKey, projectId, colKey, name, type, reference}) => {
+const addColumn = async ({sheetKey, projectId, colKey, name, type, reference, options}) => {
 
   console.log("addColumn with reference", reference)
 
@@ -27,7 +27,8 @@ const addColumn = async ({sheetKey, projectId, colKey, name, type, reference}) =
         key: colKey,
         name,
         type,
-        reference
+        reference,
+        options
       }
       cols.push(newCol)
       sheet.columns = cols;
@@ -265,14 +266,14 @@ Meteor.methods({
     }
   },
 
-  'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference}) => {
+  'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference, options}) => {
     console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
     let sheet = Sheets.findOne({key: sheetKey, projectId});
     if(sheet) {
       let cols = sheet.columns;
       let newCols = cols.map(c => {
         if(c.key == colKey) {
-          return {...c, name: newVal, type: newType, reference: newReference}
+          return {...c, name: newVal, type: newType, reference: newReference, options}
         } else {
           return c
         }

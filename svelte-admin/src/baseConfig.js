@@ -6,6 +6,7 @@ export const columnTypes = {
   location: "Location",
   sheetRef: "SheetRef",
   mediaFile: "MediaFile",
-  number: "Number"
+  number: "Number",
+  optionSelect: "OptionSelect"
 }
   

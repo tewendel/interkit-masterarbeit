@@ -5,6 +5,7 @@
   import SheetColumnSelect from './SheetColumnSelect.svelte';
   import SheetIdSelect from './SheetIdSelect.svelte'
   import MediaFileSelect from './MediaFileSelect.svelte';
+  import OptionSelect from './OptionSelect.svelte';
   
   export let type = null
   export let value = {}
@@ -24,6 +25,7 @@
     "sheetColumn": SheetColumnSelect,
     "sheetId": SheetIdSelect,
     "mediaFile": MediaFileSelect,
+    "optionSelect": OptionSelect,
   }
 
 </script>
