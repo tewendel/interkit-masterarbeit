@@ -6,7 +6,7 @@
 
   export let projectId
 
-  const exportEndpoint = `${INTERKIT_SERVER_URL}export/`
+  const exportEndpoint = `${INTERKIT_SERVER_URL}/export/`
 
 </script>
 
@@ -20,7 +20,6 @@
 <ImportProject {projectId} />
 
 <Button size="small" href={exportEndpoint + `?projectId=${projectId}`}>Export DB & Media (.zip)</Button>
-
 
 <h4>Snapshots (coming soon)</h4>
 

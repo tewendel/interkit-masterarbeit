@@ -102,8 +102,9 @@
     }
   }
 
-  const createColumn = ()=> {
-    InterkitClient.call('sheet.addColumn', {sheetKey, projectId})
+  const createColumn = async ()=> {
+    let newCol = await InterkitClient.call('sheet.addColumn', {sheetKey, projectId})
+    openUpdateHeaderModal(newCol);
   }
 
   const createRow = ()=> {
@@ -217,7 +218,7 @@
 </script>
 
 {#if $currentSheet}
-  <button on:click={close}>{"<<"} back</button><br><br>
+  <button on:click={close}>{"<"} back to sheet overview</button><br><br>
   <h4>{$currentSheet.name} <small>{$currentSheet.key}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button></h4>
   
 
@@ -226,18 +227,18 @@
     sortable
     {headers}
     rows={carbonRows}
-    style="min-height: 100px; padding-bottom: 100px; overflow-x: scroll"
+    style="min-height: 100px; padding-bottom: 150px; overflow-x: scroll"
   >
     
     <span slot="cell-header" let:header>
       {#if header.key == "overflow"}
-        <OverflowMenu flipped>
+        <OverflowMenu style="float: right" flipped>
             <OverflowMenuItem on:click={createColumn} text="add column" />    
         </OverflowMenu>   
       {:else}
         <div class="sheet-header" >
-          <OverflowMenu size="sm">
-            <div slot="menu" style="font-size: 1rem; padding: 5px;">{header.value}</div>
+          <OverflowMenu size="sm" style="width: 100%;">
+            <div slot="menu" style="font-size: 1rem; padding: 5px; margin: 5px;">{header.value}</div>
             <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
             <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
             <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
@@ -249,7 +250,7 @@
     
     <span slot="cell" let:row let:cell>
       {#if cell.key === 'overflow'}
-        <OverflowMenu flipped>
+        <OverflowMenu style="float: right" flipped>
           <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
         </OverflowMenu>
       {:else}

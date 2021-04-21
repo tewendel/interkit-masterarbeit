@@ -21,13 +21,15 @@ const addColumn = async ({sheetKey, projectId, colKey, name, type}) => {
     if(sheet) {
       let cols = sheet.columns;
       if(!cols) cols = [];
-      cols.push({
+      let newCol = {
         key: colKey,
         name,
         type,
-      })
+      }
+      cols.push(newCol)
       sheet.columns = cols;
       Sheets.update({_id: sheet._id}, {$set: {columns: cols}});
+      return newCol;
     }
 }
 
@@ -94,14 +96,16 @@ Meteor.methods({
 
   'resumeUserSession': async function (userAuth) {
      
-    let hashedToken = Accounts._hashLoginToken(userAuth?.token)
-    let query = { 'services.resume.loginTokens.hashedToken': hashedToken }    
-    let user = Meteor.users.findOne(query);
+    if(userAuth?.token) {
+      let hashedToken = Accounts._hashLoginToken(userAuth?.token)
+      let query = { 'services.resume.loginTokens.hashedToken': hashedToken }    
+      let user = Meteor.users.findOne(query);
 
-    if(user) {
-      // user found by token, logging user in on server
-      this.setUserId(user._id);
-      return true;
+      if(user) {
+        // user found by token, logging user in on server
+        this.setUserId(user._id);
+        return true;
+      }
     }
 
     return false;
@@ -214,7 +218,7 @@ Meteor.methods({
   },
 
   'sheet.addColumn': async ({sheetKey, projectId, colKey, name, type}) => {
-    await addColumn({sheetKey, projectId, colKey, name, type});
+    return await addColumn({sheetKey, projectId, colKey, name, type});
   },
 
   'sheet.moveColumn': async ({sheetKey, projectId, colKey, direction}) => {
