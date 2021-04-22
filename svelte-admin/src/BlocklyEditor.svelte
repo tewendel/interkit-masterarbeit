@@ -1,6 +1,7 @@
 <script>
 
   import {onMount} from 'svelte'
+  import indent from 'xml-formatter';
   
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   
@@ -15,6 +16,7 @@
   import initSheetIdField from 'interkit-dev/blockly/sheetIdField.js'
   
   import InputModal from './InputModals/InputModal.svelte';
+  import CodeHighlighter from './CodeHighlighter.svelte';
 
   export let open;
   export let projectId;
@@ -144,9 +146,10 @@
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    generatedCode = imports + "<AppBase>\n" + code + "\n</AppBase>";
-
-    document.getElementById('textarea').value = generatedCode;
+    generatedCode = imports + indent("<AppBase>\n" + code + "\n</AppBase>", {
+      collapseContent: false, 
+      indentation: '  ', 
+    });
 
   }
 
@@ -190,18 +193,18 @@
 
 </script>
 
+
   <Tabs>
       <Tab label="blockly" />
       <Tab label="App.svelte" />
-    <div slot="content">
-      <TabContent>
-          <div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
-      </TabContent>
-      <TabContent>
-          <textarea id="textarea"></textarea>
-      </TabContent>
-      
-    </div>
+        <div slot="content">
+          <TabContent>
+              <div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
+          </TabContent>
+          <TabContent>
+            <CodeHighlighter code={generatedCode} />
+          </TabContent>
+      </div>
   </Tabs>
 
 
@@ -221,8 +224,4 @@
   />
 
 <style>
-  textarea {
-    width: 100%;
-    height: 500px;
-  }
 </style>

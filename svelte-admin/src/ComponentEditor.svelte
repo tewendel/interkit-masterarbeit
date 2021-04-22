@@ -68,9 +68,5 @@
 
 
 <style>
-  textarea {
-    width: 400px;
-    height: 150px;
-  }
-  
+
 </style>

@@ -65,6 +65,7 @@
   }
   .left-pane {
     flex: 1;
+    overflow-x: auto;
   }
 
   .right-pane {
