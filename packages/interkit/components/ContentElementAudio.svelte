@@ -19,9 +19,20 @@
 
 </script>
 
-<span>{title}</span>
-{#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
-  (playing)
-{:else}
-  <button on:click={play}>play</button>
-{/if}
+<section class="ContentElementAudio container">
+
+  <h3 class="ContentElementAudio__Headline headline">{title}</h3>
+
+  <div class="ContentElementAudio__Controls">
+    {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
+      (playing)
+    {:else}
+      <button on:click={play}>play</button>
+    {/if}
+  </div>
+
+</section>
+
+<style>
+
+</style>

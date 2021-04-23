@@ -20,7 +20,7 @@
 </script>
 
 
-<div class="page" class:visible="{$selectedPanel === panel}">
+<div class="BottomMenuPage page" class:visible="{$selectedPanel === panel}">
   <slot></slot>
 </div>
 
@@ -30,6 +30,7 @@
     display: block;
     width: 100%;
     height: 100%;
+    position: relative;
   }
 
   .page:not(.visible) {
