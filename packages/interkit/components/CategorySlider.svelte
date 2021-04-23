@@ -6,10 +6,12 @@
   export let title
   export let categoryRef
   export let categoryTitleColumn
+  export let categorySubtitleColumn
   export let categoryDescriptionColumn
   export let categoryImageColumn
   export let category2Ref
   export let category2TitleColumn
+  export let category2SubtitleColumn
   export let category2DescriptionColumn
   export let category2ImageColumn
 
@@ -19,6 +21,9 @@
   export let elementDescriptionColumn
   export let elementCategoryRefColumn
   export let elementCategory2RefColumn
+
+  export let elementCategoryOrderColumn
+  export let elementCategory2OrderColumn
 
   import { onMount } from 'svelte'
 
@@ -35,8 +40,26 @@
   let elementSheetKey = util.getSheetKey(elementTitleColumn)
   
   // the columnKey of the element sheet that references the category
-  let elementCategoryRefColumnKey = util.colKey(primary ? elementCategoryRefColumn : elementCategory2RefColumn) 
+  let elementCategoryRefColumnKey = util.colKey(primary ? elementCategoryRefColumn : elementCategory2RefColumn)
 
+  let elementCategoryRefColumSelected = primary ? elementCategoryRefColumn : elementCategory2RefColumn; 
+  let elementCategoryOrderColumnSelected = primary ? elementCategoryOrderColumn : elementCategory2OrderColumn;
+  let categoryTitleColumnSelected = primary ? categoryTitleColumn : category2TitleColumn;
+  let categorySubtitleColumnSelected = primary ? categorySubtitleColumn : category2SubtitleColumn;
+
+  console.log("category 2", 
+    elementCategory2RefColumn, 
+    elementCategory2OrderColumn, 
+    category2TitleColumn, 
+    category2SubtitleColumn
+  )
+
+  console.log("select the right category", 
+    elementCategoryRefColumSelected, 
+    elementCategoryOrderColumnSelected, 
+    categoryTitleColumnSelected, 
+    categorySubtitleColumnSelected
+  )
 
   let categoryTitle;
   let elementSub;
@@ -57,6 +80,7 @@
     categoryTitle = util.rowVal(categoryRow, categoryTitleColumn)
   })
 
+  
 
 </script>
 
@@ -67,4 +91,8 @@
       descriptionColumn={elementDescriptionColumn}
       audioColumn={elementAudioColumn}
       imageColumn={elementImageColumn}
+      categoryRefColumn={elementCategoryRefColumSelected}
+      categoryOrderColumn={elementCategoryOrderColumnSelected}
+      categoryTitleColumn={categoryTitleColumnSelected}
+      categorySubtitleColumn={categorySubtitleColumnSelected}
 />

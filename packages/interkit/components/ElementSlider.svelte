@@ -9,6 +9,10 @@
   export let descriptionColumn;
   export let audioColumn;
   export let imageColumn;
+  export let categoryRefColumn;
+  export let categoryOrderColumn;
+  export let categoryTitleColumn;
+  export let categorySubtitleColumn;
 
 </script>
 
@@ -23,6 +27,10 @@
         {audioColumn}
         {descriptionColumn}
         {imageColumn}
+        {categoryRefColumn}
+        {categoryOrderColumn}
+        {categoryTitleColumn}
+        {categorySubtitleColumn}        
       />
     {/each}
   </div>

@@ -16,14 +16,18 @@
   export let elementImageColumn;
   export let elementCategoryRefColumn;  
   export let elementCategory2RefColumn;  
+  export let elementCategoryOrderColumn;
+  export let elementCategory2OrderColumn;
 
   // columns for the primary category
   export let categoryTitleColumn;
+  export let categorySubtitleColumn;
   export let categoryDescriptionColumn;
   export let categoryImageColumn;
 
   // columns for the secondary category
   export let category2TitleColumn;
+  export let category2SubtitleColumn;
   export let category2DescriptionColumn;
   export let category2ImageColumn;
 
@@ -158,9 +162,11 @@
       categoryRef={section.categoryRef}
       category2Ref={section.category2Ref}
       {categoryTitleColumn}
+      {categorySubtitleColumn}
       {categoryDescriptionColumn}
       {categoryImageColumn}
       {category2TitleColumn}
+      {category2SubtitleColumn}
       {category2DescriptionColumn}
       {category2ImageColumn}
       {elementTitleColumn}
@@ -168,7 +174,9 @@
       {elementAudioColumn}
       {elementImageColumn}
       {elementCategoryRefColumn}
+      {elementCategoryOrderColumn}
       {elementCategory2RefColumn}
+      {elementCategory2OrderColumn}
     />
 
 
