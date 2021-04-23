@@ -82,7 +82,8 @@
 
   .pages {
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
+    position: relative;
   }
 
   .media-player {

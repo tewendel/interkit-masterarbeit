@@ -24,9 +24,15 @@
 
 {#if $audioPlayerStatus}
 
-<div class="audioplayer-container">
+<div class="AudioPlayer container">
 
-  <div>{$audioPlayerStatus.title}</div>
+  <div class="AudioPlayer__Expand expand">
+    <button class="AudioPlayer__Expand__Button icon-expand icon" on:click={()=>alert("expand")} title="Expand">
+      expand
+    </button>
+  </div>
+
+  <h4 class="AudioPlayer__Title title">{$audioPlayerStatus.title}</h4>
 
   {#key $audioPlayerStatus}
     <audio controls autoplay={$audioPlayerStatus.autoplay}>
@@ -34,7 +40,11 @@
     </audio>
   {/key}
 
-  <button on:click={closePlayer}>close</button>
+  <div class="AudioPlayer__Close close">
+    <button class="AudioPlayer__Close__Button icon-close icon" on:click={closePlayer} title="Close">
+      Close
+    </button>
+  </div>
 
 </div>
 
@@ -42,10 +52,48 @@
 
 <style>
 
-  .audioplayer-container {
-    background-color: white;
-    padding: 5px;
+  .container {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: lightgrey;
+    border: solid 1px black;
+    border-bottom-width: 0;
+    padding: 4px;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .container > * {
+    margin: 0 4px;
+  }
+
+  .expand {}
+  .title {
+    flex: 1;
+    text-overflow: ellipsis;
+  }
+  .close {}
+
+  .icon {
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: center;
+    color: transparent;
+    border: none;
+    width: 25px;
+    height: 25px;
+    margin: 0 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .icon-expand {
+    background-image: url("../icons/Arrow-Up.svg");
+  }
+  .icon-close {
+    background-image: url("../icons/Close.svg");
+    padding: 0 12px;
   }
 
 </style>

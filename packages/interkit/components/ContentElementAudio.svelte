@@ -46,19 +46,16 @@
 
 </script>
 
-<MediaFileImage mediafileRef={util.rowVal(element, imageColumn)} />    
-<span>{title}</span>
-<span>{categoryIndex}</span>
+<section class="ContentElementAudio">
+  <MediaFileImage mediafileRef={util.rowVal(element, imageColumn)} />    
+  <h3>{title} <span>{categoryIndex}</span>
 <span>{util.rowVal(categoryRow, categoryTitleColumn)}</span>
 <span>{util.rowVal(categoryRow, categorySubtitleColumn)}</span>
-<div>{description}</div>
-{#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
-  (playing)
-{:else}
-  <button on:click={play}>play</button>
-{/if}
-
-
-<style>
-  span {margin: 5px;}
-</style>
+</h3>
+  <p>{description}</p>
+  {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
+    (playing)
+  {:else}
+    <button on:click={play}>play</button>
+  {/if}
+</section>
