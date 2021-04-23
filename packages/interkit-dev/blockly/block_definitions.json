@@ -12,7 +12,7 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementAudio %12 %13 elementImage %14 %15 categoryTitle %16 %17 categoryDescription %18 %19 categoryImage %20 %21",
+  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23 sectionCategory2Ref %28 %29 sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementAudio %12 %13 elementImage %14 %15 elementCategoryRef %36 %37 elementCategory2Ref %38 %39 categoryTitle %16 %17 categoryDescription %18 %19 categoryImage %20 %21 category2Title %30 %31 category2Description %32 %33 category2Image %34 %35",
   "args0": [
     {
       "type": "input_dummy"
@@ -44,7 +44,7 @@
       "columnType": "optionSelect",
       "text": "dashboard/type",
       "value": "dashboard/type",
-      "options": "ElementSlider, ElementSingle, ElementRandom, FeaturedCategory, MenuSwitcher"
+      "options": "ElementSlider, ElementSingle, ElementRandom, CategorySlider, FeaturedCategory, MenuSwitcher"
     },
     {
       "type": "input_dummy"
@@ -149,6 +149,69 @@
     },
     {
       "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "sectionCategory2Ref",
+      "columnType": "sheetRef",
+      "text": "dashboard/category2",
+      "value": "dashboard/category2",
+      "refKey": "categories2"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "category2TitleColumn",
+      "columnType": "string",
+      "text": "categories2/name",
+      "value": "categories2/name"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "category2DescriptionColumn",
+      "columnType": "string",
+      "text": "categories2/description",
+      "value": "categories2/description"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "category2ImageColumn",
+      "columnType": "mediaFile",
+      "text": "categories2/image",
+      "value": "categories2/image"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "name": "elementCategoryRefColumn",
+      "type": "sheetColumn",
+      "columnType": "sheetRef",
+      "refKey": "categories",
+      "text": "elements/category",
+      "value": "elements/category"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "name": "elementCategory2RefColumn",
+      "type": "sheetColumn",
+      "columnType": "sheetRef",
+      "refKey": "categories2",
+      "text": "elements/category2",
+      "value": "elements/category2"
+    },
+    {
+      "type": "input_dummy"
     }
   ],
   "previousStatement": null,
@@ -215,7 +278,7 @@
 
   {
     "type": "ElementList",
-    "message0": "<ElementList> %1 dataSheetKey %2 %3 contentElement %4",
+    "message0": "<ElementList> %1 dataSheetKey %2 %3 sortColumn %4 %5 contentElement %6",
     "args0": [
       {
         "type": "input_dummy"
@@ -225,6 +288,16 @@
         "name": "dataSheetKey",
         "value": "elements",
         "text": "elements"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "sheetColumn",
+        "name": "sortColumn",
+        "value": "elements/categorySort",
+        "text": "elements/categorySort",
+        "columnType": "number"
       },
       {
         "type": "input_dummy"
@@ -448,7 +521,7 @@
 
   {
     "type": "ContentElementAudio",
-    "message0": "<ContentElementAudio> %1 name %2 %3 audio %4 %5",
+    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9",
     "args0": [
       {
         "type": "input_dummy"
@@ -472,7 +545,28 @@
       },
       {
         "type": "input_dummy"
+      },
+      {
+        "name": "descriptionColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "elements/description",
+        "value": "elements/description"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "imageColumn",
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "elements/image",
+        "value": "elements/image"
+      },
+      {
+        "type": "input_dummy"
       }
+
     ],
     "previousStatement": null,
     "nextStatement": null,

@@ -146,11 +146,18 @@
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    generatedCode = imports + indent("<AppBase>\n" + code + "\n</AppBase>", {
-      collapseContent: false, 
-      indentation: '  ', 
-    });
-
+    let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";
+    //console.log(codeWithAppBase)
+    /*try {
+      generatedCode = imports + indent(codeWithAppBase, {
+        collapseContent: false, 
+        indentation: '  ', 
+      });
+    } catch (e) {
+      console.log("indent error", e)
+      // fallback*/
+      generatedCode = imports + codeWithAppBase;
+    //}
   }
 
   $: {

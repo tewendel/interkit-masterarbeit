@@ -21,7 +21,7 @@ export default (Blockly, update) => {
   CustomFields.SheetColumnField.fromJson = function(options) {
     /*var value = Blockly.utils.replaceMessageReferences(
       options['value']);*/
-    console.log(options)
+    //console.log(options)
     let value = {
       columnType: options.columnType,
       refKey: options.refKey,

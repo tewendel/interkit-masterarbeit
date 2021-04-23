@@ -83,7 +83,7 @@
         Frame: {w} x {h} px
         <Dropdown
           type="inline"
-          titleText="Aspec Ratio"
+          titleText="Aspect Ratio"
           bind:selectedIndex={dropdown_AR_selectedIndex}
           items={dropdown_AR_items}
         />

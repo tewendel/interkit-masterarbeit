@@ -1,8 +1,10 @@
 <script>
 
+  // columns for the sections of the dashboard
   export let sectionTitles; // column of the section title
   export let sectionRefs; // column of references to elements
-  export let sectionCategoryRef; // column of references to category
+  export let sectionCategoryRef; // column of references to the primary category
+  export let sectionCategory2Ref; // column of references to the secondary category
   export let sectionTypes; // column that tells us which component to use per section
   export let sectionImage; // column that gives us an image for the section
   export let sectionOrder; // column that tells us in which order the sections should be rendered
@@ -12,11 +14,18 @@
   export let elementDescriptionColumn;
   export let elementAudioColumn;
   export let elementImageColumn;
+  export let elementCategoryRefColumn;  
+  export let elementCategory2RefColumn;  
 
-  // columns for the category in featured category
+  // columns for the primary category
   export let categoryTitleColumn;
   export let categoryDescriptionColumn;
   export let categoryImageColumn;
+
+  // columns for the secondary category
+  export let category2TitleColumn;
+  export let category2DescriptionColumn;
+  export let category2ImageColumn;
 
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient, util } from '../'
@@ -26,6 +35,7 @@
   import ElementRandom from './ElementRandom.svelte';
   import FeaturedCategory from './FeaturedCategory.svelte';
   import MenuSwitcher from './MenuSwitcher.svelte';
+  import CategorySlider from './CategorySlider.svelte';
 
   let projectId = INTERKIT_PROJECT_ID;
 
@@ -57,7 +67,7 @@
         //console.log(aRefRow)
 
         if(!aRefRow) {
-          console.log("dashboard empty: no element selected in reference column, aborting subscribe")
+          console.log("dashboard empty: no element selected in reference column, aborting auto-subscribe to elements")
           return
         }
 
@@ -92,6 +102,7 @@
     refs: util.rowVal(r, sectionRefs),
     type: util.rowVal(r, sectionTypes),
     categoryRef: util.rowVal(r, sectionCategoryRef),
+    category2Ref: util.rowVal(r, sectionCategory2Ref),
     image: util.rowVal(r, sectionImage)
   }}) : []
 
@@ -102,6 +113,8 @@
 <h1>Dashboard</h1>
 
 {#each sections as section}
+
+  <!--{JSON.stringify(section)}-->
 
   {#if section.type == "ElementSlider"}
     <ElementSlider 
@@ -137,6 +150,27 @@
       {categoryDescriptionColumn}
       {categoryImageColumn}
     />
+
+  {:else if section.type == "CategorySlider"}
+
+    <CategorySlider
+      title={section.title}
+      categoryRef={section.categoryRef}
+      category2Ref={section.category2Ref}
+      {categoryTitleColumn}
+      {categoryDescriptionColumn}
+      {categoryImageColumn}
+      {category2TitleColumn}
+      {category2DescriptionColumn}
+      {category2ImageColumn}
+      {elementTitleColumn}
+      {elementDescriptionColumn}
+      {elementAudioColumn}
+      {elementImageColumn}
+      {elementCategoryRefColumn}
+      {elementCategory2RefColumn}
+    />
+
 
   {:else if section.type == "MenuSwitcher"}
 

@@ -47,7 +47,7 @@
     {#each $sheets as sheet}
       <li on:click={()=>{openSheet(sheet)}}>
         <img class="icon" src="images/sheet_icon.png"/><br/>
-        <div>{sheet.name}</div>
+        <div style="text-align: center;">{sheet.name}</div>
       </li>
     {/each}
     </ul>
