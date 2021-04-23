@@ -146,10 +146,7 @@
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    generatedCode = imports + indent("<AppBase>\n" + code + "\n</AppBase>", {
-      collapseContent: false, 
-      indentation: '  ', 
-    });
+    generatedCode = imports +"<AppBase>\n" + code + "\n</AppBase>";
 
   }
 
