@@ -151,23 +151,30 @@
    
 </script>
 
-<slot name="filters"></slot>
-<slot name="layers"></slot>
+<div class="Map__Container container">
+  
+  <slot name="filters"></slot>
+  <slot name="layers"></slot>
 
-<div id="mapid" bind:this={mapElement}></div>
+  <MapFilterControls
+    {filterLists}
+    {setFilter}
+    {activeFilter}
+  />
 
-<MapFilterControls
-  {filterLists}
-  {setFilter}
-  {activeFilter}
-/>
+  <div id="mapid" bind:this={mapElement}></div>
+
+</div>
 
 <style>
+
+  .container {
+    height: 100%;
+    width: 100%;
+  }
+
   #mapid { 
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 50px;
+    height: 100%;
+    width: 100%;
   }
 </style>

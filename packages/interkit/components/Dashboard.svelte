@@ -162,7 +162,6 @@
 
   .dashboard-container {
     justify-content: normal;
-    padding-bottom: 100px;
   }
 
   

@@ -26,15 +26,19 @@
 
 <style>
   .page {
-    position: fixed;
-    overflow-y: auto;
-    top: 0;
-    left: 0;
-    height: 100%;
+    overflow-y: scroll;
+    display: block;
     width: 100%;
-    visibility: hidden
+    height: 100%;
   }
-  .visible {
-    visibility: visible
+
+  .page:not(.visible) {
+    position: absolute;
+    z-index:-1;
+  }
+
+  page.visible {
+    position: static;
+    display: block;
   }
 </style>

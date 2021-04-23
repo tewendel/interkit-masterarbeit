@@ -59,7 +59,22 @@
 	});
 </script>
 
-<div class="tabs">
-	<TabList><slot name="tabList"></slot></TabList>
-  <slot name="tabPanels"></slot>
+<div class="Tabs tabs">
+	<TabList>
+		<slot name="tabList"></slot>
+	</TabList>
+  <slot name="tabPanels" class="Tabs__Panel panel"></slot>
 </div>
+
+<style>
+	.tabs {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+	}
+
+	.panel {
+		flex: 1;
+	}
+</style>
