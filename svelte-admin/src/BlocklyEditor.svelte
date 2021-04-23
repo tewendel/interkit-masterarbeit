@@ -146,8 +146,9 @@
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    generatedCode = imports +"<AppBase>\n" + code + "\n</AppBase>";
-
+    let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";
+    generatedCode = imports + codeWithAppBase;
+    
   }
 
   $: {

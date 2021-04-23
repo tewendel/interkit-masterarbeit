@@ -21,7 +21,7 @@
 </script>
 
 {#if mediafile}
-  <img src={encodeURI(mediafile.link)}/>
+  <img alt="mediafile" src={encodeURI(mediafile.link)}/>
 {/if}
 
 <style>
