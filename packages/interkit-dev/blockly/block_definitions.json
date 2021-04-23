@@ -633,8 +633,8 @@
         "name": "categoryTitleColumn",
         "type": "sheetColumn",
         "columnType": "string",
-        "text": "categories/title",
-        "value": "categories/title"
+        "text": "categories/name",
+        "value": "categories/name"
       },
       {
         "type": "input_dummy"
