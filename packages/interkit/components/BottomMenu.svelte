@@ -60,16 +60,13 @@
 <div class="BottomMenu container">
   <div class="BottomMenu__Pages pages">
     <slot name="pages"></slot>
-  </div>
-
-  <div class="media-player">
-    <slot name="media_player"></slot>
-  </div>
-
-  <div class="BottomMemu__Buttons buttons">
-    <div class="button-container">
-      <slot name="buttons"></slot>
+    <div class="BottomMenu__MediaPlayer media-player">
+      <slot name="media_player"></slot>
     </div>
+  </div>
+
+  <div class="BottomMenu__Buttons buttons">
+    <slot name="buttons"></slot>
   </div>
 </div>
 
@@ -80,31 +77,26 @@
     display: flex;
     flex-direction: column;
     background-color: var(--background-color);
+    /*--bottom-menu-height: 55px;*/
   }
 
   .pages {
     flex: 1;
+    overflow: auto;
   }
 
   .media-player {
-    position: fixed;
+    position: absolute;
+    width: 100%;
     left: 0;
-    bottom: 50px;
-    z-index: 1000;
+    bottom: 0;
   }
 
   .buttons {
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     background: white;
-    z-index: 1000;
-  }
-
-  .button-container {
     display: flex;
-    width: 100%;
+    height: 55px;
   }
 
 

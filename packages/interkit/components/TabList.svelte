@@ -6,13 +6,14 @@
 
 
 {#if !$hideTabNav}
-<div class="tab-list">
-	<slot></slot>
-</div>
+	<div class="Tabs__TabList tab-list">
+		<slot></slot>
+	</div>
 {/if}
 
 <style>
 	.tab-list {
-		border-bottom: 1px solid teal;
+		height: 50px;
+		display: flex;
 	}
 </style>

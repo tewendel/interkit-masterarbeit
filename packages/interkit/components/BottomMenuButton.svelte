@@ -43,8 +43,10 @@
     filter: brightness(90%);
   }
 
-  .button.selected {
-    font-weight: bold;
+  .button.selected .text {
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: currentColor;
   }
 </style>
 
