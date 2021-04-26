@@ -26,7 +26,7 @@
   }
 
   $: {
-    console.log(filterLists)  
+    //console.log(filterLists)  
   }
   
 </script>

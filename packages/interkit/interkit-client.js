@@ -14,7 +14,7 @@ try {
 } catch(e) {
   console.log(e)
 }
-console.log(get(userAuth))
+//console.log(get(userAuth))
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
@@ -51,7 +51,7 @@ const InterkitClient = {
     console.log("connected")
 
     let result = await server.call("resumeUserSession", get(userAuth))
-    console.log("resumeUserSession result", result)
+    //console.log("resumeUserSession result", result)
     if(result) {
       // login again
       userId.set(get(userAuth)?.id);

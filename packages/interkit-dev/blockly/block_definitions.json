@@ -360,7 +360,7 @@
 
     {
     "type": "Map",
-    "message0": "<Map> %1 markerPositions %2 %3 markerLabels %4 %5 audio %6 %7 filters %8 %9 layers %10 %11",
+    "message0": "<Map> %1 markerPositions %2 %3 markerLabels %4 %5 markerIcon %6 %7 audio %8 %9 filters %10 %11 layers %12 %13",
     "args0": [
       {
         "type": "input_dummy"
@@ -381,6 +381,16 @@
         "columnType": "string",
         "text": "elements/title",
         "value": "elements/title"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "markerIcon",
+        "type": "field_input",
+        "columnType": "string",
+        "text": "",
+        "value": ""
       },
       {
         "type": "input_dummy"

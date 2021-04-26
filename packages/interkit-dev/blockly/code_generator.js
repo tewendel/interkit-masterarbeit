@@ -143,6 +143,7 @@ export const initCodeGenerator = (Blockly) => {
     let code = "<Map \n"
     code += attribute(block, "markerPositions");
     code += attribute(block, "markerLabels");
+    code += attribute(block, "markerIcon");
     code += attribute(block, "audioColumn", "audio");   
     code += ">\n";
     code += slot(block, "filters");

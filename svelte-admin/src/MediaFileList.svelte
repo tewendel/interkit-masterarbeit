@@ -11,6 +11,7 @@
 
   const headers = [
     { key: "name", value: "name" },
+    { key: "key", value: "key" },
     { key: "link", value: "link" },
     { key: "preview", value: "preview" },
   ];
@@ -48,6 +49,8 @@
     <span slot="cell" let:row let:cell>
       {#if cell.key === 'preview'}
         <MediaFilePreview key={row.meta.key} {projectId} mediaManager/>
+      {:else if cell.key === 'key'}
+        {row.meta.key}
       {:else}{cell.value}{/if}
     </span>
 
