@@ -4,27 +4,52 @@
 
 <script>
 
-  import { onMount, setContext } from 'svelte'
+  import { onMount, setContext, onDestroy } from 'svelte'
   
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
 
   import MapFilterControls from './MapFilterControls.svelte'
-  
+
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  //import 'leaflet.tilelayer.colorfilter';
+  import 'leaflet.tilelayer.gl';
+  import { desaturateShader } from './mapShaders.js'
+
+  import { Plugins } from '@capacitor/core';
+  const { Geolocation } = Plugins;
+
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
   export let audioColumn; // type sheetColumn: "sheetId/columnId"
+  export let markerIcon; // for now type string - key of mediaFile
+
+  let projectId = INTERKIT_PROJECT_ID;
 
   let filterLists = [];
   let activeFilter;
 
-  let projectId = INTERKIT_PROJECT_ID;
+  let map;
+  let latlng = {lat: 51.505, lng: -0.09};
+  let satLayer;
+  let mapElement; 
+  let markerIconLeaflet;
+  let userIcon;
+  let userPositionMarker;
+  let markers = [];
+  let geoWatch;
+  let currentPosition;
+
+  let subHandle;
+  let markerRows;
+
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
-    registerFilter: async (name, categoryNameColumn, elementRefColumn) => {
+    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, elementRefColumn}) => {
 
-      console.log("registerFilter", name, categoryNameColumn, elementRefColumn)
+      //console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
       // get the sheetId of the sheet with the categories
       let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
@@ -38,27 +63,16 @@
         filterCategorySheetKey,
         categoryRows,
         categoryNameColumn,
+        categoryColorColumn,
         elementRefColumn 
       })
 
       filterLists = filterLists;
-      console.log(filterLists);
+      //console.log(filterLists);
     }
   });
 
   //console.log(markerPositions, markerLabels)
-
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
-
-  let latlng = {lat: 51.505, lng: -0.09};
-
-  let map;
-  let mapElement; 
-  let markers = [];
-
-  let subHandle;
-  let markerRows;
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
@@ -97,7 +111,13 @@
     // setup new markers
     for(let markerValue of markerValues) {
       if(markerValue.location) {
-        let marker = L.marker(markerValue.location, {title: markerValue.title}).addTo(map)
+        let markerOptions = {
+          title: markerValue.title,
+        }
+        if(markerIconLeaflet) {
+          markerOptions.icon = markerIconLeaflet;
+        }
+        let marker = L.marker(markerValue.location, markerOptions).addTo(map)
         marker.payload = markerValue;
         marker.on('click', markerClick);
         markers.push(marker);  
@@ -111,7 +131,10 @@
 
     L.Icon.Default.imagePath = '/leaflet/'
 
-    map = L.map('mapid', {zoomControl: false}).setView([latlng.lat, latlng.lng], 13);  
+    map = L.map('mapid', {
+      zoomControl: false,
+      attributionControl: false,
+    }).setView([latlng.lat, latlng.lng], 13);  
 
     // these tiles fail to load on ios - not sure why
     /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
@@ -123,9 +146,37 @@
       position: 'bottomright'
     }).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    let esriAttr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    let esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+
+    // Instantiate our L.TileLayer.GL...
+    satLayer = L.tileLayer.gl({
+      uniforms: {
+        uRGB: [1.0, 1.0, 1.0]
+      },
+      fragmentShader: desaturateShader,
+      tileUrls: [esriUrl],
+      //attribution: esriAttr
     }).addTo(map);
+
+    let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    let cartodbUrl = 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
+
+    let labels_layer = L.tileLayer(cartodbUrl, {
+      id: 'cartodb_labels', 
+      //attribution: cartodbAttr
+    }).addTo(map)
+
+    // load the marker icon
+    let markerMediafile = await InterkitClient.call("mediafile.get", {key: markerIcon, projectId});
+    //console.log(markerMediafile?.link)
+    if(markerMediafile?.link)
+      markerIconLeaflet = L.icon({
+        iconUrl: markerMediafile.link,
+        iconSize:     [24, 24], // size of the icon
+        iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
+      });
+
   
     let sheetKey;
     if(markerPositions) {
@@ -142,11 +193,78 @@
       })
     }
 
+    //const coordinates = await Geolocation.getCurrentPosition();
+    //console.log('Current Position', coordinates);
+    let lastErrorCode;
+
+    geoWatch = Geolocation.watchPosition({}, (position, err) => {
+      if(position) {
+        currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
+        //console.log(position, err)
+
+        let positionStore = InterkitClient.getGlobalStore("userPosition")
+        positionStore.set(currentPosition);
+
+        if(!userIcon)
+          userIcon = L.icon({
+            iconUrl: "leaflet/user_pos.svg",
+            iconSize:     [12, 12], 
+            iconAnchor:   [6, 6], 
+          });
+
+        if(!userPositionMarker) {
+          userPositionMarker = L.marker(currentPosition, {
+            icon: userIcon
+          }).addTo(map)
+        } else {
+          userPositionMarker.setLatLng(currentPosition); 
+        }
+      }
+      
+      if(err) {
+        if(!lastErrorCode) {
+          console.log(err)
+          lastErrorCode = err.code;
+        }
+      }
+
+    })
+      
+  })
+
+  onDestroy(()=>{
+    Geolocation.clearWatch(geoWatch)
   })
 
   const setFilter = (filter) => {
     activeFilter = filter;
     updateMarkers();
+
+    let colorRGBArray;
+    if(filter) {
+      let colorRGB = util.rowVal(filter.row, filter.categoryColorColumn);
+      try {
+        colorRGBArray = JSON.parse(colorRGB)
+      } catch(e) {
+        console.info(e)
+      }
+    }
+    
+    // update colorization 
+    if(filter && colorRGBArray) {
+      satLayer.setUniform("uRGB", colorRGBArray);
+      satLayer.reRender();
+    } else {
+      satLayer.setUniform("uRGB", [1.0, 1.0, 1.0]);
+      satLayer.reRender();
+    }
+  }
+
+  const panToUserPosition = () => {
+    if(currentPosition)
+      map.panTo(currentPosition)
+    else 
+      console.log("currentPosition", currentPosition)
   }
    
 </script>
@@ -162,6 +280,12 @@
     {activeFilter}
   />
 
+  <div 
+    on:click={panToUserPosition} id="locateButton"
+    style='background-image: url("/app/{INTERKIT_PROJECT_ID}/leaflet/locate.svg")'
+  >
+  </div>
+
   <div id="mapid" bind:this={mapElement}></div>
 
 </div>
@@ -176,5 +300,20 @@
   #mapid { 
     height: 100%;
     width: 100%;
+  }
+
+  #locateButton {
+    width: 40px;
+    height: 40px;
+    /*background-color: #fff;*/
+    position: absolute;
+    right: 7px;
+    bottom: 85px;
+    z-index: 1000;
+    border-radius: 2px;
+  }
+
+  #locateButton:hover {
+    cursor: pointer;
   }
 </style>

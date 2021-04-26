@@ -58,7 +58,12 @@
     <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
       {#if bundleServerURL && !$compileError}
         {#key $buildHash}
-          <iframe title="embedded app preview" src={previewURL}></iframe><br>
+          <iframe 
+            title="embedded app preview" 
+            src={previewURL} 
+            allow="geolocation"
+            data-build-hash={$buildHash}>
+          </iframe><br>
         {/key}
       {/if}
       {#if $bundleProcessing}

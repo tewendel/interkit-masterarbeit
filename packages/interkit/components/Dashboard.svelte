@@ -1,5 +1,17 @@
 <script>
 
+  import { onMount, onDestroy } from 'svelte'
+  import { InterkitClient, util } from '../'
+
+  import ElementSlider from './ElementSlider.svelte';
+  import ElementRandom from './ElementRandom.svelte';
+  import ElementNearest from './ElementNearest.svelte';
+  import FeaturedCategory from './FeaturedCategory.svelte';
+  import MenuSwitcher from './MenuSwitcher.svelte';
+  import CategorySlider from './CategorySlider.svelte';
+
+  let projectId = INTERKIT_PROJECT_ID;
+
   // columns for the sections of the dashboard
   export let sectionTitles; // column of the section title
   export let sectionRefs; // column of references to elements
@@ -9,6 +21,15 @@
   export let sectionImage; // column that gives us an image for the section
   export let sectionOrder; // column that tells us in which order the sections should be rendered
 
+  const sectionColumns = {
+    titleColumn: sectionTitles,
+    elementRefsColumn: sectionRefs,
+    categoryRefsColumn: [sectionCategoryRef, sectionCategory2Ref],
+    typeColumn: sectionTypes,
+    imageColumn: sectionImage,
+    orderColumn: sectionOrder
+  }
+
   // columns for the individual elements eg in sliders
   export let elementTitleColumn;
   export let elementDescriptionColumn;
@@ -16,28 +37,43 @@
   export let elementImageColumn;
   export let elementCategoryRefColumn;  
   export let elementCategory2RefColumn;  
+  export let elementCategoryOrderColumn;
+  export let elementCategory2OrderColumn;
+  export let elementLocationColumn;
+
+  const elementColumns = {
+    titleColumn: elementTitleColumn,
+    descriptionColumn: elementDescriptionColumn,
+    audioColumn: elementAudioColumn,
+    imageColumn: elementImageColumn,
+    categoryRefColumn: [elementCategoryRefColumn, elementCategory2RefColumn], 
+    categoryOrderColumn: [elementCategoryOrderColumn, elementCategory2OrderColumn],
+    locationColumn: elementLocationColumn,    
+  }
 
   // columns for the primary category
   export let categoryTitleColumn;
+  export let categorySubtitleColumn;
   export let categoryDescriptionColumn;
   export let categoryImageColumn;
 
   // columns for the secondary category
   export let category2TitleColumn;
+  export let category2SubtitleColumn;
   export let category2DescriptionColumn;
   export let category2ImageColumn;
 
-  import { onMount, onDestroy } from 'svelte'
-  import { InterkitClient, util } from '../'
-
-  import ElementSlider from './ElementSlider.svelte';
-  import ElementSingle from './ElementSingle.svelte';
-  import ElementRandom from './ElementRandom.svelte';
-  import FeaturedCategory from './FeaturedCategory.svelte';
-  import MenuSwitcher from './MenuSwitcher.svelte';
-  import CategorySlider from './CategorySlider.svelte';
-
-  let projectId = INTERKIT_PROJECT_ID;
+  const categoryColumns = [{
+    titleColumn: categoryTitleColumn,
+    subtitleColumn: categorySubtitleColumn,
+    descriptionColumn: categoryDescriptionColumn,
+    imageColumn: categoryImageColumn,
+  }, {
+    titleColumn: category2TitleColumn,
+    subtitleColumn: category2SubtitleColumn,
+    descriptionColumn: category2DescriptionColumn,
+    imageColumn: category2ImageColumn,
+  }]
 
   let sectionSheetKey = util.getSheetKey(sectionTitles) // key of the sheet with the dashboard structure  
 
@@ -49,7 +85,7 @@
   if(sectionSheetKey != util.getSheetKey(sectionRefs))
     alert("bad config: sectionTitles and sectionRefs must be from same sheet")
 
-  let referenceSheetKey; // is of the sheet containing the elements
+  let elementSheetKey; // the key of the sheet containing the elements
   let elementSub;
   let elementRows = [];
     
@@ -58,30 +94,16 @@
     if(sectionSheetKey) {
       sectionSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: sectionSheetKey, projectId}], r=>r.sheetKey==sectionSheetKey);
       sectionRows = sectionSub.data;
-      //console.log("sectionRows", $sectionRows)
+    }
 
-      if(refsColumnKey) {
-
-        // for now we assume all references are to the same sheet!
-        let aRefRow = $sectionRows.find(r => r.values?.[refsColumnKey]?.sheetKey)
-        //console.log(aRefRow)
-
-        if(!aRefRow) {
-          console.log("dashboard empty: no element selected in reference column, aborting auto-subscribe to elements")
-          return
-        }
-
-        referenceSheetKey = aRefRow.values[refsColumnKey].sheetKey;
-
-        //console.log("referenceSheetId", referenceSheetId)
-
-        elementSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: referenceSheetKey, projectId}], r=>r.sheetKey==referenceSheetKey);
-        elementSub.data.subscribe(data=>{
-          elementRows = data;
-        })
-
-        //console.log(elementRows)
-      }
+    // this is the row subscription that powers all the sub components of dashboard
+    if(elementTitleColumn) {  
+      elementSheetKey = util.getSheetKey(elementTitleColumn);
+      elementSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: elementSheetKey, projectId}], r=>r.sheetKey==elementSheetKey);
+      elementSub.data.subscribe(data=>{
+        elementRows = data;
+        //console.log("elementRows update", elementRows)
+      })
     }
   })
 
@@ -97,13 +119,12 @@
     return 0;
   }
 
-  $: sections = $sectionRows ? $sectionRows.sort(sort).map(r=>{return {
+  $: sections = $sectionRows ? [...$sectionRows].sort(sort).map(r=>{return {
+    type: util.rowVal(r, sectionTypes),
     title: util.rowVal(r, sectionTitles), 
     refs: util.rowVal(r, sectionRefs),
-    type: util.rowVal(r, sectionTypes),
-    categoryRef: util.rowVal(r, sectionCategoryRef),
-    category2Ref: util.rowVal(r, sectionCategory2Ref),
-    image: util.rowVal(r, sectionImage)
+    image: util.rowVal(r, sectionImage),
+    sectionRow: r  
   }}) : []
 
 </script>
@@ -120,55 +141,42 @@
     <ElementSlider 
       title={section.title}
       elementRows={elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))}
-      titleColumn={elementTitleColumn}
-      descriptionColumn={elementDescriptionColumn}
-      audioColumn={elementAudioColumn}
-      imageColumn={elementImageColumn}
+      {elementColumns}
+      {categoryColumns}
     />
-  {:else if section.type == "ElementSingle"}
-    <ElementSingle
-      elementRow={elementRows.find(r=>section.refs?.rowKeys[0] == r.key)}
-      titleColumn={elementTitleColumn}
-      descriptionColumn={elementDescriptionColumn}
-      audioColumn={elementAudioColumn}
+  {:else if section.type == "ElementNearest"}
+    <ElementNearest
+      title={section.title}
+      {elementRows}
+      {elementColumns}
+      {categoryColumns}
     />
   {:else if section.type == "ElementRandom"}
     <ElementRandom
-      {elementRows}
-      titleColumn={elementTitleColumn}
-      descriptionColumn={elementDescriptionColumn}
-      audioColumn={elementAudioColumn}
+      title={section.title}
       image={section.image}
-      title={section.title}
+      {elementRows}
+      {elementColumns}
     />
-  {:else if section.type == "FeaturedCategory"}
-
-    <FeaturedCategory
-      title={section.title}
-      categoryRef={section.categoryRef}
-      {categoryTitleColumn}
-      {categoryDescriptionColumn}
-      {categoryImageColumn}
-    />
-
+  
   {:else if section.type == "CategorySlider"}
 
     <CategorySlider
       title={section.title}
-      categoryRef={section.categoryRef}
-      category2Ref={section.category2Ref}
-      {categoryTitleColumn}
-      {categoryDescriptionColumn}
-      {categoryImageColumn}
-      {category2TitleColumn}
-      {category2DescriptionColumn}
-      {category2ImageColumn}
-      {elementTitleColumn}
-      {elementDescriptionColumn}
-      {elementAudioColumn}
-      {elementImageColumn}
-      {elementCategoryRefColumn}
-      {elementCategory2RefColumn}
+      sectionRow={section.sectionRow}
+      {sectionColumns}
+      {elementColumns}
+      {elementRows}
+      {categoryColumns}
+    />
+
+  {:else if section.type == "FeaturedCategory"}
+
+    <FeaturedCategory
+      title={section.title}
+      sectionRow={section.sectionRow}
+      {sectionColumns}
+      {categoryColumns}
     />
 
 

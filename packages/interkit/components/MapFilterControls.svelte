@@ -26,7 +26,7 @@
   }
 
   $: {
-    console.log(filterLists)  
+    //console.log(filterLists)  
   }
   
 </script>
@@ -48,6 +48,7 @@
         filterSelect({
           name: filterName(categoryRow), 
           row: categoryRow,
+          categoryColorColumn: openFilterList.categoryColorColumn,
           elementRefColumn: openFilterList.elementRefColumn
         })}}>{filterName(categoryRow)}</span></li>
     {/each}
@@ -69,6 +70,7 @@
     left: 0;
     width: 100%;
     padding: 10px;
+    z-index: 1000;
   }
 
   #filterControls span {

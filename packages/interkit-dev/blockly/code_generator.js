@@ -59,16 +59,25 @@ export const initCodeGenerator = (Blockly) => {
       "elementTitleColumn",
       "elementDescriptionColumn",      
       "elementAudioColumn",
+      "elementLocationColumn",
       "elementImageColumn",
       "elementCategoryRefColumn",
+      "elementCategoryOrderColumn",
       "elementCategory2RefColumn",
+      "elementCategory2OrderColumn",
       "categoryTitleColumn",
+      "categorySubtitleColumn",
       "categoryDescriptionColumn",
       "categoryImageColumn",
       "category2TitleColumn",
+      "category2SubtitleColumn",
       "category2DescriptionColumn",
       "category2ImageColumn"
       ])
+
+
+
+
     code += " />\n"
     return code;
   };
@@ -135,6 +144,7 @@ export const initCodeGenerator = (Blockly) => {
     let code = "<Map \n"
     code += attribute(block, "markerPositions");
     code += attribute(block, "markerLabels");
+    code += attribute(block, "markerIcon");
     code += attribute(block, "audioColumn", "audio");   
     code += ">\n";
     code += slot(block, "filters");
@@ -147,7 +157,12 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['MapCategoryFilter'] = function(block) {
 
     let code = "<MapCategoryFilter \n"
-    code += attributes(block, ["name", "categoryNameColumn", "elementRefColumn"])
+    code += attributes(block, [
+      "name", 
+      "categoryNameColumn", 
+      "categoryColorColumn", 
+      "elementRefColumn"
+    ])
     code += "/>\n";
 
     return code;
@@ -217,8 +232,16 @@ export const initCodeGenerator = (Blockly) => {
     var code = "<ContentElementAudio {element} \n";
     code += attribute(block, "nameColumn", "name")
     code += attribute(block, "audioColumn", "audio")
-    code += attribute(block, "audioColumn", "description")
-    code += attribute(block, "imageColumn", "image")
+    code += attribute(block, "descriptionColumn")
+    code += attribute(block, "imageColumn")
+    code += attributes(block, [
+       "categoryRefColumn", 
+       "categoryOrderColumn",
+       "categoryTitleColumn",
+       "categorySubtitleColumn",
+       "locationColumn"
+    ]);
+    
     code += "\n/>\n"
 
     return code;

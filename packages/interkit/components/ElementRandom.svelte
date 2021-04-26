@@ -4,19 +4,18 @@
   import { playAudio } from './AudioPlayer.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   
-  export let elementRows;
-
-  export let titleColumn;
-  export let descriptionColumn;
-  export let audioColumn;
-
-  export let image;
   export let title;
+  export let image;
+  
+  export let elementRows;
+  export let elementColumns;
+
   
   const play = async () => {
     let randomIndex = Math.floor(elementRows.length * Math.random())
     let elementRow = elementRows[randomIndex]
-    await playAudio(util.rowVal(elementRow, audioColumn).value, util.rowVal(elementRow, titleColumn))
+    console.log(elementRow)
+    await playAudio(util.rowVal(elementRow, elementColumns.audioColumn)?.value, util.rowVal(elementRow, elementColumns.titleColumn))
   }
 
 </script>

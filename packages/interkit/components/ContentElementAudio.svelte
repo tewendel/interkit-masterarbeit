@@ -1,34 +1,69 @@
 <script>
 
-  import { InterkitClient, util } from '../'
-  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  import { onMount } from 'svelte';
 
+  import { InterkitClient, util } from '../'
+  
+  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  
   import MediaFileImage from './MediaFileImage.svelte'
 
   import { playAudio } from './AudioPlayer.svelte'
 
   export let element;
+  //console.log("ContentElementAudio", element)
+
+  export let elementColumns;
+  export let categoryColumns;
+  export let categoryIndex = 0;
   
-  export let nameColumn;
-  export let audioColumn;
+  let projectId = INTERKIT_PROJECT_ID
 
-  export let descriptionColumn;
-  export let imageColumn;
+  $: mediafileKey = util.rowVal(element, elementColumns.audioColumn)?.value
+  $: title = util.rowVal(element, elementColumns.titleColumn)
+  $: description = util.rowVal(element, elementColumns.descriptionColumn)
+  $: categoryOrderPosition = util.rowVal(element, elementColumns.categoryOrderColumn[categoryIndex])
 
+  let categoryRow; // the row of the category that is referenced in this element
 
-  $: mediafileKey = util.rowVal(element, audioColumn)?.value
-  $: title = util.rowVal(element, nameColumn)
-  $: description = util.rowVal(element, descriptionColumn)
+  onMount(async () => {
+    let categoryRowKey = util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
+    if(categoryRowKey)
+      categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
+    //console.log(categoryRow)
+  })
 
   const play = async () => {
     await playAudio(mediafileKey, title)      
   }
 
+  const userPositionStore = InterkitClient.getGlobalStore("userPosition");
+  let distance = "";
+  const calculateDistance = (userPosition) => {
+    let elementPosition = util.rowVal(element, elementColumns.locationColumn);
+    let meters = util.getDistance(elementPosition, userPosition)
+    if(meters) {
+      if(meters < 1000) distance = meters + "m";
+      else distance = Math.floor(meters / 1000) + "km";
+    }
+  }
+  $: {
+    calculateDistance($userPositionStore)
+  }
+
+  
+
 </script>
 
 <section class="ContentElementAudio">
-  <MediaFileImage mediafileRef={util.rowVal(element, imageColumn)} />    
-  <h3>{title}</h3>
+  <MediaFileImage mediafileRef={util.rowVal(element, elementColumns.imageColumn)} />    
+  <h3>{title} <span>{categoryOrderPosition}</span>
+<span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
+<span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
+{distance}
+<span>
+
+</h3>
   <p>{description}</p>
   {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
     (playing)

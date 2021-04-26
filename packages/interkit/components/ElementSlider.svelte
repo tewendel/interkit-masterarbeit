@@ -4,11 +4,9 @@
   
   export let title;
   export let elementRows;
-
-  export let titleColumn;
-  export let descriptionColumn;
-  export let audioColumn;
-  export let imageColumn;
+  export let elementColumns;
+  export let categoryColumns;
+  export let categoryIndex = 0;
 
 </script>
 
@@ -17,17 +15,18 @@
 
   {#if elementRows}
     <div class="ElementSlider__Slider slider" data-slides-amount={elementRows.length}>
-      {#each elementRows as element}
-        <div class="ElementSlider__Slide slide">
-          <ContentElementAudio
+      {#if elementRows.length}
+        {#each elementRows as element}
+          <div class="ElementSlider__Slide slide">
+            <ContentElementAudio
             {element}
-            nameColumn = {titleColumn}
-            {audioColumn}
-            {descriptionColumn}
-            {imageColumn}
-          />
-        </div>
-      {/each}
+            {elementColumns}
+            {categoryColumns}
+            {categoryIndex}
+            />
+          </div>
+        {/each}
+      {/if}
     </div>
   {/if}
 </div>
