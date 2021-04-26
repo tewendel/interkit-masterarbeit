@@ -36,7 +36,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.meteor-server
-      cache_from: interkit/server
+      cache_from: 
+        - interkit/server
       args:
         BUILD_SOURCE_PATH: ./meteor-server
         BUILD_REPOSITORIES_PATH: ./repositories
@@ -73,7 +74,8 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile.svelte-admin
-      cache_from: interkit/admin
+      cache_from: 
+        - interkit/admin
       args:
         BUILD_SOURCE_PATH: ./svelte-admin
     ports:
@@ -91,7 +93,8 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile.app-bundler
-      cache_from: interkit/bundler
+      cache_from: 
+        - interkit/bundler
       args:
         BUILD_SOURCE_PATH: ./app-bundler
         BUILD_REPOSITORIES_PATH: ./repositories
