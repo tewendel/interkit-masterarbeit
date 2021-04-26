@@ -59,6 +59,7 @@ export const initCodeGenerator = (Blockly) => {
       "elementTitleColumn",
       "elementDescriptionColumn",      
       "elementAudioColumn",
+      "elementLocationColumn",
       "elementImageColumn",
       "elementCategoryRefColumn",
       "elementCategoryOrderColumn",

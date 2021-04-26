@@ -3,7 +3,7 @@
   import { TABS } from './BottomMenu.svelte';
   import { InterkitClient } from '../'
 
-  export let path;
+  export let path = null;
 
   const panel = {};
   const { registerPanel, selectedPanel, selectPanel } = getContext(TABS);

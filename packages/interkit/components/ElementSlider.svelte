@@ -4,15 +4,9 @@
   
   export let title;
   export let elementRows;
-
-  export let titleColumn;
-  export let descriptionColumn;
-  export let audioColumn;
-  export let imageColumn;
-  export let categoryRefColumn;
-  export let categoryOrderColumn;
-  export let categoryTitleColumn;
-  export let categorySubtitleColumn;
+  export let elementColumns;
+  export let categoryColumns;
+  export let categoryIndex = 0;
 
 </script>
 
@@ -20,19 +14,16 @@
 
 {#if elementRows}
   <div class="slider-container">
-    {#each elementRows as element}
-      <ContentElementAudio
-        {element}
-        nameColumn = {titleColumn}
-        {audioColumn}
-        {descriptionColumn}
-        {imageColumn}
-        {categoryRefColumn}
-        {categoryOrderColumn}
-        {categoryTitleColumn}
-        {categorySubtitleColumn}        
-      />
-    {/each}
+    {#if elementRows.length}
+      {#each elementRows as element}
+        <ContentElementAudio
+          {element}
+          {elementColumns}
+          {categoryColumns}
+          {categoryIndex}
+        />
+      {/each}
+    {/if}
   </div>
 {/if}
 

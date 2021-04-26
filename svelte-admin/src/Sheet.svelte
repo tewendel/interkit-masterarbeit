@@ -123,7 +123,7 @@
     let column = headers.find(h => h.key == cell.key)
     let columnName = column?.value
     let columnType = column?.type
-    console.log(columnType)
+    //console.log(columnType)
 
     if(columnType == "string") {
       let newVal = prompt("Update " + columnName, cell.value)
@@ -216,9 +216,9 @@
           //empty: true 
         }) // add overflow column
   }
-  $: { console.log("rows update", $rows) }
+  //$: { console.log("rows update", $rows) }
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.values, key: r.key, id: r._id}}) : []
-  $: { console.log("carbonRows update", carbonRows) }
+  //$: { console.log("carbonRows update", carbonRows) }
 
 </script>
 

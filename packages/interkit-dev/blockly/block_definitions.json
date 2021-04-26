@@ -12,7 +12,7 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23 sectionCategory2Ref %28 %29 sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementAudio %12 %13 elementImage %14 %15 elementCategoryRef %36 %37 elementCategoryOrderColumn %40 %41 elementCategory2Ref %38 %39 elementCategory2OrderColumn %42 %43 categoryTitle %16 %17 categorySubtitleColumn %44 %45 categoryDescription %18 %19 categoryImage %20 %21 category2Title %30 %31 category2SubtitleColumn %46 %47 category2Description %32 %33 category2Image %34 %35",
+  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23 sectionCategory2Ref %28 %29 sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementAudio %12 %13 elementImage %14 %15 elementLocationColumn %48 %49 elementCategoryRef %36 %37 elementCategoryOrderColumn %40 %41 elementCategory2Ref %38 %39 elementCategory2OrderColumn %42 %43 categoryTitle %16 %17 categorySubtitleColumn %44 %45 categoryDescription %18 %19 categoryImage %20 %21 category2Title %30 %31 category2SubtitleColumn %46 %47 category2Description %32 %33 category2Image %34 %35",
   "args0": [
     {
       "type": "input_dummy"
@@ -44,7 +44,7 @@
       "columnType": "optionSelect",
       "text": "dashboard/type",
       "value": "dashboard/type",
-      "options": "ElementSlider, ElementSingle, ElementRandom, CategorySlider, FeaturedCategory, MenuSwitcher"
+      "options": "ElementSlider, ElementNearest, ElementRandom, CategorySlider, FeaturedCategory, MenuSwitcher"
     },
     {
       "type": "input_dummy"
@@ -244,13 +244,22 @@
     {
       "type": "input_dummy"
     },
-
     {
       "type": "sheetColumn",
       "name": "category2SubtitleColumn",
       "columnType": "string",
       "text": "categories2/subtitle",
       "value": "categories2/subtitle"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "sheetColumn",
+      "name": "elementLocationColumn",
+      "columnType": "string",
+      "text": "elements/position",
+      "value": "elements/position"
     },
     {
       "type": "input_dummy"

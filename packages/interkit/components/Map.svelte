@@ -195,6 +195,7 @@
 
     //const coordinates = await Geolocation.getCurrentPosition();
     //console.log('Current Position', coordinates);
+    let lastErrorCode;
 
     geoWatch = Geolocation.watchPosition({}, (position, err) => {
       if(position) {
@@ -219,10 +220,16 @@
           userPositionMarker.setLatLng(currentPosition); 
         }
       }
-      if(err) console.log(err)
-        
-    })
+      
+      if(err) {
+        if(!lastErrorCode) {
+          console.log(err)
+          lastErrorCode = err.code;
+        }
+      }
 
+    })
+      
   })
 
   onDestroy(()=>{
@@ -239,7 +246,7 @@
       try {
         colorRGBArray = JSON.parse(colorRGB)
       } catch(e) {
-        console.log(e)
+        console.info(e)
       }
     }
     
