@@ -12,33 +12,57 @@
 
 </script>
 
-<h3>{title}</h3>
+<div class="ElementSlider container">
+  <h3 class="ElementSlider__title title">{title}</h3>
 
-{#if elementRows}
-  <div class="slider-container">
-    {#each elementRows as element}
-      <ContentElementAudio
-        {element}
-        nameColumn = {titleColumn}
-        {audioColumn}
-        {descriptionColumn}
-        {imageColumn}
-      />
-    {/each}
-  </div>
-{/if}
+  {#if elementRows}
+    <div class="ElementSlider__Slider slider" data-slides-amount={elementRows.length}>
+      {#each elementRows as element}
+        <div class="ElementSlider__Slide slide">
+          <ContentElementAudio
+            {element}
+            nameColumn = {titleColumn}
+            {audioColumn}
+            {descriptionColumn}
+            {imageColumn}
+          />
+        </div>
+      {/each}
+    </div>
+  {/if}
+</div>
 
 
 <style> 
 
-  .slider-container {
-    display: flex;
+  .container {
+    width: 100%;
   }
 
-  .slider-container > div {
+  .title {}
+
+  .slider {
+    display: flex;
+    flex-flow: row nowrap;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .slider[data-slides-amount="1"] .slide {
+    width:100%;
+  }
+
+  .slide {
+    width: 80%;
+    flex: none;
     border: 1px solid gray;
-    padding: 5px;
-    
+    scroll-snap-align: center;
+    box-sizing: border-box;
+  }
+
+  .slide + .slide {
+    border-left: none;
   }
 
 

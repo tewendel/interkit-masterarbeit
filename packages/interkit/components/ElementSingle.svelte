@@ -16,13 +16,12 @@
 
 </script>
 
-<div>    
-  <h3>{util.rowVal(elementRow, titleColumn)}</h3>
+<div class="ElementSingle container">    
+  <h3 class="ElementSingle__headline headline">{util.rowVal(elementRow, titleColumn)}</h3>
   <button on:click={play}>play</button>
 </div>
 
 <style> 
-
-  
-
+  .container {}
+  .headline {}
 </style>
