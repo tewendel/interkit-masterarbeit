@@ -131,7 +131,10 @@
 
     L.Icon.Default.imagePath = '/leaflet/'
 
-    map = L.map('mapid', {zoomControl: false}).setView([latlng.lat, latlng.lng], 13);  
+    map = L.map('mapid', {
+      zoomControl: false,
+      attributionControl: false,
+    }).setView([latlng.lat, latlng.lng], 13);  
 
     // these tiles fail to load on ios - not sure why
     /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
@@ -153,13 +156,16 @@
       },
       fragmentShader: desaturateShader,
       tileUrls: [esriUrl],
-      attribution: esriAttr
+      //attribution: esriAttr
     }).addTo(map);
 
     let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     let cartodbUrl = 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
 
-    let labels_layer = L.tileLayer(cartodbUrl, {id: 'cartodb_labels', attribution: cartodbAttr}).addTo(map)
+    let labels_layer = L.tileLayer(cartodbUrl, {
+      id: 'cartodb_labels', 
+      //attribution: cartodbAttr
+    }).addTo(map)
 
     // load the marker icon
     let markerMediafile = await InterkitClient.call("mediafile.get", {key: markerIcon, projectId});
@@ -193,7 +199,10 @@
     geoWatch = Geolocation.watchPosition({}, (position, err) => {
       if(position) {
         currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
-        console.log(position, err)
+        //console.log(position, err)
+
+        let positionStore = InterkitClient.getGlobalStore("userPosition")
+        positionStore.set(currentPosition);
 
         if(!userIcon)
           userIcon = L.icon({
@@ -292,7 +301,7 @@
     /*background-color: #fff;*/
     position: absolute;
     right: 7px;
-    bottom: 130px;
+    bottom: 85px;
     z-index: 1000;
     border-radius: 2px;
   }

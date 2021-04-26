@@ -10,6 +10,11 @@ export default {
     return row?.values[colKey(sheetColumn)]
   },
 
+  rowValString: (row, sheetColumn) => {
+    let v = row?.values[colKey(sheetColumn)];
+    return v ? v : "";
+  },
+
   getSheetKey: (sheetColumn) => {
     return sheetColumn?.split("/")?.[0];
   },

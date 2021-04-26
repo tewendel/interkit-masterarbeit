@@ -3,7 +3,11 @@
   import { onMount } from 'svelte';
 
   import { InterkitClient, util } from '../'
+  
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  const userPositionStore = InterkitClient.getGlobalStore("userPosition");
+
+  import { getDistance } from 'geolib';
 
   import MediaFileImage from './MediaFileImage.svelte'
 
@@ -16,11 +20,13 @@
 
   export let descriptionColumn;
   export let imageColumn;
+  export let locationColumn;
 
   export let categoryRefColumn; // the column on the element referencing the category
   export let categoryOrderColumn; // the column on the element with the order for this category
   export let categoryTitleColumn; // the column on the category with the title
   export let categorySubtitleColumn; // the column on the category with the subtitle
+
 
   console.log(categoryRefColumn, categoryOrderColumn, categoryTitleColumn, categorySubtitleColumn)
 
@@ -44,13 +50,37 @@
     await playAudio(mediafileKey, title)      
   }
 
+  let distance = "";
+  const calculateDistance = (userPosition) => {
+    let elementPosition = util.rowVal(element, locationColumn);
+    if(userPosition && elementPosition) {
+      let meters = getDistance({
+        longitude: userPosition.lng,
+        latitude: userPosition.lat
+      }, {
+        longitude: elementPosition.lng,
+        latitude: elementPosition.lat
+      })
+      if(meters < 1000) distance = meters + "m";
+      else distance = Math.floor(meters / 1000) + "km";
+    }
+  }
+  $: {
+    calculateDistance($userPositionStore)
+  }
+
+  
+
 </script>
 
 <section class="ContentElementAudio">
   <MediaFileImage mediafileRef={util.rowVal(element, imageColumn)} />    
   <h3>{title} <span>{categoryIndex}</span>
-<span>{util.rowVal(categoryRow, categoryTitleColumn)}</span>
-<span>{util.rowVal(categoryRow, categorySubtitleColumn)}</span>
+<span>{util.rowValString(categoryRow, categoryTitleColumn)}</span>
+<span>{util.rowValString(categoryRow, categorySubtitleColumn)}</span>
+{distance}
+<span>
+
 </h3>
   <p>{description}</p>
   {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
