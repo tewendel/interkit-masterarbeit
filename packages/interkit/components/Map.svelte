@@ -29,9 +29,9 @@
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
-    registerFilter: async (name, categoryNameColumn, elementRefColumn) => {
+    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, elementRefColumn}) => {
 
-      console.log("registerFilter", name, categoryNameColumn, elementRefColumn)
+      console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
       // get the sheetId of the sheet with the categories
       let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
@@ -45,6 +45,7 @@
         filterCategorySheetKey,
         categoryRows,
         categoryNameColumn,
+        categoryColorColumn,
         elementRefColumn 
       })
 
@@ -172,9 +173,17 @@
     activeFilter = filter;
     updateMarkers();
 
+    let colorRGB = util.rowVal(filter.row, filter.categoryColorColumn);
+    let colorRGBArray;
+    try {
+      colorRGBArray = JSON.parse(colorRGB)
+    } catch(e) {
+      console.log(e)
+    }
+    
     // update colorization 
-    if(filter) {
-      satLayer.setUniform("uRGB", [0.6, 0.9, 0.3]);
+    if(filter && colorRGBArray) {
+      satLayer.setUniform("uRGB", colorRGBArray);
       satLayer.reRender();
     } else {
       satLayer.setUniform("uRGB", [1.0, 1.0, 1.0]);

@@ -155,7 +155,12 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['MapCategoryFilter'] = function(block) {
 
     let code = "<MapCategoryFilter \n"
-    code += attributes(block, ["name", "categoryNameColumn", "elementRefColumn"])
+    code += attributes(block, [
+      "name", 
+      "categoryNameColumn", 
+      "categoryColorColumn", 
+      "elementRefColumn"
+    ])
     code += "/>\n";
 
     return code;

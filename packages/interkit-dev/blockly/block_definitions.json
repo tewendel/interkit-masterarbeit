@@ -768,7 +768,7 @@
 
     {
       "type": "MapCategoryFilter",
-      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 elementRefColumn %6 %7",
+      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 categoryColorColumn %6 %7 elementRefColumn %8 %9",
       "args0": [
         {
           "type": "input_dummy"
@@ -786,6 +786,16 @@
           "columnType": "string",
           "text": "categories/name",
           "value": "categories/name"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "categoryColorColumn",
+          "type": "sheetColumn",
+          "columnType": "string",
+          "text": "categories/color",
+          "value": "categories/color"
         },
         {
           "type": "input_dummy"
