@@ -9,7 +9,7 @@ docker-build-master:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    - docker-compose build
+    - docker-compose build --pull
     - docker-compose push
   only:
     - main
