@@ -173,12 +173,14 @@
     activeFilter = filter;
     updateMarkers();
 
-    let colorRGB = util.rowVal(filter.row, filter.categoryColorColumn);
     let colorRGBArray;
-    try {
-      colorRGBArray = JSON.parse(colorRGB)
-    } catch(e) {
-      console.log(e)
+    if(filter) {
+      let colorRGB = util.rowVal(filter.row, filter.categoryColorColumn);
+      try {
+        colorRGBArray = JSON.parse(colorRGB)
+      } catch(e) {
+        console.log(e)
+      }
     }
     
     // update colorization 
