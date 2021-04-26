@@ -10,7 +10,14 @@
   import { playAudio } from './AudioPlayer.svelte'
 
   import MapFilterControls from './MapFilterControls.svelte'
-  
+
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  //import 'leaflet.tilelayer.colorfilter';
+  import 'leaflet.tilelayer.gl';
+  import { desaturateShader } from './mapShaders.js'
+
+
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
   export let audioColumn; // type sheetColumn: "sheetId/columnId"
@@ -48,12 +55,10 @@
 
   //console.log(markerPositions, markerLabels)
 
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
-
   let latlng = {lat: 51.505, lng: -0.09};
 
   let map;
+  let satLayer;
   let mapElement; 
   let markers = [];
 
@@ -123,9 +128,28 @@
       position: 'bottomright'
     }).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    let esriAttr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    let esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+
+    // Instantiate our L.TileLayer.GL...
+    satLayer = L.tileLayer.gl({
+      uniforms: {
+        uRGB: [1.0, 1.0, 1.0]
+      },
+      fragmentShader: desaturateShader,
+      tileUrls: [esriUrl],
+      attribution: esriAttr
     }).addTo(map);
+
+    /* update colorization 
+    satLayer.setUniform(uRGB, [0.6, 0.9, 0.3]);
+    satLayer.reRender();
+    */
+
+    let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    let cartodbUrl = 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
+
+    let labels_layer = L.tileLayer(cartodbUrl, {id: 'cartodb_labels', attribution: cartodbAttr}).addTo(map)
   
     let sheetKey;
     if(markerPositions) {
@@ -147,6 +171,15 @@
   const setFilter = (filter) => {
     activeFilter = filter;
     updateMarkers();
+
+    // update colorization 
+    if(filter) {
+      satLayer.setUniform("uRGB", [0.6, 0.9, 0.3]);
+      satLayer.reRender();
+    } else {
+      satLayer.setUniform("uRGB", [1.0, 1.0, 1.0]);
+      satLayer.reRender();
+    }
   }
    
 </script>
