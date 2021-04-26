@@ -581,14 +581,14 @@
   },
 
   {
-    "type": "ContentElementAudio",
+    "type": "ContentElementAudioBlocklyWrapper",
     "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
     "args0": [
       {
         "type": "input_dummy"
       },
       {
-        "name": "name",
+        "name": "titleColumn",
         "type": "sheetColumn",
         "columnType": "string",
         "text": "elements/title",
@@ -598,7 +598,7 @@
         "type": "input_dummy"
       },
       {
-        "name": "audio",
+        "name": "audioColumn",
         "type": "sheetColumn",
         "columnType": "mediaFile",
         "text": "elements/audio",
@@ -671,7 +671,7 @@
       {
         "name": "locationColumn",
         "type": "sheetColumn",
-        "columnType": "string",
+        "columnType": "location",
         "text": "elements/position",
         "value": "elements/position"
       },

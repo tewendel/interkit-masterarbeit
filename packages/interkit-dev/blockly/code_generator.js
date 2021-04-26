@@ -227,14 +227,14 @@ export const initCodeGenerator = (Blockly) => {
     return `<HeadlinePage headline="${text_label}"/>\n`
   };
 
-  Blockly.JavaScript['ContentElementAudio'] = function(block) {
+  Blockly.JavaScript['ContentElementAudioBlocklyWrapper'] = function(block) {
 
-    var code = "<ContentElementAudio {element} \n";
-    code += attribute(block, "nameColumn", "name")
-    code += attribute(block, "audioColumn", "audio")
-    code += attribute(block, "descriptionColumn")
-    code += attribute(block, "imageColumn")
+    var code = "<ContentElementAudioBlocklyWrapper {element} \n";
     code += attributes(block, [
+       "titleColumn",
+       "audioColumn",
+       "descriptionColumn",
+       "imageColumn",
        "categoryRefColumn", 
        "categoryOrderColumn",
        "categoryTitleColumn",

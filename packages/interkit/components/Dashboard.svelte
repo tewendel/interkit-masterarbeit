@@ -121,7 +121,7 @@
 
   $: sections = $sectionRows ? [...$sectionRows].sort(sort).map(r=>{return {
     type: util.rowVal(r, sectionTypes),
-    title: util.rowVal(r, sectionTitles), 
+    title: util.rowValString(r, sectionTitles), 
     refs: util.rowVal(r, sectionRefs),
     image: util.rowVal(r, sectionImage),
     sectionRow: r  

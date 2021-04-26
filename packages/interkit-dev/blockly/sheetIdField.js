@@ -38,7 +38,7 @@ export default (Blockly, update) => {
   CustomFields.SheetIdField.prototype.SERIALIZABLE = true;
 
   CustomFields.SheetIdField.prototype.toXml = function(fieldElement) {
-    console.log(this.value_)
+    //console.log(this.value_)
     fieldElement.setAttribute('value', this.value_.value);
     fieldElement.setAttribute('text', this.value_.text);
 

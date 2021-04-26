@@ -38,7 +38,8 @@ Meteor.publish('rows', getRows)
 
 Meteor.methods({'rows.get': ({sheetKey, projectId})=>{
   let rows = getRows({sheetKey, projectId})
-  return rows.fetch();
+  if(rows)
+    return rows.fetch();
 }})
 
 const getRow = ({key, projectId}) => {

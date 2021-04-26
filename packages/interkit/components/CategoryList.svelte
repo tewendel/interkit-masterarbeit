@@ -45,7 +45,7 @@
   <li on:click={()=>{openCategory(category)}}>
     <h3>{util.rowVal(category, nameKey)}</h3>
     <MediaFileImage mediafileRef={util.rowVal(category, imageKey)} />    
-    <div>{util.rowVal(category, descriptionKey)}</div>
+    <div>{util.rowValString(category, descriptionKey)}</div>
   </li>
   {/each}
 </ul>
