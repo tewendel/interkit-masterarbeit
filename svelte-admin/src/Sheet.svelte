@@ -1,6 +1,8 @@
 <script>
   import { InterkitClient } from 'interkit'
-  import { DataTable, OverflowMenu, OverflowMenuItem } from "carbon-components-svelte";
+  import { DataTable, OverflowMenu, OverflowMenuItem, Button } from "carbon-components-svelte";
+  import Add16 from "carbon-icons-svelte/lib/Add16";
+  import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import InputModal from './InputModals/InputModal.svelte';
   import SheetCell from './SheetCell.svelte';
   import { columnTypes } from './baseConfig.js';
@@ -223,16 +225,19 @@
 </script>
 
 {#if $currentSheet}
-  <button on:click={close}>{"<"} back to sheet overview</button><br><br>
-  <h4>{$currentSheet.name} <small>{$currentSheet.key}</small> <button on:click={rename}>rename</button> <button on:click={remove}>remove</button></h4>
-  
+  <Button kind="tertiary" size="small" on:click={close}>{"<"} back to sheet overview</Button><br><br>
+  <h4>{$currentSheet.name} 
+    <small>{$currentSheet.key}</small> 
+  </h4>
+  <Button size="small" on:click={rename}>Rename</Button> 
+  <Button size="small" on:click={remove} icon={Delete16}>Remove</Button>
 
   <br><br>
   <DataTable
     sortable
     {headers}
     rows={carbonRows}
-    style="min-height: 100px; padding-bottom: 150px; overflow-x: scroll"
+    style="padding-bottom: 48px; overflow-x: auto"
   >
     
     <span slot="cell-header" let:header>
@@ -243,7 +248,7 @@
       {:else}
         <div class="sheet-header" >
           <OverflowMenu size="sm" style="width: 100%;">
-            <div slot="menu" style="font-size: 1rem; padding: 5px; margin: 5px;">{header.value}</div>
+            <div slot="menu" style="font-weight:bold">{header.value}</div>
             <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
             <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
             <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
@@ -266,7 +271,7 @@
     </span>
   
   </DataTable>
-  <button on:click={createRow}>add row</button>
+  <Button size="small" icon={Add16} on:click={createRow}>Add Row</Button>
 {/if}
     
 <InputModal
@@ -298,5 +303,6 @@
   .marker-icon { height: 30px; }
   small {
     font-size: 50%;
+    font-family: monospace;
   } 
 </style>

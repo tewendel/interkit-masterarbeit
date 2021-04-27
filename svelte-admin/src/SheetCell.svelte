@@ -6,26 +6,43 @@
   export let projectId;
 </script>
 
-{#if cell.value?.lat}
+<span class="cell">
 
-  <img class="marker-icon" src="leaflet/marker-icon.png"/>
+  {#if cell.value?.lat}
 
-{:else if cell.value?.type == "sheetRef"}
+    <img class="marker-icon" src="leaflet/marker-icon.png"/>
 
-  <ReferenceCell {refData} value={cell.value}/>
+  {:else if cell.value?.type == "sheetRef"}
 
-{:else if cell.value?.type == "mediaFile"}
+    <ReferenceCell {refData} value={cell.value}/>
 
-  <MediaFilePreview key={cell.value.value} {projectId}/>
+  {:else if cell.value?.type == "mediaFile"}
 
-{:else}
+    <MediaFilePreview key={cell.value.value} {projectId}/>
 
-  {cell.value ? cell.value : ""}
+  {:else}
 
-{/if}
+      {cell.value ? cell.value : ""}
+
+  {/if}
+
+</span>
 
 <style>
 
+  .cell {
+    max-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 10em;
+    white-space: nowrap;
+  }
+
+  .cell:empty:after {
+    content: "–";
+    opacity: 0.5;
+  }
   img {
     max-height: 1.5rem;
   }
