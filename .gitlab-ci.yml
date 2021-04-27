@@ -52,7 +52,7 @@ docker-build-master:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - echo INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA > .env
-    - echo $INTERKIT_ENV_FILE >> .env
+    - echo $INTERKIT_ENV_FILE | tr ' ' '\n' >> .env
     - apt-get install rsync -y
     - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/
     - echo "cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
