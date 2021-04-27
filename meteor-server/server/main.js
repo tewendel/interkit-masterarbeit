@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import cors from 'cors'
 
 require('dotenv').config( {
   path: `${process.env.PWD}/.env`
@@ -36,6 +37,6 @@ const app = express();
 setupMediaServer(app);
 setupExportServer(app);
 setupImportServer(app);
-//WebApp.connectHandlers.use(cors({origin:false}));
+WebApp.connectHandlers.use(cors({origin:false}));
 //WebApp.accessRule('*');
 WebApp.connectHandlers.use(app);
