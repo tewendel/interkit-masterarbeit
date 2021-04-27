@@ -142,7 +142,7 @@ export const setupMediaServer = (app) => {
           });
         });  
     }
-    //res.end();
+    res.end();
   });
 }
 
