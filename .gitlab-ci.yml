@@ -27,3 +27,32 @@ docker-build-master:
 #    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
 #  except:
 #    - main
+
+.deploy: &deploy
+  stage: deploy
+  image: ubuntu
+  when: manual
+  only:
+    - master
+  except:
+    - merge_requests
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - rsync -e 'ssh -i ~/.ssh/id_rsa' --delete-after --filter=":e- .gitignore" -v -a ./* $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
+    - echo "cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_SERVER 
+
+deploy-demo:
+  <<: *deploy
+  environment:
+    name: demo
+    url: https://demo.interkit.app
+  stage: deploy-demo
+
+
