@@ -21,6 +21,11 @@ Meteor.startup(() => {
       username: 'admin',
       password: `${process.env.ADMIN_PASSWORD}`,
     });
+  } else {
+    if (process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.length && process.env.ADMIN_PASSWORD.length > 0 ) {
+      // always override admin password with password from ENV
+      Accounts.setPassword(Accounts.findUserByUsername("admin"), process.env.ADMIN_PASSWORD, { logout: false })
+    }
   }
 
 
