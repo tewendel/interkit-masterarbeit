@@ -1,6 +1,6 @@
 stages:
-  - docker-build-master
-  - deploy-master-demo
+  - build
+  - deploy
 
 # This file is a template, and might need editing before it works on your project.
 docker-build-master:
@@ -57,6 +57,6 @@ deploy-master-demo:
   environment:
     name: demo
     url: https://demo.interkit.app
-  stage: deploy-demo
+  stage: deploy
 
 
