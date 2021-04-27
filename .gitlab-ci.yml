@@ -49,14 +49,18 @@ docker-build-master:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - rsync -e 'ssh -i ~/.ssh/id_rsa' --delete-after --filter=":e- .gitignore" -v -a ./* $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
+    - echo "INTERKIT_SERVER_URL=$INTERKIT_SERVER_URL" > .env
+    - echo "INTERKIT_SERVER_WEBSOCKETS_URL=$INTERKIT_SERVER_WEBSOCKETS_URL" >> .env
+    - echo "INTERKIT_BUNDLER_URL=$INTERKIT_BUNDLER_URL" >> .env
+    - scp docker-compose.yml $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
+    - scp .env $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
     - echo "cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_SERVER 
 
-deploy-master-demo:
+deploy-master-gate:
   <<: *deploy
   environment:
     name: demo
-    url: https://demo.interkit.app
+    url: https://gate.interkit.app
   stage: deploy
 
 
