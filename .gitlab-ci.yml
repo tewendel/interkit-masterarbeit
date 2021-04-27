@@ -1,3 +1,7 @@
+stages:
+  - build
+  - deploy
+
 # This file is a template, and might need editing before it works on your project.
 docker-build-master:
   # Official docker image.
@@ -27,3 +31,36 @@ docker-build-master:
 #    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
 #  except:
 #    - main
+
+.deploy: &deploy
+  stage: deploy
+  image: ubuntu
+  when: manual
+  only:
+    - main
+  except:
+    - merge_requests
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "INTERKIT_SERVER_URL=$INTERKIT_SERVER_URL" > .env
+    - echo "INTERKIT_SERVER_WEBSOCKETS_URL=$INTERKIT_SERVER_WEBSOCKETS_URL" >> .env
+    - echo "INTERKIT_BUNDLER_URL=$INTERKIT_BUNDLER_URL" >> .env
+    - scp docker-compose.yml $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
+    - scp .env $SSH_USER@$SSH_SERVER:~/$CI_PROJECT_NAME/
+    - echo "cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_SERVER 
+
+deploy-master-gate:
+  <<: *deploy
+  environment:
+    name: demo
+    url: https://gate.interkit.app
+  stage: deploy
+
+
