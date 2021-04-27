@@ -51,6 +51,8 @@
         <MediaFilePreview key={row.meta.key} {projectId} mediaManager/>
       {:else if cell.key === 'key'}
         {row.meta.key}
+      {:else if cell.key === 'link'}
+        <a href={row.link} title={row.link} target="_blank" class="truncate">{row.link}</a>
       {:else}{cell.value}{/if}
     </span>
 
@@ -59,3 +61,13 @@
 {:else}
   loading...
 {/if}
+
+<style>
+  .truncate {
+    max-width: 10em;
+    display: inline-block;
+    text-align:right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
