@@ -53,8 +53,8 @@ docker-build-master:
   script:
     - echo INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA > .env
     - echo $INTERKIT_ENV_FILE >> .env
-    - scp docker-compose.yml $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/
-    - scp .env $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/
+    - scp docker-compose.yml $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/docker-compose.yml
+    - scp .env $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/.env
     - echo "cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
 
 deploy-master-demo:
