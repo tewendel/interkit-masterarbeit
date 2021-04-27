@@ -37,7 +37,7 @@ docker-build-master:
   image: ubuntu
   when: manual
   only:
-    - master
+    - main
   except:
     - merge_requests
   before_script:
