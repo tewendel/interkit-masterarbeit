@@ -3,6 +3,7 @@
   import { InterkitClient, util } from '../'
   import { onMount, getContext } from 'svelte'
   import MediaFileImage from './MediaFileImage.svelte';
+  import CategoryCover from './CategoryCover.svelte';
 
   let listNavContext = getContext("listNav");
 
@@ -43,9 +44,12 @@
 <ul>
   {#each $categories as category}
   <li on:click={()=>{openCategory(category)}}>
-    <h3>{util.rowVal(category, nameKey)}</h3>
-    <MediaFileImage mediafileRef={util.rowVal(category, imageKey)} />    
-    <div>{util.rowValString(category, descriptionKey)}</div>
+    <CategoryCover 
+      categoryRow={category}
+      titleColumn={nameKey}
+      imageColumn={imageKey}
+      descriptionColumn={descriptionKey}
+    />
   </li>
   {/each}
 </ul>

@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
+  import CategoryCover from './CategoryCover.svelte'
 
   let projectId = INTERKIT_PROJECT_ID;
 
@@ -34,11 +35,14 @@
 
 <div class="feature-container" on:click={openCategory}> 
 
+  <h3>{title}</h3>
   {#if categoryRow}
-    <h3>{title}</h3>
-    <h4>{util.rowVal(categoryRow, categoryColumns[categoryIndex].titleColumn)}</h4>
-    <MediaFileImage mediafileRef={util.rowVal(categoryRow, categoryColumns[categoryIndex].imageColumn)} />    
-    <div>{util.rowValString(categoryRow, categoryColumns[categoryIndex].descriptionColumn)}</div>
+    <CategoryCover 
+      {categoryRow}
+      titleColumn={categoryColumns[categoryIndex].titleColumn}
+      imageColumn={categoryColumns[categoryIndex].imageColum}
+      descriptionColumn={categoryColumns[categoryIndex].descriptionColumn}
+    />
   {/if}
 
 </div>
