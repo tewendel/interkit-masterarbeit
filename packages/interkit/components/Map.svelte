@@ -24,7 +24,7 @@
   export let markerLabels; // type sheetColumn: "sheetId/columnId"
   export let audioColumn; // type sheetColumn: "sheetId/columnId"
   export let markerIcon; // for now type string - key of mediaFile
-
+  
   let projectId = INTERKIT_PROJECT_ID;
 
   let filterLists = [];
@@ -76,11 +76,7 @@
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
-    await playAudio(
-      e.target?.payload?.audio,
-      e.target?.payload?.title, 
-      false
-    )
+    await playAudio(e.target?.payload?.elementRow)
   }
 
   const updateMarkers = () => {
@@ -93,13 +89,12 @@
       util.rowVal(r, activeFilter.elementRefColumn)?.rowKeys?.includes(activeFilter.row.key)
     )
 
-    // prepare data for marker production
+    // prepare data for marker production and audio playback when clicked
     let markerValues = rowsFiltered.map(r=> {return {
       location: (util.rowVal(r, markerPositions)?.lat
                 && util.rowVal(r, markerPositions)?.lng ?
                 util.rowVal(r, markerPositions) : undefined),
-      title: util.rowVal(r, markerLabels),
-      audio: util.rowVal(r, audioColumn)?.value
+      elementRow: r
     }})
 
     // clear old markers

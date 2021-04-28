@@ -1,46 +1,124 @@
 <script context="module">
-  import { InterkitClient } from '../'
-  let projectId = INTERKIT_PROJECT_ID
-  export const playAudio = async (key, title, autoplay=true) => {
-    let mediafile;
-    if(key) {
-      mediafile = await InterkitClient.call("mediafile.get", {key, projectId})
-      console.log(mediafile)
-    }
+  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  export const playAudio = async (elementRow, autoplay=true) => {
     audioPlayerStatus.set({
-      mediafileKey: mediafile?.meta.key,
-      src: mediafile?.link,
-      title,
+      elementRow,
       autoplay
     })
   }
-
-  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 </script>
 
 <script>
+  import { InterkitClient, util } from '../'
+  import MediaFileImage from './MediaFileImage.svelte';
+
+  let projectId = INTERKIT_PROJECT_ID
+  
+  // import all the column information
+  export let titleColumn = "elements/title"
+  export let audioColumn = "elements/audio"
+  export let descriptionColumn = "elements/description"
+  export let imageColumn = "elements/image"
+  export let locationColumn = "elements/position"
+  export let categoryRefColumn = "elements/category"
+  export let categoryOrderColumn = "elements/categoryOrder"
+
+  const elementColumns = {
+    titleColumn,
+    descriptionColumn,
+    audioColumn,
+    imageColumn,
+    categoryRefColumn: [categoryRefColumn], 
+    categoryOrderColumn: [categoryOrderColumn],
+    locationColumn,
+  }
+
+  export let categoryTitleColumn = "categories/name"
+  export let categorySubtitleColumn = "categories/subtitle";
+
+  const categoryIndex = 0;
+  
+  const categoryColumns = [{
+    titleColumn: categoryTitleColumn,
+    subtitleColumn: categorySubtitleColumn
+  }]
+
   const closePlayer = () => {
     audioPlayerStatus.set(null)
   }
 
+  $: audioKey = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.audioColumn)?.value
+  $: title = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.titleColumn)
+  $: description = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.descriptionColumn)
+  $: categoryOrderPosition = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.categoryOrderColumn[categoryIndex])
+  $: imageRef = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.imageColumn)
+
+  let mediafile;
+  const loadAudiofile = async (key) => {
+    if(key) {
+      mediafile = await InterkitClient.call("mediafile.get", {key, projectId})
+    } else {
+      mediafile = null;
+    }
+  }
+
+  $: {
+    loadAudiofile(audioKey)
+  } 
+
+  let categoryRow; // the row of the category that is referenced in this element
+
+  const loadCategory = async (elementRow) => {
+    let categoryRowKey = util.rowVal(elementRow, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
+    if(categoryRowKey)
+      categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
+    else 
+      categoryRow = null;
+    //console.log(categoryRow)
+  }
+
+  $: {
+    loadCategory($audioPlayerStatus?.elementRow)
+  }
+
+  let playerExpanded = false;
+  const toggleExpanded = () => {
+    playerExpanded = !playerExpanded;
+  }
+    
 </script>
 
 {#if $audioPlayerStatus}
 
 <div class="AudioPlayer container">
 
-  <div class="AudioPlayer__Expand expand">
-    <button class="AudioPlayer__Expand__Button icon-expand icon" on:click={()=>alert("expand")} title="Expand">
+  {#if !playerExpanded}
+    <h4 class="AudioPlayer__Title title">{title}</h4>
+    <div class="AudioPlayer__Expand expand">
+    <button class="AudioPlayer__Expand__Button icon-expand icon" on:click={toggleExpanded} title="Expand">
       expand
     </button>
   </div>
+  {:else}
+    <div class="expanded-content">
+      <MediaFileImage mediafileRef={imageRef} />    
+      <h4>
+        <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
+        {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
+        <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
+      </h4>  
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
+    <button class="AudioPlayer__Expand__Button icon-collapse icon" on:click={toggleExpanded} title="Expand">
+      collapse
+    </button>
+  {/if}
 
-  <h4 class="AudioPlayer__Title title">{$audioPlayerStatus.title}</h4>
-
-  {#key $audioPlayerStatus}
-    {#if $audioPlayerStatus.src}
+  {#key mediafile}
+    {#if mediafile}
     <audio controls autoplay={$audioPlayerStatus.autoplay}>
-      <source src={encodeURI($audioPlayerStatus.src)} type="audio/mpeg">
+      <source src={encodeURI(mediafile.link)} type="audio/mpeg">
     </audio>
     {/if}
   {/key}
@@ -68,6 +146,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 1000;
   }
 
   .container > * {
@@ -95,6 +174,10 @@
   }
   .icon-expand {
     background-image: url("../icons/Arrow-Up.svg");
+  }
+
+  .icon-collapse {
+    background-image: url("../icons/Dropdown.svg");
   }
   .icon-close {
     background-image: url("../icons/Close.svg");

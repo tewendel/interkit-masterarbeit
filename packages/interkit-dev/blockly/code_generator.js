@@ -248,8 +248,20 @@ export const initCodeGenerator = (Blockly) => {
   };
 
   Blockly.JavaScript['AudioPlayer'] = function(block) {
-    var text_label = block.getFieldValue('NAME');
-    return `<AudioPlayer/>\n`
+    var code = "<AudioPlayer \n";
+    code += attributes(block, [
+       "titleColumn",
+       "audioColumn",
+       "descriptionColumn",
+       "imageColumn",
+       "categoryRefColumn", 
+       "categoryOrderColumn",
+       "categoryTitleColumn",
+       "categorySubtitleColumn",
+       "locationColumn"
+    ]);
+    code += "\n/>\n";
+    return code;
   };
 
   Blockly.JavaScript['Theming'] = function (block) {

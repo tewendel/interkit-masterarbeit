@@ -570,8 +570,102 @@
   
   {
     "type": "AudioPlayer",
-    "message0": "AudioPlayer",
+    "message0": "<AudioPlayer> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
     "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "titleColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "elements/title",
+        "value": "elements/title"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "audioColumn",
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "elements/audio",
+        "value": "elements/audio"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "descriptionColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "elements/description",
+        "value": "elements/description"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "imageColumn",
+        "type": "sheetColumn",
+        "columnType": "mediaFile",
+        "text": "elements/image",
+        "value": "elements/image"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "categoryRefColumn",
+        "type": "sheetColumn",
+        "columnType": "sheetRef",
+        "refKey": "categories",
+        "text": "elements/category",
+        "value": "elements/category"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "categoryOrderColumn",
+        "type": "sheetColumn",
+        "columnType": "number",
+        "text": "elements/categoryOrder",
+        "value": "elements/categoryOrder"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "categoryTitleColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "categories/name",
+        "value": "categories/name"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "categorySubtitleColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "categories/subtitle",
+        "value": "categories/subtitle"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "locationColumn",
+        "type": "sheetColumn",
+        "columnType": "location",
+        "text": "elements/position",
+        "value": "elements/position"
+      },
+      {
+        "type": "input_dummy"
+      }
     ],
     "previousStatement": null,
     "nextStatement": null,

@@ -23,10 +23,11 @@
   
   let projectId = INTERKIT_PROJECT_ID
 
-  $: mediafileKey = util.rowVal(element, elementColumns.audioColumn)?.value
+  $: audioKey = util.rowVal(element, elementColumns.audioColumn)?.value
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
+  $: imageRef = util.rowVal(element, elementColumns.imageColumn)
 
   let categoryRow; // the row of the category that is referenced in this element
 
@@ -38,7 +39,7 @@
   })
 
   const play = async () => {
-    await playAudio(mediafileKey, title)      
+    await playAudio(element)      
   }
 
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
@@ -60,7 +61,7 @@
 
 <section class="ContentElementAudio">
   {#if size != "xs"}
-    <MediaFileImage mediafileRef={util.rowVal(element, elementColumns.imageColumn)} />    
+    <MediaFileImage mediafileRef={imageRef} />    
   {/if}
   <span>{distance}</span>
   <h3>{title}</h3>
@@ -73,7 +74,7 @@
     <p>{description}</p>
   {/if}
   
-  {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
+  {#if audioKey && (audioKey == $audioPlayerStatus?.mediafileAudio?.meta?.key)}
     (playing)
   {:else}
     <button on:click={play}>play</button>
