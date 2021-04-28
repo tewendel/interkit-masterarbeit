@@ -9,7 +9,8 @@
   import FeaturedCategory from './FeaturedCategory.svelte';
   import MenuSwitcher from './MenuSwitcher.svelte';
   import CategorySlider from './CategorySlider.svelte';
-
+  import ContentElementAudio from './ContentElementAudio.svelte';
+  
   let projectId = INTERKIT_PROJECT_ID;
 
   // columns for the sections of the dashboard
@@ -137,7 +138,14 @@
 
   <!--{JSON.stringify(section)}-->
 
-  {#if section.type == "ElementSlider"}
+  {#if section.type == "ElementSingle"}
+  <ContentElementAudio
+    size="xs"
+    element={(elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))?.[0])}
+    {elementColumns}
+    {categoryColumns}
+  />
+  {:else if section.type == "ElementSlider"}
     <ElementSlider 
       title={section.title}
       elementRows={elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))}

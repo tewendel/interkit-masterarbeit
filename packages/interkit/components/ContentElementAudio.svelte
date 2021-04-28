@@ -16,6 +16,10 @@
   export let elementColumns;
   export let categoryColumns;
   export let categoryIndex = 0;
+
+  export let size = "m"
+  // xs - used in dashboard, no image, no description, no category info
+  // s - used in bookmark list, small image, no description
   
   let projectId = INTERKIT_PROJECT_ID
 
@@ -55,17 +59,20 @@
 </script>
 
 <section class="ContentElementAudio">
-  <MediaFileImage mediafileRef={util.rowVal(element, elementColumns.imageColumn)} />    
+  {#if size != "xs"}
+    <MediaFileImage mediafileRef={util.rowVal(element, elementColumns.imageColumn)} />    
+  {/if}
   <span>{distance}</span>
   <h3>{title}</h3>
-  <h4>
-    <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
-    {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
-    <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
-  </h4>  
+  {#if size != "xs"}
+    <h4>
+      <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
+      {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
+      <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
+    </h4>  
+    <p>{description}</p>
+  {/if}
   
-
-  <p>{description}</p>
   {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
     (playing)
   {:else}
