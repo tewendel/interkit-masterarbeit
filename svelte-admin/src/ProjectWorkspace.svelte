@@ -16,6 +16,9 @@
   
   let selected
 
+  let rightPaneHidden = false;
+  const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
+
 </script>
 
 {#if $currentProject}
@@ -46,8 +49,12 @@
         </div>
       </Tabs>
     </div>
-    <div class="right-pane">
-      <Preview {projectId}/>
+    {#if rightPaneHidden}
+      <button class="toggle-right" on:click={toggleRightPane}>show preview</button>
+    {/if}
+    <div class="right-pane" class:hidden={rightPaneHidden}>
+        <button on:click={toggleRightPane}>hide preview</button>
+        <Preview {projectId}/>
     </div>
   </div>
 {:else}
@@ -71,5 +78,15 @@
   .right-pane {
     flex: 0.5;
     min-width: 320px;
+  }
+
+  .toggle-right {
+    position: fixed;
+    right: 50px;
+    top: 50px;
+  }
+
+  div.hidden {
+    display: none;
   }
 </style>

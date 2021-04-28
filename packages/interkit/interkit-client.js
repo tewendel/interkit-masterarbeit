@@ -143,8 +143,17 @@ const InterkitClient = {
   },
 
   getGlobalStore: (key) => {
-    if(!globalStores[key])
-      globalStores[key] = writable(null);   
+    if(!globalStores[key]) {
+      let persistedStoreJSON = localStorage.getItem(key)
+      console.log("localStorage store?", key, JSON.stringify(persistedStoreJSON))
+      let persistedStore;
+      try {
+        persistedStore = JSON.parse(persistedStoreJSON)
+      } catch (e) {
+        console.log(e)
+      }
+      globalStores[key] = writable(persistedStore);   
+    }
     return globalStores[key]
   },
 

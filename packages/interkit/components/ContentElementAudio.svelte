@@ -7,6 +7,7 @@
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   
   import MediaFileImage from './MediaFileImage.svelte'
+  import BookmarkToggle from './BookmarkToggle.svelte'
 
   import { playAudio } from './AudioPlayer.svelte'
 
@@ -18,8 +19,12 @@
   export let categoryIndex = 0;
 
   export let size = "m"
+
   // xs - used in dashboard, no image, no description, no category info
   // s - used in bookmark list, small image, no description
+
+  // use this to specify a bookmark list
+  export let bookmarkFilter = "bookmarks";
   
   let projectId = INTERKIT_PROJECT_ID
 
@@ -64,6 +69,9 @@
     <MediaFileImage mediafileRef={imageRef} />    
   {/if}
   <span>{distance}</span>
+  {#if size != "xs"}
+    <BookmarkToggle elementKey={element?.key}/>
+  {/if}
   <h3>{title}</h3>
   {#if size != "xs"}
     <h4>

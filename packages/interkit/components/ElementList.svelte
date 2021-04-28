@@ -2,6 +2,18 @@
   import { InterkitClient, util } from '../'
   import { onMount, getContext, onDestroy } from 'svelte'
 
+  // the key of the sheet from which to get the data
+  export let dataSheetKey 
+
+  // the column key to use for sorting the elements
+  export let sortColumn
+
+  // set this option to only show elements that are bookmarked locally on the client
+  export let bookmarkFilter // this is TRUE or FALSE
+  let bookmarkStore;
+  if(bookmarkFilter == "TRUE")
+    bookmarkStore = InterkitClient.getGlobalStore("bookmarks")
+
   const listNavContext = getContext("listNav");
   const singleViewData = listNavContext?.singleViewData
   
@@ -23,12 +35,10 @@
     setupSub();    
   }
 
-  // the key of the sheet from which to get the data
-  export let dataSheetKey 
+  $: {
+    if($bookmarkStore) setupSub();
+  }
 
-  // the column key to use for sorting the elements
-  export let sortColumn
-  
   let projectId = INTERKIT_PROJECT_ID;
 
   let dataSub
@@ -55,9 +65,20 @@
       return dataRow?.values?.[refKey]?.rowKeys?.includes(filterCategoryKey)
     }
 
+    const checkBookmark = (dataRow) => {
+      console.log("bookmarkFilter", bookmarkFilter);
+      if(bookmarkFilter != "TRUE") return true;
+      if(bookmarkFilter && $bookmarkStore) {
+        if($bookmarkStore?.[dataRow.key])
+          return true;
+        else 
+          return false;
+      }
+    }
+
     if(dataSub) await dataSub.stop()
     // subscribe to the data
-    dataSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: dataSheetKey, projectId}], r=>{return (r.sheetKey==dataSheetKey) && check(r)});
+    dataSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: dataSheetKey, projectId}], r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
     dataRows = dataSub.data;  
     console.log("dataRows", $dataRows)
     console.log(sortColumn)

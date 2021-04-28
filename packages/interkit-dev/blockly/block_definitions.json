@@ -329,7 +329,7 @@
 
   {
     "type": "ElementList",
-    "message0": "<ElementList> %1 dataSheetKey %2 %3 sortColumn %4 %5 contentElement %6",
+    "message0": "<ElementList> %1 dataSheetKey %2 %3 sortColumn %4 %5 bookmarkFilter %6 %7 contentElement %8",
     "args0": [
       {
         "type": "input_dummy"
@@ -349,6 +349,13 @@
         "value": "elements/categoryOrder",
         "text": "elements/categoryOrder",
         "columnType": "number"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "field_checkbox",
+        "name": "bookmarkFilter"
       },
       {
         "type": "input_dummy"

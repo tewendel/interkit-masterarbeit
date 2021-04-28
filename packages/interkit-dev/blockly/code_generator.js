@@ -133,6 +133,7 @@ export const initCodeGenerator = (Blockly) => {
     var code = "<ElementList \n";
     code += attribute(block, "dataSheetKey")
     code += attribute(block, "sortColumn")
+    code += attribute(block, "bookmarkFilter")
     code += ">\n"
     code += slot(block, "contentElement", "element") 
     code += "</ElementList>\n"
