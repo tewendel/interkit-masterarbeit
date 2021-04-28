@@ -28,7 +28,6 @@
   
   let projectId = INTERKIT_PROJECT_ID
 
-  $: audioKey = util.rowVal(element, elementColumns.audioColumn)?.value
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
@@ -82,7 +81,7 @@
     <p>{description}</p>
   {/if}
   
-  {#if audioKey && (audioKey == $audioPlayerStatus?.mediafileAudio?.meta?.key)}
+  {#if element && (element.key == $audioPlayerStatus?.elementRow?.key)}
     (playing)
   {:else}
     <button on:click={play}>play</button>
