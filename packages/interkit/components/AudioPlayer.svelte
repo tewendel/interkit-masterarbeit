@@ -11,6 +11,7 @@
 <script>
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte';
+  import Icon from './Icon.svelte'
 
   let projectId = INTERKIT_PROJECT_ID
   
@@ -90,43 +91,69 @@
 
 {#if $audioPlayerStatus}
 
-<div class="AudioPlayer container">
+<div class="AudioPlayer container" class:expanded={playerExpanded}>
 
-  {#if !playerExpanded}
-    <h4 class="AudioPlayer__Title title">{title}</h4>
-    <div class="AudioPlayer__Expand expand">
-    <button class="AudioPlayer__Expand__Button icon-expand icon" on:click={toggleExpanded} title="Expand">
-      expand
-    </button>
-  </div>
-  {:else}
-    <div class="expanded-content">
-      <MediaFileImage mediafileRef={imageRef} />    
-      <h4>
-        <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
-        {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
-        <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
+    <div class="AudioPlayer__Expanded expanded-content">
+
+      <figure class="AudioPlayer__Expanded__Picture">
+        <MediaFileImage fitDimension="height" mediafileRef={imageRef} />    
+      </figure>
+
+      <h3 class="AudioPlayer__Expanded__Title">
+        {title}
+      </h3>
+      <h4 class="AudioPlayer__Expanded__SubTitle">
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
+        </span>
+        {#if categoryOrderPosition}
+          <span>
+            {categoryOrderPosition}
+          </span>
+          – 
+        {/if}
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
+        </span>
       </h4>  
-      <h3>{title}</h3>
-      <p>{description}</p>
+
+      <p class="AudioPlayer__Expanded__Description">
+        {description}
+      </p>
     </div>
-    <button class="AudioPlayer__Expand__Button icon-collapse icon" on:click={toggleExpanded} title="Expand">
-      collapse
-    </button>
-  {/if}
 
-  {#key mediafile}
-    {#if mediafile}
-    <audio style="width: 100%" controls autoplay={$audioPlayerStatus.autoplay}>
-      <source src={encodeURI(mediafile.link)} type="audio/mpeg">
-    </audio>
-    {/if}
-  {/key}
+    <div class="base-content">
 
-  <div class="AudioPlayer__Close close">
-    <button class="AudioPlayer__Close__Button icon-close icon" on:click={closePlayer} title="Close">
-      Close
-    </button>
+      <div class="AudioPlayer__ExpandCollapse expand-collapse">
+        <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
+          <Icon type={playerExpanded ? "arrow-down" : "arrow-up"}>
+            {playerExpanded ? "Collapse" : "Expand"}
+          </Icon>
+        </button>
+      </div>
+
+      <h4 class="AudioPlayer__Title title">
+        {title}
+      </h4>
+
+    {#key mediafile}
+      {#if mediafile}
+        <span class="AudioPlayer__Audioplayer audio">
+          <audio controls autoplay={$audioPlayerStatus.autoplay}>
+            <source src={encodeURI(mediafile.link)} type="audio/mpeg">
+          </audio>
+        </span>
+      {/if}
+    {/key}
+
+    <div class="AudioPlayer__Close close">
+      <button class="AudioPlayer__Close__Button icon-close icon" on:click={closePlayer} title="Close">
+        <Icon type="close">
+          Close
+        </Icon>
+      </button>
+    </div>
+
   </div>
 
 </div>
@@ -136,20 +163,29 @@
 <style>
 
   .container {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     width: 100%;
     background-color: lightgrey;
     border: solid 1px black;
     border-bottom-width: 0;
-    padding: 4px;
     position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     z-index: 1000;
   }
 
-  .container > * {
+  .container:not(.expanded) .expanded-content {
+    display: none;
+  }
+
+  .base-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+  }
+
+  .base-content > * {
     margin: 0 4px;
   }
 
@@ -160,28 +196,48 @@
   }
   .close {}
 
-  .icon {
-    background-repeat: no-repeat;
-    background-size: 25px;
-    background-position: center;
-    color: transparent;
-    border: none;
-    width: 25px;
-    height: 25px;
-    margin: 0 4px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .icon-expand {
-    background-image: url("../icons/Arrow-Up.svg");
+  .icon-close {
+    padding: 0 12px;
   }
 
-  .icon-collapse {
-    background-image: url("../icons/Dropdown.svg");
+  button {
+    border: none;
+    outline: none;
   }
-  .icon-close {
-    background-image: url("../icons/Close.svg");
-    padding: 0 12px;
+
+  .AudioPlayer__Expanded {
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .AudioPlayer__Expanded__Picture {
+    height: 170px;
+    max-height: 25vh;
+    padding-bottom: 8px;
+    order: 1;
+  }
+
+  .AudioPlayer__Expanded__Title,
+  .AudioPlayer__Expanded__SubTitle,
+  .AudioPlayer__Expanded__Description {
+    padding: 0 16px;
+  }
+
+  .AudioPlayer__Expanded__Title {
+    order: 3;
+  }
+  .AudioPlayer__Expanded__SubTitle {
+    order: 2;
+  }
+
+  .AudioPlayer__Expanded__Description {
+    order: 3;
+    overflow-y: scroll;
+  }
+
+  .AudioPlayer__Expanded__Description {
+    padding-top: 16px;
   }
 
 </style>

@@ -1,3 +1,7 @@
+* {
+  font-family:Arial, Helvetica, sans-serif;
+}
+
 .BottomMenuButton {
   height: 50px !important;
 }
@@ -29,8 +33,49 @@
   right: -0.8em;
 }
 
-.BottomMenuButton.selected .BottomMenuButton__Text {
+.Theming .BottomMenuButton.selected .BottomMenuButton__Text {
   border-style: solid;
   border-width: 0 0 1px 0;
   border-color: currentColor;
+}
+
+.Theming .ContentElementAudio__Picture.picture {
+  grid-row: 1;
+}
+
+.Theming .ContentElementAudio__Content.content {
+  padding-top: 0;
+}
+
+.Theming .ContentElementAudio__Distance.distance:before {
+  content: "⬤";
+  float: left;
+  top: 0.5em;
+  position: relative;
+}
+
+.Theming .Button.button {
+  background-color: transparent;
+  border: none;
+}
+
+.Theming .AudioPlayer {
+  background-color: black !important;
+  color: white;
+}
+
+.Theming .AudioPlayer .icon {
+  filter: invert(1);
+}
+
+.Theming .AudioPlayer__Expanded__Picture {
+  height: 150px;
+  width: 150px;
+  margin: 16px;
+}
+
+.Theming .icon-play {
+  background-image: url("icons-gate/play-black.svg");
+  width: 2em;
+  background-size: 2em;
 }

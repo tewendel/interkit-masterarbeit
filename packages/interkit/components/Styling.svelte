@@ -3,7 +3,7 @@
   export let primary_color = "#27EBBC"
   export let text_color = "#000000"
   export let font_family = "inter"
-  export let google_font = "Inter:wght@100"
+  export let google_font = "Inter:wght@200;300;400;500"
   export let background_color = "#FFFFFF"
 
   import { onMount } from 'svelte'

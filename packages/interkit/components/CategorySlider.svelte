@@ -22,22 +22,27 @@
   let elementCategoryRefColumnKey = util.colKey(elementColumns.categoryRefColumn[categoryIndex])
 
   let categoryTitle;  
-  onMount(async ()=>{
-    let categoryRow = await InterkitClient.call("row.get", {key: sectionCategoryKey, projectId})
+
+  const updateCategoryTitle = async (sCKey)=>{
+    let categoryRow = await InterkitClient.call("row.get", {key: sCKey, projectId})
     //console.log(categoryRow)
     categoryTitle = util.rowVal(categoryRow, categoryColumns[categoryIndex].titleColumn)
-  })
+  }
 
   // determine if an element row contains a reference to the category we want to filter for
   const filter = (dataRow) => {
     return dataRow?.values?.[elementCategoryRefColumnKey]?.rowKeys?.includes(sectionCategoryKey)
   }
+  
+  $: updateCategoryTitle(sectionCategoryKey)
   $: elementRows_filtered = elementRows.filter(filter);
+
+
 
 </script>
 
 <ElementSlider 
-      title={categoryTitle}
+      title={title || categoryTitle}
       elementRows={elementRows_filtered}
       {elementColumns}
       {categoryColumns}

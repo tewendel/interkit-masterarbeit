@@ -8,6 +8,8 @@
   
   import MediaFileImage from './MediaFileImage.svelte'
   import BookmarkToggle from './BookmarkToggle.svelte'
+  import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
 
   import { playAudio } from './AudioPlayer.svelte'
 
@@ -32,6 +34,7 @@
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
+  $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
 
   let categoryRow; // the row of the category that is referenced in this element
 
@@ -56,34 +59,122 @@
       else distance = Math.floor(meters / 1000) + "km";
     }
   }
+
   $: {
     calculateDistance($userPositionStore)
   }
 
-
 </script>
 
-<section class="ContentElementAudio">
+<section class="ContentElementAudio container">
+
   {#if size != "xs"}
-    <MediaFileImage mediafileRef={imageRef} />    
+    <figure class="ContentElementAudio__Picture picture">
+      <MediaFileImage mediafileRef={imageRef} />    
+    </figure>
   {/if}
-  <span>{distance}</span>
-  {#if size != "xs"}
-    <BookmarkToggle elementKey={element?.key}/>
-  {/if}
-  <h3>{title}</h3>
-  {#if size != "xs"}
-    <h4>
-      <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
-      {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
-      <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
-    </h4>  
-    <p>{description}</p>
-  {/if}
-  
-  {#if element && (element.key == $audioPlayerStatus?.elementRow?.key)}
-    (playing)
-  {:else}
-    <button on:click={play}>play</button>
-  {/if}
+
+  <div class="ContentElementAudio__Controls controls">
+    <span class="ContentElementAudio__Play play">
+      <Button on:click={play}>
+        {#if playing}
+          (playing)
+        {:else}
+          <Icon height="1em" type="play" />
+          play
+        {/if}
+      </Button>
+    </span>
+
+    <span class="ContentElementAudio__Distance distance">
+      <Button>
+        {distance}
+      </Button>
+    </span>
+
+    {#if size != "xs"}
+      <span class="ContentElementAudio__Bookmark bookmark">
+        <Button>
+          <BookmarkToggle elementKey={element?.key}/>
+        </Button>
+      </span>
+    {/if}
+  </div>
+
+  <div class="ContentElementAudio__Content content">
+    <h3 class="ContentElementAudio__Title title">
+      {title}
+    </h3>
+
+    {#if size != "xs"}
+      <h4 class="ContentElementAudio__SubTitle subtitle">
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
+        </span>
+        {#if categoryOrderPosition}
+          <span>
+            {categoryOrderPosition}
+          </span> 
+          – 
+        {/if}
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
+        </span>
+      </h4>  
+      <p class="ContentElementAudio__Description description">
+        {description}
+      </p>
+    {/if}
+  </div>
+
 </section>
+
+<style>
+
+  /* Layout */
+
+  .container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+  }
+  .picture {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .controls {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .content {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  /* Controls Layout */
+
+  .controls {
+    display: flex;
+    padding: 8px;
+  }
+
+  .controls > *:not(:first-child) {
+    margin-left: 8px;
+  }
+  .play {
+    flex: 1;
+  }
+
+  /* elements */
+
+  .content {
+    padding: 16px;
+  }
+
+  .description {
+    margin-top: 8px;
+  }
+
+
+</style>

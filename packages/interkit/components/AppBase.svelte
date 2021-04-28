@@ -1,4 +1,4 @@
-<div class="AppBase">
+<div class="AppBase Theming">
   <slot ></slot>
 </div>
 
@@ -18,6 +18,18 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
   :global(body) {
     font-family: 'Inter', sans-serif;
+  }
+
+  :global(h2) {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+  }
+
+  :global(h3) {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
   }
 
 </style>
