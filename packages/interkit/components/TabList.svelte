@@ -5,15 +5,21 @@
 </script>
 
 
-{#if !$hideTabNav}
-	<div class="Tabs__TabList tab-list">
-		<slot></slot>
-	</div>
-{/if}
+<div class:visible={!$hideTabNav} class="Tabs__TabList tab-list">
+	<slot></slot>
+</div>
 
 <style>
 	.tab-list {
 		height: 50px;
 		display: flex;
+    visibility: hidden;
+    height: 0px;
 	}
+
+  .visible {
+    visibility: visible;
+    height: auto;
+  }
+
 </style>

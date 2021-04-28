@@ -21,8 +21,8 @@
 
   $: mediafileKey = util.rowVal(element, elementColumns.audioColumn)?.value
   $: title = util.rowVal(element, elementColumns.titleColumn)
-  $: description = util.rowVal(element, elementColumns.descriptionColumn)
-  $: categoryOrderPosition = util.rowVal(element, elementColumns.categoryOrderColumn[categoryIndex])
+  $: description = util.rowValString(element, elementColumns.descriptionColumn)
+  $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
 
   let categoryRow; // the row of the category that is referenced in this element
 
@@ -51,19 +51,20 @@
     calculateDistance($userPositionStore)
   }
 
-  
 
 </script>
 
 <section class="ContentElementAudio">
   <MediaFileImage mediafileRef={util.rowVal(element, elementColumns.imageColumn)} />    
-  <h3>{title} <span>{categoryOrderPosition}</span>
-<span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
-<span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
-{distance}
-<span>
+  <span>{distance}</span>
+  <h3>{title}</h3>
+  <h4>
+    <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}</span>
+    {#if categoryOrderPosition}<span>{categoryOrderPosition}</span> – {/if}
+    <span>{util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}</span>
+  </h4>  
+  
 
-</h3>
   <p>{description}</p>
   {#if mediafileKey && (mediafileKey == $audioPlayerStatus?.mediafileKey)}
     (playing)

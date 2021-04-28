@@ -37,6 +37,7 @@
 		},
 
 		selectTab: tab => {
+      console.log("selectedTab")
 			const i = tabs.indexOf(tab);
 			selectedTab.set(tab);
 			selectedPanel.set(panels[i]);

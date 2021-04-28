@@ -86,12 +86,6 @@
   
 </script>
 
-{#if filterCategoryName}
-  <h2>{filterCategoryName}</h2>
-{:else}
-  <h2>alles</h2>
-{/if}
-
 {#if dataRowsSorted}
 <ul>
   {#each dataRowsSorted as row}

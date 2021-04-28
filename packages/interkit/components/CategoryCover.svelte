@@ -9,6 +9,6 @@
 </script>
 
 
-<h3>{util.rowVal(category, titleColumn)}</h3>
-<MediaFileImage mediafileRef={util.rowVal(category, imageColumn)} />    
-<div>{util.rowValString(category, descriptionColumn)}</div>
+<MediaFileImage mediafileRef={util.rowVal(categoryRow, imageColumn)} />    
+<h3>{util.rowVal(categoryRow, titleColumn)}</h3>
+<div>{util.rowValString(categoryRow, descriptionColumn)}</div>

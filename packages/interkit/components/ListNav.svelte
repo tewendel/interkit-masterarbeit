@@ -29,7 +29,7 @@
 </script>
 
 <div class:active={$singleViewData}>
-  <span on:click={()=>{setSingleView(null)}}>{"<"} back</span>
+  <span on:click={()=>{setSingleView(null)}}>{"<"} {$singleViewData?.filterCategoryName}</span>
   <slot name="singleView"></slot>
 </div>
 

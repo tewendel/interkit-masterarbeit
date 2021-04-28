@@ -40,7 +40,7 @@
     <CategoryCover 
       {categoryRow}
       titleColumn={categoryColumns[categoryIndex].titleColumn}
-      imageColumn={categoryColumns[categoryIndex].imageColum}
+      imageColumn={categoryColumns[categoryIndex].imageColumn}
       descriptionColumn={categoryColumns[categoryIndex].descriptionColumn}
     />
   {/if}

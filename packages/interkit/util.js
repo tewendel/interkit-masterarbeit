@@ -15,7 +15,9 @@ export default {
 
   rowValString: (row, sheetColumn) => {
     let v = rowVal(row, sheetColumn);
-    return v ? v : "";
+    let r = v ? v : "";
+    //console.log("rowValString", v, r)
+    return r;
   },
 
   getSheetKey: (sheetColumn) => {
@@ -51,7 +53,7 @@ export default {
 
   getDistance: (elementPosition, userPosition) => {
     if(elementPosition && userPosition) {
-      console.log("getDistance", elementPosition, userPosition)
+      //console.log("getDistance", elementPosition, userPosition)
       let meters = getDistance({
         longitude: userPosition.lng,
         latitude: userPosition.lat
