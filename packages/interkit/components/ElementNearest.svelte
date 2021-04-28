@@ -1,6 +1,7 @@
 <script>
   import { InterkitClient, util } from '../'
-  import ElementSlider from './ElementSlider.svelte';
+  import ContentElementAudio from './ContentElementAudio.svelte';
+
 
   export let title;
   export let elementRows;
@@ -16,9 +17,9 @@
   
 </script>
 
-<ElementSlider
-  title={title}
-  elementRows={[elementRows_sorted[0]]}
-  {elementColumns}
-  {categoryColumns}
-/>
+<ContentElementAudio
+    size="xs"
+    element={elementRows_sorted[0]}
+    {elementColumns}
+    {categoryColumns}
+  />

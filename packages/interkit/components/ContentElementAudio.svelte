@@ -37,13 +37,17 @@
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
 
   let categoryRow; // the row of the category that is referenced in this element
-
-  onMount(async () => {
+  const setupCategory = async (element) => {
     let categoryRowKey = util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
+    console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
     if(categoryRowKey)
       categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
-    //console.log(categoryRow)
-  })
+    console.log("categoryRow", categoryRow)
+  }
+
+  $: {
+    setupCategory(element)
+  }
 
   const play = async () => {
     await playAudio(element)      

@@ -14,16 +14,19 @@
   export let categoryColumns;
 
   // select the categories to use
-  let categoryIndex = util.getCategoryIndex(sectionRow, sectionColumns);
-  
+  let categoryIndex;
   let categoryRow;
-  onMount(async ()=>{
+  
+  const setup = async (sectionRow) => {
+    categoryIndex = util.getCategoryIndex(sectionRow, sectionColumns);
     if(typeof categoryIndex == "number") {
       // the rowKey of the category we want to display
       let sectionCategoryKey = util.rowVal(sectionRow, sectionColumns.categoryRefsColumn[categoryIndex])?.rowKeys?.[0]
       categoryRow = await InterkitClient.call("row.get", {key: sectionCategoryKey, projectId})
     }
-  });
+  }
+
+  $: setup(sectionRow);    
   
   const openCategory = ()=>{
     InterkitClient.callGlobalMethod("featuredCategoryPage")
