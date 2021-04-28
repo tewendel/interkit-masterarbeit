@@ -4,6 +4,7 @@
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
   import CategoryCover from './CategoryCover.svelte'
+  import SectionHeadline from './SectionHeadline.svelte'
 
   let projectId = INTERKIT_PROJECT_ID;
 
@@ -38,7 +39,11 @@
 
 <div class="feature-container" on:click={openCategory}> 
 
-  <h3>{title}</h3>
+  <h3>
+    <SectionHeadline>
+      {title}
+    </SectionHeadline>
+  </h3>
   {#if categoryRow}
     <CategoryCover 
       {categoryRow}

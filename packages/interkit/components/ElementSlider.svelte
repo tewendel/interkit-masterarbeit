@@ -1,6 +1,7 @@
 <script>
 
   import ContentElementAudio from './ContentElementAudio.svelte';
+  import SectionHeadline from './SectionHeadline.svelte'
   
   export let title;
   export let elementRows;
@@ -11,7 +12,11 @@
 </script>
 
 <div class="ElementSlider container">
-  <h3 class="ElementSlider__title title">{title}</h3>
+  <h3 class="ElementSlider__title title">
+    <SectionHeadline>
+      {title}
+    </SectionHeadline>
+  </h3>
 
   {#if elementRows}
     <div class="ElementSlider__Slider slider" data-slides-amount={elementRows.length}>
@@ -37,8 +42,6 @@
   .container {
     width: 100%;
   }
-
-  .title {}
 
   .slider {
     display: flex;

@@ -6,11 +6,24 @@
   height: 50px !important;
 }
 
+.SectionHeadline,
 .BottomMenuButton__Text {
   position: relative;
   font-size: 20px;
 }
 
+.SectionHeadline {
+  font-size: 25px;
+  display: inline-block;
+  margin-left: 1.2em !important;
+}
+
+.SectionHeadline:empty {
+  display: none;
+}
+
+.SectionHeadline:before,
+.SectionHeadline:after,
 .BottomMenuButton__Text:before,
 .BottomMenuButton__Text:after {
   content: "";
@@ -23,11 +36,13 @@
   border-width: 1px;
 }
 
+.SectionHeadline:before,
 .BottomMenuButton__Text:before {
   clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
   left:-0.8em;
 }
 
+.SectionHeadline:after,
 .BottomMenuButton__Text:after {
   clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
   right: -0.8em;
