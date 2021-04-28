@@ -44,7 +44,7 @@
       "columnType": "optionSelect",
       "text": "dashboard/type",
       "value": "dashboard/type",
-      "options": "ElementSlider, ElementNearest, ElementRandom, CategorySlider, FeaturedCategory, MenuSwitcher"
+      "options": "ElementSingle, ElementSlider, ElementNearest, ElementRandom, CategorySlider, FeaturedCategory, MenuSwitcher"
     },
     {
       "type": "input_dummy"
