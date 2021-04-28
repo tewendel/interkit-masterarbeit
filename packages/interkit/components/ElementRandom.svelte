@@ -15,7 +15,7 @@
     let randomIndex = Math.floor(elementRows.length * Math.random())
     let elementRow = elementRows[randomIndex]
     console.log(elementRow)
-    await playAudio(util.rowVal(elementRow, elementColumns.audioColumn)?.value, util.rowVal(elementRow, elementColumns.titleColumn))
+    await playAudio(elementRow)
   }
 
 </script>
