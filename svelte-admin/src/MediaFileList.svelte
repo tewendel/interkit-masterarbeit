@@ -11,9 +11,9 @@
 
   const headers = [
     { key: "name", value: "name" },
+    { key: "preview", value: "preview" },
     { key: "key", value: "key" },
     { key: "link", value: "link" },
-    { key: "preview", value: "preview" },
   ];
 
   let rows = [];
@@ -52,7 +52,7 @@
       {:else if cell.key === 'key'}
         {row.meta.key}
       {:else if cell.key === 'link'}
-        <a href={row.link} title={row.link} target="_blank" class="truncate">{row.link}</a>
+        <a href={row.link} title={row.link} target="_blank" class="truncate">url</a>
       {:else}{cell.value}{/if}
     </span>
 
