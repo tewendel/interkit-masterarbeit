@@ -16,8 +16,8 @@
   }
 
   const filterSelect = (filter) => {
-    //filterSelectOpen = false;
-    //openFilterList = null;
+    filterSelectOpen = false;
+    openFilterList = null;
     setFilter(filter);
   }
 
@@ -33,30 +33,32 @@
 
 {#if filterLists?.length}
 <div id="filterControls">
-  <span on:click={toggleFilters}>filter</span>
-  {#if filterSelectOpen}
-    <ul>
-    {#each filterLists as filterList}
-      <li><span on:click={()=>{setOpenFilterList(filterList)}}>{filterList.name}</span></li>
-    {/each}
-    </ul>
-  {/if}
-  {#if openFilterList && filterSelectOpen}
-    <ul>
-    {#each openFilterList.categoryRows as categoryRow}
-      <li><span on:click={()=>{
-        filterSelect({
-          name: filterName(categoryRow), 
-          row: categoryRow,
-          categoryColorColumn: openFilterList.categoryColorColumn,
-          elementRefColumn: openFilterList.elementRefColumn
-        })}}>{filterName(categoryRow)}</span></li>
-    {/each}
-    </ul>
-  {/if}
   {#if activeFilter}
     <span on:click={()=>filterSelect(null)}>{activeFilter.name} x</span>
+  {:else}
+    <span on:click={toggleFilters}>filter</span>
+    {#if filterSelectOpen}
+      <ul>
+      {#each filterLists as filterList}
+        <li><span class:active={filterList == openFilterList} on:click={()=>{setOpenFilterList(filterList)}}>{filterList.name}</span></li>
+      {/each}
+      </ul>
+    {/if}
+    {#if openFilterList && filterSelectOpen}
+      <ul>
+      {#each openFilterList.categoryRows as categoryRow}
+        <li><span on:click={()=>{
+          filterSelect({
+            name: filterName(categoryRow), 
+            row: categoryRow,
+            categoryColorColumn: openFilterList.categoryColorColumn,
+            elementRefColumn: openFilterList.elementRefColumn
+          })}}>{filterName(categoryRow)}</span></li>
+      {/each}
+      </ul>
+    {/if}
   {/if}
+  
 
 </div>
 {/if}
@@ -80,6 +82,14 @@
 
   #filterControls span:hover {
     cursor: pointer;
+  }
+
+  li {
+    margin: 7px;
+  }
+
+  #filterControls span.active {
+    background-color: gray;
   }
 
 </style>

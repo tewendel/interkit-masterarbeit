@@ -117,7 +117,7 @@
 
   {#key mediafile}
     {#if mediafile}
-    <audio controls autoplay={$audioPlayerStatus.autoplay}>
+    <audio style="width: 100%" controls autoplay={$audioPlayerStatus.autoplay}>
       <source src={encodeURI(mediafile.link)} type="audio/mpeg">
     </audio>
     {/if}
