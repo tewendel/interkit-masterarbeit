@@ -946,7 +946,127 @@
       "nextStatement": null,
       "colour": 230,
       "tooltip": "Filter the markers on the map"
+    },
+
+
+    {
+      "type": "TopNav",
+      "message0": "<TopNav> %1 label %2 %3 page %4",
+      "args0": [
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "field_input",
+          "name": "label",
+          "text": "Einstellungen"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+        "type": "input_statement",
+        "name": "default"
+        } 
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 90,
+      "tooltip": "Add a button on the top right with access to a special page (eg for settings)"
+    },
+
+    {
+      "type": "Subsections",
+      "message0": "<Subsections> %1 Subsections %2",
+      "args0": [
+        {
+          "type": "input_dummy"
+        },
+        {
+        "type": "input_statement",
+        "name": "default"
+        } 
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 90
+    },
+
+     {
+      "type": "Subsection",
+      "message0": "<Subsection> %1 title %2 %3 page %4",
+      "args0": [
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "field_input",
+          "name": "title"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+        "type": "input_statement",
+        "name": "default"
+        } 
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 90,
+      "tooltip": ""
+    },
+
+    {
+      "type": "DynamicContent",
+      "message0": "<DynamicContent> %1 keyColumn %2 %3 contentColumn %4 %5 contentKey %6 %7 format %8 %9",
+      "args0": [
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "sheetColumn",
+          "name": "keyColumn",
+          "columnType": "string",
+          "text": "settings/contentKey",
+          "value": "settings/contentKey"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "sheetColumn",
+          "name": "contentColumn",
+          "columnType": "string",
+          "text": "settings/content",
+          "value": "settings/content"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "field_input",
+          "name": "contentKey"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "field_input",
+          "name": "format",
+          "text": "plaintext"
+        },
+        {
+          "type": "input_dummy"
+        }
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 230,
+      "tooltip": ""
     }
+
+
 
 
 ]

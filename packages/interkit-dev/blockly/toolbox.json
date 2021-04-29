@@ -75,6 +75,10 @@
       "contents": [
         {
           "kind": "block",
+          "type": "DynamicContent"
+        },
+        {
+          "kind": "block",
           "type": "ContentElementAudioBlocklyWrapper"
         },
         {
@@ -102,6 +106,24 @@
         {
           "kind": "block",
           "type": "TabPanel"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "TopNav",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "TopNav"
+        },
+        {
+          "kind": "block",
+          "type": "Subsections"
+        },
+        {
+          "kind": "block",
+          "type": "Subsection"
         }
       ]
     }
