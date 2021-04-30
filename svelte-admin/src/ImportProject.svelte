@@ -6,7 +6,7 @@
 
   export let projectId
 
-  const importEndpoint = `${INTERKIT_SERVER_URL}import/`
+  const importEndpoint = `${INTERKIT_SERVER_URL}/import/`
 
   let uploadStatus = "idle"
   let uploadFiles = []
