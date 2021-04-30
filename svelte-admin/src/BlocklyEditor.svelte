@@ -6,14 +6,14 @@
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   
   import Blockly from 'blockly';
-  import { blocklyConfig } from 'interkit-dev'
+  import { blocklyConfig } from 'interkit-blockly'
   import parseBlocklyXML from './parseBlocklyXML.js';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
 
-  import initSheetColumnField from 'interkit-dev/blockly/sheetColumnField.js'
-  import initSheetIdField from 'interkit-dev/blockly/sheetIdField.js'
+  import initSheetColumnField from 'interkit-blockly/blockly/sheetColumnField.js'
+  import initSheetIdField from 'interkit-blockly/blockly/sheetIdField.js'
   
   import InputModal from './InputModals/InputModal.svelte';
   import CodeHighlighter from './CodeHighlighter.svelte';

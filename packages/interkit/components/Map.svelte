@@ -47,7 +47,7 @@
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
-    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, elementRefColumn}) => {
+    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, categoryUnlistedColumn, elementRefColumn}) => {
 
       //console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
@@ -57,11 +57,13 @@
       // get the categories that we can filter for with this filter
       let categoryRows = await InterkitClient.call("rows.get", {sheetKey: filterCategorySheetKey, projectId})
 
+      let categoryRowsListed = categoryRows.filter(r => !util.rowVal(r, categoryUnlistedColumn))
+
       // add the filter to our collection
       filterLists.push({
         name,
         filterCategorySheetKey,
-        categoryRows,
+        categoryRows: categoryRowsListed,
         categoryNameColumn,
         categoryColorColumn,
         elementRefColumn 

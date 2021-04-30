@@ -11,6 +11,7 @@
   export let nameKey;
   export let imageKey;
   export let descriptionKey;
+  export let unlistedKey;
 
   let projectId = INTERKIT_PROJECT_ID
 
@@ -20,7 +21,7 @@
 
   onMount(async ()=>{    
     //console.log("mount archive category")
-    categorySub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: categorySheetKey, projectId}], r=>r.sheetKey==categorySheetKey);
+    categorySub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: categorySheetKey, projectId}], r=>r.sheetKey==categorySheetKey && !util.rowVal(r, unlistedKey));
     categories = categorySub.data;  
   })
 
