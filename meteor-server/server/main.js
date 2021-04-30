@@ -40,6 +40,7 @@ import { setupExportServer } from '../imports/exportServer.js'
 import { setupImportServer } from '../imports/importServer.js'
 const app = express();
 app.use(cors());
+app.options('*', cors())
 setupMediaServer(app);
 setupExportServer(app);
 setupImportServer(app);
