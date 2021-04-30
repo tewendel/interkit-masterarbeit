@@ -124,6 +124,7 @@ const importData = async (req, res) => {
     zip.close()
 
     res.status(200).send(errorMessages.length > 0 ? JSON.parse(errorMessages) : {status: "ok"})
+    res.end();
   });
 
   //})
