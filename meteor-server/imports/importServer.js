@@ -7,6 +7,16 @@ import { Random } from 'meteor/random'
 import { importProjectMediaFile, removeProjectMedia } from './mediaServer'
 import { importProjectData, replaceProjectData } from './projectUtils'
 
+import cors from 'cors'
+
+const headers = (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', "*")
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
+}
+
 const importData = async (req, res) => {
 
   /*res.setHeader("Access-Control-Allow-Origin", "*");
@@ -142,7 +152,7 @@ const importData = async (req, res) => {
 }
 
 export const setupImportServer = (app) => {
-  app.post('/import', upload.single('importfile'),  async (req, res) => { // should be PUT, but PUT creates cors issues
+  app.post('/import', upload.single('importfile'), cors(), headers, async (req, res) => { // should be PUT, but PUT creates cors issues
     importData(req, res)
   })
 }
