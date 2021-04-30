@@ -39,9 +39,9 @@ import { setupMediaServer } from '../imports/mediaServer.js';
 import { setupExportServer } from '../imports/exportServer.js'
 import { setupImportServer } from '../imports/importServer.js'
 const app = express();
+app.use(cors());
 setupMediaServer(app);
 setupExportServer(app);
 setupImportServer(app);
-app.use(cors());
 //WebApp.accessRule('*');
 WebApp.connectHandlers.use(app);
