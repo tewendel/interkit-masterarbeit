@@ -42,6 +42,6 @@ const app = express();
 setupMediaServer(app);
 setupExportServer(app);
 setupImportServer(app);
-WebApp.connectHandlers.use(cors({origin:false}));
+app.use(cors());
 //WebApp.accessRule('*');
 WebApp.connectHandlers.use(app);
