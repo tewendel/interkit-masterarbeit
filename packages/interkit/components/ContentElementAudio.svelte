@@ -31,6 +31,7 @@
   let projectId = INTERKIT_PROJECT_ID
 
   $: title = util.rowVal(element, elementColumns.titleColumn)
+  $: supertext = util.rowVal(element, elementColumns.supertextColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
@@ -39,10 +40,10 @@
   let categoryRow; // the row of the category that is referenced in this element
   const setupCategory = async (element) => {
     let categoryRowKey = util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
-    console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
+    //console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
     if(categoryRowKey)
       categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
-    console.log("categoryRow", categoryRow)
+    //console.log("categoryRow", categoryRow)
   }
 
   $: {
@@ -79,6 +80,7 @@
   {/if}
 
   <div class="ContentElementAudio__Controls controls">
+    {#if util.rowVal(element, elementColumns.audioColumn)}
     <span class="ContentElementAudio__Play play">
       <Button on:click={play}>
         {#if playing}
@@ -89,14 +91,17 @@
         {/if}
       </Button>
     </span>
+    {/if}
 
+    {#if util.rowVal(element, elementColumns.locationColumn)}
     <span class="ContentElementAudio__Distance distance">
       <Button>
         {distance}
       </Button>
     </span>
+    {/if}
 
-    {#if size != "xs"}
+    {#if size != "xs" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
       <span class="ContentElementAudio__Bookmark bookmark">
         <Button>
           <BookmarkToggle elementKey={element?.key}/>
@@ -112,22 +117,30 @@
 
     {#if size != "xs"}
       <h4 class="ContentElementAudio__SubTitle subtitle">
-        <span>
-          {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
-        </span>
-        {#if categoryOrderPosition}
+        {#if supertext}
+          <span>{supertext}</span>
+        {:else}
           <span>
-            {categoryOrderPosition}
-          </span> 
-          – 
+            {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
+          </span>
+          {#if categoryOrderPosition}
+            <span>
+              {categoryOrderPosition}
+            </span> 
+            – 
+          {/if}
+          <span>
+            {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
+          </span>
         {/if}
-        <span>
-          {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
-        </span>
       </h4>  
       <p class="ContentElementAudio__Description description">
         {description}
       </p>
+
+      {#if util.rowVal(element, elementColumns.linkColumn)}
+        <a target="_blank" href="{util.rowVal(element, elementColumns.linkColumn)}">link</a>
+      {/if}
     {/if}
   </div>
 

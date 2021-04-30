@@ -33,6 +33,7 @@
 
   // columns for the individual elements eg in sliders
   export let elementTitleColumn;
+  export let elementSupertextColumn;
   export let elementDescriptionColumn;
   export let elementAudioColumn;
   export let elementImageColumn;
@@ -41,15 +42,18 @@
   export let elementCategoryOrderColumn;
   export let elementCategory2OrderColumn;
   export let elementLocationColumn;
+  export let elementLinkColumn;
 
   const elementColumns = {
     titleColumn: elementTitleColumn,
+    supertextColumn: elementSupertextColumn,
     descriptionColumn: elementDescriptionColumn,
     audioColumn: elementAudioColumn,
     imageColumn: elementImageColumn,
     categoryRefColumn: [elementCategoryRefColumn, elementCategory2RefColumn], 
     categoryOrderColumn: [elementCategoryOrderColumn, elementCategory2OrderColumn],
     locationColumn: elementLocationColumn,    
+    linkColumn: elementLinkColumn
   }
 
   // columns for the primary category
@@ -57,23 +61,27 @@
   export let categorySubtitleColumn;
   export let categoryDescriptionColumn;
   export let categoryImageColumn;
+  export let categoryUnlistedColumn;
 
   // columns for the secondary category
   export let category2TitleColumn;
   export let category2SubtitleColumn;
   export let category2DescriptionColumn;
   export let category2ImageColumn;
+  export let category2UnlistedColumn;
 
   const categoryColumns = [{
     titleColumn: categoryTitleColumn,
     subtitleColumn: categorySubtitleColumn,
     descriptionColumn: categoryDescriptionColumn,
     imageColumn: categoryImageColumn,
+    unlistedColumn: categoryUnlistedColumn
   }, {
     titleColumn: category2TitleColumn,
     subtitleColumn: category2SubtitleColumn,
     descriptionColumn: category2DescriptionColumn,
     imageColumn: category2ImageColumn,
+    unlistedColumn: categoryUnlistedColumn
   }]
 
   let sectionSheetKey = util.getSheetKey(sectionTitles) // key of the sheet with the dashboard structure  

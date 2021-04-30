@@ -15,7 +15,7 @@ RUN meteor npm install -g npm@7
 # copy shared files and install dependencies
 COPY /packages ${APP_SOURCE_FOLDER}/../packages
 RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit && meteor npm ci
-RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit-dev && meteor npm ci
+RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit-blockly && meteor npm ci
 
 # install meteor app dependencies
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh

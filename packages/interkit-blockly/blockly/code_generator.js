@@ -61,14 +61,17 @@ export const initCodeGenerator = (Blockly) => {
       "elementAudioColumn",
       "elementLocationColumn",
       "elementImageColumn",
+      "elementSupertextColumn",
       "elementCategoryRefColumn",
       "elementCategoryOrderColumn",
       "elementCategory2RefColumn",
       "elementCategory2OrderColumn",
+      "elementLinkColumn",
       "categoryTitleColumn",
       "categorySubtitleColumn",
       "categoryDescriptionColumn",
       "categoryImageColumn",
+      "categoryUnlistedColumn",
       "category2TitleColumn",
       "category2SubtitleColumn",
       "category2DescriptionColumn",
@@ -124,6 +127,7 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "nameKey")
     code += attribute(block, "imageKey")
     code += attribute(block, "descriptionKey")
+    code += attribute(block, "unlistedKey")
     code += "/>\n"
     return code;
   };
@@ -162,7 +166,8 @@ export const initCodeGenerator = (Blockly) => {
       "name", 
       "categoryNameColumn", 
       "categoryColorColumn", 
-      "elementRefColumn"
+      "elementRefColumn",
+      "categoryUnlistedColumn",
     ])
     code += "/>\n";
 
@@ -271,6 +276,44 @@ export const initCodeGenerator = (Blockly) => {
     code += " />\n"
     return code;
   };
+
+  Blockly.JavaScript['TopNav'] = function (block) {
+    var code = "<TopNav \n"
+    code += attribute(block, "label")
+    code += ">\n"
+    code += statements(block, "default")
+    code += "</TopNav>\n"
+    return code;
+  };
+
+  Blockly.JavaScript['Subsections'] = function (block) {
+    var code = "<Subsections \n"
+    code += ">\n"
+    code += statements(block, "default")
+    code += "</Subsections>\n"
+    return code;
+  };
+
+  Blockly.JavaScript['Subsection'] = function (block) {
+    var code = "<Subsection \n"
+    code += attribute(block, "title")
+    code += ">\n"
+    code += statements(block, "default")
+    code += "</Subsection>\n"
+    return code;
+  };
+
+  Blockly.JavaScript['DynamicContent'] = function(block) {
+    var code = "<DynamicContent \n";
+    code += attributes(block, [
+       "keyColumn", "contentColumn", "contentKey", "format"
+    ]);
+    code += "\n/>\n";
+    return code;
+  };
+
+
+
   
   
 }

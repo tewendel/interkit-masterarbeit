@@ -8,7 +8,7 @@ WORKDIR /app
 # copy shared files and install dependencies
 COPY /packages /packages
 RUN cd /packages/interkit && npm ci
-RUN cd /packages/interkit-dev && npm ci
+RUN cd /packages/interkit-blockly && npm ci
 
 # copy app files and install dependencies
 COPY ${BUILD_SOURCE_PATH} ./
@@ -19,7 +19,7 @@ RUN npm ci
 # copy shared files and install dependencies AGAIN for starters
 COPY /packages /var/packages
 RUN cd /var/packages/interkit && npm ci
-RUN cd /var/packages/interkit-dev && npm ci
+RUN cd /var/packages/interkit-blockly && npm ci
 
 # set repositories path in container
 ENV REPOSITORIES_PATH=/var/repositories
