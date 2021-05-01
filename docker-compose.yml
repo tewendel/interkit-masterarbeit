@@ -2,34 +2,26 @@ version: '3'
 
 services:
 
-  nginx-proxy:
-    image: bbtsoftwareag/nginx-proxy-unrestricted-requestsize:alpine
-    container_name: nginx-proxy
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+        #- "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.letsencrypt.acme.email=info@interkit.app"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     ports:
-      - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
-      - certs:/etc/nginx/certs:ro
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    labels:
-      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+      - "letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-proxy-le
-    depends_on:
-      - nginx-proxy
-    volumes:
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam:ro
-      - certs:/etc/nginx/certs
-      - acme:/etc/acme.sh
-      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   server:
     image: interkit/server:${INTERKIT_IMAGE_TAG}
@@ -54,11 +46,12 @@ services:
       MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
       BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
-      LETSENCRYPT_HOST: $INTERKIT_SERVER_HOST
-      LETSENCRYPT_EMAIL: info@interkit.app
-      VIRTUAL_HOST: $INTERKIT_SERVER_HOST
-      VIRTUAL_PORT: 3000
       ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.rule=Host(`${INTERKIT_SERVER_HOST}`)"
+      - "traefik.http.routers.server.entrypoints=websecure"
+      - "traefik.http.routers.server.tls.certresolver=letsencrypt"
 
   mongo:
     image: mongo:4.2
@@ -79,10 +72,11 @@ services:
     environment:
       INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
       INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
-      LETSENCRYPT_HOST: $INTERKIT_ADMIN_HOST
-      LETSENCRYPT_EMAIL: info@interkit.app
-      VIRTUAL_HOST: $INTERKIT_ADMIN_HOST
-      VIRTUAL_PORT: 5000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admin.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
+      - "traefik.http.routers.admin.entrypoints=websecure"
+      - "traefik.http.routers.admin.tls.certresolver=letsencrypt"
 
   bundler:
     image: interkit/bundler:${INTERKIT_IMAGE_TAG}
@@ -98,11 +92,11 @@ services:
     - projects:/var/repositories/projects
     environment:
       PORT: 4000
-      LETSENCRYPT_HOST: $INTERKIT_BUNDLER_HOST
-      LETSENCRYPT_EMAIL: info@interkit.app
-      VIRTUAL_HOST: $INTERKIT_BUNDLER_HOST
-      VIRTUAL_PORT: 4000
-    
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bundler.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
+      - "traefik.http.routers.bundler.entrypoints=websecure"
+      - "traefik.http.routers.bundler.tls.certresolver=letsencrypt"
 
 volumes:
   db-data:
@@ -113,9 +107,4 @@ volumes:
   #    o: bind
   projects:
   mediafiles:
-  certs:
-  html:
-  vhost:
-  conf:
-  dhparam:
-  acme:
+  letsencrypt:
