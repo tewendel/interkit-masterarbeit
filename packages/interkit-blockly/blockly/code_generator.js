@@ -310,6 +310,15 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
+  Blockly.JavaScript['MapLayer'] = function(block) {
+    var code = "<MapLayer \n";
+    code += attributes(block, [
+       "name", "assetPath", "topLeft", "bottomRight", "audio", "hideLabels"
+    ]);
+    code += "\n/>\n";
+    return code;
+  };
+
 
 
   

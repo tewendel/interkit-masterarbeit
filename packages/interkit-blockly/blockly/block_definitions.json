@@ -975,6 +975,62 @@
       "tooltip": "Filter the markers on the map"
     },
 
+    {
+      "type": "MapLayer",
+      "message0": "<MapLayer> %1 name %2 %3 assetPath %4 %5 topLeft %6 %7 bottomRight %8 %9 audio %10 %11 hideLabels %12 %13",
+      "args0": [
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "name",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "assetPath",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "topLeft",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "bottomRight",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "audio",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "hideLabels",
+          "type": "field_checkbox"
+        },
+        {
+          "type": "input_dummy"
+        }
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 230,
+      "tooltip": "Filter the markers on the map"
+    },
+
 
     {
       "type": "TopNav",

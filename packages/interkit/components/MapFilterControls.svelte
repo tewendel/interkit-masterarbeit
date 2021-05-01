@@ -67,8 +67,8 @@
 <style>
 
   #filterControls {
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 10px;
     left: 0;
     width: 100%;
     padding: 10px;

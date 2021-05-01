@@ -10,6 +10,7 @@
   import { playAudio } from './AudioPlayer.svelte'
 
   import MapFilterControls from './MapFilterControls.svelte'
+  import MapLayerControls from './MapLayerControls.svelte'
 
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
@@ -28,14 +29,19 @@
   let filterLists = [];
   let activeFilter;
 
+  let layers = [];
+  let activeLayer;
+  let imageOverlay;
+  
   let map;
+  let labels_layer; // layer for street names
   let latlng = {lat: 51.505, lng: -0.09};
-  let satLayer;
   let mapElement; 
   let markerIconLeaflet;
   let userIcon;
   let userPositionMarker;
   let markers = [];
+  let satLayer; // this is a special webgl layer to color satellite tiles
   let geoWatch;
   let currentPosition;
 
@@ -71,6 +77,12 @@
 
       filterLists = filterLists;
       //console.log(filterLists);
+    },
+
+    registerLayer: async (layerData) => {
+      // add the layer to our collection
+      layers.push(layerData)
+      layers = layers;
     }
   });
 
@@ -170,7 +182,7 @@
     let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     let cartodbUrl = 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
 
-    let labels_layer = L.tileLayer(cartodbUrl, {
+    labels_layer = L.tileLayer(cartodbUrl, {
       id: 'cartodb_labels', 
       //attribution: cartodbAttr
     }).addTo(map)
@@ -254,7 +266,7 @@
       try {
         colorRGBArray = JSON.parse(colorRGB)
       } catch(e) {
-        console.info(e)
+        console.info("error parsing colorRGBArray")
       }
     }
     
@@ -265,6 +277,41 @@
     } else {
       satLayer.setUniform("uRGB", [1.0, 1.0, 1.0]);
       satLayer.reRender();
+    }
+  }
+
+  // set the image overlay layer
+  const setLayer = (layer) => {
+    activeLayer = layer;
+    console.log(layer);
+
+    if(layer) {
+      let imageUrl = layer.assetPath;
+      //let imageBounds = map.getBounds();
+      let imageBounds;
+
+      try {
+        imageBounds = [
+          JSON.parse(layer.topLeft),
+          JSON.parse(layer.bottomRight)
+        ]
+        console.log(imageBounds)
+      } catch(e) {
+        console.log("error parsing layer bounds")
+      }
+      if(imageBounds)
+        imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+      if(layer.hideLabels == "TRUE")
+        map.removeLayer(labels_layer)
+
+    } else {
+      if(imageOverlay) {
+        map.removeLayer(imageOverlay);
+      }
+      if(!map.hasLayer(labels_layer)) {
+          labels_layer.addTo(map);
+      }
     }
   }
 
@@ -292,6 +339,12 @@
     {filterLists}
     {setFilter}
     {activeFilter}
+  />
+
+  <MapLayerControls
+    {layers}
+    {setLayer}
+    {activeLayer}
   />
 
   <div 

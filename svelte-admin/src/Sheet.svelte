@@ -262,6 +262,7 @@
       {#if cell.key === 'overflow'}
         <OverflowMenu style="float: right" flipped>
           <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
+          <OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" />
         </OverflowMenu>
       {:else}
         <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>

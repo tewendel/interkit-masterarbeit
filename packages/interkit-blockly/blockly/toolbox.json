@@ -30,10 +30,6 @@
         {
           "kind": "block",
           "type": "Dashboard"
-        },
-        {
-          "kind": "block",
-          "type": "Map"
         }
       ]
     },
@@ -84,10 +80,6 @@
         {
           "kind": "block",
           "type": "AudioPlayer"
-        },
-        {
-          "kind": "block",
-          "type": "MapCategoryFilter"
         }
       ]
     },
@@ -124,6 +116,24 @@
         {
           "kind": "block",
           "type": "Subsection"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Map",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "Map"
+        },
+        {
+          "kind": "block",
+          "type": "MapCategoryFilter"
+        },
+        {
+          "kind": "block",
+          "type": "MapLayer"
         }
       ]
     }
