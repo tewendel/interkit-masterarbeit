@@ -140,8 +140,6 @@
 
 <div class="dashboard-container">
 
-<h1>Dashboard</h1>
-
 {#each sections as section}
 
   <!--{JSON.stringify(section)}-->
