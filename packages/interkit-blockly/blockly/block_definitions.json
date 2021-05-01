@@ -416,7 +416,7 @@
 
     {
     "type": "Map",
-    "message0": "<Map> %1 markerPositions %2 %3 markerLabels %4 %5 markerIcon %6 %7 audio %8 %9 filters %10 %11 layers %12 %13",
+    "message0": "<Map> %1 markerPositions %2 %3 element %4 %5 filters %6 %7 layers %8 %9",
     "args0": [
       {
         "type": "input_dummy"
@@ -432,31 +432,8 @@
         "type": "input_dummy"
       },
       {
-        "name": "markerLabels",
-        "type": "sheetColumn",
-        "columnType": "string",
-        "text": "elements/title",
-        "value": "elements/title"
-      },
-      {
-        "type": "input_dummy"
-      },
-      {
-        "name": "markerIcon",
-        "type": "field_input",
-        "columnType": "string",
-        "text": "",
-        "value": ""
-      },
-      {
-        "type": "input_dummy"
-      },
-      {
-        "name": "audio",
-        "type": "sheetColumn",
-        "columnType": "mediaFile",
-        "text": "elements/audio",
-        "value": "elements/audio"
+        "type": "input_statement",
+        "name": "element"
       },
       {
         "type": "input_dummy"

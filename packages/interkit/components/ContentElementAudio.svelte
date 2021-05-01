@@ -20,11 +20,14 @@
   export let categoryColumns;
   export let categoryIndex = 0;
 
-  export let size = "m"
+  // get size from prop, or from element passed in, or default to "l"
+  export let size = element.size || "l"
 
   // xs - used in dashboard, no image, no description, no category info
   // s - used in bookmark list, small image, no description
-
+  // m - used in map - small image, no description
+  // l - used in dashboard sliders and elementlist
+  
   // use this to specify a bookmark list
   export let bookmarkFilter = "bookmarks";
   
@@ -51,6 +54,9 @@
   }
 
   const play = async () => {
+    if(typeof element.onPlay == "function") {
+      element.onPlay();
+    }
     await playAudio(element)      
   }
 
@@ -71,14 +77,12 @@
 
 </script>
 
-<section class="ContentElementAudio container">
+<section class={`ContentElementAudio container size-${size}`}>
 
-  {#if size != "xs"}
-    <figure class="ContentElementAudio__Picture picture">
-      <MediaFileImage mediafileRef={imageRef} />    
-    </figure>
-  {/if}
-
+  <figure class="ContentElementAudio__Picture picture">
+    <MediaFileImage mediafileRef={imageRef} />    
+  </figure>
+  
   <div class="ContentElementAudio__Controls controls">
     {#if util.rowVal(element, elementColumns.audioColumn)}
     <span class="ContentElementAudio__Play play">
@@ -101,7 +105,7 @@
     </span>
     {/if}
 
-    {#if size != "xs" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
+    {#if !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
       <span class="ContentElementAudio__Bookmark bookmark">
         <Button>
           <BookmarkToggle elementKey={element?.key}/>
@@ -115,33 +119,33 @@
       {title}
     </h3>
 
-    {#if size != "xs"}
-      <h4 class="ContentElementAudio__SubTitle subtitle">
-        {#if supertext}
-          <span>{supertext}</span>
-        {:else}
+    <h4 class="ContentElementAudio__SubTitle subtitle">
+      {#if supertext}
+        <span>{supertext}</span>
+      {:else}
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
+        </span>
+        {#if categoryOrderPosition}
           <span>
-            {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
-          </span>
-          {#if categoryOrderPosition}
-            <span>
-              {categoryOrderPosition}
-            </span> 
-            – 
-          {/if}
-          <span>
-            {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
-          </span>
+            {categoryOrderPosition}
+          </span> 
+          – 
         {/if}
-      </h4>  
-      <p class="ContentElementAudio__Description description">
-        {description}
-      </p>
-
-      {#if util.rowVal(element, elementColumns.linkColumn)}
-        <a target="_blank" href="{util.rowVal(element, elementColumns.linkColumn)}">link</a>
+        <span>
+          {util.rowValString(categoryRow, categoryColumns[categoryIndex].subtitleColumn)}
+        </span>
       {/if}
+    </h4>
+
+    <p class="ContentElementAudio__Description description">
+      {description}
+    </p>
+
+    {#if util.rowVal(element, elementColumns.linkColumn)}
+      <a class="ContentElementAudio__Link link" target="_blank" href="{util.rowVal(element, elementColumns.linkColumn)}">link</a>
     {/if}
+    
   </div>
 
 </section>
@@ -158,7 +162,7 @@
     grid-column: 1;
     grid-row: 1 / span 2;
   }
-
+  
   .controls {
     grid-column: 1;
     grid-row: 2;
@@ -192,6 +196,21 @@
   .description {
     margin-top: 8px;
   }
+
+  /* size variants */
+
+  .container.size-m .picture {
+    width: 25%; 
+  }
+
+  .container.size-xs .controls .bookmark, 
+  .container.size-xs .picture, 
+  .container.size-xs .content .subtitle,
+  .container.size-xs .content .description,
+  .container.size-xs .content .link {
+    display: none;
+  }
+ 
 
 
 </style>

@@ -21,8 +21,6 @@
   const { Geolocation } = Plugins;
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
-  export let markerLabels; // type sheetColumn: "sheetId/columnId"
-  export let audioColumn; // type sheetColumn: "sheetId/columnId"
   export let markerIcon; // for now type string - key of mediaFile
   
   let projectId = INTERKIT_PROJECT_ID;
@@ -40,6 +38,8 @@
   let markers = [];
   let geoWatch;
   let currentPosition;
+
+  let selectedElement;
 
   let subHandle;
   let markerRows;
@@ -78,7 +78,16 @@
 
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
-    await playAudio(e.target?.payload?.elementRow)
+    //await playAudio(e.target?.payload?.elementRow)
+
+    selectedElement = {
+      ...e.target?.payload?.elementRow,
+      onPlay: () => {selectedElement = null}
+    }
+  }
+
+  const mapClick = () => {
+    selectedElement = null;
   }
 
   const updateMarkers = () => {
@@ -138,6 +147,8 @@
       maxZoom: 20,
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);*/
+
+    map.on("click", mapClick);
 
     L.control.zoom({
       position: 'bottomright'
@@ -271,6 +282,12 @@
   <slot name="filters"></slot>
   <slot name="layers"></slot>
 
+  {#if selectedElement}
+    <div class="marker_popup">
+      <slot name="element" element={{size: "m", ...selectedElement}}></slot>
+    </div>
+  {/if}
+
   <MapFilterControls
     {filterLists}
     {setFilter}
@@ -312,5 +329,14 @@
 
   #locateButton:hover {
     cursor: pointer;
+  }
+
+  .marker_popup {
+    position: absolute;
+    bottom: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+    z-index: 1000;
+    background-color: #fff;
   }
 </style>
