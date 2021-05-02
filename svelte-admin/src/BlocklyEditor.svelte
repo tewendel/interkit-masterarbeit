@@ -4,6 +4,8 @@
   import indent from 'xml-formatter';
   
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { watchResize } from "svelte-watch-resize";
+
   
   import Blockly from 'blockly';
   import { blocklyConfig } from 'interkit-blockly'
@@ -196,6 +198,12 @@
     
   }
 
+  const resizeBlockly = (node) => {
+    console.log("resize")
+    if(workspace)
+      Blockly.svgResize(workspace);
+  }
+
 
 </script>
 
@@ -205,7 +213,7 @@
       <Tab label="App.svelte" />
         <div slot="content">
           <TabContent>
-              <div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
+              <div id="blocklyDiv" style="height: 500px; width: 100%;" use:watchResize={resizeBlockly}></div>
           </TabContent>
           <TabContent>
             <CodeHighlighter code={generatedCode} />
