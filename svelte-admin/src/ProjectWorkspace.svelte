@@ -41,7 +41,7 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryEditor {projectId} />
+            <RepositoryEditor {projectId} open={selected === 3}/>
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} />

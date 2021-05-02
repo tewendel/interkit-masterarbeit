@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
 
   export let projectId
+  export let open = false
 
   let bundleServerURL
 
@@ -12,9 +13,16 @@
 
 </script>
 
-{projectId}
-<iframe src="{bundleServerURL}/fs/fs/{projectId}">
-</iframe>
+<code>
+cd ../repositories/projects/{projectId}
+<br />
+cd /var/repositories/projects/{projectId}
+</code>
+
+{#if open}
+  <iframe src="{bundleServerURL}/fs/fs/{projectId}">
+  </iframe>
+{/if}
 
 <style>
   iframe {

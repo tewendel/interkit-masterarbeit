@@ -93,6 +93,7 @@ services:
     - projects:/var/repositories/projects
     environment:
       PORT: 4000
+      ADMIN_PASSWORD: ${INTERKIT_ADMIN_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bundler.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"

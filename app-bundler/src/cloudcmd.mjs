@@ -1,11 +1,15 @@
 import cloudcmd from 'cloudcmd';
+import criton from 'criton';
+
+const algo = 'sha512WithRSAEncryption'; 
+const password = criton(process.env.ADMIN_PASSWORD, algo);
 
 const config = {
   "name": "interkit project file editor",       // set tab name in web browser
-  //"auth"                  : false,    // enable http authentication
-  //"username"              : "root",   // username for authentication
-  //"password"              : "toor",   // password hash for authentication
-  "algo": "sha512WithRSAEncryption", // cryptographic algorithm
+  "auth"                  : true,    // enable http authentication
+  "username"              : "admin",   // username for authentication
+  "password": password,   // password hash for authentication
+  "algo": algo, // cryptographic algorithm
   "editor": "edward", // default, could be "dword" or "edward"
   "packer": "tar",    // default, could be "tar" or "zip"
   "diff": true,     // when save - send patch, not whole file
@@ -25,8 +29,8 @@ const config = {
   "confirmMove": true,     // confirm move
   "showConfig": true,    // show config at startup
   "showFileName": true,    // do not show file name in view and edit
-  "contact": true,     // enable contact
-  "configDialog": true,     // enable config dialog
+  "contact": false,     // enable contact
+  "configDialog": false,     // enable config dialog
   "configAuth": true,     // enable auth change in config dialog
   "console": true,     // enable console
   "syncConsolePath": false,    // do not sync console path
