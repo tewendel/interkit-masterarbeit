@@ -4,34 +4,27 @@
 </script>
 
 <script>
-  import { 
-    Header,
-    Content,
-  } from "carbon-components-svelte";
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
   import Logout from './Logout.svelte';
-
-  let userId = InterkitClient.userId;
-
   import { 
     Grid,
     Row,
     Column,
-
     UnorderedList,
     ListItem,
     Tile,
-
     DataTable, Link
   } from "carbon-components-svelte";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import Copy16 from "carbon-icons-svelte/lib/Copy16";
 
   export let params = {}
+
+  let userId = InterkitClient.userId;
 
   let sub;
   let projects;
@@ -126,6 +119,13 @@
 
       {/if}
 
+    </Column>
+  </Row>
+  <Row>
+    <Column>
+      <Tile>
+        Admin Version: {INTERKIT_IMAGE_TAG}
+      </Tile>
     </Column>
   </Row>
 </Grid>

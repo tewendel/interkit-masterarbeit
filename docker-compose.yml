@@ -72,6 +72,7 @@ services:
     environment:
       INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
       INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
+      INTERKIT_IMAGE_TAG: $INTERKIT_IMAGE_TAG
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.admin.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
