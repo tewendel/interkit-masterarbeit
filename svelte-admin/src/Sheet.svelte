@@ -1,6 +1,6 @@
 <script>
   import { InterkitClient } from 'interkit'
-  import { DataTable, OverflowMenu, OverflowMenuItem, Button } from "carbon-components-svelte";
+  import { DataTable, OverflowMenu, OverflowMenuItem, Button, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import InputModal from './InputModals/InputModal.svelte';
@@ -219,8 +219,32 @@
         }) // add overflow column
   }
   //$: { console.log("rows update", $rows) }
+
   $: carbonRows = $rows ? $rows.map(r=>{return {...r.values, key: r.key, id: r._id}}) : []
   //$: { console.log("carbonRows update", carbonRows) }
+
+  let searchQuery;
+  const searchFunction = (r, query) => {
+    console.log(r)
+    if(!query || query == "") return true;
+    else {
+      for(const key in r) {
+        console.log(r[key])
+        if(typeof r[key] == "string") {
+          if(r[key].toLowerCase().includes(query.toLowerCase())) 
+            return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  let rowsFiltered = [];
+  $: {
+    rowsFiltered = carbonRows.filter((r)=>{return searchFunction(r, searchQuery)})
+    console.log(rows, rowsFiltered)
+  }
+
 
 </script>
 
@@ -236,9 +260,15 @@
   <DataTable
     sortable
     {headers}
-    rows={carbonRows}
+    rows={rowsFiltered}
     style="padding-bottom: 48px; overflow-x: auto"
   >
+
+    <Toolbar>
+      <ToolbarContent>
+        <ToolbarSearch bind:value={searchQuery}/>
+      </ToolbarContent>
+    </Toolbar>
     
     <span slot="cell-header" let:header>
       {#if header.key == "overflow"}

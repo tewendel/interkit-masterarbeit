@@ -94,11 +94,21 @@ if (Meteor.isServer) {
       //console.log("getMediaFile", mediafileId)
       if(key && projectId) {
         let mediafileInstance = MediaFiles.findOne({'meta.key': key, 'meta.projectId': projectId})
-        let mediafileObj = {
-          ...mediafileInstance.get(),
-          link: mediafileInstance.link()
+        if(mediafileInstance) {
+          let mediafileObj = {
+            ...mediafileInstance.get(),
+            link: mediafileInstance.link()
+          }
+          return mediafileObj;
+        } else {
+          return null;
         }
-        return mediafileObj;
+      }
+    },
+    "mediafile.delete": ({key, projectId}) => {
+      if(key && projectId && Meteor.userId()) {
+        console.log("mediafile.delete", key, projectId)
+        MediaFiles.remove({'meta.key': key, 'meta.projectId': projectId})
       }
     }
   })

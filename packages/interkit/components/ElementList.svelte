@@ -56,7 +56,7 @@
       // find the reference column in the data sheet that references the category sheet
       let refColumn = dataSheet.columns.find(c => c?.type == "sheetRef" && c?.reference == categorySheetKey)
       refKey = refColumn?.key;
-      console.log("refKey", refKey)
+      //console.log("refKey", refKey)
     }
 
     // function to check if a row from the data sheet references the filter category
@@ -66,7 +66,7 @@
     }
 
     const checkBookmark = (dataRow) => {
-      console.log("bookmarkFilter", bookmarkFilter);
+      //console.log("bookmarkFilter", bookmarkFilter);
       if(bookmarkFilter != "TRUE") return true;
       if(bookmarkFilter && $bookmarkStore) {
         if($bookmarkStore?.[dataRow.key])
@@ -80,8 +80,8 @@
     // subscribe to the data
     dataSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: dataSheetKey, projectId}], r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
     dataRows = dataSub.data;  
-    console.log("dataRows", $dataRows)
-    console.log(sortColumn)
+    //console.log("dataRows", $dataRows)
+    //console.log(sortColumn)
     dataRows.subscribe((data) => {
       data.sort((a, b) => util.rowVal(a, sortColumn) - util.rowVal(b, sortColumn))
       dataRowsSorted = data;
