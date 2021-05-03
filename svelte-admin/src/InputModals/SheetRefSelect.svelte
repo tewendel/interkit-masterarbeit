@@ -74,7 +74,7 @@ import {
   on:close={close}
   >
   <ModalHeader title="Multiselect" />
-  <ModalBody style="height: 200px">
+  <ModalBody style="height: 300px">
 
     {#if rows && sheet.columns}
       <!--Select labelText="Rows" bind:selected={selectedRowId} on:change={change}>
@@ -91,6 +91,7 @@ import {
         items={multiSelectItems}
         bind:selectedIds={selectedIds}
         on:select={multiChange}
+        style="height: 200px"
       />
 
     {/if}
