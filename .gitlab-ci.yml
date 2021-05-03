@@ -17,8 +17,8 @@ docker-build-master:
     - INTERKIT_IMAGE_TAG=latest docker-compose push
     - INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA docker-compose build
     - INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA docker-compose push
-  only:
-    - main
+  #only:
+  #  - main
 
 #docker-build:
 #  # Official docker image.
