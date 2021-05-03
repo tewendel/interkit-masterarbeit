@@ -1,0 +1,51 @@
+import simpleDDP from 'simpleDDP'; // ES6
+import ws from 'isomorphic-ws';
+
+const opts = {
+  endpoint: process.env.INTERKIT_SERVER_WEBSOCKETS_URL,
+  SocketConstructor: ws,
+  reconnectInterval: 5000
+};
+
+let projects = []
+
+const setup = async () => {
+
+  const server = new simpleDDP(opts);
+
+  server.on('connected', () => {
+    // do something
+  });
+
+  server.on('disconnected', () => {
+    // for example show alert to user
+  });
+
+  server.on('error', (e) => {
+    // global errors from server
+  });
+
+  let projectsSub = server.subscribe("projects");
+
+  await projectsSub.ready();
+
+  let reactiveCollection = server.collection('projects').reactive();
+
+  reactiveCollection.onChange((newData) => {
+    projects = newData
+  });
+}
+
+const getProjectIdFromProjectSlug = (slug) => {
+  const project = projects.find( p => (p.slug && p.slug != "" && p.slug === slug) )
+  if (project) {
+    return project.id
+  } else {
+    return false
+  }
+}
+
+export default {
+  setup,
+  getProjectIdFromProjectSlug
+}

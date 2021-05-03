@@ -8,10 +8,13 @@ import { get_bundle_zip } from './src/get_bundle_zip.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
 import { put_duplicate_project } from './src/put_duplicate_project.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
+import interkit_server from './src/interkit_server.mjs'
 
 const PORT = process.env.PORT
 
 const cloudcmd_prefix = '/fs/';
+
+interkit_server.setup()
 
 const app = express();
 
@@ -22,20 +25,22 @@ const socket = new io.Server(server, {
 
 app.use(cloudcmd_prefix, setup_cloudcmd(socket));
 
-
 app.use(cors())
 
 app.use(express.static('public', {index: false}))
 
+// get a zip file of the bundle for a given app
+app.get('/bundlezip/:projectSlug', get_bundle_zip)
+
 // compile a bundle for a given app
 app.get('/compile/:projectId', get_compile)
 
-// get a zip file of the bundle for a given app
-app.get('/bundlezip/:projectId', get_bundle_zip)
-
+// duplicate app repository
 app.put('/app/:projectId', put_duplicate_project)
 //app.use(express.static('public', { index: false }))
 
+
+// get app public files
 app.use(get_app_files);
 
 

@@ -118,7 +118,7 @@ Meteor.methods({
   // create repo  
   'project.create': async ({ name }) => {
 
-      let projectId = await Projects.insert({ name });
+      let projectId = await Projects.insert({ name, slug: name });
 
       if(projectId) {  
         const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
@@ -152,6 +152,19 @@ Meteor.methods({
       const files = await fs.promises.readdir(getRepoPath(projectId))
       return files;
   },
+
+  'project.setSlug': async ({ projectId, slug }) => {
+    console.log("setSlug", projectId, slug, Projects.findOne({ slug }), Meteor.userId() )
+    if (!Projects.findOne({ slug }) ) {
+      const res = Projects.update({_id: projectId}, { $set: { slug } })
+      console.log("setSlug result", res)
+      return slug
+    } else {
+      return false
+    }
+    
+  },
+
 
   // add a file to a project
   'file.create': async ({ filename, projectId }) => {

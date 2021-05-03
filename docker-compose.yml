@@ -93,6 +93,9 @@ services:
     - projects:/var/repositories/projects
     environment:
       PORT: 4000
+      ADMIN_PASSWORD: ${INTERKIT_ADMIN_PASSWORD}
+      INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
+      INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bundler.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
