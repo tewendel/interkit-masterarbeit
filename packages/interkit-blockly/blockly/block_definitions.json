@@ -62,7 +62,7 @@
     {
       "type": "sheetColumn",
       "name": "elementDescriptionColumn",
-      "columnType": "string",
+      "columnType": "richText",
       "text": "elements/description",
       "value": "elements/description"
     },
@@ -622,7 +622,7 @@
       {
         "name": "descriptionColumn",
         "type": "sheetColumn",
-        "columnType": "string",
+        "columnType": "richText",
         "text": "elements/description",
         "value": "elements/description"
       },
@@ -728,7 +728,7 @@
       {
         "name": "descriptionColumn",
         "type": "sheetColumn",
-        "columnType": "string",
+        "columnType": "richText",
         "text": "elements/description",
         "value": "elements/description"
       },
@@ -1120,7 +1120,7 @@
         {
           "type": "sheetColumn",
           "name": "contentColumn",
-          "columnType": "string",
+          "columnType": "richText",
           "text": "settings/content",
           "value": "settings/content"
         },
@@ -1137,7 +1137,7 @@
         {
           "type": "field_input",
           "name": "format",
-          "text": "plaintext"
+          "text": "richText"
         },
         {
           "type": "input_dummy"

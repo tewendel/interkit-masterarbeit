@@ -31,6 +31,7 @@
     "install": "^0.13.0",
     "interkit-dev": "*",
     "leaflet": "^1.7.1",
+    "marked": "^2.0.3",
     "npm": "^7.10.0",
     "sirv-cli": "^1.0.0",
     "svelte-qrcode": "^0.0.2",

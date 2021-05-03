@@ -7,6 +7,7 @@ export const columnTypes = {
   sheetRef: "SheetRef",
   mediaFile: "MediaFile",
   number: "Number",
-  optionSelect: "OptionSelect"
+  optionSelect: "OptionSelect",
+  richText: "RichText"
 }
   

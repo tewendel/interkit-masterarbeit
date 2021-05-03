@@ -13,6 +13,8 @@
   import MediaFileImage from './MediaFileImage.svelte';
   import Icon from './Icon.svelte'
 
+  import marked from "marked"
+
   let projectId = INTERKIT_PROJECT_ID
   
   // import all the column information
@@ -118,7 +120,9 @@
       </h4>  
 
       <p class="AudioPlayer__Expanded__Description">
-        {description}
+        {#if description}
+          {@html marked(description)}
+        {/if}
       </p>
     </div>
 

@@ -142,7 +142,7 @@
       }
     }
 
-    if(columnType == "location" || columnType == "sheetRef" || columnType == "mediaFile" || columnType == "optionSelect") {
+    if(["location", "sheetRef", "mediaFile", "optionSelect", "richText"].includes(columnType)) {
       console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;

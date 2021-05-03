@@ -3,6 +3,8 @@
   import { InterkitClient, util } from '../'
   import { onMount } from 'svelte';
 
+  import marked from "marked"
+
   let projectId = INTERKIT_PROJECT_ID;
 
   export let keyColumn; // the column for the human readable keys 
@@ -19,10 +21,17 @@
   onMount(async () => {
     let rows = await InterkitClient.call("rows.get", {sheetKey: contentSheetKey, projectId})
     contentRow = rows.find(r => util.rowVal(r, keyColumn) == contentKey);
-    content = util.rowVal(contentRow, contentColumn);
+    content = util.rowVal(contentRow, contentColumn);  
+    
   });
 
 </script>
 
-{content}
+{#if format == "richText"}
+  {#if content}
+    {@html marked(content)}
+  {/if}
+{:else}
+  {content}
+{/if}
 

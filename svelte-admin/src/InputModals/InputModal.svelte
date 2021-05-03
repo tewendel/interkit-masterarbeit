@@ -6,6 +6,7 @@
   import SheetIdSelect from './SheetIdSelect.svelte'
   import MediaFileSelect from './MediaFileSelect.svelte';
   import OptionSelect from './OptionSelect.svelte';
+  import RichtTextModal from './RichtTextModal.svelte';
   
   export let type = null
   export let value = {}
@@ -26,6 +27,7 @@
     "sheetId": SheetIdSelect,
     "mediaFile": MediaFileSelect,
     "optionSelect": OptionSelect,
+    "richText": RichtTextModal
   }
 
 </script>
