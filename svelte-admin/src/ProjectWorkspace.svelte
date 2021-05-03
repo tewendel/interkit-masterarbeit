@@ -44,7 +44,7 @@
             <RepositoryEditor {projectId} open={selected === 3}/>
           </TabContent>
           <TabContent>
-            <ProjectEditor {projectId} />
+            <ProjectEditor {projectId} {currentProject} />
           </TabContent>
         </div>
       </Tabs>

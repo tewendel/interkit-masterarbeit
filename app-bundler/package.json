@@ -50,7 +50,8 @@
     "svelte": "^3.32.3",
     "svelte-error-boundary": "^1.0.1",
     "the-answer": "^1.0.0",
-    "wolfy87-eventemitter": "^5.2.9"
+    "wolfy87-eventemitter": "^5.2.9",
+    "ws": "^6.2.1"
   },
   "workspaces": [
     "../packages/*"

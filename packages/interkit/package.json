@@ -20,5 +20,6 @@
   },
   "peerDependencies": {
     "svelte": "^3.35.0"
-  }
+  },
+  "type": "module"
 }
