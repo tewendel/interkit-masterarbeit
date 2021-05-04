@@ -14,8 +14,6 @@
   import Icon from './Icon.svelte'
 
   import marked from "marked"
-
-  let projectId = INTERKIT_PROJECT_ID
   
   // import all the column information
   export let titleColumn = "elements/title"
@@ -59,7 +57,7 @@
   let mediafile;
   const loadAudiofile = async (key) => {
     if(key) {
-      mediafile = await InterkitClient.call("mediafile.get", {key, projectId})
+      mediafile = await InterkitClient.call("mediafile.get", {key})
     } else {
       mediafile = null;
     }
@@ -74,7 +72,7 @@
   const loadCategory = async (elementRow) => {
     let categoryRowKey = util.rowVal(elementRow, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
     if(categoryRowKey)
-      categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
+      categoryRow = await InterkitClient.call("row.get", {key: categoryRowKey});
     else 
       categoryRow = null;
     //console.log(categoryRow)

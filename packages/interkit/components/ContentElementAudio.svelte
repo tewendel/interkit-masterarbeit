@@ -31,8 +31,6 @@
   // use this to specify a bookmark list
   export let bookmarkFilter = "bookmarks";
   
-  let projectId = INTERKIT_PROJECT_ID
-
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
@@ -45,7 +43,7 @@
     let categoryRowKey = util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
     //console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
     if(categoryRowKey)
-      categoryRow = await InterkitClient.call("row.get", {projectId, key: categoryRowKey});
+      categoryRow = await InterkitClient.call("row.get", {key: categoryRowKey});
     //console.log("categoryRow", categoryRow)
   }
 

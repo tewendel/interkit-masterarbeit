@@ -11,8 +11,6 @@
   import CategorySlider from './CategorySlider.svelte';
   import ContentElementAudio from './ContentElementAudio.svelte';
   
-  let projectId = INTERKIT_PROJECT_ID;
-
   // columns for the sections of the dashboard
   export let sectionTitles; // column of the section title
   export let sectionRefs; // column of references to elements
@@ -101,14 +99,14 @@
   onMount(async ()=>{
 
     if(sectionSheetKey) {
-      sectionSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: sectionSheetKey, projectId}], r=>r.sheetKey==sectionSheetKey);
+      sectionSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: sectionSheetKey}, r=>r.sheetKey==sectionSheetKey);
       sectionRows = sectionSub.data;
     }
 
     // this is the row subscription that powers all the sub components of dashboard
     if(elementTitleColumn) {  
       elementSheetKey = util.getSheetKey(elementTitleColumn);
-      elementSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: elementSheetKey, projectId}], r=>r.sheetKey==elementSheetKey);
+      elementSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: elementSheetKey}, r=>r.sheetKey==elementSheetKey);
       elementSub.data.subscribe(data=>{
         elementRows = data;
         //console.log("elementRows update", elementRows)

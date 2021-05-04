@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "preinstall": "check-engine",
-    "dev": "nodemon -r dotenv/config --ignore 'public/*'",
+    "dev": "HOST=0.0.0.0 nodemon -r dotenv/config --ignore 'public/*'",
     "start": "node -r dotenv/config server.mjs",
     "dev-starter-project": "rollup -c -w",
     "sirv": "sirv public"

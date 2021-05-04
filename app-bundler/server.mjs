@@ -30,7 +30,7 @@ app.use(cors())
 app.use(express.static('public', {index: false}))
 
 // get a zip file of the bundle for a given app
-app.get('/bundlezip/:projectSlug', get_bundle_zip)
+app.get('/bundlezip/:projectId', get_bundle_zip)
 
 // compile a bundle for a given app
 app.get('/compile/:projectId', get_compile)

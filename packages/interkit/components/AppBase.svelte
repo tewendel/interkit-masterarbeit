@@ -1,5 +1,21 @@
+<script>
+
+  import { InterkitClient } from '../'
+  import { onMount } from 'svelte'
+  
+  onMount(async ()=>{
+    await InterkitClient.initApp()  
+  });
+
+  let config = InterkitClient.config;
+  let projectId = InterkitClient.projectId;
+  
+</script>
+
 <div class="AppBase Theming">
-  <slot ></slot>
+  {#if $projectId}
+    <slot ></slot>
+  {/if}
 </div>
 
 <style>
@@ -37,6 +53,8 @@
 <!-- reset styles -->
 
 <svelte:head>
+  <title>{$config?.project_slug}</title>
+
   <style>
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,

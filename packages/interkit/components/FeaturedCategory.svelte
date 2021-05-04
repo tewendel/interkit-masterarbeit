@@ -6,8 +6,6 @@
   import CategoryCover from './CategoryCover.svelte'
   import SectionHeadline from './SectionHeadline.svelte'
 
-  let projectId = INTERKIT_PROJECT_ID;
-
   export let title;
 
   export let sectionRow;
@@ -23,7 +21,7 @@
     if(typeof categoryIndex == "number") {
       // the rowKey of the category we want to display
       let sectionCategoryKey = util.rowVal(sectionRow, sectionColumns.categoryRefsColumn[categoryIndex])?.rowKeys?.[0]
-      categoryRow = await InterkitClient.call("row.get", {key: sectionCategoryKey, projectId})
+      categoryRow = await InterkitClient.call("row.get", {key: sectionCategoryKey})
     }
   }
 

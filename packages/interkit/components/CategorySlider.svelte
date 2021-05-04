@@ -3,8 +3,6 @@
   import { InterkitClient, util } from '../'
   import ElementSlider from './ElementSlider.svelte'
 
-  let projectId = INTERKIT_PROJECT_ID;
-
   export let title;
   export let sectionRow;
   export let sectionColumns;
@@ -24,7 +22,7 @@
   let categoryTitle;  
 
   const updateCategoryTitle = async (sCKey)=>{
-    let categoryRow = await InterkitClient.call("row.get", {key: sCKey, projectId})
+    let categoryRow = await InterkitClient.call("row.get", {key: sCKey})
     //console.log(categoryRow)
     categoryTitle = util.rowVal(categoryRow, categoryColumns[categoryIndex].titleColumn)
   }

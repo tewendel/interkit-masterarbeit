@@ -39,8 +39,6 @@
     if($bookmarkStore) setupSub();
   }
 
-  let projectId = INTERKIT_PROJECT_ID;
-
   let dataSub
   let dataRows // the store that contains the data we subscribe to
   let dataSheet; // the sheet object
@@ -78,7 +76,7 @@
 
     if(dataSub) await dataSub.stop()
     // subscribe to the data
-    dataSub = await InterkitClient.getSub('rows', 'rows', [{sheetKey: dataSheetKey, projectId}], r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
+    dataSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: dataSheetKey}, r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
     dataRows = dataSub.data;  
     //console.log("dataRows", $dataRows)
     //console.log(sortColumn)
@@ -93,7 +91,7 @@
 
   onMount(async ()=>{
     // load the sheet 
-    dataSheet = await InterkitClient.call('sheet.get', {key: dataSheetKey, projectId})
+    dataSheet = await InterkitClient.call('sheet.get', {key: dataSheetKey})
     await setupSub();
   })
 

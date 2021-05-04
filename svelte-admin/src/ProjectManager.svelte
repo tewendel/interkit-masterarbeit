@@ -42,7 +42,7 @@
     console.log("project subscription " + projectId)
     destroyProjectsSub() // not sure if nessesary
     if (projectId) {
-      sub = await InterkitClient.getSub('projects', 'projects',[], (p)=>p.id == projectId, true)
+      sub = await InterkitClient.getSub('projects', 'projects', null, (p)=>p.id == projectId, true)
       currentProject = sub.data
     } else {
       sub = await InterkitClient.getSub('projects', 'projects') 
