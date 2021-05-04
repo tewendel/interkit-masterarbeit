@@ -1,9 +1,16 @@
-* {
-  font-family:Arial, Helvetica, sans-serif;
+
+@font-face {
+  font-family: "Gaisyr";
+  src: url("fonts-gate/Gaisyr-Book.woff2") format("woff2");
+}
+
+body {
+  font-family: Gaisyr, Arial, Helvetica, sans-serif;
 }
 
 .BottomMenuButton {
   height: 50px !important;
+  border-left: none !important;
 }
 
 .SectionHeadline,

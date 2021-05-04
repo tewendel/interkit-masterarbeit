@@ -1,8 +1,8 @@
 <script>
-
+  export let inverse = false
 </script>
 
-<span class="Button button" on:click>
+<span class="Button button" on:click class:inverse>
   <slot />
 </span>
 
@@ -14,6 +14,11 @@
     background-color: white;
     display: inline-block;
     overflow: hidden;
+  }
+
+  .button.inverse {
+    background-color: black;
+    color: white;
   }
   .button:empty {
     display: none;

@@ -3,6 +3,7 @@
   import { setContext, getContext } from 'svelte';
   import { writable } from 'svelte/store';
   import TopNavBar from './TopNavBar.svelte';
+  import Icon from './Icon.svelte'
 
   let sections = [];
   let activeSection = writable(null);
@@ -42,9 +43,16 @@
   
 {:else}
 
-  <ul>
+  <ul class="Subsections">
     {#each sections as section}
-      <li on:click={()=>{selectSection(section)}}>{section.title}</li>
+      <li class="Subsections__Entry entry" on:click={()=>{selectSection(section)}}>
+        <span class="Subsections__EntryTitle entry_title">
+          {section.title}
+        </span>
+        <span class="Subsections__EntryArrow entry_arrow">
+          <Icon type="arrow-right" />
+        </span>
+      </li>
     {/each}
   </ul>
 
@@ -56,6 +64,20 @@
 <style> 
   li:hover {
     cursor: pointer;
+  }
+
+  .entry {
+    margin: 0 8px;
+    font-size: 20px;
+    line-height: 24px;
+    padding: 16px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+    display: flex;
+  }
+
+  .entry_title {
+    flex: 1;
   }
 
 </style>

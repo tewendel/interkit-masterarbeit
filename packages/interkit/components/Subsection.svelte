@@ -10,7 +10,7 @@
 
 </script>
 
-<div class:active={key == $activeSection?.key}>
+<div class:active={key == $activeSection?.key} class="Subsection">
   <slot></slot>
 </div>
 
@@ -22,6 +22,9 @@
 
   div.active {
     display: block;
+  }
+
+  .subsection {
   }
 
 </style>

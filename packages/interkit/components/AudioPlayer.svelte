@@ -3,7 +3,8 @@
   export const playAudio = async (elementRow, autoplay=true) => {
     audioPlayerStatus.set({
       elementRow,
-      autoplay
+      autoplay,
+      paused: false
     })
   }
 </script>
@@ -12,6 +13,7 @@
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte';
   import Icon from './Icon.svelte'
+  import Button from './Button.svelte'
 
   import marked from "marked"
 
@@ -48,6 +50,12 @@
 
   const closePlayer = () => {
     audioPlayerStatus.set(null)
+  }
+
+  const togglePlay = () => {
+    audioPlayerStatus.update( s => ({
+      ...s, paused: !$audioPlayerStatus.paused
+    }))
   }
 
   $: audioKey = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.audioColumn)?.value
@@ -126,7 +134,7 @@
       </p>
     </div>
 
-    <div class="base-content">
+    <div class="AudioPlayer__Content base-content">
 
       <div class="AudioPlayer__ExpandCollapse expand-collapse">
         <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
@@ -136,6 +144,12 @@
         </button>
       </div>
 
+      <div class="AudioPlayer__PlayButton playbutton">
+        <Button inverse on:click={togglePlay}>
+          <Icon inverse type={ $audioPlayerStatus.paused ? "play" : "pause"} />
+        </Button>
+      </div>
+
       <h4 class="AudioPlayer__Title title">
         {title}
       </h4>
@@ -143,7 +157,7 @@
     {#key mediafile}
       {#if mediafile}
         <span class="AudioPlayer__Audioplayer audio">
-          <audio style="width: 100%" controls autoplay={$audioPlayerStatus.autoplay}>
+          <audio controls bind:paused={$audioPlayerStatus.paused} autoplay={$audioPlayerStatus.autoplay}>
             <source src={encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
         </span>
@@ -151,7 +165,7 @@
     {/key}
 
     <div class="AudioPlayer__Close close">
-      <button class="AudioPlayer__Close__Button icon-close icon" on:click={closePlayer} title="Close">
+      <button class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
         <Icon type="close">
           Close
         </Icon>
@@ -187,6 +201,9 @@
     flex-direction: row;
     align-items: center;
     padding: 12px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
   }
 
   .base-content > * {
@@ -196,6 +213,9 @@
   .expand {}
   .title {
     flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
   .close {}
@@ -207,6 +227,10 @@
   button {
     border: none;
     outline: none;
+  }
+
+  .playbutton {
+    margin: 0 8px;
   }
 
   .AudioPlayer__Expanded {
@@ -237,11 +261,15 @@
 
   .AudioPlayer__Expanded__Description {
     order: 3;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .AudioPlayer__Expanded__Description {
     padding-top: 16px;
+  }
+  
+  audio {
+    display:none;
   }
 
 </style>

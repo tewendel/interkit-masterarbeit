@@ -1,4 +1,6 @@
 <script>
+  import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
 
   export let label;
   export let back = false;
@@ -6,22 +8,39 @@
 
 </script>
 
-<nav class:back={back}>
-  <span on:click={onClick}>{label}</span>
+<nav class:back class="TopNavBar">
+  <span class="TopNavBar__Button button">
+    <Button on:click={onClick}>
+      <Icon type={back ? "arrow-left" : "settings"} />
+    </Button>
+  </span>
+  <span class="TopNavBar__Label label">
+    {label}
+  </span>
 </nav>
 
 <style>
-
-nav {
+  nav {
     display: flex;
-    height: 40px;
+    height: 55px;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: gray;
     z-index: 1000;
-    justify-content: right;
-    padding: 5px;
+    align-content: left;
+    align-items: center;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+  }
+
+  .label, .button {
+    margin: 8px;
+  }
+
+  .label {
+    flex: 1;
+    font-size: 24px;
+    line-height: 32px;
   }
 
   nav.back {
@@ -30,10 +49,6 @@ nav {
 
   nav span:hover {
     cursor: pointer;
-  }
-
-  nav.back span::before {
-    content: "< ";
   }
 
 </style>

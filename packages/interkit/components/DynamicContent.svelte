@@ -27,11 +27,20 @@
 
 </script>
 
-{#if format == "richText"}
-  {#if content}
-    {@html marked(content)}
+<div class="DynamicContent container">
+  {#if format == "richText"}
+    {#if content}
+      {@html marked(content)}
+    {/if}
+  {:else}
+    {content}
   {/if}
-{:else}
-  {content}
-{/if}
+</div>
 
+<style>
+  .container {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 16px;
+  }
+</style>
