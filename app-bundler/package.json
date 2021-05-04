@@ -27,6 +27,7 @@
     "is-plain-object": "^2.0.4",
     "isarray": "^1.0.0",
     "isobject": "^2.1.0",
+    "isomorphic-git": "^1.8.2",
     "isomorphic-ws": "^4.0.1",
     "kind-of": "^5.1.0",
     "leaflet": "^1.7.1",
