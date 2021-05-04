@@ -12,15 +12,15 @@
   const selectSection = (section) => {
     activeSection.set(section);
     setNavBarVisibility(false);
-    console.log("activeSection", $activeSection)
+    //console.log("activeSection", $activeSection)
   }
 
   setContext("Subsections", {
       registerSection: ({key, title}) => {
-        console.log("registerSection", title)
+        //console.log("registerSection", title)
         sections.push({key, title})
         sections = sections;
-        console.log(sections)
+        //console.log(sections)
       },
       activeSection
   });

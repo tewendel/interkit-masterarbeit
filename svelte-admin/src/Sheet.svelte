@@ -225,7 +225,7 @@
 
   let searchQuery;
   const searchFunction = (r, query) => {
-    console.log(r)
+    //console.log(r)
     if(!query || query == "") return true;
     else {
       for(const key in r) {

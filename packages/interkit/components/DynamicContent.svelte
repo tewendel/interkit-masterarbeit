@@ -14,7 +14,7 @@
 
   // we first identify the sheet that contains our data
   let contentSheetKey = util.getSheetKey(contentColumn)
-  console.log(contentSheetKey)
+  //console.log(contentSheetKey)
   let contentRow;
   let content;
 

@@ -4,7 +4,7 @@ export default (Blockly, update) => {
 
   const CustomFields = {}
 
-  console.log("init sheetIdField")
+  //console.log("init sheetIdField")
 
   CustomFields.SheetIdField = function(opt_value, opt_validator) {
     /*opt_value = this.doClassValidation_(opt_value);
@@ -17,21 +17,21 @@ export default (Blockly, update) => {
         this, opt_value, opt_validator);
 
     this.setValue(opt_value);
-    console.log(this.getValue())    
+    //console.log(this.getValue())    
   };
   Blockly.utils.object.inherits(CustomFields.SheetIdField, Blockly.Field);
 
   // this is called when a block with this field is created
 
   CustomFields.SheetIdField.fromJson = function(options) {
-    console.log("json options", options)
+    //console.log("json options", options)
     /*var value = Blockly.utils.replaceMessageReferences(
       options['value']);*/
     let value = {
       value: options.value, 
       text: options.text
     }
-    console.log(value)
+    //console.log(value)
     return new CustomFields.SheetIdField(value);
   };
 

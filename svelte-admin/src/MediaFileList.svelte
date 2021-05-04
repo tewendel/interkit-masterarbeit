@@ -33,7 +33,7 @@
 
   let searchQuery;
   const searchFunction = (m, query) => {
-    console.log(m)
+    //console.log(m)
     if(!query || query == "") return true;
     else {
       if(m.name.toLowerCase().includes(query.toLowerCase())
@@ -48,7 +48,7 @@
   let rowsFiltered = [];
   $: {
     rowsFiltered = rows.filter((m)=>{return searchFunction(m, searchQuery)})
-    console.log(rows, rowsFiltered)
+    //console.log(rows, rowsFiltered)
   }
 
   let selectedRowIds = [value?.value];

@@ -17,7 +17,7 @@
     subHandle = await InterkitClient.getSub('mediafiles', 'mediafiles', [projectId]);
     mediafilesStore = subHandle.data
     unsubscribe = mediafilesStore.subscribe((data)=>{
-      console.log("new mediafiles", data)
+      //console.log("new mediafiles", data)
       mediafilesArray = data;
     })    
   }

@@ -162,7 +162,7 @@
   }
 
   $: {
-    console.log("blockly open", open)
+    //console.log("blockly open", open)
     if(open && !workspace) {
       initBlockly();      
       myUpdateFunction();
@@ -199,7 +199,7 @@
   }
 
   const resizeBlockly = (node) => {
-    console.log("resize")
+    //console.log("resize")
     if(workspace)
       Blockly.svgResize(workspace);
   }

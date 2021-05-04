@@ -10,7 +10,7 @@
 
 </script>
 
-<div>
+<div>  
   <input bind:value={username} type="text"/><br/>
   <input bind:value={password} type="password"/><br/>
   <button on:click={submit}>login</button>

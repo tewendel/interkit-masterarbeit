@@ -416,7 +416,7 @@
 
     {
     "type": "Map",
-    "message0": "<Map> %1 markerPositions %2 %3 element %4 %5 filters %6 %7 layers %8 %9",
+    "message0": "<Map> %1 markerPositions %2 %3 markerIconAsset %4 %5 defaultLocation %6 %7 element %8 %9 filters %10 %11 layers %12 %13",
     "args0": [
       {
         "type": "input_dummy"
@@ -427,6 +427,20 @@
         "columnType": "location",
         "text": "elements/position",
         "value": "elements/position"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "markerIconAsset",
+        "type": "field_input"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "defaultLocation",
+        "type": "field_input"
       },
       {
         "type": "input_dummy"

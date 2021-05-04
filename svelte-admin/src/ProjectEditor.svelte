@@ -13,7 +13,7 @@
 
   let slug = ""
 
-  console.log(currentProject)
+  //console.log(currentProject)
 
   const initSlug = function(projectId) {
     slug = $currentProject.slug

@@ -22,7 +22,18 @@
   const { Geolocation } = Plugins;
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
-  export let markerIcon; // for now type string - key of mediaFile
+  export let markerIconAsset; // path to asset we use for marker icon
+  export let defaultLocation; // where to center the map [lat, lng]
+
+  let defaultLocationLatLng = [51.505, -0.09];
+  if(defaultLocation) {
+    try {
+      defaultLocationLatLng = JSON.parse(defaultLocation)
+      console.log("defaultLocationLatLng", defaultLocationLatLng)
+    } catch(e) {
+      console.log("error parsinng defaultLocation")
+    }
+  }
   
   let projectId = INTERKIT_PROJECT_ID;
 
@@ -35,9 +46,8 @@
   
   let map;
   let labels_layer; // layer for street names
-  let latlng = {lat: 51.505, lng: -0.09};
   let mapElement; 
-  let markerIconLeaflet;
+  let markerIcon;
   let userIcon;
   let userPositionMarker;
   let markers = [];
@@ -132,9 +142,10 @@
         let markerOptions = {
           title: markerValue.title,
         }
-        if(markerIconLeaflet) {
-          markerOptions.icon = markerIconLeaflet;
+        if(markerIcon) {
+          markerOptions.icon = markerIcon;
         }
+        //console.log(markerOptions)
         let marker = L.marker(markerValue.location, markerOptions).addTo(map)
         marker.payload = markerValue;
         marker.on('click', markerClick);
@@ -149,10 +160,12 @@
 
     L.Icon.Default.imagePath = '/leaflet/'
 
+    //console.log("defaultLocationLatLng", defaultLocationLatLng)
+
     map = L.map('mapid', {
       zoomControl: false,
       attributionControl: false,
-    }).setView([latlng.lat, latlng.lng], 13);  
+    }).setView(defaultLocationLatLng, 13);  
 
     // these tiles fail to load on ios - not sure why
     /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
@@ -188,14 +201,14 @@
     }).addTo(map)
 
     // load the marker icon
-    let markerMediafile = await InterkitClient.call("mediafile.get", {key: markerIcon, projectId});
-    //console.log(markerMediafile?.link)
-    if(markerMediafile?.link)
-      markerIconLeaflet = L.icon({
-        iconUrl: markerMediafile.link,
+    if(markerIconAsset) {
+      markerIcon = L.icon({
+        iconUrl: markerIconAsset,
         iconSize:     [24, 24], // size of the icon
         iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
       });
+      //console.log(markerIcon)
+    }
 
   
     let sheetKey;

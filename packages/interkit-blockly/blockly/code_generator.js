@@ -147,7 +147,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['Map'] = function(block) {
 
     let code = "<Map \n"
-    code += attribute(block, "markerPositions");
+    code += attributes(block, ["markerPositions", "markerIconAsset", "defaultLocation"]);
     code += ">\n";
     code += slot(block, "element", "element");
     code += slot(block, "filters");
