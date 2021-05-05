@@ -100,27 +100,32 @@ const downloadAndActivateBundle = async (bundleZipURL) => {
 }
 
 const checkDownloadedVersion = async () => {
-  console.log("looking for downloaded Bundle...")
-  let json;
-  if(await readdir("bundle")) {
-    json = await Filesystem.readFile({
-      path: "bundle/interkit.config.json",
-      directory: FilesystemDirectory.Data,
-      encoding: FilesystemEncoding.UTF8
-    })
-    //console.log(json?.data);
-    if(json?.data) {
-      try {
-        let config = JSON.parse(json?.data);
-        //console.log(config)
-        //console.log("bundle version" + config.bundle_version)
-        if(config.bundle_version) {
-          return config.bundle_version;
+
+  if(Capacitor.isNative) {
+    console.log("looking for downloaded Bundle...")
+    let json;
+    if(await readdir("bundle")) {
+      json = await Filesystem.readFile({
+        path: "bundle/interkit.config.json",
+        directory: FilesystemDirectory.Data,
+        encoding: FilesystemEncoding.UTF8
+      })
+      //console.log(json?.data);
+      if(json?.data) {
+        try {
+          let config = JSON.parse(json?.data);
+          //console.log(config)
+          //console.log("bundle version" + config.bundle_version)
+          if(config.bundle_version) {
+            return config.bundle_version;
+          }
+        } catch(e) {
+          console.log("cannot parse config json", e)
         }
-      } catch(e) {
-        console.log("cannot parse config json", e)
       }
     }
+  } else {
+     console.log("we are in web context, skipping check for downloaded bundle") 
   }
   return null;
 }

@@ -1,5 +1,6 @@
 import simpleDDP from 'simpleddp'; // ES6
 import ws from 'isomorphic-ws';
+import { ensureRepositories } from './filesystem.mjs'
 
 const opts = {
   endpoint: process.env.INTERKIT_SERVER_WEBSOCKETS_URL,
@@ -32,6 +33,7 @@ const setup = async () => {
   let reactiveCollection = server.collection('projects').reactive();
 
   reactiveCollection.onChange((newData) => {
+    ensureRepositories(newData)
     projects = newData
   });
 }

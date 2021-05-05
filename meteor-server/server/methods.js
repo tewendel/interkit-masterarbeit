@@ -3,7 +3,6 @@ import { Projects, Sheets, Rows } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
-const git = require('isomorphic-git')
 const fs = require('fs')
 const fse = require('fs-extra');
 
@@ -119,25 +118,7 @@ Meteor.methods({
   'project.create': async ({ name }) => {
 
       let projectId = await Projects.insert({ name, slug: name });
-
-      if(projectId) {  
-        const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
-        const repoPath = getRepoPath(projectId)
-        
-        // create new directory and initialize repo
-        try {
-          if (!fs.existsSync(repoPath)) {
-            await fs.promises.mkdir(repoPath);
-            await git.init({fs, dir: repoPath});
-            await fse.copySync(starterPath, repoPath)
-
-          } else {
-            console.log("Directory already exists.");
-          }
-        } catch (err) {
-            console.log(err);
-        }
-      }
+      // bundler will be notified via subscription
   },
 
   'project.remove': async ({ projectId }) => {

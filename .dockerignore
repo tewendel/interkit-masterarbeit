@@ -1,6 +1,7 @@
 # root
 node_modules/
 .env
+repositories/projects/*
 
 # all apps
 **/node_modules/
@@ -8,7 +9,6 @@ node_modules/
 
 # meteor-admin
 meteor-server/.meteor/local
-repositories/projects/*
 
 # svelte-admin
 public/build/

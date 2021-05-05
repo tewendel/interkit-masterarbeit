@@ -149,9 +149,9 @@ const checkForUpdates = async () => {
     console.log(`my version: ${myVersion} - online version: ${onlineVersion}`);
 
     let downloadedVersion = await InterkitLiveReload.checkDownloadedVersion();
-    console.log("found a downloaded bundle with version " + downloadedVersion);
 
     if(downloadedVersion) {
+      console.log("found a downloaded bundle with version " + downloadedVersion);
       if(
         versionCompare(downloadedVersion, myVersion) >= 0  // I am newer or equal downloaded
         && versionCompare(onlineVersion, myVersion) >= 0 // I am newer or queal online
@@ -177,7 +177,7 @@ const checkForUpdates = async () => {
        await InterkitLiveReload.downloadAndActivateBundle(encodeURI(bundleURL))
 
     } else {
-      console.log("online is same or older - do nothing");
+      console.log("online is same or older - we are on the newest available version, no update or switch needed");
     }
 
     
@@ -220,14 +220,15 @@ const InterkitClient = {
 
     if(config && params && !params?.projectId) {
       params.projectId = get(projectId);
+      console.log("added projectId to method params", params, method)
     }
 
     if(params && !params?.projectId) {
-      alert("warning, call to method before projectId has been retreived:" + method)
-    } else {
-      let response = await server.call(method, params);
-      return response
-    }
+      console.log("warning, call to method before projectId has been retreived:" + method)
+    } 
+    
+    let response = await server.call(method, params);
+    return response
   },
 
 

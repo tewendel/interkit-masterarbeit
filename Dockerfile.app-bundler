@@ -15,6 +15,7 @@ COPY ${BUILD_SOURCE_PATH} ./
 #RUN npm i @node-rs/bcrypt-linux-musl
 #RUN apt-get update && apt-get install musl
 RUN npm ci
+RUN npx node-prune --yes
 
 # copy shared files and install dependencies AGAIN for starters
 COPY /packages /var/packages
