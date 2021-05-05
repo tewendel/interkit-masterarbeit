@@ -24,7 +24,7 @@ export const MediaFiles = new FilesCollection({
 
 MediaFiles.writeSync = Meteor.wrapAsync(MediaFiles.write, MediaFiles.writeSync);
 
-export const getMediaFiles = (projectId) => {
+export const getMediaFiles = ({projectId}) => {
   if(projectId)
     return MediaFiles.find({ "meta.projectId": projectId }).cursor;
   else 
@@ -86,8 +86,8 @@ export const importProjectMediaFile = async function(fileBuffer, fileName, fileT
 if (Meteor.isServer) {
   Meteor.publish('mediafiles', getMediaFiles);
   Meteor.methods({
-    "mediafiles.get": (projectId)=>{
-      let cursor = getMediaFiles(projectId)
+    "mediafiles.get": ({projectId})=>{
+      let cursor = getMediaFiles({projectId})
       return cursor?.fetch();
     },
     "mediafile.get": ({key, projectId}) => {

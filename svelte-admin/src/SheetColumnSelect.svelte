@@ -27,7 +27,7 @@
   }
 
   onMount(async ()=> {
-    subHandle = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.projectId == projectId);
+    subHandle = await InterkitClient.getSub('sheets', 'sheets', {projectId}, (s)=>s.projectId == projectId);
     sheets = subHandle.data    
 
     // initial values coming in through sheetColumn

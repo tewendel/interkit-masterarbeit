@@ -31,12 +31,12 @@
     if(newKey) {
       // subscribe to the rows of the current sheet
       if(rowsSubHandle) rowsSubHandle.stop()
-      rowsSubHandle = await InterkitClient.getSub('rows', 'rows', [{sheetKey, projectId}], (r)=>r.sheetKey == newKey);
+      rowsSubHandle = await InterkitClient.getSub('rows', 'rows', {sheetKey, projectId}, (r)=>r.sheetKey == newKey);
       rows = rowsSubHandle.data;
 
       // subscribe to the current sheet itself
       if(currentSheetSub) currentSheetSub.stop()
-      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', [{key: sheetKey, projectId}], (s)=>s.key == sheetKey, true);
+      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', {key: sheetKey, projectId}, (s)=>s.key == sheetKey, true);
       currentSheet = currentSheetSub.data;      
     }
   }
@@ -55,7 +55,7 @@
         let refSheetKey = column.reference
 
         if(refSubs[refSheetKey]) refSubs[refSheetKey].stop()
-        refSubs[refSheetKey] = await InterkitClient.getSub('rows', 'rows', [{sheetKey: refSheetKey, projectId}], (r)=>r.sheetKey == refSheetKey);
+        refSubs[refSheetKey] = await InterkitClient.getSub('rows', 'rows', {sheetKey: refSheetKey, projectId}, (r)=>r.sheetKey == refSheetKey);
         
         // manually (un)subscribe to the store to update data
         if(refDataUnsubscribe[refSheetKey]) refDataUnsubscribe[refSheetKey]()
@@ -242,7 +242,7 @@
   let rowsFiltered = [];
   $: {
     rowsFiltered = carbonRows.filter((r)=>{return searchFunction(r, searchQuery)})
-    console.log(rows, rowsFiltered)
+    //console.log(rows, rowsFiltered)
   }
 
 

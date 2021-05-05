@@ -1,5 +1,5 @@
 import '@capacitor-community/http';
-import { Plugins, FilesystemDirectory } from '@capacitor/core';
+import { Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 
 const { Filesystem } = Plugins;
 
@@ -22,6 +22,7 @@ const readdir = async (path = "") => {
 const downloadBundle = async (bundleZipURL) => {
 
   // delete bundle zip if there is already one 
+  console.log("deleting old bundle...");
   try {
     await Filesystem.deleteFile({
       path: "bundle.zip",
@@ -31,7 +32,7 @@ const downloadBundle = async (bundleZipURL) => {
     console.log(e)
   }
 
-  console.log("attempting download of", bundleZipURL)
+  console.log("attempting download of " + bundleZipURL)
 
   // do the download and save the absolute paths
   try {
@@ -88,9 +89,40 @@ const activateBundle = async () => {
 }
 
 const downloadAndActivateBundle = async (bundleZipURL) => {
-  await downloadBundle(bundleZipURL);
-  await unzipBundle();
-  await activateBundle();
+
+  if(Capacitor.isNative) {
+    await downloadBundle(bundleZipURL);
+    await unzipBundle();
+    await activateBundle();
+  } else {
+    console.log("we are in web context, skipping live reload")
+  }
+}
+
+const checkDownloadedVersion = async () => {
+  console.log("looking for downloaded Bundle...")
+  let json;
+  if(await readdir("bundle")) {
+    json = await Filesystem.readFile({
+      path: "bundle/interkit.config.json",
+      directory: FilesystemDirectory.Data,
+      encoding: FilesystemEncoding.UTF8
+    })
+    //console.log(json?.data);
+    if(json?.data) {
+      try {
+        let config = JSON.parse(json?.data);
+        //console.log(config)
+        //console.log("bundle version" + config.bundle_version)
+        if(config.bundle_version) {
+          return config.bundle_version;
+        }
+      } catch(e) {
+        console.log("cannot parse config json", e)
+      }
+    }
+  }
+  return null;
 }
 
 const activateInstalledBundle = async () => {
@@ -102,7 +134,7 @@ const activateInstalledBundle = async () => {
   if(await readdir("bundle")) {
     console.log("found updated source code, creating serverBasePath...")
     let uri = await Filesystem.getUri({
-      path: "bundle/bundle",
+      path: "bundle",
       directory: FilesystemDirectory.Data
     })
     console.log("uri", uri);
@@ -112,6 +144,7 @@ const activateInstalledBundle = async () => {
 
 const InterkitLiveReload = {
   downloadAndActivateBundle,
+  checkDownloadedVersion,
   activateInstalledBundle
 }
 

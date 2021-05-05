@@ -165,6 +165,15 @@ Meteor.methods({
     
   },
 
+  'project.getId': async ({ slug }) => {
+    let project = Projects.findOne({ slug });
+    console.log("getId for slug", slug, project?._id);
+    if(project) {
+      return project._id
+    } else {
+      return null
+    }
+  },
 
   // add a file to a project
   'file.create': async ({ filename, projectId }) => {

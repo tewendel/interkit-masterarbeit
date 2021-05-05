@@ -4,6 +4,14 @@ import { simpleDDPLogin } from 'simpleddp-plugin-login';
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
+import InterkitLiveReload from "./interkit-live-reload.js"
+
+// this store holds the basic data from interkit.config.json
+let config = writable(null); 
+
+// this store holds the projctId that is loaded with info from the config
+let projectId = writable(null);
+
 let server;
 
 // get auth token from local storage if available
@@ -32,32 +40,160 @@ const restore_ids = (data) => {
   return data;
 }
 
-const InterkitClient = {
-  userId,
-  connect: async (url) => {
-    console.log("InterkitClient.connect", url)
-    if(server) {
-      console.log("server already initialized, ignoring")
+// connects to the meteor server
+const connect = async (url) => {
+  if(!url)
+    url = get(config)?.INTERKIT_SERVER_WEBSOCKETS_URL
+  
+  console.log("InterkitClient.connect", url)
+  if(server) {
+    console.log("server already initialized, ignoring")
+    return
+  }
+  let opts = {
+    endpoint: url,
+    SocketConstructor: ws,
+    reconnectInterval: 5000
+  };
+  server = new simpleDDP(opts, [simpleDDPLogin]);
+  // this needs to be done once in the client app
+  await server.connect();
+  console.log("connected")
+
+  let result = await server.call("resumeUserSession", get(userAuth))
+  //console.log("resumeUserSession result", result)
+  if(result) {
+    // login again
+    userId.set(get(userAuth)?.id);
+  }
+}
+
+// loads local config file to get basic info about project
+const loadConfig = async () => {
+
+    let response = await fetch("interkit.config.json")
+    let _config;
+    try {
+      _config = await response.json()
+      console.log("interkit.config.json", _config)
+    } catch(e) {
+      console.log("error parsing config", e);
+    }
+
+    // override loadTheme option that might be set in config
+    let params = (new URL(document.location)).searchParams;
+    if(params.get("loadTheme")) {
+      _config.INTERKIT_APP_LOAD_THEME = params.get("loadTheme") === "true";
+    }
+    console.log(`INTERKIT_APP_LOAD_THEME=${_config.INTERKIT_APP_LOAD_THEME}`)
+    
+    config.set(_config);
+}
+
+const getProjectId = async() => {
+
+  let _projectId;
+  let params = (new URL(document.location)).searchParams;
+  if(params.get("projectId")) {
+    console.log("got projectId from url param, using that")
+    _projectId = params.get("projectId");
+  } else {
+    console.log("trying to get projectId from server via slug", get(config)?.project_slug);
+    let result = await server.call("project.getId", {slug: get(config)?.project_slug})
+    if(result) {
+      _projectId = result;
+    } else {
+      alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+    }
+  } 
+  console.log("INTERKIT_PROJECT_ID", _projectId);
+  projectId.set(_projectId);
+}
+
+// compares two version strings of the format "0.1", returns 0 if equal, -1 if a > b, 1 if a < b
+const versionCompare = (a, b) => {
+  if(a == b) return 0;
+  let aNumeric = a.split(".").map(c => parseInt(c));
+  let bNumeric = b.split(".").map(c => parseInt(c));
+  // compare first digit
+  if(aNumeric[0] > bNumeric[0]) return -1;
+  if(aNumeric[0] < bNumeric[0]) return 1;
+  // compare second digit
+  if(aNumeric[1] > bNumeric[1]) return -1;
+  if(aNumeric[1] < bNumeric[1]) return 1;
+}
+
+const checkForUpdates = async () => {
+
+    let _config = get(config);
+    let _projectId = get(projectId);
+
+    if(!_projectId) {
+      console.log("no projectId, aborting update")
       return
     }
-    let opts = {
-      endpoint: url,
-      SocketConstructor: ws,
-      reconnectInterval: 5000
-    };
-    server = new simpleDDP(opts, [simpleDDPLogin]);
-    // this needs to be done once in the client app
-    await server.connect();
-    console.log("connected")
 
-    let result = await server.call("resumeUserSession", get(userAuth))
-    //console.log("resumeUserSession result", result)
-    if(result) {
-      // login again
-      userId.set(get(userAuth)?.id);
+    let url = `${_config?.INTERKIT_BUNDLER_URL}/app/${_projectId}/interkit.config.json`;
+    console.log("looking for online config at", url);
+    let response = await fetch(url)
+    let onlineConfig;
+    try {
+      onlineConfig = await response.json()
+      console.log("found online config", onlineConfig);  
+    } catch(e) {
+      console.log("error during update", e)
     }
-  },
 
+    let myVersion = _config?.bundle_version
+    let onlineVersion = onlineConfig?.bundle_version
+    console.log(`my version: ${myVersion} - online version: ${onlineVersion}`);
+
+    let downloadedVersion = await InterkitLiveReload.checkDownloadedVersion();
+    console.log("found a downloaded bundle with version " + downloadedVersion);
+
+    if(downloadedVersion) {
+      if(
+        versionCompare(downloadedVersion, myVersion) >= 0  // I am newer or equal downloaded
+        && versionCompare(onlineVersion, myVersion) >= 0 // I am newer or queal online
+      ) {
+        console.log("I'm at the newest available version, no need to update")
+        return;
+      }
+
+      // If the downloaded version is newer or equal to the online version, switch 
+      if(versionCompare(onlineVersion, downloadedVersion) >= 0) {
+        console.log("The downloaded version is the newest available, switching to that...")
+        await InterkitLiveReload.activateInstalledBundle();
+        return;
+      } 
+    }
+
+    // if the online version is newer than me, downnload it and switch!
+    if(versionCompare(myVersion, onlineVersion) == 1) {
+       console.log("online is newer, we need to update!");
+       let bundleURL = `${_config?.INTERKIT_BUNDLER_URL}/bundlezip/${_projectId}`;
+       //let bundleURL = "https://app.demo.interkit.app/bundlezip/Pn5M862Kw9Zj7C8ot"
+
+       await InterkitLiveReload.downloadAndActivateBundle(encodeURI(bundleURL))
+
+    } else {
+      console.log("online is same or older - do nothing");
+    }
+
+    
+}
+
+const InterkitClient = {
+  userId,
+  config,
+  projectId,
+  connect,
+  initApp: async () => {
+    await loadConfig();
+    await connect()
+    await getProjectId();
+    await checkForUpdates();
+  },
   login: async ({username, password}) => {
     console.log(server)
     let userAuthData = await server.login({
@@ -79,30 +215,47 @@ const InterkitClient = {
     localStorage.setItem('userAuth', null);
   },
 
-  // call a meteor method
+  // call a meteor method, add projectId to params if needed (allow method calls without params)
   call: async (method, params) => {
-    let response = await server.call(method, params);
-    return response
+
+    if(config && params && !params?.projectId) {
+      params.projectId = get(projectId);
+    }
+
+    if(params && !params?.projectId) {
+      alert("warning, call to method before projectId has been retreived:" + method)
+    } else {
+      let response = await server.call(method, params);
+      return response
+    }
   },
 
 
   /*
     col: the meteor collection 
     pub: the meteor publication to subscribe to
-    pubArgs: an array of arguments for the subscription
+    pubArgs: an object with arguments for the subscription - projectId is added from config
     cFilter: a filter function to narrow down the results
     single: track a single document or an array
   */
 
-  getSub: async (col, pub, pubArgs=[], cFilter=(a)=>true, single=false) => {
+  getSub: async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => {
     //console.log("getSub", pub)
     
     // setup the store
     let sub = {};
     sub.data = writable([]); // save svelte store under data
 
+    // add projectId to arguments object
+    if(pubArgs) {
+      if(!pubArgs?.projectId && get(projectId)) {
+        pubArgs.projectId = get(projectId);
+      }
+    }
+    //console.log(col, pub, pubArgs)
+
     // setup the subscription
-    sub.sub = server.sub(pub, pubArgs);
+    sub.sub = server.sub(pub, [pubArgs]);
     await sub.sub.ready();
     //console.log("sub ready", pub)
 

@@ -16,7 +16,7 @@
 
   const resetSub = async (projectId) => {
     if(subHandle) await subHandle.stop()
-    subHandle = await InterkitClient.getSub('sheets', 'sheets', [projectId], (s)=>s.projectId == projectId);
+    subHandle = await InterkitClient.getSub('sheets', 'sheets', {projectId}, (s)=>s.projectId == projectId);
     sheets = subHandle.data
   }
 

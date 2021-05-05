@@ -29,14 +29,12 @@
   if(defaultLocation) {
     try {
       defaultLocationLatLng = JSON.parse(defaultLocation)
-      console.log("defaultLocationLatLng", defaultLocationLatLng)
+      //console.log("defaultLocationLatLng", defaultLocationLatLng)
     } catch(e) {
       console.log("error parsinng defaultLocation")
     }
   }
   
-  let projectId = INTERKIT_PROJECT_ID;
-
   let filterLists = [];
   let activeFilter;
 
@@ -60,6 +58,9 @@
   let subHandle;
   let markerRows;
 
+  // store of projectid
+  let projectId = InterkitClient.projectId;
+
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
@@ -71,7 +72,7 @@
       let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
       
       // get the categories that we can filter for with this filter
-      let categoryRows = await InterkitClient.call("rows.get", {sheetKey: filterCategorySheetKey, projectId})
+      let categoryRows = await InterkitClient.call("rows.get", {sheetKey: filterCategorySheetKey})
 
       let categoryRowsListed = categoryRows.filter(r => !util.rowVal(r, categoryUnlistedColumn))
 
@@ -218,7 +219,7 @@
     
     //console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetKey) {
-      subHandle = await InterkitClient.getSub('rows', 'rows', [{sheetKey, projectId}]);
+      subHandle = await InterkitClient.getSub('rows', 'rows', {sheetKey});
       let rows = subHandle.data;
       rows.subscribe((rowsArray)=>{
         markerRows = rowsArray;
@@ -362,7 +363,7 @@
 
   <div 
     on:click={panToUserPosition} id="locateButton"
-    style='background-image: url("/app/{INTERKIT_PROJECT_ID}/leaflet/locate.svg")'
+    style='background-image: url("leaflet/locate.svg")'
   >
   </div>
 

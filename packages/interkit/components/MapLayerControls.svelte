@@ -5,8 +5,6 @@
 
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 
-  const projectId = INTERKIT_PROJECT_ID
-
   export let layers;
   export let setLayer;
   export let activeLayer;
@@ -24,7 +22,7 @@
   const loadAudioElement = async (layer) => {
     if(layer?.audio) {
       console.log(layer.audio)
-      audioElementRow = await InterkitClient.call("row.get", {key: activeLayer.audio, projectId})
+      audioElementRow = await InterkitClient.call("row.get", {key: activeLayer.audio})
       console.log("audioElementRow", audioElementRow)
       // autoplay on layer select
       /*if(audioElementRow) {

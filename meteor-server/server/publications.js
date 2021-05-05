@@ -8,16 +8,16 @@ Meteor.publish('projects', function() {
 });
 
 // get all the sheets in a project
-const getSheets = (projectId) => {
+const getSheets = ({projectId}) => {
   if(projectId)
     return Sheets.find({projectId})
   else 
     return null;
 }
 Meteor.publish('sheets', getSheets);
-Meteor.methods({'sheets.get': (projectId)=>{
-  //console.log("sheets.get"); 
-  let sheets = getSheets(projectId);
+Meteor.methods({'sheets.get': ({projectId})=>{
+  console.log("sheets.get", projectId); 
+  let sheets = getSheets({projectId});
   return sheets.fetch();
 }});
 

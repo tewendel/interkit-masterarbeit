@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run sub-globals-from-dotenv && rollup -c",
-    "start": "npm run sub-globals-from-dotenv && sirv public",
-    "sub-globals-from-dotenv": "mkdir -p public/build/ && envsub -s dollar-basic -f .env src/globals.envsub.js public/build/globals.js",
-    "dev": "npm run sub-globals-from-dotenv && rollup -c -w"
+    "build": "rollup -c",
+    "start": "sirv public",
+    "dev": "rollup -c -w"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
@@ -25,10 +24,14 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "@capacitor/android": "^3.0.0-rc.0",
-    "@capacitor/cli": "^3.0.0-rc.0",
-    "@capacitor/core": "^3.0.0-rc.0",
-    "@capacitor/ios": "^3.0.0-rc.0",
+    "@capacitor-community/barcode-scanner": "^1.2.1",
+    "@capacitor-community/http": "^0.3.0",
+    "@capacitor/android": "^2.4.7",
+    "@capacitor/cli": "^2.4.7",
+    "@capacitor/core": "^2.4.7",
+    "@capacitor/ios": "^2.4.7",
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-zip": "^3.1.0",
     "envsub": "^4.0.7",
     "leaflet": "^1.7.1",
     "sirv-cli": "^1.0.0"
