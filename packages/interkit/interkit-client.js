@@ -193,6 +193,7 @@ const InterkitClient = {
     await connect()
     await getProjectId();
     await checkForUpdates();
+    return true;
   },
   login: async ({username, password}) => {
     console.log(server)
@@ -220,7 +221,7 @@ const InterkitClient = {
 
     if(config && params && !params?.projectId) {
       params.projectId = get(projectId);
-      console.log("added projectId to method params", params, method)
+      //console.log("added projectId to method params", params, method)
     }
 
     if(params && !params?.projectId) {

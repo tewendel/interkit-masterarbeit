@@ -2,18 +2,30 @@
 
   import { InterkitClient } from '../'
   import { onMount } from 'svelte'
+
+  let initComplete = false;
   
   onMount(async ()=>{
-    await InterkitClient.initApp()  
+    initComplete = await InterkitClient.initApp()  
   });
 
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;
+
+  import { Plugins } from '@capacitor/core';
+  const { SplashScreen } = Plugins;
+
+  $: {
+    if(initComplete) {
+      SplashScreen.hide()  
+    }
+
+  }
   
 </script>
 
 <div class="AppBase Theming">
-  {#if $projectId}
+  {#if $projectId && initComplete}
     <slot ></slot>
   {/if}
 </div>
