@@ -194,7 +194,7 @@
     }).addTo(map);
 
     let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    let cartodbUrl = 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
+    let cartodbUrl = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
 
     labels_layer = L.tileLayer(cartodbUrl, {
       id: 'cartodb_labels', 
