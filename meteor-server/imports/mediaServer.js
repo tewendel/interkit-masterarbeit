@@ -85,6 +85,7 @@ export const importProjectMediaFile = async function(fileBuffer, fileName, fileT
 
 if (Meteor.isServer) {
   Meteor.publish('mediafiles', getMediaFiles);
+
   Meteor.methods({
     "mediafiles.get": ({projectId})=>{
       let cursor = getMediaFiles({projectId})

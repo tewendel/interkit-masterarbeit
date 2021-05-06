@@ -14,7 +14,7 @@
   // set up a store and expose it via context api to children
   let singleViewData = writable(null);
   const setSingleView = (data) => {
-    console.log("setSingleView", data)
+    //console.log("setSingleView", data)
     singleViewData.set(data);
     if(setHideTabNav) setHideTabNav(data ? true : false); // tell parent Tabs component to hide tabs navigation
   };

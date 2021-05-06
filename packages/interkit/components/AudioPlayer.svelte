@@ -65,7 +65,7 @@
   let mediafile;
   const loadAudiofile = async (key) => {
     if(key) {
-      mediafile = await InterkitClient.call("mediafile.get", {key})
+      mediafile = await InterkitClient.getMediaFile(key)
     } else {
       mediafile = null;
     }
@@ -75,15 +75,19 @@
     loadAudiofile(audioKey)
   } 
 
+  let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
 
   const loadCategory = async (elementRow) => {
     let categoryRowKey = util.rowVal(elementRow, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
-    if(categoryRowKey)
-      categoryRow = await InterkitClient.call("row.get", {key: categoryRowKey});
-    else 
+    //console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
+    if(categoryRowKey) {
+      let categorySheetKey = util.getSheetKey(categoryColumns[categoryIndex].titleColumn)
+      categoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
+      categoryRow = $categoryRowStore.find(r => r.key == categoryRowKey)
+    } else {
       categoryRow = null;
-    //console.log(categoryRow)
+    }
   }
 
   $: {

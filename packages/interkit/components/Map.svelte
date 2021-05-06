@@ -5,6 +5,7 @@
 <script>
 
   import { onMount, setContext, onDestroy } from 'svelte'
+  import { get } from 'svelte/store'
   
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
@@ -55,7 +56,8 @@
 
   let selectedElement;
 
-  let subHandle;
+  let elementRows; // store with the elements we want to show
+  let unsubElementRows; // unsubscribe method to this store
   let markerRows;
 
   // store of projectid
@@ -69,25 +71,30 @@
       //console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
       // get the sheetId of the sheet with the categories
-      let filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
+      const filterCategorySheetKey = util.getSheetKey(categoryNameColumn);
       
       // get the categories that we can filter for with this filter
-      let categoryRows = await InterkitClient.call("rows.get", {sheetKey: filterCategorySheetKey})
-
-      let categoryRowsListed = categoryRows.filter(r => !util.rowVal(r, categoryUnlistedColumn))
-
+      const categoryRowStore = await InterkitClient.getRowSubStore(filterCategorySheetKey);
+      const unlistedFilter = r => !util.rowVal(r, categoryUnlistedColumn)
+      
       // add the filter to our collection
       filterLists.push({
         name,
         filterCategorySheetKey,
-        categoryRows: categoryRowsListed,
+        categoryRows: get(categoryRowStore)?.filter(unlistedFilter),
         categoryNameColumn,
         categoryColorColumn,
         elementRefColumn 
       })
-
       filterLists = filterLists;
-      //console.log(filterLists);
+      
+      // update the filterlist when new categories are added
+      categoryRowStore.subscribe((data) => {
+        let filter = filterLists.find(l => l.name == name);
+        if(filter)
+          filter.categoryRows = data?.filter(unlistedFilter)
+        filterLists = filterLists;
+      });
     },
 
     registerLayer: async (layerData) => {
@@ -219,9 +226,8 @@
     
     //console.log(sheetId, positionColumnKey, labelColumnKey)
     if(sheetKey) {
-      subHandle = await InterkitClient.getSub('rows', 'rows', {sheetKey});
-      let rows = subHandle.data;
-      rows.subscribe((rowsArray)=>{
+      elementRows = await InterkitClient.getRowSubStore(sheetKey);
+      unsubElementRows = elementRows.subscribe((rowsArray)=>{
         markerRows = rowsArray;
         updateMarkers();
       })
@@ -267,6 +273,8 @@
   })
 
   onDestroy(()=>{
+    if(unsubElementRows)
+      unsubElementRows()
     Geolocation.clearWatch(geoWatch)
   })
 
@@ -359,6 +367,7 @@
     {layers}
     {setLayer}
     {activeLayer}
+    elementRows = {$elementRows}
   />
 
   <div 

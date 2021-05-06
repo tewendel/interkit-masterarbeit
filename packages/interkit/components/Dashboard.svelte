@@ -86,31 +86,24 @@
 
   let refsColumnKey = util.colKey(sectionRefs) // column of the element references
 
-  let sectionSub; // sub to the dashboard structure sheet
-  let sectionRows; // the rows from the sheet that specify the dashboard structure
+  let sectionRows; // store with the rows from the sheet that specify the dashboard structure
   
   if(sectionSheetKey != util.getSheetKey(sectionRefs))
     alert("bad config: sectionTitles and sectionRefs must be from same sheet")
 
   let elementSheetKey; // the key of the sheet containing the elements
-  let elementSub;
-  let elementRows = [];
+  let elementRows; // store with the elements
     
   onMount(async ()=>{
 
     if(sectionSheetKey) {
-      sectionSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: sectionSheetKey}, r=>r.sheetKey==sectionSheetKey);
-      sectionRows = sectionSub.data;
+      sectionRows = await InterkitClient.getRowSubStore(sectionSheetKey);
     }
 
     // this is the row subscription that powers all the sub components of dashboard
     if(elementTitleColumn) {  
       elementSheetKey = util.getSheetKey(elementTitleColumn);
-      elementSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: elementSheetKey}, r=>r.sheetKey==elementSheetKey);
-      elementSub.data.subscribe(data=>{
-        elementRows = data;
-        //console.log("elementRows update", elementRows)
-      })
+      elementRows = await InterkitClient.getRowSubStore(elementSheetKey);
     }
   })
 
@@ -138,72 +131,74 @@
 
 <div class="dashboard-container">
 
-{#each sections as section}
+{#if $elementRows && sections}
+  {#each sections as section}
 
-  <!--{JSON.stringify(section)}-->
+    <!--{JSON.stringify(section)}-->
 
-  {#if section.type == "ElementSingle"}
-  <ContentElementAudio
-    size="xs"
-    element={(elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))?.[0])}
-    {elementColumns}
-    {categoryColumns}
-  />
-  {:else if section.type == "ElementSlider"}
-    <ElementSlider 
-      title={section.title}
-      elementRows={elementRows.filter(r=>section.refs?.rowKeys.includes(r.key))}
+    {#if section.type == "ElementSingle"}
+    <ContentElementAudio
+      size="xs"
+      element={($elementRows?.filter(r=>section.refs?.rowKeys.includes(r.key))?.[0])}
       {elementColumns}
       {categoryColumns}
     />
-  {:else if section.type == "ElementNearest"}
-    <ElementNearest
-      title={section.title}
-      {elementRows}
-      {elementColumns}
-      {categoryColumns}
-    />
-  {:else if section.type == "ElementRandom"}
-    <ElementRandom
-      title={section.title}
-      image={section.image}
-      {elementRows}
-      {elementColumns}
-    />
-  
-  {:else if section.type == "CategorySlider"}
+    {:else if section.type == "ElementSlider"}
+      <ElementSlider 
+        title={section.title}
+        elementRows={$elementRows?.filter(r=>section.refs?.rowKeys.includes(r.key))}
+        {elementColumns}
+        {categoryColumns}
+      />
+    {:else if section.type == "ElementNearest"}
+      <ElementNearest
+        title={section.title}
+        elementRows={$elementRows}
+        {elementColumns}
+        {categoryColumns}
+      />
+    {:else if section.type == "ElementRandom"}
+      <ElementRandom
+        title={section.title}
+        image={section.image}
+        elementRows={$elementRows}
+        {elementColumns}
+      />
+    
+    {:else if section.type == "CategorySlider"}
 
-    <CategorySlider
-      title={section.title}
-      sectionRow={section.sectionRow}
-      {sectionColumns}
-      {elementColumns}
-      {elementRows}
-      {categoryColumns}
-    />
+      <CategorySlider
+        title={section.title}
+        sectionRow={section.sectionRow}
+        {sectionColumns}
+        {elementColumns}
+        elementRows={$elementRows}
+        {categoryColumns}
+      />
 
-  {:else if section.type == "FeaturedCategory"}
+    {:else if section.type == "FeaturedCategory"}
 
-    <FeaturedCategory
-      title={section.title}
-      sectionRow={section.sectionRow}
-      {sectionColumns}
-      {categoryColumns}
-    />
+      <FeaturedCategory
+        title={section.title}
+        sectionRow={section.sectionRow}
+        {sectionColumns}
+        {categoryColumns}
+      />
 
 
-  {:else if section.type == "MenuSwitcher"}
+    {:else if section.type == "MenuSwitcher"}
 
-    <MenuSwitcher
-      title={section.title}
-      image={section.image}
-    />
+      <MenuSwitcher
+        title={section.title}
+        image={section.image}
+      />
 
-  {:else}
-    <div>Dashboard Component {section.type} not implenented yet.</div>
-  {/if}
+    {:else}
+      <div>Dashboard Component {section.type} not implenented yet.</div>
+    {/if}
 
-{/each}
+  {/each}
+{/if}
 
 </div>
 

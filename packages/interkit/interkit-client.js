@@ -26,6 +26,12 @@ try {
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
+// centrally store all subscriptions to sheets, using sheetKey as key on this object
+let rowSubs = {};
+let mediaFileSub;
+let sheetSub;
+
+// can probably be deprecated - used to make sure last subcription is closed
 let subscriptionCounter = {};
 
 let globalStores = {};
@@ -178,9 +184,92 @@ const checkForUpdates = async () => {
 
     } else {
       console.log("online is same or older - we are on the newest available version, no update or switch needed");
-    }
+    }   
+}
 
+  /*
+    col: the meteor collection 
+    pub: the meteor publication to subscribe to
+    pubArgs: an object with arguments for the subscription - projectId is added from config
+    cFilter: a filter function to narrow down the results
+    single: track a single document or an array
+
+    -> components should not use this directly but use getRowSubStore (see below)
+  */
+
+const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => {
+  //console.log("getSub", pub)
+  
+  // setup the store
+  let sub = {};
+  sub.data = writable([]); // save svelte store under data
+
+  // add projectId to arguments object
+  if(pubArgs) {
+    if(!pubArgs?.projectId && get(projectId)) {
+      pubArgs.projectId = get(projectId);
+    }
+  }
+  //console.log(col, pub, pubArgs)
+
+  // setup the subscription
+  sub.sub = server.sub(pub, [pubArgs]);
+  await sub.sub.ready();
+  //console.log("sub ready", pub)
+
+  if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
+  subscriptionCounter[pub] += 1;
+  //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
+
+  let collection = server.collection(col).filter(cFilter)
+  let data = single ? collection.fetch()[0] : collection.fetch()
+  //console.log("data", pub, data)
+
+  // write an initial fetch of the collection into the store
+  sub.data.set(restore_ids(data));
+  
+  // update the store through simpleDDP's onChange listener
+  sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
+  sub.reactiveCollection.onChange((newData)=>{
     
+    // this is called way too often! -> todo: optimize 
+    // console.log("onChange", newData)
+    sub.data.set(restore_ids(newData))      
+    
+  })
+
+  sub.stop = async () => {
+    if(subscriptionCounter[pub] > 0) {
+      subscriptionCounter[pub] -= 1
+      //console.log("reduced subscriptionCounter", pub, subscriptionCounter[pub])
+    }
+    
+    if(subscriptionCounter[pub] == 0) {
+      console.log("stopping subscription to", pub)
+      await sub.sub.remove()
+    }
+  } 
+
+  sub.status = "subscribed";
+
+  return sub;
+}
+
+// returns the row store for a given sheet, created one if not available or waits for subscription to complete
+const getRowSubStore = async (sheetKey) => {
+  if(!rowSubs[sheetKey]) {
+    // no subscription for this sheet yet, create one
+    rowSubs[sheetKey] = {
+      status: "subscribing",
+      subPromise: new Promise(async (resolve, reject) => {
+        console.log("creating row subscription on sheet", sheetKey)
+        let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey)
+        resolve(rsub);
+      })
+    };
+  }
+  let sub = await rowSubs[sheetKey].subPromise;
+  return sub?.data;
 }
 
 const InterkitClient = {
@@ -232,75 +321,43 @@ const InterkitClient = {
     return response
   },
 
+  getSub,
+  getRowSubStore,
+  
+  getMediaFile: async (key) => {
+    if(!mediaFileSub) {
+      // no subscription to media files yet, set it up
+      mediaFileSub = new Promise(async (resolve, reject) => {
+        console.log("creating subscription for mediafiles")
+        let msub = await getSub("mediafiles", "mediafiles", {})
+        resolve(msub);
+      })
+    }    
+    let sub = await mediaFileSub;
+    let mediafile = get(sub?.data)?.find(m => m.meta.key == key)
+    mediafile.link = 
+    `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+    return mediafile
+  },
 
-  /*
-    col: the meteor collection 
-    pub: the meteor publication to subscribe to
-    pubArgs: an object with arguments for the subscription - projectId is added from config
-    cFilter: a filter function to narrow down the results
-    single: track a single document or an array
-  */
-
-  getSub: async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => {
-    //console.log("getSub", pub)
-    
-    // setup the store
-    let sub = {};
-    sub.data = writable([]); // save svelte store under data
-
-    // add projectId to arguments object
-    if(pubArgs) {
-      if(!pubArgs?.projectId && get(projectId)) {
-        pubArgs.projectId = get(projectId);
-      }
-    }
-    //console.log(col, pub, pubArgs)
-
-    // setup the subscription
-    sub.sub = server.sub(pub, [pubArgs]);
-    await sub.sub.ready();
-    //console.log("sub ready", pub)
-
-    if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
-    subscriptionCounter[pub] += 1;
-    //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
-
-    let collection = server.collection(col).filter(cFilter)
-    let data = single ? collection.fetch()[0] : collection.fetch()
-    //console.log("data", pub, data)
-
-    // write an initial fetch of the collection into the store
-    sub.data.set(restore_ids(data));
-    
-    // update the store through simpleDDP's onChange listener
-    sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
-    sub.reactiveCollection.onChange((newData)=>{
-      
-      // this is called way too often! -> todo: optimize 
-      // console.log("onChange", newData)
-      sub.data.set(restore_ids(newData))      
-      
-    })
-
-    sub.stop = async () => {
-      if(subscriptionCounter[pub] > 0) {
-        subscriptionCounter[pub] -= 1
-        //console.log("reduced subscriptionCounter", pub, subscriptionCounter[pub])
-      }
-      
-      if(subscriptionCounter[pub] == 0) {
-        console.log("stopping subscription to", pub)
-        await sub.sub.remove()
-      }
-    } 
-
-    return sub;
+  getSheet: async (key) => {
+    if(!sheetSub) {
+      // no subscription to media files yet, set it up
+      sheetSub = new Promise(async (resolve, reject) => {
+        console.log("creating subscription for sheets")
+        let ssub = await getSub("sheets", "sheets", {})
+        resolve(ssub);
+      })
+    }    
+    let sub = await sheetSub;
+    let sheet = get(sub?.data)?.find(m => m.key == key)
+    return sheet
   },
 
   getGlobalStore: (key) => {
     if(!globalStores[key]) {
       let persistedStoreJSON = localStorage.getItem(key)
-      console.log("localStorage store?", key, JSON.stringify(persistedStoreJSON))
+      //console.log("localStorage store?", key, JSON.stringify(persistedStoreJSON))
       let persistedStore;
       try {
         persistedStore = JSON.parse(persistedStoreJSON)
@@ -313,12 +370,12 @@ const InterkitClient = {
   },
 
   registerGlobalMethod: (key, method) => {
-    console.log("registerGlobalMethod", key)
+    //console.log("registerGlobalMethod", key)
     globalMethods[key] = method;
   },
   callGlobalMethod: (key, options) => {    
     if(globalMethods[key]) {
-      console.log("callGlobalMethod", key)
+      //console.log("callGlobalMethod", key)
       globalMethods[key](options);
     } else {
       console.log("global method not fouund", key);

@@ -37,7 +37,7 @@
 		},
 
 		selectTab: tab => {
-      console.log("selectedTab")
+      //console.log("selectedTab")
 			const i = tabs.indexOf(tab);
 			selectedTab.set(tab);
 			selectedPanel.set(panels[i]);
@@ -53,7 +53,7 @@
 		selectedPanel,
 
     setHideTabNav: (value) => {
-      console.log("setHideTabNav", value)
+      //console.log("setHideTabNav", value)
       hideTabNav.set(value)
     },
     hideTabNav

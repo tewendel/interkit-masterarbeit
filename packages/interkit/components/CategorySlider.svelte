@@ -19,11 +19,14 @@
   // the columnKey of the element sheet that references the category
   let elementCategoryRefColumnKey = util.colKey(elementColumns.categoryRefColumn[categoryIndex])
 
+  let categoryRowStore;
+  let categoryRow; // the row of the category that is referenced
   let categoryTitle;  
 
   const updateCategoryTitle = async (sCKey)=>{
-    let categoryRow = await InterkitClient.call("row.get", {key: sCKey})
-    //console.log(categoryRow)
+    let categorySheetKey = util.getSheetKey(categoryColumns[categoryIndex].titleColumn)
+    categoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
+    categoryRow = $categoryRowStore.find(r => r.key == sCKey)
     categoryTitle = util.rowVal(categoryRow, categoryColumns[categoryIndex].titleColumn)
   }
 

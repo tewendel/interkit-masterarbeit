@@ -8,6 +8,7 @@
   export let layers;
   export let setLayer;
   export let activeLayer;
+  export let elementRows;
 
   let layerSelectOpen = false;
   let audioElementRow;
@@ -21,9 +22,9 @@
   }
   const loadAudioElement = async (layer) => {
     if(layer?.audio) {
-      console.log(layer.audio)
-      audioElementRow = await InterkitClient.call("row.get", {key: activeLayer.audio})
-      console.log("audioElementRow", audioElementRow)
+      //console.log(layer.audio)
+      audioElementRow = elementRows.find(r => r.key == activeLayer.audio)
+      //console.log("audioElementRow", audioElementRow)
       // autoplay on layer select
       /*if(audioElementRow) {
         playAudio(audioElementRow);

@@ -26,7 +26,6 @@
   // name of the category
   let filterCategoryName;
   
-
   $: {
     //console.log("singleViewData changed", $singleViewData);
     categorySheetKey = $singleViewData?.categorySheetKey;
@@ -74,13 +73,15 @@
       }
     }
 
-    if(dataSub) await dataSub.stop()
+    //if(dataSub) await dataSub.stop()
     // subscribe to the data
-    dataSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: dataSheetKey}, r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
-    dataRows = dataSub.data;  
+    //dataSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: dataSheetKey}, r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
+    
+    dataRows = await InterkitClient.getRowSubStore(dataSheetKey);
     //console.log("dataRows", $dataRows)
     //console.log(sortColumn)
-    dataRows.subscribe((data) => {
+    dataSub = dataRows.subscribe((data) => {
+      data = data.filter(r => check(r) && checkBookmark(r))
       data.sort((a, b) => util.rowVal(a, sortColumn) - util.rowVal(b, sortColumn))
       dataRowsSorted = data;
     })
@@ -91,13 +92,13 @@
 
   onMount(async ()=>{
     // load the sheet 
-    dataSheet = await InterkitClient.call('sheet.get', {key: dataSheetKey})
+    dataSheet = await InterkitClient.getSheet(dataSheetKey);
     await setupSub();
   })
 
   onDestroy(async ()=>{
     if(dataSub) {
-      await dataSub.stop()
+      dataSub();
     }
   })
 

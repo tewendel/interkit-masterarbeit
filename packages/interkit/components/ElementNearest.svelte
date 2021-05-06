@@ -4,7 +4,7 @@
 
 
   export let title;
-  export let elementRows;
+  export let elementRows = [];
   export let elementColumns;
   export let categoryColumns;
 

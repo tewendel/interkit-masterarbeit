@@ -16,21 +16,34 @@
   let contentRow;
   let content;
 
+  // subscribe to the rows in that sheet
+  let rowStore;
   onMount(async () => {
-    let rows = await InterkitClient.call("rows.get", {sheetKey: contentSheetKey})
-    contentRow = rows.find(r => util.rowVal(r, keyColumn) == contentKey);
-    content = util.rowVal(contentRow, contentColumn);  
-  });
+    rowStore = await InterkitClient.getRowSubStore(contentSheetKey)  
+  })
+
+  const updateContent = async (contentSheetKey, contentKey, rows) => {
+    if(rows) {
+      contentRow = rows.find(r => util.rowVal(r, keyColumn) == contentKey);
+      content = util.rowVal(contentRow, contentColumn);    
+    }    
+  }
+
+  $: {
+    updateContent(contentSheetKey, contentKey, $rowStore)
+  }
 
 </script>
 
 <div class="DynamicContent container">
-  {#if format == "richText"}
-    {#if content}
-      {@html marked(content)}
+  {#if $rowStore}
+    {#if format == "richText"}
+      {#if content}
+        {@html marked(content)}
+      {/if}
+    {:else}
+      {content}
     {/if}
-  {:else}
-    {content}
   {/if}
 </div>
 

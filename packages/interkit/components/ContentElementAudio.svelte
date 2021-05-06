@@ -38,13 +38,16 @@
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
 
+  let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
   const setupCategory = async (element) => {
     let categoryRowKey = util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
     //console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
-    if(categoryRowKey)
-      categoryRow = await InterkitClient.call("row.get", {key: categoryRowKey});
-    //console.log("categoryRow", categoryRow)
+    if(categoryRowKey) {
+      let categorySheetKey = util.getSheetKey(categoryColumns[categoryIndex].titleColumn)
+      categoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
+      categoryRow = $categoryRowStore.find(r => r.key == categoryRowKey)
+    }    
   }
 
   $: {

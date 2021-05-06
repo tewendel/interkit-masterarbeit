@@ -13,15 +13,17 @@
   export let descriptionKey;
   export let unlistedKey;
 
-  let categorySub
+  //let categorySub
   let categories
   let filterCategoryKey
 
   onMount(async ()=>{    
     //console.log("mount archive category")
-    categorySub = await InterkitClient.getSub('rows', 'rows', {sheetKey: categorySheetKey}, r=>r.sheetKey==categorySheetKey && !util.rowVal(r, unlistedKey));
-    categories = categorySub.data;  
+    //categorySub = await InterkitClient.getSub('rows', 'rows', {sheetKey: categorySheetKey}, r=>r.sheetKey==categorySheetKey && !util.rowVal(r, unlistedKey));
+    categories = await InterkitClient.getRowSubStore(categorySheetKey)
   })
+
+  $: categories_filtered = $categories?.filter(r => !util.rowVal(r, unlistedKey))
 
   const openCategory = (category)=> {
     filterCategoryKey = category.key;
@@ -39,9 +41,9 @@
 
 </script>
 
-{#if $categories}
+{#if categories_filtered}
 <ul>
-  {#each $categories as category}
+  {#each categories_filtered as category}
   <li on:click={()=>{openCategory(category)}}>
     <CategoryCover 
       categoryRow={category}

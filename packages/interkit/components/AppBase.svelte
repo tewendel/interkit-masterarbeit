@@ -27,6 +27,8 @@
 <div class="AppBase Theming">
   {#if $projectId && initComplete}
     <slot ></slot>
+  {:else}
+    loading...
   {/if}
 </div>
 

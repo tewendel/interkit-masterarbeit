@@ -14,14 +14,17 @@
 
   // select the categories to use
   let categoryIndex;
+  let categoryRowStore;
   let categoryRow;
-  
+
   const setup = async (sectionRow) => {
     categoryIndex = util.getCategoryIndex(sectionRow, sectionColumns);
     if(typeof categoryIndex == "number") {
       // the rowKey of the category we want to display
       let sectionCategoryKey = util.rowVal(sectionRow, sectionColumns.categoryRefsColumn[categoryIndex])?.rowKeys?.[0]
-      categoryRow = await InterkitClient.call("row.get", {key: sectionCategoryKey})
+      let categorySheetKey = util.getSheetKey(categoryColumns[categoryIndex].titleColumn)
+      categoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
+      categoryRow = $categoryRowStore.find(r => r.key == sectionCategoryKey)        
     }
   }
 
