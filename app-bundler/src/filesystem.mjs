@@ -41,7 +41,7 @@ async function setupNewRepository(project) {
   
   const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
   const projectPath = getProjectPath(projectId)
-  const interkitConfigJson = JSON.stringify(generateInterkitConfig(project))
+  const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
 
   console.log(`setup new project ${projectId} in ${projectPath}. \n ${interkitConfigJson}`)
 
