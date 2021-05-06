@@ -2,6 +2,7 @@
 
   import { InterkitClient, util } from '../'
   import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import marked from "marked"
 
@@ -22,10 +23,15 @@
     rowStore = await InterkitClient.getRowSubStore(contentSheetKey)  
   })
 
+  const addSpecialElements = (c) => {
+    return c.replace("[config]", JSON.stringify(get(InterkitClient.config)))
+  }
+
   const updateContent = async (contentSheetKey, contentKey, rows) => {
     if(rows) {
       contentRow = rows.find(r => util.rowVal(r, keyColumn) == contentKey);
-      content = util.rowVal(contentRow, contentColumn);    
+      let original_content = util.rowVal(contentRow, contentColumn)
+      content = addSpecialElements(original_content);
     }    
   }
 

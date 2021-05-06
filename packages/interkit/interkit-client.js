@@ -105,9 +105,10 @@ const getProjectId = async() => {
     _projectId = params.get("projectId");
   } else {
     console.log("trying to get projectId from server via slug", get(config)?.project_slug);
-    let result = await server.call("project.getId", {slug: get(config)?.project_slug})
+    //let result = await server.call("project.getId", {slug: get(config)?.project_slug})
+    let result = await fetch(get(config)?.INTERKIT_BUNDLER_URL + "/project_id/" + get(config)?.project_slug)
     if(result) {
-      _projectId = result;
+      _projectId = await result.text();
     } else {
       alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
     }
@@ -279,9 +280,9 @@ const InterkitClient = {
   connect,
   initApp: async () => {
     await loadConfig();
-    await connect()
     await getProjectId();
     await checkForUpdates();
+    await connect()
     return true;
   },
   login: async ({username, password}) => {
