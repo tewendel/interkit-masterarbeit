@@ -9,6 +9,8 @@
   
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
+  import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
 
   import MapFilterControls from './MapFilterControls.svelte'
   import MapLayerControls from './MapLayerControls.svelte'
@@ -350,7 +352,15 @@
         console.log("currentPosition", currentPosition)
     }
   }
-   
+
+  const zoomIn = async () => {
+    map.zoomIn()
+  }
+
+  const zoomOut = async () => {
+    map.zoomOut()
+  }
+
 </script>
 
 <div class="Map__Container container">
@@ -364,23 +374,41 @@
     </div>
   {/if}
 
-  <MapFilterControls
-    {filterLists}
-    {setFilter}
-    {activeFilter}
-  />
+  <div class="Map__LayerControls layer_controls">
+    <MapFilterControls
+      {filterLists}
+      {setFilter}
+      {activeFilter}
+    />
 
-  <MapLayerControls
-    {layers}
-    {setLayer}
-    {activeLayer}
-    elementRows = {$elementRows}
-  />
+    <MapLayerControls
+      {layers}
+      {setLayer}
+      {activeLayer}
+      elementRows = {$elementRows}
+    />
+  </div>
 
-  <div 
-    on:click={panToUserPosition} id="locateButton"
-    style='background-image: url("leaflet/locate.svg")'
-  >
+  <div class="Map__Controls controls">
+
+    <button class="Map__Controls__ZoomIn zoomIn">
+      <Button on:click={zoomIn}>
+        <Icon type="plus" />
+      </Button>
+    </button>
+
+    <button class="Map__Controls__ZoomOut zoomOut">
+      <Button on:click={zoomOut}>
+        <Icon type="minus" />
+      </Button>
+    </button>
+
+    <button class="Map__Controls__Locate locate" id="locateButton">
+      <Button on:click={panToUserPosition}>
+        <Icon type="position" />
+      </Button>
+    </button>
+
   </div>
 
   <div id="mapid" bind:this={mapElement}></div>
@@ -400,14 +428,6 @@
   }
 
   #locateButton {
-    width: 40px;
-    height: 40px;
-    /*background-color: #fff;*/
-    position: absolute;
-    right: 7px;
-    bottom: 85px;
-    z-index: 1000;
-    border-radius: 2px;
   }
 
   #locateButton:hover {
@@ -421,5 +441,38 @@
     margin-right: 10px;
     z-index: 1000;
     background-color: #fff;
+  }
+
+  :global(.leaflet-control) { /* hide default leaflet controls */
+    display: none;
+  }
+
+  .controls {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    padding: 8px;
+  }
+
+  .controls > * {
+    margin: 8px;
+  }
+  .controls .locate {
+    margin-top: 40px;
+  }
+
+  .layer_controls {
+    position: absolute;
+    bottom: 0;
+    padding: 20px 55px 55px 55px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    place-content: space-between;
   }
 </style>

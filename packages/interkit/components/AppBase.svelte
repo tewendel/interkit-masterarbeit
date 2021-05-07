@@ -73,6 +73,7 @@
     font-weight: 500;
   }
 
+
 </style>
 
 <!-- reset styles -->
@@ -125,6 +126,7 @@
     button {
       background-color: transparent;
       border-radius: 0;
+      border-style: none;
     }
 
     /* Make images easier to work with */

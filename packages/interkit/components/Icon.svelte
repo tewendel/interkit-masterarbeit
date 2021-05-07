@@ -4,7 +4,7 @@
   export let inverse = false
 </script>
 
-<span class:inverse class={`icon icon-${type}`} style={`--height: ${height}`}>
+<span on:click class:inverse class={`icon icon-${type}`} style={`--height: ${height}`}>
   <slot />
 </span>
 
@@ -57,5 +57,24 @@
 
   .icon-settings {
     background-image: url("../icons/Settings.svg");
+  }
+
+  .icon-plus {
+    background-image: url("../icons/Plus.svg");
+  }
+  .icon-minus {
+    background-image: url("../icons/Minus.svg");
+  }
+
+  .icon-position {
+    background-image: url("../icons/Position.svg");
+  }
+
+  .icon-layer {
+    background-image: url("../icons/Layer.svg");
+  }
+
+  .icon-filter {
+    background-image: url("../icons/Filter.svg");
   }
 </style>

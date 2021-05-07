@@ -2,6 +2,8 @@
 
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
+  import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
 
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 
@@ -36,47 +38,60 @@
 </script>
 
 {#if layers?.length}
-<div id="layerControls">
-  {#if activeLayer}
-    <div>
-      {#if audioElementRow}
-        {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
-          <span>(playing)</span>
-        {:else}
-          <span on:click={()=>{playAudio(audioElementRow)}}>play</span>
-        {/if}
-      {/if}
-      {activeLayer.name}
-      <span on:click={()=>layerSelect(null)}>x</span>
-    </div>
+  <div id="layerControls">
     
-  {:else}
-    <span class="layerSelectToggle" on:click={toggleLayers}>layers</span>
-    {#if layerSelectOpen}
-      <ul>
-      {#each layers as layer}
-        <li><span on:click={()=>{layerSelect(layer)}}>{layer.name}</span></li>
-      {/each}
-      </ul>
+    {#if activeLayer}
+      <div class="MapLayerControls__ActiveLayer active_layer">
+        <Button>
+          {#if audioElementRow}
+            {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
+              <span>(playing)</span>
+            {:else}
+              <span on:click={()=>{playAudio(audioElementRow)}}>play</span>
+            {/if}
+          {/if}
+          {activeLayer.name}
+          <Icon type="close" height="1em" on:click={()=>layerSelect(null)} />
+        </Button>
+      </div>
     {/if}
-  {/if}
-</div>
+
+      <span class="layerSelectToggle" on:click={toggleLayers}>
+        <Button>
+          <Icon type="layer" height="1em" />
+          layers
+        </Button>
+      </span>
+      {#if layerSelectOpen}
+        <ul>
+        {#each layers as layer}
+          <li>
+            <Button on:click={()=>{layerSelect(layer)}}>
+              {layer.name}
+            </Button>
+          </li>
+        {/each}
+        </ul>
+      {/if}
+
+  </div>
 {/if}
 
 
 <style>
 
   #layerControls {
+    display: flex;
+    flex-direction: column-reverse;
+    place-items: flex-end;
+  }
+
+  .active_layer {
     position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 100%;
-    padding: 10px;
-    z-index: 1000;
+    top: 16px;
   }
 
   span.layerSelectToggle, li span, #layerControls div {
-    background-color: white;
     padding: 2px;
   }
 
