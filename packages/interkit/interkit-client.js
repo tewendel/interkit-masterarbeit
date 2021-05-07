@@ -6,6 +6,9 @@ import { writable, get } from 'svelte/store';
 
 import InterkitLiveReload from "./interkit-live-reload.js"
 
+import { Capacitor } from '@capacitor/core';
+
+
 // this store holds the basic data from interkit.config.json
 let config = writable(null); 
 
@@ -77,18 +80,35 @@ const connect = async (url) => {
 
 // loads local config file to get basic info about project
 const loadConfig = async () => {
-
-    let response = await fetch("interkit.config.json")
+    let params = (new URL(document.location)).searchParams;
     let _config;
-    try {
-      _config = await response.json()
-      console.log("interkit.config.json", _config)
-    } catch(e) {
-      console.log("error parsing config", e);
+    
+    if(params.get("localConfigURL")) {
+
+      console.log("localConfigURL", params.get("localConfigURL"))
+
+      // we are in the authoring system preview - load generated config from budler
+      let response = await fetch(params.get("localConfigURL"))    
+      try {
+        _config = await response.json()
+        console.log("interkit.config.json", _config)
+      } catch(e) {
+        console.log("error parsing config", e);
+      }
+
+    } else {
+
+      // we are in standalone/capacitor mode - load config from our own public directory
+      let response = await fetch("interkit.config.json")    
+      try {
+        _config = await response.json()
+        console.log("interkit.config.json", _config)
+      } catch(e) {
+        console.log("error parsing config", e);
+      }
     }
 
     // override loadTheme option that might be set in config
-    let params = (new URL(document.location)).searchParams;
     if(params.get("loadTheme")) {
       _config.INTERKIT_APP_LOAD_THEME = params.get("loadTheme") === "true";
     }
@@ -311,12 +331,15 @@ const InterkitClient = {
   initApp: async () => {
     await loadConfig();
     await getProjectId();
-    await checkForUpdates();
+    console.log("Capacitor.isNative", Capacitor.isNative)
+    if(Capacitor.isNative) {
+      await checkForUpdates();
+    }
     await connect()
     return true;
   },
   login: async ({username, password}) => {
-    console.log(server)
+    //console.log(server)
     let userAuthData = await server.login({
       password,
       user: {

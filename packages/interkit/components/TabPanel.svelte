@@ -25,6 +25,7 @@
 
   .tab-panel-container {
     padding-bottom: 50px;
+    height: 100%;
   }
 
 </style>

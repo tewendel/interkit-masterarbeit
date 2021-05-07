@@ -10,10 +10,14 @@
   export let locationColumn
   export let categoryRefColumn
   export let categoryOrderColumn
+  export let shortDescriptionColumn
+
+  //console.log("shortDescriptionColumn", shortDescriptionColumn)
 
   const elementColumns = {
     titleColumn,
     descriptionColumn,
+    shortDescriptionColumn,
     audioColumn,
     imageColumn,
     categoryRefColumn: [categoryRefColumn], 

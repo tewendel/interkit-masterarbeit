@@ -34,6 +34,7 @@
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
+  $: short_description = util.rowValString(element, elementColumns.shortDescriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
@@ -140,7 +141,7 @@
     </h4>
 
     <p class="ContentElementAudio__Description description">
-      {description}
+      {short_description}
     </p>
 
     {#if util.rowVal(element, elementColumns.linkColumn)}

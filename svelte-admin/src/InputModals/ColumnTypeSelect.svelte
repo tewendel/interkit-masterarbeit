@@ -24,7 +24,7 @@
   let sheets;
 
   onMount(async ()=>{
-    sheets = await InterkitClient.call("sheets.get", projectId)
+    sheets = await InterkitClient.call("sheets.get", {projectId})
   })
 
 </script>

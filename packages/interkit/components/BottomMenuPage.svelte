@@ -26,7 +26,7 @@
 
 <style>
   .page {
-    overflow-y: scroll;
+    overflow-y: hidden;
     display: block;
     width: 100%;
     height: 100%;

@@ -54,7 +54,7 @@
     {/if}
     <div class="right-pane" class:hidden={rightPaneHidden}>
         <button on:click={toggleRightPane}>hide preview</button>
-        <Preview {projectId}/>
+        <Preview {projectId} {currentProject}/>
     </div>
   </div>
 {:else}

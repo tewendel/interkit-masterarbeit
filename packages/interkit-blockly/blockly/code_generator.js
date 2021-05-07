@@ -243,7 +243,8 @@ export const initCodeGenerator = (Blockly) => {
        "categoryOrderColumn",
        "categoryTitleColumn",
        "categorySubtitleColumn",
-       "locationColumn"
+       "locationColumn",
+       "shortDescriptionColumn"
     ]);
     
     code += "\n/>\n"
@@ -318,6 +319,15 @@ export const initCodeGenerator = (Blockly) => {
     code += "\n/>\n";
     return code;
   };
+
+  Blockly.JavaScript['ScrollContainer'] = function (block) {
+    var code = "<ScrollContainer \n"
+    code += ">\n"
+    code += statements(block, "default")
+    code += "</ScrollContainer>\n"
+    return code;
+  };
+
 
 
 

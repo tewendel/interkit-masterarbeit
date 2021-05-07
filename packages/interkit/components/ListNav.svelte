@@ -29,27 +29,37 @@
   
 </script>
 
-<div class:active={$singleViewData}>
-  <TopNavBar icon="arrow-left" onClick={()=>{setSingleView(null)}}>
-    {$singleViewData?.filterCategoryName}
-  </TopNavBar>
-  <slot name="singleView"></slot>
-</div>
+<div class="list-nav-container">
 
-<div class:active={!$singleViewData}>
-  <slot name="listView"></slot>
+  <div class:active={$singleViewData}>
+    <TopNavBar icon="arrow-left" onClick={()=>{setSingleView(null)}}>
+      {$singleViewData?.filterCategoryName}
+    </TopNavBar>
+    <slot name="singleView"></slot>
+  </div>
+
+  <div class:active={!$singleViewData}>
+    <slot name="listView"></slot>
+  </div>
+
 </div>
 
 <style>
+
+  .list-nav-container {
+    height: 100%;
+  }
+
   span:hover {
     cursor: pointer;
   }
 
-  div {
+  div.list-nav-container div {
     display: none;
   }
 
-  .active {
+  div.list-nav-container .active {
     display: block;
+    height: 100%;
   }
 </style>
