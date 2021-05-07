@@ -341,7 +341,8 @@
 
   const panToUserPosition = async () => {
     let result = await Permissions.query({name: "geolocation"})
-    if(result != "granted") {
+    console.log("geo permission", result)
+    if(result.state != "granted") {
       alert(permissionNotification)
     } else {
       if(currentPosition)
