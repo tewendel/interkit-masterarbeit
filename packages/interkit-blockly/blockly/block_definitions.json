@@ -416,7 +416,7 @@
 
     {
     "type": "Map",
-    "message0": "<Map> %1 markerPositions %2 %3 markerIconAsset %4 %5 defaultLocation %6 %7 element %8 %9 filters %10 %11 layers %12 %13",
+    "message0": "<Map> %1 markerPositions %2 %3 markerIconAsset %4 %5 defaultLocation %6 %7 permissionNotification %8 %9 element %10 %11 filters %12 %13 layers %14 %15",
     "args0": [
       {
         "type": "input_dummy"
@@ -440,6 +440,13 @@
       },
       {
         "name": "defaultLocation",
+        "type": "field_input"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "permissionNotification",
         "type": "field_input"
       },
       {

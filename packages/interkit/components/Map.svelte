@@ -20,11 +20,13 @@
   import { desaturateShader } from './mapShaders.js'
 
   import { Plugins } from '@capacitor/core';
-  const { Geolocation } = Plugins;
+  const { Geolocation, Permissions } = Plugins;
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerIconAsset; // path to asset we use for marker icon
   export let defaultLocation; // where to center the map [lat, lng]
+  // what to tell the user when there is no permission for gps
+  export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen."; 
 
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
@@ -337,11 +339,16 @@
     }
   }
 
-  const panToUserPosition = () => {
-    if(currentPosition)
-      map.panTo(currentPosition)
-    else 
-      console.log("currentPosition", currentPosition)
+  const panToUserPosition = async () => {
+    let result = await Permissions.query({name: "geolocation"})
+    if(result != "granted") {
+      alert(permissionNotification)
+    } else {
+      if(currentPosition)
+        map.panTo(currentPosition)
+      else 
+        console.log("currentPosition", currentPosition)
+    }
   }
    
 </script>
