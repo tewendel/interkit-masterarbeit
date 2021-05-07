@@ -11,6 +11,7 @@
 
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;
+  let connectionIssue = InterkitClient.connectionIssue;
 
   import { Plugins } from '@capacitor/core';
   const { SplashScreen } = Plugins;
@@ -21,6 +22,11 @@
     }
 
   }
+
+  const retry = () => {
+    window.location.reload(true);
+  }
+
   
 </script>
 
@@ -28,7 +34,12 @@
   {#if $projectId && initComplete}
     <slot ></slot>
   {:else}
-    loading....
+    <div class="Loading">
+      <p class="static-loading-indicator">laden....</p>
+      {#if $connectionIssue}
+      <button class="network-reload" on:click={retry}>verbinden</button>
+      {/if}
+    </div>
   {/if}
 </div>
 
@@ -138,6 +149,15 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
+    }
+
+    /* Styling for loading indikator */
+    .Loading {
+      padding: 20px;
+    }
+    .Loading button {
+      padding: 5px;
+      margin-top: 5px;
     }
   </style>
 </svelte:head>

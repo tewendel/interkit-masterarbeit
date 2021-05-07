@@ -11,6 +11,7 @@ let config = writable(null);
 
 // this store holds the projctId that is loaded with info from the config
 let projectId = writable(null);
+let connectionIssue = writable(false);
 
 let server;
 
@@ -96,6 +97,23 @@ const loadConfig = async () => {
     config.set(_config);
 }
 
+const fetchWithTimeout = async (resource, options={timeout: 8000}) => { 
+  const { timeout } = options;
+  
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
+  const response = await fetch(resource, {
+    ...options,
+    signal: controller.signal  
+  });
+  clearTimeout(id);
+
+  return response;
+}
+
+let connectionAlert = false;
+
 const getProjectId = async() => {
 
   let _projectId;
@@ -105,12 +123,23 @@ const getProjectId = async() => {
     _projectId = params.get("projectId");
   } else {
     console.log("trying to get projectId from server via slug", get(config)?.project_slug);
-    //let result = await server.call("project.getId", {slug: get(config)?.project_slug})
-    let result = await fetch(get(config)?.INTERKIT_BUNDLER_URL + "/project_id/" + get(config)?.project_slug)
+    let url = get(config)?.INTERKIT_BUNDLER_URL + "/project_id/" + get(config)?.project_slug
+    let result
+    try {
+      result = await fetchWithTimeout(url)
+    } catch (e) {
+      console.log(e);
+      if(!connectionAlert) {
+        alert("Diese App benötigt Internet-Zugriff. Bitte überprüfen Sie Ihre Verbindung.")
+        connectionAlert = true;
+        connectionIssue.set(true);
+      }
+    }    
+
     if(result) {
       _projectId = await result.text();
     } else {
-      alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+      console.log("couldn't retrieve projectId from slug " + get(config)?.project_slug);
     }
   } 
   console.log("INTERKIT_PROJECT_ID", _projectId);
@@ -277,6 +306,7 @@ const InterkitClient = {
   userId,
   config,
   projectId,
+  connectionIssue,
   connect,
   initApp: async () => {
     await loadConfig();
