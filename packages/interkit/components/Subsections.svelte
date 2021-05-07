@@ -36,10 +36,11 @@
 {#if $activeSection}
 
   <TopNavBar
-    label={$activeSection.title}
-    back={true}
+    icon="arrow-left"
     onClick={closeSection}
-  />
+  >
+    {$activeSection.title}
+  </TopNavBar>
   
 {:else}
 
