@@ -39,10 +39,12 @@
 <div id="layerControls">
   {#if activeLayer}
     <div>
-      {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
-        <span>(playing)</span>
-      {:else}
-        <span on:click={()=>{playAudio(audioElementRow)}}>play</span>
+      {#if audioElementRow}
+        {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
+          <span>(playing)</span>
+        {:else}
+          <span on:click={()=>{playAudio(audioElementRow)}}>play</span>
+        {/if}
       {/if}
       {activeLayer.name}
       <span on:click={()=>layerSelect(null)}>x</span>
