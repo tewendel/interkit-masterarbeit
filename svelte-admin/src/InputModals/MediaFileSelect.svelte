@@ -25,7 +25,7 @@
   let files = [];
 
   onMount(async ()=>{
-    files = await InterkitClient.call("mediafiles.get", projectId)
+    files = await InterkitClient.call("mediafiles.get", {projectId})
   })
 
 </script>

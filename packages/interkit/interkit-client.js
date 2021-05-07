@@ -310,8 +310,8 @@ const InterkitClient = {
   call: async (method, params) => {
 
     if(config && params && !params?.projectId) {
+      console.log("adding projectId to method params", params, method)
       params.projectId = get(projectId);
-      //console.log("added projectId to method params", params, method)
     }
 
     if(params && !params?.projectId) {
