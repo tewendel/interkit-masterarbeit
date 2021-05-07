@@ -83,11 +83,13 @@
     </Toolbar>
 
     <span slot="cell" let:row let:cell>
-      {#if cell.key === 'overflow' && cell.value}
-        <OverflowMenu style="float: right" flipped>
-          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
-          <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
-        </OverflowMenu>
+      {#if cell.key === 'overflow'}
+          {#if row.name != "empty"}
+            <OverflowMenu style="float: right" flipped>
+              <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
+              <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
+            </OverflowMenu>
+          {/if}
       {:else if cell.key === 'type' && cell.value}
         {row.type}
       {:else if cell.key === 'preview'}
