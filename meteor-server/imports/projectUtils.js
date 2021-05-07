@@ -89,7 +89,7 @@ const getAllOfProject = async function (projectId)  {
   const project = Projects.findOne({ _id: projectId })
   const sheets = Sheets.find({ projectId }).fetch()
   const rows = Rows.find({ projectId }).fetch()
-  const files = getMediaFiles(projectId).fetch()
+  const files = getMediaFiles({ projectId }).fetch()
 
   return {
     project,

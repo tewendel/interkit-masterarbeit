@@ -336,8 +336,10 @@ const InterkitClient = {
     }    
     let sub = await mediaFileSub;
     let mediafile = get(sub?.data)?.find(m => m.meta.key == key)
-    mediafile.link = 
-    `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+    if(mediafile) {
+      mediafile.link = 
+      `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+    } 
     return mediafile
   },
 
