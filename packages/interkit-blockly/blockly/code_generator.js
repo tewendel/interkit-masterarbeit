@@ -320,6 +320,15 @@ export const initCodeGenerator = (Blockly) => {
     return code;
   };
 
+  Blockly.JavaScript['ScrollContainer'] = function (block) {
+    var code = "<ScrollContainer \n"
+    code += ">\n"
+    code += statements(block, "default")
+    code += "</ScrollContainer>\n"
+    return code;
+  };
+
+
 
 
   

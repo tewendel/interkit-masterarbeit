@@ -52,10 +52,6 @@
   }
 
   $: {
-    console.log("contentelementaudio", element, elementColumns.shortDescriptionColumn, short_description)
-  }
-
-  $: {
     setupCategory(element)
   }
 
