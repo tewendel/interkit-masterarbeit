@@ -6,6 +6,7 @@ import http from 'http';
 import { get_compile } from './src/get_compile.mjs'
 import { get_bundle_zip } from './src/get_bundle_zip.mjs'
 import { get_config } from './src/get_config.mjs'
+import { get_local_config } from './src/get_local_config.mjs'
 import { get_project_id } from './src/get_project_id.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
 import { put_duplicate_project } from './src/put_duplicate_project.mjs'
@@ -36,6 +37,9 @@ app.get('/bundlezip/:projectId', get_bundle_zip)
 
 // get a interkit.config.json for a given app
 app.get('/config/:projectSlug', get_config)
+
+// get a interkit.config.json for a given app
+app.get('/localConfig/:projectSlug', get_local_config)
 
 // get projectId for a fiven project slug
 app.get('/project_id/:projectSlug', get_project_id)

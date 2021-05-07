@@ -94,5 +94,6 @@ async function gitAddAll(projectPath) {
 
 export {
   ensureRepositories,
-  getProjectPath
+  getProjectPath,
+  generateInterkitConfig
 }

@@ -20,6 +20,7 @@
   import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
 
   export let projectId, previewURL = "";
+  export let currentProject;
 
   const convert = new Convert();
   const query = new URLSearchParams(); // modify app configuration on request
@@ -27,6 +28,8 @@
   let bundlezipURL = "";
   let bundleServerURL
   let themed = true
+  let localConfig = true
+
   let w, h
 
   const dropdown_AR_items = [
@@ -46,7 +49,15 @@
   $: {
     //console.log(themed)
     query.set("loadTheme", themed)
-    query.set("projectId", projectId)
+    //query.set("projectId", projectId)
+    //console.log("currentProject", $currentProject)
+    console.log("localConfig", localConfig)
+    if(localConfig) {
+      query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
+    } else {
+      query.delete("localConfigURL")
+    }
+    console.log("query", query.toString())
     previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }
@@ -83,6 +94,9 @@
     <Row>
       <Column>
         <Toggle size="sm" labelText="Apply Theme" toggled on:toggle={(e) => themed = e.detail.toggled}/>
+      </Column>
+      <Column>
+        <Toggle size="sm" labelText="Local Config" toggled on:toggle={(e) => localConfig = e.detail.toggled}/>
       </Column>
       <Column>
         Frame: {w} x {h} px
