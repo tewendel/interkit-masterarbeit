@@ -152,7 +152,7 @@
         </Button>
       </div>
 
-      <h4 class="AudioPlayer__Title title">
+      <h4 class="AudioPlayer__Title title" on:click={toggleExpanded}>
         {title}
       </h4>
 
@@ -193,19 +193,28 @@
     position: relative;
     z-index: 1000;
   }
+  .base-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
 
   .container:not(.expanded) .expanded-content {
     display: none;
   }
 
-  .base-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 12px;
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 500;
+  .container.expanded .base-content .title {
+    display: none;
+  }
+
+  .container.expanded .base-content {
+    justify-content: space-between;
   }
 
   .base-content > * {
@@ -270,7 +279,7 @@
     padding-top: 16px;
   }
   
-  audio {
+  .audio, audio {
     display:none;
   }
 
