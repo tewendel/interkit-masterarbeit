@@ -721,7 +721,7 @@
 
   {
     "type": "ContentElementAudioBlocklyWrapper",
-    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
+    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 shortDescription %20 %21 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
     "args0": [
       {
         "type": "input_dummy"
@@ -816,8 +816,17 @@
       },
       {
         "type": "input_dummy"
+      },
+      {
+        "name": "shortDescriptionColumn",
+        "type": "sheetColumn",
+        "columnType": "richText",
+        "text": "elements/short_description",
+        "value": "elements/short_description"
+      },
+      {
+        "type": "input_dummy"
       }
-
     ],
     "previousStatement": null,
     "nextStatement": null,

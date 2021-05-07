@@ -34,6 +34,7 @@
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
+  $: short_description = util.rowValString(element, elementColumns.shortDescriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
@@ -48,6 +49,10 @@
       categoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
       categoryRow = $categoryRowStore.find(r => r.key == categoryRowKey)
     }    
+  }
+
+  $: {
+    console.log("contentelementaudio", element, elementColumns.shortDescriptionColumn, short_description)
   }
 
   $: {
@@ -140,7 +145,7 @@
     </h4>
 
     <p class="ContentElementAudio__Description description">
-      {description}
+      {short_description}
     </p>
 
     {#if util.rowVal(element, elementColumns.linkColumn)}
