@@ -1,7 +1,7 @@
 <script>
   import { InterkitClient, util } from '../'
   import ContentElementAudio from './ContentElementAudio.svelte';
-
+  import SectionHeadline from './SectionHeadline.svelte'
 
   export let title;
   export let elementRows = [];
@@ -22,6 +22,13 @@
   
 </script>
 
+{#if title}
+<h3>
+  <SectionHeadline>
+    {title}
+  </SectionHeadline>
+</h3>
+{/if}
 <ContentElementAudio
     size="xs"
     element={elementRows_sorted?.[0]}
