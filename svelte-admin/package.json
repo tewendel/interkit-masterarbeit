@@ -6,7 +6,7 @@
     "preinstall": "check-engine",
     "sub-globals-from-dotenv": "envsub -s dollar-basic -f .env src/globals.envsub.js public/build/globals.js",
     "sub-globals-from-env": "envsub -s dollar-basic src/globals.envsub.js public/build/globals.js",
-    "dev": "npm run sub-globals-from-dotenv && rollup -c -w",
+    "dev": "npm run sub-globals-from-dotenv && rollup -c -w --host 0.0.0.0",
     "start": "npm run sub-globals-from-env && sirv public --host 0.0.0.0",
     "serve:dev": "npm run sub-globals-from-dotenv && sirv public --dev --no-clear"
   },
