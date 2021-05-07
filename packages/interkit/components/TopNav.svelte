@@ -24,10 +24,11 @@
 
 {#if showNavBar}
   <TopNavBar
-    {label}
-    back={pageOpen}
     onClick={togglePage}
-  />
+    icon={pageOpen ? "arrow-left" : "settings"}
+  >
+    {label}
+  </TopNavBar>
 {/if}
 
 <div class:active={pageOpen} class="page">

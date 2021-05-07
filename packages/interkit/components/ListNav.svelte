@@ -2,6 +2,7 @@
 
   import { setContext, getContext } from 'svelte';
   import { writable } from 'svelte/store';
+  import TopNavBar from './TopNavBar.svelte'
 
   // get function to hide tabnav
   import { TABS } from './Tabs.svelte';  
@@ -29,7 +30,9 @@
 </script>
 
 <div class:active={$singleViewData}>
-  <span on:click={()=>{setSingleView(null)}}>{"<"} {$singleViewData?.filterCategoryName}</span>
+  <TopNavBar icon="arrow-left" onClick={()=>{setSingleView(null)}}>
+    {$singleViewData?.filterCategoryName}
+  </TopNavBar>
   <slot name="singleView"></slot>
 </div>
 

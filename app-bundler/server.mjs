@@ -34,10 +34,10 @@ app.use(express.static('public', {index: false}))
 // get a zip file of the bundle for a given app
 app.get('/bundlezip/:projectId', get_bundle_zip)
 
-// get a zip file of the bundle for a given app
+// get a interkit.config.json for a given app
 app.get('/config/:projectSlug', get_config)
 
-// get a zip file of the bundle for a given app
+// get projectId for a fiven project slug
 app.get('/project_id/:projectSlug', get_project_id)
 
 // compile a bundle for a given app

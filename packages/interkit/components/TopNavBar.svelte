@@ -2,20 +2,21 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
 
-  export let label;
-  export let back = false;
+  export let icon = "";
   export let onClick;
 
 </script>
 
-<nav class:back class="TopNavBar">
-  <span class="TopNavBar__Button button">
-    <Button on:click={onClick}>
-      <Icon type={back ? "arrow-left" : "settings"} />
-    </Button>
-  </span>
+<nav class="TopNavBar">
+  {#if icon}
+    <span class="TopNavBar__Button button">
+      <Button on:click={onClick}>
+        <Icon type={icon} />
+      </Button>
+    </span>
+  {/if}
   <span class="TopNavBar__Label label">
-    {label}
+    <slot />
   </span>
 </nav>
 
@@ -23,10 +24,7 @@
   nav {
     display: flex;
     height: 55px;
-    top: 0;
-    left: 0;
     width: 100%;
-    z-index: 1000;
     align-content: left;
     align-items: center;
     box-sizing: border-box;
@@ -42,10 +40,6 @@
     font-size: 24px;
     line-height: 32px;
   }
-
-  nav.back {
-    justify-content: left;
-  } 
 
   nav span:hover {
     cursor: pointer;

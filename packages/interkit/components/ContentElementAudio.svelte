@@ -172,6 +172,20 @@
   .content {
     grid-column: 1;
     grid-row: 3;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content .title {
+    order: 2;
+  }
+
+  .content .subtitle {
+    order: 1;
+  }
+
+  .content .description {
+    order: 3;
   }
 
   /* Controls Layout */
