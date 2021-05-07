@@ -29,6 +29,9 @@
         }
     })
     : []
+    if(radio && mediafiles) {
+      rows = rows.concat({name: "empty", value: null})
+    }
   }
 
   let searchQuery;
@@ -80,18 +83,18 @@
     </Toolbar>
 
     <span slot="cell" let:row let:cell>
-      {#if cell.key === 'overflow'}
+      {#if cell.key === 'overflow' && cell.value}
         <OverflowMenu style="float: right" flipped>
           <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
-          <OverflowMenuItem on:click={()=>{alert(row.meta.key)}} text="show key" />
+          <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
         </OverflowMenu>
-      {:else if cell.key === 'type'}
+      {:else if cell.key === 'type' && cell.value}
         {row.type}
       {:else if cell.key === 'preview'}
-        <MediaFilePreview key={row.meta.key} {projectId} mediaManager/>
-      {:else if cell.key === 'link'}
+        <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
+      {:else if cell.key === 'link' && cell.value}
         <a href={row.link} title={row.link} target="_blank" class="truncate">url</a>
-      {:else}{cell.value}{/if}
+      {:else}{cell.value || ""}{/if}
     </span>
 
   </DataTable>

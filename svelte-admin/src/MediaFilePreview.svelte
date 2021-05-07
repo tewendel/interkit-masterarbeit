@@ -27,7 +27,9 @@
 {:else if mediafile?.isImage}
   <img class="preview-image" src={encodeURI(mediafile.link)}/>
 {:else}
+  {#if mediafile}
   no preview for this media type
+  {/if}
 {/if}
 
 

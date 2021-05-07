@@ -310,8 +310,8 @@ const InterkitClient = {
   call: async (method, params) => {
 
     if(config && params && !params?.projectId) {
+      console.log("adding projectId to method params", params, method)
       params.projectId = get(projectId);
-      //console.log("added projectId to method params", params, method)
     }
 
     if(params && !params?.projectId) {
@@ -336,8 +336,10 @@ const InterkitClient = {
     }    
     let sub = await mediaFileSub;
     let mediafile = get(sub?.data)?.find(m => m.meta.key == key)
-    mediafile.link = 
-    `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+    if(mediafile) {
+      mediafile.link = 
+      `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+    } 
     return mediafile
   },
 

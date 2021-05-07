@@ -28,7 +28,7 @@
   {#if $projectId && initComplete}
     <slot ></slot>
   {:else}
-    loading...
+    loading....
   {/if}
 </div>
 
