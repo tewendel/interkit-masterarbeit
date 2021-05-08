@@ -16,7 +16,9 @@
 
   const listNavContext = getContext("listNav");
   const singleViewData = listNavContext?.singleViewData
-  
+
+  const scrollContext = getContext("scrollContainer")
+
   // this is the id of the sheet containing the categories
   let categorySheetKey
   
@@ -45,6 +47,8 @@
   let dataRowsSorted; // 
 
   const setupSub = async ()=> {
+
+    scrollContext?.scrollUp();
 
     //console.log(dataSheet)
     if(!dataSheet) return
