@@ -3,6 +3,8 @@ import fs from 'fs'
 import fse from 'fs-extra'
 import git from 'isomorphic-git'
 
+import { gitAddAll } from './git.mjs'
+
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 const INTERKIT_BUNDLER_URL = process.env.INTERKIT_BUNDLER_URL
 const INTERKIT_SERVER_WEBSOCKETS_URL = process.env.INTERKIT_SERVER_WEBSOCKETS_URL
@@ -76,20 +78,6 @@ async function setupNewRepository(project) {
   } catch (err) {
     console.log(err);
   }
-}
-
-async function gitAddAll(projectPath) {
-  const repo = {
-    fs,
-    dir: projectPath
-  }
-  await git.statusMatrix(repo).then((status) =>
-    Promise.all(
-      status.map(([filepath, , worktreeStatus]) =>
-        worktreeStatus ? git.add({ ...repo, filepath }) : git.remove({ ...repo, filepath })
-      )
-    )
-  )
 }
 
 export {

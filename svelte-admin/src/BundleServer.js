@@ -61,6 +61,13 @@ const compileReloadPreview = async () => {
   reloadPreview();
 }
 
+const gitStatus = async (projectId) => {
+  const res = await fetch(bundleServerURL + "/git/status/" + projectId)
+  const resJSON = await res.json()
+  return resJSON
+}
+
+
 export const BundleServer = {
   connect,
   getServerURL: () => bundleServerURL,
@@ -68,5 +75,6 @@ export const BundleServer = {
   compileReloadPreview,
   reloadPreview,
   duplicateProject,
+  gitStatus,
 }
 
