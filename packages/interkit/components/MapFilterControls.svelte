@@ -125,6 +125,8 @@
     right: 0;
     bottom: 55px;
     z-index: 1000;
+    font-size: 14px;
+    line-height: 20px;
   }
 
   #filterControls span:hover {
