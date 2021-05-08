@@ -24,8 +24,11 @@
 <style>
 
   .tab-panel-container {
-    padding-bottom: 50px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    overflow-y: hidden;
   }
 
 </style>

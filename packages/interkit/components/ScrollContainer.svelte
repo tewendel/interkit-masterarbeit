@@ -8,7 +8,7 @@
 <style>
 
   div {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
   }
 
