@@ -2,11 +2,23 @@
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   export const playAudio = async (elementRow, autoplay=true) => {
     audioPlayerStatus.set({
+      active: true,
       elementRow,
       autoplay,
       paused: false
     })
   }
+
+  export const format = (seconds) => {
+    if (isNaN(seconds)) return '...';
+
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) seconds = '0' + seconds;
+
+    return `${minutes}:${seconds}`;
+  }
+
 </script>
 
 <script>
@@ -47,7 +59,8 @@
   }]
 
   const closePlayer = () => {
-    audioPlayerStatus.set(null)
+    mediafile = null;
+    audioPlayerStatus.set({active: false})
   }
 
   const togglePlay = () => {
@@ -98,10 +111,17 @@
   const toggleExpanded = () => {
     playerExpanded = !playerExpanded;
   }
+
+  const seek = (seconds) => {
+    audioPlayerStatus.set({
+      ...$audioPlayerStatus,
+      currentTime: $audioPlayerStatus.currentTime + seconds
+    })
+  }
     
 </script>
 
-{#if $audioPlayerStatus}
+{#if $audioPlayerStatus?.active}
 
 <div class="AudioPlayer container" class:expanded={playerExpanded}>
 
@@ -134,6 +154,7 @@
           {@html marked(description)}
         {/if}
       </p>
+
     </div>
 
     <div class="AudioPlayer__Content base-content">
@@ -146,23 +167,46 @@
         </button>
       </div>
 
+      <div class="AudioPlayer__PlayButton backbutton expanded-content">
+        <Button inverse on:click={()=>{seek(-30)}}>
+          <Icon inverse type={"skip-backward"} />
+        </Button>
+      </div>
+
       <div class="AudioPlayer__PlayButton playbutton">
         <Button inverse on:click={togglePlay}>
           <Icon inverse type={ $audioPlayerStatus.paused ? "play" : "pause"} />
         </Button>
       </div>
 
+      <div class="AudioPlayer__PlayButton backbutton expanded-content">
+        <Button inverse on:click={()=>{seek(10)}}>
+          <Icon inverse type={"skip-forward"} />
+        </Button>
+      </div>
+
+
       <h4 class="AudioPlayer__Title title" on:click={toggleExpanded}>
         {title}
       </h4>
 
+
+
     {#key mediafile}
       {#if mediafile}
         <span class="AudioPlayer__Audioplayer audio">
-          <audio controls bind:paused={$audioPlayerStatus.paused} autoplay={$audioPlayerStatus.autoplay}>
+          <audio 
+            controls
+            bind:currentTime={$audioPlayerStatus.currentTime}
+            bind:duration={$audioPlayerStatus.duration}
+            bind:paused={$audioPlayerStatus.paused} 
+            autoplay={$audioPlayerStatus.autoplay}
+          >
             <source src={encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
         </span>
+
+        
       {/if}
     {/key}
 
@@ -174,6 +218,11 @@
       </button>
     </div>
 
+  </div>
+
+  <div class="AudioPlayer__Expanded__Controls" class:expanded={playerExpanded}>
+        <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
+        <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
   </div>
 
 </div>
@@ -277,6 +326,20 @@
 
   .AudioPlayer__Expanded__Description {
     padding-top: 16px;
+  }
+
+  .AudioPlayer__Expanded__Controls:not(.expanded) {
+    display: none;
+  }
+
+  .AudioPlayer__Expanded__Controls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 12px 12px 12px;
+    box-sizing: border-box;
   }
   
   .audio, audio {

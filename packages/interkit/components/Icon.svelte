@@ -76,4 +76,12 @@
   .icon-filter {
     background-image: url("../icons/Filter.svg");
   }
+
+  .icon-skip-forward {
+    background-image: url("../icons/forward_10.svg");
+  }
+
+  .icon-skip-backward {
+    background-image: url("../icons/replay_30.svg");
+  }
 </style>
