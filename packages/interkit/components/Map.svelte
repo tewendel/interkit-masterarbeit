@@ -447,7 +447,7 @@
     bottom: 70px;
     margin-left: 10px;
     margin-right: 10px;
-    z-index: 1000;
+    z-index: 2000;
     background-color: #fff;
   }
 
