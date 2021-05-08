@@ -369,7 +369,7 @@
 
   {
     "type": "ElementList",
-    "message0": "<ElementList> %1 dataSheetKey %2 %3 sortColumn %4 %5 bookmarkFilter %6 %7 contentElement %8",
+    "message0": "<ElementList> %1 dataSheetKey %2 %3 sortColumn %4 %5 bookmarkFilter %6 %7 contentElement %8 %9 emptyElement %10 %11",
     "args0": [
       {
         "type": "input_dummy"
@@ -403,6 +403,16 @@
       {
         "type": "input_statement",
         "name": "contentElement"
+      },
+      {
+          "type": "input_dummy"
+      },
+      {
+      "type": "input_statement",
+      "name": "emptyElement"
+      },
+      {
+          "type": "input_dummy"
       }
     ],
     "previousStatement": null,

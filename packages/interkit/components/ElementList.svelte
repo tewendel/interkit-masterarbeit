@@ -111,14 +111,20 @@
 </script>
 
 {#if dataRowsSorted}
-<ul>
-  {#each dataRowsSorted as row}
-  <li>
-    <slot name="contentElement" element={row}></slot>
-  </li>
-  {/each}
-</ul>
+  {#if dataRowsSorted.length == 0}
+    <slot name="emptyElement"></slot>
+  {:else}
+    <ul>
+      {#each dataRowsSorted as row}
+      <li>
+        <slot name="contentElement" element={row}></slot>
+      </li>
+      {/each}
+    </ul>
+  {/if}
+
 {/if}
+
 
 <style>
   .back {
