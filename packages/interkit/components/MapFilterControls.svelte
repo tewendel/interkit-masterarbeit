@@ -29,6 +29,16 @@
     return util.rowVal(categoryRow, openFilterList.categoryNameColumn)
   }
 
+  const filterColorRGB = (categoryRow) => {
+    try {
+      let rgbArray = JSON.parse(util.rowVal(categoryRow, openFilterList.categoryColorColumn))
+      const c = (index) => Math.floor(rgbArray[index] * 256)
+      return `rgb(${c(0)},${c(1)},${c(2)})`
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   $: {
     if (!isFocused) filterSelectOpen = false // trigger closing
     //console.log(filterLists)  
@@ -83,6 +93,7 @@
         <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
           <Button nopadding>
             <span 
+              data-color={"color:" + filterColorRGB(categoryRow)}
               class="Map__FilterListLevel2__Item filter_list_level_2_item" 
               on:click={()=>{
             filterSelect(activeFilter && activeFilter.name == filterName(categoryRow) ? null : {
