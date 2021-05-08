@@ -21,7 +21,10 @@
   }
 
   div.active {
-    display: block;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
   }
 
   .subsection {
