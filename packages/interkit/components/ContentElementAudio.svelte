@@ -90,7 +90,7 @@
     <span class="ContentElementAudio__Play play">
       <Button on:click={play}>
         {#if playing}
-          (playing)
+          <Icon type={ $audioPlayerStatus.paused ? "play" : "pause"} />
         {:else}
           <Icon height="1em" type="play" />
           &thinsp;

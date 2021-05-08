@@ -1,12 +1,24 @@
 <script context="module">
+  import { get } from "svelte/store"
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   export const playAudio = async (elementRow, autoplay=true) => {
-    audioPlayerStatus.set({
-      active: true,
-      elementRow,
-      autoplay,
-      paused: false
-    })
+    if(elementRow) {
+      if(elementRow.key == get(audioPlayerStatus)?.elementRow?.key) {
+        // if this element is already in player, just toggle paused state
+        audioPlayerStatus.update( s => ({
+          ...s, paused: !get(audioPlayerStatus)?.paused
+        })) 
+      } else {
+        // new element, reset
+        audioPlayerStatus.set({
+          active: true,
+          elementRow,
+          autoplay,
+          paused: false,
+          currentTime: 0
+        })  
+      }
+    }
   }
 
   export const format = (seconds) => {
