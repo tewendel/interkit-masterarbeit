@@ -458,7 +458,7 @@
   .controls {
     position: absolute;
     right: 0;
-    bottom: 50%;
+    bottom: calc(50% - 64px);
     display: flex;
     flex-direction: column;
     z-index: 1000;

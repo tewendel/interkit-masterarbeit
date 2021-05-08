@@ -105,6 +105,8 @@
     left: 55px;
     bottom: 55px;
     z-index: 1000;
+    font-size: 14px;
+    line-height: 20px;
   }
 
   .active_layer {
