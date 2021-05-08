@@ -57,9 +57,5 @@
 </div>
 
 <style>
-
-  .feature-container {
-    border: 1px solid gray;
-    padding: 5px;
-  }
+ 
 </style>
