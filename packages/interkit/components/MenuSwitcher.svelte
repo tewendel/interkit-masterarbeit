@@ -12,7 +12,7 @@
 
 </script>
 
-<div on:click={doSwitch}>
+<div on:click={doSwitch} class="MenuSwitcher">
   <h3>
     <SectionHeadline>
       {title}
