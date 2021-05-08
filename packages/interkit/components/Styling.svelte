@@ -5,6 +5,7 @@
   export let font_family = "inter"
   export let google_font = "Inter:wght@200;300;400;500"
   export let background_color = "#FFFFFF"
+  export let background_color_highlight = "#E7EB27"
 
   import { onMount } from 'svelte'
 
@@ -22,6 +23,7 @@
     --ion-font-family: ${fontFamily};
     --ion-color-primary: ${primary_color};
     --color-background: ${background_color};
+    --color-background-highlight: ${background_color_highlight};
   `} >
   <slot />
 </div>

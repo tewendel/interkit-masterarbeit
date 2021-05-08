@@ -90,7 +90,7 @@
     <span class="ContentElementAudio__Play play">
       <Button on:click={play}>
         {#if playing}
-          <Icon type={ $audioPlayerStatus.paused ? "play" : "pause"} />
+          <Icon height="1em" type={ $audioPlayerStatus.paused ? "play" : "pause"} />
         {:else}
           <Icon height="1em" type="play" />
           &thinsp;
@@ -227,7 +227,15 @@
   .container.size-xs .content .link {
     display: none;
   }
- 
+
+  .container.size-xs {
+    height: 66vh;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
+    background-color: var(--color-background-highlight);
+  }
 
 
 </style>
