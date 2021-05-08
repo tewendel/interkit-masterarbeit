@@ -1,8 +1,9 @@
 <script>
   export let inverse = false
+  export let nopadding = false
 </script>
 
-<span class="Button button" on:click class:inverse>
+<span class="Button button" class:nopadding on:click class:inverse>
   <slot />
 </span>
 
@@ -14,6 +15,10 @@
     background-color: white;
     display: inline-block;
     overflow: hidden;
+  }
+
+  .nopadding {
+    padding: 0;
   }
 
   .button.inverse {

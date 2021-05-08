@@ -59,6 +59,7 @@
   let currentPosition;
 
   let selectedElement;
+  let controlsFocus; // which of the controls is focused -> hide the submenu of the other
 
   let elementRows; // store with the elements we want to show
   let unsubElementRows; // unsubscribe method to this store
@@ -376,18 +377,24 @@
   {/if}
 
   <div class="Map__LayerControls layer_controls">
+
     <MapFilterControls
+      on:click={() => controlsFocus="filters"}
+      isFocused={controlsFocus=="filters"}
       {filterLists}
       {setFilter}
       {activeFilter}
     />
 
     <MapLayerControls
+      on:click={() => controlsFocus="layers"}
+      isFocused={controlsFocus=="layers"}
       {layers}
       {setLayer}
       {activeLayer}
       elementRows = {$elementRows}
     />
+
   </div>
 
   <div class="Map__Controls controls">
@@ -466,14 +473,5 @@
   }
 
   .layer_controls {
-    position: absolute;
-    bottom: 0;
-    padding: 20px 55px 55px 55px;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    z-index: 1000;
-    display: flex;
-    place-content: space-between;
   }
 </style>

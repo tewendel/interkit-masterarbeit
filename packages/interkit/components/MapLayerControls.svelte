@@ -11,6 +11,7 @@
   export let setLayer;
   export let activeLayer;
   export let elementRows;
+  export let isFocused;
 
   let layerSelectOpen = false;
   let audioElementRow;
@@ -35,14 +36,15 @@
   }
   $: loadAudioElement(activeLayer)
 
+  $: if (!isFocused) layerSelectOpen = false // trigger closing
+
 </script>
 
-{#if layers?.length}
-  <div id="layerControls">
-    
-    {#if activeLayer}
-      <div class="MapLayerControls__ActiveLayer active_layer">
-        <Button>
+{#if activeLayer}
+  <div class="MapLayerControls__ActiveLayer active_layer active">
+    <Button nopadding>
+      <span class="MapLayerControls__ActiveLayer__Item active_layer_item">
+        <span class="label">
           {#if audioElementRow}
             {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
               <span>(playing)</span>
@@ -51,23 +53,39 @@
             {/if}
           {/if}
           {activeLayer.name}
-          <Icon type="close" height="1em" on:click={()=>layerSelect(null)} />
-        </Button>
-      </div>
-    {/if}
+        </span>
+        <Icon type="close" height="1em" on:click={()=>layerSelect(null)} />
+      </span>
+    </Button>
+  </div>
+{/if}
 
-      <span class="layerSelectToggle" on:click={toggleLayers}>
-        <Button>
-          <Icon type="layer" height="1em" />
-          layers
+{#if layers?.length}
+  <div id="layerControls" on:click>
+    
+      <span 
+        class="MapLayerControls__Button layerSelectToggle" 
+        on:click={toggleLayers}
+        class:active={layerSelectOpen}
+        >
+        <Button nopadding>
+          <span class="MapLayerControls__Button__Item button_item">
+            <Icon type="layer" height="1em" />
+            <span class="label">
+              Ebenen
+            </span>
+          </span>
         </Button>
       </span>
+
       {#if layerSelectOpen}
         <ul>
         {#each layers as layer}
-          <li>
-            <Button on:click={()=>{layerSelect(layer)}}>
-              {layer.name}
+          <li class:active={ activeLayer && layer.name == activeLayer.name}>
+            <Button on:click={()=>{layerSelect(activeLayer && layer.name == activeLayer.name ? null : layer)}}>
+              <span class="MapLayerControls__Layers__Item layers_item">
+                {layer.name}
+              </span>
             </Button>
           </li>
         {/each}
@@ -83,12 +101,29 @@
   #layerControls {
     display: flex;
     flex-direction: column-reverse;
-    place-items: flex-end;
+    position: absolute;
+    left: 55px;
+    bottom: 55px;
+    z-index: 1000;
   }
 
   .active_layer {
     position: absolute;
     top: 16px;
+    left: 16px;
+    z-index: 1000;
+  }
+
+  .active_layer_item .label {
+    max-width: calc(50vw - 64px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+
+  .active {
+    filter: invert(1);
   }
 
   span.layerSelectToggle, li span, #layerControls div {
@@ -100,7 +135,14 @@
   }
 
   li {
-    margin: 7px;
+    margin: 8px 0;
+  }
+
+  .button_item,
+  .active_layer_item,
+  .layers_item {
+    padding: 8px;
+    display: inline-block;
   }
 
 </style>
