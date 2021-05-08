@@ -89,8 +89,10 @@
   .media-player {
     position: absolute;
     width: 100%;
+    height: 100%;
     left: 0;
     bottom: 0;
+    pointer-events: none;
   }
 
   .buttons {

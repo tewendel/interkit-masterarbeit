@@ -87,6 +87,11 @@
   $: categoryOrderPosition = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.imageColumn)
 
+  let playerExpanded = false;
+  const toggleExpanded = () => {
+    playerExpanded = !playerExpanded;
+  }
+    
   let mediafile;
   const loadAudiofile = async (key) => {
     if(key) {
@@ -94,6 +99,7 @@
     } else {
       mediafile = null;
     }
+    playerExpanded = false;
   }
 
   $: {
@@ -119,11 +125,6 @@
     loadCategory($audioPlayerStatus?.elementRow)
   }
 
-  let playerExpanded = false;
-  const toggleExpanded = () => {
-    playerExpanded = !playerExpanded;
-  }
-
   const seek = (seconds) => {
     audioPlayerStatus.set({
       ...$audioPlayerStatus,
@@ -139,9 +140,11 @@
 
     <div class="AudioPlayer__Expanded expanded-content">
 
-      <figure class="AudioPlayer__Expanded__Picture">
-        <MediaFileImage fitDimension="height" mediafileRef={imageRef} />    
-      </figure>
+      {#if imageRef}
+        <figure class="AudioPlayer__Expanded__Picture">
+          <MediaFileImage fitDimension="height" mediafileRef={imageRef} />    
+        </figure>
+      {/if}
 
       <h3 class="AudioPlayer__Expanded__Title">
         {title}
@@ -253,7 +256,15 @@
     border-bottom-width: 0;
     position: relative;
     z-index: 1000;
+    pointer-events: auto;
+    position: absolute;
+    bottom: 0;
   }
+
+  .container.expanded {
+    height: 100%
+  }
+
   .base-content {
     display: flex;
     flex-direction: row;
@@ -264,6 +275,7 @@
     font-size: 20px;
     line-height: 24px;
     font-weight: 500;
+    height: 60px;
   }
 
   .container:not(.expanded) .expanded-content {
@@ -276,6 +288,11 @@
 
   .container.expanded .base-content {
     justify-content: space-between;
+  }
+
+  .container.expanded .expanded-content {
+    overflow-y: scroll;
+    flex: 1;
   }
 
   .base-content > * {
@@ -306,6 +323,7 @@
   }
 
   .AudioPlayer__Expanded {
+    padding-top: 16px;
     padding-bottom: 32px;
     display: flex;
     flex-direction: column;
@@ -333,11 +351,11 @@
 
   .AudioPlayer__Expanded__Description {
     order: 3;
-    overflow-y: auto;
   }
 
   .AudioPlayer__Expanded__Description {
     padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   .AudioPlayer__Expanded__Controls:not(.expanded) {
@@ -346,6 +364,7 @@
 
   .AudioPlayer__Expanded__Controls {
     width: 100%;
+    height: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
