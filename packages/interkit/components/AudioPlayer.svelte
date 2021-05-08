@@ -182,7 +182,7 @@
         </button>
       </div>
 
-      <div class="AudioPlayer__PlayButton backbutton expanded-content">
+      <div class="AudioPlayer__PlayButton seekbutton">
         <Button inverse on:click={()=>{seek(-30)}}>
           <Icon inverse type={"skip-backward"} />
         </Button>
@@ -194,7 +194,7 @@
         </Button>
       </div>
 
-      <div class="AudioPlayer__PlayButton backbutton expanded-content">
+      <div class="AudioPlayer__PlayButton seekbutton">
         <Button inverse on:click={()=>{seek(10)}}>
           <Icon inverse type={"skip-forward"} />
         </Button>
@@ -371,6 +371,10 @@
     justify-content: space-between;
     padding: 0px 12px 12px 12px;
     box-sizing: border-box;
+  }
+
+  :not(.expanded) .base-content .seekbutton {
+    display: none;
   }
   
   .audio, audio {
