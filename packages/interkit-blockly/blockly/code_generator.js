@@ -140,6 +140,7 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "bookmarkFilter")
     code += ">\n"
     code += slot(block, "contentElement", "element") 
+    code += slot(block, "emptyElement", "element") 
     code += "</ElementList>\n"
     return code;
   };

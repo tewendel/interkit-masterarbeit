@@ -1,6 +1,27 @@
+<script>
+
+  import { setContext } from 'svelte'
+
+  let containerElement;
+
+  const scrollUp = () => {
+    //console.log("scroll up!")
+    if(containerElement)
+      containerElement.scrollTo(0, 0)
+  }
+
+  // context for children (for example ElementList)
+  setContext("scrollContainer", {
+    scrollUp 
+  });
 
 
-<div>
+  
+
+</script>
+
+
+<div bind:this={containerElement}>
   <slot></slot>
 </div>
 
@@ -8,7 +29,7 @@
 <style>
 
   div {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
   }
 

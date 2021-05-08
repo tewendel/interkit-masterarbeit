@@ -27,7 +27,8 @@
 <style>
   .page {
     overflow-y: hidden;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     position: relative;

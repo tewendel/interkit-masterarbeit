@@ -59,7 +59,8 @@
   }
 
   div.list-nav-container .active {
-    display: block;
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 </style>
