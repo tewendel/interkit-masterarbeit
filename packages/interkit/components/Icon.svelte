@@ -17,10 +17,9 @@
     border: none;
     width: var(--height);
     height: var(--height);
-    margin: 0 4px;
     cursor: pointer;
     user-select: none;
-    display: inline-block;
+    display: inline-flex;
   }
 
   .icon.inverse {

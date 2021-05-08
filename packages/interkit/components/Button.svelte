@@ -13,7 +13,7 @@
     border: 1px solid rgba(0, 0, 0, 0.87);
     border-radius: 16px;
     background-color: white;
-    display: inline-block;
+    display: inline-flex;
     overflow: hidden;
   }
 

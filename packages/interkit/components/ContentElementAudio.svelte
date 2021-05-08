@@ -93,6 +93,7 @@
           (playing)
         {:else}
           <Icon height="1em" type="play" />
+          &thinsp;
           play
         {/if}
       </Button>
