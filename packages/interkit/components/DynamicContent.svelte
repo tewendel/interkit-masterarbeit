@@ -3,8 +3,7 @@
   import { InterkitClient, util } from '../'
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
-
-  import marked from "marked"
+  import MarkdownContent from './MarkdownContent.svelte'
 
   export let keyColumn; // the column for the human readable keys 
   export let contentColumn; // the column for the content
@@ -41,11 +40,11 @@
 
 </script>
 
-<div class="DynamicContent container">
+<div class="DynamicContent container" class:richtText={format == "richText"}>
   {#if $rowStore}
     {#if format == "richText"}
       {#if content}
-        {@html marked(content)}
+        <MarkdownContent {content} />
       {/if}
     {:else}
       {content}
@@ -59,4 +58,5 @@
     line-height: 20px;
     padding: 16px;
   }
+
 </style>
