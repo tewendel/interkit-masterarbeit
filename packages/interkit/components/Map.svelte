@@ -309,6 +309,9 @@
 
   // set the image overlay layer
   const setLayer = (layer) => {
+    if(imageOverlay) {
+      map.removeLayer(imageOverlay);
+    }
     activeLayer = layer;
     console.log(layer);
 
@@ -333,9 +336,6 @@
         map.removeLayer(labels_layer)
 
     } else {
-      if(imageOverlay) {
-        map.removeLayer(imageOverlay);
-      }
       if(!map.hasLayer(labels_layer)) {
           labels_layer.addTo(map);
       }
