@@ -23,7 +23,9 @@
   })
 
   const addSpecialElements = (c) => {
-    return c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
+    let result = c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
+    result = result?.replace("[version]", JSON.stringify(get(InterkitClient.config)?.bundle_version))
+    return result
   }
 
   const updateContent = async (contentSheetKey, contentKey, rows) => {
