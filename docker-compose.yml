@@ -28,8 +28,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.meteor-server
-      cache_from: 
-        - interkit/server:latest
+      #cache_from: 
+      #  - interkit/server:latest
       args:
         BUILD_SOURCE_PATH: ./meteor-server
         BUILD_REPOSITORIES_PATH: ./repositories
