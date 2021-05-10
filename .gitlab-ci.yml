@@ -13,6 +13,7 @@ docker-build:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
+    - docker pull interkit/bundler:latest
     - INTERKIT_IMAGE_TAG=latest docker-compose build --parallel
     - INTERKIT_IMAGE_TAG=latest docker-compose push
     - INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA docker-compose build --parallel
