@@ -372,6 +372,11 @@
 
   {#if selectedElement}
     <div class="marker_popup">
+      <div class="marker_popup_close">
+        <Button class="marker_popup_close" on:click={mapClick}>
+          <Icon type="close" />
+        </Button>
+      </div>
       <slot name="element" element={{size: "m", ...selectedElement}}></slot>
     </div>
   {/if}
@@ -449,6 +454,14 @@
     margin-right: 10px;
     z-index: 2000;
     background-color: #fff;
+
+    border: 1px solid black;
+  }
+
+  .marker_popup_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 
   :global(.leaflet-control) { /* hide default leaflet controls */
