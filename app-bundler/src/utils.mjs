@@ -29,5 +29,5 @@ const resolveProjectPath = (slug, res) => {
 export {
   validateProjectId,
   resolveProjectPath,
-  projectSlugRegex
+  projectSlugRegex,
 }

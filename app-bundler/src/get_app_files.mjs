@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import * as path from 'path';
+import { resolveProjectPath } from './utils.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 
@@ -10,12 +11,14 @@ const get_app_files = async (req, res, next) => {
 
   const match = req.path.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
 
+  if (match == null) res.sendStatus(404)
+
+  const slugOrId = match?.[1]
+  let subpath = match?.[2]
+
+  const projectId = resolveProjectPath(slugOrId, res)
   
   // console.log("url, match", req.url, match)
-  const projectId = match?.[1]
-  let subpath = match?.[2] 
-
-  if (match == null || !projectId) res.send(404)
 
   if(projectId) {  
     // console.log("projectId: " + projectId, "subpath: " + subpath)
@@ -41,7 +44,7 @@ const get_app_files = async (req, res, next) => {
       res.contentType(path.basename(filePath));
       res.send(file)
     } catch (error) {
-      res.send(404)
+      res.sendStatus(404)
     }
   }
 
