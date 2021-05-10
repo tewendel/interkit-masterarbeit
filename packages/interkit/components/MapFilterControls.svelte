@@ -91,9 +91,8 @@
       <ul class="Map__FilterListLevel2 filter_list_level_2">
       {#each openFilterList.categoryRows as categoryRow}
         <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
-          <Button nopadding>
+          <Button nopadding color={filterColorRGB(categoryRow)}>
             <span 
-              data-color={"color:" + filterColorRGB(categoryRow)}
               class="Map__FilterListLevel2__Item filter_list_level_2_item" 
               on:click={()=>{
             filterSelect(activeFilter && activeFilter.name == filterName(categoryRow) ? null : {

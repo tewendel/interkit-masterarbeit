@@ -1,9 +1,10 @@
 <script>
   export let inverse = false
   export let nopadding = false
+  export let color;
 </script>
 
-<span class="Button button" class:nopadding on:click class:inverse>
+<span class="Button button" class:nopadding on:click class:inverse style={color ? ("background-color:"+color) : ""}>
   <slot />
 </span>
 
