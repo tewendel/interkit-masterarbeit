@@ -84,7 +84,8 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile.app-bundler
-      cache_from: interkit/bundler:latest
+      cache_from: 
+        - interkit/bundler:latest
       args:
         BUILD_SOURCE_PATH: ./app-bundler
         BUILD_REPOSITORIES_PATH: ./repositories
