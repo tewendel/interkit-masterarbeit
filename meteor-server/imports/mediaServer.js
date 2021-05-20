@@ -4,6 +4,8 @@ const _fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: '/tmp' }) // Temp dir for multer
 
+const getMP3Duration = require('get-mp3-duration')
+
 require('dotenv').config({
   path: `${process.env.PWD}/.env`
 })
@@ -127,20 +129,29 @@ export const setupMediaServer = (app) => {
     if (req.file !== undefined /*&& req.file.mimetype.substr(0, 6) == 'image/'*/) {
     
         _fs.stat(req.file.path, function (_statError, _statData) { 
-          const _addFileMeta = {
-            fileName: req.file.originalname,
-            type: req.file.mimetype,
-            size: req.file.size,
-            meta: {
-              projectId: req.body.projectId,
-              key: uuidv4()
-            }
-          };
-
           _fs.readFile(req.file.path, function (_readError, _readData) {
             if (_readError) {
               console.log(_readError);
             } else {
+
+              let duration;
+              console.log(req.file)
+              if(req.file.mimetype == "audio/mpeg") {
+                duration = getMP3Duration(_readData)
+                console.log("getMp3Duration", duration);
+              }
+
+              const _addFileMeta = {
+                fileName: req.file.originalname,
+                type: req.file.mimetype,
+                size: req.file.size,
+                meta: {
+                  projectId: req.body.projectId,
+                  key: uuidv4(),
+                  duration,
+                }
+              };
+
               MediaFiles.write(_readData, _addFileMeta, function (_uploadError, _uploadData) {
                 if (_uploadError) {
                   console.log(_uploadError);
@@ -157,5 +168,13 @@ export const setupMediaServer = (app) => {
   });
 }
 
+// check that all audios have duration and add if needeed
+let audios = MediaFiles.find({type: "audio/mpeg", "meta.duration": {$exists: false}}).fetch();
+for(let audio of audios) {
+  const buffer = _fs.readFileSync(audio.path)
+  const duration = getMP3Duration(buffer)
+  console.log("adding duration to audio", audio, duration)
+  MediaFiles.update({_id: audio._id}, {$set: {meta: { ...audio.meta, duration }}});
+}
 
 

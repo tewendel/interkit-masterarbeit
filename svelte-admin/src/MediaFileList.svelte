@@ -3,7 +3,7 @@
   import { onDestroy } from 'svelte'
   import { DataTable, OverflowMenu, OverflowMenuItem, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
   import MediaFilePreview from './MediaFilePreview.svelte';
-  import { InterkitClient } from 'interkit';
+  import { InterkitClient, util } from 'interkit';
 
   export let mediafiles; // this should be an array, not a store
   export let radio = false;
@@ -13,6 +13,7 @@
   const headers = [
     { key: "name", value: "name" },
     { key: "type", value: "type" },
+    { key: "duration", value: "duration" },
     { key: "preview", value: "preview", sort: false },
     { key: "link", value: "link", sort: false },
     { key: "overflow", sort: false, empty: true },
@@ -24,7 +25,8 @@
     rows = mediafiles ? mediafiles.map(mediafile => {
         return {
           ...mediafile,
-          id: mediafile.meta.key,          
+          id: mediafile.meta.key,
+          duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot
         }
     })

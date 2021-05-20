@@ -38,7 +38,7 @@
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
-
+  
   let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
   const setupCategory = async (element) => {
@@ -53,6 +53,18 @@
 
   $: {
     setupCategory(element)
+  }
+
+  let duration;
+  const getDuration = async (_element) => {
+    let audioKey = util.rowVal(_element, elementColumns.audioColumn)?.value
+    let mediaFile = await InterkitClient.getMediaFile(audioKey);
+    //console.log(mediaFile);
+    duration = mediaFile?.meta?.duration;
+  }
+
+  $: {
+    getDuration(element)
   }
 
   const play = async () => {
@@ -94,7 +106,7 @@
         {:else}
           <Icon height="1em" type="play" />
           &thinsp;
-          play
+          <span class="ContentElementAudio__Duration">{util.formatDuration(duration)}</span>
         {/if}
       </Button>
     </span>

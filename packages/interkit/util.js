@@ -64,5 +64,15 @@ export default {
       //console.log("meters", meters)
       return meters;
     }
+  },
+
+  formatDuration: (milliseconds) => {
+    if (isNaN(milliseconds)) return '–';
+    let seconds = Math.floor(milliseconds / 1000);
+    //console.log("formatDuration", seconds);
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) seconds = '0' + seconds;
+    return `${minutes}:${seconds}`;
   }
 }
