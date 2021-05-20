@@ -229,8 +229,8 @@
     if(markerIconAsset) {
       markerIcon = L.icon({
         iconUrl: markerIconAsset,
-        iconSize:     [24, 24], // size of the icon
-        iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
+        iconSize:     [20, 20], // size of the icon
+        iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
       });
       //console.log(markerIcon)
     }
@@ -265,8 +265,8 @@
         if(!userIcon)
           userIcon = L.icon({
             iconUrl: "leaflet/user_pos.svg",
-            iconSize:     [12, 12], 
-            iconAnchor:   [6, 6], 
+            iconSize:     [18, 18], 
+            iconAnchor:   [9, 9], 
           });
 
         if(!userPositionMarker) {
@@ -360,8 +360,10 @@
     if(result.state != "granted") {
       alert(permissionNotification)
     } else {
-      if(currentPosition)
+      if(currentPosition) {
         map.panTo(currentPosition)
+        map.zoomIn(5)
+      }
       else 
         console.log("currentPosition", currentPosition)
     }
