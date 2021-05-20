@@ -125,11 +125,31 @@
     loadCategory($audioPlayerStatus?.elementRow)
   }
 
+  //let rangeSliderValue = $audioPlayerStatus?.currentTime
+  let rangeSliderValue = 0;
+  let rangeSliderDragging = false;
+
+  const updateSliderValue = (value) => {
+    if(!rangeSliderDragging) {
+      rangeSliderValue = value
+    }
+  }
+
+  $: updateSliderValue($audioPlayerStatus?.currentTime)
+
+  
   const seek = (seconds) => {
     audioPlayerStatus.set({
       ...$audioPlayerStatus,
       currentTime: $audioPlayerStatus.currentTime + seconds
     })
+  }
+
+  const seekTo = (seconds) => {
+    audioPlayerStatus.set({
+      ...$audioPlayerStatus,
+      currentTime: seconds
+    }) 
   }
     
 </script>
@@ -238,6 +258,22 @@
   <div class="AudioPlayer__Expanded__Controls" class:expanded={playerExpanded}>
         <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
         <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
+  </div>
+
+  <div class="AudioPlayer__Expanded__Controls" class:expanded={playerExpanded}>
+    <input 
+      type="range" 
+      class="seekPositionRangeSlider" 
+      name="seekPosition"
+      min="0" 
+      max={$audioPlayerStatus?.duration} 
+      bind:value={rangeSliderValue}
+      on:input={()=>{rangeSliderDragging = true;}}
+      on:change={()=>{
+        seekTo(rangeSliderValue)
+        rangeSliderDragging = false;
+      }}
+    >
   </div>
 
 </div>
@@ -379,6 +415,23 @@
   
   .audio, audio {
     display:none;
+  }
+
+  .seekPositionRangeSlider {
+    width: 100%;
+    -webkit-appearance: none;
+    background-color: #fff; 
+    height: 1px;
+  }
+
+  .seekPositionRangeSlider::-webkit-slider-thumb, .seekPositionRangeSlider::-moz-range-thumb {
+     -webkit-appearance: none;
+     height: 8px;
+     width: 8px;
+     background: #fff;
+     margin-top: -5px;
+     border-radius: 50%;
+     border: none;
   }
 
 </style>
