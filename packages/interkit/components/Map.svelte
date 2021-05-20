@@ -29,6 +29,8 @@
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen."; 
+  export let defaultBaseColor = [0.74, 0.79, 0.85];
+
 
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
@@ -178,6 +180,8 @@
     map = L.map('mapid', {
       zoomControl: false,
       attributionControl: false,
+      //preferCanvas: true,
+      //renderer: L.canvas()
     }).setView(defaultLocationLatLng, 13);  
 
     // these tiles fail to load on ios - not sure why
@@ -198,7 +202,7 @@
     // Instantiate our L.TileLayer.GL...
     satLayer = L.tileLayer.gl({
       uniforms: {
-        uRGB: [1.0, 1.0, 1.0]
+        uRGB: defaultBaseColor
       },
       fragmentShader: desaturateShader,
       tileUrls: [esriUrl],
@@ -206,13 +210,24 @@
     }).addTo(map);
 
     let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    let cartodbUrl = 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
-
-    labels_layer = L.tileLayer(cartodbUrl, {
+    let labelUrl = 'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'
+    labels_layer = L.tileLayer(labelUrl, {
       id: 'cartodb_labels', 
       //attribution: cartodbAttr
     }).addTo(map)
 
+    /*let Stamen_TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.{ext}', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abcd',
+      minZoom: 0,
+      maxZoom: 20,
+      ext: 'png'
+    });*/
+
+    //Stamen_TonerLabels.addTo(map)
+
+
+    
     // load the marker icon
     if(markerIconAsset) {
       markerIcon = L.icon({
@@ -302,7 +317,7 @@
       satLayer.setUniform("uRGB", colorRGBArray);
       satLayer.reRender();
     } else {
-      satLayer.setUniform("uRGB", [1.0, 1.0, 1.0]);
+      satLayer.setUniform("uRGB", defaultBaseColor);
       satLayer.reRender();
     }
   }
