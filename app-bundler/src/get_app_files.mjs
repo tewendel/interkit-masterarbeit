@@ -11,12 +11,16 @@ const get_app_files = async (req, res, next) => {
 
   const match = req.path.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
 
-  if (match == null) res.sendStatus(404)
+  if (match == null) {
+    res.sendStatus(404)
+    next();
+    return;
+  }
 
   const slugOrId = match?.[1]
   let subpath = match?.[2]
 
-  const projectId = resolveProjectPath(slugOrId, res)
+  const projectId = resolveProjectPath(slugOrId)
   
   // console.log("url, match", req.url, match)
 
@@ -48,6 +52,9 @@ const get_app_files = async (req, res, next) => {
       res.sendStatus(404)
       next();
     }
+  } else {
+    res.sendStatus(404)
+    next();
   }
   
 }

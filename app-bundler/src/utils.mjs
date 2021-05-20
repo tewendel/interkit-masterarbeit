@@ -11,7 +11,7 @@ const validateProjectSlug = (projectSlug) => {
   return (projectSlug && projectSlug.match(projectSlugRegex) !== null)
 }
 
-const resolveProjectPath = (slug, res) => {
+const resolveProjectPath = (slug) => {
   // TODO validate slug across system
   let projectId = false
   if (validateProjectSlug(slug)) {
@@ -21,7 +21,7 @@ const resolveProjectPath = (slug, res) => {
   if (validateProjectId(projectId)) {
     return projectId
   } else {
-    if (res) res.sendStatus(404)
+    //if (res) res.sendStatus(404)
     return false
   }
 }
