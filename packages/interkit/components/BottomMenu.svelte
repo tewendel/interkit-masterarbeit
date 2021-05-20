@@ -6,6 +6,7 @@
 
   import { setContext, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
+  import { InterkitClient } from '../'
 
   const tabs = [];
   const panels = [];
@@ -53,16 +54,20 @@
       selectedPanel
     });
 
-
+    const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 
 </script>
 
 <div class="BottomMenu container">
   <div class="BottomMenu__Pages pages">
     <slot name="pages"></slot>
-    <div class="BottomMenu__MediaPlayer media-player">
+  </div>
+
+  <div class="BottomMenu__MediaPlayer media-player" 
+    class:active={$audioPlayerStatus?.active}
+    class:expanded={$audioPlayerStatus?.expanded}
+  >
       <slot name="media_player"></slot>
-    </div>
   </div>
 
   <div class="BottomMenu__Buttons buttons">
@@ -87,12 +92,19 @@
   }
 
   .media-player {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
-    left: 0;
-    bottom: 0;
+    height: 0px;
     pointer-events: none;
+    display: flex;
+  }
+
+  .media-player.active {
+    height: 55px;
+  }
+
+  .media-player.expanded {
+    height: 100%;
   }
 
   .buttons {

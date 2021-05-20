@@ -103,7 +103,7 @@
     flex-direction: column-reverse;
     position: absolute;
     left: 55px;
-    bottom: 55px;
+    bottom: 30px;
     z-index: 1000;
     font-size: 14px;
     line-height: 20px;

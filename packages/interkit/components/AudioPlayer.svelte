@@ -15,7 +15,8 @@
           elementRow,
           autoplay,
           paused: false,
-          currentTime: 0
+          currentTime: 0,
+          expanded: false,
         })  
       }
     }
@@ -90,6 +91,9 @@
   let playerExpanded = false;
   const toggleExpanded = () => {
     playerExpanded = !playerExpanded;
+    audioPlayerStatus.update( s => ({
+      ...s, expanded: playerExpanded
+    }))
   }
     
   let mediafile;

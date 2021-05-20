@@ -122,7 +122,7 @@
     place-items: flex-end;
     position: absolute;
     right: 0;
-    bottom: 55px;
+    bottom: 30px;
     z-index: 1000;
     font-size: 14px;
     line-height: 20px;
