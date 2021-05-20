@@ -422,6 +422,9 @@
     -webkit-appearance: none;
     background-color: #fff; 
     height: 1px;
+    /* this is to have a larger target to tap */
+    border-top: 10px solid #000; 
+    border-bottom: 10px solid #000;
   }
 
   .seekPositionRangeSlider::-webkit-slider-thumb, .seekPositionRangeSlider::-moz-range-thumb {
