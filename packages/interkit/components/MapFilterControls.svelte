@@ -8,11 +8,15 @@
   export let setFilter;
   export let activeFilter;
   export let isFocused;
+  export let onClose;
 
   let filterSelectOpen = false;
 
   const toggleFilters = () => {
     filterSelectOpen = !filterSelectOpen;
+    if(!filterSelectOpen && onClose) {
+      onClose();
+    }
   }
   let openFilterList;
   const setOpenFilterList = (filterList) => {

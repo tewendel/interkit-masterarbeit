@@ -62,7 +62,7 @@
   let currentPosition;
 
   let selectedElement;
-  let controlsFocus; // which of the controls is focused -> hide the submenu of the other
+  let controlsFocus = null; // which of the controls is focused -> hide the submenu of the other
 
   let elementRows; // store with the elements we want to show
   let unsubElementRows; // unsubscribe method to this store
@@ -297,6 +297,7 @@
   })
 
   const setFilter = (filter) => {
+    controlsFocus = null;
     activeFilter = filter;
     updateMarkers();
 
@@ -322,6 +323,7 @@
 
   // set the image overlay layer
   const setLayer = (layer) => {
+    controlsFocus = null;
     if(imageOverlay) {
       map.removeLayer(imageOverlay);
     }
@@ -378,6 +380,10 @@
     map.zoomOut()
   }
 
+  const closeControls = () => {
+    controlsFocus = null;
+  }
+
 </script>
 
 <div class="Map__Container container">
@@ -408,44 +414,47 @@
     <MapFilterControls
       on:click={() => controlsFocus="filters"}
       isFocused={controlsFocus=="filters"}
+      onClose={closeControls}
       {filterLists}
       {setFilter}
       {activeFilter}
+      
     />
 
     <MapLayerControls
       on:click={() => controlsFocus="layers"}
       isFocused={controlsFocus=="layers"}
+      onClose={closeControls}
       {layers}
       {setLayer}
       {activeLayer}
-      elementRows = {$elementRows}
+      elementRows={$elementRows}
     />
 
   </div>
 
-  <div class="Map__Controls controls">
+    <div class="Map__Controls controls">
 
-    <button class="Map__Controls__ZoomIn zoomIn">
-      <Button on:click={zoomIn}>
-        <Icon type="plus" />
-      </Button>
-    </button>
+      <button class="Map__Controls__ZoomIn zoomIn">
+        <Button on:click={zoomIn}>
+          <Icon type="plus" />
+        </Button>
+      </button>
 
-    <button class="Map__Controls__ZoomOut zoomOut">
-      <Button on:click={zoomOut}>
-        <Icon type="minus" />
-      </Button>
-    </button>
+      <button class="Map__Controls__ZoomOut zoomOut">
+        <Button on:click={zoomOut}>
+          <Icon type="minus" />
+        </Button>
+      </button>
 
-    <button class="Map__Controls__Locate locate" id="locateButton">
-      <Button on:click={panToUserPosition}>
-        <Icon type="position" />
-      </Button>
-    </button>
+      <button class="Map__Controls__Locate locate" id="locateButton">
+        <Button on:click={panToUserPosition}>
+          <Icon type="position" />
+        </Button>
+      </button>
 
-  </div>
-
+    </div>
+  
   <div id="mapid" bind:this={mapElement}></div>
 
 </div>

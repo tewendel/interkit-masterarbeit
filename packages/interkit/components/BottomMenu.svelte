@@ -58,7 +58,7 @@
 
 </script>
 
-<div class="BottomMenu container">
+<div class="BottomMenu container" class:mediaPlayerActive={$audioPlayerStatus?.active}>
   <div class="BottomMenu__Pages pages">
     <slot name="pages"></slot>
   </div>

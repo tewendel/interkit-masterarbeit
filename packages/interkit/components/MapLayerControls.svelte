@@ -12,12 +12,14 @@
   export let activeLayer;
   export let elementRows;
   export let isFocused;
+  export let onClose;
 
   let layerSelectOpen = false;
   let audioElementRow;
   
   const toggleLayers = () => {
     layerSelectOpen = !layerSelectOpen;
+    if(!layerSelectOpen && onClose) onClose();
   }  
   const layerSelect = (layer) => {
     layerSelectOpen = false;
