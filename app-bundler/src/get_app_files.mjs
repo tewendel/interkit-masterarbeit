@@ -40,13 +40,13 @@ const get_app_files = async (req, res, next) => {
       const file = await fs.readFile(filePath)
       res.contentType(path.basename(filePath));
       res.send(file)
+      next();
     } catch (error) {
       res.send(404)
+      next();
     }
   }
-
-
-  next();
+  
 }
 
 export { get_app_files }
