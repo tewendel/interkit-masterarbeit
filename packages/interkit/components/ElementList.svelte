@@ -117,7 +117,7 @@
     <ul>
       {#each dataRowsSorted as row}
       <li>
-        <slot name="contentElement" element={row}></slot>
+        <slot name="contentElement" element={{...row, size: "s"}}></slot>
       </li>
       {/each}
     </ul>

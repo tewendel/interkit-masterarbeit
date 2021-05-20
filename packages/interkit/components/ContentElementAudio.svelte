@@ -25,7 +25,7 @@
 
   // xs - used in dashboard, no image, no description, no category info
   // s - used in bookmark list, small image, no description
-  // m - used in map - small image, no description
+  // m - used in map - small image, description
   // l - used in dashboard sliders and elementlist
   
   // use this to specify a bookmark list
@@ -228,7 +228,11 @@
 
   /* size variants */
 
-  .container.size-m .picture {
+  .container.size-s .description {
+    display: none;
+  }
+
+  .container.size-s .picture, .container.size-m .picture {
     width: 25%; 
   }
 

@@ -49,12 +49,21 @@
   }
   :global(html),
   :global(body) {
-    height: 100%;
+    /*height: 100%;*/
     overflow: hidden;
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
   }
+
+  :global(body) {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  :global(html) {
+    height: -webkit-fill-available;
+  }
+
   /* default font */
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
   :global(body) {

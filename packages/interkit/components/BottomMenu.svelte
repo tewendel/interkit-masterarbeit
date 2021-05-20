@@ -94,12 +94,12 @@
   .media-player {
     position: relative;
     width: 100%;
-    height: 0px;
     pointer-events: none;
-    display: flex;
+    display: none;
   }
 
   .media-player.active {
+    display: flex;
     height: 55px;
   }
 

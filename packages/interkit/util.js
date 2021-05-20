@@ -67,7 +67,7 @@ export default {
   },
 
   formatDuration: (milliseconds) => {
-    if (isNaN(milliseconds)) return '–';
+    if (isNaN(milliseconds)) return '';
     let seconds = Math.floor(milliseconds / 1000);
     //console.log("formatDuration", seconds);
     const minutes = Math.floor(seconds / 60);

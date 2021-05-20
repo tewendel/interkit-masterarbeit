@@ -6,6 +6,7 @@
 
   import { onMount, setContext, onDestroy } from 'svelte'
   import { get } from 'svelte/store'
+  import { fly } from 'svelte/transition';
   
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
@@ -385,16 +386,23 @@
   <slot name="layers"></slot>
 
   {#if selectedElement}
-    <div class="marker_popup">
-      <div class="marker_popup_close">
-        <Button class="marker_popup_close" on:click={mapClick}>
-          <Icon type="close" />
-        </Button>
+    <div class="marker_popup" 
+      class:active={selectedElement ? true : false}
+      transition:fly="{{ y: 300, duration: 100, opacity: 1 }}"
+    >
+      <div class="marker_popup_background">
+        <div class="marker_popup_close">
+          <Button class="marker_popup_close" on:click={mapClick}>
+            <Icon type="close" />
+          </Button>
+        </div>
+        {#if selectedElement}
+          <slot name="element" element={{size: "m", ...selectedElement}}></slot>
+        {/if}
       </div>
-      <slot name="element" element={{size: "m", ...selectedElement}}></slot>
     </div>
   {/if}
-
+  
   <div class="Map__LayerControls layer_controls">
 
     <MapFilterControls
@@ -464,12 +472,22 @@
   .marker_popup {
     position: absolute;
     bottom: 70px;
-    margin-left: 10px;
-    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     z-index: 2000;
-    background-color: #fff;
-
     border: 1px solid black;
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .marker_popup_background {
+    background-color: #fff;
+    position: relative;
+  }
+
+  .marker_popup.active {
+    display: block; 
   }
 
   .marker_popup_close {
