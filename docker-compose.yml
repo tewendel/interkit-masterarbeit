@@ -66,8 +66,8 @@ services:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
-      cache_from: 
-        - interkit/admin:latest
+      #cache_from: 
+      #  - interkit/admin:latest
       dockerfile: ./Dockerfile.svelte-admin
       args:
         BUILD_SOURCE_PATH: ./svelte-admin
@@ -88,8 +88,8 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile.app-bundler
-      cache_from: 
-        - interkit/bundler:latest
+      #cache_from: 
+      #  - interkit/bundler:latest
       args:
         BUILD_SOURCE_PATH: ./app-bundler
         BUILD_REPOSITORIES_PATH: ./repositories
