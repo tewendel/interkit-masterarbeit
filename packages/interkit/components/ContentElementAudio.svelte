@@ -158,7 +158,9 @@
     </p>
 
     {#if util.rowVal(element, elementColumns.linkColumn)}
-      <a class="ContentElementAudio__Link link" target="_blank" href="{util.rowVal(element, elementColumns.linkColumn)}">link</a>
+      <div class="link_container">
+        <a class="ContentElementAudio__Link link" target="_blank" href="{util.rowVal(element, elementColumns.linkColumn)}">LINK</a>
+      </div>
     {/if}
     
   </div>
@@ -200,6 +202,10 @@
 
   .content .description {
     order: 3;
+  }
+
+  .content .link_container {
+    order: 4;
   }
 
   /* Controls Layout */

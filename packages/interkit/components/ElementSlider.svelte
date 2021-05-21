@@ -8,10 +8,11 @@
   export let elementColumns;
   export let categoryColumns;
   export let categoryIndex = 0;
+  export let special = false;
 
 </script>
 
-<div class="ElementSlider container">
+<div class="ElementSlider container" class:special>
   <h3 class="ElementSlider__title title">
     <SectionHeadline>
       {title}
@@ -24,10 +25,10 @@
         {#each elementRows as element}
           <div class="ElementSlider__Slide slide">
             <ContentElementAudio
-            {element}
-            {elementColumns}
-            {categoryColumns}
-            {categoryIndex}
+              {element}
+              {elementColumns}
+              {categoryColumns}
+              {categoryIndex}
             />
           </div>
         {/each}
@@ -58,7 +59,7 @@
   .slide {
     width: 80%;
     flex: none;
-    border: 1px solid gray;
+    /*border: 1px solid gray;*/
     scroll-snap-align: center;
     box-sizing: border-box;
   }

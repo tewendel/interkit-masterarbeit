@@ -9,6 +9,7 @@
   export let elementRows;
   export let elementColumns;
   export let categoryColumns;
+  export let special = false; // true option used for events slider in GATE project
 
   // select the categories to use
   let categoryIndex = util.getCategoryIndex(sectionRow, sectionColumns);
@@ -48,4 +49,5 @@
       {elementColumns}
       {categoryColumns}
       {categoryIndex}
+      {special}
 />

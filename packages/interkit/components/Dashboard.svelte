@@ -32,6 +32,7 @@
   // columns for the individual elements eg in sliders
   export let elementTitleColumn;
   export let elementSupertextColumn;
+  export let elementShortDescriptionColumn;
   export let elementDescriptionColumn;
   export let elementAudioColumn;
   export let elementImageColumn;
@@ -46,6 +47,7 @@
     titleColumn: elementTitleColumn,
     supertextColumn: elementSupertextColumn,
     descriptionColumn: elementDescriptionColumn,
+    shortDescriptionColumn: elementShortDescriptionColumn,
     audioColumn: elementAudioColumn,
     imageColumn: elementImageColumn,
     categoryRefColumn: [elementCategoryRefColumn, elementCategory2RefColumn], 
@@ -53,6 +55,8 @@
     locationColumn: elementLocationColumn,    
     linkColumn: elementLinkColumn
   }
+
+  console.log("dashboard elementColumns", elementColumns)
 
   // columns for the primary category
   export let categoryTitleColumn;
@@ -174,6 +178,18 @@
         {elementColumns}
         elementRows={$elementRows}
         {categoryColumns}
+      />
+
+    {:else if section.type == "CategorySliderSpecial"}
+
+      <CategorySlider
+        title={section.title}
+        sectionRow={section.sectionRow}
+        {sectionColumns}
+        {elementColumns}
+        elementRows={$elementRows}
+        {categoryColumns}
+        special
       />
 
     {:else if section.type == "FeaturedCategory"}
