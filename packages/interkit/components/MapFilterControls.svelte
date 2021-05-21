@@ -95,7 +95,11 @@
       <ul class="Map__FilterListLevel2 filter_list_level_2">
       {#each openFilterList.categoryRows as categoryRow}
         <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
-          <Button nopadding color={filterColorRGB(categoryRow)}>
+          <Button 
+            nopadding 
+            color={!(activeFilter && activeFilter.name == filterName(categoryRow)) ? 
+              filterColorRGB(categoryRow) : null}
+          >
             <span 
               class="Map__FilterListLevel2__Item filter_list_level_2_item" 
               on:click={()=>{
@@ -152,7 +156,6 @@
     margin: 8px 0 8px 14px;
     white-space: nowrap;
   }
-
 
   .active {
     filter: invert(1);

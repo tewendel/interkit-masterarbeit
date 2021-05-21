@@ -4,7 +4,7 @@
   export let color;
 </script>
 
-<span class="Button button" class:nopadding on:click class:inverse style={color ? ("background-color:"+color) : ""}>
+<span class="Button button" class:nopadding on:click class:inverse style={color && !inverse ? ("background-color:"+color) : ""}>
   <slot />
 </span>
 
