@@ -117,7 +117,7 @@
     <ul>
       {#each dataRowsSorted as row}
       <li>
-        <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "m"}}></slot>
+        <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "l"}}></slot>
       </li>
       {/each}
     </ul>
