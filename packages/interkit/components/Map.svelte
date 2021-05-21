@@ -27,6 +27,9 @@
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerIconAsset; // path to asset we use for marker icon
+
+  export let markerCheckedIconAsset = "icons-gate/map_marker_checked.svg";
+
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen."; 
@@ -54,6 +57,7 @@
   let labels_layer; // layer for street names
   let mapElement; 
   let markerIcon;
+  let markerIconChecked;
   let userIcon;
   let userPositionMarker;
   let markers = [];
@@ -67,6 +71,8 @@
   let elementRows; // store with the elements we want to show
   let unsubElementRows; // unsubscribe method to this store
   let markerRows;
+
+  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
 
   // store of projectid
   let projectId = InterkitClient.projectId;
@@ -161,6 +167,9 @@
         if(markerIcon) {
           markerOptions.icon = markerIcon;
         }
+        if($elementProperties?.[markerValue.elementRow.key]?.checked) {
+          markerOptions.icon = markerIconChecked;
+        }
         //console.log(markerOptions)
         let marker = L.marker(markerValue.location, markerOptions).addTo(map)
         marker.payload = markerValue;
@@ -169,6 +178,11 @@
       }
     }
     // this probably needs to be much more efficient
+  }
+
+  $: {
+    if(markerRows && $elementProperties)
+      updateMarkers();
   }
 
   onMount(async ()=>{
@@ -226,14 +240,21 @@
     });
     labels_layer.addTo(map)
 
-    // load the marker icon
+    // load the marker icons
     if(markerIconAsset) {
       markerIcon = L.icon({
         iconUrl: markerIconAsset,
         iconSize:     [20, 20], // size of the icon
         iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
       });
-      //console.log(markerIcon)
+    }
+
+    if(markerCheckedIconAsset) {
+      markerIconChecked = L.icon({
+        iconUrl: markerCheckedIconAsset,
+        iconSize:     [20, 20], // size of the icon
+        iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      });
     }
 
   

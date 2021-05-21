@@ -58,7 +58,7 @@
     imageColumn,
     categoryRefColumn: [categoryRefColumn], 
     categoryOrderColumn: [categoryOrderColumn],
-    locationColumn,
+    locationColumn
   }
 
   export let categoryTitleColumn = "categories/name"
@@ -87,7 +87,7 @@
   $: description = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.imageColumn)
-
+  
   let playerExpanded = false;
   const toggleExpanded = () => {
     playerExpanded = !playerExpanded;
@@ -127,6 +127,21 @@
 
   $: {
     loadCategory($audioPlayerStatus?.elementRow)
+  }
+
+
+  // mark elements as "listend to" after 10s of playback
+  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
+  const markElementListened = (time) => {
+    if(time > 20) {
+      let key = $audioPlayerStatus?.elementRow?.key
+      if(key && !get(elementProperties)?.[key]?.checked) {
+        InterkitClient.setElementProperty(elementProperties, key, "checked", true)  
+      }      
+    }
+  }
+  $: {
+    markElementListened($audioPlayerStatus?.currentTime) 
   }
 
   //let rangeSliderValue = $audioPlayerStatus?.currentTime

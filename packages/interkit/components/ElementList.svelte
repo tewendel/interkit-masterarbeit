@@ -12,7 +12,7 @@
   export let bookmarkFilter // this is TRUE or FALSE
   let bookmarkStore;
   if(bookmarkFilter == "TRUE")
-    bookmarkStore = InterkitClient.getGlobalStore("bookmarks")
+    bookmarkStore = InterkitClient.getGlobalStore("elementProperties")
 
   const listNavContext = getContext("listNav");
   const singleViewData = listNavContext?.singleViewData
@@ -70,7 +70,7 @@
       //console.log("bookmarkFilter", bookmarkFilter);
       if(bookmarkFilter != "TRUE") return true;
       if(bookmarkFilter && $bookmarkStore) {
-        if($bookmarkStore?.[dataRow.key])
+        if($bookmarkStore?.[dataRow.key]?.bookmarked)
           return true;
         else 
           return false;

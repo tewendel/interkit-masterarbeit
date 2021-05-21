@@ -61,6 +61,7 @@ export const initCodeGenerator = (Blockly) => {
       "elementShortDescriptionColumn",      
       "elementAudioColumn",
       "elementLocationColumn",
+      "elementMinDistanceColumn",
       "elementImageColumn",
       "elementSupertextColumn",
       "elementCategoryRefColumn",
@@ -246,7 +247,8 @@ export const initCodeGenerator = (Blockly) => {
        "categoryTitleColumn",
        "categorySubtitleColumn",
        "locationColumn",
-       "shortDescriptionColumn"
+       "shortDescriptionColumn",
+       "minDistanceColumn"
     ]);
     
     code += "\n/>\n"
@@ -265,7 +267,8 @@ export const initCodeGenerator = (Blockly) => {
        "categoryOrderColumn",
        "categoryTitleColumn",
        "categorySubtitleColumn",
-       "locationColumn"
+       "locationColumn",
+       "minDistanceColumn"
     ]);
     code += "\n/>\n";
     return code;

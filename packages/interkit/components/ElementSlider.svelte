@@ -57,7 +57,7 @@
   }
 
   .slide {
-    width: 80%;
+    width: 85%;
     flex: none;
     /*border: 1px solid gray;*/
     scroll-snap-align: center;

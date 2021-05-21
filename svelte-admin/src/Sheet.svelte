@@ -136,8 +136,9 @@
 
     if(columnType == "number") {
       let newVal = prompt("Update " + columnName, (cell.value && typeof cell.value == "number") ? cell.value : "")
-      newVal = parseFloat(newVal);
+      console.log("newVal", newVal)
       if(newVal != null) {
+        newVal = parseFloat(newVal);
         InterkitClient.call('row.updateValue', {rowKey: row.key, colKey: column.key, newVal, projectId})
       }
     }

@@ -42,6 +42,7 @@
   export let elementCategory2OrderColumn;
   export let elementLocationColumn;
   export let elementLinkColumn;
+  export let elementMinDistanceColumn;
 
   const elementColumns = {
     titleColumn: elementTitleColumn,
@@ -53,7 +54,8 @@
     categoryRefColumn: [elementCategoryRefColumn, elementCategory2RefColumn], 
     categoryOrderColumn: [elementCategoryOrderColumn, elementCategory2OrderColumn],
     locationColumn: elementLocationColumn,    
-    linkColumn: elementLinkColumn
+    linkColumn: elementLinkColumn,
+    minDistanceColumn: elementMinDistanceColumn
   }
 
   console.log("dashboard elementColumns", elementColumns)

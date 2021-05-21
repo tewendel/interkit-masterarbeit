@@ -1,7 +1,7 @@
 <script>
   export let inverse = false
   export let nopadding = false
-  export let color;
+  export let color = null;
 </script>
 
 <span class="Button button" class:nopadding on:click class:inverse style={color && !inverse ? ("background-color:"+color) : ""}>

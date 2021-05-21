@@ -1,6 +1,7 @@
 <script>
 
   import { onMount } from 'svelte';
+  import { get } from "svelte/store"
 
   import { InterkitClient, util } from '../'
   
@@ -38,7 +39,7 @@
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
-  
+
   let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
   const setupCategory = async (element) => {
@@ -67,27 +68,66 @@
     getDuration(element)
   }
 
-  const play = async () => {
-    if(typeof element.onPlay == "function") {
-      element.onPlay();
-    }
-    await playAudio(element)      
+  const userPositionStore = InterkitClient.getGlobalStore("userPosition");
+  let distanceMeters;
+  let distance = "";
+
+  const formatDistance  = (meters) => {
+    let d = "";
+    if(meters < 1000) d = meters + "m";
+    else d = Math.floor(meters / 1000) + "km";
+    return d;
   }
 
-  const userPositionStore = InterkitClient.getGlobalStore("userPosition");
-  let distance = "";
   const calculateDistance = (userPosition) => {
     let elementPosition = util.rowVal(element, elementColumns.locationColumn);
-    let meters = util.getDistance(elementPosition, userPosition)
-    if(meters) {
-      if(meters < 1000) distance = meters + "m";
-      else distance = Math.floor(meters / 1000) + "km";
+    distanceMeters = util.getDistance(elementPosition, userPosition)
+    if(distanceMeters) {
+      distance = formatDistance(distanceMeters)
     }
   }
 
   $: {
     calculateDistance($userPositionStore)
   }
+
+  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
+
+  const play = async () => {
+
+    if(typeof element.onPlay == "function") {
+      element.onPlay();
+    }
+
+    // check if this has a minDistance set
+    let minDistance = util.rowVal(element, elementColumns.minDistanceColumn)
+    console.log("minDistance", minDistance, distanceMeters)
+    
+    // check if this has been unlocked
+    let unlocked = get(elementProperties)?.[element.key]?.unlocked;
+    console.log("unlocked status:", unlocked)
+
+    // check if we can play this
+    if(
+      !distanceMeters || // we have no info about users distance, for example gps broken
+      unlocked || // this has alreaddy been unlocked
+      !minDistance || // there is no minDistance set
+      (minDistance && distanceMeters < minDistance) // we are inside the appropriate distance
+    ) {
+      // if close enough, start playback and mark as unlocked
+      await playAudio(element)      
+      if(!unlocked)
+        InterkitClient.setElementProperty(elementProperties, element.key, "unlocked", true)  
+    } else {
+      // if not, refuse playback with info  
+      alert("Sie sind zu weit entfernt, um das Audio freizuschalten! Aktuelle Entfernung: " + distance)
+    }
+    
+  }
+
+
+
+
 
 </script>
 

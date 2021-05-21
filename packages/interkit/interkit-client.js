@@ -413,16 +413,26 @@ const InterkitClient = {
   getGlobalStore: (key) => {
     if(!globalStores[key]) {
       let persistedStoreJSON = localStorage.getItem(key)
-      //console.log("localStorage store?", key, JSON.stringify(persistedStoreJSON))
       let persistedStore;
       try {
         persistedStore = JSON.parse(persistedStoreJSON)
       } catch (e) {
         console.log(e)
       }
+      console.log("localStorage store", key, persistedStore)
       globalStores[key] = writable(persistedStore);   
     }
     return globalStores[key]
+  },
+
+  setElementProperty: (store, key, property, value) => {
+    let storeData = get(store)
+    if(!storeData) storeData = {}
+    if(!storeData[key]) storeData[key] = {};
+    storeData[key][property] = value;
+    console.log("setElemmentProperty", property, value, storeData)
+    store.set(storeData);
+    localStorage.setItem("elementProperties", JSON.stringify(storeData));
   },
 
   registerGlobalMethod: (key, method) => {

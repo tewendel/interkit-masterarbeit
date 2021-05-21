@@ -5,33 +5,18 @@
   
   export let elementKey;
 
-  const bookmarkFilter = "bookmarks"
-  const bookmarkStore = InterkitClient.getGlobalStore(bookmarkFilter)
+  const bookmarkStore = InterkitClient.getGlobalStore("elementProperties")
   
   const addBookmark = (key) => {
-    let bookmarks = get(bookmarkStore)
-    console.log(bookmarks, key)
-    if(!bookmarks) {
-      bookmarks = {}
-    }
-    if(!bookmarks[key]) {
-      bookmarks[key] = true;
-    }
-    bookmarkStore.set(bookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    InterkitClient.setElementProperty(bookmarkStore, key, "bookmarked", true)
   }
   
   const removeBookmark = (key) => {
-    let bookmarks = get(bookmarkStore)
-    if(bookmarks) 
-      if(bookmarks[key]) {
-        bookmarks[key] = undefined;
-      }
-    bookmarkStore.set(bookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks)); 
+    //console.log("removeBookmark", get(bookmarkStore))
+    InterkitClient.setElementProperty(bookmarkStore, key, "bookmarked", false)
   }
 
-  $: isBookmarked = $bookmarkStore ? $bookmarkStore?.[elementKey] : false
+  $: isBookmarked = $bookmarkStore ? $bookmarkStore?.[elementKey]?.bookmarked : false
   
   const toggleBookmark = () => {
     if(isBookmarked) 
@@ -44,9 +29,9 @@
 
 <span on:click={toggleBookmark}>
   {#if isBookmarked}
-    gemerkt
+    GEMERKT
   {:else}
-    merken
+    MERKEN
   {/if}
 </span>
 

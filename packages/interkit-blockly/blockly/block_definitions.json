@@ -12,7 +12,7 @@
 
   {
   "type": "Dashboard",
-  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23 sectionCategory2Ref %28 %29 sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementShortDescriptionColumn %56 %57 elementSupertextColumn %50 %51 elementAudio %12 %13 elementImage %14 %15 elementLocationColumn %48 %49 elementCategoryRef %36 %37 elementCategoryOrderColumn %40 %41 elementCategory2Ref %38 %39 elementCategory2OrderColumn %42 %43 elementLink %54 %55 categoryTitle %16 %17 categorySubtitleColumn %44 %45 categoryDescription %18 %19 categoryImage %20 %21 categoryUnlisted %52 %53 category2Title %30 %31 category2SubtitleColumn %46 %47 category2Description %32 %33 category2Image %34 %35",
+  "message0": "<Dashboard> %1 sectionTitle %2 %3 sectionType %6 %7 sectionElementRef %4 %5 sectionCategoryRef %22 %23 sectionCategory2Ref %28 %29 sectionImage %24 %25 sectionOrder %26 %27 elementTitle %8 %9 elementDescription %10 %11 elementShortDescriptionColumn %56 %57 elementSupertextColumn %50 %51 elementAudio %12 %13 elementImage %14 %15 elementLocationColumn %48 %49 elementMinDistanceColumn %58 %59 elementCategoryRef %36 %37 elementCategoryOrderColumn %40 %41 elementCategory2Ref %38 %39 elementCategory2OrderColumn %42 %43 elementLink %54 %55 categoryTitle %16 %17 categorySubtitleColumn %44 %45 categoryDescription %18 %19 categoryImage %20 %21 categoryUnlisted %52 %53 category2Title %30 %31 category2SubtitleColumn %46 %47 category2Description %32 %33 category2Image %34 %35",
   "args0": [
     {
       "type": "input_dummy"
@@ -300,6 +300,16 @@
       "columnType": "richText",
       "text": "elements/short_description",
       "value": "elements/short_description"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "name": "elementMinDistanceColumn",
+      "type": "sheetColumn",
+      "columnType": "number",
+      "text": "elements/minDistance",
+      "value": "elements/minDistance"
     },
     {
       "type": "input_dummy"
@@ -635,7 +645,7 @@
   
   {
     "type": "AudioPlayer",
-    "message0": "<AudioPlayer> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
+    "message0": "<AudioPlayer> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 minDistanceColumn %20 %21 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
     "args0": [
       {
         "type": "input_dummy"
@@ -730,6 +740,16 @@
       },
       {
         "type": "input_dummy"
+      },
+      {
+        "name": "minDistanceColumn",
+        "type": "sheetColumn",
+        "columnType": "number",
+        "text": "elements/minDistance",
+        "value": "elements/minDistance"
+      },
+      {
+        "type": "input_dummy"
       }
     ],
     "previousStatement": null,
@@ -741,7 +761,7 @@
 
   {
     "type": "ContentElementAudioBlocklyWrapper",
-    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 shortDescription %20 %21 image %8 %9 locationColumn %18 %19 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
+    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 shortDescription %20 %21 image %8 %9 locationColumn %18 %19 minDistanceColumn %22 %23 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
     "args0": [
       {
         "type": "input_dummy"
@@ -843,6 +863,16 @@
         "columnType": "richText",
         "text": "elements/short_description",
         "value": "elements/short_description"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "minDistanceColumn",
+        "type": "sheetColumn",
+        "columnType": "number",
+        "text": "elements/minDistance",
+        "value": "elements/minDistance"
       },
       {
         "type": "input_dummy"

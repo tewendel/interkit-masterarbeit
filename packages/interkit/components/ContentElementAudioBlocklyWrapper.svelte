@@ -8,6 +8,7 @@
   export let descriptionColumn
   export let imageColumn
   export let locationColumn
+  export let minDistanceColumn
   export let categoryRefColumn
   export let categoryOrderColumn
   export let shortDescriptionColumn
@@ -23,6 +24,7 @@
     categoryRefColumn: [categoryRefColumn], 
     categoryOrderColumn: [categoryOrderColumn],
     locationColumn,
+    minDistanceColumn
   }
 
   export let categoryTitleColumn;
