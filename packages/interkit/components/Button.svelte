@@ -29,4 +29,7 @@
   .button:empty {
     display: none;
   }
+  .button.noborder {
+    border: none;
+  }
 </style>

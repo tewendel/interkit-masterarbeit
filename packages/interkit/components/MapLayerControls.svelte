@@ -2,6 +2,7 @@
 
   import { InterkitClient, util } from '../'
   import { playAudio } from './AudioPlayer.svelte'
+  import AudioPlayButton from './AudioPlayButton.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
 
@@ -26,14 +27,17 @@
     setLayer(layer);
   }
   const loadAudioElement = async (layer) => {
+    //console.log("layer", layer)
     if(layer?.audio) {
-      //console.log(layer.audio)
-      audioElementRow = elementRows.find(r => r.key == activeLayer.audio)
-      //console.log("audioElementRow", audioElementRow)
+      console.log(layer.audio, elementRows)
+      audioElementRow = elementRows.find(r => r.key == layer.audio)
+      console.log("audioElementRow", audioElementRow)
       // autoplay on layer select
       /*if(audioElementRow) {
         playAudio(audioElementRow);
       }*/
+    } else {
+      audioElementRow = null;
     }
   }
   $: loadAudioElement(activeLayer)
@@ -48,11 +52,13 @@
       <span class="MapLayerControls__ActiveLayer__Item active_layer_item">
         <span class="label">
           {#if audioElementRow}
-            {#if $audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
-              <span>(playing)</span>
-            {:else}
-              <span on:click={()=>{playAudio(audioElementRow)}}>play</span>
-            {/if}
+            <div class="MapLayerControls__ActiveLayer__PlayButton">
+              <AudioPlayButton
+                playing={$audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
+                onTap={()=>{playAudio(audioElementRow)}}
+                paused={$audioPlayerStatus?.paused}
+              />
+            </div>
           {/if}
           {activeLayer.name}
         </span>

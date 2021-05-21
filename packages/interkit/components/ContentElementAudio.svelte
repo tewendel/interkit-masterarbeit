@@ -10,6 +10,7 @@
   import MediaFileImage from './MediaFileImage.svelte'
   import BookmarkToggle from './BookmarkToggle.svelte'
   import Button from './Button.svelte'
+  import AudioPlayButton from './AudioPlayButton.svelte'
   import Icon from './Icon.svelte'
 
   import { playAudio } from './AudioPlayer.svelte'
@@ -140,15 +141,12 @@
   <div class="ContentElementAudio__Controls controls">
     {#if util.rowVal(element, elementColumns.audioColumn)}
     <span class="ContentElementAudio__Play play">
-      <Button on:click={play}>
-        {#if playing}
-          <Icon height="1em" type={ $audioPlayerStatus.paused ? "play" : "pause"} />
-        {:else}
-          <Icon height="1em" type="play" />
-          &thinsp;
-          <span class="ContentElementAudio__Duration">{util.formatDuration(duration)}</span>
-        {/if}
-      </Button>
+      <AudioPlayButton
+        {playing}
+        onTap={play}
+        paused={$audioPlayerStatus?.paused}
+      />
+      <span class="ContentElementAudio__Duration">{util.formatDuration(duration)}</span>
     </span>
     {/if}
 
