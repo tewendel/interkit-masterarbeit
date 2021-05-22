@@ -49,19 +49,11 @@
   }
   :global(html),
   :global(body) {
-    /*height: 100%;*/
+    height: 100%;
     overflow: hidden;
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
-  }
-
-  :global(body) {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-  }
-  :global(html) {
-    height: -webkit-fill-available;
   }
 
   /* default font */
