@@ -283,7 +283,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
   sub.reactiveCollection.onChange((newData)=>{
     
     // this is called way too often! -> todo: optimize 
-    // console.log("onChange", newData)
+    // console.log("onChange", col, newData)
     sub.data.set(restore_ids(newData))      
     
   })
@@ -319,6 +319,19 @@ const getRowSubStore = async (sheetKey) => {
     };
   }
   let sub = await rowSubs[sheetKey].subPromise;
+  return sub?.data;
+}
+
+const getMediaFileSubStore = async () => {
+  if(!mediaFileSub) {
+    // no subscription to media files yet, set it up
+    mediaFileSub = new Promise(async (resolve, reject) => {
+      console.log("creating subscription for mediafiles")
+      let msub = await getSub("mediafiles", "mediafiles", {})
+      resolve(msub);
+    })
+  }    
+  let sub = await mediaFileSub;
   return sub?.data;
 }
 
@@ -378,22 +391,21 @@ const InterkitClient = {
   getSub,
   getRowSubStore,
   
+  getMediaFileSubStore,
   getMediaFile: async (key) => {
-    if(!mediaFileSub) {
-      // no subscription to media files yet, set it up
-      mediaFileSub = new Promise(async (resolve, reject) => {
-        console.log("creating subscription for mediafiles")
-        let msub = await getSub("mediafiles", "mediafiles", {})
-        resolve(msub);
-      })
-    }    
-    let sub = await mediaFileSub;
-    let mediafile = get(sub?.data)?.find(m => m.meta.key == key)
-    if(mediafile) {
-      mediafile.link = 
-      `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
-    } 
-    return mediafile
+    if(key) {
+      let store = await getMediaFileSubStore()
+      let mediafile = get(store)?.find(m => m.meta.key == key)
+      if(mediafile) {
+        mediafile.link = 
+        `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
+      } else {
+        //console.log("mediafile not found", key, get(store))
+      }
+      return mediafile
+    } else {
+      console.log("call of getMediaFile with no key", key, typeof key)
+    }
   },
 
   getSheet: async (key) => {
