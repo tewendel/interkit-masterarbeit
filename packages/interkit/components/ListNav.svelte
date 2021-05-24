@@ -32,7 +32,11 @@
 <div class="list-nav-container">
 
   <div class:active={$singleViewData}>
-    <TopNavBar icon="arrow-left" onClick={()=>{setSingleView(null)}}>
+    <TopNavBar 
+      icon="arrow-left" 
+      onClick={()=>{setSingleView(null)}}
+      pageOpen
+    >
       {$singleViewData?.filterCategoryName}
     </TopNavBar>
     <slot name="singleView"></slot>
