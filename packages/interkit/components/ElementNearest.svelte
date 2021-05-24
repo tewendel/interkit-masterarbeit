@@ -22,16 +22,18 @@
   
 </script>
 
-{#if title}
-<h3>
-  <SectionHeadline>
-    {title}
-  </SectionHeadline>
-</h3>
+{#if elementRows_sorted?.[0]}
+  {#if title}
+  <h3>
+    <SectionHeadline>
+      {title}
+    </SectionHeadline>
+  </h3>
+  {/if}
+  <ContentElementAudio
+      size="xs"
+      element={elementRows_sorted?.[0]}
+      {elementColumns}
+      {categoryColumns}
+    />
 {/if}
-<ContentElementAudio
-    size="xs"
-    element={elementRows_sorted?.[0]}
-    {elementColumns}
-    {categoryColumns}
-  />
