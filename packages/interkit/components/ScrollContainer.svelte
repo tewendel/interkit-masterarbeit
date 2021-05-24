@@ -18,11 +18,23 @@
   // get context from BottomMenuPage
   let pageContext = getContext("BottomMenuPage");
   let lastScrollTop = 0;
+  let lastScrolledUp;
   const scroll = (e) => {
     //console.log("scrolled to", e.target.scrollTop)
     if(pageContext?.setScrolling) {
-      if(e.target.scrollTop < lastScrollTop) pageContext.setScrolling(-1)
-      if(e.target.scrollTop > lastScrollTop) pageContext.setScrolling(1)
+      // scrolling down
+      if(e.target.scrollTop > lastScrollTop 
+        && (!lastScrolledUp || (new Date().getTime() - lastScrolledUp > 1000))
+      ) {
+        pageContext.setScrolling(1)
+      }
+      // scrolling up
+      if(e.target.scrollTop < lastScrollTop) {
+        pageContext.setScrolling(-1)
+        lastScrolledUp = new Date().getTime()
+        //console.log(lastScrolledUp)
+      }
+      
       lastScrollTop = e.target.scrollTop
     }
   }
