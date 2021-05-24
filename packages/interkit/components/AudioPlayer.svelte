@@ -17,6 +17,7 @@
           paused: false,
           currentTime: 0,
           expanded: false,
+          loading: true,
         })  
       }
     }
@@ -35,10 +36,12 @@
 </script>
 
 <script>
+  import { onMount } from 'svelte'
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte';
   import Icon from './Icon.svelte'
   import Button from './Button.svelte'
+  import Loading from './Loading.svelte'
 
   import marked from "marked"
   
@@ -170,6 +173,7 @@
       currentTime: seconds
     }) 
   }
+
     
 </script>
 
@@ -228,9 +232,13 @@
       </div>
 
       <div class="AudioPlayer__PlayButton playbutton">
-        <Button inverse on:click={togglePlay}>
-          <Icon inverse type={ $audioPlayerStatus.paused ? "play" : "pause"} />
-        </Button>
+        {#if $audioPlayerStatus.loading }
+          <Loading inverse/>
+        {:else}
+          <Button inverse on:click={togglePlay}>
+            <Icon inverse type={ $audioPlayerStatus.paused ? "play" : "pause"} />
+          </Button>
+        {/if}
       </div>
 
       <div class="AudioPlayer__PlayButton seekbutton">
@@ -250,7 +258,14 @@
       {#if mediafile}
         <span class="AudioPlayer__Audioplayer audio">
           <audio 
+            id="audio"
             controls
+            on:playing={() => { 
+              if($audioPlayerStatus.loading) {
+                audioPlayerStatus.update(s=>({...s, loading: false}))
+                //console.log("playing")
+              }
+            }}
             bind:currentTime={$audioPlayerStatus.currentTime}
             bind:duration={$audioPlayerStatus.duration}
             bind:paused={$audioPlayerStatus.paused} 

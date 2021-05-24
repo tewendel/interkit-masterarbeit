@@ -145,6 +145,7 @@
         {playing}
         onTap={play}
         paused={$audioPlayerStatus?.paused}
+        loading={$audioPlayerStatus?.loading}
       />
       <span class="ContentElementAudio__Duration">{util.formatDuration(duration)}</span>
     </span>
@@ -258,6 +259,15 @@
   }
   .play {
     flex: 1;
+  }
+
+  .play {
+    height: 2em;
+    line-height: 2em;
+  }
+
+  .play span {
+    vertical-align: middle;
   }
 
   /* elements */
