@@ -26,12 +26,13 @@
   <TopNavBar
     onClick={togglePage}
     icon={pageOpen ? "arrow-left" : "settings"}
+    {pageOpen}
   >
     {label}
   </TopNavBar>
 {/if}
 
-<div class:active={pageOpen} class="page">
+<div class:active={pageOpen} class="TopNav__Page">
 
   <slot></slot>
 

@@ -3,11 +3,12 @@
   import Icon from './Icon.svelte'
 
   export let icon = "";
+  export let pageOpen
   export let onClick;
 
 </script>
 
-<nav class="TopNavBar">
+<nav class="TopNavBar" class:pageOpen>
   {#if icon}
     <span class="TopNavBar__Button button">
       <Button on:click={onClick}>
@@ -15,7 +16,7 @@
       </Button>
     </span>
   {/if}
-  <span class="TopNavBar__Label label">
+  <span class="TopNavBar__Label label" on:click={onClick}>
     <slot />
   </span>
 </nav>

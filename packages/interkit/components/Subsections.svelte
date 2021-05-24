@@ -38,6 +38,7 @@
   <TopNavBar
     icon="arrow-left"
     onClick={closeSection}
+    pageOpen
   >
     {$activeSection.title}
   </TopNavBar>

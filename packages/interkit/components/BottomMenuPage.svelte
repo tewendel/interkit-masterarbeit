@@ -1,9 +1,20 @@
 <script>
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
   import { TABS } from './BottomMenu.svelte';
   import { InterkitClient } from '../'
 
   export let path = null;
+
+
+  let scrollDirection = -1;
+  setContext("BottomMenuPage", {
+    setScrolling: (direction) => {
+      scrollDirection = direction;
+    }
+  })
+  $: {
+    console.log("scrollDirection", scrollDirection)
+  }
 
   const panel = {};
   const { registerPanel, selectedPanel, selectPanel } = getContext(TABS);
@@ -20,7 +31,12 @@
 </script>
 
 
-<div class="BottomMenuPage page" class:visible="{$selectedPanel === panel}">
+<div 
+  class="BottomMenuPage page" 
+  class:scroll-up={scrollDirection == -1} 
+  class:scroll-down={scrollDirection == 1} 
+  class:visible="{$selectedPanel === panel}"
+>
   <slot></slot>
 </div>
 
