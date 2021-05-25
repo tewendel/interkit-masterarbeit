@@ -2,8 +2,10 @@
 
   import { InterkitClient, util } from '../'
   import { get } from 'svelte/store'
+  import Icon from "./Icon.svelte";
   
   export let elementKey;
+  export let close = false;
 
   const bookmarkStore = InterkitClient.getGlobalStore("elementProperties")
   
@@ -29,7 +31,11 @@
 
 <span on:click={toggleBookmark}>
   {#if isBookmarked}
-    GEMERKT
+    {#if close}
+      <Icon type="close" />
+    {:else}
+      GEMERKT
+    {/if}
   {:else}
     MERKEN
   {/if}

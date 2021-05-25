@@ -164,11 +164,24 @@
         <Button>
           <BookmarkToggle elementKey={element?.key}/>
         </Button>
-      </span>
+      </span>      
     {/if}
+  
   </div>
 
-  <div class="ContentElementAudio__Content content">
+  <!-- special for the gate: add an extra bookmark toggle -->
+  {#if !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
+  <span class="ContentElementAudio__Bookmark_extra bookmark_extra">
+        <Button>
+          <BookmarkToggle close elementKey={element?.key}/>
+        </Button>
+  </span>
+  {/if}
+  <!-- end special -->
+
+  
+  <div class="ContentElementAudio_Titles titles">
+
     <h3 class="ContentElementAudio__Title title">
       {title}
     </h3>
@@ -192,6 +205,10 @@
       {/if}
     </h4>
 
+  </div>
+
+  <div class="ContentElementAudio__Content content">
+    
     <p class="ContentElementAudio__Description description">
       {short_description}
     </p>
@@ -224,27 +241,34 @@
     grid-row: 2;
   }
 
-  .content {
+  .titles {
     grid-column: 1;
     grid-row: 3;
     display: flex;
     flex-direction: column;
   }
 
-  .content .title {
+  .content {
+    grid-column: 1;
+    grid-row: 4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .titles .title {
     order: 2;
   }
 
-  .content .subtitle {
+  .titles .subtitle {
     order: 1;
   }
 
   .content .description {
-    order: 3;
+    order: 1;
   }
 
   .content .link_container {
-    order: 4;
+    order: 2;
   }
 
   /* Controls Layout */
@@ -272,6 +296,12 @@
 
   /* elements */
 
+  .titles {
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .content {
     padding: 16px;
   }
@@ -292,9 +322,12 @@
 
   .container.size-xs .controls .bookmark, 
   .container.size-xs .picture, 
-  .container.size-xs .content .subtitle,
-  .container.size-xs .content .description,
-  .container.size-xs .content .link {
+  .container.size-xs .titles .subtitle,
+  .container.size-xs .content {
+    display: none;
+  }
+
+  .ContentElementAudio__Bookmark_extra {
     display: none;
   }
 
