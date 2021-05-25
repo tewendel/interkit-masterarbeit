@@ -35,9 +35,14 @@
   const filter = (dataRow) => {
     return dataRow?.values?.[elementCategoryRefColumnKey]?.rowKeys?.includes(sectionCategoryKey)
   }
-  
+
+  const sort = (rows) => {
+    let sortColumn = elementColumns.categoryOrderColumn[categoryIndex]
+    return [...rows].sort((a, b) => util.rowVal(a, sortColumn) - util.rowVal(b, sortColumn))  
+  }
+
   $: updateCategoryTitle(sectionCategoryKey)
-  $: elementRows_filtered = elementRows.filter(filter);
+  $: elementRows_filtered = sort(elementRows.filter(filter));
 
 
 
