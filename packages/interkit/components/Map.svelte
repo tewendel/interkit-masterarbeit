@@ -522,8 +522,8 @@
 
   .marker_popup_close {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 16px;
+    right: 16px;
   }
 
   :global(.leaflet-control) { /* hide default leaflet controls */
