@@ -6,13 +6,13 @@
   import Icon from './Icon.svelte'
 
   export let onTap;
-  export let playing;
+  export let playing; // this is set when this is the audio element currently in the player
   export let loading = false;
   export let paused = false;
   
 </script>
 
-  {#if loading}
+  {#if loading && playing}
     <Loading/>
   {:else}
     <Button on:click={onTap}>
