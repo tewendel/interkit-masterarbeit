@@ -15,6 +15,7 @@
 
   import MapFilterControls from './MapFilterControls.svelte'
   import MapLayerControls from './MapLayerControls.svelte'
+  import MapActiveOverlayButtons from './MapActiveOverlayButtons.svelte'
 
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
@@ -429,7 +430,15 @@
       </div>
     </div>
   {/if}
-  
+
+  <MapActiveOverlayButtons
+    {activeFilter}
+    {activeLayer}
+    {setFilter}
+    {setLayer}
+    elementRows={$elementRows}
+  />
+
   <div class="Map__LayerControls layer_controls">
 
     <MapFilterControls
@@ -438,8 +447,7 @@
       onClose={closeControls}
       {filterLists}
       {setFilter}
-      {activeFilter}
-      
+      {activeFilter}      
     />
 
     <MapLayerControls
@@ -549,4 +557,6 @@
 
   .layer_controls {
   }
+
+  
 </style>

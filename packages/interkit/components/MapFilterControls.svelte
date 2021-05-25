@@ -50,18 +50,7 @@
   
 </script>
 
-{#if activeFilter}
-  <span class="Map__ActiveFilter active_filter active">
-    <Button nopadding>
-      <span class="Map__ActiveFilter__Item active_filter_item">
-        <span class="label">
-          {activeFilter.name}
-        </span>
-        <Icon type="close" height="1em" on:click={()=>filterSelect(null)} />
-      </span>
-    </Button>
-  </span>
-{/if}
+
 
 {#if filterLists?.length}
   <div id="filterControls" on:click>
@@ -161,21 +150,6 @@
     filter: invert(1);
   }
 
-  .active_filter {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 1000;
-  }
-
-  .active_filter_item .label {
-    max-width: calc(50vw - 64px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-  }
-
   .filter_list, .filter_list_level_2 {
     display: flex; 
   }
@@ -192,7 +166,6 @@
   }
 
   .filter_button_item,
-  .active_filter_item,
   .filter_list_item,
   .filter_list_level_2_item {
     padding: 8px;
