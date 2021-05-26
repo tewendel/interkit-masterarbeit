@@ -23,7 +23,7 @@
   import 'leaflet.tilelayer.gl';
   import { desaturateShader } from './mapShaders.js'
 
-  import { Plugins } from '@capacitor/core';
+  import { Plugins, Capacitor } from '@capacitor/core';
   const { Geolocation, Permissions } = Plugins;
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
@@ -380,17 +380,24 @@
   }
 
   const panToUserPosition = async () => {
-    let result = await Permissions.query({name: "geolocation"})
-    console.log("geo permission", result)
-    if(result.state != "granted") {
-      alert(permissionNotification)
+    if(Capacitor.isNative) {
+      let result = await Permissions.query({name: "geolocation"})
+      console.log("geo permission", result)
+      if(result.state != "granted") {
+        alert(permissionNotification)
+      } else {
+        if(currentPosition) {
+          map.panTo(currentPosition)
+          map.zoomIn(5)
+        }
+        else 
+          console.log("currentPosition", currentPosition)
+      }
     } else {
       if(currentPosition) {
         map.panTo(currentPosition)
         map.zoomIn(5)
       }
-      else 
-        console.log("currentPosition", currentPosition)
     }
   }
 
