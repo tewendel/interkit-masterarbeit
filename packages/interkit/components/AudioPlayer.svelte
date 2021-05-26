@@ -342,9 +342,10 @@
     <div class="AudioPlayer__Overlay overlay"
       style={
         (overlayColor ? ("background:" + overlayColor + "; ") : "")
-        + "width: calc(" 
+        + ($audioPlayerStatus?.currentTime ? 
+        "width: calc(" 
         + ($audioPlayerStatus?.currentTime / $audioPlayerStatus?.duration * 100) 
-        + "% + 8px)"
+        + "% + 8px)" : "")
       }
     ></div>
   </div>
