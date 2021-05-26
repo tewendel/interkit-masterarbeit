@@ -30,7 +30,7 @@
   
 </script>
 
-<div class="AppBase Theming">
+<div class="AppBase Theming" id="Theming">
   {#if $projectId && initComplete}
     <slot ></slot>
   {:else}
