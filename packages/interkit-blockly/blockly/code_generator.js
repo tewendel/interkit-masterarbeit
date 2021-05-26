@@ -268,7 +268,9 @@ export const initCodeGenerator = (Blockly) => {
        "categoryTitleColumn",
        "categorySubtitleColumn",
        "locationColumn",
-       "minDistanceColumn"
+       "minDistanceColumn",
+       "colorCategoryRefColumn",
+       "categoryColorColumn"
     ]);
     code += "\n/>\n";
     return code;

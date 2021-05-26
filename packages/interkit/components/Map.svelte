@@ -198,7 +198,7 @@
       attributionControl: false,
       //preferCanvas: true,
       //renderer: L.canvas()
-    }).setView(defaultLocationLatLng, 13);  
+    }).setView(defaultLocationLatLng, 14);  
 
     // these tiles fail to load on ios - not sure why
     /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {

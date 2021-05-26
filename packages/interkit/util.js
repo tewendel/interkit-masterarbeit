@@ -74,5 +74,16 @@ export default {
     seconds = Math.floor(seconds % 60);
     if (seconds < 10) seconds = '0' + seconds;
     return `${minutes}:${seconds}`;
+  },
+
+  filterColorRGB: (categoryRow, categoryColorColumn) => {
+    try {
+      let rgbArray = JSON.parse(rowVal(categoryRow, categoryColorColumn))
+      const c = (index) => Math.floor(rgbArray[index] * 256)
+      return `rgb(${c(0)},${c(1)},${c(2)})`
+    } catch(e) {
+      console.log(e)
+    }
   }
+
 }

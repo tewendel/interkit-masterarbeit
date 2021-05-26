@@ -33,16 +33,6 @@
     return util.rowVal(categoryRow, openFilterList.categoryNameColumn)
   }
 
-  const filterColorRGB = (categoryRow) => {
-    try {
-      let rgbArray = JSON.parse(util.rowVal(categoryRow, openFilterList.categoryColorColumn))
-      const c = (index) => Math.floor(rgbArray[index] * 256)
-      return `rgb(${c(0)},${c(1)},${c(2)})`
-    } catch(e) {
-      console.log(e)
-    }
-  }
-
   $: {
     if (!isFocused) filterSelectOpen = false // trigger closing
     //console.log(filterLists)  
@@ -87,7 +77,7 @@
           <Button 
             nopadding 
             color={!(activeFilter && activeFilter.name == filterName(categoryRow)) ? 
-              filterColorRGB(categoryRow) : null}
+              util.filterColorRGB(categoryRow, openFilterList.categoryColorColumn) : null}
           >
             <span 
               class="Map__FilterListLevel2__Item filter_list_level_2_item" 

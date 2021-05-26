@@ -645,7 +645,7 @@
   
   {
     "type": "AudioPlayer",
-    "message0": "<AudioPlayer> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 minDistanceColumn %20 %21 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
+    "message0": "<AudioPlayer> %1 title %2 %3 audio %4 %5 description %6 %7 image %8 %9 locationColumn %18 %19 minDistanceColumn %20 %21 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17 colorCategoryRefColumn %22 %23 categoryColorColumn %24 %25",
     "args0": [
       {
         "type": "input_dummy"
@@ -747,6 +747,27 @@
         "columnType": "number",
         "text": "elements/minDistance",
         "value": "elements/minDistance"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "colorCategoryRefColumn",
+        "type": "sheetColumn",
+        "columnType": "sheetRef",
+        "refKey": "categories2",
+        "text": "elements/category2",
+        "value": "elements/category2"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "categoryColorColumn",
+        "type": "sheetColumn",
+        "columnType": "string",
+        "text": "categories2/color",
+        "value": "categories2/color"
       },
       {
         "type": "input_dummy"

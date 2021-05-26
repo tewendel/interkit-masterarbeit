@@ -6,6 +6,7 @@
   import { InterkitClient, util } from '../'
   
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
   
   import MediaFileImage from './MediaFileImage.svelte'
   import BookmarkToggle from './BookmarkToggle.svelte'
@@ -39,7 +40,7 @@
   $: short_description = util.rowValString(element, elementColumns.shortDescriptionColumn)
   $: categoryOrderPosition = util.rowValString(element, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
-  $: playing = element && (element.key == $audioPlayerStatus?.elementRow?.key)
+  $: playing = element && (element.key == $audioPlayerElement?.key) && $audioPlayerStatus?.active
 
   let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element

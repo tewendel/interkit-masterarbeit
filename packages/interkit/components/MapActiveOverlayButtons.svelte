@@ -13,6 +13,7 @@
   export let elementRows;
 
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
 
   let audioElementRow;
   
@@ -56,7 +57,7 @@
         <span class="Map__ActiveLayer__Item active_layer_item">
           {#if audioElementRow}
             <AudioPlayButton
-              playing={$audioPlayerStatus && $audioPlayerStatus.elementRow?.key == audioElementRow?.key}
+              playing={$audioPlayerElement && $audioPlayerElement?.key == audioElementRow?.key}
               onTap={()=>{playAudio(audioElementRow)}}
               paused={$audioPlayerStatus?.paused}
             />

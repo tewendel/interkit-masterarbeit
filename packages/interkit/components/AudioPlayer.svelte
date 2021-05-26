@@ -1,6 +1,8 @@
 <script context="module">
   import { get } from "svelte/store"
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
+  
   export const playAudio = async (elementRow, autoplay=true) => {
     if(elementRow) {
       if(elementRow.key == get(audioPlayerStatus)?.elementRow?.key) {
@@ -10,9 +12,10 @@
         })) 
       } else {
         // new element, reset
+        audioPlayerElement.set(elementRow)
         audioPlayerStatus.set({
           active: true,
-          elementRow,
+          //elementRow,
           autoplay,
           paused: false,
           currentTime: 0,
@@ -53,6 +56,7 @@
   export let locationColumn = "elements/position"
   export let categoryRefColumn = "elements/category"
   export let categoryOrderColumn = "elements/categoryOrder"
+  export let colorCategoryRefColumn = "elements/category2"
 
   const elementColumns = {
     titleColumn,
@@ -61,11 +65,13 @@
     imageColumn,
     categoryRefColumn: [categoryRefColumn], 
     categoryOrderColumn: [categoryOrderColumn],
-    locationColumn
+    locationColumn,
+    colorCategoryRefColumn
   }
 
   export let categoryTitleColumn = "categories/name"
   export let categorySubtitleColumn = "categories/subtitle";
+  export let categoryColorColumn = "categories2/color";
 
   const categoryIndex = 0;
   
@@ -77,6 +83,7 @@
   const closePlayer = () => {
     mediafile = null;
     audioPlayerStatus.set({active: false})
+    audioPlayerElement.set(null);
   }
 
   const togglePlay = () => {
@@ -85,11 +92,11 @@
     }))
   }
 
-  $: audioKey = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.audioColumn)?.value
-  $: title = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.titleColumn)
-  $: description = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.descriptionColumn)
-  $: categoryOrderPosition = util.rowValString($audioPlayerStatus?.elementRow, elementColumns.categoryOrderColumn[categoryIndex])
-  $: imageRef = util.rowVal($audioPlayerStatus?.elementRow, elementColumns.imageColumn)
+  $: audioKey = util.rowVal($audioPlayerElement, elementColumns.audioColumn)?.value
+  $: title = util.rowVal($audioPlayerElement, elementColumns.titleColumn)
+  $: description = util.rowValString($audioPlayerElement, elementColumns.descriptionColumn)
+  $: categoryOrderPosition = util.rowValString($audioPlayerElement, elementColumns.categoryOrderColumn[categoryIndex])
+  $: imageRef = util.rowVal($audioPlayerElement, elementColumns.imageColumn)
   
   let playerExpanded = false;
   const toggleExpanded = () => {
@@ -116,6 +123,10 @@
   let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
 
+  let colorCategoryRowStore;
+  let colorCategoryRow;
+  let overlayColor;
+
   const loadCategory = async (elementRow) => {
     let categoryRowKey = util.rowVal(elementRow, elementColumns.categoryRefColumn[categoryIndex])?.rowKeys?.[0]
     //console.log("categories", util.rowVal(element, elementColumns.categoryRefColumn[categoryIndex]))
@@ -128,8 +139,25 @@
     }
   }
 
+  const loadColor = async (elementRow) => {
+    let categoryRowKey = util.rowVal(elementRow, colorCategoryRefColumn)?.rowKeys?.[0]
+    //console.log(categoryRowKey)
+    if(categoryRowKey) {
+      let categorySheetKey = util.getSheetKey(categoryColorColumn)
+      //console.log(categorySheetKey)
+      colorCategoryRowStore = await InterkitClient.getRowSubStore(categorySheetKey);
+      //console.log($colorCategoryRowStore)
+      colorCategoryRow = $colorCategoryRowStore.find(r => r.key == categoryRowKey)
+      overlayColor = util.filterColorRGB(colorCategoryRow, categoryColorColumn);
+    } else {
+      colorCategoryRow = null;
+      overlayColor = null;
+    } 
+  }
+
   $: {
-    loadCategory($audioPlayerStatus?.elementRow)
+    loadCategory($audioPlayerElement)
+    loadColor($audioPlayerElement)
   }
 
 
@@ -137,7 +165,7 @@
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const markElementListened = (time) => {
     if(time > 20) {
-      let key = $audioPlayerStatus?.elementRow?.key
+      let key = $audioPlayerElement?.key
       if(key && !get(elementProperties)?.[key]?.checked) {
         InterkitClient.setElementProperty(elementProperties, key, "checked", true)  
       }      
@@ -310,6 +338,17 @@
     >
   </div>
 
+  <div class="AudioPlayer__Overlay__Container overlay_container">
+    <div class="AudioPlayer__Overlay overlay"
+      style={
+        (overlayColor ? ("background:" + overlayColor + "; ") : "")
+        + "width: calc(" 
+        + ($audioPlayerStatus?.currentTime / $audioPlayerStatus?.duration * 100) 
+        + "% + 8px)"
+      }
+    ></div>
+  </div>
+
 </div>
 
 {/if}
@@ -456,12 +495,13 @@
     -webkit-appearance: none;
     background-color: #fff; 
     height: 1px;
+    margin: 0;
     /* this is to have a larger target to tap */
     border-top: 10px solid #000; 
     border-bottom: 10px solid #000;
   }
 
-  .seekPositionRangeSlider::-webkit-slider-thumb, .seekPositionRangeSlider::-moz-range-thumb {
+  .seekPositionRangeSlider::-moz-range-thumb {
      -webkit-appearance: none;
      height: 8px;
      width: 8px;
@@ -469,6 +509,19 @@
      margin-top: -5px;
      border-radius: 50%;
      border: none;
+  }
+  
+  .seekPositionRangeSlider::-webkit-slider-thumb {
+   -webkit-appearance: none;
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+}
+
+  .overlay_container {
+    display: none;
   }
 
 </style>
