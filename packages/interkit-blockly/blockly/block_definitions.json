@@ -446,7 +446,7 @@
 
     {
     "type": "Map",
-    "message0": "<Map> %1 markerPositions %2 %3 markerIconAsset %4 %5 defaultLocation %6 %7 permissionNotification %8 %9 element %10 %11 filters %12 %13 layers %14 %15",
+    "message0": "<Map> %1 markerPositions %2 %3 markerIconAsset %4 %5 defaultLocation %6 %7 permissionNotification %8 %9 mainLayerLabel %16 %17 element %10 %11 filters %12 %13 layers %14 %15",
     "args0": [
       {
         "type": "input_dummy"
@@ -499,6 +499,14 @@
       {
         "type": "input_statement",
         "name": "layers"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "field_input",
+        "name": "mainLayerLabel",
+        "text": "Ebenen"
       },
       {
         "type": "input_dummy"

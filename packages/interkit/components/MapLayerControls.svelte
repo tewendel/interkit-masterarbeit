@@ -11,6 +11,8 @@
   export let isFocused;
   export let onClose;
 
+  export let mainLayerLabel = "Ebenen"
+
   let layerSelectOpen = false;
   
   const toggleLayers = () => {
@@ -38,7 +40,7 @@
           <span class="MapLayerControls__Button__Item button_item">
             <Icon type="layer" height="1em" />
             <span class="label">
-              Ebenen
+              {mainLayerLabel}
             </span>
           </span>
         </Button>

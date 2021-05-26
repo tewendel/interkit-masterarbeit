@@ -33,7 +33,10 @@
 
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
-  export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen."; 
+  export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen.";
+
+  export let mainLayerLabel = "Ebenen";
+
   export let defaultBaseColor = [0.74, 0.79, 0.85];
 
 
@@ -465,6 +468,7 @@
       {setLayer}
       {activeLayer}
       elementRows={$elementRows}
+      {mainLayerLabel}
     />
 
   </div>
