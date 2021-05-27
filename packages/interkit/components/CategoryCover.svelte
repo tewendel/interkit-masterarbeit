@@ -20,6 +20,7 @@
     <p class="CategoryCover__Description description">
       {util.rowValString(categoryRow, descriptionColumn)}
     </p>
+    <div class="CategoryCover__Button">Erkunden</div>
   </div>
 </section>
 
@@ -33,4 +34,9 @@
   .description {
     margin-top: 8px;
   }
+
+  .CategoryCover__Button {
+    display: none;
+  }
+
 </style>
