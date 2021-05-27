@@ -279,6 +279,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['Theming'] = function (block) {
     var code = "<Theming \n"
     code += attribute(block,"cssFile")
+    code += attribute(block, "jsFile")
     code += " />\n"
     return code;
   };

@@ -1005,7 +1005,7 @@
 
     {
       "type": "Theming",
-      "message0": "<Theming> %1 cssFile %2",
+      "message0": "<Theming> %1 cssFile %2 jsFile %3",
       "args0": [
         {
           "type": "input_dummy"
@@ -1014,6 +1014,11 @@
           "type": "field_input",
           "name": "cssFile",
           "text": "global.css"
+        },
+        {
+          "type": "field_input",
+          "name": "jsFile",
+          "text": "custom.js"
         }
       ],
       "previousStatement": null,
