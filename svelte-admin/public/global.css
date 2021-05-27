@@ -1,0 +1,8 @@
+.bx--data-table-container {
+  height: 400px;
+}
+
+.bx--data-table-container thead th {
+  position: sticky;
+  top: 0;
+}
