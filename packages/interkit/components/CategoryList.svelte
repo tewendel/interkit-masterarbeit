@@ -42,7 +42,7 @@
 </script>
 
 {#if categories_filtered}
-<ul>
+<ul class="CategoryList" data-categories={categorySheetKey}>
   {#each categories_filtered as category}
   <li on:click={()=>{openCategory(category)}}>
     <CategoryCover 

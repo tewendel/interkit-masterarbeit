@@ -42,7 +42,7 @@
 
 <style>
   .page {
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
     display: flex;
     flex-direction: column;
     width: 100%;

@@ -29,7 +29,7 @@
   
 </script>
 
-<div class="list-nav-container">
+<div class="ListNav list-nav-container" data-categories={$singleViewData?.categorySheetKey}>
 
   <div class:active={$singleViewData}>
     <TopNavBar 
