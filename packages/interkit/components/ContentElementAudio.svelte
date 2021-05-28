@@ -2,6 +2,7 @@
 
   import { onMount } from 'svelte';
   import { get } from "svelte/store"
+  import marked from "marked"
 
   import { InterkitClient, util } from '../'
   
@@ -211,7 +212,9 @@
   <div class="ContentElementAudio__Content content">
     
     <p class="ContentElementAudio__Description description">
-      {short_description}
+      {#if short_description}
+        {@html marked(short_description)}
+      {/if}
     </p>
 
     {#if util.rowVal(element, elementColumns.linkColumn)}
