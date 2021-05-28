@@ -10,6 +10,6 @@
 <svelte:head>
   {#if $config?.INTERKIT_APP_LOAD_THEME}
     <link rel='stylesheet' href={cssFile}>
-    <script src={jsFile}></script>
+    <script defer src={jsFile}></script>
   {/if}
 </svelte:head>
