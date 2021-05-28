@@ -276,9 +276,11 @@
       </div>
 
 
+      {#key title}
       <h4 class="AudioPlayer__Title title" on:click={toggleExpanded}>
         {title}
       </h4>
+      {/key}
 
 
 
