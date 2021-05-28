@@ -23,11 +23,14 @@
     let elementRow = rowsFiltered[randomIndex]
     console.log(elementRow)
     await playAudio(elementRow)
+    clickCounter += 1;
   }
+
+  let clickCounter = 0;
 
 </script>
 
-<div on:click={play}>    
+<div class={`ElementRandom clickCounter-${clickCounter}`} on:click={play}>    
   <MediaFileImage mediafileRef={image} />    
   <h3>{title}</h3>
 </div>
