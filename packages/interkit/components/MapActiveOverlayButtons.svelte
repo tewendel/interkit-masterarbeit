@@ -92,14 +92,14 @@
 
   .active_filter_item, .active_layer_item {
     padding: 8px;
-    display: inline-block;
+    display: inline-flex;
   }
 
   .active_layer_item .label, .active_filter_item .label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
+    display: inline-flex;
   }
 
   
