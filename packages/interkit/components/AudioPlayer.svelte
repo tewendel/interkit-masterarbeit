@@ -506,8 +506,8 @@
 
   .seekPositionRangeSlider::-moz-range-thumb {
      -webkit-appearance: none;
-     height: 8px;
-     width: 8px;
+     height: 14px;
+     width: 14px;
      background: #fff;
      margin-top: -5px;
      border-radius: 50%;
@@ -516,8 +516,8 @@
   
   .seekPositionRangeSlider::-webkit-slider-thumb {
    -webkit-appearance: none;
-    height: 8px;
-    width: 8px;
+    height: 14px;
+    width: 14px;
     background: #fff;
     border-radius: 50%;
     border: none;
