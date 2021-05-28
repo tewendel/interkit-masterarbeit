@@ -5,7 +5,7 @@
   
   export const playAudio = async (elementRow, autoplay=true) => {
     if(elementRow) {
-      if(elementRow.key == get(audioPlayerStatus)?.elementRow?.key) {
+      if(elementRow.key == get(audioPlayerElement)?.key) {
         // if this element is already in player, just toggle paused state
         audioPlayerStatus.update( s => ({
           ...s, paused: !get(audioPlayerStatus)?.paused
