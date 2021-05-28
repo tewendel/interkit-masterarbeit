@@ -11,11 +11,12 @@
 <style>
   
   :global(.MarkdownContent p) {
-    margin-bottom: 1em;
+    margin-bottom: 1em;    
   }
 
-  :global(.MarkdownContent h2+p, .MarkdownContent h3+p, .MarkdownContent h4+p) {
+  :global(.MarkdownContent h2, .MarkdownContent h3, .MarkdownContent h4) {
     margin-top: 1em;
+    margin-bottom: 1em;
   }
 
 </style>
