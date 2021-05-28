@@ -62,11 +62,3 @@
   }
 
 </style>
-
-<svelte:head>
-  <style>
-    .DynamicContent p {
-      margin-bottom: 5px;
-    }
-  </style>
-</svelte:head>
