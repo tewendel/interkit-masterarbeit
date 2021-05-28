@@ -317,7 +317,7 @@
 
   </div>
 
-  <div class="AudioPlayer__Expanded__Controls" class:expanded={playerExpanded}>
+  <div class="AudioPlayer__Expanded__Time" class:expanded={playerExpanded}>
         <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
         <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
   </div>
@@ -468,11 +468,11 @@
     padding-bottom: 16px;
   }
 
-  .AudioPlayer__Expanded__Controls:not(.expanded) {
+  .AudioPlayer__Expanded__Controls:not(.expanded), .AudioPlayer__Expanded__Time:not(.expanded) {
     display: none;
   }
 
-  .AudioPlayer__Expanded__Controls {
+  .AudioPlayer__Expanded__Controls, .AudioPlayer__Expanded__Time {
     width: 100%;
     height: 20px;
     display: flex;
