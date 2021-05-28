@@ -98,6 +98,8 @@
 
   const play = async () => {
 
+    if(!util.rowVal(element, elementColumns.audioColumn)) return
+
     if(typeof element.onPlay == "function") {
       element.onPlay();
     }
@@ -136,7 +138,7 @@
 
 <section class={`ContentElementAudio container size-${size}`}>
 
-  <figure class="ContentElementAudio__Picture picture">
+  <figure class="ContentElementAudio__Picture picture" on:click={play}>
     <MediaFileImage mediafileRef={imageRef} />    
   </figure>
   
