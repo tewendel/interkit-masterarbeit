@@ -30,6 +30,7 @@
     align-items: center;
     box-sizing: border-box;
     border-bottom: 1px solid black;
+    margin-top: env(safe-area-inset-top);
   }
 
   .label, .button {
