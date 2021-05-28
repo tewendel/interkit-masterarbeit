@@ -37,6 +37,11 @@
     if (!isFocused) filterSelectOpen = false // trigger closing
     //console.log(filterLists)  
   }
+
+  const sortCategories = (_categories, orderColumn) => {
+    console.log(_categories, orderColumn)
+    return _categories ? [..._categories].sort((a, b) => util.rowVal(a, orderColumn) - util.rowVal(b, orderColumn)) : null
+  }
   
 </script>
 
@@ -72,7 +77,7 @@
 
     {#if openFilterList && filterSelectOpen}
       <ul class="Map__FilterListLevel2 filter_list_level_2">
-      {#each openFilterList.categoryRows as categoryRow}
+      {#each sortCategories(openFilterList.categoryRows, openFilterList.categoryOrderColumn) as categoryRow}
         <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
           <Button 
             nopadding 

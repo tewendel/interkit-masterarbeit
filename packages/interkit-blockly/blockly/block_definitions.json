@@ -324,7 +324,7 @@
 
   {
     "type": "CategoryList",
-    "message0": "<CategoryList> %1 categorySheetKey %2 %3 nameKey %4 %5 imageKey %6 %7 descriptionKey %8 %9 unlistedKey %10 %11",
+    "message0": "<CategoryList> %1 categorySheetKey %2 %3 nameKey %4 %5 imageKey %6 %7 descriptionKey %8 %9 unlistedKey %10 %11 orderKey %12 %13",
     "args0": [
       {
         "type": "input_dummy"
@@ -374,6 +374,16 @@
         "columnType": "string",
         "text": "categories/unlisted",
         "value": "categories/unlisted"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "orderKey",
+        "type": "sheetColumn",
+        "columnType": "number",
+        "text": "categories/order",
+        "value": "categories/order"
       },
       {
         "type": "input_dummy"
@@ -1029,7 +1039,7 @@
 
     {
       "type": "MapCategoryFilter",
-      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 categoryColorColumn %6 %7 categoryUnlistedColumn %10 %11 elementRefColumn %8 %9",
+      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 categoryColorColumn %6 %7 categoryUnlistedColumn %10 %11 elementRefColumn %8 %9 categoryOrderColumn %12 %13",
       "args0": [
         {
           "type": "input_dummy"
@@ -1078,6 +1088,16 @@
           "columnType": "string",
           "text": "categories/unlisted",
           "value": "categories/unlisted"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "categoryOrderColumn",
+          "type": "sheetColumn",
+          "columnType": "number",
+          "text": "categories/order",
+          "value": "categories/order"
         },
         {
           "type": "input_dummy"

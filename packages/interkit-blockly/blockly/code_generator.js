@@ -130,6 +130,7 @@ export const initCodeGenerator = (Blockly) => {
     code += attribute(block, "imageKey")
     code += attribute(block, "descriptionKey")
     code += attribute(block, "unlistedKey")
+    code += attribute(block, "orderKey")
     code += "/>\n"
     return code;
   };
@@ -169,6 +170,7 @@ export const initCodeGenerator = (Blockly) => {
       "categoryColorColumn", 
       "elementRefColumn",
       "categoryUnlistedColumn",
+      "categoryOrderColumn"
     ])
     code += "/>\n";
 

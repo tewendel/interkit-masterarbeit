@@ -9,11 +9,12 @@ export let categoryNameColumn;
 export let categoryColorColumn;
 export let categoryUnlistedColumn;
 export let elementRefColumn;
+export let categoryOrderColumn;
 
 const { registerFilter } = getContext(MAP);
 
 // register this filter to map context
-registerFilter({name, categoryNameColumn, categoryColorColumn, elementRefColumn, categoryUnlistedColumn});
+registerFilter({name, categoryNameColumn, categoryColorColumn, elementRefColumn, categoryUnlistedColumn, categoryOrderColumn});
 
 </script>
 
