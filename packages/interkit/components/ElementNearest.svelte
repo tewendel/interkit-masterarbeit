@@ -16,7 +16,7 @@
   let elementRows_sorted;
   $: {
     if($userPositionStore) {
-      elementRows_sorted = [...elementRows].filter(r => util.rowVal(r, elementColumns.locationColumn)).sort(distanceSort)
+      elementRows_sorted = [...elementRows].filter(r => util.rowVal(r, elementColumns.locationColumn) &&  util.rowVal(r, elementColumns.audioColumn)).sort(distanceSort)
     }
   }
   
