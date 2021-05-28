@@ -190,7 +190,7 @@
 
   const submitHeaderColumnUpdate = () => {
     console.log("submit", updateHeader)
-    InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference, options: updateHeader.options})
+    InterkitClient.call('sheet.updateHeader', {sheetKey, projectId, colKey: updateHeader.key, newVal: updateHeader.value, newType: updateHeader.type, newReference: updateHeader.reference, options: updateHeader.options, newColKey: updateHeader.newColKey})
   }
   
   // transform headers and rows for use with carbon DataTable

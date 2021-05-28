@@ -95,6 +95,19 @@ const addRow = async ({sheetKey, projectId})  => {
     })           
 }
 
+// updates the row objects after a column key has been changed
+const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKey}) => {
+  console.log("updateRowsWithNewColKey", oldColKey, newColKey);
+  let rows = Rows.find({sheetKey, projectId}).fetch()
+  for(let row of rows) {    
+    let values = row.values
+    values[newColKey] = values[oldColKey]
+    delete values[oldColKey];
+    console.log(values);
+    Rows.update({_id: row._id}, {$set: {values}});
+  }    
+}
+
 Meteor.methods({
 
   'resumeUserSession': async function (userAuth) {
@@ -269,19 +282,26 @@ Meteor.methods({
     }
   },
 
-  'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference, options}) => {
-    console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference)
+  'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference, options, newColKey}) => {
+    console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference, newColKey)
     let sheet = Sheets.findOne({key: sheetKey, projectId});
     if(sheet) {
+      if((newColKey != colKey) && sheet.columns.find(c=>c.key == newColKey)) {
+        console.log("abort renaming column if it already exists in sheet")
+        return
+      }
       let cols = sheet.columns;
       let newCols = cols.map(c => {
         if(c.key == colKey) {
-          return {...c, name: newVal, type: newType, reference: newReference, options}
+          return {...c, name: newVal, type: newType, reference: newReference, options, key: newColKey ? newColKey : colKey}
         } else {
           return c
         }
       })
       Sheets.update({_id: sheet._id}, {$set: {columns: newCols}});
+      if((colKey != newColKey) && newColKey) {
+        updateRowsWithNewColKey({sheetKey, projectId, oldColKey: colKey, newColKey});
+      }
     }
   },
 
