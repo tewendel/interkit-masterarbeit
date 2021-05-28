@@ -401,7 +401,7 @@
   }
 
   .container.expanded .expanded-content {
-    overflow-y: scroll;
+    overflow-y: auto;
     flex: 1;
   }
 
