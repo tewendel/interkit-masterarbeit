@@ -25,6 +25,9 @@
 
   onMount(async ()=>{
     sheets = await InterkitClient.call("sheets.get", {projectId})
+
+    // initialise
+    value.newColKey = value.key;
   })
 
 </script>
@@ -60,6 +63,10 @@
         <TextInput labelText="Options" placeholder="Option 1, Option 2" bind:value={value.options} />
       </FormGroup>
     {/if}
+    <FormGroup>
+      <span>WARNING: only change if you know what you are doing</span>
+      <TextInput labelText="Key" placeholder="Enter column key..." bind:value={value.newColKey} />
+    </FormGroup>
   </ModalBody>
   <ModalFooter primaryButtonText="Save"/>
 </ComposedModal>

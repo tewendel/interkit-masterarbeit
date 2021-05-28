@@ -12,7 +12,8 @@
   export let imageKey;
   export let descriptionKey;
   export let unlistedKey;
-
+  export let orderKey;
+  
   //let categorySub
   let categories
   let filterCategoryKey
@@ -23,7 +24,11 @@
     categories = await InterkitClient.getRowSubStore(categorySheetKey)
   })
 
-  $: categories_filtered = $categories?.filter(r => !util.rowVal(r, unlistedKey))
+  $: categories_filtered = sortCategories($categories?.filter(r => !util.rowVal(r, unlistedKey)))
+
+  const sortCategories = (_categories) => {
+    return _categories ? [..._categories].sort((a, b) => util.rowVal(a, orderKey) - util.rowVal(b, orderKey)) : null
+  }
 
   const openCategory = (category)=> {
     filterCategoryKey = category.key;

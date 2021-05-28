@@ -84,7 +84,7 @@
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
-    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, categoryUnlistedColumn, elementRefColumn}) => {
+    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, categoryUnlistedColumn, elementRefColumn, categoryOrderColumn}) => {
 
       //console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
@@ -102,7 +102,8 @@
         categoryRows: get(categoryRowStore)?.filter(unlistedFilter),
         categoryNameColumn,
         categoryColorColumn,
-        elementRefColumn 
+        elementRefColumn,
+        categoryOrderColumn 
       })
       filterLists = filterLists;
       

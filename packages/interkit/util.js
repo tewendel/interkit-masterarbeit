@@ -77,12 +77,17 @@ export default {
   },
 
   filterColorRGB: (categoryRow, categoryColorColumn) => {
-    try {
-      let rgbArray = JSON.parse(rowVal(categoryRow, categoryColorColumn))
-      const c = (index) => Math.floor(rgbArray[index] * 256)
-      return `rgb(${c(0)},${c(1)},${c(2)})`
-    } catch(e) {
-      console.log(e)
+    let value = rowVal(categoryRow, categoryColorColumn);
+    if(value) {
+      try {
+        let rgbArray = JSON.parse(value)
+        const c = (index) => Math.floor(rgbArray[index] * 256)
+        return `rgb(${c(0)},${c(1)},${c(2)})`
+      } catch(e) {
+        console.log(e)
+      }
+    } else {
+      return ""
     }
   }
 
