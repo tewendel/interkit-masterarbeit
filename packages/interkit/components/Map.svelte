@@ -77,6 +77,7 @@
   let markerRows;
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
 
   // store of projectid
   let projectId = InterkitClient.projectId;
@@ -392,15 +393,16 @@
       } else {
         if(currentPosition) {
           map.panTo(currentPosition)
-          map.zoomIn(5)
+          map.setZoom(15, {animate: false})
         }
         else 
           console.log("currentPosition", currentPosition)
       }
     } else {
       if(currentPosition) {
-        map.panTo(currentPosition)
-        map.zoomIn(5)
+        console.log(currentPosition)
+        map.panTo(currentPosition, {animate: false})
+        map.setZoom(15)
       }
     }
   }
@@ -415,6 +417,13 @@
 
   const closeControls = () => {
     controlsFocus = null;
+  }
+
+
+  $: if($mapFocus) {
+    console.log($mapFocus);
+    map.panTo({lat: $mapFocus.lat, lng: $mapFocus.lng}, {animate: false});
+    map.setZoom(16);
   }
 
 </script>

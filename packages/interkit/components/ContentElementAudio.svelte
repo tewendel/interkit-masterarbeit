@@ -8,6 +8,7 @@
   
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
   
   import MediaFileImage from './MediaFileImage.svelte'
   import BookmarkToggle from './BookmarkToggle.svelte'
@@ -130,15 +131,16 @@
     
   }
 
-
-
-
+  const openMapTo = (element) => {
+    InterkitClient.callGlobalMethod("menuSwitcherTarget")
+    mapFocus.set(util.rowVal(element, elementColumns.locationColumn));
+  }
 
 </script>
 
-<section class={`ContentElementAudio container size-${size}`}>
+<section class={`ContentElementAudio container size-${size}`}  on:click={play}>
 
-  <figure class="ContentElementAudio__Picture picture" on:click={play}>
+  <figure class="ContentElementAudio__Picture picture">
     <MediaFileImage mediafileRef={imageRef} />    
   </figure>
   
@@ -147,7 +149,7 @@
     <span class="ContentElementAudio__Play play">
       <AudioPlayButton
         {playing}
-        onTap={play}
+        onTap={()=>{}}
         paused={$audioPlayerStatus?.paused}
         loading={$audioPlayerStatus?.loading}
       />
@@ -156,7 +158,7 @@
     {/if}
 
     {#if util.rowVal(element, elementColumns.locationColumn)}
-    <span class="ContentElementAudio__Distance distance">
+    <span class="ContentElementAudio__Distance distance" on:click|stopPropagation={()=>{openMapTo(element)}}>
       <Button>
         {distance}
       </Button>
