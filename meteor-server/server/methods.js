@@ -138,6 +138,15 @@ Meteor.methods({
       Projects.remove(projectId);
   },
 
+
+  'project.rename': async ({ projectId, newName }) => {
+    console.log("proejct.rename", projectId, newName)
+    let project = Projects.find(projectId);
+    if(project) {
+      Projects.update({_id: projectId}, {$set: { name: newName }})
+    }
+  },
+
   'project.duplicate': async ({ projectId }) => {
       return duplicateProject(projectId)
   },

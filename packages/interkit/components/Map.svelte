@@ -77,6 +77,7 @@
   let markerRows;
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
 
   // store of projectid
   let projectId = InterkitClient.projectId;
@@ -281,10 +282,10 @@
     //console.log('Current Position', coordinates);
     let lastErrorCode;
 
-    geoWatch = Geolocation.watchPosition({}, (position, err) => {
+    geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
-        //console.log(position, err)
+        console.log("currentPosition", JSON.stringify(currentPosition), err)
 
         let positionStore = InterkitClient.getGlobalStore("userPosition")
         positionStore.set(currentPosition);
@@ -386,21 +387,23 @@
   const panToUserPosition = async () => {
     if(Capacitor.isNative) {
       let result = await Permissions.query({name: "geolocation"})
-      console.log("geo permission", result)
+      console.log("geo permission", JSON.stringify(result))
+      console.log("panning to", JSON.stringify(currentPosition))
       if(result.state != "granted") {
         alert(permissionNotification)
       } else {
         if(currentPosition) {
-          map.panTo(currentPosition)
-          map.zoomIn(5)
+          map.panTo(currentPosition, {animate: false})
+          map.setZoom(16)
         }
         else 
           console.log("currentPosition", currentPosition)
       }
     } else {
       if(currentPosition) {
-        map.panTo(currentPosition)
-        map.zoomIn(5)
+        console.log(currentPosition)
+        map.panTo(currentPosition, {animate: false})
+        map.setZoom(16)
       }
     }
   }
@@ -415,6 +418,13 @@
 
   const closeControls = () => {
     controlsFocus = null;
+  }
+
+
+  $: if($mapFocus) {
+    console.log($mapFocus);
+    map.panTo({lat: $mapFocus.lat, lng: $mapFocus.lng}, {animate: false});
+    map.setZoom(16);
   }
 
 </script>
