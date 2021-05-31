@@ -7,6 +7,9 @@ import css from 'rollup-plugin-css-only';
 import babel from '@rollup/plugin-babel';
 
 const production = !process.env.ROLLUP_WATCH;
+const quick_compile = process.env.QUICK_COMPILE === "true"
+
+console.log(`production: ${production ? "on" : "off"}, quick_compile: ${quick_compile ? "on" : "off"}`)
 
 function serve() {
 	let server;
@@ -35,7 +38,7 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'public/build/bundle.js'
+		file: 'public/build/' + (quick_compile ? 'bundle_dev.js' : 'bundle.js')
 	},
 	plugins: [
 		svelte({
@@ -61,17 +64,17 @@ export default {
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
-		!production && serve(),
+		!production && !quick_compile && serve(),
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && !quick_compile && livereload('public'),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser(),
+		production && !quick_compile && terser(),
 
-    production && babel({
+		production && !quick_compile && babel({
       extensions: ['.js', '.mjs', '.html', '.svelte'],
       babelHelpers: 'bundled',
       comments: false,

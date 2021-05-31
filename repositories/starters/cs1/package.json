@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "start": "sirv public",
+    "build:dev": "QUICK_COMPILE=true rollup -c",
     "dev": "rollup -c -w"
   },
   "devDependencies": {
