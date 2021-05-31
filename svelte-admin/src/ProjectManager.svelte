@@ -21,6 +21,7 @@
   } from "carbon-components-svelte";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import Copy16 from "carbon-icons-svelte/lib/Copy16";
+  import Edit16 from "carbon-icons-svelte/lib/Edit16";
 
   export let params = {}
 
@@ -74,6 +75,13 @@
     }
   }
 
+  const renameProject = async (row) => {
+    let newName = prompt("Projekt umbenennen", row.name)
+    if(newName) {
+      await InterkitClient.call("project.rename", {projectId: row._id, newName});
+    }
+  }
+
   const duplicateProject = async (projectId) => {
     console.log("duplicating database")
     const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
@@ -99,6 +107,7 @@
           <span slot="cell" let:row let:cell>
             {#if cell.key === 'action'}
               <div class="actions">
+                <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit16 /></span>
                 <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy16 /></span>
                 <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
               </div>
