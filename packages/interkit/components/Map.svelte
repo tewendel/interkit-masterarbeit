@@ -282,10 +282,10 @@
     //console.log('Current Position', coordinates);
     let lastErrorCode;
 
-    geoWatch = Geolocation.watchPosition({}, (position, err) => {
+    geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
-        //console.log(position, err)
+        console.log("currentPosition", JSON.stringify(currentPosition), err)
 
         let positionStore = InterkitClient.getGlobalStore("userPosition")
         positionStore.set(currentPosition);
@@ -387,13 +387,14 @@
   const panToUserPosition = async () => {
     if(Capacitor.isNative) {
       let result = await Permissions.query({name: "geolocation"})
-      console.log("geo permission", result)
+      console.log("geo permission", JSON.stringify(result))
+      console.log("panning to", JSON.stringify(currentPosition))
       if(result.state != "granted") {
         alert(permissionNotification)
       } else {
         if(currentPosition) {
-          map.panTo(currentPosition)
-          map.setZoom(15, {animate: false})
+          map.panTo(currentPosition, {animate: false})
+          map.setZoom(16)
         }
         else 
           console.log("currentPosition", currentPosition)
@@ -402,7 +403,7 @@
       if(currentPosition) {
         console.log(currentPosition)
         map.panTo(currentPosition, {animate: false})
-        map.setZoom(15)
+        map.setZoom(16)
       }
     }
   }
