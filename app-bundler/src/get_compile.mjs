@@ -10,12 +10,16 @@ const execPromise = promisify(exec)
 const get_compile =  async (req, res) => {
 
   const projectId = req.params.projectId;
+  const dev = typeof(req.query.dev) !== "undefined";
 
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
+  const command = `cd ${projectPath} && `
+    + (dev ? `npm run build:dev` : `npm install && npm run build:dev && npm run build`)
+
   let code, message
   try {
-    const result = await execPromise(`cd ${projectPath} && npm install && npm run build`);
+    const result = await execPromise(command);
     code = 0
     message = result.stdout + result.stderr
   } catch (error) {

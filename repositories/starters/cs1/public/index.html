@@ -19,7 +19,7 @@
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			var src = (new URLSearchParams).get('dev') ? 'build/bundle_dev.js' : 'build/bundle.js'
+			var src = (new URLSearchParams(window.location.search)).get('dev') ? 'build/bundle_dev.js' : 'build/bundle.js'
 			var scriptTag = document.createElement('script');
 			scriptTag.setAttribute('defer', true);
 			scriptTag.setAttribute('src', src);

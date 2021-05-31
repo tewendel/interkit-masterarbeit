@@ -2,7 +2,7 @@
   import QrCode from "svelte-qrcode"
   import { InterkitClient } from 'interkit'
   import Convert from 'ansi-to-html'
-  import { BundleServer, compileError, runtimeError, bundleProcessing, buildHash } from './BundleServer.js'
+  import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
   import { 
     Tabs, 
@@ -57,6 +57,7 @@
     } else {
       query.delete("localConfigURL")
     }
+    query.set("dev", true)
     console.log("query", query.toString())
     previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
@@ -87,8 +88,6 @@
 
   <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
   
-  <Button icon={ReloadCompileIcon} kind="tertiary" on:click={BundleServer.compileReloadPreview}>compile & relaod</Button>
-
   <br><br>
   <Grid>
     <Row>
@@ -110,40 +109,46 @@
     </Row>
   </Grid>
 
-  <br><br>
+  <br>
 
-  <Tabs>
-      <Tab label="web preview" />
-      <Tab label="app preview" />
-    <div slot="content">
-      <TabContent>
-        <div>
-          <a target="_blank" href="{previewURL}">
-              {#key previewURL}
-                <QrCode value={previewURL} />
-              {/key}
-            <br>
-            link to app
-          </a>
-        </div>          
-      </TabContent>
-      <TabContent>
-        <div>
-          <a target="_blank" href="{bundlezipURL}">
-              {#key bundlezipURL}
-                <QrCode value={bundlezipURL} />
-              {/key}
-            <br>
-            bundle zip
-          </a>
-        </div>
+  {#if $bundleNotBuilt}
+    <Button on:click={()=>BundleServer.compileReloadPreview()}>Build Preview</Button>
+  {:else}
+    {#if $bundleProcessing}
+      <Loading withOverlay={false} small />
+    {:else}
+      <Tabs>
+          <Tab label="web preview" />
+          <Tab label="app preview" />
+        <div slot="content">
+          <TabContent>
+            <div>
+              <a target="_blank" href="{previewURL}">
+                  {#key previewURL}
+                    <QrCode value={previewURL} />
+                  {/key}
+                <br>
+                link to app
+              </a>
+            </div>          
+          </TabContent>
+          <TabContent>
+            <div>
+              <a target="_blank" href="{bundlezipURL}">
+                  {#key bundlezipURL}
+                    <QrCode value={bundlezipURL} />
+                  {/key}
+                <br>
+                bundle zip
+              </a>
+            </div>
+              
+          </TabContent>
           
-      </TabContent>
-      
-    </div>
-  </Tabs>
-  
-  
+        </div>
+      </Tabs>  
+    {/if}
+  {/if}
   
 {#if $compileError}
   <div class="error">compile error: {@html convert.toHtml($compileError)}</div>

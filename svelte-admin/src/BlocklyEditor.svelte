@@ -3,7 +3,7 @@
   import {onMount} from 'svelte'
   import indent from 'xml-formatter';
   
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
   import { watchResize } from "svelte-watch-resize";
 
   
@@ -191,10 +191,10 @@
     await InterkitClient.call("file.save", {file: appSvelteFile, projectId})
   }
 
-  const saveAndCompile = async ()=>{
+  const saveAndCompile = async (dev=false)=>{
 
     await save();
-    BundleServer.compileReloadPreview();
+    BundleServer.compileReloadPreview(dev);
     
   }
 
@@ -224,9 +224,10 @@
 
 
 
-  <button on:click={save}>save</button>
-  <button on:click={saveAndCompile}>save & compile</button>
-  <button on:click={createDatabase}>check database</button>
+  <Button on:click={()=>saveAndCompile(true)}>save</Button>
+  <br />
+  <br />
+  <Button on:click={createDatabase} size="small" kind="tertiary">check database</Button>
   
   <InputModal
     type={openInputModal}

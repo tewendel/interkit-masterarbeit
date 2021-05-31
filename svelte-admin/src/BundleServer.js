@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export const compileError = writable(null);
 export const runtimeError = writable(null);
 export const bundleProcessing = writable(false);
+export const bundleNotBuilt = writable(true);
 export const buildHash = writable("0");
 
 let bundleServerURL;
@@ -13,8 +14,8 @@ const reloadPreview = () => {
     runtimeError.set(null)
 };
 
-const compileProject = async () => {
-  const res = await fetch(bundleServerURL + "/compile/" + projectId)
+const compileProject = async (dev=false) => {
+  const res = await fetch(bundleServerURL + "/compile/" + projectId + (dev ? "/?dev" : ""))
   const resJSON = await res.json()
   console.log(resJSON)
   if(resJSON.status == "error") {
@@ -54,9 +55,10 @@ const initProject = async (_projectId) => {
   }, false);
 }
 
-const compileReloadPreview = async () => {
+const compileReloadPreview = async (dev=false) => {
+  bundleNotBuilt.set(dev)
   bundleProcessing.set(true)
-  await compileProject();
+  await compileProject(dev);
   bundleProcessing.set(false)
   reloadPreview();
 }
