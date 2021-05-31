@@ -112,7 +112,7 @@
   <br>
 
   {#if $bundleNotBuilt}
-    <Button on:click={()=>BundleServer.compileReloadPreview()}>Build Preview</Button>
+    <Button on:click={()=>BundleServer.compileReloadPreview()}>Build App</Button>
   {:else}
     {#if $bundleProcessing}
       <Loading withOverlay={false} small />
