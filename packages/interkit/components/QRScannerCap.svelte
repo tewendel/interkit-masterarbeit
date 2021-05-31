@@ -9,6 +9,7 @@
 
     // check or request permission
     const status = await BarcodeScanner.checkPermission({ force: true });
+    console.log(JSON.stringify(status))
 
     if (status.granted) {
       // the user granted permission

@@ -1,7 +1,9 @@
 <script>
   import InterkitLiveReload from '../interkit-live-reload'
   //import QRScanner from './QRScanner.svelte'
+ 
   import QRScannerCap from './QRScannerCap.svelte'
+  import InterkitLogo from './InterkitLogo.svelte'
 
   let bundleZipUrl = `https://sebquack.uber.space/bundle.zip`;
   let doingUpdate = false;
@@ -13,9 +15,15 @@
 
 </script>
 
-<h1>enter bundle zip url</h1>
-<input type="text" bind:value={bundleZipUrl}/>
-<button on:click={doUpdate}>Do Update</button>
+<div class="info">
+  <div class="content">
+    Scanne den QR Code im Interkit-Redaktionssystem, um das Projekt zu laden!
+    <!--<label>enter bundle zip url</label>
+    <input type="text" bind:value={bundleZipUrl}/>
+    <button on:click={doUpdate}>Do Update</button><br>-->
+  </div>
+  <a href="https://interkit.app"><InterkitLogo/></a>
+</div>
 
 {#if !doingUpdate}
   <!--QRScanner
@@ -28,5 +36,39 @@
     }}
   />
 {/if}
+
+<style>
+  * {
+    font-family: sans-serif;
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: 0;
+  }
+
+  .info {
+    background-color: #fff;
+    position:  absolute;
+    bottom: 0px;
+    width:  100%;
+    margin: 0;
+    padding:  15px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .content {
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+
+
+</style>
 
 
