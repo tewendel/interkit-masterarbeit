@@ -94,11 +94,12 @@
 
   const rename = () => {
     let newName = prompt("Rename sheet", $currentSheet.name)
-    InterkitClient.call('sheet.rename', {key: sheetKey, projectId, name: newName})
+    if(newName)
+      InterkitClient.call('sheet.rename', {key: sheetKey, projectId, name: newName})
   }
 
   const remove = async () => {
-    if(confirm("permanently remove sheet and all data within?")) {
+    if(confirm("permanently remove sheet, including all rows and all data within?")) {
       await InterkitClient.call('sheet.remove', {sheetKey, projectId})
       close();
     }
@@ -255,7 +256,7 @@
     <small>{$currentSheet.key}</small> 
   </h4>
   <Button size="small" on:click={rename}>Rename</Button> 
-  <Button size="small" on:click={remove} icon={Delete16}>Remove</Button>
+  <Button size="small" on:click={remove} icon={Delete16}>Remove Sheet</Button>
 
   <br><br>
   <DataTable
@@ -292,8 +293,8 @@
     <span slot="cell" let:row let:cell>
       {#if cell.key === 'overflow'}
         <OverflowMenu style="float: right" flipped>
-          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
           <OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" />
+          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
         </OverflowMenu>
       {:else}
         <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
