@@ -217,9 +217,12 @@
         </figure>
       {/if}
 
+      {#key title}
       <h3 class="AudioPlayer__Expanded__Title">
         {title}
       </h3>
+      {/key}
+      
       <h4 class="AudioPlayer__Expanded__SubTitle">
         <span>
           {util.rowValString(categoryRow, categoryColumns[categoryIndex].titleColumn)}
