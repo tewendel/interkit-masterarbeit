@@ -15,6 +15,27 @@ async function gitAddAll(projectPath) {
   )
 }
 
+async function gitAdd(projectPath, filepath) {
+  const repo = {
+    fs,
+    dir: projectPath
+  }
+  git.add({ ...repo, filepath })
+}
+
+async function gitCommit(projectPath, message = "some commit") {
+  let sha = await git.commit({
+    fs,
+    dir: projectPath,
+    author: {
+      name: 'Interkit System',
+      email: 'info@interkit.app',
+    },
+    message
+  })
+  return sha
+}
+
 async function gitLatestCommit(projectPath, branch = "master") {
   let commits = await git.log({
     fs,
@@ -31,5 +52,7 @@ async function gitLatestCommit(projectPath, branch = "master") {
 
 export {
   gitAddAll,
-  gitLatestCommit
+  gitLatestCommit,
+  gitAdd,
+  gitCommit
 }

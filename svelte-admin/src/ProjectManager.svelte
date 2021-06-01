@@ -85,8 +85,6 @@
   const duplicateProject = async (projectId) => {
     console.log("duplicating database")
     const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
-    console.log(newProjectId, "duplicating bundle")
-    await BundleServer.duplicateProject(projectId, newProjectId)
   }
 
 </script>

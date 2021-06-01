@@ -3,7 +3,7 @@ import fs from 'fs'
 import fse from 'fs-extra'
 import git from 'isomorphic-git'
 
-import { gitAddAll } from './git.mjs'
+import { gitAddAll, gitAdd, gitCommit } from './git.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 const INTERKIT_BUNDLER_URL = process.env.INTERKIT_BUNDLER_URL
@@ -22,7 +22,16 @@ function ensureRepositories(projects) {
     const projectId = project.id
     const projectPath = getProjectPath(projectId)
     if (!fs.existsSync(projectPath)) {
-      setupNewRepository(project)
+      // find source project id if this project duplicates an existing project
+      const projectHistoryCreateEvents = project.history && Array.isArray(project.history) && project.history.filter(e => e.event === "create_project") || []
+      const lastCreateEvent = projectHistoryCreateEvents[projectHistoryCreateEvents.length-1] || {}
+      const sourceProjectId = lastCreateEvent?.props?.sourceProjectId
+      if (sourceProjectId) {
+        duplicateRepository(project, sourceProjectId)
+      } else {
+        setupNewRepository(project)
+      }
+      
     }
   }
 }
@@ -38,7 +47,49 @@ function generateInterkitConfig(project) {
   }
 }
 
-async function setupNewRepository(project) {
+async function duplicateRepository(project, sourceProjectId) {
+  const projectId = project.id
+  const oldProjectPath = getProjectPath(sourceProjectId)
+  const projectPath = getProjectPath(projectId)
+
+  console.log(`duplicating project ${oldProjectPath} to ${projectPath}`)
+
+  if (fs.existsSync(projectPath)) {
+    console.warn("path already exists", projectPath)
+    return
+  }
+
+  if (!fs.existsSync(oldProjectPath)) {
+    console.warn("path noes not exist", oldProjectPath)
+    return
+  }
+
+  // copy files
+
+  try {
+    fse.copySync(oldProjectPath, projectPath)
+    console.log(`copied ${oldProjectPath} to ${projectPath}`)
+  } catch (err) {
+    console.warn(`copy failed: ${oldProjectPath} to ${projectPath}`)
+    return
+  }
+
+  // adjust slug
+
+  // generate new interkit.config (TODO: modify existing config) to connect with new project slug
+  const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
+  // ...and overwrite interkit.config
+  await fs.promises.writeFile(
+    path.join(projectPath, "public/interkit.config.json"),
+    interkitConfigJson
+  )
+  // ...and commit
+  await gitAdd(projectPath, "public/interkit.config.json")
+  await gitCommit(projectPath, "generate new interkit.config.json because of project duplication")
+
+}
+
+async function setupNewRepository(project, sourceProjectId=false) {
   const projectId = project.id
   
   const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
