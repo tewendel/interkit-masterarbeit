@@ -280,11 +280,37 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
   
   // update the store through simpleDDP's onChange listener
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
+
+
+  let bufferedWritesInterval = 500
+  let bufferedWritesMaxAge = 2000
+  let bufferedWritesFlushAt = null
+  let bufferedWritesFlushHandle = null
+
+  const updateAndFlush = (d) => {
+    if (bufferedWritesFlushHandle) {
+      clearTimeout(bufferedWritesFlushHandle);
+      bufferedWritesFlushHandle = null;
+    }
+    sub.data.set(restore_ids(d))
+  }
+
   sub.reactiveCollection.onChange((newData)=>{
-    
-    // this is called way too often! -> todo: optimize 
     // console.log("onChange", col, newData)
-    sub.data.set(restore_ids(newData))      
+    
+    if (bufferedWritesFlushAt === null) {
+      bufferedWritesFlushAt = new Date().valueOf() + bufferedWritesMaxAge;
+    }
+    else if (bufferedWritesFlushAt < new Date().valueOf()) {
+      updateAndFlush(newData)
+      return;
+    }
+
+    // schedule next flush time to bufferedWritesInterval ahead of now
+    if (bufferedWritesFlushHandle) {
+      clearTimeout(bufferedWritesFlushHandle);
+    }
+    bufferedWritesFlushHandle = setTimeout(() => updateAndFlush(newData), bufferedWritesInterval);
     
   })
 
