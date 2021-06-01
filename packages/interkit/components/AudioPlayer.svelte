@@ -347,7 +347,7 @@
         + ($audioPlayerStatus?.currentTime ? 
         "width: calc(" 
         + ($audioPlayerStatus?.currentTime / $audioPlayerStatus?.duration * 100) 
-        + "% + 8px)" : "")
+        + "% + 14px)" : "")
       }
     ></div>
   </div>
