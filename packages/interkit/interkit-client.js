@@ -213,14 +213,14 @@ const checkForUpdates = async () => {
         && versionCompare(onlineVersion, myVersion) >= 0 // I am newer or queal online
       ) {
         console.log("I'm at the newest available version, no need to update")
-        return;
+        return false;
       }
 
       // If the downloaded version is newer or equal to the online version, switch 
       if(versionCompare(onlineVersion, downloadedVersion) >= 0) {
         console.log("The downloaded version is the newest available, switching to that...")
         await InterkitLiveReload.activateInstalledBundle();
-        return;
+        return true;
       } 
     }
 
@@ -231,10 +231,12 @@ const checkForUpdates = async () => {
        //let bundleURL = "https://app.demo.interkit.app/bundlezip/Pn5M862Kw9Zj7C8ot"
 
        await InterkitLiveReload.downloadAndActivateBundle(encodeURI(bundleURL))
+       return true;
 
     } else {
       console.log("online is same or older - we are on the newest available version, no update or switch needed");
-    }   
+    }
+    return false;   
 }
 
   /*
@@ -344,12 +346,15 @@ const InterkitClient = {
   initApp: async () => {
     await loadConfig();
     await getProjectId();
-    console.log("Capacitor.isNative", Capacitor.isNative)
+    
+    let updating = false;
     if(Capacitor.isNative) {
-      await checkForUpdates();
+      updating = await checkForUpdates();
     }
-    await connect()
-    return true;
+    if(!updating) {
+      await connect()
+      return true;
+    }
   },
   login: async ({username, password}) => {
     //console.log(server)
