@@ -29,6 +29,17 @@ duplicateProject = async function (projectId) {
   // transform ids and assemble new data object
   const newProjectData = transformProjectData(projectData, newProjectId, newProjectName)
 
+  // change slug
+  const newProjectSlug = newProjectData.project.slug + "_" + newProjectId
+  newProjectData.project.slug = newProjectSlug
+
+  // start new history
+  newProjectData.project.history = [
+    makeProjectHistoryEntry("create_project", {
+      sourceProjectId: projectId,
+    })
+  ]
+
   // inset docs
   // uses https://github.com/mikowals/batch-insert
   if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
@@ -101,6 +112,15 @@ const getAllOfProject = async function (projectId)  {
 
 const transformProjectIds = function(projectData, newProjectId) {
   return projectData
+}
+
+const makeProjectHistoryEntry = function(eventName, eventProps) {
+  const historyEntry = {
+    date: new Date(),
+    event: eventName,
+    props: eventProps,
+  }
+  return historyEntry
 }
 
 //duplicateProjectData()
