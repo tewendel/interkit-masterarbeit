@@ -188,9 +188,11 @@
   
   <div class="ContentElementAudio_Titles titles">
 
+    {#key title}
     <h3 class="ContentElementAudio__Title title">
       {title}
     </h3>
+    {/key}
 
     <h4 class="ContentElementAudio__SubTitle subtitle">
       {#if supertext}
