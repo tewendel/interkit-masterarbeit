@@ -284,7 +284,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
 
 
-  let bufferedWritesInterval = 500
+  let bufferedWritesInterval = 350
   let bufferedWritesMaxAge = 2000
   let bufferedWritesFlushAt = null
   let bufferedWritesFlushHandle = null
@@ -294,6 +294,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
       clearTimeout(bufferedWritesFlushHandle);
       bufferedWritesFlushHandle = null;
     }
+    bufferedWritesFlushAt = null
     sub.data.set(restore_ids(d))
   }
 
@@ -311,6 +312,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
     // schedule next flush time to bufferedWritesInterval ahead of now
     if (bufferedWritesFlushHandle) {
       clearTimeout(bufferedWritesFlushHandle);
+      bufferedWritesFlushHandle = null;
     }
     bufferedWritesFlushHandle = setTimeout(() => updateAndFlush(newData), bufferedWritesInterval);
     
