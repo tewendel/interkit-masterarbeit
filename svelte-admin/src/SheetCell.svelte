@@ -20,6 +20,10 @@
 
     <MediaFilePreview key={cell.value.value} {projectId}/>
 
+  {:else if typeof cell.value == "number"}
+
+    {cell.value}
+    
   {:else}
 
       {cell.value ? cell.value : ""}
