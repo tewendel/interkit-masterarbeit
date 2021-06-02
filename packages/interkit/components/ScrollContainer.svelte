@@ -53,6 +53,7 @@
   div {
     flex: 1;
     overflow-y: auto;
+    height: 100%;
   }
 
 </style>
