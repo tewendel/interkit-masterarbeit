@@ -285,7 +285,7 @@
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
-        console.log("currentPosition", JSON.stringify(currentPosition), err)
+        //console.log("currentPosition", JSON.stringify(currentPosition), err)
 
         let positionStore = InterkitClient.getGlobalStore("userPosition")
         positionStore.set(currentPosition);

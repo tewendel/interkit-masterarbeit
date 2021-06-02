@@ -130,10 +130,15 @@
     <div class="project-create-form">
           <input bind:value={newProjectName}>
           <button on:click={createProject}>create project</button>
-        </div>
+    </div>
   </Row>
   {/if}
-  <Row>{#if $userId} <Logout/> {/if}</Row>
+  <Row>{#if $userId} 
+    <div class="logout">
+      <Logout/> 
+    </div>
+  {/if}
+  </Row>
   <Row>
     <Column>
       <Tile>
@@ -146,6 +151,11 @@
 <style>
   .project-create-form {
     margin-top: 10px;
+    margin-left: 15px;
+    padding: 15px;
+  }
+
+  .logout {
     padding: 15px;
   }
 
