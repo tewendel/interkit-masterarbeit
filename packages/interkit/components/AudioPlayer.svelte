@@ -372,12 +372,12 @@
     position: relative;
     z-index: 1000;
     pointer-events: auto;
-    /*position: absolute;*/
     bottom: 0;
   }
 
   .container.expanded {
-    height: 100%
+    height: 100%;
+    position: absolute;
   }
 
   .base-content {

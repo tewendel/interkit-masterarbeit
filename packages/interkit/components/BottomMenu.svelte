@@ -101,7 +101,6 @@
   .media-player.active {
     display: flex;
     /*height: 55px;*/
-    /*transition: height 0.2s ease-out;*/
   }
 
   .media-player.expanded {
