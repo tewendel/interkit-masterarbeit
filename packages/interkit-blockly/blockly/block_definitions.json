@@ -919,7 +919,7 @@
       {
         "name": "useBookmarks",
         "type": "field_checkbox",
-        "value": "FALSE"
+        "value": "TRUE"
       },
       {
         "type": "input_dummy"
