@@ -1,8 +1,11 @@
-.bx--data-table-container {
+.SheetTableContainer .bx--data-table-container,
+.MediaFileListTableContainer .bx--data-table-container {
   height: 400px;
+  overflow: auto;
 }
 
-.bx--data-table-container thead th {
+.SheetTableContainer .bx--data-table-container thead th,
+.MediaFileListTableContainer .bx--data-table-container thead th {
   position: sticky;
   top: 0;
 }

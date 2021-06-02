@@ -97,37 +97,43 @@
         <ProjectWorkspace projectId={currentProjectId} {currentProject}/>
       {:else}
 
-        <DataTable
-          headers={[{ key: 'name', value: 'Projects' }, { key: 'action', value: 'Action', empty: true }]}
-          rows={projectRows}
-          size="tall"
-        >
-          <span slot="cell" let:row let:cell>
-            {#if cell.key === 'action'}
-              <div class="actions">
-                <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit16 /></span>
-                <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy16 /></span>
-                <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
-              </div>
-            {:else}
-              
-              <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
+      
+      <DataTable
+        headers={[{ key: 'name', value: 'Projects' }, { key: 'action', value: 'Action', empty: true }]}
+        rows={projectRows}
+        size="tall"
+      >
+        <span slot="cell" let:row let:cell>
+          {#if cell.key === 'action'}
+            <div class="actions">
+              <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit16 /></span>
+              <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy16 /></span>
+              <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
+            </div>
+          {:else}
+            
+            <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
 
-            {/if}
-          </span>
-        </DataTable>
-
-        <div class="project-create-form">
-          <input bind:value={newProjectName}>
-          <button on:click={createProject}>create project</button>
-        </div>
-
-        {#if $userId} <Logout/> {/if}
+          {/if}
+        </span>
+      </DataTable>
+        
+        
 
       {/if}
 
     </Column>
   </Row>
+
+  {#if !currentProjectId}
+  <Row>
+    <div class="project-create-form">
+          <input bind:value={newProjectName}>
+          <button on:click={createProject}>create project</button>
+        </div>
+  </Row>
+  {/if}
+  <Row>{#if $userId} <Logout/> {/if}</Row>
   <Row>
     <Column>
       <Tile>

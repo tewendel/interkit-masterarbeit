@@ -259,54 +259,57 @@
   <Button size="small" on:click={remove} icon={Delete16}>Remove Sheet</Button>
 
   <br><br>
-  <DataTable
-    sortable
-    {headers}
-    rows={rowsFiltered}
-    style="padding-bottom: 48px; overflow-x: auto"
-  >
 
-    <Toolbar>
-      <ToolbarContent>
-        <ToolbarSearch bind:value={searchQuery}/>
-      </ToolbarContent>
-    </Toolbar>
-    
-    <span slot="cell-header" let:header>
-      {#if header.key == "overflow"}
-        <OverflowMenu style="float: right" flipped>
-            <OverflowMenuItem on:click={createColumn} text="add column" />    
-        </OverflowMenu>   
-      {:else}
-        <div class="sheet-header" >
-          <OverflowMenu size="sm" style="width: 100%;">
-            <div slot="menu" style="font-weight:bold">{header.value}</div>
-            <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
-            <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
-            <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
-            <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+  <div class="SheetTableContainer">
+    <DataTable
+      sortable
+      {headers}
+      rows={rowsFiltered}
+      style="padding-bottom: 48px; overflow-x: auto"
+    >
+
+      <Toolbar>
+        <ToolbarContent>
+          <ToolbarSearch bind:value={searchQuery}/>
+        </ToolbarContent>
+      </Toolbar>
+      
+      <span slot="cell-header" let:header>
+        {#if header.key == "overflow"}
+          <OverflowMenu style="float: right" flipped>
+              <OverflowMenuItem on:click={createColumn} text="add column" />    
+          </OverflowMenu>   
+        {:else}
+          <div class="sheet-header" >
+            <OverflowMenu size="sm" style="width: 100%;">
+              <div slot="menu" style="font-weight:bold">{header.value}</div>
+              <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
+              <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
+              <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
+              <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+            </OverflowMenu>
+          </div>
+        {/if}
+      </span>
+      
+      <span slot="cell" let:row let:cell>
+        {#if cell.key === 'overflow'}
+          <OverflowMenu style="float: right" flipped>
+            <OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" />
+            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
           </OverflowMenu>
-        </div>
-      {/if}
-    </span>
+        {:else}
+          <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
+            <SheetCell {cell} {refData} {projectId}/>
+          </span>
+        {/if}
+      </span>
     
-    <span slot="cell" let:row let:cell>
-      {#if cell.key === 'overflow'}
-        <OverflowMenu style="float: right" flipped>
-          <OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" />
-          <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
-        </OverflowMenu>
-      {:else}
-        <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
-          <SheetCell {cell} {refData} {projectId}/>
-        </span>
-      {/if}
-    </span>
-  
-  </DataTable>
+    </DataTable>
+  </div>
   <Button size="small" icon={Add16} on:click={createRow}>Add Row</Button>
 {/if}
-    
+
 <InputModal
   type={headerTypeModal}
   bind:value={updateHeader}

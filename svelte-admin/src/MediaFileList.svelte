@@ -41,8 +41,8 @@
     //console.log(m)
     if(!query || query == "") return true;
     else {
-      if(m.name.toLowerCase().includes(query.toLowerCase())
-        || m.type.toLowerCase().includes(query.toLowerCase())) {
+      if(m?.name.toLowerCase().includes(query.toLowerCase())
+        || m?.type?.toLowerCase()?.includes(query.toLowerCase())) {
         return true
       } else {
         return false;
@@ -76,32 +76,34 @@
 
 {#if rows}
 
-  <DataTable sortable {radio} bind:selectedRowIds {headers} rows={rowsFiltered}>
+  <div class="MediaFileListTableContainer">
+    <DataTable sortable {radio} bind:selectedRowIds {headers} rows={rowsFiltered}>
 
-    <Toolbar>
-      <ToolbarContent>
-        <ToolbarSearch bind:value={searchQuery}/>
-      </ToolbarContent>
-    </Toolbar>
+      <Toolbar>
+        <ToolbarContent>
+          <ToolbarSearch bind:value={searchQuery}/>
+        </ToolbarContent>
+      </Toolbar>
 
-    <span slot="cell" let:row let:cell>
-      {#if cell.key === 'overflow'}
-          {#if row.name != "empty"}
-            <OverflowMenu style="float: right" flipped>
-              <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
-              <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
-            </OverflowMenu>
-          {/if}
-      {:else if cell.key === 'type' && cell.value}
-        {row.type}
-      {:else if cell.key === 'preview'}
-        <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
-      {:else if cell.key === 'link' && cell.value}
-        <a href={row.link} title={row.link} target="_blank" class="truncate">url</a>
-      {:else}{cell.value || ""}{/if}
-    </span>
+      <span slot="cell" let:row let:cell>
+        {#if cell.key === 'overflow'}
+            {#if row.name != "empty"}
+              <OverflowMenu style="float: right" flipped>
+                <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
+                <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
+              </OverflowMenu>
+            {/if}
+        {:else if cell.key === 'type' && cell.value}
+          {row.type}
+        {:else if cell.key === 'preview'}
+          <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
+        {:else if cell.key === 'link' && cell.value}
+          <a href={row.link} title={row.link} target="_blank" class="truncate">url</a>
+        {:else}{cell.value || ""}{/if}
+      </span>
 
-  </DataTable>
+    </DataTable>
+  </div>
 
 {:else}
   loading...
