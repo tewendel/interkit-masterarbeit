@@ -13,10 +13,12 @@
 </script>
 
 <div on:click={doSwitch} class="MenuSwitcher">
-  <h3>
-    <SectionHeadline>
-      {title}
-    </SectionHeadline>
-  </h3>
+  {#if title}
+    <h3>
+      <SectionHeadline>
+        {title}
+      </SectionHeadline>
+    </h3>
+  {/if}
   <MediaFileImage mediafileRef={image} />    
 </div>

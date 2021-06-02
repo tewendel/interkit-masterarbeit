@@ -20,7 +20,7 @@
 	button {
 		flex: 1;
 		border: 2px solid black;
-		border-width: 0 0 2px 0;
+		border-width: 0 0 1px 0;
 		padding: 1ex;
 		position: relative;
 	}

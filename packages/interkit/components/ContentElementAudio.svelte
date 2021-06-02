@@ -313,6 +313,11 @@
     padding-right: 16px;
   }
 
+  .subtitle {
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
   .content {
     padding: 16px;
   }
@@ -327,8 +332,16 @@
     display: none;
   }
 
-  .container.size-s .picture, .container.size-m .picture {
+  .container.size-s .picture {
     width: 25%; 
+  }
+
+  .container.size-m .picture {
+    display: none;
+  }
+
+  .container.size-m .controls {
+    grid-row: 5;
   }
 
   .container.size-xs .controls .bookmark, 

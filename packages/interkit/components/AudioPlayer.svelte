@@ -438,7 +438,7 @@
   }
 
   .AudioPlayer__Expanded {
-    padding-top: 16px;
+    padding-top: 0px;
     padding-bottom: 32px;
     display: flex;
     flex-direction: column;
@@ -462,6 +462,8 @@
   }
   .AudioPlayer__Expanded__SubTitle {
     order: 2;
+    text-transform: uppercase;
+    font-size: 10px;
   }
 
   .AudioPlayer__Expanded__Description {
@@ -499,19 +501,19 @@
   .seekPositionRangeSlider {
     width: 100%;
     -webkit-appearance: none;
-    background-color: #fff; 
+    background-color: #000; 
     height: 1px;
     margin: 0;
     /* this is to have a larger target to tap */
-    border-top: 10px solid #000; 
-    border-bottom: 10px solid #000;
+    /* border-top: 10px solid #000; 
+    border-bottom: 10px solid #000; */
   }
 
   .seekPositionRangeSlider::-moz-range-thumb {
      -webkit-appearance: none;
      height: 14px;
      width: 14px;
-     background: #fff;
+     background: #000;
      margin-top: -5px;
      border-radius: 50%;
      border: none;
@@ -521,7 +523,7 @@
    -webkit-appearance: none;
     height: 14px;
     width: 14px;
-    background: #fff;
+    background: #000;
     border-radius: 50%;
     border: none;
 }

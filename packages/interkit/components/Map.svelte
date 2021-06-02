@@ -531,19 +531,21 @@
 
   .marker_popup {
     position: absolute;
-    bottom: 70px;
+    bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
     z-index: 2000;
-    border: 1px solid black;
     display: none;
     width: 100%;
     box-sizing: border-box;
+
   }
 
   .marker_popup_background {
     background-color: #fff;
     position: relative;
+    border-radius: 24px;
+    border: 1px solid black;
   }
 
   .marker_popup.active {
@@ -551,6 +553,7 @@
   }
 
   .marker_popup_close {
+    display: none;
     position: absolute;
     top: 16px;
     right: 16px;
