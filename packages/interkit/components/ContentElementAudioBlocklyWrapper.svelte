@@ -12,7 +12,7 @@
   export let categoryRefColumn
   export let categoryOrderColumn
   export let shortDescriptionColumn
-  export let useBookmarks = false;
+  export let useBookmarks = "TRUE";
 
   //console.log("shortDescriptionColumn", shortDescriptionColumn)
 

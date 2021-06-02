@@ -29,7 +29,7 @@
 
 </script>
 
-<span on:click={toggleBookmark}>
+<span on:click|stopPropagation={toggleBookmark}>
   {#if isBookmarked}
     {#if close}
       <Icon type="close" />

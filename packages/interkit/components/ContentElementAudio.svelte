@@ -35,7 +35,7 @@
   
   // use this to specify a bookmark list
   export let bookmarkFilter = "bookmarks";
-  export let useBookmarks = false;
+  export let useBookmarks = "TRUE";
   
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
@@ -139,9 +139,9 @@
 
 </script>
 
-<section class={`ContentElementAudio container size-${size}`}  on:click={play}>
+<section class={`ContentElementAudio container size-${size}`}  on:click={()=>{if(size=="xs") play()}}>
 
-  <figure class="ContentElementAudio__Picture picture">
+  <figure class="ContentElementAudio__Picture picture" on:click={play}>
     <MediaFileImage mediafileRef={imageRef} />    
   </figure>
   
@@ -150,7 +150,7 @@
     <span class="ContentElementAudio__Play play">
       <AudioPlayButton
         {playing}
-        onTap={()=>{}}
+        onTap={()=>{if(size!="xs") play()}}
         paused={$audioPlayerStatus?.paused}
         loading={$audioPlayerStatus?.loading}
       />
@@ -350,6 +350,8 @@
     place-content: center;
     background-color: var(--color-background-highlight);
   }
+
+
 
 
 </style>
