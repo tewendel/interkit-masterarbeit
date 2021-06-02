@@ -372,7 +372,7 @@
     position: relative;
     z-index: 1000;
     pointer-events: auto;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
   }
 
