@@ -800,7 +800,7 @@
 
   {
     "type": "ContentElementAudioBlocklyWrapper",
-    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 shortDescription %20 %21 image %8 %9 locationColumn %18 %19 minDistanceColumn %22 %23 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17",
+    "message0": "<ContentElementAudio> %1 title %2 %3 audio %4 %5 description %6 %7 shortDescription %20 %21 image %8 %9 locationColumn %18 %19 minDistanceColumn %22 %23 categoryRefColumn %10 %11 categoryOrderColumn %12 %13 categoryTitleColumn %14 %15 categorySubtitleColumn %16 %17 useBookmarks %24 %25",
     "args0": [
       {
         "type": "input_dummy"
@@ -912,6 +912,14 @@
         "columnType": "number",
         "text": "elements/minDistance",
         "value": "elements/minDistance"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "name": "useBookmarks",
+        "type": "field_checkbox",
+        "value": "FALSE"
       },
       {
         "type": "input_dummy"

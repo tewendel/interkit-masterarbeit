@@ -12,6 +12,7 @@
   export let categoryRefColumn
   export let categoryOrderColumn
   export let shortDescriptionColumn
+  export let useBookmarks = false;
 
   //console.log("shortDescriptionColumn", shortDescriptionColumn)
 
@@ -42,4 +43,5 @@
   {elementColumns}
   {categoryColumns}
   categoryIndex={0}
+  {useBookmarks}
 />

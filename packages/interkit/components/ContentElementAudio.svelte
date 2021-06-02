@@ -35,6 +35,7 @@
   
   // use this to specify a bookmark list
   export let bookmarkFilter = "bookmarks";
+  export let useBookmarks = false;
   
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
@@ -165,7 +166,7 @@
     </span>
     {/if}
 
-    {#if !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
+    {#if useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
       <span class="ContentElementAudio__Bookmark bookmark">
         <Button>
           <BookmarkToggle elementKey={element?.key}/>
@@ -176,7 +177,7 @@
   </div>
 
   <!-- special for the gate: add an extra bookmark toggle -->
-  {#if !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
+  {#if useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
   <span class="ContentElementAudio__Bookmark_extra bookmark_extra">
         <Button>
           <BookmarkToggle close elementKey={element?.key}/>
