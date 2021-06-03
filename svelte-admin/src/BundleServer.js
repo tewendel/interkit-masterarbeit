@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 export const compileError = writable(null);
 export const runtimeError = writable(null);
 export const bundleProcessing = writable(false);
-export const bundleNotBuilt = writable(true);
+export const bundleNotBuilt = writable(false);
 export const buildHash = writable("0");
 
 let bundleServerURL;
@@ -56,10 +56,10 @@ const initProject = async (_projectId) => {
 }
 
 const compileReloadPreview = async (dev=false) => {
-  bundleNotBuilt.set(dev)
   bundleProcessing.set(true)
   await compileProject(dev);
   bundleProcessing.set(false)
+  bundleNotBuilt.set(dev)
   reloadPreview();
 }
 

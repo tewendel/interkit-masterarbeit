@@ -111,12 +111,15 @@
 
   <br>
 
-  {#if $bundleNotBuilt}
-    <Button on:click={()=>BundleServer.compileReloadPreview()}>Build App</Button>
-  {:else}
-    {#if $bundleProcessing}
-      <Loading withOverlay={false} small />
+  <Button disabled={$bundleProcessing} kind={$bundleNotBuilt ? "primary" : "tertiary"} on:click={()=>BundleServer.compileReloadPreview()}>
+    {#if $bundleNotBuilt && $bundleProcessing}
+      Building&nbsp;&nbsp;<Loading withOverlay={false} small />
     {:else}
+      Build App
+    {/if}  
+  </Button>
+
+    {#if !$bundleNotBuilt}
       <Tabs>
           <Tab label="web preview" />
           <Tab label="app preview" />
@@ -148,7 +151,8 @@
         </div>
       </Tabs>  
     {/if}
-  {/if}
+    
+  
   
 {#if $compileError}
   <div class="error">compile error: {@html convert.toHtml($compileError)}</div>

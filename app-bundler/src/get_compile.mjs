@@ -7,15 +7,12 @@ import { exec } from 'child_process'
 
 const execPromise = promisify(exec)
 
-const get_compile =  async (req, res) => {
 
-  const projectId = req.params.projectId;
-  const dev = typeof(req.query.dev) !== "undefined";
-
+const compile_project = async function (projectId, dev=false) {
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
-  const command_npm =       `cd ${projectPath} && npm install`
-  const command_build =     `cd ${projectPath} && npm run build`
+  const command_npm = `cd ${projectPath} && npm install`
+  const command_build = `cd ${projectPath} && npm run build`
   const command_build_dev = `cd ${projectPath} && npm run build:dev`
 
   let code, message
@@ -41,6 +38,19 @@ const get_compile =  async (req, res) => {
   console.log('message:', message);
   console.log('code:', code);
 
+  return {
+    code,
+    message
+  }
+}
+
+const get_compile =  async (req, res) => {
+
+  const projectId = req.params.projectId;
+  const dev = typeof(req.query.dev) !== "undefined";
+
+  const {code, message} = await compile_project(projectId, dev)
+
   if (code == 0) {
     res.send({ status: "ok", data: { message } })
   } else {
@@ -49,4 +59,4 @@ const get_compile =  async (req, res) => {
 
 }
 
-export { get_compile }
+export { get_compile, compile_project }
