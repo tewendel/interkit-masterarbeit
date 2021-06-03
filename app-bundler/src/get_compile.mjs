@@ -14,14 +14,24 @@ const get_compile =  async (req, res) => {
 
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
-  const command = `cd ${projectPath} && `
-    + (dev ? `npm run build:dev` : `npm install && npm run build:dev && npm run build`)
+  const command_npm =       `cd ${projectPath} && npm install`
+  const command_build =     `cd ${projectPath} && npm run build`
+  const command_build_dev = `cd ${projectPath} && npm run build:dev`
 
   let code, message
   try {
-    const result = await execPromise(command);
+    if (dev) {
+      const result_build_dev = await execPromise(command_build_dev);
+      message = result_build_dev?.stdout + result_build_dev?.stderr
+    } else {
+      const result_npm = await execPromise(command_npm);
+      let [result_build, result_build_dev] = await Promise.all([
+        execPromise(command_build),
+        execPromise(command_build_dev)
+      ])
+      message = result_npm.stdout + result_npm.stderr + result_build_dev?.stdout + result_build_dev?.stderr + result_build?.stdout + result_build?.stderr
+    }
     code = 0
-    message = result.stdout + result.stderr
   } catch (error) {
     console.log("caught error", error)
     code = error.code

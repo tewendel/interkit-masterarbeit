@@ -35,7 +35,7 @@ function serve() {
 export default {
 	input: 'src/main.js',
 	output: {
-		sourcemap: true,
+		sourcemap: !quick_compile,
 		format: 'iife',
 		name: 'app',
 		file: 'public/build/' + (quick_compile ? 'bundle_dev.js' : 'bundle.js')
