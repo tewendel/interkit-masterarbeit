@@ -7,21 +7,28 @@ import { exec } from 'child_process'
 
 const execPromise = promisify(exec)
 
-const get_compile =  async (req, res) => {
 
-  const projectId = req.params.projectId;
-  const dev = typeof(req.query.dev) !== "undefined";
-
+const compile_project = async function (projectId, dev=false) {
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
-  const command = `cd ${projectPath} && `
-    + (dev ? `npm run build:dev` : `npm install && npm run build:dev && npm run build`)
+  const command_npm = `cd ${projectPath} && npm install`
+  const command_build = `cd ${projectPath} && npm run build`
+  const command_build_dev = `cd ${projectPath} && npm run build:dev`
 
   let code, message
   try {
-    const result = await execPromise(command);
+    if (dev) {
+      const result_build_dev = await execPromise(command_build_dev);
+      message = result_build_dev?.stdout + result_build_dev?.stderr
+    } else {
+      const result_npm = await execPromise(command_npm);
+      let [result_build, result_build_dev] = await Promise.all([
+        execPromise(command_build),
+        execPromise(command_build_dev)
+      ])
+      message = result_npm.stdout + result_npm.stderr + result_build_dev?.stdout + result_build_dev?.stderr + result_build?.stdout + result_build?.stderr
+    }
     code = 0
-    message = result.stdout + result.stderr
   } catch (error) {
     console.log("caught error", error)
     code = error.code
@@ -31,6 +38,19 @@ const get_compile =  async (req, res) => {
   console.log('message:', message);
   console.log('code:', code);
 
+  return {
+    code,
+    message
+  }
+}
+
+const get_compile =  async (req, res) => {
+
+  const projectId = req.params.projectId;
+  const dev = typeof(req.query.dev) !== "undefined";
+
+  const {code, message} = await compile_project(projectId, dev)
+
   if (code == 0) {
     res.send({ status: "ok", data: { message } })
   } else {
@@ -39,4 +59,4 @@ const get_compile =  async (req, res) => {
 
 }
 
-export { get_compile }
+export { get_compile, compile_project }

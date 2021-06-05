@@ -4,6 +4,7 @@ import fse from 'fs-extra'
 import git from 'isomorphic-git'
 
 import { gitAddAll, gitAdd, gitCommit } from './git.mjs'
+import { compile_project } from './get_compile.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 const INTERKIT_BUNDLER_URL = process.env.INTERKIT_BUNDLER_URL
@@ -122,6 +123,8 @@ async function setupNewRepository(project, sourceProjectId=false) {
         message: 'Initial commit'
       })
       console.log(`initial commit: ${sha}`)
+
+      await compile_project(projectId)
 
     } else {
       console.log("Directory already exists.");
