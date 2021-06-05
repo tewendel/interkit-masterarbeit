@@ -10,7 +10,7 @@
   export let isFocused;
   export let onClose;
 
-  let filterSelectOpen = false;
+  let filterSelectOpen = false; // show first level of filters
 
   const toggleFilters = () => {
     filterSelectOpen = !filterSelectOpen;
@@ -18,14 +18,20 @@
       onClose();
     }
   }
-  let openFilterList;
+  let openFilterList; 
+  console.log(openFilterList)
+
+  $: {
+    if(filterLists?.length) openFilterList = filterLists[0] // show second level of filters by default
+  }
+  
   const setOpenFilterList = (filterList) => {
     openFilterList = filterList;
   }
 
   const filterSelect = (filter) => {
     filterSelectOpen = false;
-    openFilterList = null;
+    //openFilterList = null;
     setFilter(filter);
   }
 
