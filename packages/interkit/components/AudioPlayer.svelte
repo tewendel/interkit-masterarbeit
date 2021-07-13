@@ -74,7 +74,9 @@
   export let categoryColorColumn = "categories2/color";
 
   const categoryIndex = 0;
-  
+
+  onMount(()=>initPlayer())
+
   const categoryColumns = [{
     titleColumn: categoryTitleColumn,
     subtitleColumn: categorySubtitleColumn
@@ -85,6 +87,8 @@
     audioPlayerStatus.set({active: false})
     audioPlayerElement.set(null);
   }
+
+  const initPlayer = closePlayer
 
   const togglePlay = () => {
     audioPlayerStatus.update( s => ({
@@ -97,7 +101,7 @@
   $: description = util.rowValString($audioPlayerElement, elementColumns.descriptionColumn)
   $: categoryOrderPosition = util.rowValString($audioPlayerElement, elementColumns.categoryOrderColumn[categoryIndex])
   $: imageRef = util.rowVal($audioPlayerElement, elementColumns.imageColumn)
-  
+
   let playerExpanded = false;
   const toggleExpanded = () => {
     playerExpanded = !playerExpanded;
@@ -205,9 +209,15 @@
     
 </script>
 
-{#if $audioPlayerStatus?.active}
+{#if $audioPlayerStatus}
 
-<div class="AudioPlayer container" class:expanded={playerExpanded}>
+<div 
+  class="AudioPlayer container" 
+  class:expanded={playerExpanded} 
+  class:active={$audioPlayerStatus.active}
+
+  style={`--maxAudioPlayerHeight: ${$audioPlayerStatus.maxHeightPx}px`}
+  >
 
     <div class="AudioPlayer__Expanded expanded-content">
 
@@ -372,12 +382,19 @@
     position: relative;
     z-index: 1000;
     pointer-events: auto;
-    bottom: 0;
+    bottom:0;
+    transition: height .5s;
+    height: 0;
+    will-change: height;
+  }
+
+  .container.active {
+    height: 60px;
   }
 
   .container.expanded {
-    height: 100%;
-    position: absolute;
+    height: var(--maxAudioPlayerHeight);
+    /*position: absolute;*/
   }
 
   .base-content {
@@ -393,12 +410,17 @@
     height: 60px;
   }
 
+  .expanded-content {
+    flex:1;
+  }
+
   .container:not(.expanded) .expanded-content {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
   }
 
   .container.expanded .base-content .title {
-    display: none;
+    /*display: none;*/
   }
 
   .container.expanded .base-content {
@@ -439,7 +461,8 @@
 
   .AudioPlayer__Expanded {
     padding-top: 0px;
-    padding-bottom: 32px;
+    /*padding-bottom: 32px;*/
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
   }
@@ -510,17 +533,17 @@
   }
 
   .seekPositionRangeSlider::-moz-range-thumb {
-     -webkit-appearance: none;
-     height: 14px;
-     width: 14px;
-     background: #000;
-     margin-top: -5px;
-     border-radius: 50%;
-     border: none;
+    -webkit-appearance: none;
+    height: 14px;
+    width: 14px;
+    background: #000;
+    margin-top: -5px;
+    border-radius: 50%;
+    border: none;
   }
   
   .seekPositionRangeSlider::-webkit-slider-thumb {
-   -webkit-appearance: none;
+    -webkit-appearance: none;
     height: 14px;
     width: 14px;
     background: #000;

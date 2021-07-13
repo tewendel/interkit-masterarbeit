@@ -6,12 +6,16 @@
 
   import { setContext, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
+  import { throttle } from 'throttle-debounce'
   import { InterkitClient } from '../'
 
   const tabs = [];
   const panels = [];
   const selectedTab = writable(null);
   const selectedPanel = writable(null);
+
+  let pagesHeightPx = 0
+  let audioPlayerHeightPx = 0
 
   setContext(TABS, {
       registerTab: tab => {
@@ -51,21 +55,29 @@
       },
 
       selectedTab,
-      selectedPanel
+      selectedPanel,
+      pagesHeightPx
     });
 
     const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 
+    const throttledMaxHeightUpdate = throttle(100, false, val => $audioPlayerStatus.maxHeightPx = val, true)
+
+    $: if ($audioPlayerStatus) {
+      throttledMaxHeightUpdate(pagesHeightPx + audioPlayerHeightPx)
+    }
+
 </script>
 
 <div class="BottomMenu container" class:mediaPlayerActive={$audioPlayerStatus?.active}>
-  <div class="BottomMenu__Pages pages">
+  <div class="BottomMenu__Pages pages" bind:clientHeight={pagesHeightPx}>
     <slot name="pages"></slot>
   </div>
 
   <div class="BottomMenu__MediaPlayer media-player" 
     class:active={$audioPlayerStatus?.active}
     class:expanded={$audioPlayerStatus?.expanded}
+    bind:clientHeight={audioPlayerHeightPx}
   >
       <slot name="media_player"></slot>
   </div>
@@ -95,16 +107,17 @@
     position: relative;
     width: 100%;
     pointer-events: none;
-    display: none;
+    display: flex;
+    overflow: hidden;
   }
 
   .media-player.active {
-    display: flex;
+    
     /*height: 55px;*/
   }
 
   .media-player.expanded {
-    height: 100%;
+    /*height: 100%;*/
   }
 
   .buttons {
