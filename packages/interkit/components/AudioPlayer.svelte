@@ -206,6 +206,37 @@
     }) 
   }
 
+  let touchListener = null
+  let touching = false
+  let touchStartY = 0
+  let latestTouchY = 0
+
+  const startTouch = event => {
+    //console.log("down", event?.targetTouches?.[0].identifier)
+    if (touching == false) { 
+      touching = true
+      touchStartY = event.targetTouches?.[0]?.clientY
+      handleMousemove(event.targetTouches)
+      //console.log("start", event)
+      touchListener = event.target.addEventListener("touchmove", event=>handleMousemove(event))
+    }
+  }
+
+  const handleMousemove = event => {
+    latestTouchY = event?.targetTouches?.[0]?.clientY
+    //console.log(touchStartY - latestTouchY)
+  }
+
+  const endTouch = event => {
+    if (touching && touchStartY - latestTouchY > 10 && !playerExpanded) {
+      playerExpanded = true
+    }
+    if (touching && touchStartY - latestTouchY < 10 && playerExpanded) {
+      playerExpanded = false
+    }
+    touching = false
+  }
+
     
 </script>
 
@@ -290,7 +321,12 @@
 
 
       {#key title}
-      <h4 class="AudioPlayer__Title title" on:click={toggleExpanded}>
+      <h4 
+          class="AudioPlayer__Title title" 
+          on:click={toggleExpanded}
+          on:touchstart={ startTouch }
+          on:touchend={ endTouch }
+        >
         {title}
       </h4>
       {/key}
@@ -443,6 +479,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
   }
   .close {}
 
