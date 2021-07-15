@@ -359,11 +359,19 @@
     {/key}
 
     <div class="AudioPlayer__Close close">
-      <button class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
-        <Icon type="close">
-          Close
-        </Icon>
-      </button>
+      {#if playerExpanded}
+        <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
+          <Icon type={playerExpanded ? "arrow-down" : "arrow-up"}>
+            {playerExpanded ? "Collapse" : "Expand"}
+          </Icon>
+        </button>
+      {:else}
+        <button class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
+          <Icon type="close">
+            Close
+          </Icon>
+        </button>
+      {/if}
     </div>
 
   </div>
