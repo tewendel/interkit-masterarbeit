@@ -291,10 +291,11 @@
         positionStore.set(currentPosition);
 
         if(!userIcon)
-          userIcon = L.icon({
+          userIcon = L.divIcon({
+            html: "<img class='user_pos' src='leaflet/user_pos.svg'>",
             iconUrl: "leaflet/user_pos.svg",
-            iconSize:     [18, 18], 
-            iconAnchor:   [9, 9], 
+            iconSize:     [26, 26], 
+            iconAnchor:   [13, 13], 
           });
 
         if(!userPositionMarker) {
@@ -581,6 +582,22 @@
   }
 
   .layer_controls {
+  }
+
+  :global(.leaflet-div-icon) {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  :global(.user_pos) {
+    animation: pulsate 5s;
+    animation-iteration-count: infinite; 
+  }
+
+  @keyframes pulsate {
+    0% {transform: scale(1);}
+    20% {transform: scale(1.3);}
+    40% {transform: scale(1);}
   }
 
   
