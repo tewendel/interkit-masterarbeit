@@ -14,7 +14,9 @@
   const selectedTab = writable(null);
   const selectedPanel = writable(null);
 
+  let containerHeightPx = 0
   let pagesHeightPx = 0
+  let buttonsHeightPx = 0
   let audioPlayerHeightPx = 0
 
   setContext(TABS, {
@@ -61,15 +63,20 @@
 
     const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
 
-    const throttledMaxHeightUpdate = throttle(100, false, val => $audioPlayerStatus.maxHeightPx = val, true)
+    //const throttledMaxHeightUpdate = throttle(100, false, val => $audioPlayerStatus.maxHeightPx = val, true)
 
     $: if ($audioPlayerStatus) {
-      throttledMaxHeightUpdate(pagesHeightPx + audioPlayerHeightPx)
+      //throttledMaxHeightUpdate(pagesHeightPx + audioPlayerHeightPx)
+      $audioPlayerStatus.maxHeightPx = containerHeightPx - buttonsHeightPx
     }
 
 </script>
 
-<div class="BottomMenu container" class:mediaPlayerActive={$audioPlayerStatus?.active}>
+<div 
+  class="BottomMenu container" 
+  class:mediaPlayerActive={$audioPlayerStatus?.active}
+  bind:clientHeight={containerHeightPx}
+  >
   <div class="BottomMenu__Pages pages" bind:clientHeight={pagesHeightPx}>
     <slot name="pages"></slot>
   </div>
@@ -82,7 +89,7 @@
       <slot name="media_player"></slot>
   </div>
 
-  <div class="BottomMenu__Buttons buttons">
+  <div class="BottomMenu__Buttons buttons" bind:clientHeight={buttonsHeightPx}>
     <slot name="buttons"></slot>
   </div>
 </div>
