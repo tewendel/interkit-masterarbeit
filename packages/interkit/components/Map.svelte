@@ -284,7 +284,7 @@
 
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
-        currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude}
+        currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude, heading: position.coords.heading}
         //console.log("currentPosition", JSON.stringify(currentPosition), err)
 
         let positionStore = InterkitClient.getGlobalStore("userPosition")
@@ -292,10 +292,10 @@
 
         if(!userIcon)
           userIcon = L.divIcon({
-            html: "<img class='user_pos' src='leaflet/user_pos.svg'>",
+            html: "<div class='user_pos_marker'><img class='user_pos' src='leaflet/user_pos.svg'></div>",
             iconUrl: "leaflet/user_pos.svg",
-            iconSize:     [26, 26], 
-            iconAnchor:   [13, 13], 
+            iconSize:     [60, 60], 
+            iconAnchor:   [30, 30], 
           });
 
         if(!userPositionMarker) {
@@ -430,7 +430,7 @@
 
 </script>
 
-<div class="Map__Container container">
+<div class="Map__Container container" class:hasHeading={ currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null } style={`--map-heading: ${currentPosition?.heading || 0}deg;`}>
   
   <slot name="filters"></slot>
   <slot name="layers"></slot>
@@ -589,7 +589,23 @@
     border: none !important;
   }
 
+  :global(.user_pos_marker) {
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  :global(.Map__Container.hasHeading .user_pos_marker) {
+    background-image: url("../leaflet/user_pos_heading.svg");
+    background-repeat: no-repeat;
+    transform: rotate( var(--map-heading) );
+  }
+
   :global(.user_pos) {
+    width: 20px;
+    height: 20px;
     animation: pulsate 5s;
     animation-iteration-count: infinite; 
   }
