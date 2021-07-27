@@ -61,6 +61,7 @@
   let labels_layer; // layer for street names
   let mapElement; 
   let markerIcon;
+  let markerIconSelected;
   let markerIconChecked;
   let userIcon;
   let userPositionMarker;
@@ -172,12 +173,11 @@
           title: markerValue.title,
         }
         if(markerIcon) {
-          markerOptions.icon = markerIcon;
+          markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconSelected : markerIcon;
         }
         if($elementProperties?.[markerValue.elementRow.key]?.checked) {
           markerOptions.icon = markerIconChecked;
         }
-        //console.log(markerOptions)
         let marker = L.marker(markerValue.location, markerOptions).addTo(map)
         marker.payload = markerValue;
         marker.on('click', markerClick);
@@ -188,7 +188,7 @@
   }
 
   $: {
-    if(markerRows && $elementProperties)
+    if(markerRows && $elementProperties || selectedElement )
       updateMarkers();
   }
 
@@ -253,6 +253,11 @@
         iconUrl: markerIconAsset,
         iconSize:     [20, 20], // size of the icon
         iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      });
+      markerIconSelected = L.icon({
+        iconUrl: markerIconAsset,
+        iconSize:     [30, 30], // size of the icon
+        iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
     }
 
@@ -430,8 +435,17 @@
 
   $: if($mapFocus) {
     console.log($mapFocus);
-    map.panTo({lat: $mapFocus.lat, lng: $mapFocus.lng}, {animate: false});
-    map.setZoom(16);
+    let location = false
+    if ($mapFocus?.values?.position?.lat) {
+      activeFilter = null
+      location = $mapFocus?.values?.position
+      selectedElement = $mapFocus
+    }
+    else if ($mapFocus?.lat) location = $mapFocus
+    if (location) {
+      map.panTo({lat: location.lat, lng: location.lng}, {animate: false});
+      map.setZoom(16);
+    }
   }
 
   $: hasHeading = currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null && currentPosition?.speed > 0

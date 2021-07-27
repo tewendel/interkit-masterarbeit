@@ -134,7 +134,7 @@
 
   const openMapTo = (element) => {
     InterkitClient.callGlobalMethod("menuSwitcherTarget")
-    mapFocus.set(util.rowVal(element, elementColumns.locationColumn));
+    mapFocus.set(element);
   }
 
 </script>
