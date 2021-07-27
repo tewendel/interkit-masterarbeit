@@ -68,6 +68,7 @@
   let satLayer; // this is a special webgl layer to color satellite tiles
   let geoWatch;
   let currentPosition;
+  let hasHeading = false // heading direction
 
   let selectedElement;
   let controlsFocus = null; // which of the controls is focused -> hide the submenu of the other
@@ -284,7 +285,12 @@
 
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
-        currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude, heading: position.coords.heading}
+        currentPosition = {
+          lat: position.coords.latitude, 
+          lng: position.coords.longitude, 
+          heading: position.coords.heading,
+          speed: position.coords.speed,
+        }
         //console.log("currentPosition", JSON.stringify(currentPosition), err)
 
         let positionStore = InterkitClient.getGlobalStore("userPosition")
@@ -428,10 +434,16 @@
     map.setZoom(16);
   }
 
+  $: hasHeading = currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null && currentPosition?.speed > 0
+
 </script>
 
-<div class="Map__Container container" class:hasHeading={ currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null } style={`--map-heading: ${currentPosition?.heading || 0}deg;`}>
-  
+<div 
+    class="Map__Container container" 
+    class:hasHeading
+    style={`--map-heading: ${currentPosition?.heading || 0}deg;`}
+  >
+
   <slot name="filters"></slot>
   <slot name="layers"></slot>
 
@@ -595,6 +607,10 @@
     justify-content: center;
     align-items: center;
     display: flex;
+  }
+  
+  :global(.Map__Container:not(.hasHeading) .user_pos_marker) {
+    background-image: none;
   }
 
   :global(.Map__Container.hasHeading .user_pos_marker) {
