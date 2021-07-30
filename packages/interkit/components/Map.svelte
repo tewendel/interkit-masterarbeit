@@ -188,8 +188,11 @@
   }
 
   $: {
-    if(markerRows && $elementProperties || selectedElement )
+    $elementProperties; // trigger function run 
+    selectedElement; // trigger function run
+    if(markerRows) {
       updateMarkers();
+    }
   }
 
   onMount(async ()=>{
@@ -436,10 +439,14 @@
   $: if($mapFocus) {
     console.log($mapFocus);
     let location = false
+    selectedElement = null
+    activeFilter = null
     if ($mapFocus?.values?.position?.lat) {
-      activeFilter = null
       location = $mapFocus?.values?.position
       selectedElement = $mapFocus
+      //setTimeout(()=>
+      //selectedElement = $mapFocus
+      //,1000)
     }
     else if ($mapFocus?.lat) location = $mapFocus
     if (location) {
@@ -473,7 +480,7 @@
           </Button>
         </div>
         {#if selectedElement}
-          <slot name="element" element={{size: "m", ...selectedElement}}></slot>
+          <slot name="element" element={{...selectedElement, size: "m"}}></slot>
         {/if}
       </div>
     </div>
