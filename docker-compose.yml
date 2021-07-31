@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
 
@@ -22,14 +22,13 @@ services:
       - "letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-
   server:
     image: interkit/server:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
       dockerfile: Dockerfile.meteor-server
-      #cache_from: 
-      #  - interkit/server:latest
+      cache_from: 
+        - interkit/server:latest
       args:
         BUILD_SOURCE_PATH: ./meteor-server
         BUILD_REPOSITORIES_PATH: ./repositories
@@ -66,8 +65,8 @@ services:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
-      #cache_from: 
-      #  - interkit/admin:latest
+      cache_from: 
+        - interkit/admin:latest
       dockerfile: ./Dockerfile.svelte-admin
       args:
         BUILD_SOURCE_PATH: ./svelte-admin
