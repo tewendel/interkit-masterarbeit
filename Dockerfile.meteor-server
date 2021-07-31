@@ -11,7 +11,7 @@ RUN cd /packages/interkit-blockly && npm ci
 # The tag here should match the Meteor version of your app, per .meteor/release
 FROM geoffreybooth/meteor-base:2.1 AS meteor-base
 
-ARG BUILD_SOURCE_PATH
+ARG BUILD_SOURCE_PATH=./meteor-server
 
 # Copy app package.json and package-lock.json into container
 COPY ${BUILD_SOURCE_PATH}/package*.json $APP_SOURCE_FOLDER/
@@ -48,8 +48,9 @@ COPY --from=meteor-base $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 COPY --from=meteor-base $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 # Copy repositories folder
-ARG BUILD_REPOSITORIES_PATH
-ARG BUILD_CONTAINER_REPOSITORIES_PATH
+ARG BUILD_REPOSITORIES_PATH=./repositories
+ARG BUILD_CONTAINER_REPOSITORIES_PATH=/var/repositories
+
 RUN echo COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
 COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
 

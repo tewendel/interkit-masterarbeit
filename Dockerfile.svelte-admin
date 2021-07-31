@@ -1,6 +1,6 @@
 FROM node:15-alpine
 
-ARG BUILD_SOURCE_PATH
+ARG BUILD_SOURCE_PATH=./svelte-admin
 
 WORKDIR /app
 
