@@ -20,7 +20,12 @@ docker-build:
     - docker build --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
     - docker build --cache-from interkit/bundler:latest -t interkit/bundler:latest -t interkit/bundler:$CI_COMMIT_SHORT_SHA -f Dockerfile.app-bundler .
     - docker build --cache-from interkit/admin:latest -t interkit/admin:latest -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
-    - docker push --all
+    - docker push interkit/server:latest
+    - docker push interkit/bundler:latest
+    - docker push interkit/admin:latest
+    - docker push interkit/server:$CI_COMMIT_SHORT_SHA
+    - docker push interkit/bundler:$CI_COMMIT_SHORT_SHA
+    - docker push interkit/admin:$CI_COMMIT_SHORT_SHA
   #only:
   #  - main
 
