@@ -1,4 +1,5 @@
 # root
+.git
 node_modules/
 .env
 repositories/*
