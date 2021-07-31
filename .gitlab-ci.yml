@@ -14,11 +14,11 @@ docker-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
     #- INTERKIT_IMAGE_TAG=latest docker-compose pull
-    - docker pull interkit/server-packages:latest
-    - docker pull interkit/server-base:latest
-    - docker pull interkit/server:latest
-    - docker pull interkit/bundler:latest
-    - docker pull interkit/admin:latest
+    - docker pull interkit/server-packages:latest || true
+    - docker pull interkit/server-base:latest || true
+    - docker pull interkit/server:latest || true
+    - docker pull interkit/bundler:latest || true
+    - docker pull interkit/admin:latest || true
     - docker build --target interkit-packages --cache-from interkit/server-packages:latest -t interkit/server-packages:latest -f Dockerfile.meteor-server .
     - docker build --target meteor-base --cache-from interkit/server-base:latest -t interkit/server-base:latest -f Dockerfile.meteor-server .
     - docker build --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
