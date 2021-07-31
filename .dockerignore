@@ -1,7 +1,8 @@
 # root
 node_modules/
 .env
-repositories/projects/*
+repositories/*
+!repositories/starters
 
 # all apps
 **/node_modules/

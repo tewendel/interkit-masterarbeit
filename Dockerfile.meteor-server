@@ -1,8 +1,15 @@
+FROM node:15-alpine AS interkit-packages
+
+# copy shared files and install dependencies
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-blockly && npm ci
+
 # Dockerfile for deployment
 # source: https://github.com/disney/meteor-base/blob/master/example/default.dockerfile
 
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.1
+FROM geoffreybooth/meteor-base:2.1 AS meteor-base
 
 ARG BUILD_SOURCE_PATH
 
@@ -12,10 +19,8 @@ COPY ${BUILD_SOURCE_PATH}/package*.json $APP_SOURCE_FOLDER/
 # npm >= 7 required for workspaces
 RUN meteor npm install -g npm@7
 
-# copy shared files and install dependencies
-COPY /packages ${APP_SOURCE_FOLDER}/../packages
-RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit && meteor npm ci
-RUN cd ${APP_SOURCE_FOLDER}/../packages/interkit-blockly && meteor npm ci
+# copy interkit-packages
+COPY --from=interkit-packages /packages /packages
 
 # install meteor app dependencies
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
@@ -37,10 +42,10 @@ RUN apk --no-cache add \
   ca-certificates
 
 # Copy in entrypoint
-COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+COPY --from=meteor-base $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
 # Copy in app bundle
-COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+COPY --from=meteor-base $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 # Copy repositories folder
 ARG BUILD_REPOSITORIES_PATH
