@@ -20,8 +20,8 @@ docker-build:
     - docker pull interkit/bundler:latest || true
     - docker pull interkit/admin:latest || true
     - docker build --target interkit-packages --cache-from interkit/server-packages:latest -t interkit/server-packages:latest -f Dockerfile.meteor-server .
-    - docker build --target meteor-base --cache-from interkit/server-base:latest -t interkit/server-base:latest -f Dockerfile.meteor-server .
-    - docker build --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
+    - docker build --target meteor-base --cache-from interkit/server-packages:latest --cache-from interkit/server-base:latest -t interkit/server-base:latest -f Dockerfile.meteor-server .
+    - docker build --cache-from interkit/server-packages:latest --cache-from interkit/server-base:latest --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
     - docker build --cache-from interkit/bundler:latest -t interkit/bundler:latest -t interkit/bundler:$CI_COMMIT_SHORT_SHA -f Dockerfile.app-bundler .
     - docker build --cache-from interkit/admin:latest -t interkit/admin:latest -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
     - docker push interkit/server-packages:latest
