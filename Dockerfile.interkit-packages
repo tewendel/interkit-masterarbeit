@@ -1,0 +1,6 @@
+FROM node:15-alpine AS interkit-packages
+
+# copy shared files and install dependencies
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-blockly && npm ci

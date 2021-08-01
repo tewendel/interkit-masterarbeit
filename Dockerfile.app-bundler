@@ -1,3 +1,4 @@
+FROM interkit/interkit-packages:latest AS interkit-packages
 FROM node:15
 
 ARG BUILD_SOURCE_PATH=./app-bundler
@@ -5,22 +6,21 @@ ARG BUILD_REPOSITORIES_PATH=./repositories
 
 WORKDIR /app
 
-# copy shared files and install dependencies
-COPY /packages /packages
-RUN cd /packages/interkit && npm ci
-RUN cd /packages/interkit-blockly && npm ci
+# copy shared files
+COPY --from=interkit-packages /packages /packages
 
-# copy app files and install dependencies
-COPY ${BUILD_SOURCE_PATH} ./
+# install dependencies
+COPY ${BUILD_SOURCE_PATH}/package*json ./
 #RUN npm i @node-rs/bcrypt-linux-musl
 #RUN apt-get update && apt-get install musl
 RUN npm ci
 RUN npx node-prune --yes
 
-# copy shared files and install dependencies AGAIN for starters
-COPY /packages /var/packages
-RUN cd /var/packages/interkit && npm ci
-RUN cd /var/packages/interkit-blockly && npm ci
+# copy app files
+COPY ${BUILD_SOURCE_PATH} ./
+
+# copy shared files AGAIN for starters
+COPY --from=interkit-packages /packages /var/packages
 
 # set repositories path in container
 ENV REPOSITORIES_PATH=/var/repositories

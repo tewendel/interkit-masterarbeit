@@ -35,5 +35,6 @@ docker-compose up -d
 
 ````
 git pull
+docker build -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
 docker-compose up -d --build
 ````
