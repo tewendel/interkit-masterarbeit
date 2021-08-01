@@ -6,7 +6,6 @@
 
   import { setContext, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
-  import { throttle } from 'throttle-debounce'
   import { InterkitClient } from '../'
 
   const tabs = [];
