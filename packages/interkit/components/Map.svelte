@@ -63,6 +63,7 @@
   let markerIcon;
   let markerIconSelected;
   let markerIconChecked;
+  let markerIconCheckedSelected;
   let userIcon;
   let userPositionMarker;
   let markers = [];
@@ -176,7 +177,7 @@
           markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconSelected : markerIcon;
         }
         if($elementProperties?.[markerValue.elementRow.key]?.checked) {
-          markerOptions.icon = markerIconChecked;
+          markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconCheckedSelected : markerIconChecked;
         }
         let marker = L.marker(markerValue.location, markerOptions).addTo(map)
         marker.payload = markerValue;
@@ -269,6 +270,11 @@
         iconUrl: markerCheckedIconAsset,
         iconSize:     [20, 20], // size of the icon
         iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      });
+      markerIconCheckedSelected = L.icon({
+        iconUrl: markerCheckedIconAsset,
+        iconSize:     [30, 30], // size of the icon
+        iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
     }
 
