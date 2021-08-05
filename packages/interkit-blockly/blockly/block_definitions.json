@@ -1047,7 +1047,7 @@
 
     {
       "type": "MapCategoryFilter",
-      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 categoryColorColumn %6 %7 categoryUnlistedColumn %10 %11 elementRefColumn %8 %9 categoryOrderColumn %12 %13",
+      "message0": "<MapCategoryFilter> %1 name %2 %3 categoryNameColumn %4 %5 categoryColorColumn %6 %7 categoryUnlistedColumn %10 %11 elementRefColumn %8 %9 categoryOrderColumn %12 %13 filterKeyColumn %14 %15 connectedLayerKeyColumn %16 %17",
       "args0": [
         {
           "type": "input_dummy"
@@ -1109,6 +1109,26 @@
         },
         {
           "type": "input_dummy"
+        },
+        {
+          "name": "filterKeyColumn",
+          "type": "sheetColumn",
+          "columnType": "string",
+          "text": "categories/filterKey",
+          "value": "categories/filterKey"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "connectedLayerKeyColumn",
+          "type": "sheetColumn",
+          "columnType": "string",
+          "text": "categories/connectedLayerKey",
+          "value": "categories/connectedLayerKey"
+        },
+        {
+          "type": "input_dummy"
         }
       ],
       "previousStatement": null,
@@ -1119,7 +1139,7 @@
 
     {
       "type": "MapLayer",
-      "message0": "<MapLayer> %1 name %2 %3 assetPath %4 %5 topLeft %6 %7 bottomRight %8 %9 audio %10 %11 hideLabels %12 %13",
+      "message0": "<MapLayer> %1 name %2 %3 assetPath %4 %5 topLeft %6 %7 bottomRight %8 %9 audio %10 %11 hideLabels %12 %13 layerKey %14 %15 connectedFilterKey %16 %17",
       "args0": [
         {
           "type": "input_dummy"
@@ -1162,6 +1182,20 @@
         {
           "name": "hideLabels",
           "type": "field_checkbox"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "layerKey",
+          "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "connectedFilterKey",
+          "type": "field_input"
         },
         {
           "type": "input_dummy"

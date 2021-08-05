@@ -10,11 +10,13 @@ export let categoryColorColumn;
 export let categoryUnlistedColumn;
 export let elementRefColumn;
 export let categoryOrderColumn;
+export let filterKeyColumn; // the column where the unique key for each filter can be set
+export let connectedLayerKeyColumn; // the column where a connected layer for a filter can be set
 
 const { registerFilter } = getContext(MAP);
 
 // register this filter to map context
-registerFilter({name, categoryNameColumn, categoryColorColumn, elementRefColumn, categoryUnlistedColumn, categoryOrderColumn});
+registerFilter({name, categoryNameColumn, categoryColorColumn, elementRefColumn, categoryUnlistedColumn, categoryOrderColumn, filterKeyColumn, connectedLayerKeyColumn});
 
 </script>
 

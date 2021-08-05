@@ -88,7 +88,7 @@
   
   // context for MapCategoryFilter components to register themselves
   setContext(MAP, {
-    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, categoryUnlistedColumn, elementRefColumn, categoryOrderColumn}) => {
+    registerFilter: async ({name, categoryNameColumn, categoryColorColumn, categoryUnlistedColumn, elementRefColumn, categoryOrderColumn, filterKeyColumn, connectedLayerKeyColumn}) => {
 
       //console.log("registerFilter", name, categoryNameColumn, elementRefColumn, categoryColorColumn)
 
@@ -107,7 +107,9 @@
         categoryNameColumn,
         categoryColorColumn,
         elementRefColumn,
-        categoryOrderColumn 
+        categoryOrderColumn,
+        filterKeyColumn, 
+        connectedLayerKeyColumn 
       })
       filterLists = filterLists;
       
@@ -367,6 +369,22 @@
       satLayer.setUniform("uRGB", defaultBaseColor);
       satLayer.reRender();
     }
+
+    // check for connected layer
+    if(filter) {
+      let connectedLayerKey = util.rowVal(filter.row, filter.connectedLayerKeyColumn);
+      if(connectedLayerKey) {
+        console.log("connected layer key detected", connectedLayerKey)
+        // iterate over layers
+        for(let layer of layers) {
+          if(layer.layerKey == connectedLayerKey) {
+            console.log("layer found, activating...")
+            setLayer({...layer, connectedFilterKey: undefined});
+          }
+        }
+      }
+    }
+        
   }
 
   // set the image overlay layer
@@ -397,6 +415,28 @@
 
       if(layer.hideLabels == "TRUE")
         map.removeLayer(labels_layer)
+
+      // check for connected filter
+      if(layer.connectedFilterKey) {
+        console.log("connected filter detected", layer.connectedFilterKey)
+        // find the corresponding filter
+        // iterate over filterLists
+        for(let filterList of filterLists) {
+          // in each filterList go over filters and check if filterKey is connnected
+          for(let categoryRow of filterList.categoryRows) {
+            let filterKey = util.rowVal(categoryRow, filterList.filterKeyColumn);
+            if(filterKey == layer.connectedFilterKey) {
+              console.log("connected filter found, activating...")
+              setFilter({
+                name: util.rowVal(categoryRow, filterList.categoryNameColumn),
+                row: categoryRow,
+                categoryColorColumn: filterList.categoryColorColumn,
+                elementRefColumn: filterList.elementRefColumn
+              })
+            }
+          }
+        }        
+      }
 
     } else {
       if(!map.hasLayer(labels_layer)) {

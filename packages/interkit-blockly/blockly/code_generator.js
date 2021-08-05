@@ -170,7 +170,9 @@ export const initCodeGenerator = (Blockly) => {
       "categoryColorColumn", 
       "elementRefColumn",
       "categoryUnlistedColumn",
-      "categoryOrderColumn"
+      "categoryOrderColumn",
+      "filterKeyColumn",
+      "connectedLayerKeyColumn"
     ])
     code += "/>\n";
 
@@ -325,7 +327,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['MapLayer'] = function(block) {
     var code = "<MapLayer \n";
     code += attributes(block, [
-       "name", "assetPath", "topLeft", "bottomRight", "audio", "hideLabels"
+       "name", "assetPath", "topLeft", "bottomRight", "audio", "hideLabels", "layerKey", "connectedFilterKey"
     ]);
     code += "\n/>\n";
     return code;

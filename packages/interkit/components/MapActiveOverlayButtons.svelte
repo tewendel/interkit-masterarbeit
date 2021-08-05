@@ -20,9 +20,9 @@
   const loadAudioElement = async (layer) => {
     //console.log("layer", layer)
     if(layer?.audio) {
-      console.log(layer.audio, elementRows)
+      //console.log(layer.audio, elementRows)
       audioElementRow = elementRows.find(r => r.key == layer.audio)
-      console.log("audioElementRow", audioElementRow)
+      //console.log("audioElementRow", audioElementRow)
       // autoplay on layer select
       /*if(audioElementRow) {
         playAudio(audioElementRow);

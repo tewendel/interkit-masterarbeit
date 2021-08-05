@@ -97,7 +97,9 @@
               name: filterName(categoryRow), 
               row: categoryRow,
               categoryColorColumn: openFilterList.categoryColorColumn,
-              elementRefColumn: openFilterList.elementRefColumn
+              elementRefColumn: openFilterList.elementRefColumn,
+              filterKeyColumn: openFilterList.filterKeyColumn,
+              connectedLayerKeyColumn: openFilterList.connectedLayerKeyColumn,
             })}}>
               {filterName(categoryRow)}
             </span>
