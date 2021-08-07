@@ -39,6 +39,8 @@
 
   export let defaultBaseColor = [0.74, 0.79, 0.85];
 
+  export let hideOnMapColumn;
+
 
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
@@ -159,8 +161,11 @@
 
     // filter rows
     let rowsFiltered = markerRows.filter(r => 
-      !activeFilter ||
-      util.rowVal(r, activeFilter.elementRefColumn)?.rowKeys?.includes(activeFilter.row.key)
+      (!activeFilter ||
+      util.rowVal(r, activeFilter.elementRefColumn)?.rowKeys?.includes(activeFilter.row.key))
+      && 
+      (!hideOnMapColumn || 
+      util.rowVal(r, hideOnMapColumn) != "true")
     )
 
     // prepare data for marker production and audio playback when clicked
