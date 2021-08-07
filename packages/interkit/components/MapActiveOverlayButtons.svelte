@@ -24,9 +24,9 @@
       audioElementRow = elementRows.find(r => r.key == layer.audio)
       //console.log("audioElementRow", audioElementRow)
       // autoplay on layer select
-      /*if(audioElementRow) {
+      if(audioElementRow) {
         playAudio(audioElementRow);
-      }*/
+      }
     } else {
       audioElementRow = null;
     }
