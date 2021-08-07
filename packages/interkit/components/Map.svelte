@@ -67,6 +67,7 @@
   let userIcon;
   let userPositionMarker;
   let markers = [];
+  let hideMarkers = false; // option to hide all markers
   let satLayer; // this is a special webgl layer to color satellite tiles
   let geoWatch;
   let currentPosition;
@@ -145,6 +146,13 @@
     selectedElement = null;
   }
 
+  const removeMarkers = () => {  
+    for(let marker of markers) {
+      map.removeLayer(marker)
+    }
+    markers = [];
+  }
+
   const updateMarkers = () => {
 
     //console.log("activeFilter", activeFilter, markerRows);
@@ -164,30 +172,31 @@
     }})
 
     // clear old markers
-    for(let marker of markers) {
-      map.removeLayer(marker)
-    }
-    markers = [];
+    removeMarkers();
 
-    // setup new markers
-    for(let markerValue of markerValues) {
-      if(markerValue.location) {
-        let markerOptions = {
-          title: markerValue.title,
+    if(!hideMarkers) {
+
+      // setup new markers
+      for(let markerValue of markerValues) {
+        if(markerValue.location) {
+          let markerOptions = {
+            title: markerValue.title,
+          }
+          if(markerIcon) {
+            markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconSelected : markerIcon;
+          }
+          if($elementProperties?.[markerValue.elementRow.key]?.checked) {
+            markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconCheckedSelected : markerIconChecked;
+          }
+          let marker = L.marker(markerValue.location, markerOptions).addTo(map)
+          marker.payload = markerValue;
+          marker.on('click', markerClick);
+          markers.push(marker);  
         }
-        if(markerIcon) {
-          markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconSelected : markerIcon;
-        }
-        if($elementProperties?.[markerValue.elementRow.key]?.checked) {
-          markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconCheckedSelected : markerIconChecked;
-        }
-        let marker = L.marker(markerValue.location, markerOptions).addTo(map)
-        marker.payload = markerValue;
-        marker.on('click', markerClick);
-        markers.push(marker);  
       }
+      // this probably needs to be much more efficient
+
     }
-    // this probably needs to be much more efficient
   }
 
   $: {
@@ -349,6 +358,7 @@
   const setFilter = (filter) => {
     controlsFocus = null;
     activeFilter = filter;
+    hideMarkers = false;
     updateMarkers();
 
     let colorRGBArray;
@@ -438,11 +448,21 @@
         }        
       }
 
+      if(layer.hideMarkers == "TRUE") {
+        console.log("hiding all markers...");
+        hideMarkers = true;
+      } else {
+        hideMarkers = false;
+      }
+
     } else {
+      hideMarkers = false;
       if(!map.hasLayer(labels_layer)) {
           labels_layer.addTo(map);
       }
     }
+
+    updateMarkers();
   }
 
   const panToUserPosition = async () => {

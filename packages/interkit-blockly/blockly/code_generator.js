@@ -327,7 +327,7 @@ export const initCodeGenerator = (Blockly) => {
   Blockly.JavaScript['MapLayer'] = function(block) {
     var code = "<MapLayer \n";
     code += attributes(block, [
-       "name", "assetPath", "topLeft", "bottomRight", "audio", "hideLabels", "layerKey", "connectedFilterKey"
+       "name", "assetPath", "topLeft", "bottomRight", "audio", "hideLabels", "layerKey", "connectedFilterKey", "hideMarkers"
     ]);
     code += "\n/>\n";
     return code;

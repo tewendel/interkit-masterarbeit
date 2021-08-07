@@ -1139,7 +1139,7 @@
 
     {
       "type": "MapLayer",
-      "message0": "<MapLayer> %1 name %2 %3 assetPath %4 %5 topLeft %6 %7 bottomRight %8 %9 audio %10 %11 hideLabels %12 %13 layerKey %14 %15 connectedFilterKey %16 %17",
+      "message0": "<MapLayer> %1 name %2 %3 assetPath %4 %5 topLeft %6 %7 bottomRight %8 %9 audio %10 %11 hideLabels %12 %13 layerKey %14 %15 connectedFilterKey %16 %17 hideMarkers %18 %19",
       "args0": [
         {
           "type": "input_dummy"
@@ -1196,6 +1196,13 @@
         {
           "name": "connectedFilterKey",
           "type": "field_input"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "hideMarkers",
+          "type": "field_checkbox"
         },
         {
           "type": "input_dummy"
