@@ -1,11 +1,13 @@
 <script>
   import { util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
+  import MarkdownContent from './MarkdownContent.svelte'
 
   export let categoryRow;
   export let titleColumn;
   export let imageColumn;
   export let descriptionColumn;
+
 </script>
 
 
@@ -18,7 +20,7 @@
       {util.rowVal(categoryRow, titleColumn)}
     </h3>
     <p class="CategoryCover__Description description">
-      {util.rowValString(categoryRow, descriptionColumn)}
+      <MarkdownContent content={util.rowValString(categoryRow, descriptionColumn)} />
     </p>
     <div class="CategoryCover__Button">Erkunden</div>
   </div>
