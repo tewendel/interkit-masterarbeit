@@ -8,6 +8,9 @@
   // the column key to use for sorting the elements
   export let sortColumn
 
+  // the column to use for hiding individual elements
+  export let hideColumn
+
   // set this option to only show elements that are bookmarked locally on the client
   export let bookmarkFilter // this is TRUE or FALSE
   let bookmarkStore;
@@ -77,6 +80,10 @@
       }
     }
 
+    const checkHidden = (dataRow) => {
+      return util.rowVal(dataRow, hideColumn) != "true"
+    }
+
     //if(dataSub) await dataSub.stop()
     // subscribe to the data
     //dataSub = await InterkitClient.getSub('rows', 'rows', {sheetKey: dataSheetKey}, r=>{return (r.sheetKey==dataSheetKey) && check(r) && checkBookmark(r)});
@@ -85,7 +92,7 @@
     //console.log("dataRows", $dataRows)
     //console.log(sortColumn)
     dataSub = dataRows.subscribe((data) => {
-      data = data.filter(r => check(r) && checkBookmark(r))
+      data = data.filter(r => check(r) && checkBookmark(r) && checkHidden(r))
       data.sort((a, b) => util.rowVal(a, sortColumn) - util.rowVal(b, sortColumn))
       dataRowsSorted = data;
     })
