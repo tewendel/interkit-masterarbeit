@@ -361,8 +361,8 @@
     <div class="AudioPlayer__Close close">
       {#if playerExpanded}
         <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
-          <Icon type={playerExpanded ? "arrow-down" : "arrow-up"}>
-            {playerExpanded ? "Collapse" : "Expand"}
+          <Icon type="close">
+            Close
           </Icon>
         </button>
       {:else}
