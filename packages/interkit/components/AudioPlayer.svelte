@@ -287,6 +287,14 @@
 
     </div>
 
+    <div class="AudioPlayer__GrabIndicator" 
+      on:click={toggleExpanded}
+      on:touchstart={ startTouch }
+      on:touchend={ endTouch }
+      class:expanded={playerExpanded}
+      >
+    </div>
+
     <div class="AudioPlayer__Content base-content">
 
       <div class="AudioPlayer__ExpandCollapse expand-collapse">
@@ -323,9 +331,6 @@
       {#key title}
       <h4 
           class="AudioPlayer__Title title" 
-          on:click={toggleExpanded}
-          on:touchstart={ startTouch }
-          on:touchend={ endTouch }
         >
         {title}
       </h4>
@@ -433,7 +438,13 @@
   }
 
   .container.active {
-    height: 60px;
+    height: 72px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .container.active { /* mouse pointer devices don't need grab indicator */
+      height: 60px;
+    }
   }
 
   .container.expanded {
@@ -541,6 +552,31 @@
   .AudioPlayer__Expanded__Description {
     padding-top: 16px;
     padding-bottom: 16px;
+  }
+
+  .AudioPlayer__GrabIndicator {
+    height: 12px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: black;
+  }
+
+  @media (hover: hover) and (pointer: fine) { /* mouse pointer devices don't need grab indicator */
+    .AudioPlayer__GrabIndicator {
+      display: none;
+    }
+  }
+
+  .AudioPlayer__GrabIndicator::after {
+    content: "";
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: currentColor;
+  }
+  .AudioPlayer__GrabIndicator.expanded {
+    display: none;
   }
 
   .AudioPlayer__Expanded__Controls:not(.expanded), .AudioPlayer__Expanded__Time:not(.expanded) {
