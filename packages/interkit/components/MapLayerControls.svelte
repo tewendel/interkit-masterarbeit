@@ -46,19 +46,17 @@
         </Button>
       </span>
 
-      {#if layerSelectOpen}
-        <ul>
-        {#each layers as layer}
-          <li class:active={ activeLayer && layer.name == activeLayer.name}>
-            <Button nopadding on:click={()=>{layerSelect(activeLayer && layer.name == activeLayer.name ? null : layer)}}>
-              <span class="MapLayerControls__Layers__Item layers_item">
-                {layer.name}
-              </span>
-            </Button>
-          </li>
-        {/each}
-        </ul>
-      {/if}
+      <ul class:active="{layerSelectOpen}">
+      {#each layers as layer}
+        <li class:active={ activeLayer && layer.name == activeLayer.name}>
+          <Button nopadding on:click={()=>{layerSelect(activeLayer && layer.name == activeLayer.name ? null : layer)}}>
+            <span class="MapLayerControls__Layers__Item layers_item">
+              {layer.name}
+            </span>
+          </Button>
+        </li>
+      {/each}
+      </ul>
 
   </div>
 {/if}
@@ -67,12 +65,6 @@
 <style>
 
   #layerControls {
-    display: flex;
-    flex-direction: column-reverse;
-    position: absolute;
-    left: 55px;
-    bottom: 30px;
-    z-index: 1000;
     font-size: 14px;
     line-height: 20px;
   }
@@ -89,8 +81,15 @@
     cursor: pointer;
   }
 
+  ul {
+    display: flex;
+    max-width: 100vw;
+    overflow-y: auto;
+  }
+
   li {
     margin: 8px 0;
+    white-space: nowrap;
   }
 
   .button_item,

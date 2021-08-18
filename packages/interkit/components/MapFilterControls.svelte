@@ -64,9 +64,7 @@
       </Button>
     </span>
     
-
-    {#if filterSelectOpen}
-      <ul class="Map__FilterList filter_list">
+    <ul class="Map__FilterList filter_list" class:open="{filterSelectOpen}">
       {#each filterLists as filterList}
         <li class:active={filterList == openFilterList} >
           <Button nopadding>
@@ -76,40 +74,37 @@
                 {filterList.name}
             </span>
           </Button>
+        
+          <ul class="Map__FilterListLevel2 filter_list_level_2" class:open="{filterList == openFilterList}">
+          {#each sortCategories(filterList.categoryRows, filterList.categoryOrderColumn) as categoryRow}
+            <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
+              <Button 
+                nopadding 
+                color={!(activeFilter && activeFilter.name == filterName(categoryRow)) ? 
+                  util.filterColorRGB(categoryRow, filterList.categoryColorColumn) : null}
+              >
+                <span 
+                  class="Map__FilterListLevel2__Item filter_list_level_2_item" 
+                  on:click={()=>{
+                filterSelect(activeFilter && activeFilter.name == filterName(categoryRow) ? null : {
+                  name: filterName(categoryRow), 
+                  row: categoryRow,
+                  categoryColorColumn: filterList.categoryColorColumn,
+                  elementRefColumn: filterList.elementRefColumn,
+                  filterKeyColumn: filterList.filterKeyColumn,
+                  connectedLayerKeyColumn: filterList.connectedLayerKeyColumn,
+                })}}>
+                  {filterName(categoryRow)}
+                </span>
+              </Button>
+            </li>
+          {/each}
+          </ul>
+          
         </li>
       {/each}
-      </ul>
-    {/if}
-
-    {#if openFilterList && filterSelectOpen}
-      <ul class="Map__FilterListLevel2 filter_list_level_2">
-      {#each sortCategories(openFilterList.categoryRows, openFilterList.categoryOrderColumn) as categoryRow}
-        <li class:active={activeFilter && activeFilter.name == filterName(categoryRow)} >
-          <Button 
-            nopadding 
-            color={!(activeFilter && activeFilter.name == filterName(categoryRow)) ? 
-              util.filterColorRGB(categoryRow, openFilterList.categoryColorColumn) : null}
-          >
-            <span 
-              class="Map__FilterListLevel2__Item filter_list_level_2_item" 
-              on:click={()=>{
-            filterSelect(activeFilter && activeFilter.name == filterName(categoryRow) ? null : {
-              name: filterName(categoryRow), 
-              row: categoryRow,
-              categoryColorColumn: openFilterList.categoryColorColumn,
-              elementRefColumn: openFilterList.elementRefColumn,
-              filterKeyColumn: openFilterList.filterKeyColumn,
-              connectedLayerKeyColumn: openFilterList.connectedLayerKeyColumn,
-            })}}>
-              {filterName(categoryRow)}
-            </span>
-          </Button>
-        </li>
-      {/each}
-      </ul>
-    {/if}
-
-
+    </ul>
+    
 </div>
 {/if}
 
@@ -117,13 +112,6 @@
 <style>
 
   #filterControls {
-    display: flex;
-    flex-direction: column-reverse;
-    place-items: flex-end;
-    position: absolute;
-    right: 0;
-    bottom: 30px;
-    z-index: 1000;
     font-size: 14px;
     line-height: 20px;
   }
@@ -138,6 +126,10 @@
     padding-right: 55px;
   }
 
+  .filter_button {
+    display: none;
+  }
+
   .filter_list,
   .filter_list_level_2 {
     max-width: 100%;
@@ -145,7 +137,7 @@
   }
 
   li {
-    margin: 8px 0 8px 14px;
+    margin: 8px 0 8px 0px;
     white-space: nowrap;
   }
 
@@ -153,7 +145,7 @@
     filter: invert(1);
   }
 
-  .filter_list, .filter_list_level_2 {
+  .filter_list_level_2 {
     display: flex; 
   }
 
@@ -161,7 +153,6 @@
     max-width: 100vw;
     overflow-y: auto;
     box-sizing: border-box;
-    padding: 0 55px;
   }
 
   .filter_list_level_2 > :last-child {

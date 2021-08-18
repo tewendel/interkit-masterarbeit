@@ -76,13 +76,8 @@
 <style>
 
   .active_labels {
-    position: absolute;
-    width: 100%;
-    top: 16px;
-    left: 16px;
-    z-index: 1000;
     filter: invert(1);
-    display: flex;
+    display: none;
     flex-direction: column;
   }
 

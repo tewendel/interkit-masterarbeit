@@ -405,6 +405,7 @@
   // set the image overlay layer
   const setLayer = (layer) => {
     controlsFocus = null;
+    mapLayerControlsExpanded = false; // close filter & layer panel
     if(imageOverlay) {
       map.removeLayer(imageOverlay);
     }
@@ -528,6 +529,8 @@
 
   $: hasHeading = currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null && currentPosition?.speed > 0
 
+  let mapLayerControlsExpanded = false; // is the layer controls panel open?`
+
 </script>
 
 <div 
@@ -557,38 +560,54 @@
     </div>
   {/if}
 
-  <MapActiveOverlayButtons
-    {activeFilter}
-    {activeLayer}
-    {setFilter}
-    {setLayer}
-    elementRows={$elementRows}
-  />
-
+  
   <div class="Map__LayerControls layer_controls">
 
-    <MapFilterControls
-      on:click={() => controlsFocus="filters"}
-      isFocused={controlsFocus=="filters"}
-      onClose={closeControls}
-      {filterLists}
-      {setFilter}
-      {activeFilter}      
-    />
+    <div class="layer_info">Filters & Layers {#if activeFilter} (1 filter active) {/if} {#if activeLayer} (1 layer active) {/if}</div>
 
-    <MapLayerControls
-      on:click={() => controlsFocus="layers"}
-      isFocused={controlsFocus=="layers"}
-      onClose={closeControls}
-      {layers}
-      {setLayer}
+    <div class="layer_controls_expanded" class:expanded="{mapLayerControlsExpanded}">
+
+      <MapFilterControls
+        on:click={() => controlsFocus="filters"}
+        isFocused={controlsFocus=="filters"}
+        onClose={closeControls}
+        {filterLists}
+        {setFilter}
+        {activeFilter}      
+      />
+
+      <MapLayerControls
+        on:click={() => controlsFocus="layers"}
+        isFocused={controlsFocus=="layers"}
+        onClose={closeControls}
+        {layers}
+        {setLayer}
+        {activeLayer}
+        elementRows={$elementRows}
+        {mainLayerLabel}
+      />
+
+    </div>
+
+    <Button on:click={()=>mapLayerControlsExpanded = !mapLayerControlsExpanded}>
+      {#if !mapLayerControlsExpanded}
+        ▼ Open
+      {:else}
+        ▲ Close
+      {/if}
+    </Button>
+
+    <MapActiveOverlayButtons
+      {activeFilter}
       {activeLayer}
+      {setFilter}
+      {setLayer}
       elementRows={$elementRows}
-      {mainLayerLabel}
     />
 
   </div>
 
+  {#if !mapLayerControlsExpanded}
     <div class="Map__Controls controls">
 
       <button class="Map__Controls__ZoomIn zoomIn">
@@ -610,6 +629,7 @@
       </button>
 
     </div>
+  {/if}
   
   <div id="mapid" bind:this={mapElement}></div>
 
@@ -685,7 +705,25 @@
     margin-top: 40px;
   }
 
+  .layer_info {
+    background-color: white;
+    padding:  8px;
+    width: 100vw;
+  }
+
   .layer_controls {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+  }
+
+  .layer_controls_expanded {
+    display: none;
+  }
+
+  .layer_controls_expanded.expanded {
+    display : block;
   }
 
   :global(.leaflet-div-icon) {
