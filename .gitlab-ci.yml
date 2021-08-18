@@ -1,12 +1,12 @@
 stages:
+  - prepare
   - build
   - deploy
 
-# This file is a template, and might need editing before it works on your project.
-docker-build:
+docker-build-base:
   # Official docker image.
   image: docker:latest
-  stage: build
+  stage: prepare
   services:
     - docker:dind
   before_script:
@@ -15,39 +15,69 @@ docker-build:
   script:
     #- INTERKIT_IMAGE_TAG=latest docker-compose pull
     - docker pull interkit/interkit-packages:latest || true
+    - docker build --cache-from interkit/interkit-packages:latest -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
+    - docker push interkit/interkit-packages:latest
+
+docker-build-server:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  needs:
+    - docker-build-base
+  before_script:
+    - apk add --no-cache docker-compose
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  script:
+    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
+    - docker pull interkit/interkit-packages:latest || true
     - docker pull interkit/server-base:latest || true
     - docker pull interkit/server:latest || true
-    - docker pull interkit/bundler:latest || true
-    - docker pull interkit/admin:latest || true
     - docker build --cache-from interkit/interkit-packages:latest -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
     - docker build --target meteor-base --cache-from interkit/server-packages:latest --cache-from interkit/server-base:latest -t interkit/server-base:latest -f Dockerfile.meteor-server .
     - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/server-base:latest --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
-    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/bundler:latest -t interkit/bundler:latest -t interkit/bundler:$CI_COMMIT_SHORT_SHA -f Dockerfile.app-bundler .
-    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/admin:latest -t interkit/admin:latest -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
-    - docker push interkit/interkit-packages:latest
     - docker push interkit/server-base:latest
     - docker push interkit/server:latest
-    - docker push interkit/bundler:latest
-    - docker push interkit/admin:latest
     - docker push interkit/server:$CI_COMMIT_SHORT_SHA
-    - docker push interkit/bundler:$CI_COMMIT_SHORT_SHA
-    - docker push interkit/admin:$CI_COMMIT_SHORT_SHA
-  #only:
-  #  - main
 
-#docker-build:
-#  # Official docker image.
-#  image: docker:latest
-#  stage: build
-#  services:
-#    - docker:dind
-#  before_script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  script:
-#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-#    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-#  except:
-#    - main
+docker-build-bundler:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  needs:
+    - docker-build-base
+  before_script:
+    - apk add --no-cache docker-compose
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  script:
+    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
+    - docker pull interkit/interkit-packages:latest || true
+    - docker pull interkit/bundler:latest || true
+    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/bundler:latest -t interkit/bundler:latest -t interkit/bundler:$CI_COMMIT_SHORT_SHA -f Dockerfile.app-bundler .
+    - docker push interkit/bundler:latest
+    - docker push interkit/bundler:$CI_COMMIT_SHORT_SHA
+
+docker-build-admin:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  needs:
+    - docker-build-base
+  before_script:
+    - apk add --no-cache docker-compose
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  script:
+    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
+    - docker pull interkit/interkit-packages:latest || true
+    - docker pull interkit/admin:latest || true
+    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/admin:latest -t interkit/admin:latest -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
+    - docker push interkit/admin:latest
+    - docker push interkit/admin:$CI_COMMIT_SHORT_SHA
 
 .deploy: &deploy
   stage: deploy
