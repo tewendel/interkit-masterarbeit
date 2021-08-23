@@ -68,7 +68,7 @@ $: {
     </span>
     {/if}
 
-    {#if useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
+    {#if size != "xs" && useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
       <span class="ContentElementAudio__Bookmark bookmark">
         <Button>
           <BookmarkToggle elementKey={element?.key}/>
