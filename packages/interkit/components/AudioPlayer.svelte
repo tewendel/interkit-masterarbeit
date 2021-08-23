@@ -578,11 +578,13 @@
     color: black;
   }
 
+  
   @media (hover: hover) and (pointer: fine) { /* mouse pointer devices don't need grab indicator */
     .AudioPlayer__GrabIndicator {
-      display: none;
+      /*display: none;*/
     }
   }
+  
 
   .AudioPlayer__GrabIndicator::after {
     content: "";
