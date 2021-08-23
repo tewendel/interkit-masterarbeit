@@ -590,9 +590,21 @@
   
   <div class="Map__LayerControls layer_controls">
 
-    <div class="layer_info">Filters & Layers {#if activeFilter} (1 filter active) {/if} {#if activeLayer} (1 layer active) {/if}</div>
+    <div class="Map__LayerControls__Info layer_info">
+      <span class="Map__LayerControls__Text">
+        Filters & Layers 
+      </span>
+      <span class="Map__LayerControls__FiltersActive" data-number={activeFilter ? "1" : "0"}>
+        (1 filter active) 
+      </span>
+      <span class="Map__LayerControls__LayersActive" data-number={activeLayer ? "1" : "0"}>
+        (1 layer active) 
+      </span>
+      <span class="Map__LayerControls__TextAfter">
+      </span>
+    </div>
 
-    <div class="layer_controls_expanded" class:expanded="{mapLayerControlsExpanded}">
+    <div class="Map__LayerControls__Expanded layer_controls_expanded" class:expanded="{mapLayerControlsExpanded}">
 
       <MapFilterControls
         on:click={() => controlsFocus="filters"}
@@ -616,13 +628,19 @@
 
     </div>
 
-    <Button on:click={()=>mapLayerControlsExpanded = !mapLayerControlsExpanded}>
-      {#if !mapLayerControlsExpanded}
-        ▼ Open
-      {:else}
-        ▲ Close
-      {/if}
-    </Button>
+    <div class="Map__LayerControls__PanelControls panel_controls" data-state={mapLayerControlsExpanded ? "opened" : "closed"}>
+      <Button on:click={()=>mapLayerControlsExpanded = !mapLayerControlsExpanded}>
+        {#if !mapLayerControlsExpanded}
+          <span class="Map__LayerControls__PanelControls__Open">
+            Open
+          </span>
+        {:else}
+          <span class="Map__LayerControls__PanelControls__Close">
+             Close
+           </span>
+        {/if}
+      </Button>
+    </div>
 
     <MapActiveOverlayButtons
       {activeFilter}
@@ -723,6 +741,22 @@
     flex-direction: column;
     z-index: 1000;
     padding: 8px;
+  }
+
+  .Map__LayerControls__PanelControls__Open:before {
+    content:  "▼ ";
+  }
+  
+  .Map__LayerControls__PanelControls__Close:before {
+    content:  "▲ ";
+  }
+
+  .Map__LayerControls__FiltersActive[data-number="0"] {
+    display: none;
+  }
+
+  .Map__LayerControls__LayersActive[data-number="0"] {
+    display: none;
   }
 
   .controls > * {

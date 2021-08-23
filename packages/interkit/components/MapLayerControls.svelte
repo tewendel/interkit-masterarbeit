@@ -29,7 +29,7 @@
 </script>
 
 {#if layers?.length}
-  <div id="layerControls" on:click>
+  <div id="layerControls" class="MapLayerControls" on:click>
     
       <span 
         class="MapLayerControls__Button layerSelectToggle" 
