@@ -89,6 +89,13 @@ export default {
     } else {
       return ""
     }
+  },
+
+  formatDistance: (meters) => {
+    let d = "";
+    if(meters < 1000) d = meters + "m";
+    else d = Math.floor(meters / 1000) + "km";
+    return d;
   }
 
 }

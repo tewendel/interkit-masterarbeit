@@ -542,7 +542,7 @@
     activeFilter = null
     if ($mapFocus?.values?.position?.lat) {
       location = $mapFocus?.values?.position
-      selectedElement = $mapFocus
+      selectedElement = null;
       //setTimeout(()=>
       //selectedElement = $mapFocus
       //,1000)

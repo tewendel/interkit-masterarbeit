@@ -8,13 +8,13 @@
   
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
-  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
   
   import MediaFileImage from './MediaFileImage.svelte'
   import BookmarkToggle from './BookmarkToggle.svelte'
   import Button from './Button.svelte'
   import AudioPlayButton from './AudioPlayButton.svelte'
   import Icon from './Icon.svelte'
+  import ContentElementAudioControls from './ContentElementAudioControls.svelte'
 
   import { playAudio } from './AudioPlayer.svelte'
 
@@ -73,22 +73,17 @@
     getDuration(element)
   }
 
+  // we calculate our own distance here in order to check on playback
+
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   let distanceMeters;
   let distance = "";
-
-  const formatDistance  = (meters) => {
-    let d = "";
-    if(meters < 1000) d = meters + "m";
-    else d = Math.floor(meters / 1000) + "km";
-    return d;
-  }
 
   const calculateDistance = (userPosition) => {
     let elementPosition = util.rowVal(element, elementColumns.locationColumn);
     distanceMeters = util.getDistance(elementPosition, userPosition)
     if(distanceMeters) {
-      distance = formatDistance(distanceMeters)
+      distance = util.formatDistance(distanceMeters)
     }
   }
 
@@ -132,10 +127,7 @@
     
   }
 
-  const openMapTo = (element) => {
-    InterkitClient.callGlobalMethod("menuSwitcherTarget")
-    mapFocus.set(element);
-  }
+  
 
 </script>
 
@@ -145,36 +137,18 @@
     <MediaFileImage mediafileRef={imageRef} />    
   </figure>
   
-  <div class="ContentElementAudio__Controls controls">
-    {#if util.rowVal(element, elementColumns.audioColumn)}
-    <span class="ContentElementAudio__Play play">
-      <AudioPlayButton
-        {playing}
-        onTap={()=>{if(size!="xs") play()}}
-        paused={$audioPlayerStatus?.paused}
-        loading={$audioPlayerStatus?.loading}
-      />
-      <span class="ContentElementAudio__Duration">{util.formatDuration(duration)}</span>
-    </span>
-    {/if}
-
-    {#if util.rowVal(element, elementColumns.locationColumn)}
-    <span class="ContentElementAudio__Distance distance" on:click|stopPropagation={()=>{openMapTo(element)}}>
-      <Button>
-        {distance}
-      </Button>
-    </span>
-    {/if}
-
-    {#if useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}
-      <span class="ContentElementAudio__Bookmark bookmark">
-        <Button>
-          <BookmarkToggle elementKey={element?.key}/>
-        </Button>
-      </span>      
-    {/if}
-  
-  </div>
+  <ContentElementAudioControls
+    {element}
+    {elementColumns}
+    {categoryColumns}
+    {playing}
+    {size}
+    {duration}
+    {useBookmarks}
+    {categoryRow}
+    {categoryIndex}
+    {play}
+  />
 
   <!-- special for the gate: add an extra bookmark toggle -->
   {#if useBookmarks == "TRUE" && !util.rowVal(categoryRow, categoryColumns[categoryIndex].unlistedColumn)}

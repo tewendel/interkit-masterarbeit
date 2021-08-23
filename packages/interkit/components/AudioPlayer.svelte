@@ -45,6 +45,7 @@
   import Icon from './Icon.svelte'
   import Button from './Button.svelte'
   import Loading from './Loading.svelte'
+  import ContentElementAudioControls from './ContentElementAudioControls.svelte'
 
   import marked from "marked"
   
@@ -257,6 +258,20 @@
           <MediaFileImage fitDimension="height" mediafileRef={imageRef} />    
         </figure>
       {/if}
+
+      <ContentElementAudioControls
+        element={$audioPlayerElement}
+        {elementColumns}
+        {categoryColumns}
+        playing={$audioPlayerStatus?.active}
+        size={"m"}
+        duration={$audioPlayerStatus?.duration}
+        useBookmarks={"TRUE"}
+        {categoryRow}
+        {categoryIndex}
+        play={null}
+        onOpenMap={toggleExpanded}
+      />
 
       {#key title}
       <h3 class="AudioPlayer__Expanded__Title">
