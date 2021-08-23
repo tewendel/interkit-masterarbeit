@@ -30,6 +30,7 @@
   export let markerIconAsset; // path to asset we use for marker icon
 
   export let markerCheckedIconAsset = "icons-gate/map_marker_checked.svg";
+  export let markerPlayingIconAsset = "icons-gate/map_marker_playing.svg";
 
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
@@ -66,6 +67,7 @@
   let markerIconSelected;
   let markerIconChecked;
   let markerIconCheckedSelected;
+  let markerIconPlaying;
   let userIcon;
   let userPositionMarker;
   let markers = [];
@@ -84,6 +86,7 @@
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const mapFocus = InterkitClient.getGlobalStore("mapFocus")
+  const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
 
   // store of projectid
   let projectId = InterkitClient.projectId;
@@ -187,12 +190,22 @@
           let markerOptions = {
             title: markerValue.title,
           }
+
+          // change size when marker is tapped
           if(markerIcon) {
             markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconSelected : markerIcon;
           }
+
+          // show checked for markers that are on bookmarks list
           if($elementProperties?.[markerValue.elementRow.key]?.checked) {
             markerOptions.icon = (selectedElement && selectedElement?.key === markerValue?.elementRow?.key ) ? markerIconCheckedSelected : markerIconChecked;
           }
+
+          // show play icon on markers that are in the audio player
+          if(markerValue?.elementRow?.key == $audioPlayerElement?.key) {
+            markerOptions.icon = markerIconPlaying;  
+          }
+          
           let marker = L.marker(markerValue.location, markerOptions).addTo(map)
           marker.payload = markerValue;
           marker.on('click', markerClick);
@@ -205,6 +218,7 @@
   }
 
   $: {
+    $audioPlayerElement; // trigger function run
     $elementProperties; // trigger function run 
     selectedElement; // trigger function run
     if(markerRows) {
@@ -292,6 +306,19 @@
         iconSize:     [30, 30], // size of the icon
         iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
+    }
+
+    if(markerPlayingIconAsset) {
+      markerIconPlaying = L.icon({
+        iconUrl: markerPlayingIconAsset,
+        iconSize:     [30, 30], // size of the icon
+        iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+      });
+      /*markerIconPlayingSelected = L.icon({
+        iconUrl: markerCheckedIconAsset,
+        iconSize:     [30, 30], // size of the icon
+        iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+      });*/
     }
 
   
