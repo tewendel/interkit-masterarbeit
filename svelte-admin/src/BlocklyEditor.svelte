@@ -100,9 +100,37 @@
     const CustomFields1 = initSheetColumnField(Blockly, updateSheetColumn);
     const CustomFields2 = initSheetIdField(Blockly, updateSheetId);
     
+    // todo: replace with dynamic code generator
     blocklyConfig.initCodeGenerator(Blockly);
+
+    /* 
+    Blockly.JavaScript['AppBase'] = function (block) {
+      var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+      let code = `<AppBase
+        sectionTitles="${text_sectiontitles}"
+        sectionRefs="${text_sectionrefs}"
+        >\n${statements_name}\n</AppBase>\n`
+      return code;
+    };
+    */
     
+    // todo: replace auto generated definitions here
     Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
+
+    /* example from https://developers.google.com/blockly/guides/configure/web/custom-blocks?hl=en#javascript
+
+    Blockly.Blocks['string_length'] = {
+      init: function() {
+      this.appendValueInput('VALUE')
+          .setCheck('String')
+          .appendField('length of');
+      this.setOutput(true, 'Number');
+      this.setColour(160);
+      this.setTooltip('Returns number of letters in the provided text.');
+      this.setHelpUrl('http://www.w3schools.com/jsref/jsref_length_string.asp');
+        }
+    };
+    */
     
     workspace = Blockly.inject('blocklyDiv', {
       toolbox: blocklyConfig.toolbox,
