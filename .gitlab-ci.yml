@@ -3,24 +3,32 @@ stages:
   - build
   - deploy
 
-docker-build-base:
-  # Official docker image.
-  image: docker:latest
-  stage: prepare
+variables:
+  DOCKER_IMAGE_TAG: 20
+  INTERKIT_BASE_TAG: '${CI_COMMIT_BRANCH}-latest'
+  INTERKIT_IMAGE_TAG: '${CI_COMMIT_BRANCH}-${CI_COMMIT_SHORT_SHA}'
+  ENVIRONMENT_NAME: 'demo-${CI_COMMIT_BRANCH}'
+  ENVIRONMENT_URL: 'https://demo-${CI_COMMIT_BRANCH}.interkit.app'
+
+.build: &build
+  image: docker:$DOCKER_IMAGE_TAG
   services:
     - docker:dind
   before_script:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+
+docker-build-base:
+  <<: *deploy
+  stage: prepare
   script:
-    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
-    - docker pull interkit/interkit-packages:latest || true
-    - docker build --cache-from interkit/interkit-packages:latest -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
-    - docker push interkit/interkit-packages:latest
+    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG -f Dockerfile.interkit-packages -t interkit/interkit-packages:$INTERKIT_BASE_TAG .
+    - docker push interkit/interkit-packages:$INTERKIT_BASE_TAG
 
 docker-build-server:
   # Official docker image.
-  image: docker:latest
+  image: docker:$DOCKER_IMAGE_TAG
   stage: build
   services:
     - docker:dind
@@ -30,20 +38,19 @@ docker-build-server:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
-    - docker pull interkit/interkit-packages:latest || true
-    - docker pull interkit/server-base:latest || true
-    - docker pull interkit/server:latest || true
-    - docker build --cache-from interkit/interkit-packages:latest -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
-    - docker build --target meteor-base --cache-from interkit/server-packages:latest --cache-from interkit/server-base:latest -t interkit/server-base:latest -f Dockerfile.meteor-server .
-    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/server-base:latest --cache-from interkit/server:latest -t interkit/server:latest -t interkit/server:$CI_COMMIT_SHORT_SHA -f Dockerfile.meteor-server .
-    - docker push interkit/server-base:latest
-    - docker push interkit/server:latest
-    - docker push interkit/server:$CI_COMMIT_SHORT_SHA
+    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
+    - docker pull interkit/server-base:$INTERKIT_BASE_TAG || true
+    - docker pull interkit/server:$INTERKIT_BASE_TAG || true
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG -f Dockerfile.interkit-packages -t interkit/interkit-packages:$INTERKIT_BASE_TAG .
+    - docker build --target meteor-base --cache-from interkit/server-packages:$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG -t interkit/server-base:$INTERKIT_BASE_TAG -f Dockerfile.meteor-server .
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG --cache-from interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_IMAGE_TAG -f Dockerfile.meteor-server .
+    - docker push interkit/server-base:$INTERKIT_BASE_TAG
+    - docker push interkit/server:$INTERKIT_BASE_TAG
+    - docker push interkit/server:$INTERKIT_IMAGE_TAG
 
 docker-build-bundler:
   # Official docker image.
-  image: docker:latest
+  image: docker:$DOCKER_IMAGE_TAG
   stage: build
   services:
     - docker:dind
@@ -53,16 +60,15 @@ docker-build-bundler:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
-    - docker pull interkit/interkit-packages:latest || true
-    - docker pull interkit/bundler:latest || true
-    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/bundler:latest -t interkit/bundler:latest -t interkit/bundler:$CI_COMMIT_SHORT_SHA -f Dockerfile.app-bundler .
-    - docker push interkit/bundler:latest
-    - docker push interkit/bundler:$CI_COMMIT_SHORT_SHA
+    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
+    - docker pull interkit/bundler:$INTERKIT_BASE_TAG || true
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler .
+    - docker push interkit/bundler:$INTERKIT_BASE_TAG
+    - docker push interkit/bundler:$INTERKIT_IMAGE_TAG
 
 docker-build-admin:
   # Official docker image.
-  image: docker:latest
+  image: docker:$DOCKER_IMAGE_TAG
   stage: build
   services:
     - docker:dind
@@ -72,12 +78,11 @@ docker-build-admin:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    #- INTERKIT_IMAGE_TAG=latest docker-compose pull
-    - docker pull interkit/interkit-packages:latest || true
-    - docker pull interkit/admin:latest || true
-    - docker build --cache-from interkit/interkit-packages:latest --cache-from interkit/admin:latest -t interkit/admin:latest -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
-    - docker push interkit/admin:latest
-    - docker push interkit/admin:$CI_COMMIT_SHORT_SHA
+    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
+    - docker pull interkit/admin:$INTERKIT_BASE_TAG || true
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
+    - docker push interkit/admin:$INTERKIT_BASE_TAG
+    - docker push interkit/admin:$INTERKIT_IMAGE_TAG
 
 .deploy: &deploy
   stage: deploy
@@ -96,17 +101,20 @@ docker-build-admin:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - echo INTERKIT_IMAGE_TAG=$CI_COMMIT_SHORT_SHA > .env
-    - echo $INTERKIT_ENV_FILE | tr ' ' '\n' >> .env
+    - echo INTERKIT_IMAGE_TAG=$INTERKIT_IMAGE_TAG > .env
+    - echo $INTERKIT_ENV_FILE | tr ' ' '\n' | sed 's/demo\./$ENVIRONMENT_NAME./' >> .env
     - apt-get install rsync -y
-    - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$CI_PROJECT_NAME/
-    - echo "docker system prune -af && cd ~/$CI_PROJECT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
+    - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$ENVIRONMENT_NAME/
+    - echo "docker system prune -af && cd ~/$ENVIRONMENT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
 
 deploy-demo:
   <<: *deploy
+  only:
+    - main
+    - v0_2
   environment:
-    name: demo
-    url: https://demo.interkit.app
+    name: $ENVIRONMENT_NAME
+    url: $ENVIRONMENT_URL
   stage: deploy
 
 
