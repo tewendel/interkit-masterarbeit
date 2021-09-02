@@ -80,7 +80,7 @@ docker-build-admin:
   script:
     - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
     - docker pull interkit/admin:$INTERKIT_BASE_TAG || true
-    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin .
     - docker push interkit/admin:$INTERKIT_BASE_TAG
     - docker push interkit/admin:$INTERKIT_IMAGE_TAG
 
