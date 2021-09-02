@@ -85,11 +85,8 @@ docker-build-admin:
 .deploy: &deploy
   stage: deploy
   image: ubuntu
-  when: manual
   #only:
   #  - main
-  except:
-    - merge_requests
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -109,6 +106,8 @@ deploy-demo:
   <<: *deploy
   rules:
     - if: $INTERKIT_ENV_FILE
+    - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
+    - when: manual
   environment:
     name: $CI_COMMIT_BRANCH
     url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
