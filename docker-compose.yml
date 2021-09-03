@@ -2,51 +2,32 @@ version: '3.2'
 
 services:
 
-  traefik:
-    image: "traefik:v2.4"
-    container_name: "traefik"
-    command:
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
-        #- "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.letsencrypt.acme.email=info@interkit.app"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - "letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
   server:
     image: interkit/server:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
       dockerfile: Dockerfile.meteor-server
-    ports:
-      - '3000:3000'
+    expose:
+      - 3000
     volumes:
       - projects:/var/repositories/projects
       - mediafiles:/var/mediafiles
     depends_on:
       - mongo
     environment:
-      ROOT_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
+      ROOT_URL: $INTERKIT_SERVER_URL
       MONGO_URL: mongodb://mongo:27017/meteor
       REPOSITORIES_PATH: /var/repositories
       MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
-      BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
+      BUNDLER_URL: $INTERKIT_BUNDLER_URL
       ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.server.rule=Host(`${INTERKIT_SERVER_HOST}`)"
-      - "traefik.http.routers.server.entrypoints=websecure"
-      - "traefik.http.routers.server.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.server-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_SERVER_HOST}`)"
+    networks:
+      - frontproxy
+      - default
 
   mongo:
     image: mongo:4.2
@@ -54,45 +35,53 @@ services:
       - --storageEngine=wiredTiger
     volumes:
       - db-data:/data/db
+    networks:
+      - default
 
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
       dockerfile: ./Dockerfile.svelte-admin
-    ports:
-      - '5000:5000'
+    expose:
+      - 5000
     environment:
-      INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
-      INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
+      INTERKIT_SERVER_WEBSOCKETS_URL: $INTERKIT_SERVER_WEBSOCKETS_URL
+      INTERKIT_SERVER_URL: $INTERKIT_SERVER_URL
       INTERKIT_IMAGE_TAG: $INTERKIT_IMAGE_TAG
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.admin.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
-      - "traefik.http.routers.admin.entrypoints=websecure"
-      - "traefik.http.routers.admin.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.admin-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
+    networks:
+      - frontproxy
+      - default
 
   bundler:
     image: interkit/bundler:${INTERKIT_IMAGE_TAG}
     build:
       context: ./
       dockerfile: ./Dockerfile.app-bundler
-    ports:
-      - '4000:4000'
+    expose:
+      - 4000
     volumes:
       - projects:/var/repositories/projects
     environment:
       PORT: 4000
-      ADMIN_PASSWORD: ${INTERKIT_ADMIN_PASSWORD}
-      INTERKIT_BUNDLER_URL: ${INTERKIT_BUNDLER_URL:-http://localhost:4000}
-      INTERKIT_SERVER_WEBSOCKETS_URL: ${INTERKIT_SERVER_WEBSOCKETS_URL:-ws://localhost:3000/websocket}
-      INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL: ${INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL:-ws://server:3000/websocket}
-      INTERKIT_SERVER_URL: ${INTERKIT_SERVER_URL:-http://localhost:3000}
+      ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
+      INTERKIT_BUNDLER_URL: $INTERKIT_BUNDLER_URL
+      INTERKIT_SERVER_WEBSOCKETS_URL: $INTERKIT_SERVER_WEBSOCKETS_URL
+      INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL: $INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL
+      INTERKIT_SERVER_URL: $INTERKIT_SERVER_URL
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.bundler.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
-      - "traefik.http.routers.bundler.entrypoints=websecure"
-      - "traefik.http.routers.bundler.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.bundler-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
+    networks:
+      - frontproxy
+      - default
+
+networks:
+  frontproxy:
+    external: true
 
 volumes:
   db-data:
@@ -103,4 +92,3 @@ volumes:
   #    o: bind
   projects:
   mediafiles:
-  letsencrypt:

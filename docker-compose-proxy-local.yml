@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - '--api.dashboard=true'
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - frontproxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - 'traefik.http.routers.traefik.service=api@internal'
+        #- 'traefik.http.services.api@internal.loadbalancer.traefik.port=8080'
+
+networks:
+  frontproxy:
+    external: true
