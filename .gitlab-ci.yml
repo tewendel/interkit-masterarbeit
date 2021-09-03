@@ -7,8 +7,6 @@ variables:
   DOCKER_IMAGE_TAG: 20
   INTERKIT_BASE_TAG: '${CI_COMMIT_BRANCH}-latest'
   INTERKIT_IMAGE_TAG: '${CI_COMMIT_BRANCH}-${CI_COMMIT_SHORT_SHA}'
-  ENVIRONMENT_NAME: 'demo-${CI_COMMIT_BRANCH}'
-  ENVIRONMENT_URL: 'https://demo-${CI_COMMIT_BRANCH}.interkit.app'
 
 .build: &build
   image: docker:$DOCKER_IMAGE_TAG
@@ -19,7 +17,7 @@ variables:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
 
 docker-build-base:
-  <<: *deploy
+  <<: *build
   stage: prepare
   script:
     - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
@@ -80,18 +78,15 @@ docker-build-admin:
   script:
     - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
     - docker pull interkit/admin:$INTERKIT_BASE_TAG || true
-    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$CI_COMMIT_SHORT_SHA -f Dockerfile.svelte-admin .
+    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin .
     - docker push interkit/admin:$INTERKIT_BASE_TAG
     - docker push interkit/admin:$INTERKIT_IMAGE_TAG
 
 .deploy: &deploy
   stage: deploy
   image: ubuntu
-  when: manual
   #only:
   #  - main
-  except:
-    - merge_requests
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -102,19 +97,20 @@ docker-build-admin:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - echo INTERKIT_IMAGE_TAG=$INTERKIT_IMAGE_TAG > .env
-    - echo $INTERKIT_ENV_FILE | tr ' ' '\n' | sed 's/demo\./$ENVIRONMENT_NAME./' >> .env
+    - echo $INTERKIT_ENV_FILE | tr ' ' '\n' >> .env
     - apt-get install rsync -y
-    - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$ENVIRONMENT_NAME/
-    - echo "docker system prune -af && cd ~/$ENVIRONMENT_NAME && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
+    - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$CI_COMMIT_BRANCH/
+    - echo "docker system prune -af && cd ~/$CI_COMMIT_BRANCH && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
 
 deploy-demo:
   <<: *deploy
-  only:
-    - main
-    - v0_2
+  rules:
+    - if: $INTERKIT_ENV_FILE
+    - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
+    - when: manual
   environment:
-    name: $ENVIRONMENT_NAME
-    url: $ENVIRONMENT_URL
+    name: $CI_COMMIT_BRANCH
+    url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
   stage: deploy
 
 
