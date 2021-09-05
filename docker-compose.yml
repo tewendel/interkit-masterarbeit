@@ -4,6 +4,7 @@ services:
 
   server:
     image: interkit/server:${INTERKIT_IMAGE_TAG}
+    restart: always
     build:
       context: ./
       dockerfile: Dockerfile.meteor-server
@@ -31,6 +32,7 @@ services:
 
   mongo:
     image: mongo:4.2
+    restart: always
     command:
       - --storageEngine=wiredTiger
     volumes:
@@ -40,6 +42,7 @@ services:
 
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
+    restart: always
     build:
       context: ./
       dockerfile: ./Dockerfile.svelte-admin
@@ -58,6 +61,7 @@ services:
 
   bundler:
     image: interkit/bundler:${INTERKIT_IMAGE_TAG}
+    restart: always
     build:
       context: ./
       dockerfile: ./Dockerfile.app-bundler
