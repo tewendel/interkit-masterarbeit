@@ -100,7 +100,7 @@ docker-build-admin:
     - echo $INTERKIT_ENV_FILE | tr ' ' '\n' >> .env
     - apt-get install rsync -y
     - rsync -e ssh -v -a {docker-compose.yml,.env} $SSH_USER@$SSH_HOST:~/$CI_COMMIT_BRANCH/
-    - echo "docker system prune -af && cd ~/$CI_COMMIT_BRANCH && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
+    - echo "cd ~/$CI_COMMIT_BRANCH && ls -la && docker-compose pull && docker-compose up -d --remove-orphans" | ssh $SSH_USER@$SSH_HOST 
 
 deploy-demo:
   <<: *deploy
