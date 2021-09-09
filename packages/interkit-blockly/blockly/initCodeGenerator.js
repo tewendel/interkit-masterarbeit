@@ -1,3 +1,5 @@
+import { getBlockObjects } from './getBlockObjects.js'
+
 export const initCodeGenerator = (Blockly) => {
 
   /* helper functions */
@@ -32,11 +34,31 @@ export const initCodeGenerator = (Blockly) => {
     var statements_name = Blockly.JavaScript.statementToCode(block, blocklyAttributeName);    
     return `${statements_name}`  
   }
-  
 
-  /* code generators for each block */
+  /* generate code generators from block definitions */
   console.log("initCodeGenerator");
 
+  const blockObjects = getBlockObjects();    
+
+  for(let blockObject of blockObjects) {
+    Blockly.JavaScript[blockObject.name] = function(block) {
+      let code = `<${blockObject.name} `;
+      for(let field of blockObject.fields) {
+        code += ` ${field.name}="${block.getFieldValue(field.name)}" `
+      }
+      code += `/>`
+      return code;
+    }
+  }
+
+  /* old manual code generators for reference
+
+  Blockly.JavaScript['HeadlinePage'] = function(block) {
+    var text_label = block.getFieldValue('NAME');
+    return `<HeadlinePage headline="${text_label}"/>\n`
+  };
+
+  
   Blockly.JavaScript['AppBase'] = function (block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
     let code = `<AppBase
@@ -341,7 +363,7 @@ export const initCodeGenerator = (Blockly) => {
     code += "</ScrollContainer>\n"
     return code;
   };
-
+  */
 
 
 

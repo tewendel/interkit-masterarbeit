@@ -100,40 +100,16 @@
     const CustomFields1 = initSheetColumnField(Blockly, updateSheetColumn);
     const CustomFields2 = initSheetIdField(Blockly, updateSheetId);
     
-    // todo: replace with dynamic code generator
-    blocklyConfig.initCodeGenerator(Blockly);
-
-    /* 
-    Blockly.JavaScript['AppBase'] = function (block) {
-      var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-      let code = `<AppBase
-        sectionTitles="${text_sectiontitles}"
-        sectionRefs="${text_sectionrefs}"
-        >\n${statements_name}\n</AppBase>\n`
-      return code;
-    };
-    */
+    blocklyConfig.initBlockDefinitions(Blockly); // generates block definitions from yaml component files
     
-    // todo: replace auto generated definitions here
-    Blockly.defineBlocksWithJsonArray(blocklyConfig.definitions);
+    console.log("Blocks", Blockly.Blocks)
 
-    /* example from https://developers.google.com/blockly/guides/configure/web/custom-blocks?hl=en#javascript
-
-    Blockly.Blocks['string_length'] = {
-      init: function() {
-      this.appendValueInput('VALUE')
-          .setCheck('String')
-          .appendField('length of');
-      this.setOutput(true, 'Number');
-      this.setColour(160);
-      this.setTooltip('Returns number of letters in the provided text.');
-      this.setHelpUrl('http://www.w3schools.com/jsref/jsref_length_string.asp');
-        }
-    };
-    */
+    blocklyConfig.initCodeGenerator(Blockly); // generates code generator from yaml component files
     
+    //console.log(blocklyConfig.toolbox)
+
     workspace = Blockly.inject('blocklyDiv', {
-      toolbox: blocklyConfig.toolbox,
+      toolbox: blocklyConfig.getToolbox(), // generates toolbox from yaml component files
       zoom:
          {controls: true,
           wheel: true,
@@ -143,6 +119,9 @@
           scaleSpeed: 1.2,
           pinch: true},
     });
+
+    console.log(workspace)
+
     workspace.addChangeListener(myUpdateFunction);
 
     blocklyXML = await InterkitClient.call("file.load", {filename: blocklyXMLFile, projectId})  
