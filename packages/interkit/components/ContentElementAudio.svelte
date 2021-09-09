@@ -45,6 +45,8 @@
   $: imageRef = util.rowVal(element, elementColumns.imageColumn)
   $: playing = element && (element.key == $audioPlayerElement?.key) && $audioPlayerStatus?.active
 
+  let showMore = false
+
   let categoryRowStore;
   let categoryRow; // the row of the category that is referenced in this element
   const setupCategory = async (element) => {
@@ -195,6 +197,21 @@
     <p class="ContentElementAudio__Description description">
       {#if short_description}
         {@html marked(short_description)}
+        {#if description}
+          <span 
+            class="ContentElementAudio__Description__MoreButton more_button" 
+            class:show={!showMore}
+            on:click={() => showMore = !showMore}
+            >
+              mehr
+          </span>
+          <div 
+            class="ContentElementAudio__Description__MoreContent more_content" 
+            class:show={showMore}
+            >
+              {@html marked(description)}
+          </div>
+        {/if}
       {/if}
     </p>
 
@@ -298,6 +315,23 @@
 
   .description {
     margin-top: 8px;
+  }
+
+  .more_button {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .more_button:not(.show) {
+    display: none;
+  }
+
+  .more_content {
+    padding-top: 1em;
+  }
+
+  .more_content:not(.show) {
+    display: none;
   }
 
   /* size variants */

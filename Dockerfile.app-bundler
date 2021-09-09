@@ -1,4 +1,5 @@
-FROM interkit/interkit-packages:latest AS interkit-packages
+ARG INTERKIT_BASE_TAG=latest
+FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
 FROM node:15
 
 ARG BUILD_SOURCE_PATH=./app-bundler
