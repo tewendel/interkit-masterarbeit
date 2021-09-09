@@ -16,7 +16,11 @@ export default (Blockly, update) => {
     CustomFields.SheetIdField.superClass_.constructor.call(
         this, opt_value, opt_validator);
 
-    this.setValue(opt_value);
+    let value = {
+      value: opt_value?.defaultValue, 
+      text: opt_value?.defaultValue
+    }
+    this.setValue(value);
     //console.log(this.getValue())    
   };
   Blockly.utils.object.inherits(CustomFields.SheetIdField, Blockly.Field);
@@ -72,5 +76,5 @@ export default (Blockly, update) => {
 
   Blockly.fieldRegistry.register('sheetId', CustomFields.SheetIdField);
   
-  return CustomFields;
+  return CustomFields.SheetIdField;
 }

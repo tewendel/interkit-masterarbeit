@@ -14,9 +14,19 @@ export default (Blockly, update) => {
     CustomFields.SheetColumnField.superClass_.constructor.call(
         this, opt_value, opt_validator);
 
-    this.setValue(opt_value);
+    // this is initialised in getBlockObject.js
+    let value = {
+      columnType: opt_value?.columnType,
+      refKey: opt_value?.refKey,
+      value: opt_value?.defaultValue,
+      text: opt_value?.defaultValue,
+      options: opt_value?.options
+    }  
+    this.setValue(value);
   };
   Blockly.utils.object.inherits(CustomFields.SheetColumnField, Blockly.Field);
+
+  // this is not used anymore as we create fields through JS api
 
   CustomFields.SheetColumnField.fromJson = function(options) {
     /*var value = Blockly.utils.replaceMessageReferences(
@@ -77,5 +87,5 @@ export default (Blockly, update) => {
 
   console.log("Blockly.fieldRegistry done")
 
-  return CustomFields;
+  return CustomFields.SheetColumnField;
 }

@@ -8,6 +8,9 @@ export const getToolbox = (Blockly) => {
   // read out categories
   let categories = {};
   for(let blockObject of blockObjects) {
+    if(!blockObject.toolboxCategory) {
+      blockObject.toolboxCategory = "Default" // default category
+    }
     if(!categories[blockObject.toolboxCategory]) {
       categories[blockObject.toolboxCategory] = []
     }

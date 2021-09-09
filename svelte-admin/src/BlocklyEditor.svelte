@@ -97,10 +97,12 @@
 
     console.log("initBlockly")
 
-    const CustomFields1 = initSheetColumnField(Blockly, updateSheetColumn);
-    const CustomFields2 = initSheetIdField(Blockly, updateSheetId);
-    
-    blocklyConfig.initBlockDefinitions(Blockly); // generates block definitions from yaml component files
+    const customFields = {
+      SheetColumnField: initSheetColumnField(Blockly, updateSheetColumn),
+      SheetIdField: initSheetIdField(Blockly, updateSheetId)    
+    }
+
+    blocklyConfig.initBlockDefinitions(Blockly, customFields); // generates block definitions from yaml component files
     
     console.log("Blocks", Blockly.Blocks)
 
