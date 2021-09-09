@@ -29,8 +29,11 @@
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
   export let markerIconAsset; // path to asset we use for marker icon
 
+  export let markerSelectedIconAsset = "icons-gate/map_marker_selected.svg";
   export let markerCheckedIconAsset = "icons-gate/map_marker_checked.svg";
+  export let markerCheckedSelectedIconAsset = "icons-gate/map_marker_checked_selected.svg";
   export let markerPlayingIconAsset = "icons-gate/map_marker_playing.svg";
+  export let markerPlayingSelectedIconAsset = "icons-gate/map_marker_playing_selected.svg";
 
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
@@ -281,45 +284,59 @@
     });
     labels_layer.addTo(map)
 
-    // load the marker icons
+    // load the marker icon
     if(markerIconAsset) {
       markerIcon = L.icon({
         iconUrl: markerIconAsset,
         iconSize:     [20, 20], // size of the icon
         iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
       });
+    }
+
+    // selected icon
+    if(markerSelectedIconAsset) {
       markerIconSelected = L.icon({
-        iconUrl: markerIconAsset,
+        iconUrl: markerSelectedIconAsset,
         iconSize:     [30, 30], // size of the icon
         iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
-    }
+    } else markerIconSelected = markerIcon
 
+    // checked icon
     if(markerCheckedIconAsset) {
       markerIconChecked = L.icon({
         iconUrl: markerCheckedIconAsset,
         iconSize:     [20, 20], // size of the icon
         iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
       });
+    } else markerIconChecked = markerIcon
+
+    // checked selected icon
+    if(markerCheckedSelectedIconAsset) {
       markerIconCheckedSelected = L.icon({
-        iconUrl: markerCheckedIconAsset,
+        iconUrl: markerCheckedSelectedIconAsset,
         iconSize:     [30, 30], // size of the icon
         iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
-    }
+    } else markerIconCheckedSelected = markerIconChecked
 
+    // playing icon
     if(markerPlayingIconAsset) {
       markerIconPlaying = L.icon({
         iconUrl: markerPlayingIconAsset,
+        iconSize:     [20, 20], // size of the icon
+        iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      });
+    } else markerIconPlaying = markerIcon
+
+    // playing selected icon
+    if(markerPlayingSelectedIconAsset) {
+      markerIconPlaying = L.icon({
+        iconUrl: markerPlayingSelectedIconAsset,
         iconSize:     [30, 30], // size of the icon
         iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
       });
-      /*markerIconPlayingSelected = L.icon({
-        iconUrl: markerCheckedIconAsset,
-        iconSize:     [30, 30], // size of the icon
-        iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
-      });*/
-    }
+    } else markerIconPlayingSelected = markerIconPlaying
 
   
     let sheetKey;
