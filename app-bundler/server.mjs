@@ -13,6 +13,7 @@ import { put_duplicate_project } from './src/put_duplicate_project.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
+import { get_yamls } from './src/get_yamls.mjs'
 
 const PORT = process.env.PORT
 
@@ -53,6 +54,10 @@ app.put('/app/:projectId', put_duplicate_project)
 
 // git status
 app.get('/git/status/:projectId', get_git_status)
+
+// get component configuration yamls
+app.get('/components/:projectSlug', get_yamls)
+
 
 //app.use(express.static('public', { index: false }))
 

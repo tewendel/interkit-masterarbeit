@@ -1,0 +1,7 @@
+blockName: HeadlinePage
+blockTitle: Headline Page
+color: 230
+fields:
+  - type: string # sheetColumn | slot | string | boolean | number
+    name: Text
+    defaultValue: Headline

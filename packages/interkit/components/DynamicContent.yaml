@@ -1,0 +1,12 @@
+blockName: DynamicContent
+blockTitle: Dynamic Content
+# green
+color: 230
+fields:
+  - type: sheetColumn # | slot | string | boolean | number
+    name: keyColumn
+    columnType: string # | optionSelect
+    options:
+      - opt1
+      - opt2
+    defaultValue: settings/contentKey
