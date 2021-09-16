@@ -1,4 +1,5 @@
 <script>
+  import '@google/model-viewer'
 
   import { InterkitClient } from 'interkit'
   export let key;
@@ -26,6 +27,12 @@
   {/key}
 {:else if mediafile?.isImage}
   <img class="preview-image" src={encodeURI(mediafile.link)}/>
+{:else if mediafile?.type.split("/")?.[0] === "model"}
+  {#if mediafile?.type.indexOf("model/gltf") === 0}
+    <model-viewer src={mediafile.link}/>
+  {:else}
+    3d model without preview
+  {/if}
 {:else}
   {#if mediafile}
   no preview for this media type
