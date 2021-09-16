@@ -15,6 +15,25 @@ export const MediaFiles = new FilesCollection({
   collectionName: 'mediafiles',
   allowClientCode: false, // Disallow remove files from Client
   storagePath: `${process.env.MEDIAFILES_PATH}`,
+  responseHeaders(responseCode, fileRef, versionRef, version, http) {
+    const headers = {};
+    switch (responseCode) {
+      case '206':
+        headers['Pragma'] = 'private';
+        headers['Transfer-Encoding'] = 'chunked';
+        break;
+      case '400':
+        headers['Cache-Control'] = 'no-cache';
+        break;
+      case '416':
+        headers['Content-Range'] = 'bytes */' + versionRef.size;
+    }
+    headers['Connection'] = 'keep-alive';
+    headers['Content-Type'] = versionRef.type || 'application/octet-stream';
+    headers['Accept-Ranges'] = 'bytes';
+    headers['Access-Control-Allow-Origin'] = '*';// <-- Custom header
+    return headers;
+  },
   onBeforeUpload(file) {
     // Allow upload files under 10MB, and only in png/jpg/jpeg formats
     if (file.size <= 10485760 && /png|jpg|jpeg|mp3/i.test(file.extension)) {
@@ -25,6 +44,8 @@ export const MediaFiles = new FilesCollection({
 });
 
 MediaFiles.writeSync = Meteor.wrapAsync(MediaFiles.write, MediaFiles.writeSync);
+
+// MediaFiles.collection.attachSchema(new SimpleSchema(Images.schema)); // https://github.com/VeliovGroup/Meteor-Files/wiki/Schema
 
 export const getMediaFiles = ({projectId}) => {
   if(projectId)
@@ -148,7 +169,7 @@ export const setupMediaServer = (app) => {
                 meta: {
                   projectId: req.body.projectId,
                   key: uuidv4(),
-                  duration,
+                  duration
                 }
               };
 
