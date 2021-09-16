@@ -455,6 +455,7 @@ const InterkitClient = {
     return sheet
   },
 
+  // get a local persistant store by key or initialize a new one if it doens't exist
   getGlobalStore: (key) => {
     if(!globalStores[key]) {
       let persistedStoreJSON = localStorage.getItem(key)
@@ -470,7 +471,13 @@ const InterkitClient = {
     return globalStores[key]
   },
 
-  setElementProperty: (store, key, property, value) => {
+  // set property on an item in a global store and persist it
+  setElementProperty: (
+      store,  // a global store from getGlobalStore()
+      key, // an id, typically a row key from database
+      property, // name of the property
+      value // value of the property
+      ) => {
     let storeData = get(store)
     if(!storeData) storeData = {}
     if(!storeData[key]) storeData[key] = {};
@@ -480,10 +487,13 @@ const InterkitClient = {
     localStorage.setItem("elementProperties", JSON.stringify(storeData));
   },
 
+  
   registerGlobalMethod: (key, method) => {
     //console.log("registerGlobalMethod", key)
     globalMethods[key] = method;
   },
+
+
   callGlobalMethod: (key, options) => {    
     if(globalMethods[key]) {
       //console.log("callGlobalMethod", key)
