@@ -63,7 +63,15 @@ docker-compose up -d
 ````
 docker network create frontproxy
 docker-compose -f docker-compose-proxy-local.yml -f docker-compose.yml --env-file docker-compose.env.local.example up
-open admin.localhost
+open http://admin.localhost
+````
+
+### build & deploy locally
+````
+docker network create frontproxy
+INTERKIT_IMAGE_TAG=local docker-compose build
+INTERKIT_IMAGE_TAG=local docker-compose -f docker-compose-proxy-local.yml -f docker-compose.yml --env-file docker-compose.env.local.example up
+open http://admin.localhost
 ````
 
 ### update
