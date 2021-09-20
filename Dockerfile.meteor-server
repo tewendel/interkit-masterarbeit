@@ -5,7 +5,7 @@ FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
 # source: https://github.com/disney/meteor-base/blob/master/example/default.dockerfile
 
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.1 AS meteor-base
+FROM geoffreybooth/meteor-base:2.4 AS meteor-base
 
 ARG BUILD_SOURCE_PATH=./meteor-server
 
