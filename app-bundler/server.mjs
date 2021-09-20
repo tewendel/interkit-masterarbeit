@@ -56,7 +56,7 @@ app.put('/app/:projectId', put_duplicate_project)
 app.get('/git/status/:projectId', get_git_status)
 
 // get component configuration yamls
-app.get('/components/:projectSlug', get_yamls)
+app.get('/components/:projectId', get_yamls)
 
 
 //app.use(express.static('public', { index: false }))

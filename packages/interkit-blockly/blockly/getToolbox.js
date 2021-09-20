@@ -1,9 +1,9 @@
-import { getBlockObjects } from './getBlockObjects.js'
+//import { getBlockObjects } from './getBlockObjects.js'
 
-export const getToolbox = (Blockly) => {
+export const getToolbox = (Blockly, blockObjects) => {
 
   // get block objects
-  const blockObjects = getBlockObjects();
+  // const blockObjects = getBlockObjects();
 
   // read out categories
   let categories = {};
@@ -62,6 +62,8 @@ export const getToolbox = (Blockly) => {
       })
     })
   }
+
+  console.log("toolbox", toolbox)
 
   return toolbox;
 }

@@ -1,6 +1,6 @@
-import { getBlockObjects } from './getBlockObjects.js'
+//import { getBlockObjects } from './getBlockObjects.js'
 
-export const initCodeGenerator = (Blockly) => {
+export const initCodeGenerator = (Blockly, blockObjects) => {
 
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
@@ -38,7 +38,7 @@ export const initCodeGenerator = (Blockly) => {
   /* generate code generators from block definitions */
   console.log("initCodeGenerator");
 
-  const blockObjects = getBlockObjects();    
+  //const blockObjects = getBlockObjects();    
 
   for(let blockObject of blockObjects) {
     Blockly.JavaScript[blockObject.name] = function(block) {

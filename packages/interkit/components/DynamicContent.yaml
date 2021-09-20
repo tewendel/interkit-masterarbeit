@@ -1,12 +1,22 @@
-blockName: DynamicContent
-blockTitle: Dynamic Content
+name: DynamicContent
+title: Dynamic Content
 # green
 color: 230
 fields:
-  - type: sheetColumn # | slot | string | boolean | number
+  - type: sheetColumn # | slot | string | checkbox
     name: keyColumn
-    columnType: string # | optionSelect
-    options:
-      - opt1
-      - opt2
+    columnType: string # | mediaFile | richText | sheetRef | number | location | optionSelect
+    # options: 
+    #   - one
+    #   - two
     defaultValue: settings/contentKey
+  - type: sheetColumn
+    name: contentColumn
+    columnType: richText
+    defaultValue: settings/content
+  - name: contentKey
+    type: string
+  - name: format
+    type: string
+    defaultValue: richText
+toolboxCategory: "Basics"

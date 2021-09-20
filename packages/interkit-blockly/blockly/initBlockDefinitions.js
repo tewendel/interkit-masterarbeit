@@ -1,8 +1,7 @@
-import { getBlockObjects } from './getBlockObjects.js'
+//import { getBlockObjects } from './getBlockObjects.js'
 
-export const initBlockDefinitions = (Blockly, customFields) => {
+export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
 
-  const blockObjects = getBlockObjects();
   const defaultBlockColour = 220;
 
   // iterate over blockObjects and use js Blockly api to define blocks

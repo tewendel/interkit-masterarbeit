@@ -102,16 +102,25 @@
       SheetIdField: initSheetIdField(Blockly, updateSheetId)    
     }
 
-    blocklyConfig.initBlockDefinitions(Blockly, customFields); // generates block definitions from yaml component files
+
+    let blockData = await BundleServer.loadBlockData(projectId);
+    console.log("loaded block info from app bundler", blockData)
+    if(blockData.errors.length) {
+      alert("error loading block data")
+      console.log(blockData)
+    }
+    let blockObjects = blockData.components.map(e => e.json);
+
+    blocklyConfig.initBlockDefinitions(Blockly, blockObjects, customFields); // generates block definitions from yaml component files
     
     console.log("Blocks", Blockly.Blocks)
 
-    blocklyConfig.initCodeGenerator(Blockly); // generates code generator from yaml component files
+    blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
     
     //console.log(blocklyConfig.toolbox)
 
     workspace = Blockly.inject('blocklyDiv', {
-      toolbox: blocklyConfig.getToolbox(), // generates toolbox from yaml component files
+      toolbox: blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
       zoom:
          {controls: true,
           wheel: true,
@@ -122,7 +131,7 @@
           pinch: true},
     });
 
-    console.log(workspace)
+    //console.log(workspace)
 
     workspace.addChangeListener(myUpdateFunction);
 
@@ -146,7 +155,7 @@
   }
 
   const myUpdateFunction = async (event) => {
-    //console.log("myUpdateFunction")
+    console.log("myUpdateFunction")
     let code;
     try {
       code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -174,7 +183,6 @@
     //console.log("blockly open", open)
     if(open && !workspace) {
       initBlockly();      
-      myUpdateFunction();
     }
   }
 

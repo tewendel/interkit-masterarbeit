@@ -1,6 +1,10 @@
 import * as path from 'path';
 import { promises as fs } from 'fs';
-import { parse } from 'yaml'
+
+import pkg from 'yaml';
+const { parse } = pkg;
+//import { parse } from 'yaml'
+
 import { resolveProjectPath } from './utils.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
@@ -8,7 +12,8 @@ const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 const get_yamls =  async (req, res) => {
 
   const projectSlug = req.params.projectSlug;
-  const projectId = resolveProjectPath(projectSlug, res);
+  const projectId = req.params.projectId;
+  //const projectId = resolveProjectPath(projectSlug, res);
   
   if(projectId) {
     //console.log("get_yamls")

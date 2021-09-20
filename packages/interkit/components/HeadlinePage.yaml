@@ -1,7 +1,8 @@
-blockName: HeadlinePage
-blockTitle: Headline Page
+name: HeadlinePage
+title: Headline Page
 color: 230
 fields:
-  - type: string # sheetColumn | slot | string | boolean | number
-    name: Text
+  - type: string # sheetColumn | slot | string | checkbox
+    name: headline
     defaultValue: Headline
+toolboxCategory: "Basics"

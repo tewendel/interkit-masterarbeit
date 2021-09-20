@@ -69,6 +69,11 @@ const gitStatus = async (projectId) => {
   return resJSON
 }
 
+const loadBlockData = async (projectId) => {
+  const res = await fetch(bundleServerURL + "/components/" + projectId)
+  const resJSON = await res.json()
+  return resJSON 
+}
 
 export const BundleServer = {
   connect,
@@ -78,5 +83,6 @@ export const BundleServer = {
   reloadPreview,
   duplicateProject,
   gitStatus,
+  loadBlockData
 }
 
