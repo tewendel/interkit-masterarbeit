@@ -1,8 +1,7 @@
 import * as path from 'path';
 import { promises as fs } from 'fs';
 
-import pkg from 'yaml';
-const { parse } = pkg;
+import pkg from 'yaml'; const { parse } = pkg; // there are environemnts in which the direct import does not work
 //import { parse } from 'yaml'
 
 import { resolveProjectPath } from './utils.mjs'

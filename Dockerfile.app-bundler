@@ -2,7 +2,7 @@ ARG INTERKIT_BASE_TAG=latest
 FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
 FROM node:15
 
-ARG BUILD_SOURCE_PATH=./app-bundler
+
 ARG BUILD_REPOSITORIES_PATH=./repositories
 
 WORKDIR /app
@@ -11,14 +11,14 @@ WORKDIR /app
 COPY --from=interkit-packages /packages /packages
 
 # install dependencies
-COPY ${BUILD_SOURCE_PATH}/package*json ./
+COPY ./app-bundler/package*json ./
 #RUN npm i @node-rs/bcrypt-linux-musl
 #RUN apt-get update && apt-get install musl
 RUN npm ci
-RUN npx node-prune --yes
+#RUN npx node-prune --yes
 
 # copy app files
-COPY ${BUILD_SOURCE_PATH} ./
+COPY ./app-bundler ./
 
 # copy shared files AGAIN for starters
 COPY --from=interkit-packages /packages /var/packages
