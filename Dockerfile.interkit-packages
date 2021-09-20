@@ -1,4 +1,4 @@
-FROM node:15-alpine AS interkit-packages
+FROM node:16-alpine AS interkit-packages
 
 # copy shared files and install dependencies
 COPY /packages /packages

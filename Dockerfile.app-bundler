@@ -1,6 +1,6 @@
 ARG INTERKIT_BASE_TAG=latest
 FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
-FROM node:15
+FROM node:16
 
 
 ARG BUILD_REPOSITORIES_PATH=./repositories

@@ -13,7 +13,7 @@
     "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\""
   },
   "engines": {
-    "node": "15",
+    "node": "16",
     "npm": "7"
   },
   "dependencies": {
