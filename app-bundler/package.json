@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "archiver": "^5.3.0",
-    "carbon-components-svelte": "^0.29.1",
+    "carbon-components-svelte": "^0.44.2",
     "clone-deep": "^4.0.1",
     "cloudcmd": "^15.9.1",
     "copy": "^0.3.2",
