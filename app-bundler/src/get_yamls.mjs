@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { promises as fs } from 'fs';
+import { existsSync } from 'fs'
 
 import pkg from 'yaml'; const { parse } = pkg; // there are environemnts in which the direct import does not work
 //import { parse } from 'yaml'
@@ -17,21 +18,40 @@ const get_yamls =  async (req, res) => {
   if(projectId) {
     //console.log("get_yamls")
     const projectNodeModulesComponentsPath = path.join(REPOSITORIES_PATH, "projects", projectId, "node_modules", "interkit", "components")
-    // TODO include customized components from project
+    const projectComponentsPath = path.join(REPOSITORIES_PATH, "projects", projectId, "src", "components")
     console.log(projectNodeModulesComponentsPath);
 
     // make a list of files and paths
 
     const yamlFiles = []
     try {
-      const files = await fs.readdir(projectNodeModulesComponentsPath);
-      for (const file of files)
+
+      // interkit components
+      const interkitFiles = await fs.readdir(projectNodeModulesComponentsPath);
+      for (const file of interkitFiles) {
         if (file.substr(-5) === ".yaml" || file.substr(-4) === ".yml") {
           yamlFiles.push({
             name: file,
             path: projectNodeModulesComponentsPath + "/" + file,
+            origin: "interkit",
           })
         }
+      }
+
+      // project components
+      if (existsSync(projectComponentsPath)) {
+        const projectFiles = await fs.readdir(projectComponentsPath);
+        for (const file of projectFiles) {
+          if (file.substr(-5) === ".yaml" || file.substr(-4) === ".yml") {
+            yamlFiles.push({
+              name: file,
+              path: projectComponentsPath + "/" + file,
+              origin: "project",
+            })
+          }
+        }
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -60,7 +80,7 @@ const get_yamls =  async (req, res) => {
         resultObj.errors.push({
           file: file.name,
           name: "file read error",
-          errorMessage: `file read error at ${file.name}: ` + JSON.stringify(err)
+          errorMessage: `file read error at ${file.name}: ` + JSON.stringify(err),
         })
       }
 
@@ -71,6 +91,7 @@ const get_yamls =  async (req, res) => {
           const json = parse(yaml)
           resultObj.components.push({
             file: file.name,
+            origin: file.origin,
             json,
             yaml
           })
