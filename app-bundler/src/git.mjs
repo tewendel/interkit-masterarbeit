@@ -37,15 +37,20 @@ async function gitCommit(projectPath, message = "some commit") {
 }
 
 async function gitLatestCommit(projectPath, branch = "master") {
-  let commits = await git.log({
-    fs,
-    dir: projectPath,
-    depth: 1,
-  })
+  let commits = []
+  try {
+    commits = await git.log({
+      fs,
+      dir: projectPath,
+      depth: 1,
+    })
+  } catch (error) {
+    console.warn(error)
+  }
   const commit = commits[0]
   return {
-    sha: commit.oid.substr(0,7),
-    message: commit.commit.message
+    sha: commit ? commit.oid.substr(0,7) : "0",
+    message: commit ? commit.commit.message : "(error)"
   }
 }
 
