@@ -25,6 +25,11 @@
     <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
   </audio-->
   {/key}
+{:else if mediafile?.isVideo}
+  {#key mediafile}
+  <a href="{mediafile.link}" target="_blank">play</a> 
+    {#if !mediaManager}[change]{/if}
+  {/key}
 {:else if mediafile?.isImage}
   <img class="preview-image" src={encodeURI(mediafile.link)}/>
 {:else if mediafile?.type.split("/")?.[0] === "model"}
