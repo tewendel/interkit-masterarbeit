@@ -27,13 +27,16 @@
   const { Geolocation, Permissions } = Plugins;
 
   export let markerPositions; // type sheetColumn: "sheetId/columnId"
-  export let markerIconAsset; // path to asset we use for marker icon
+  export let markerIconAsset = "icons/Location.svg"; // path to default asset we use for marker icon
 
   export let markerSelectedIconAsset = "icons-gate/map_marker_selected.svg";
   export let markerCheckedIconAsset = "icons-gate/map_marker_checked.svg";
   export let markerCheckedSelectedIconAsset = "icons-gate/map_marker_checked_selected.svg";
   export let markerPlayingIconAsset = "icons-gate/map_marker_playing.svg";
   export let markerPlayingSelectedIconAsset = "icons-gate/map_marker_playing_selected.svg";
+
+  export let customIconColumn; // a custom mediafile as icon for each element
+  export let markerLabelColumn; // a short custom string for the marker (eg "01")
 
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
@@ -56,10 +59,10 @@
     }
   }
   
-  let filterLists = [];
+  let filterLists = []; // array containing filterlists registered via slot
   let activeFilter;
 
-  let layers = [];
+  let layers = []; // array containing layers that were registered via slot
   let activeLayer;
   let imageOverlay;
   
@@ -138,8 +141,6 @@
     }
   });
 
-  //console.log(markerPositions, markerLabels)
-
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
     //await playAudio(e.target?.payload?.elementRow)
@@ -161,7 +162,28 @@
     markers = [];
   }
 
-  const updateMarkers = () => {
+  // assembles html to pass to leaflet for a custom marker div
+  const createIconDiv = async (markerValue) => {
+
+    let label = util.rowVal(markerValue.elementRow, markerLabelColumn);
+    
+    let mediafileRef = util.rowVal(markerValue.elementRow, customIconColumn);
+    let mediafile = await InterkitClient.getMediaFile(mediafileRef.value); // this should probably be cashed locally on the client
+    let iconSrc = mediafile?.link || markerIconAsset;
+    
+    let html = `
+    <div class="marker-container">
+      <span>${label}</span> <img src="${iconSrc}"/>
+    </div>
+    `;
+    
+    return L.divIcon({
+      html,
+      className: 'map-marker'
+    });
+  }
+
+  const updateMarkers = async () => {
 
     //console.log("activeFilter", activeFilter, markerRows);
 
@@ -208,15 +230,16 @@
           if(markerValue?.elementRow?.key == $audioPlayerElement?.key) {
             markerOptions.icon = markerIconPlaying;  
           }
+
+          let icon = await createIconDiv(markerValue);
+          let marker = L.marker(markerValue.location, {icon}).addTo(map)
           
-          let marker = L.marker(markerValue.location, markerOptions).addTo(map)
           marker.payload = markerValue;
           marker.on('click', markerClick);
           markers.push(marker);  
         }
       }
       // this probably needs to be much more efficient
-
     }
   }
 
@@ -234,28 +257,21 @@
 
     L.Icon.Default.imagePath = '/leaflet/'
 
-    //console.log("defaultLocationLatLng", defaultLocationLatLng)
-
     map = L.map('mapid', {
       zoomControl: false,
       attributionControl: false,
-      //preferCanvas: true,
-      //renderer: L.canvas()
     }).setView(defaultLocationLatLng, 14);  
 
-    // these tiles fail to load on ios - not sure why
-    /*L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+    // default interkit map style
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
       maxZoom: 20,
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-    }).addTo(map);*/
+    }).addTo(map);
 
     map.on("click", mapClick);
 
-    L.control.zoom({
-      position: 'bottomright'
-    }).addTo(map);
-
-    let esriAttr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    // satellite and label layers from THE GATE Project
+    /*let esriAttr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     let esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
 
     // Instantiate our L.TileLayer.GL...
@@ -266,7 +282,7 @@
       fragmentShader: desaturateShader,
       tileUrls: [esriUrl],
       //attribution: esriAttr
-    }).addTo(map);
+    }).addTo(map);*/
 
     /*let cartodbAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     let labelUrl = 'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'
@@ -275,14 +291,18 @@
       //attribution: cartodbAttr
     }).addTo(map)*/
 
-    labels_layer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.{ext}', {
-      /*attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',*/
+    /*labels_layer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.{ext}', {
+      //attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a //href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; 
+      //<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       subdomains: 'abcd',
       minZoom: 0,
       maxZoom: 20,
       ext: 'png'
     });
     labels_layer.addTo(map)
+    */
+
+    /* set up marker icons */
 
     // load the marker icon
     if(markerIconAsset) {
@@ -338,7 +358,9 @@
       });
     } else markerIconPlayingSelected = markerIconPlaying
 
-  
+    
+    /* watch data changes for marker updates */
+
     let sheetKey;
     if(markerPositions) {
       sheetKey = util.getSheetKey(markerPositions)
@@ -353,10 +375,11 @@
       })
     }
 
+    /* watch user position */
+
     //const coordinates = await Geolocation.getCurrentPosition();
     //console.log('Current Position', coordinates);
     let lastErrorCode;
-
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {
@@ -410,6 +433,8 @@
     hideMarkers = false;
     updateMarkers();
 
+    /*
+    // recoloring of satellite layer from THE GATE project
     let colorRGBArray;
     if(filter) {
       let colorRGB = util.rowVal(filter.row, filter.categoryColorColumn);
@@ -419,8 +444,10 @@
         console.info("error parsing colorRGBArray")
       }
     }
+    */
     
     // update colorization 
+    /*
     if(filter && colorRGBArray) {
       satLayer.setUniform("uRGB", colorRGBArray);
       satLayer.reRender();
@@ -428,6 +455,7 @@
       satLayer.setUniform("uRGB", defaultBaseColor);
       satLayer.reRender();
     }
+    */
 
     // check for connected layer
     if(filter) {
@@ -604,70 +632,71 @@
     </div>
   {/if}
 
-  
-  <div class="Map__LayerControls layer_controls">
+  {#if layers.length || filterLists.length}
+    <div class="Map__LayerControls layer_controls">
 
-    <div class="Map__LayerControls__Info layer_info">
-      <span class="Map__LayerControls__Text">
-        Filters & Layers 
-      </span>
-      <span class="Map__LayerControls__FiltersActive" data-number={activeFilter ? "1" : "0"}>
-        (1 filter active) 
-      </span>
-      <span class="Map__LayerControls__LayersActive" data-number={activeLayer ? "1" : "0"}>
-        (1 layer active) 
-      </span>
-      <span class="Map__LayerControls__TextAfter">
-      </span>
-    </div>
+      <div class="Map__LayerControls__Info layer_info">
+        <span class="Map__LayerControls__Text">
+          Filters & Layers 
+        </span>
+        <span class="Map__LayerControls__FiltersActive" data-number={activeFilter ? "1" : "0"}>
+          (1 filter active) 
+        </span>
+        <span class="Map__LayerControls__LayersActive" data-number={activeLayer ? "1" : "0"}>
+          (1 layer active) 
+        </span>
+        <span class="Map__LayerControls__TextAfter">
+        </span>
+      </div>
 
-    <div class="Map__LayerControls__Expanded layer_controls_expanded" class:expanded="{mapLayerControlsExpanded}">
+      <div class="Map__LayerControls__Expanded layer_controls_expanded" class:expanded="{mapLayerControlsExpanded}">
 
-      <MapFilterControls
-        on:click={() => controlsFocus="filters"}
-        isFocused={controlsFocus=="filters"}
-        onClose={closeControls}
-        {filterLists}
-        {setFilter}
-        {activeFilter}      
-      />
+        <MapFilterControls
+          on:click={() => controlsFocus="filters"}
+          isFocused={controlsFocus=="filters"}
+          onClose={closeControls}
+          {filterLists}
+          {setFilter}
+          {activeFilter}      
+        />
 
-      <MapLayerControls
-        on:click={() => controlsFocus="layers"}
-        isFocused={controlsFocus=="layers"}
-        onClose={closeControls}
-        {layers}
-        {setLayer}
+        <MapLayerControls
+          on:click={() => controlsFocus="layers"}
+          isFocused={controlsFocus=="layers"}
+          onClose={closeControls}
+          {layers}
+          {setLayer}
+          {activeLayer}
+          elementRows={$elementRows}
+          {mainLayerLabel}
+        />
+
+      </div>
+
+      <div class="Map__LayerControls__PanelControls panel_controls" data-state={mapLayerControlsExpanded ? "opened" : "closed"}>
+        <Button on:click={()=>mapLayerControlsExpanded = !mapLayerControlsExpanded}>
+          {#if !mapLayerControlsExpanded}
+            <span class="Map__LayerControls__PanelControls__Open">
+              Open
+            </span>
+          {:else}
+            <span class="Map__LayerControls__PanelControls__Close">
+               Close
+             </span>
+          {/if}
+        </Button>
+      </div>
+
+      <MapActiveOverlayButtons
+        {activeFilter}
         {activeLayer}
+        {setFilter}
+        {setLayer}
         elementRows={$elementRows}
-        {mainLayerLabel}
       />
 
     </div>
-
-    <div class="Map__LayerControls__PanelControls panel_controls" data-state={mapLayerControlsExpanded ? "opened" : "closed"}>
-      <Button on:click={()=>mapLayerControlsExpanded = !mapLayerControlsExpanded}>
-        {#if !mapLayerControlsExpanded}
-          <span class="Map__LayerControls__PanelControls__Open">
-            Open
-          </span>
-        {:else}
-          <span class="Map__LayerControls__PanelControls__Close">
-             Close
-           </span>
-        {/if}
-      </Button>
-    </div>
-
-    <MapActiveOverlayButtons
-      {activeFilter}
-      {activeLayer}
-      {setFilter}
-      {setLayer}
-      elementRows={$elementRows}
-    />
-
-  </div>
+  {/if}
 
   {#if !mapLayerControlsExpanded}
     <div class="Map__Controls controls">
@@ -714,6 +743,16 @@
 
   #locateButton:hover {
     cursor: pointer;
+  }
+
+  :global(div.marker-container) {
+    background-color: #fff;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    border-radius: 12px;
+    min-width: 40px;
   }
 
   .marker_popup {
