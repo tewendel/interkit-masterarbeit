@@ -106,7 +106,7 @@
     let blockData = await BundleServer.loadBlockData(projectId);
     console.log("loaded block info from app bundler", blockData)
     if(blockData.errors.length) {
-      alert("error loading block data")
+      alert("error loading block data" + blockData.errors.reduce( (result, entry)=> result + "\n\n" + entry.errorMessage, ""))
       console.log(blockData)
     }
     let blockObjects = blockData.components.map(e => e.json);
