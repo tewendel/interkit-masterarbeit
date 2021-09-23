@@ -104,9 +104,8 @@ docker-build-admin:
 deploy-demo:
   <<: *deploy
   rules:
-    - if: $INTERKIT_ENV_FILE
-    - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
-    - when: manual
+    - if: $INTERKIT_ENV_FILE && '$CI_PIPELINE_SOURCE != "merge_request_event"'
+      when: manual
   environment:
     name: $CI_COMMIT_BRANCH
     url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
