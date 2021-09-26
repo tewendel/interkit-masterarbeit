@@ -85,6 +85,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bundler-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
+      - "traefik.http.middlewares.bundler-${INTERKIT_IMAGE_TAG}.headers.accesscontrolalloworigin=*"
     networks:
       - frontproxy
       - default
