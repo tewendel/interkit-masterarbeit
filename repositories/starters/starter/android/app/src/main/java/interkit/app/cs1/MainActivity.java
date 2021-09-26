@@ -1,4 +1,4 @@
-package interkit.app.cs1;
+package interkit.app.starter;
 
 import android.os.Bundle;
 

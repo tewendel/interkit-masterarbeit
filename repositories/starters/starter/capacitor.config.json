@@ -1,5 +1,5 @@
 {
-  "appId": "interkit.app.cs1",
+  "appId": "interkit.app.starter",
   "appName": "interkit-starter",
   "webDir": "public",
   "bundledWebRuntime": false
