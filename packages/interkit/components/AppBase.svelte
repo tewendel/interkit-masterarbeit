@@ -33,6 +33,7 @@
 <div class="AppBase Theming" id="Theming">
   {#if $projectId && initComplete}
     <slot ></slot>
+    <slot name="viewport"></slot>
   {:else}
     <div class="Loading">
       <p class="static-loading-indicator">laden....</p>

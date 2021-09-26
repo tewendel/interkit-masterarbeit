@@ -1,0 +1,7 @@
+name: AppBase
+title: App Base
+colour: 130
+fields:
+  - type: slot
+    name: viewport
+toolboxCategory: Basics

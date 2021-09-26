@@ -122,13 +122,15 @@
     workspace = Blockly.inject('blocklyDiv', {
       toolbox: blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
       zoom:
-         {controls: true,
+        {
+          controls: true,
           wheel: true,
           startScale: 1.0,
           maxScale: 3,
           minScale: 0.3,
           scaleSpeed: 1.2,
-          pinch: true},
+          pinch: true
+        },
     });
 
     //console.log(workspace)
@@ -168,14 +170,15 @@
     let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.indexOf(e) === i)
 
     let imports = "<script>\n";
-    imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
+    //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
+    imports += `import initActions from "./actions.js"; \ninitActions(); \n`
     for(let type of allBlocksUnique) {
       imports += `import ${type} from "interkit/components/${type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
-    let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";
-    generatedCode = imports + codeWithAppBase;
+    // let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";
+    generatedCode = imports + code;
     
   }
 
