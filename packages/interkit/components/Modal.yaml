@@ -1,0 +1,13 @@
+name: Modal
+title: Modal
+# green
+color: 230
+fields:
+  - type: string # | slot | string | checkbox
+    name: dismissActionName
+    defaultValue: modalDismiss
+  - type: sheetColumn
+    name: contentColumn
+    columnType: richText
+    defaultValue: modals/content
+toolboxCategory: "Draft"

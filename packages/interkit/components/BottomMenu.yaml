@@ -1,0 +1,11 @@
+name: BottomMenu
+title: Bottom Menu
+colour: 280
+fields:
+  - type: "slot"
+    name: "pages"
+  - type: "slot"
+    name: "media_player"
+  - type: "slot"
+    name: "buttons"
+toolboxCategory: BottomMenu

@@ -1,6 +1,6 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
-export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
+export const initBlockDefinitions = (Blockly, blockObjects, customFields, metadata={}) => {
 
   const defaultBlockColour = 220;
 
@@ -54,7 +54,8 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
 
         // color
         this.setColour(blockObject.colour ? blockObject.colour : defaultBlockColour);
-      }
+      },
+      data: JSON.stringify(metadata) // can be used to add metadata like whether the component is imported from project or from interkit {location: "interkit"}, {location: "."}
     }
   }
 

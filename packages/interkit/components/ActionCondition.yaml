@@ -1,0 +1,7 @@
+name: ActionCondition
+title: Action > Condition
+colour: 100
+fields:
+  - type: string
+    name: uiKey
+toolboxCategory: Draft
