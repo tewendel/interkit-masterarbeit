@@ -6,4 +6,4 @@ fields:
     name: triggers
   - type: slot
     name: effects
-toolboxCategory: Actions
+toolboxCategory: Draft
