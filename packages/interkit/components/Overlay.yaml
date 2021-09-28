@@ -6,4 +6,4 @@ fields:
     name: default
   - type: number
     name: zIndex
-toolboxCategory: Overlays
+toolboxCategory: Layout

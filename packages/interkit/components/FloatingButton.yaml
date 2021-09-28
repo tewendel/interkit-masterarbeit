@@ -10,4 +10,4 @@ fields:
     name: x_pos
   - type: string
     name: y_pos
-toolboxCategory: Overlays
+toolboxCategory: Draft
