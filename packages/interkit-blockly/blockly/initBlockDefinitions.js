@@ -25,6 +25,14 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields, metada
             this.appendDummyInput()
             .appendField(field.name)
             .appendField(new Blockly.FieldCheckbox(field.defaultValue), field.name);
+          
+          } else if (field.type == "options") {
+
+            const options = field.options.map(o => [o, o])
+
+            this.appendDummyInput()
+              .appendField(field.name)
+              .appendField(new Blockly.FieldDropdown(options), field.name);
 
           } else if(field.type == "slot") {
 
