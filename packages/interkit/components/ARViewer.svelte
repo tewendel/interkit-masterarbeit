@@ -2,6 +2,8 @@
 
   import { InterkitClient, util } from '../'
   import { onMount } from 'svelte';
+
+  import MediaFileResolver from './MediaFileResolver.svelte'
   import MarkdownContent from './MarkdownContent.svelte'
 
   export let keyColumn; // key column, a unique identifier
@@ -16,6 +18,7 @@
   console.log(sheetKey)
   let row = null
   let values = null
+  let origin = null
 
   // subscribe to the rows in that sheet
   let rowStore;
@@ -24,19 +27,22 @@
     console.log(rowStore)
   })
 
-/*
-  const addSpecialElements = (c) => {
-    let result = c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
-    result = result?.replace("[version]", JSON.stringify(get(InterkitClient.config)?.bundle_version))
-    return result
-  }
-*/
+  let androidHref
+  let iosHref
 
   $: {
     if ($rowStore) {
       row = $rowStore.find(r => util.rowVal(r, keyColumn) === contentKey);
-      values = row.values || null
+      values = row.values || {}
       console.log(values)
+    }
+
+    if (values && values.glbFile) {
+      androidHref = `intent://arvr.google.com/scene-viewer/1.0?file=${values.glbFile}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`
+    }
+
+    if (values && values.usdzFile) {
+      iosHref = values.usdzFile
     }
   }
 
@@ -53,6 +59,11 @@
       </li>
       <li>
         USDZ: {JSON.stringify(values.usdzFile)}
+        <MediaFileResolver let:url mediafileRef={values.usdzFile} >
+          <a rel="ar external" title={values.title} href={url} >
+            iOS
+          </a>
+        </MediaFileResolver>
       </li>
     </ul>
   {/if}
