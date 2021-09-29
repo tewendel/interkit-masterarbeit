@@ -6,23 +6,23 @@ fields:
   - type: sheetColumn
     name: keyColumn
     columnType: string
-    defaultValue: 3dObjects/key
+    defaultValue: elements/key
   - type: sheetColumn
     name: titleColumn
     columnType: string
-    defaultValue: 3dObjects/title
+    defaultValue: elements/title
   - type: sheetColumn
     name: glbColumn
     columnType: mediaFile
-    defaultValue: 3dObjects/glbFile
+    defaultValue: elements/glbFile
   - type: sheetColumn
     name: usdzColumn
     columnType: mediaFile
-    defaultValue: 3dObjects/usdzFile
+    defaultValue: elements/usdzFile
   - type: sheetColumn
     name: descriptionColumn
     columnType: richText
-    defaultValue: 3dObjects/description
+    defaultValue: elements/description
   - type: string
     name: contentKey
 toolboxCategory: "MediaPlayer"
