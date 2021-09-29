@@ -5,6 +5,7 @@
 
   import MediaFileResolver from './MediaFileResolver.svelte'
   import MarkdownContent from './MarkdownContent.svelte'
+  import Button from './Button.svelte'
 
   export let titleColumn; // title column
   export let glbColumn; // glb (android) column
@@ -26,22 +27,25 @@
 
 <div class="ARViewer container">
   {#if element}
-    <h2>contentKey</h2>
-    <h2>{element.title}</h2>
     <ul>
       <li>
-        GLB: {JSON.stringify(element.glbFileRef)}
+        AR VIEW
+      </li>
+      <li>
         <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
           <a rel="external" title={element.title} href={`intent://arvr.google.com/scene-viewer/1.0?file=${url}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`} >
-            start android
+            <Button inverse>
+              start android
+            </Button>
           </a>
         </MediaFileResolver>
       </li>
       <li>
-        USDZ: {JSON.stringify(element.usdzFileRef)}
         <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
           <a rel="ar external" title={element.title} href={url} >
-            start iOS
+            <Button inverse>
+              start iOS
+            </Button>
           </a>
         </MediaFileResolver>
       </li>
@@ -57,6 +61,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(255,255,255,0.8);
+  }
+
+  ul {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    font-size: 12vw;
   }
 
 </style>
