@@ -6,7 +6,10 @@ import jsQR from "jsqr";
 let video;
 let mediaStream;
 
-export let onScan;
+import { executeTrigger } from '../actions'
+const onScan = (payload) => {
+  executeTrigger("QRCodeScanned", payload);
+}
 
 const init = ()=> {
 
