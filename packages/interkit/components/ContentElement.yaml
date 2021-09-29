@@ -1,0 +1,31 @@
+name: ContentElement
+fields: 
+  - name: supertextColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: elements/supertext
+  - name: titleColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: elements/title
+  - name: shortDescriptionColumn
+    type: sheetColumn
+    columnType: richText
+    defaultValue: elements/shortDescription
+  - name: descriptionColumn
+    type: sheetColumn
+    columnType: richText
+    defaultValue: elements/description
+  - name: imageColumn
+    type: sheetColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - name: locationColumn
+    type: sheetColumn
+    columnType: location
+    defaultValue: elements/position
+  - name: buttons
+    type: slot
+hiddenProps:
+  - element
+toolboxCategory: Elements

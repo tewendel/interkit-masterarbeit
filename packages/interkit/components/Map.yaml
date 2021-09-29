@@ -25,6 +25,8 @@ fields:
     name: "permissionNotification"
   - type: "slot"
     name: "element"
+    slotProps:
+      - "element"
   - type: "slot"  
     name: "filters"
   - type: "slot"  
