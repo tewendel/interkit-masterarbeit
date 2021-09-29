@@ -33,7 +33,7 @@
   $: {
     if ($rowStore) {
       row = $rowStore.find(r => util.rowVal(r, keyColumn) === contentKey);
-      values = row.values || {}
+      values = row ? row.values : {}
       console.log(values)
     }
 
@@ -56,12 +56,17 @@
     <ul>
       <li>
         GLB: {JSON.stringify(values.glbFile)}
+        <MediaFileResolver let:url mediafileRef={values.glbFile} >
+          <a rel="external" title={values.title} href={`intent://arvr.google.com/scene-viewer/1.0?file=${url}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`} >
+            start android
+          </a>
+        </MediaFileResolver>
       </li>
       <li>
         USDZ: {JSON.stringify(values.usdzFile)}
         <MediaFileResolver let:url mediafileRef={values.usdzFile} >
           <a rel="ar external" title={values.title} href={url} >
-            iOS
+            start iOS
           </a>
         </MediaFileResolver>
       </li>
