@@ -1,4 +1,10 @@
 name: QRScanner
 colour: 100
-fields: []
+fields: 
+  - type: sheetColumn
+    name: elementKeyColumn
+    columnType: string
+    defaultValue: elements/qrKey
+  - type: string
+    name: targetKey
 toolboxCategory: QR Scanner

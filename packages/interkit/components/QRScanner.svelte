@@ -1,14 +1,44 @@
 <script>
 
+import { InterkitClient, util } from '../'
+
 import {onMount, onDestroy } from 'svelte';
 import jsQR from "jsqr";
+import { executeTrigger } from '../actions'
 
 let video;
 let mediaStream;
 
-import { executeTrigger } from '../actions'
-const onScan = (payload) => {
+export let elementKeyColumn; // the column on a sheet to select an element (optional)
+export let targetKey; // a key that we use as target element (optional)
+
+let dataRows; 
+
+const onScan = (code) => {
+  console.log("found code", code)
+
+  // try to find element by that key
+  let elementRows = $dataRows.filter(r => util.rowVal(r, elementKeyColumn) == code)
+  console.log(elementRows)
+
+  let elementRow = elementRows?.[0]
+  console.log(elementRow)
+
+  let payload = {
+    code,
+    elementRow,
+    targetFound: elementRow ? (util.rowVal(elementRow, elementKeyColumn) == targetKey) : false
+  }
+
   executeTrigger("QRCodeScanned", payload);
+}
+
+const initRowSub = async ()=> {
+  console.log("elementKeyColumn", elementKeyColumn)
+  let dataSheetKey = util.getSheetKey(elementKeyColumn);
+  console.log("dataSheetKey", dataSheetKey)
+  dataRows = await InterkitClient.getRowSubStore(dataSheetKey);
+  console.log($dataRows)
 }
 
 const init = ()=> {
@@ -31,6 +61,10 @@ const init = ()=> {
     }
 
     // WARNING: this currently does not work in capacitor on ios (need https!)
+
+    if(!navigator?.mediaDevices) {
+      alert("cannot access navigator.mediaDevices - https connection?")
+    }
     
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
@@ -74,7 +108,10 @@ const init = ()=> {
 
 }
 
-onMount(init);
+onMount(async () => {
+  init()
+  await initRowSub();
+});
 
 onDestroy(()=>{
   console.log("stopping video stream", mediaStream);
