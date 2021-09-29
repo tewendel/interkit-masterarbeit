@@ -1,0 +1,7 @@
+name: BlocklySubTree
+fields:
+  - name: key
+    type: string
+  - name: blocks 
+    type: slot
+toolboxCategory: Blockly

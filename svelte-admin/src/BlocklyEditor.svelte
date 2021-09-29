@@ -115,8 +115,6 @@
     
     console.log("Blocks", Blockly.Blocks)
 
-    blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
-    
     //console.log(blocklyConfig.toolbox)
 
     workspace = Blockly.inject('blocklyDiv', {
@@ -147,6 +145,9 @@
         alert("error importing blockly xml")
       }
     }
+
+    blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
+    
   }
 
   const createDatabase = () => {
@@ -157,7 +158,7 @@
   }
 
   const myUpdateFunction = async (event) => {
-    console.log("myUpdateFunction")
+    //console.log("myUpdateFunction")
     let code;
     try {
       code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -173,7 +174,8 @@
     //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     imports += `import initActions from "./actions.js"; \ninitActions(); \n`
     for(let type of allBlocksUnique) {
-      imports += `import ${type} from "interkit/components/${type}.svelte";\n`
+      if(type != "BlocklySubTree" && type != "SubtreeReference")
+        imports += `import ${type} from "interkit/components/${type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 

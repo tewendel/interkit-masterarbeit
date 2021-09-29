@@ -1,7 +1,6 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
 export const initCodeGenerator = (Blockly, blockObjects) => {
-
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
@@ -35,6 +34,22 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
     return `${statements_name}`  
   }
 
+  const getSubtreeStatements = (subtreeKey) => {
+    //console.log("looking for subtree", subtreeKey)
+    const subtrees = Blockly.mainWorkspace.getBlocksByType("BlocklySubTree")
+    //console.log(subtrees)
+    for(let subtree of subtrees) {
+      //console.log(subtree.getFieldValue("key"))
+      if(subtree.getFieldValue("key") == subtreeKey) {        
+         let code = Blockly.JavaScript.statementToCode(subtree, "blocks")
+         //console.log("found with code", code)
+         return code;
+      }
+    }
+    return "";  
+  }
+
+  
   /* generate code generators from block definitions */
   console.log("initCodeGenerator");
 
@@ -42,6 +57,17 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
 
   for(let blockObject of blockObjects) {
     Blockly.JavaScript[blockObject.name] = function(block) {
+
+      // special blockly control blocks
+
+      if(blockObject.name == "SubtreeReference") {
+        //console.log("found SubtreeReference")
+        return getSubtreeStatements(block.getFieldValue("key"))        
+      }
+
+      if(blockObject.name == "BlocklySubTree") {
+        return ""
+      }
       
       // opening tag
       let code = `<${blockObject.name}\n`;

@@ -1,0 +1,9 @@
+name: TopNavBarCustom
+fields:
+  - type: slot
+    name: left
+  - type: slot
+    name: right
+  - type: slot
+    name: content
+toolboxCategory: TopBar
