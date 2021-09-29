@@ -1,0 +1,11 @@
+name: ElementShowIf
+title: Element Show If
+color: 50
+fields:
+  - type: string
+    name: property  
+  - type: slot
+    name: iftrue
+  - type: slot
+    name: else
+toolboxCategory: "Conditionals"

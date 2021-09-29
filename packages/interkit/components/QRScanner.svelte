@@ -15,6 +15,7 @@ export let targetKey; // a key that we use as target element (optional)
 let dataRows; 
 
 const onScan = (code) => {
+  if(!code || code == "") return
   console.log("found code", code)
 
   // try to find element by that key

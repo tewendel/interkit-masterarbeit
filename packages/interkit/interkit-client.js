@@ -373,6 +373,22 @@ const getUiKeyStore = uiKey => {
   return globalStores[key]
 }
 
+const getGlobalStore = (key) => {
+  if(!globalStores[key]) {
+    let persistedStoreJSON = localStorage.getItem(key)
+    let persistedStore;
+    try {
+      persistedStore = JSON.parse(persistedStoreJSON)
+    } catch (e) {
+      console.log(e)
+    }
+    console.log("localStorage store", key, persistedStore)
+    globalStores[key] = writable(persistedStore);   
+  }
+  return globalStores[key]
+}
+
+
 const InterkitClient = {
   userId,
   config,
@@ -464,20 +480,7 @@ const InterkitClient = {
   },
 
   // get a local persistant store by key or initialize a new one if it doens't exist
-  getGlobalStore: (key) => {
-    if(!globalStores[key]) {
-      let persistedStoreJSON = localStorage.getItem(key)
-      let persistedStore;
-      try {
-        persistedStore = JSON.parse(persistedStoreJSON)
-      } catch (e) {
-        console.log(e)
-      }
-      console.log("localStorage store", key, persistedStore)
-      globalStores[key] = writable(persistedStore);   
-    }
-    return globalStores[key]
-  },
+  getGlobalStore,
 
   // set property on an item in a global store and persist it
   setElementProperty: (
@@ -493,6 +496,15 @@ const InterkitClient = {
     console.log("setElemmentProperty", property, value, storeData)
     store.set(storeData);
     localStorage.setItem("elementProperties", JSON.stringify(storeData));
+  },
+
+  getElementProperty: (
+    store, // a global store from getGlobalStore()
+    elementKey, // rowKey of the element to check
+    property // name of the property, for example "bookmarked"
+  ) => {
+    let value = get(store)?.[elementKey]?.[property]
+    return value;
   },
 
   getUiKeyStore,

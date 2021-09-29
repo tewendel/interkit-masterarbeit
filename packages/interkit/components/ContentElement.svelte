@@ -101,9 +101,11 @@
     
   </div>
 
-  <div>
-    distance: {distance}
-  </div>
+  {#if distance}
+    <div>
+      distance: {distance}
+    </div>
+  {/if}
 
   <slot name="buttons">
   </slot>
