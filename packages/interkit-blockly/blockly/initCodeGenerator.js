@@ -52,19 +52,24 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
           code += attribute(block, field.name)
         }
       }
+      if(blockObject.hiddenProps) {
+        code += blockObject.hiddenProps.map(p=>`{${p}}`).join(" ")
+      }
       code += `>`
 
       // slots
       for(let field of blockObject.fields) {
         if(field.type == "slot") {
           if(field.name != "default")
-             code += `<svelte:fragment slot="${field.name}">`
-          
+             code += (`<svelte:fragment slot="${field.name}"`
+                   + (field?.slotProps ? field.slotProps.map(p=>` let:${p}={${p}}`).join(" ") : "")
+                   + ">")
+
           code += statements(block, field.name)
           
           if(field.name != "default")
             code += "</svelte:fragment>"
-        }
+        }        
       }
 
       // closing tag
