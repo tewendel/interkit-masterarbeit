@@ -1,0 +1,9 @@
+name: Overlay
+title: Overlay
+colour: 100
+fields:
+  - type: slot
+    name: default
+  - type: number
+    name: zIndex
+toolboxCategory: Layout

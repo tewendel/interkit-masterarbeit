@@ -1,0 +1,9 @@
+name: BottomMenuPage
+title: Bottom Menu > Page
+colour: 280
+fields:
+  - type: "slot"
+    name: "default"
+  - type: "string"
+    name: "path"
+toolboxCategory: BottomMenu

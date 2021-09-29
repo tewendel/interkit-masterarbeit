@@ -365,6 +365,14 @@ const getMediaFileSubStore = async () => {
   return sub?.data;
 }
 
+const getUiKeyStore = uiKey => {
+  const key = "uiKey_" + uiKey
+  if (!globalStores[key]) {
+    globalStores[key] = writable();
+  }
+  return globalStores[key]
+}
+
 const InterkitClient = {
   userId,
   config,
@@ -487,12 +495,19 @@ const InterkitClient = {
     localStorage.setItem("elementProperties", JSON.stringify(storeData));
   },
 
+  getUiKeyStore,
   
+  setUiKey: (uiKey, value) => {
+    const store = getUiKeyStore(uiKey)
+    //console.log(`change ${uiKey} from ${get(uiKey)} to ${value}`)
+    console.log(`change ${uiKey} to ${value}`)
+    store.set(value)
+  },
+
   registerGlobalMethod: (key, method) => {
     //console.log("registerGlobalMethod", key)
     globalMethods[key] = method;
   },
-
 
   callGlobalMethod: (key, options) => {    
     if(globalMethods[key]) {

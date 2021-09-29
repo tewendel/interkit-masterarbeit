@@ -1,0 +1,9 @@
+name: Action
+title: Action
+colour: 100
+fields:
+  - type: slot
+    name: triggers
+  - type: slot
+    name: effects
+toolboxCategory: Draft

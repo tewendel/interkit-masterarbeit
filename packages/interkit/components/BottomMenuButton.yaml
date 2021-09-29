@@ -1,0 +1,8 @@
+name: BottomMenuButton
+title: Bottom Menu > Button
+colour: 280
+fields:
+  - type: "string"
+    name: "label"
+    defaultValue: "default"
+toolboxCategory: BottomMenu

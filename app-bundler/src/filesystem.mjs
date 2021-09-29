@@ -93,7 +93,7 @@ async function duplicateRepository(project, sourceProjectId) {
 async function setupNewRepository(project, sourceProjectId=false) {
   const projectId = project.id
   
-  const starterPath = process.env.REPOSITORIES_PATH + "/starters/cs1"
+  const starterPath = process.env.REPOSITORIES_PATH + "/starters/starter"
   const projectPath = getProjectPath(projectId)
   const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
 

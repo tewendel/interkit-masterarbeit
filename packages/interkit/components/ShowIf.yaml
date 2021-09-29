@@ -1,0 +1,12 @@
+name: ShowIf
+title: Show If
+color: 50
+fields:
+  - type: string
+    name: uiKey
+    defaultValue: showIf
+  - type: slot
+    name: iftrue
+  - type: slot
+    name: else
+toolboxCategory: "Conditionals"

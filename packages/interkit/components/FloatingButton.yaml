@@ -1,0 +1,13 @@
+name: FloatingButton
+title: Floating Button
+colour: 100
+fields:
+  - type: string
+    name: text
+  - type: string
+    name: clickTrigger
+  - type: string
+    name: x_pos
+  - type: string
+    name: y_pos
+toolboxCategory: Draft

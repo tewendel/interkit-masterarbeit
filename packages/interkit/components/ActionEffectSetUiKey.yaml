@@ -1,0 +1,9 @@
+name: ActionEffectSetUiKey
+title: Action > Effect > set uiKey
+colour: 100
+fields:
+  - type: string
+    name: uiKey
+  - type: string
+    name: value
+toolboxCategory: Draft

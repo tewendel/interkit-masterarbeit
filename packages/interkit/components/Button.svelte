@@ -1,10 +1,30 @@
 <script>
+  import { executeTrigger } from '../actions'
+
   export let inverse = false
   export let nopadding = false
   export let color = null;
+  export let type
+  export let text // primary | secondary | tertiary TODO
+  export let clickTrigger
+
+  console.log(executeTrigger, clickTrigger)
+
+  if (type === "primary") {
+    inverse = true
+  }
+
 </script>
 
-<span class="Button button" class:nopadding on:click class:inverse style={color && !inverse ? ("background-color:"+color) : ""}>
+<span 
+    on:click
+    on:click={ () => executeTrigger(clickTrigger) }
+    class="Button button" 
+    class:nopadding 
+    class:inverse 
+    style={color && !inverse ? ("background-color:"+color) : ""}
+  >
+  { text }
   <slot />
 </span>
 
@@ -16,6 +36,7 @@
     background-color: white;
     display: inline-flex;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .nopadding {

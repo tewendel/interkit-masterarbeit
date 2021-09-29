@@ -1,0 +1,7 @@
+name: ActionTrigger
+title: Action > Trigger
+colour: 100
+fields:
+  - type: string
+    name: trigger
+toolboxCategory: Draft

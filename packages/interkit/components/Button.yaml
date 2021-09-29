@@ -1,0 +1,14 @@
+name: Button
+title: Button
+colour: 100
+fields:
+  - type: string
+    name: text
+  - type: string
+    name: clickTrigger
+  - type: options
+    name: type
+    options: 
+      - primary
+      - secondary
+toolboxCategory: Input

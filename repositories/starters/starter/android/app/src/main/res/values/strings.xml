@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">interkit-starter</string>
+    <string name="title_activity_main">interkit-starter</string>
+    <string name="package_name">interkit.app.starter</string>
+    <string name="custom_url_scheme">interkit.app.starter</string>
+</resources>

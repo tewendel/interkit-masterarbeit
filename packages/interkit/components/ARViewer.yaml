@@ -1,0 +1,28 @@
+name: ARViewer
+title: AR Viewer
+# green
+color: 230
+fields:
+  - type: sheetColumn
+    name: keyColumn
+    columnType: string
+    defaultValue: 3dObjects/key
+  - type: sheetColumn
+    name: titleColumn
+    columnType: string
+    defaultValue: 3dObjects/title
+  - type: sheetColumn
+    name: glbColumn
+    columnType: mediaFile
+    defaultValue: 3dObjects/glbFile
+  - type: sheetColumn
+    name: usdzColumn
+    columnType: mediaFile
+    defaultValue: 3dObjects/usdzFile
+  - type: sheetColumn
+    name: descriptionColumn
+    columnType: richText
+    defaultValue: 3dObjects/description
+  - type: string
+    name: contentKey
+toolboxCategory: "MediaPlayer"

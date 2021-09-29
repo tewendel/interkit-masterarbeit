@@ -3,7 +3,7 @@ title: Dynamic Content
 # green
 color: 230
 fields:
-  - type: sheetColumn # | slot | string | checkbox
+  - type: sheetColumn # | slot | string | checkbox | options
     name: keyColumn
     columnType: string # | mediaFile | richText | sheetRef | number | location | optionSelect
     # options: 
