@@ -25,16 +25,19 @@ const registerActions = actions => {
 
 const executeTrigger = (trigger, payload) => {
   console.log("executeTrigger", trigger, payload)
+  let actionsTriggered = 0;
   for (let action of globalActions) {
     if (action.triggers && action.triggers.indexOf(trigger) > -1) {
+      actionsTriggered += 1;
       console.log("action triggered", action, payload)
       action.method({
         timestamp: Date.now(),
         payload
       })
-    } else {
-      console.log(`trigger "${trigger}" did not trigger any action`);
     }
+  }
+  if(actionsTriggered == 0) {
+    console.log(`trigger "${trigger}" did not trigger any action`);
   }
 }
 
