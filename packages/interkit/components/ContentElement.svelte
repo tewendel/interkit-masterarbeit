@@ -1,5 +1,11 @@
 <script>
+
   export let element;
+
+  import { setContext } from 'svelte';
+  setContext("buttonBar", {
+    buttonPayload: element
+  });
 
   export let supertextColumn
   export let titleColumn
@@ -98,6 +104,9 @@
   <div>
     distance: {distance}
   </div>
+
+  <slot name="buttons">
+  </slot>
 
 </section>
 

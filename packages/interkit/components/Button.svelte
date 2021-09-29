@@ -1,4 +1,12 @@
 <script>
+
+  import { getContext } from 'svelte';
+
+  // get context from parent element, for example ContentElement and pass the payload to the action
+  const c = getContext("buttonBar");
+  console.log("buttonPayload", c?.buttonPayload)
+  const buttonPayload = c?.buttonPayload
+
   import { executeTrigger } from '../actions'
 
   export let inverse = false
@@ -18,13 +26,13 @@
 
 <span 
     on:click
-    on:click={ () => executeTrigger(clickTrigger) }
+    on:click={ () => executeTrigger(clickTrigger, buttonPayload) }
     class="Button button" 
     class:nopadding 
     class:inverse 
     style={color && !inverse ? ("background-color:"+color) : ""}
   >
-  { text }
+  { text || "" }
   <slot />
 </span>
 

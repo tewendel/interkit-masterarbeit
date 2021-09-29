@@ -166,14 +166,17 @@
   const createIconDiv = async (markerValue) => {
 
     let label = util.rowVal(markerValue.elementRow, markerLabelColumn);
+    let labelSpan = label ? `<span>${label}</span>`: "";
     
     let mediafileRef = util.rowVal(markerValue.elementRow, customIconColumn);
-    let mediafile = await InterkitClient.getMediaFile(mediafileRef.value); // this should probably be cashed locally on the client
+    let mediafile;
+    if(mediafileRef)
+      mediafile = await InterkitClient.getMediaFile(mediafileRef.value); // this should probably be cashed locally on the client
     let iconSrc = mediafile?.link || markerIconAsset;
-    
+
     let html = `
     <div class="marker-container">
-      <span>${label}</span> <img src="${iconSrc}"/>
+      ${labelSpan} <img src="${iconSrc}"/>
     </div>
     `;
     

@@ -24,6 +24,8 @@ fields:
     type: sheetColumn
     columnType: location
     defaultValue: elements/position
+  - name: buttons
+    type: slot
 hiddenProps:
   - element
 toolboxCategory: Elements

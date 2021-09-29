@@ -1,0 +1,25 @@
+name: ElementList
+toolboxCategory: "Lists"
+color: 230
+fields:
+  - type: sheetId
+    name: dataSheetKey
+    defaultValue: elements
+  - type: slot
+    name: contentElement
+    slotProps:
+      - "element"
+  - type: "sheetColumn"
+    name: "sortColumn"
+    defaultValue: "elements/categoryOrder"
+    columnType: "number"
+  - type: "checkbox"
+    name: "bookmarkFilter"
+  - type: "slot"
+    name: "emptyElement"
+  - name: "hideColumn"
+    type: "sheetColumn"
+    defaultValue: "elements/hideInArchive"
+    columnType": "string"
+
+

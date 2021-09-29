@@ -27,7 +27,7 @@ const executeTrigger = (trigger, payload) => {
   console.log("executeTrigger", trigger, payload)
   for (let action of globalActions) {
     if (action.triggers && action.triggers.indexOf(trigger) > -1) {
-      console.log("action triggered", action)
+      console.log("action triggered", action, payload)
       action.method({
         timestamp: Date.now(),
         payload
