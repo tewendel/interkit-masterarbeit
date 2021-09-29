@@ -4,10 +4,6 @@ title: AR Viewer
 color: 230
 fields:
   - type: sheetColumn
-    name: keyColumn
-    columnType: string
-    defaultValue: elements/key
-  - type: sheetColumn
     name: titleColumn
     columnType: string
     defaultValue: elements/title
@@ -23,6 +19,4 @@ fields:
     name: descriptionColumn
     columnType: richText
     defaultValue: elements/description
-  - type: string
-    name: contentKey
 toolboxCategory: "MediaPlayer"
