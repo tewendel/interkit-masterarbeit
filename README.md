@@ -21,7 +21,9 @@ npm install -g meteor
 
 2) update .env files in /app-bundler, /meteor-server, /svelte-admin (see READMEs in those folders for details)
 
-3) run the relevant systems in one shell
+3) create folder /repositories/projects
+
+4) run the relevant systems in one shell
 
 ````
 npm run dev
