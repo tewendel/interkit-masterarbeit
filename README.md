@@ -7,13 +7,23 @@ proof of concept for creating, editing, compiling and bundling svelte apps with 
 
 ### quick start
 
-install all packages
+1) install all packages
 
 ````
 npm run install:all
 ````
 
-run the relevant systems in one shell
+you may additionally need to install meteor with
+
+````
+npm install -g meteor
+````
+
+2) update .env files in /app-bundler, /meteor-server, /svelte-admin (see READMEs in those folders for details)
+
+3) create folder /repositories/projects
+
+4) run the relevant systems in one shell
 
 ````
 npm run dev
