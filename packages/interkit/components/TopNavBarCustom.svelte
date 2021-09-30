@@ -1,6 +1,13 @@
+<script>
+
+  export let headline;
+
+</script>
+
 <div class="TopNavBarCustom">
   <nav>
     <slot name="left"/>
+    {#if headline && headline != "undefined"}<span>{headline}</span>{/if}
     <slot name="right"/>
   </nav>
   <div class="content">

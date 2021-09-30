@@ -1,6 +1,7 @@
 <script>
   import { InterkitClient, util } from '../'
   import { onMount, getContext, onDestroy } from 'svelte'
+  import { executeTrigger } from '../actions'
 
   // the key of the sheet from which to get the data
   export let dataSheetKey 
@@ -10,6 +11,9 @@
 
   // the column to use for hiding individual elements
   export let hideColumn
+
+  // name of the trigger to activate on select
+  export let selectTrigger
 
   // set this option to only show elements that are bookmarked locally on the client
   export let bookmarkFilter // this is TRUE or FALSE
@@ -113,8 +117,18 @@
     }
   })
 
+  const onClick = (element) => {
+    
+    // if we are in listNave, set the context
+    if(listNavContext)
+      listNavContext?.setSingleView(element);
 
-  
+    // also trigger the action, if set
+    if(selectTrigger)
+      executeTrigger(selectTrigger, element)
+  }
+
+
 </script>
 
 {#if dataRowsSorted}
@@ -123,7 +137,7 @@
   {:else}
     <ul>
       {#each dataRowsSorted as row}
-      <li>
+      <li on:click={()=>{onClick(row)}}>
         <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "l"}}></slot>
       </li>
       {/each}

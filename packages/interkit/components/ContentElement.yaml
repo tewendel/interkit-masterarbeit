@@ -26,6 +26,8 @@ fields:
     defaultValue: elements/position
   - name: buttons
     type: slot
-hiddenProps:
+  - name: size
+    type: string
+hiddenProps: 
   - element
 toolboxCategory: Elements

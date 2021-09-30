@@ -15,7 +15,7 @@
   // set up a store and expose it via context api to children
   let singleViewData = writable(null);
   const setSingleView = (data) => {
-    //console.log("setSingleView", data)
+    console.log("setSingleView", data)
     singleViewData.set(data);
     if(setHideTabNav) setHideTabNav(data ? true : false); // tell parent Tabs component to hide tabs navigation
   };
@@ -26,7 +26,8 @@
     singleViewData 
   });
 
-  
+  export let singleViewHeadline; // headline for topbar in single view
+
 </script>
 
 <div class="ListNav list-nav-container" data-categories={$singleViewData?.categorySheetKey}>
@@ -37,9 +38,9 @@
       onClick={()=>{setSingleView(null)}}
       pageOpen
     >
-      {$singleViewData?.filterCategoryName}
+      {singleViewHeadline || $singleViewData?.filterCategoryName}
     </TopNavBar>
-    <slot name="singleView"></slot>
+    <slot name="singleView" element={$singleViewData}></slot>
   </div>
 
   <div class:active={!$singleViewData}>

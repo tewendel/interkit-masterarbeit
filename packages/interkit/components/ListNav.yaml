@@ -1,0 +1,11 @@
+name: ListNav
+fields:
+  - type: slot
+    name: listView
+  - type: slot
+    name: singleView
+    slotProps:
+      - "element"
+  - type: string
+    name: singleViewHeadline
+toolboxCategory: Lists

@@ -1,8 +1,32 @@
 <script>
 
-  export let element;
+  import marked from "marked"
+  import { setContext, getContext } from 'svelte';
+  import { get } from 'svelte/store'
+  import { onMount } from 'svelte';
+  import { InterkitClient, util } from '../'
+  import MediaFileImage from './MediaFileImage.svelte'
+  import Button from './Button.svelte'
+  
+  export let element; // use prop if passed in directly 
+  console.log("ContentElement with element prop", element)
 
-  import { setContext } from 'svelte';
+  // use global store if available
+  let elementDetail = InterkitClient.getGlobalStore("elementDetail")
+  if($elementDetail) {
+    element = $elementDetail
+  }
+
+  // get context from listNav
+  let listNavContext = getContext("listNav")
+  if(!element && listNavContext) {
+    listNavContext.singleViewData.subscribe((data) => {
+      element = data;
+      console.log("detected listnav context update, set element to", element)
+    })    
+  }
+
+  // set context for buttons in buttons slot
   setContext("buttonBar", {
     buttonPayload: element
   });
@@ -14,8 +38,8 @@
   export let imageColumn
   export let locationColumn
 
-  // get size from prop, or from element passed in, or default to "l"
-  export let size = element.size || "m"
+  // get size from prop, or from element passed in, or default
+  export let size = element?.size || "m"
 
   // xs - used in dashboard, no image, no description, no category info
   // s - used in bookmark list, small image, no description
@@ -31,15 +55,6 @@
     locationColumn
   }
 
-  import { onMount } from 'svelte';
-  import { get } from "svelte/store"
-  import marked from "marked"
-
-  import { InterkitClient, util } from '../'
-  
-  import MediaFileImage from './MediaFileImage.svelte'
-  import Button from './Button.svelte'
-  
   $: title = util.rowVal(element, elementColumns.titleColumn)
   $: supertext = util.rowVal(element, elementColumns.supertextColumn)
   $: description = util.rowValString(element, elementColumns.descriptionColumn)
@@ -67,50 +82,54 @@
   
 </script>
 
-<section class={`ContentElementAudio container size-${size}`}>
+{#if element}
 
-  <figure class="ContentElementAudio__Picture picture">
-    <MediaFileImage mediafileRef={imageRef} />    
-  </figure>
-    
-  <div class="ContentElementAudio_Titles titles">
+  <section class={`ContentElementAudio container size-${size}`}>
 
-    <h4 class="ContentElementAudio__SubTitle subtitle">
-      {#if supertext}
-        <span>{supertext}</span>
-      {/if}
-    </h4>
+    <figure class="ContentElementAudio__Picture picture">
+      <MediaFileImage mediafileRef={imageRef} />    
+    </figure>
+      
+    <div class="ContentElementAudio_Titles titles">
 
-    {#key title}
-    <h3 class="ContentElementAudio__Title title">
-      {title}
-    </h3>
-    {/key}
+      <h4 class="ContentElementAudio__SubTitle subtitle">
+        {#if supertext}
+          <span>{supertext}</span>
+        {/if}
+      </h4>
 
-  </div>
+      {#key title}
+      <h3 class="ContentElementAudio__Title title">
+        {title}
+      </h3>
+      {/key}
 
-  <div class="ContentElementAudio__Content content">
-    
-      {#if short_description}
-        {@html marked(short_description)}
-      {/if}
-
-      {#if description}
-        {@html marked(description)}
-      {/if}
-    
-  </div>
-
-  {#if distance}
-    <div>
-      distance: {distance}
     </div>
-  {/if}
 
-  <slot name="buttons">
-  </slot>
+    <div class="ContentElementAudio__Content content">
+      
+        {#if short_description}
+          {@html marked(short_description)}
+        {/if}
 
-</section>
+        {#if description}
+          {@html marked(description)}
+        {/if}
+      
+    </div>
+
+    {#if distance}
+      <div class="distance">
+        distance: {distance}
+      </div>
+    {/if}
+
+    <slot name="buttons">
+    </slot>
+
+  </section>
+
+{/if}
 
 <style>
 
@@ -233,6 +252,10 @@
 
   .container.size-m .controls {
     grid-row: 5;
+  }
+
+  .container.size-s .distance {
+    display: none;
   }
 
   .container.size-xs .controls .bookmark, 

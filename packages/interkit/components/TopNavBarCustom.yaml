@@ -1,9 +1,13 @@
 name: TopNavBarCustom
 fields:
+  - type: string
+    name: headline
   - type: slot
     name: left
   - type: slot
     name: right
   - type: slot
     name: content
+    slotProps:
+      - element
 toolboxCategory: TopBar
