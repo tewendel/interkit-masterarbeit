@@ -92,4 +92,20 @@
   .icon-skip-backward {
     background-image: url("../icons/replay_30.svg");
   }
+
+  .icon-qr-scan {
+    background-image: url("../icons/QR-Scan.svg");
+  }
+
+  .icon-qr-scan-thin {
+    background-image: url("../icons/QR-Scan-Thin.svg");
+  }
+
+  .icon-hint {
+    background-image: url("../icons/Hint.svg");
+  }
+
+  .icon-archive {
+    background-image: url("../icons/Archiv.svg");
+  }
 </style>

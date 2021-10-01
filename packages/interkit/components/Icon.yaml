@@ -18,6 +18,10 @@ fields:
       - filter
       - skip-forward
       - skip-backward
+      - hint
+      - qr-scan
+      - qr-scan-thin
+      - archive
   - type: checkbox
     name: inverse
     defaultValue: FALSE
