@@ -26,6 +26,7 @@
     --font-size-headline-1: 30px;
     --font-size-buttons: 12px;
     --font-size-regular: 14px;
+    --line-height-regular: 20px;
   `} >
   <slot />
 </div>

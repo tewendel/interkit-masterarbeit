@@ -192,8 +192,7 @@ const close = () => {
       <svelte:fragment slot="left">
         <Button text="" onClick={close} type="secondary">
           <Icon type="arrow-left"/>
-        </Button>
-        <span>QR-Code Scannen</span>
+        </Button><span>QR-Code Scannen</span>
       </svelte:fragment>
       <svelte:fragment slot="content">
         <QRTips 
