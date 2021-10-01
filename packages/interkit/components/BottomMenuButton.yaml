@@ -5,4 +5,6 @@ fields:
   - type: "string"
     name: "label"
     defaultValue: "default"
+  - type: slot
+    name: default
 toolboxCategory: BottomMenu

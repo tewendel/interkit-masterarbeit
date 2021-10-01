@@ -124,6 +124,11 @@
       border-spacing: 0;
     }
 
+    /* headlines not bold */
+    h1, h2, h3, h4, h5 {
+      font-weight: normal;
+    }
+
     /* buttons no special */
     button {
       background-color: transparent;

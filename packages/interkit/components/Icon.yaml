@@ -22,6 +22,9 @@ fields:
       - qr-scan
       - qr-scan-thin
       - archive
+      - map
+      - dashboard
+      - ar
   - type: checkbox
     name: inverse
     defaultValue: FALSE

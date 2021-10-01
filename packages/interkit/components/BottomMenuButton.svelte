@@ -16,15 +16,20 @@
     class:selected="{$selectedTab === tab}"  
     on:click="{() => selectTab(tab)}"
   >
+  <slot />
   <span class="BottomMenuButton__Text text">
     {label}
-  </span>
+  </span>  
 </button>
 
 
 <style>
   .button {
     flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     /*height: 3em;*/
     font-family: var(--font-family);
     background-color: var(--color-background);
@@ -43,10 +48,17 @@
     filter: brightness(90%);
   }
 
+  .button .text {
+    font-size: var(--font-size-buttons);
+  }
+
+  /*
   .button.selected .text {
     border-style: solid;
     border-width: 0 0 1px 0;
     border-color: currentColor;
   }
+  */
+
 </style>
 

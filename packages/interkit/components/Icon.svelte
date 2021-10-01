@@ -108,4 +108,16 @@
   .icon-archive {
     background-image: url("../icons/Archiv.svg");
   }
+
+  .icon-dashboard {
+    background-image: url("../icons/Dashboard.svg"); 
+  }
+
+  .icon-map {
+    background-image: url("../icons/Map.svg"); 
+  }
+
+  .icon-ar {
+    background-image: url("../icons/AR.svg"); 
+  }
 </style>

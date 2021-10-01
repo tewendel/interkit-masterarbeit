@@ -55,6 +55,11 @@
     display: inline-flex;
     overflow: hidden;
     cursor: pointer;
+    align-items: center;
+  }
+
+  span.button {
+    font-size: var(--font-size-buttons);
   }
 
   .nopadding {

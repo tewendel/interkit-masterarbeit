@@ -24,6 +24,8 @@
     --color-background-highlight: ${background_color_highlight};
 
     --font-size-headline-1: 30px;
+    --font-size-buttons: 12px;
+    --font-size-regular: 14px;
   `} >
   <slot />
 </div>

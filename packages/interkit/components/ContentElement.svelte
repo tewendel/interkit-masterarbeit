@@ -48,8 +48,8 @@
 
   // xs - used in dashboard, no image, no description, no category info
   // s - used in bookmark list, small image, no description
-  // m - used in map - small image, description
-  // l - used in dashboard sliders and elementlist
+  // m - used in map - small image, short description only
+  // l - used in dashboard sliders and full view
   
   const elementColumns = {
     supertextColumn,
@@ -113,25 +113,34 @@
 
     <div class="ContentElementAudio__Content content">
       
-        {#if short_description}
-          {@html marked(short_description)}
-        {/if}
-
-        {#if description}
-          {@html marked(description)}
-        {/if}
+        <div class="short-description">
+          {#if short_description}
+            {@html marked(short_description)}
+          {/if}
+        </div>
+        
+        <div class="description">
+          {#if description}
+            {@html marked(description)}
+          {/if}
+        </div>
       
     </div>
 
-    {#if distance}
-      <Button type="secondary">
-        <Icon type="location"/>
-        {distance}
-      </Button>
-    {/if}
+    <div class="button-bar-container">
+      <slot name="buttons">
+      </slot>
 
-    <slot name="buttons">
-    </slot>
+      {#if distance}
+      <span class="distance">
+        <Button type="secondary">
+          <Icon type="location"/>
+          {distance}
+        </Button>
+      </span>
+      {/if}
+    </div>
+    
 
   </section>
 
@@ -144,6 +153,8 @@
   .container {
     display: grid;
     grid-template-rows: auto auto auto;
+    padding: 8px;
+    font-size: var(--font-size-regular);
   }
   .picture {
     grid-column: 1;
@@ -211,9 +222,9 @@
   /* elements */
 
   .titles {
-    padding-top: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .subtitle {
@@ -222,7 +233,7 @@
   }
 
   .content {
-    padding: 16px;
+    padding: 8px;
   }
 
   .description {
@@ -246,10 +257,45 @@
     display: none;
   }
 
+  /* button bar */
+
+
+  .button-bar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
   /* size variants */
 
-  .container.size-s .description {
+  .container.size-l .button-bar-container {
+    grid-row: 3;
+  }  
+
+  .container.size-l .titles {
+    grid-row: 4;
+  }
+
+  .container.size-l .content {
+    grid-row: 5;
+  }
+
+  .container.size-s {
+    border: 1px solid black;
+    border-radius: 25px;
+    margin: 16px;
+  }
+
+  .container.size-s .short-description, .container.size-l .short-description {
     display: none;
+  }
+
+  .container.size-s .description, .container.size-m .description {
+    display: none;
+  }
+
+  .container.size-s .titles {
+    width: 50%;
   }
 
   .container.size-s .picture {
@@ -260,7 +306,7 @@
     grid-row: 5;
   }
 
-  .container.size-s .distance {
+  .container.size-s .distance, .container.size-s .content {
     display: none;
   }
 

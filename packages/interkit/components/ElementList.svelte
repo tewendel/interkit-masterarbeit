@@ -2,6 +2,8 @@
   import { InterkitClient, util } from '../'
   import { onMount, getContext, onDestroy } from 'svelte'
   import { executeTrigger } from '../actions'
+  import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
 
   // the key of the sheet from which to get the data
   export let dataSheetKey 
@@ -137,8 +139,9 @@
   {:else}
     <ul>
       {#each dataRowsSorted as row}
-      <li on:click={()=>{onClick(row)}}>
+      <li class="item" on:click={()=>{onClick(row)}}>
         <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "l"}}></slot>
+        <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
       </li>
       {/each}
     </ul>
@@ -154,4 +157,14 @@
   .back:hover {
     cursor: pointer;
   }
+
+  li.item {
+    position: relative;
+  }
+  .right-arrow {
+    position:  absolute;
+    bottom: 10px;
+    right:  25px;
+  }
+
 </style>
