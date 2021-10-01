@@ -11,9 +11,35 @@
   export let glbColumn; // glb (android) column
   export let usdzColumn; // usdz (ios) column
   export let descriptionColumn; //  description column
+  export let ARmode = "AR preferred" // "AR preferred" | "AR only"
 
   const ARElementStore = InterkitClient.getGlobalStore("ARElement")
   let element
+
+  let iosLinkRef
+  let androidLinkRef
+
+  const androidFallbackUrl = "https://developers.google.com/ar"
+  const androidARmode = ARmode === "AR only" ? "ar_only" : "ar_preferred"
+
+  const generateAndroidHref = url => 
+    `intent://` + 
+    `arvr.google.com/scene-viewer/1.0`+ 
+    `?file=${url}`+ 
+    `&mode=${androidARmode}` + 
+    `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` + 
+    `S.browser_fallback_url=${androidFallbackUrl};end;`
+
+
+  onMount(()=> {
+    const a = document.createElement("a");
+    if (a.relList.supports("ar")) {
+      // iOS quickloor AR is available.
+      iosLinkRef.click()
+    } else {
+
+    }
+  })
 
   $: {
     element = {
@@ -33,7 +59,12 @@
       </li>
       <li>
         <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
-          <a rel="external" title={element.title} href={`intent://arvr.google.com/scene-viewer/1.0?file=${url}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`} >
+          <a 
+            bind:this={androidLinkRef} 
+            rel="external" 
+            title={element.title} 
+            href={generateAndroidHref(url)}
+          >
             <Button inverse>
               start android
             </Button>
@@ -42,7 +73,7 @@
       </li>
       <li>
         <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
-          <a rel="ar external" title={element.title} href={url} >
+          <a bind:this={iosLinkRef} rel="ar external" title={element.title} href={url} >
             <Button inverse>
               start iOS
             </Button>

@@ -19,4 +19,10 @@ fields:
     name: descriptionColumn
     columnType: richText
     defaultValue: elements/description
+  - type: options
+    name: ARmode
+    defaultValue: "AR preferred"
+    options:
+      - "AR preferred"
+      - "AR only"
 toolboxCategory: "MediaPlayer"
