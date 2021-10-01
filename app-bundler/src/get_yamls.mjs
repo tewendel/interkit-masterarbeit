@@ -56,7 +56,7 @@ const get_yamls =  async (req, res) => {
       console.error(err);
     }
 
-    console.log("getting yaml files: ", JSON.stringify(yamlFiles))
+    // console.log("getting yaml files: ", JSON.stringify(yamlFiles))
 
     // read files and construct result object
 
