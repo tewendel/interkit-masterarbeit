@@ -12,7 +12,9 @@
         {headline}
       </span>
     {/if}
-    <slot name="right"/>
+    <div class="buttons-right">
+      <slot name="right"/>
+    </div>
   </nav>
   <div  class="TopNavBarCustom__Content content">
     <slot name="content"/>
@@ -40,6 +42,9 @@
   .content {
     flex: 1;
     overflow: hidden;
+  }
+  .buttons-right {
+    float: right;
   }
 
 

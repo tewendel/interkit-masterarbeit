@@ -5,7 +5,7 @@
   // get context from parent element, for example ContentElement and pass the payload to the action
   const c = getContext("buttonBar");
   console.log("buttonPayload", c?.buttonPayload)
-  const buttonPayload = c?.buttonPayload
+  const buttonPayload = c?.buttonPayload // this is a store
 
   import { executeTrigger } from '../actions'
 
@@ -14,9 +14,18 @@
   export let color = null;
   export let type
   export let text // primary | secondary | tertiary TODO
-  export let clickTrigger
+  
+  export let clickTrigger // set this to execute a trigger on button click
+  export let onClick // function to call on click if we are not using this with triggers
 
-  console.log(executeTrigger, clickTrigger)
+  const handleClick = () => {
+
+    if(clickTrigger)
+      executeTrigger(clickTrigger, buttonPayload ? $buttonPayload : undefined)
+
+    if(onClick)
+      onClick();
+  }
 
   if (type === "primary") {
     inverse = true
@@ -26,7 +35,7 @@
 
 <span 
     on:click
-    on:click={ () => executeTrigger(clickTrigger, buttonPayload) }
+    on:click={handleClick}
     class="Button button" 
     class:nopadding 
     class:inverse 
