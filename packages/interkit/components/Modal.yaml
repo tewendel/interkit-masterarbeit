@@ -3,11 +3,16 @@ title: Modal
 # green
 color: 230
 fields:
-  - type: string # | slot | string | checkbox
-    name: dismissActionName
-    defaultValue: modalDismiss
-  - type: sheetColumn
-    name: contentColumn
-    columnType: richText
-    defaultValue: modals/content
-toolboxCategory: "Draft"
+  - type: string
+    name: dismissText
+    defaultValue: Verstanden
+  - type: string
+    name: helpText
+    defaultValue: Hilfe erhalten
+  - type: string
+    name: dismissTrigger
+  - type: string
+    name: helpTrigger
+  - type: slot
+    name: content
+toolboxCategory: "Overlays"
