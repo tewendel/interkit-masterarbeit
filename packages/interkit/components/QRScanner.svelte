@@ -10,6 +10,7 @@ import Button from './Button.svelte'
 import Overlay from './Overlay.svelte'
 import TopNavBarCustom from './TopNavBarCustom.svelte'
 import QRTips from './QRTips.svelte'
+import Icon from './Icon.svelte'
 
 let video;
 let mediaStream;
@@ -143,12 +144,16 @@ const logKey = (e) => {
   }
 }
 
+let showQRScannerTipsUiKey;
+
 onMount(async () => {
   initCamera()
   await initRowSub();
   await initTips();
   document.addEventListener('keydown', logKey);
-  
+
+  showQRScannerTipsUiKey = InterkitClient.getUiKeyStore("showQRScannerTips")
+  if($showQRScannerTipsUiKey) showTips = true;
 });
 
 onDestroy(()=>{
@@ -185,7 +190,10 @@ const close = () => {
       headline="QR-Code Scannen"
     >
       <svelte:fragment slot="left">
-        <Button text="<" onClick={close}/>
+        <Button text="" onClick={close} type="secondary">
+          <Icon type="arrow-left"/>
+        </Button>
+        <span>QR-Code Scannen</span>
       </svelte:fragment>
       <svelte:fragment slot="content">
         <QRTips 
@@ -196,6 +204,7 @@ const close = () => {
           {tipTextColumn}
           {tipOrderColumn}
           onClose={close}
+          {tips}
         />
       </svelte:fragment>
     </TopNavBarCustom>

@@ -16,22 +16,7 @@
 
   export let onClose;
 
-  let tipRowStore; // store for all the tips
-  let tips; // array with just the tips for this element
-
-  onMount(async () => {
-    // setup the subscription to the tip rows
-    const tipSheetKey = util.getSheetKey(tipQrKeyColumn);
-    tipRowStore = await InterkitClient.getRowSubStore(tipSheetKey);
-
-    // filter tips for targetElement and sort by order column
-    tips = $tipRowStore
-      .filter(t => 
-        util.rowVal(t, tipQrKeyColumn) == util.rowVal(targetElement, elementKeyColumn)
-      )
-      .sort((a, b) => util.rowVal(a, tipOrderColumn) - util.rowVal(b, tipOrderColumn))  
-    console.log("tips", tips)
-  })
+  export let tips; // array with just the tips for this element
 
   let tipIndex = 0;
 
@@ -56,7 +41,7 @@
   {:else}
 
     <p>Für diese Ziel gibt es keine Hinweise.</p>
-    <Button text="zurück" onClick={incrIndex}/>
+    <Button text="weiter" onClick={incrIndex}/>
 
   {/if}
 

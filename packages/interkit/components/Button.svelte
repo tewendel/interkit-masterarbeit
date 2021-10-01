@@ -42,7 +42,8 @@
     style={color && !inverse ? ("background-color:"+color) : ""}
   >
   { text || "" }
-  <slot />
+  <slot/>
+
 </span>
 
 <style>

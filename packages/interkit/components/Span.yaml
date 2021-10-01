@@ -1,0 +1,5 @@
+name: Span
+fields:
+  - name: text
+    type: string
+toolboxCategory: Basics

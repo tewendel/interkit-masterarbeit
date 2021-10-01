@@ -20,10 +20,10 @@
     --font-family: ${fontFamily}; 
     --color-primary: ${primary_color};
     --color-text: ${text_color};
-    --ion-font-family: ${fontFamily};
-    --ion-color-primary: ${primary_color};
     --color-background: ${background_color};
     --color-background-highlight: ${background_color_highlight};
+
+    --font-size-headline-1: 30px;
   `} >
   <slot />
 </div>

@@ -73,6 +73,10 @@
     background-image: url("../icons/Position.svg");
   }
 
+  .icon-location {
+    background-image: url("../icons/Location.svg");
+  }
+
   .icon-layer {
     background-image: url("../icons/Layer.svg");
   }

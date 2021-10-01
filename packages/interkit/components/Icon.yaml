@@ -13,6 +13,7 @@ fields:
       - plus
       - minus
       - position
+      - location
       - layer
       - filter
       - skip-forward

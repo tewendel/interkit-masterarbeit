@@ -7,6 +7,7 @@
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
   
   export let element; // alaways use prop if passed in directly 
   console.log("ContentElement with element prop", element)
@@ -123,9 +124,10 @@
     </div>
 
     {#if distance}
-      <div class="distance">
-        distance: {distance}
-      </div>
+      <Button type="secondary">
+        <Icon type="location"/>
+        {distance}
+      </Button>
     {/if}
 
     <slot name="buttons">

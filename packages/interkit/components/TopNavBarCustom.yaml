@@ -1,7 +1,5 @@
 name: TopNavBarCustom
 fields:
-  - type: string
-    name: headline
   - type: slot
     name: left
   - type: slot

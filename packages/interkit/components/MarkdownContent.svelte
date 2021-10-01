@@ -9,6 +9,13 @@
 </div>
 
 <style>
+
+  :global(.MarkdownContent h1) {
+    font-size: var(--font-size-headline-1);
+    margin-bottom: 16px;
+    font-weight: normal;
+    line-height: var(--font-size-headline-1);
+  }
   
   :global(.MarkdownContent p) {
     margin-bottom: 1em;    

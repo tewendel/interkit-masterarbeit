@@ -1,0 +1,6 @@
+name: Styling
+fields:
+  - name: default
+    type: slot
+toolboxCategory: Layout
+

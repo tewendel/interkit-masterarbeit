@@ -11,4 +11,6 @@ fields:
     options: 
       - primary
       - secondary
+  - name: default
+    type: slot
 toolboxCategory: Input
