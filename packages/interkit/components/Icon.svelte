@@ -1,7 +1,11 @@
 <script>
-  export let type = ""
+  export let type
   export let height = "25px"
   export let inverse = false
+
+  if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
+
+  console.log("BUTTON", type, height, inverse)
 </script>
 
 <span on:click class:inverse class={`icon icon-${type}`} style={`--height: ${height}`}>

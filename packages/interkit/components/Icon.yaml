@@ -1,0 +1,23 @@
+name: Icon
+fields:
+  - type: options
+    name: type
+    options:
+      - arrow-up
+      - arrow-down
+      - arrow-left
+      - arrow-right
+      - close
+      - play
+      - settings
+      - plus
+      - minus
+      - position
+      - layer
+      - filter
+      - skip-forward
+      - skip-backward
+  - type: checkbox
+    name: inverse
+    defaultValue: FALSE
+toolboxCategory: Basics
