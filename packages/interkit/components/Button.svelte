@@ -5,7 +5,7 @@
   // get context from parent element, for example ContentElement and pass the payload to the action
   const c = getContext("buttonBar");
   console.log("buttonPayload", c?.buttonPayload)
-  const buttonPayload = c?.buttonPayload
+  const buttonPayload = c?.buttonPayload // this is a store
 
   import { executeTrigger } from '../actions'
 
@@ -26,7 +26,7 @@
 
 <span 
     on:click
-    on:click={ () => executeTrigger(clickTrigger, buttonPayload) }
+    on:click={ () => executeTrigger(clickTrigger, $buttonPayload) }
     class="Button button" 
     class:nopadding 
     class:inverse 

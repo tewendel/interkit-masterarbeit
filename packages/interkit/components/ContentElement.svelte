@@ -2,22 +2,22 @@
 
   import marked from "marked"
   import { setContext, getContext } from 'svelte';
-  import { get } from 'svelte/store'
+  import { get, writable } from 'svelte/store'
   import { onMount } from 'svelte';
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
   
-  export let element; // use prop if passed in directly 
+  export let element; // alaways use prop if passed in directly 
   console.log("ContentElement with element prop", element)
 
-  // use global store if available
+  // otherwise use global store if available
   let elementDetail = InterkitClient.getGlobalStore("elementDetail")
-  if($elementDetail) {
+  if(!element && $elementDetail) {
     element = $elementDetail
   }
 
-  // get context from listNav
+  // otherwise get context from listNav
   let listNavContext = getContext("listNav")
   if(!element && listNavContext) {
     listNavContext.singleViewData.subscribe((data) => {
@@ -27,9 +27,13 @@
   }
 
   // set context for buttons in buttons slot
+  const buttonPayloadStore = writable(element)
   setContext("buttonBar", {
-    buttonPayload: element
+    buttonPayload: buttonPayloadStore
   });
+
+  // update store whenever it changes
+  $: buttonPayloadStore.set(element)
 
   export let supertextColumn
   export let titleColumn
