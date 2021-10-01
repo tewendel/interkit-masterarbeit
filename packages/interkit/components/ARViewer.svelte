@@ -6,6 +6,7 @@
   import MediaFileResolver from './MediaFileResolver.svelte'
   import MarkdownContent from './MarkdownContent.svelte'
   import Button from './Button.svelte'
+  import Icon from './Icon.svelte'
   import { executeTrigger } from '../actions'
 
   export let titleColumn; // title column
@@ -82,6 +83,9 @@
 
 <div class="ARViewer container">
   {#if element}
+    <div class="ARViewer__Close close">
+      <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
+    </div>
     {#if mode == "video"}
       <!-- svelte-ignore a11y-media-has-caption -->
       <video autoplay muted loop>
@@ -130,10 +134,21 @@
     background-color: rgba(255,255,255,0.8);
   }
 
+  a img {
+    height: 40px;
+  }
+
   video {
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+
+  .close {
+    position: absolute;
+    z-index: 1;
+    top: 1em;
+    right: 1em;
   }
 
 
