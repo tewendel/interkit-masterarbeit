@@ -5,12 +5,16 @@
 </script>
 
 <div class="TopNavBarCustom">
-  <nav>
+  <nav class="TopNavBarCustom__Top">
     <slot name="left"/>
-    {#if headline && headline != "undefined"}<span>{headline}</span>{/if}
+    {#if headline && headline != "undefined"}
+      <span>
+        {headline}
+      </span>
+    {/if}
     <slot name="right"/>
   </nav>
-  <div class="content">
+  <div  class="TopNavBarCustom__Content content">
     <slot name="content"/>
   </div>
 </div>
@@ -18,6 +22,7 @@
 <style>
   .TopNavBarCustom {
     height: 100%;
+    flex: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -34,6 +39,7 @@
   }
   .content {
     flex: 1;
+    overflow: hidden;
   }
 
 
