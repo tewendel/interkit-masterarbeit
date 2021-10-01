@@ -17,7 +17,15 @@ let loading = true;
 let showTips = false;
 
 export let elementKeyColumn; // the column on a sheet to select an element (optional)
-export let targetKey; // a key that we use as target element (optional)
+
+// columns for tips sheet
+export let tipQrKeyColumn;
+export let tipImageColumn;
+export let tipTextColumn;
+export let tipOrderColumn;
+
+const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
+const targetElement = QRElementStore ? $QRElementStore : undefined
 
 let dataRows; 
 
@@ -37,7 +45,7 @@ const onScan = (code) => {
   let payload = {
     code,
     elementRow,
-    targetFound: elementRow ? (util.rowVal(elementRow, elementKeyColumn) == targetKey) : false
+    targetFound: elementRow ? (elementRow.key == targetElement?.key) : false
   }
 
   executeTrigger("QRCodeScanned", payload);
@@ -51,7 +59,24 @@ const initRowSub = async ()=> {
   console.log($dataRows)
 }
 
-const init = ()=> {
+let tipRowStore;
+let tips;
+
+const initTips = async ()=> {
+  // setup the subscription to the tip rows
+    const tipSheetKey = util.getSheetKey(tipQrKeyColumn);
+    tipRowStore = await InterkitClient.getRowSubStore(tipSheetKey);
+
+    // filter tips for targetElement and sort by order column
+    tips = $tipRowStore
+      .filter(t => 
+        util.rowVal(t, tipQrKeyColumn) == util.rowVal(targetElement, elementKeyColumn)
+      )
+      .sort((a, b) => util.rowVal(a, tipOrderColumn) - util.rowVal(b, tipOrderColumn))  
+    console.log("tips", tips)
+}
+
+const initCamera = ()=> {
 
     video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
@@ -119,9 +144,11 @@ const logKey = (e) => {
 }
 
 onMount(async () => {
-  init()
+  initCamera()
   await initRowSub();
+  await initTips();
   document.addEventListener('keydown', logKey);
+  
 });
 
 onDestroy(()=>{
@@ -133,6 +160,10 @@ onDestroy(()=>{
 
 });
 
+const close = () => {
+  showTips = false;
+}
+
 </script>
 
 <div id="scanner-container">
@@ -140,9 +171,11 @@ onDestroy(()=>{
   {#if loading}
     <div class="loadingMessage" hidden="">⌛ Warte auf Kamera...</div>
   {:else}
-    <div class="tip-button-container">
-      <Button text="Hinweis" onClick={()=>showTips = true}/>
-    </div>
+    {#if targetElement && tips?.length}
+      <div class="tip-button-container">
+        <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -152,10 +185,18 @@ onDestroy(()=>{
       headline="QR-Code Scannen"
     >
       <svelte:fragment slot="left">
-        <Button text="<" onClick={()=>showTips = false}/>
+        <Button text="<" onClick={close}/>
       </svelte:fragment>
       <svelte:fragment slot="content">
-        <QRTips/>
+        <QRTips 
+          {targetElement}
+          {elementKeyColumn}
+          {tipQrKeyColumn}
+          {tipImageColumn}
+          {tipTextColumn}
+          {tipOrderColumn}
+          onClose={close}
+        />
       </svelte:fragment>
     </TopNavBarCustom>
   </Overlay>
