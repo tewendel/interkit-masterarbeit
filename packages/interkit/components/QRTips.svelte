@@ -45,7 +45,7 @@
 
 </script>
 
-  {#if tips}
+  {#if tips?.length}
     <MediaFileImage mediafileRef={util.rowVal(tips[tipIndex], tipImageColumn)}/>
     <h1>Hinweis {tipIndex + 1}</h1>
     <p>{util.rowVal(tips[tipIndex], tipTextColumn)}</p>
@@ -53,6 +53,11 @@
     {#if tipIndex > 0}<Button text="zurück" onClick={()=>{tipIndex -= 1}}/>{/if}
     <Button text="weiter" onClick={incrIndex}/>
     
+  {:else}
+
+    <p>Für diese Ziel gibt es keine Hinweise.</p>
+    <Button text="zurück" onClick={incrIndex}/>
+
   {/if}
 
 <style>

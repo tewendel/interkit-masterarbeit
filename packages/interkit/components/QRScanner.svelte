@@ -59,7 +59,24 @@ const initRowSub = async ()=> {
   console.log($dataRows)
 }
 
-const init = ()=> {
+let tipRowStore;
+let tips;
+
+const initTips = async ()=> {
+  // setup the subscription to the tip rows
+    const tipSheetKey = util.getSheetKey(tipQrKeyColumn);
+    tipRowStore = await InterkitClient.getRowSubStore(tipSheetKey);
+
+    // filter tips for targetElement and sort by order column
+    tips = $tipRowStore
+      .filter(t => 
+        util.rowVal(t, tipQrKeyColumn) == util.rowVal(targetElement, elementKeyColumn)
+      )
+      .sort((a, b) => util.rowVal(a, tipOrderColumn) - util.rowVal(b, tipOrderColumn))  
+    console.log("tips", tips)
+}
+
+const initCamera = ()=> {
 
     video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
@@ -127,9 +144,11 @@ const logKey = (e) => {
 }
 
 onMount(async () => {
-  init()
+  initCamera()
   await initRowSub();
+  await initTips();
   document.addEventListener('keydown', logKey);
+  
 });
 
 onDestroy(()=>{
@@ -152,7 +171,7 @@ const close = () => {
   {#if loading}
     <div class="loadingMessage" hidden="">⌛ Warte auf Kamera...</div>
   {:else}
-    {#if targetElement}
+    {#if targetElement && tips?.length}
       <div class="tip-button-container">
         <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
       </div>
