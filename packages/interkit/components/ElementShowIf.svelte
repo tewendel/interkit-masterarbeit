@@ -8,7 +8,7 @@
   console.log("element", c?.buttonPayload)
   const element = c?.buttonPayload // this is a store
 
-  $: console.log("element store show if", $element)
+  //$: console.log("element store show if", $element)
 
   import { InterkitClient } from '../'
   export let property;
