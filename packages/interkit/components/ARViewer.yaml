@@ -3,6 +3,8 @@ title: AR Viewer
 # green
 color: 230
 fields:
+  - type: string
+    name: closeTrigger
   - type: sheetColumn
     name: titleColumn
     columnType: string
@@ -16,13 +18,17 @@ fields:
     columnType: mediaFile
     defaultValue: elements/usdzFile
   - type: sheetColumn
-    name: descriptionColumn
-    columnType: richText
-    defaultValue: elements/description
-  - type: options
-    name: ARmode
-    defaultValue: "AR preferred"
-    options:
-      - "AR preferred"
-      - "AR only"
+    name: imageColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - type: sheetColumn
+    name: videoColumn
+    columnType: mediaFile
+    defaultValue: elements/video
+#  - type: options
+#    name: ARmode
+#    defaultValue: "preferred"
+#    options:
+#      - "preferred"
+#      - "only"
 toolboxCategory: "MediaPlayer"
