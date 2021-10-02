@@ -6,10 +6,10 @@
 
 <div class="TopNavBarCustom">
   <nav class="TopNavBarCustom__Top">
-    <div class="left">
+    <div class="left TopNavBarCustom__Top__Left">
       <slot name="left"/>
     </div>
-    <div class="right">
+    <div class="right TopNavBarCustom__Top__Right">
       <slot name="right"/>
     </div>
   </nav>
@@ -40,9 +40,12 @@
     padding-left: 16px;
     padding-right: 16px;
   }
-  .left, .right {
-    
+  
+  :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {
+    margin-left: 8px;
+    display: inline-flex;
   }
+
   .right {
     text-align: right;
   }
