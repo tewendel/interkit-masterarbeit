@@ -5,6 +5,7 @@
 
   import MediaFileResolver from './MediaFileResolver.svelte'
   import MarkdownContent from './MarkdownContent.svelte'
+  import Modal from './Modal.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import { executeTrigger } from '../actions'
@@ -15,6 +16,9 @@
   export let imageColumn; // image column
   export let videoColumn; // video column
   export let closeTrigger; // triggered at close
+  export let fallbackModalDismissText
+  export let fallbackModalHelpText
+  export let helpTrigger
   export let ARmode = "only" // "preferred" | "only"
 
   const ARElementStore = InterkitClient.getGlobalStore("ARElement")
@@ -87,6 +91,13 @@
       <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
     </div>
     {#if mode == "video"}
+      <Modal
+          dismissText = {fallbackModalDismissText}
+          helpText = {fallbackModalHelpText}
+          helpTrigger = {helpTrigger}
+        >
+        <slot name="fallbackModalContent" />
+      </Modal>
       <!-- svelte-ignore a11y-media-has-caption -->
       <video autoplay muted loop>
         <MediaFileResolver let:url mediafileRef={element.videoFileRef} >

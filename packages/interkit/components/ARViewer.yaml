@@ -25,6 +25,14 @@ fields:
     name: videoColumn
     columnType: mediaFile
     defaultValue: elements/video
+  - type: slot
+    name: fallbackModalContent
+  - type: string
+    name: fallbackModalDismissText
+  - type: string
+    name: fallbackModalHelpText
+  - type: string
+    name: helpTrigger
 #  - type: options
 #    name: ARmode
 #    defaultValue: "preferred"
