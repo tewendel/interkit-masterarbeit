@@ -121,7 +121,7 @@
             href={generateAndroidHref(url)}
           >
             <Button inverse>
-              {androidButtonText}
+              {startButtonText}
             </Button>
           </a>
         </MediaFileResolver>
@@ -132,7 +132,7 @@
         <slot name="iosInfo"></slot>
 
         <Button inverse on:click={() => iosLinkRef.click()}>
-          {androidButtonText}
+          {startButtonText}
         </Button>
 
         <div style="position: absolute; z-index:-1; visibility: hidden">
