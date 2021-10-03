@@ -1,13 +1,7 @@
 <script>
 
-  import { getContext } from 'svelte';
-
-  // get context from parent element, for example ContentElement and pass the payload to the action
-  const c = getContext("buttonBar");
-  console.log("buttonPayload", c?.buttonPayload)
-  const buttonPayload = c?.buttonPayload // this is a store
-
   import { executeTrigger } from '../actions'
+  import { getContext } from 'svelte';
 
   export let inverse = false
   export let nopadding = false
@@ -17,6 +11,14 @@
   
   export let clickTrigger // set this to execute a trigger on button click
   export let onClick // function to call on click if we are not using this with triggers
+
+
+  // get context from parent element, for example ContentElement and pass the payload to the action
+  const c = getContext("buttonBar");
+  const buttonPayload = c?.buttonPayload // this is a store
+  if(buttonPayload) {
+    console.log("buttonPayload", $buttonPayload)
+  }
 
   const handleClick = () => {
 

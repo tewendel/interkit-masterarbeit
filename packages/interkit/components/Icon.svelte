@@ -5,7 +5,7 @@
 
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 
-  console.log("BUTTON", type, height, inverse)
+  //console.log("BUTTON", type, height, inverse)
 </script>
 
 <span on:click class:inverse class={`icon icon-${type}`} style={`--height: ${height}`}>
