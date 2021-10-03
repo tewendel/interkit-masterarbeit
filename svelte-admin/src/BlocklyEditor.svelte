@@ -109,7 +109,10 @@
       alert("error loading block data" + blockData.errors.reduce( (result, entry)=> result + "\n\n" + entry.errorMessage, ""))
       console.log(blockData)
     }
-    let blockObjects = blockData.components.map(e => e.json);
+    let blockObjects = blockData.components.map(e => ({
+      ...e.json, 
+      origin: e.origin 
+    }));
 
     blocklyConfig.initBlockDefinitions(Blockly, blockObjects, customFields); // generates block definitions from yaml component files
     
@@ -167,15 +170,20 @@
     }
     
     // add import statements
-    let allBlocks = workspace.getAllBlocks().map(b=>b.type)
-    let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.indexOf(e) === i)
+    let allBlocks = workspace.getAllBlocks()
+    let allBlocksUnique = allBlocks.filter((e, i) => allBlocks.findIndex(b => b.type === e.type) === i)
 
     let imports = "<script>\n";
     //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     imports += `import initActions from "./actions.js"; \ninitActions(); \n`
-    for(let type of allBlocksUnique) {
-      if(type != "BlocklySubTree" && type != "SubtreeReference")
-        imports += `import ${type} from "interkit/components/${type}.svelte";\n`
+    for(let block of allBlocksUnique) {
+      let origin = "interkit"
+      try {
+        const data = block.data ? JSON.parse(block.data) : {}
+        if (data.origin) origin = data.origin
+      } catch {}
+      if(block.type != "BlocklySubTree" && block.type != "SubtreeReference")
+        imports += `import ${block.type} from "${origin}/components/${block.type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 

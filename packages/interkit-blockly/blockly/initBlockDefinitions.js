@@ -1,6 +1,6 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
-export const initBlockDefinitions = (Blockly, blockObjects, customFields, metadata={}) => {
+export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
 
   const defaultBlockColour = 220;
 
@@ -63,7 +63,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields, metada
         // color
         this.setColour(blockObject.colour ? blockObject.colour : defaultBlockColour);
       },
-      data: JSON.stringify(metadata) // can be used to add metadata like whether the component is imported from project or from interkit {location: "interkit"}, {location: "."}
+      data: JSON.stringify({ origin: blockObject.origin }) // TODO escape characters or use a more appropriate format https://stackoverflow.com/questions/7918868/how-to-escape-xml-entities-in-javascript
     }
   }
 

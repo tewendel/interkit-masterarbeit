@@ -46,7 +46,7 @@ const get_yamls =  async (req, res) => {
             yamlFiles.push({
               name: file,
               path: projectComponentsPath + "/" + file,
-              origin: "project",
+              origin: ".",
             })
           }
         }
