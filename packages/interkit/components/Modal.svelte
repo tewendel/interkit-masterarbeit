@@ -23,7 +23,10 @@
     position: fixed;
     top:0;
     width: 100vw;
-    border-radius: 0 0 20px;
+    box-sizing:border-box;
+    border-radius: 0 0 20px 20px;
+    padding: 20px;
+    background-color: white;
     border: 1px black solid;
   }
 </style>

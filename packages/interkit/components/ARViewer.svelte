@@ -96,7 +96,9 @@
           helpText = {fallbackModalHelpText}
           helpTrigger = {helpTrigger}
         >
-        <slot name="fallbackModalContent" />
+        <div slot="content">
+          <slot name="fallbackModalContent" />
+        </div>
       </Modal>
       <!-- svelte-ignore a11y-media-has-caption -->
       <video autoplay muted loop>
