@@ -120,10 +120,10 @@ const initCamera = ()=> {
           inversionAttempts: "dontInvert",
         });
         if (code) {
-          drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+          /*drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
           drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
           drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");*/
           onScan(code.data);
         } else {
           
@@ -181,11 +181,14 @@ const close = () => {
         <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
       </div>
     {/if}
+    <div class="qr-frame"></div>
   {/if}
 </div>
 
 {#if showTips}
-  <Overlay>
+  <Overlay 
+    zIndex=3
+  >
     <TopNavBarCustom
       headline="QR-Code Scannen"
     >
@@ -231,8 +234,23 @@ const close = () => {
     left: 0;
   }
 
+  .qr-frame {
+    width: 200px;
+    height: 200px;
+    background-image: url("../icons/QR_frame.svg");
+    background-size: contain;
+    z-index: 2;
+  }
+
   .loadingMessage, .tip-button-container {
     z-index: 1;
+  }
+
+  .tip-button-container {
+    position: absolute;
+    bottom: 40px;
+    transform: translateX(-50%);
+    left: 50%;
   }
 
 </style>

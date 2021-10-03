@@ -782,7 +782,6 @@
   }
 
   .marker_popup_close {
-    display: none;
     position: absolute;
     top: 16px;
     right: 16px;
