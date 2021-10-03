@@ -16,7 +16,8 @@ let video;
 let mediaStream;
 let loading = true;
 let showTips = false;
-
+let running = true;
+    
 export let elementKeyColumn; // the column on a sheet to select an element (optional)
 
 // columns for tips sheet
@@ -129,7 +130,9 @@ const initCamera = ()=> {
           
         }
       }
-      requestAnimationFrame(tick);
+      if(running)
+        requestAnimationFrame(tick);
+
     }
 
 }
@@ -157,6 +160,7 @@ onMount(async () => {
 });
 
 onDestroy(()=>{
+  running = false;
   console.log("stopping video stream", mediaStream);
   if(!mediaStream) return;
   mediaStream.getTracks().forEach((track)=>{
