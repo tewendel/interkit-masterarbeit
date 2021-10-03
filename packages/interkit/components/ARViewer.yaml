@@ -18,21 +18,25 @@ fields:
     columnType: mediaFile
     defaultValue: elements/usdzFile
   - type: sheetColumn
-    name: imageColumn
+    name: modelPreviewImageColumn
     columnType: mediaFile
-    defaultValue: elements/image
+    defaultValue: elements/modelPreviewImageColumn
   - type: sheetColumn
     name: videoColumn
     columnType: mediaFile
     defaultValue: elements/video
   - type: slot
-    name: fallbackModalContent
+    name: iosInfo
+  - type: slot
+    name: androidInfo    
+  - type: slot
+    name: videoFallbackInfo    
+  - type: slot
+    name: videoOnlyInfo
   - type: string
-    name: fallbackModalDismissText
+    name: startButtonText
   - type: string
-    name: fallbackModalHelpText
-  - type: string
-    name: helpTrigger
+    name: videoButtonText
 #  - type: options
 #    name: ARmode
 #    defaultValue: "preferred"

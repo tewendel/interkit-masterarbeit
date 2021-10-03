@@ -4,22 +4,27 @@
   import { onMount } from 'svelte';
 
   import MediaFileResolver from './MediaFileResolver.svelte'
-  import MarkdownContent from './MarkdownContent.svelte'
-  import Modal from './Modal.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import { executeTrigger } from '../actions'
 
+  // slots:
+  // - iosInfo
+  // - androidInfo
+  // - videoFallbackInfo
+  // - videoOnlyInfo
+
   export let titleColumn; // title column
   export let glbColumn; // glb (android) column
   export let usdzColumn; // usdz (ios) column
-  export let imageColumn; // image column
+  export let modelPreviewImageColumn; // 3d preview image column
   export let videoColumn; // video column
+  export let startButtonText;
+  export let videoButtonText;
   export let closeTrigger; // triggered at close
-  export let fallbackModalDismissText
-  export let fallbackModalHelpText
-  export let helpTrigger
+  //export let helpButtonTrigger // further info
   export let ARmode = "only" // "preferred" | "only"
+
 
   const ARElementStore = InterkitClient.getGlobalStore("ARElement")
   let element
@@ -38,34 +43,35 @@
     `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` + 
     `S.browser_fallback_url=${androidFallbackUrl};end;`
 
-  let mode // video | ios | android
+  let capability // video | ios | android
+  let mode = "init" // init | video
 
   onMount(()=> {
     const a = document.createElement("a");
     if (a.relList.supports("ar")) {
       // iOS quickloor AR is available.
-      mode = "ios"
+      capability = "ios"
     } else {
       const userAgent = window.navigator.userAgent
       if (/Android/i.test(userAgent)) {
         // android 
-        mode = "android"
+        capability = "android"
       } else {
-        mode = "video"
+        capability = "video"
       }
     } 
 
      // start automatically
     setTimeout(() => {
-      if (mode === "android") androidLinkRef.click()
-      if (mode === "ios") iosLinkRef.click()
+      // if (mode === "android") androidLinkRef.click()
+      // if (mode === "ios") iosLinkRef.click()
       }, 1000
     )
 
     // close automatically
     setTimeout(() => {
-      if (mode !== "video") {
-          executeTrigger(closeTrigger)
+      if (capability !== "video") {
+          // executeTrigger(closeTrigger)
         }
       }, 2000
     )
@@ -77,7 +83,7 @@
       title: util.rowVal($ARElementStore, titleColumn),
       glbFileRef: util.rowVal($ARElementStore, glbColumn),
       usdzFileRef: util.rowVal($ARElementStore, usdzColumn),
-      imageFileRef: util.rowVal($ARElementStore, imageColumn),
+      imageFileRef: util.rowVal($ARElementStore, modelPreviewImageColumn),
       videoFileRef: util.rowVal($ARElementStore, videoColumn),
     }
     console.log(element)
@@ -90,53 +96,74 @@
     <div class="ARViewer__Close close">
       <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
     </div>
-    {#if mode == "video"}
-      <Modal
-          dismissText = {fallbackModalDismissText}
-          helpText = {fallbackModalHelpText}
-          helpTrigger = {helpTrigger}
-        >
-        <div slot="content">
-          <slot name="fallbackModalContent" />
-        </div>
-      </Modal>
+
+    {#if mode === "video"}
+
       <!-- svelte-ignore a11y-media-has-caption -->
       <video autoplay muted loop>
         <MediaFileResolver let:url mediafileRef={element.videoFileRef} >
           <source src={url} >
         </MediaFileResolver>
       </video>
+
     {:else}
-      <ul>
-        <li>
-          AR VIEW
-          mode={mode}
-        </li>
-        <li>
-          <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
-            <a 
-              bind:this={androidLinkRef} 
-              rel="external" 
-              title={element.title} 
-              href={generateAndroidHref(url)}
-            >
-              <Button inverse>
-                start android
-              </Button>
-            </a>
-          </MediaFileResolver>
-        </li>
-        <li>
+
+      {#if capability === "android"}
+
+        <slot name="androidInfo"></slot>
+
+        <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
+          <a 
+            class="ARViewer__Link-android link-android"
+            bind:this={androidLinkRef} 
+            rel="external" 
+            title={element.title} 
+            href={generateAndroidHref(url)}
+          >
+            <Button inverse>
+              {androidButtonText}
+            </Button>
+          </a>
+        </MediaFileResolver>
+      {/if}
+
+      {#if capability === "ios"}
+
+        <slot name="iosInfo"></slot>
+
+        <Button inverse on:click={() => iosLinkRef.click()}>
+          {androidButtonText}
+        </Button>
+
+        <div style="position: absolute; z-index:-1; visibility: hidden">
           <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
-            <a bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
+            <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
               <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
-                <img style="display:inline" src={imgUrl} alt={element.title}/>
+                <img src={imgUrl} alt={element.title}/>
               </MediaFileResolver>
             </a>
           </MediaFileResolver>
-        </li>
-      </ul>
+        </div>
+
+      {/if}
+
+      {#if capability === "video"}
+
+        <slot name="videoOnlyInfo"></slot>
+
+      {:else}
+
+        <br />
+        <slot name="videoFallbackInfo"></slot>
+
+      {/if}
+
+      <Button type="secondary" on:click={() => mode = "video"}>
+        {videoButtonText}
+      </Button>
+
     {/if}
+
   {/if}
 </div>
 
@@ -144,12 +171,20 @@
   .container {
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   a img {
-    height: 40px;
+    height: 20vmin;
+    width: 60vmin;
+    object-fit: cover;
+    border-radius: 20px;
   }
+
 
   video {
     height: 100%;
