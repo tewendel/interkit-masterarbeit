@@ -5,6 +5,7 @@ export const columnTypes = {
   string: "String",
   location: "Location",
   sheetRef: "SheetRef",
+  date: "Date",
   mediaFile: "MediaFile",
   number: "Number",
   optionSelect: "OptionSelect",
