@@ -17,6 +17,7 @@ let mediaStream;
 let loading = true;
 let showTips = false;
 let running = true;
+let scanInterval;
     
 export let elementKeyColumn; // the column on a sheet to select an element (optional)
 
@@ -115,26 +116,27 @@ const initCamera = ()=> {
 
         canvasElement.height = video.videoHeight;
         canvasElement.width = video.videoWidth;
-        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-        if (code) {
-          /*drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-          drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-          drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");*/
-          onScan(code.data);
-        } else {
-          
-        }
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);        
       }
       if(running)
-        requestAnimationFrame(tick);
-
+        requestAnimationFrame(tick);      
     }
 
+    scanInterval = setInterval(()=>{
+      var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+      var code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: "dontInvert",
+      });
+      if (code) {
+        /*drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+        drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+        drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+        drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");*/
+        onScan(code.data);
+      } else {
+        
+      }
+    }, 100);
 }
 
 const logKey = (e) => {
@@ -166,6 +168,7 @@ onDestroy(()=>{
   mediaStream.getTracks().forEach((track)=>{
     track.stop();
   });
+  clearInterval(scanInterval);
 
 });
 
@@ -231,11 +234,14 @@ const close = () => {
   }
 
   canvas {
-    width: 100%;
     box-sizing: border-box;
+    width: auto;
+    height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    width: auto;
+    left: 50%;
+    transform: translate(-50%, 0%);
   }
 
   .qr-frame {
