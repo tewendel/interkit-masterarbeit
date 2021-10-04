@@ -68,7 +68,7 @@
       <TextInput labelText="Key" placeholder="Enter column key..." bind:value={value.newColKey} />
     </FormGroup>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save"/>
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
 
 <style>

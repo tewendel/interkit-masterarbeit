@@ -37,7 +37,7 @@
       </Select>
     </FormGroup>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save"/>
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
 
 <style>
