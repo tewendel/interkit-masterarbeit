@@ -29,43 +29,53 @@
   }
 
 </script>
+
+  <div class="center-box">
   
-  <div class="container">
+    <div class="container">
 
-    {#if tips?.length}
-      
-      <div class="image">
-        <MediaFileImage mediafileRef={util.rowVal(tips[tipIndex], tipImageColumn)}/>
-      </div>
-      
-      <h1>Hinweis {tipIndex + 1}</h1>
-      <p>{util.rowVal(tips[tipIndex], tipTextColumn)}</p>
+      {#if tips?.length}
+        
+        <div class="image">
+          <MediaFileImage mediafileRef={util.rowVal(tips[tipIndex], tipImageColumn)}/>
+        </div>
+        
+        <h1>Hinweis {tipIndex + 1}</h1>
+        <p>{util.rowVal(tips[tipIndex], tipTextColumn)}</p>
 
-      <div class="QRTips__Button__Bar button-bar">
-        {#if tipIndex > 0}<Button text="Zurück" onClick={()=>{tipIndex -= 1}}/>{/if}
+        <div class="QRTips__Button__Bar button-bar">
+          {#if tipIndex > 0}<Button text="Zurück" onClick={()=>{tipIndex -= 1}}/>{/if}
+          <Button text="Weiter" onClick={incrIndex}/>
+        </div>
+        
+      {:else}
+
+        <p>Für diese Ziel gibt es keine Hinweise.</p>
         <Button text="Weiter" onClick={incrIndex}/>
-      </div>
-      
-    {:else}
 
-      <p>Für diese Ziel gibt es keine Hinweise.</p>
-      <Button text="Weiter" onClick={incrIndex}/>
+      {/if}
 
-    {/if}
+    </div>
 
   </div>
 
 <style>
 
+  .center-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .container {
-    position: fixed;
-    bottom: 64px;
-    left: 16px;
-    right: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
     border: 1px solid black;
     border-radius: 25px;
     padding: 8px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,6 +87,7 @@
     overflow: hidden;
     width: 100%;
     margin-bottom: 16px;
+    max-height: 200px;
   }
 
   h1, p {
