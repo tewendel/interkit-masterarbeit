@@ -120,4 +120,8 @@
   .icon-ar {
     background-image: url("../icons/AR.svg"); 
   }
+
+  .icon-check {
+    background-image: url("../icons/Check-Thin.svg"); 
+  }
 </style>

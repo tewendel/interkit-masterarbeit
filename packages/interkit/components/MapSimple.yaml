@@ -1,0 +1,43 @@
+name: MapSimple
+title: MapSimple
+fields:
+  - type: "string"
+    name: "defaultLocation"
+  - type: "sheetColumn"
+    name: "markerPositionsColumn"
+    columnType: "location"
+    defaultValue: "elements/position"
+  - type: "sheetColumn"
+    name: "customIconColumn"
+    columnType: "mediaFile"
+    defaultValue: "elements/mapMarkerIcon"    
+  - type: "sheetColumn"
+    name: "markerLabelColumn"
+    columnType: "string"
+    defaultValue: "elements/markerLabel"    
+  - type: string
+    name: checkedProperty
+    defaultValue: "checked"
+  - type: "sheetColumn"
+    name: "hideOnMapColumn"
+    columnType: "string"
+    defaultValue: "elements/hideOnMap"
+  - type: "string"
+    name: "permissionNotification"
+  - type: string
+    name: mapId
+    defaultValue: map
+  - type: string
+    name: height
+    defaultValue: 100%
+  - type: checkbox
+    name: showControls
+    defaultValue: TRUE
+  - type: checkbox
+    name: showPopups
+    defaultValue: TRUE
+  - type: "slot"
+    name: "element"
+    slotProps:
+      - "element"
+toolboxCategory: Map

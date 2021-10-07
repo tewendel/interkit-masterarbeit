@@ -8,6 +8,30 @@ const rowVal = (row, sheetColumn) => {
     return row?.values[colKey(sheetColumn)]
 }
 
+/* utility function to convert a sheet row into a more conveniently accessible object 
+ row = {
+    "name": "anna"
+ }
+ columnMap = {
+    "elements/name": "name"
+ }
+ object = {
+    "name": "anna"
+ }
+*/
+
+const rowToObject = (row, columnMap) => {
+  let object = {};
+  object.key = row.key; // preserve the row key
+  object.row = row // preserver the original row
+  for(let key in columnMap) {
+    object[key] = rowVal(row, columnMap[key])
+  }
+  //console.log("rowToObject", row, columnMap, object)
+  return object
+};
+
+
 export default {
 
   colKey,
@@ -27,6 +51,17 @@ export default {
   getSheetId: (sheetColumn) => {
     alert("deprecated use of getSheetId")
     return sheetColumn?.split("/")?.[0];
+  },
+  
+  rowToObject,
+  rowsToObjects: (rows, columnMap) => {
+    if(!columnMap) return [];
+    if(Array.isArray(rows))
+      return rows.map((r)=>{return rowToObject(r, columnMap)})
+    if(typeof data == "object")
+      return rowToObject(rows, columnMap)
+    console.log("rowsToObjects conversion error");
+    return [];
   },
 
   // finds the column key of the first text column in a sheet
