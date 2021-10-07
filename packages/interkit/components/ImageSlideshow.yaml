@@ -1,0 +1,24 @@
+name: ImageSlideshow
+title: Image Slideshow
+color: 230
+fields:
+  - type: sheetId
+    name: slideshowSheetKey
+    defaultValue: slideshow
+  - type: sheetColumn
+    name: imageColumn #, titleColumn, superTitleColumn, URLColumn
+    columnType: mediaFile
+    defaultValue: slideshow/image
+  - type: sheetColumn
+    name: titleColumn
+    columnType: string
+    defaultValue: slideshow/title
+  - type: sheetColumn
+    name: superTitleColumn
+    columnType: string
+    defaultValue: slideshow/superTitle
+  - type: sheetColumn
+    name: URLColumn
+    columnType: string
+    defaultValue: slideshow/url
+toolboxCategory: "Images"
