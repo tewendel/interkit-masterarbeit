@@ -153,6 +153,7 @@ export const setupMediaServer = (app) => {
           _fs.readFile(req.file.path, function (_readError, _readData) {
             if (_readError) {
               console.log(_readError);
+              res.status(500).json({error: "internal server error"})
             } else {
 
               let duration;
@@ -162,30 +163,34 @@ export const setupMediaServer = (app) => {
                 console.log("getMp3Duration", duration);
               }
 
+              const meta = {
+                projectId: req.body.projectId,
+                key: uuidv4(),
+                duration
+              }
+
               const _addFileMeta = {
                 fileName: req.file.originalname,
                 type: req.file.mimetype,
                 size: req.file.size,
-                meta: {
-                  projectId: req.body.projectId,
-                  key: uuidv4(),
-                  duration
-                }
+                meta
               };
 
               MediaFiles.write(_readData, _addFileMeta, function (_uploadError, _uploadData) {
                 if (_uploadError) {
                   console.log(_uploadError);
+                  res.status(500).json({ error: "upload error" })
                 } else {
                   console.log('upload data=', _uploadData); 
                   //_fs.unlink(req.file.path); // remove temp upload
+                  res.status(200).json({ ...meta })
                 }
               });
             }
           });
         });  
     }
-    res.end();
+    //res.end();
   });
 }
 

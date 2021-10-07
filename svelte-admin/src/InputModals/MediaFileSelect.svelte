@@ -38,7 +38,7 @@
   <ModalBody>
     <MediaFileList radio mediafiles={files} bind:value={value} {projectId}/>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save"/>
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
 
 <style>

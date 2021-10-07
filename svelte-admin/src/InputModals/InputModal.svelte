@@ -7,6 +7,7 @@
   import MediaFileSelect from './MediaFileSelect.svelte';
   import OptionSelect from './OptionSelect.svelte';
   import RichtTextModal from './RichtTextModal.svelte';
+  import DateModal from './DateModal.svelte';
   
   export let type = null
   export let value = {}
@@ -27,7 +28,8 @@
     "sheetId": SheetIdSelect,
     "mediaFile": MediaFileSelect,
     "optionSelect": OptionSelect,
-    "richText": RichtTextModal
+    "richText": RichtTextModal,
+    "date": DateModal
   }
 
 </script>

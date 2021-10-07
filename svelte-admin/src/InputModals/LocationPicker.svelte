@@ -137,7 +137,7 @@ import {
      <button on:click={moveToMarker}>back to marker</button>
     
   </ModalBody>
-  <ModalFooter primaryButtonText="Save"/>
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
 
 

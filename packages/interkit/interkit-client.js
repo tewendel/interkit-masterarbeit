@@ -485,6 +485,9 @@ const InterkitClient = {
     }
   },
 
+  getUploadEndpoint: () => 
+    `${get(config)?.INTERKIT_SERVER_URL}/mediaUpload`,
+
   getSheet: async (key) => {
     if(!sheetSub) {
       // no subscription to media files yet, set it up

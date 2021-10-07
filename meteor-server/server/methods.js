@@ -87,12 +87,17 @@ const moveColumn = async ({sheetKey, projectId, colKey, direction}) => {
 }
 
 const addRow = async ({sheetKey, projectId})  => {
+    const key = uuidv4()
     Rows.insert({
-      key: uuidv4(),
+      key,
       sheetKey: sheetKey,
       values: {},
       projectId
-    })           
+    })
+    // console.log("addRow", key)
+    return {
+      rowKey: key
+    }
 }
 
 // updates the row objects after a column key has been changed
@@ -264,7 +269,7 @@ Meteor.methods({
   },
 
   'sheet.addRow': ({sheetKey, projectId}) => {
-    addRow({sheetKey, projectId})
+    return addRow({sheetKey, projectId})
   },
 
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {

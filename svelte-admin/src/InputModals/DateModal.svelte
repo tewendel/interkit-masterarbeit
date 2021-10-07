@@ -1,13 +1,13 @@
 <script>
 
   import { InterkitClient } from 'interkit'
+  import dayjs from 'dayjs'
 
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-    TextInput,
     Select, SelectItem, FormGroup
   } from "carbon-components-svelte";
 
@@ -19,7 +19,14 @@
   export let projectId;
   export let params;
 
-  let options = params.currentColumn.options.split(",").map(o => o.trim())
+  const format = 'YYYY-MM-DDTHH:MM'
+  let internal
+
+  const input = (x) => (internal = dayjs(x).format(format))
+  const output = (x) => (value = dayjs(x, format).toDate())
+
+  $: input(value)
+  $: output(internal)
 
 </script>
 
@@ -28,14 +35,10 @@
   on:close={close}
 >
   <ModalHeader label="{value.key}" title="Update Column" />
-  <ModalBody hasForm>
-    <FormGroup>
-      <Select labelText="Option" bind:selected={value}>
-        {#each options as option}
-          <SelectItem value={option} text={option} />
-        {/each}
-      </Select>
-    </FormGroup>
+  <ModalBody>
+    Local time: <input type="datetime-local" bind:value={internal} />
+    <br />
+    Absolute time: { value }
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
