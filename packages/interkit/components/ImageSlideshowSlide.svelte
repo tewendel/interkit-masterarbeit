@@ -2,6 +2,7 @@
 
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
+  import Icon from './Icon.svelte';
 
   export let mediafileRef
   export let url
@@ -26,8 +27,7 @@
   </div>
   <a href={ url } class="ImageSlideshowSlide__button button">
     <Button>
-      <!-- FIXME use proper icon -->
-      &gt;
+      <Icon type="arrow-right"/>
     </Button>
   </a>
 </div>
