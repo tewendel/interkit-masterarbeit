@@ -76,6 +76,11 @@
   export let defaultLocation; // where to center the map [lat, lng]
   // what to tell the user when there is no permission for gps
 
+  export let height; // height of the container
+  export let showControls; // "TRUE" if we should show controls
+  export let showPopups; // "TRUE" if we should show popup on marker tap
+  export let mapId; // id of the map
+
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
     try {
@@ -126,9 +131,11 @@
   const markerClick = async (e) => {
     console.log("marker clicked", e.target?.payload);
     
-    selectedElement = {
-      ...e.target?.payload?.elementRow,
-      onPlay: () => {selectedElement = null}
+    if(showPopups == "TRUE") {
+      selectedElement = {
+        ...e.target?.payload?.elementRow,
+        onPlay: () => {selectedElement = null}
+      }
     }
   }
 
@@ -202,7 +209,7 @@
 
     /* basic map setup */
 
-    map = L.map('mapid', {
+    map = L.map(mapId, {
       zoomControl: false,
       attributionControl: false,
     }).setView(defaultLocationLatLng, 14);  
@@ -320,7 +327,7 @@
 <div 
     class="Map__Container container" 
     class:hasHeading
-    style={`--map-heading: ${currentPosition?.heading || 0}deg;`}
+    style={`--map-heading: ${currentPosition?.heading || 0}deg; height: ${height};`}
   >
 
   {#if selectedElement}
@@ -341,41 +348,42 @@
     </div>
   {/if}
 
-  <div class="Map__Controls controls">
+  {#if showControls == "TRUE"}
+    <div class="Map__Controls controls">
 
-    <button class="Map__Controls__ZoomIn zoomIn">
-      <Button on:click={zoomIn}>
-        <Icon type="plus" />
-      </Button>
-    </button>
+      <button class="Map__Controls__ZoomIn zoomIn">
+        <Button on:click={zoomIn}>
+          <Icon type="plus" />
+        </Button>
+      </button>
 
-    <button class="Map__Controls__ZoomOut zoomOut">
-      <Button on:click={zoomOut}>
-        <Icon type="minus" />
-      </Button>
-    </button>
+      <button class="Map__Controls__ZoomOut zoomOut">
+        <Button on:click={zoomOut}>
+          <Icon type="minus" />
+        </Button>
+      </button>
 
-    <button class="Map__Controls__Locate locate" id="locateButton">
-      <Button on:click={panToUserPosition}>
-        <Icon type="position" />
-      </Button>
-    </button>
+      <button class="Map__Controls__Locate locate" id="locateButton">
+        <Button on:click={panToUserPosition}>
+          <Icon type="position" />
+        </Button>
+      </button>
 
-  </div>
+    </div>
+  {/if}
   
   
-  <div id="mapid" bind:this={mapElement}></div>
+  <div class="map" id={mapId} bind:this={mapElement}></div>
 
 </div>
 
 <style>
 
   .container {
-    height: 100%;
     width: 100%;
   }
 
-  #mapid { 
+  .map { 
     height: 100%;
     width: 100%;
   }

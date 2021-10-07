@@ -24,6 +24,18 @@ fields:
     defaultValue: "elements/hideOnMap"
   - type: "string"
     name: "permissionNotification"
+  - type: string
+    name: mapId
+    defaultValue: map
+  - type: string
+    name: height
+    defaultValue: 100%
+  - type: checkbox
+    name: showControls
+    defaultValue: TRUE
+  - type: checkbox
+    name: showPopups
+    defaultValue: TRUE
   - type: "slot"
     name: "element"
     slotProps:
