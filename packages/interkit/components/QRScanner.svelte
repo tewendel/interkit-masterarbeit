@@ -29,6 +29,7 @@ export let tipOrderColumn;
 
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
 const targetElement = QRElementStore ? $QRElementStore : undefined
+const targetElementObj = util.rowToObject(targetElement, { elementKeyColumn })
 
 let dataRows; 
 
@@ -66,16 +67,19 @@ let tipRowStore;
 let tips;
 
 const initTips = async ()=> {
-  // setup the subscription to the tip rows
-    const tipSheetKey = util.getSheetKey(tipQrKeyColumn);
-    tipRowStore = await InterkitClient.getRowSubStore(tipSheetKey);
-
+    // setup the subscription to the tip rows
+    tipRowStore = await InterkitClient.getRowSubStore(tipQrKeyColumn, {
+      tipQrKeyColumn,
+      tipImageColumn,
+      tipTextColumn,
+      tipOrderColumn
+    });
+    console.log("$tipRowStore", $tipRowStore)
+    
     // filter tips for targetElement and sort by order column
     tips = $tipRowStore
-      .filter(t => 
-        util.rowVal(t, tipQrKeyColumn) == util.rowVal(targetElement, elementKeyColumn)
-      )
-      .sort((a, b) => util.rowVal(a, tipOrderColumn) - util.rowVal(b, tipOrderColumn))  
+      .filter(t => t.tipQrKeyColumn == targetElementObj.elementKeyColumn)
+      .sort((a, b) => a.tipOrderColumn - b.tipOrderColumn)  
     console.log("tips", tips)
 }
 
@@ -206,12 +210,6 @@ const close = () => {
       </svelte:fragment>
       <svelte:fragment slot="content">
         <QRTips 
-          {targetElement}
-          {elementKeyColumn}
-          {tipQrKeyColumn}
-          {tipImageColumn}
-          {tipTextColumn}
-          {tipOrderColumn}
           onClose={close}
           {tips}
         />
