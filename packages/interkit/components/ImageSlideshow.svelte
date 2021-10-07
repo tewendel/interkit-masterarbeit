@@ -13,25 +13,30 @@
   export let imageColumn
   export let URLColumn
 
-  let rowStore
+  let slides
 
   onMount(async () => {
-    rowStore = await InterkitClient.getRowSubStore(slideshowSheetKey)
+    slides = await InterkitClient.getRowSubStore(slideshowSheetKey, {
+      superTitleColumn,
+      titleColumn,
+      imageColumn,
+      URLColumn
+    })
   })
 
 </script>
 
 <div class="ImageSlideshow container">
-  {#if $rowStore}
-    <div class="ImageSlideshow__Slider slider" data-slides-amount={$rowStore.length}>
-      {#if $rowStore.length}
-        {#each $rowStore as row}
+  {#if $slides}
+    <div class="ImageSlideshow__Slider slider" data-slides-amount={$slides.length}>
+      {#if $slides.length}
+        {#each $slides as slide}
           <div class="ImageSlideshow__Slide slide">
             <ImageSlideshowSlide
-              superTitle={ util.rowVal(row, superTitleColumn) }
-              title={ util.rowVal(row, titleColumn) }
-              mediafileRef={ util.rowVal(row, imageColumn) }
-              url={ util.rowVal(row, URLColumn) }
+              superTitle={ slide.superTitleColumn }
+              title={ slide.titleColumn }
+              mediafileRef={ slide.imageColumn }
+              url={ slide.URLColumn }
               autoVia={ true }
               />
           </div>
