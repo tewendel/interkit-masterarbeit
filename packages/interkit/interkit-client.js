@@ -300,7 +300,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
     bufferedWritesFlushAt = null
     let dataRestored = restore_ids(d);
     sub.data.set(dataRestored)
-    sub.objects.set(util.rowsToObjects(d), columnMap)
+    sub.objects.set(util.rowsToObjects(dataRestored, columnMap))
   }
 
   sub.reactiveCollection.onChange((newData)=>{
@@ -358,6 +358,7 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
 
   // default subKey is the sheetKey
   if(!subKey) subKey = sheetKey;
+  console.log("using subKey", subKey)
 
   if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
