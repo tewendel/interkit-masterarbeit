@@ -1,0 +1,13 @@
+name: ProgressChecklist
+fields:
+  - name: iconColumn
+    type: sheetColumn
+    columnType: mediafile
+    defaultValue: "elements/mapMarkerIcon"
+  - name: labelColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: "elements/markerLabel"
+  - name: text
+    type: slot
+toolboxCategory: "Elements"

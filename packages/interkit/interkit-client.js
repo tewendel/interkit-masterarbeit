@@ -352,7 +352,7 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap) => {
   } else {
     sheetKey = sheetKeyOrSheetColumn
   }
-  console.log("sheetKey", sheetKey)
+  //console.log("sheetKey", sheetKey)
 
   if(!rowSubs[sheetKey]) {
     // no subscription for this sheet yet, create one
