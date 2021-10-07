@@ -252,7 +252,6 @@ const checkForUpdates = async () => {
 */
 
 const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, columnMap) => {
-  //console.log("getSub", pub)
   
   // setup the store
   let sub = {};
@@ -343,7 +342,10 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 
 // returns the row store for a given sheet, created one if not available or waits for subscription to complete
 // if a columnMap is passed in, returns the converted object store
-const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap) => {
+// subKey is a special key you can use to prevent conflicts with other subs that have different column maps
+const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
+
+  console.log("getRowSubStore", columnMap)
 
   // check if we got a sheetKey or sheetColumn
   let sheetKey;
@@ -354,9 +356,12 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap) => {
   }
   //console.log("sheetKey", sheetKey)
 
-  if(!rowSubs[sheetKey]) {
+  // default subKey is the sheetKey
+  if(!subKey) subKey = sheetKey;
+
+  if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
-    rowSubs[sheetKey] = {
+    rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
         console.log("creating row subscription on sheet", sheetKey)
@@ -365,7 +370,7 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap) => {
       })
     };
   }
-  let sub = await rowSubs[sheetKey].subPromise;
+  let sub = await rowSubs[subKey].subPromise;
   if(columnMap) {
     return sub?.objects
   } else {

@@ -17,7 +17,7 @@
   const c = getContext("buttonBar");
   const buttonPayload = c?.buttonPayload // this is a store
   if(buttonPayload) {
-    console.log("buttonPayload", $buttonPayload)
+    //console.log("buttonPayload", $buttonPayload)
   }
 
   const handleClick = () => {

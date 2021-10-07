@@ -23,9 +23,11 @@ const rowVal = (row, sheetColumn) => {
 const rowToObject = (row, columnMap) => {
   let object = {};
   object.key = row.key; // preserve the row key
+  object.row = row // preserver the original row
   for(let key in columnMap) {
     object[key] = rowVal(row, columnMap[key])
   }
+  //console.log("rowToObject", row, columnMap, object)
   return object
 };
 
