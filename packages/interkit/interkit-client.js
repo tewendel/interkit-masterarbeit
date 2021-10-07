@@ -8,6 +8,7 @@ import InterkitLiveReload from "./interkit-live-reload.js"
 
 import { Capacitor } from '@capacitor/core';
 
+import util from './util.js';
 
 // this store holds the basic data from interkit.config.json
 let config = writable(null); 
@@ -239,22 +240,24 @@ const checkForUpdates = async () => {
     return false;   
 }
 
-  /*
-    col: the meteor collection 
-    pub: the meteor publication to subscribe to
-    pubArgs: an object with arguments for the subscription - projectId is added from config
-    cFilter: a filter function to narrow down the results
-    single: track a single document or an array
+/*
+  col: the meteor collection 
+  pub: the meteor publication to subscribe to
+  pubArgs: an object with arguments for the subscription - projectId is added from config
+  cFilter: a filter function to narrow down the results
+  single: track a single document or an array
+  columnMap: column keys for conversion into more convenient objects
 
-    -> components should not use this directly but use getRowSubStore (see below)
-  */
+  -> components should not use this directly but use getRowSubStore (see below)
+*/
 
-const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => {
+const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, columnMap) => {
   //console.log("getSub", pub)
   
   // setup the store
   let sub = {};
   sub.data = writable([]); // save svelte store under data
+  sub.objects = writable([]); // svelte store to contain converted objects
 
   // add projectId to arguments object
   if(pubArgs) {
@@ -275,10 +278,11 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
 
   let collection = server.collection(col).filter(cFilter)
   let data = single ? collection.fetch()[0] : collection.fetch()
-  //console.log("data", pub, data)
+  let dataRestored = restore_ids(data)
 
-  // write an initial fetch of the collection into the store
-  sub.data.set(restore_ids(data));
+  // write an initial fetch of the collection into the stores
+  sub.data.set(dataRestored);
+  sub.objects.set(util.rowsToObjects(dataRestored, columnMap));
   
   // update the store through simpleDDP's onChange listener
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
@@ -295,7 +299,9 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
       bufferedWritesFlushHandle = null;
     }
     bufferedWritesFlushAt = null
-    sub.data.set(restore_ids(d))
+    let dataRestored = restore_ids(d);
+    sub.data.set(dataRestored)
+    sub.objects.set(util.rowsToObjects(d), columnMap)
   }
 
   sub.reactiveCollection.onChange((newData)=>{
@@ -336,20 +342,35 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false) => 
 }
 
 // returns the row store for a given sheet, created one if not available or waits for subscription to complete
-const getRowSubStore = async (sheetKey) => {
+// if a columnMap is passed in, returns the converted object store
+const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap) => {
+
+  // check if we got a sheetKey or sheetColumn
+  let sheetKey;
+  if(sheetKeyOrSheetColumn.includes("/")) {
+    sheetKey = util.getSheetKey(sheetKeyOrSheetColumn)
+  } else {
+    sheetKey = sheetKeyOrSheetColumn
+  }
+  console.log("sheetKey", sheetKey)
+
   if(!rowSubs[sheetKey]) {
     // no subscription for this sheet yet, create one
     rowSubs[sheetKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
         console.log("creating row subscription on sheet", sheetKey)
-        let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey)
+        let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
     };
   }
   let sub = await rowSubs[sheetKey].subPromise;
-  return sub?.data;
+  if(columnMap) {
+    return sub?.objects
+  } else {
+    return sub?.data;  
+  }
 }
 
 const getMediaFileSubStore = async () => {
@@ -447,7 +468,6 @@ const InterkitClient = {
 
   getSub,
   getRowSubStore,
-  
   getMediaFileSubStore,
   getMediaFile: async (key) => {
     if(key) {

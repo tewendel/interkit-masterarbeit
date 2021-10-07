@@ -6,13 +6,12 @@
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
 
-  export let targetElement;
-  export let elementKeyColumn;
-
+  /*
   export let tipQrKeyColumn;
   export let tipImageColumn;
   export let tipTextColumn;
   export let tipOrderColumn;
+  */
 
   export let onClose;
 
@@ -37,11 +36,11 @@
       {#if tips?.length}
         
         <div class="image">
-          <MediaFileImage mediafileRef={util.rowVal(tips[tipIndex], tipImageColumn)}/>
+          <MediaFileImage mediafileRef={tips[tipIndex].tipImageColumn}/>
         </div>
         
         <h1>Hinweis {tipIndex + 1}</h1>
-        <p>{util.rowVal(tips[tipIndex], tipTextColumn)}</p>
+        <p>{tips[tipIndex].tipTextColumn}</p>
 
         <div class="QRTips__Button__Bar button-bar">
           {#if tipIndex > 0}<Button text="Zurück" onClick={()=>{tipIndex -= 1}}/>{/if}
