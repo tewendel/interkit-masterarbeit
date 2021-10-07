@@ -15,6 +15,7 @@
   export let markerCheckedIconAsset = "icons/Check-Thin.svg"; // checked asset
   export let checkedProperty = "checked" // what property to use for the checkmark
 
+  // retrieve the store with element objects
   let elements;
   onMount(async () => {
     elements = await InterkitClient.getRowSubStore(customIconColumn, { 
@@ -23,9 +24,11 @@
     }, "progressChecklist")
   })
 
+  // the global store that contains element properties
   const elementProperties = InterkitClient.getGlobalStore("elementProperties");
   if(!$elementProperties) elementProperties.set({}); 
 
+  // we need to preassemble the marker html here because it requires async call to createIconDivHTML
   let markerHTMLs = {};
   const updateMarkerHTMLs = async (elements, elementProperties) => {
     if(elements?.length)
