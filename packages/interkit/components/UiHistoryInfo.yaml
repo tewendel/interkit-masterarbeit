@@ -1,0 +1,6 @@
+name: UiHistoryInfo
+title: UI History Info
+toolboxCategory: Debug
+fields:
+  - type: string
+    name: hi

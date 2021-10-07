@@ -30,6 +30,9 @@ try {
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
+// a global store to store the state history of stores relavant to the UI
+let uiHistoryStore = writable([])
+
 // centrally store all subscriptions to sheets, using sheetKey as key on this object
 let rowSubs = {};
 let mediaFileSub;
@@ -388,6 +391,73 @@ const getGlobalStore = (key) => {
   return globalStores[key]
 }
 
+// save current ui state, but also debounce
+// needs to be called *after* all changes are done
+// (alternatively the debounce should go in the different direction)
+const takeUiSnapshot = (debounceBeforeMs = 0) => {
+  uiHistoryStore.update(arr => {
+    //console.log(arr)
+    //if (typeof arr != "array") return
+
+
+    // get values from current stores
+    let stores = {}
+    for (let key in globalStores) {
+      stores[key] = get(globalStores[key])
+    }
+
+    // construct new entry
+    const newEntry = {
+      globalStores: stores,
+        date: new Date(),
+          id: Date.now()
+    }
+
+    let method = "pushState"
+
+    // replace latest entry when it is less than debounceStreakMs ago
+    if (arr.length > 0) {
+      if (arr[arr.length - 1].date.getTime() + debounceBeforeMs > Date.now()) {
+        // ...by removing the last entry before adding the new one
+        arr.pop();
+        method = "replaceState"
+      }
+    }
+
+    const result = [...arr, newEntry]
+
+    console.log("ui snapshot", method, result)
+
+    if (window) {
+      window.history[method]({ id: newEntry.id}, newEntry.id) // use browser history api to store the id
+    }
+
+    return result
+  })
+}
+
+const restoreUiSnapshot = id => {
+  const history = get(uiHistoryStore)
+  const entry = history.find(e => e.id === id)
+  if (entry) {
+    console.log("restoring ui snapshot", entry)
+    for (let key in globalStores) {
+      if (typeof entry.globalStores[key] !== "undefined") {
+        // replace existing content
+        globalStores[key].set(entry.globalStores[key])
+      } else {
+        // remove stores that are not in the snapshot
+        globalStores[key].set(null)
+        //delete globalStores[key]
+      }
+    }
+    console.log(globalStores)
+    // there is no way to remove stores, so no need to check if there are stores in the snapshot that are not there anymore
+    return entry
+  } else {
+    return false
+  }
+}
 
 const InterkitClient = {
   userId,
@@ -519,6 +589,13 @@ const InterkitClient = {
   },
 
   getUiKeyStore,
+
+  takeUiSnapshot,
+  restoreUiSnapshot,
+
+  getUiHistoryStore: () => {
+    return uiHistoryStore
+  },
   
   setUiKey: (uiKey, value) => {
     const store = getUiKeyStore(uiKey)
