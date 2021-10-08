@@ -46,10 +46,11 @@
   // get size from prop, or from element passed in, or default
   export let size = element?.size || "m"
 
-  // xs - used in dashboard, no image, no description, no category info
-  // s - used in bookmark list, small image, no description
+  // s - used in dashboard slider and lists (TODO)
   // m - used in map - small image, short description only
-  // l - used in dashboard sliders and full view
+  // l - used in full view
+  // TODO: reorganize/generalize these styling options somehow?
+
   
   const elementColumns = {
     supertextColumn,
