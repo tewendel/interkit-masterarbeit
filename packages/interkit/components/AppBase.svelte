@@ -1,12 +1,14 @@
 <script>
 
   import { InterkitClient } from '../'
+  import { executeTrigger } from '../actions.js'
   import { onMount } from 'svelte'
 
   let initComplete = false;
   
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp()  
+    executeTrigger("start")
   });
 
   let config = InterkitClient.config;
@@ -27,8 +29,28 @@
     window.location.reload(true);
   }
 
+  function popState(event) {
+    if (event && event.state && event.state.id) {
+      const result = InterkitClient.restoreUiSnapshot(event.state.id)
+      if (result === false) {
+        history.back()
+      }
+    } else {
+      history.back()
+    }
+  }
+
+  function receiveMessage(event) {
+    switch (event.data) {
+      case "go_back": history.back(); break;
+      case "go_forward": history.forward(); break;
+    }
+  }
+
   
 </script>
+
+<svelte:window on:popstate={popState} on:message={receiveMessage} />
 
 <div class="AppBase Theming" id="Theming">
   {#if $projectId && initComplete}

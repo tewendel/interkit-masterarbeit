@@ -17,6 +17,8 @@
     Column,
     Loading } from "carbon-components-svelte";
   import ReloadIcon from "carbon-icons-svelte/lib/Play20";
+  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft20";
+  import ArrowRight from "carbon-icons-svelte/lib/ArrowRight20";
   import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
 
   export let projectId, previewURL = "";
@@ -29,6 +31,7 @@
   let bundleServerURL
   let themed = true
   let localConfig = true
+  let iframeRef = null
 
   let w, h
 
@@ -64,8 +67,10 @@
   }
 
 </script>
-
-  
+  <div style="float:right">
+    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage('go_back','*')  } iconDescription="Browser back" icon={ArrowLeft} />
+    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage('go_forward','*') } iconDescription="Browser forward" icon={ArrowRight} />
+  </div>
   <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
     <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
       {#if bundleServerURL && !$compileError}
@@ -74,6 +79,7 @@
             title="embedded app preview" 
             src={previewURL} 
             allow="geolocation"
+            bind:this={iframeRef}
             data-build-hash={$buildHash}>
           </iframe><br>
         {/key}

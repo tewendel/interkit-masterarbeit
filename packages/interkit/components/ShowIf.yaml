@@ -1,6 +1,6 @@
 name: ShowIf
 title: Show If
-color: 50
+colour: 50
 fields:
   - type: string
     name: uiKey
