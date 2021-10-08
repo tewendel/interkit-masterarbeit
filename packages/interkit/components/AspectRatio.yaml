@@ -1,0 +1,17 @@
+name: AspectRatio
+title: Aspect Ratio
+toolboxCategory: Layout
+fields:
+  - name: aspectRatioType
+    type: options
+    options:
+      - element
+      - small_overlay
+      - large_overlay
+      - square
+    defaultValue: element
+  - name: standalone
+    type: checkbox
+    defaultValue: FALSE
+  - name: default
+    type: slot
