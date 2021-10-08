@@ -1,9 +1,24 @@
 <script>
-  // see https://css-tricks.com/aspect-ratio-boxes/#article-header-id-6
-  export let aspect_ratio = 1
+  // especially useful for images
+
+  export let aspectRatioType = "element" // choose from predefined interkit types
+  export let aspectRatio = null // manual setting
+  export let standalone = false // add border
+
+  const aspectRatioTypes = {
+    small_overlay: .46,
+    element: .55,
+    large_overlay: .74,
+    square: 1,
+  }
+
+  aspectRatio = aspectRatio || aspectRatioTypes[aspectRatioType]
+
+  // method: see https://css-tricks.com/aspect-ratio-boxes/#article-header-id-6
+
 </script>
 
-<div style={`--aspect-ratio: ${ aspect_ratio * 100 }%`}>
+<div class:standalone style={`--aspect-ratio: ${ aspectRatio * 100 }%`}>
 
 </div>
 
@@ -23,5 +38,10 @@
     content: "";
     display: table;
     clear: both;
+  }
+
+  .standalone {
+    border: 1px solid black;
+    border-radius: 20px;
   }
 </style>
