@@ -40,10 +40,17 @@
     }
   }
 
+  function receiveMessage(event) {
+    switch (event.data) {
+      case "go_back": history.back(); break;
+      case "go_forward": history.forward(); break;
+    }
+  }
+
   
 </script>
 
-<svelte:window on:popstate={popState}/>
+<svelte:window on:popstate={popState} on:message={receiveMessage} />
 
 <div class="AppBase Theming" id="Theming">
   {#if $projectId && initComplete}
