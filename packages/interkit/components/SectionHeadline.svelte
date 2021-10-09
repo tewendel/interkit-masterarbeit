@@ -5,5 +5,7 @@
 <style>
   .container {
     margin: 16px;
+    font-family: var(--font-family-headline);
+    color: var(--color-text-headline);
   }
 </style>

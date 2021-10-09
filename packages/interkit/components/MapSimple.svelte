@@ -401,7 +401,7 @@
     display: flex;
     flex-direction: row;
     padding: 5px;
-    border-radius: 12px;
+    border-radius: var(--border-radius-button);
     min-width: 40px;
     font-size: var(--font-size-regular);
   }
@@ -429,7 +429,7 @@
   .marker_popup_background {
     background-color: #fff;
     position: relative;
-    border-radius: 24px;
+    border-radius: var(--border-radius);
     border: 1px solid black;
   }
 
