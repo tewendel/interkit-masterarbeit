@@ -1,40 +1,81 @@
 <script>
   
-  export let primary_color = "#27EBBC"
-  export let text_color = "#000000"
-  export let font_family = "inter"
-  export let google_font = "Inter:wght@200;300;400;500"
-  export let background_color = "#FFFFFF"
-  export let background_color_highlight = "#E7EB27"
+  export let googleFont = "Inter:wght@300;400;500"
+  export let colorText = '#32332'
+  export let colorTextHeadline = '#32332'
+  export let colorTextButtonPrimary = 'white'
+  export let colorBackground = 'white'
+  export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  export let borderRadius = '16px'
+  export let borderRadiusButton = '16px'
+  export let borderWidth = '1px'
+  export let shadowAmount = '0'
 
   import { onMount } from 'svelte'
 
   onMount(async () => {
   })
 
-  const fontFamily = (font_family ? font_family + ", " : "") +  '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  /*
+  const setCssVar = (varName, value) => {
+    document.documentElement.style.setProperty('--' + varName, value)
+  }
+
+  $: {
+    setCssVar('borderRadius', borderRadius)
+  }
+  */
+
+  const baseFontStack = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+
+  
+/*
+  // detecting google fonts, but lacks precise definition
+
+  const googleFont = /[\+:@]/.test(fontFamilyText) ? fontFamilyText : false
+  if (googleFont) {
+    // strip off weights and such
+    fontFamilyText = fontFamilyText.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
+  }
+  if (fontFamilyText !== 'inherit') fontFamilyText += ', ' + baseFontStack
+
+  const googleFontHeadline = /[\+:@]/.test(fontFamilyHeadline) ? fontFamilyHeadline : false
+  if (googleFontHeadline) {
+    fontFamilyHeadline = fontFamilyHeadline.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
+  }
+  if (fontFamilyHeadline !== 'inherit') fontFamilyText += ', ' + baseFontStack
+*/
   
 </script>
 
 <div class="style" style={`
-    --font-family: ${fontFamily}; 
-    --color-primary: ${primary_color};
-    --color-text: ${text_color};
-    --color-background: ${background_color};
-    --color-background-highlight: ${background_color_highlight};
-
-    --font-size-headline-1: 30px;
-    --font-size-buttons: 12px;
-    --font-size-regular: 14px;
-    --line-height-regular: 20px;
+  --color-text: ${colorText};
+  --color-text-headline: ${colorTextHeadline};
+  --color-text-button-primary: ${colorTextButtonPrimary};
+  --color-background: ${colorBackground};
+  --font-family-text: ${fontFamilyText};
+  --font-family-headline: ${fontFamilyHeadline};
+  --border-radius: ${borderRadius};
+  --border-radius-button: ${borderRadiusButton};
+  --border-width: ${borderWidth};
+  --shadow-amount: ${shadowAmount};
+  /* derived defaults */
+  --border-color: var(--color-text);
+  --color-background-button-primary: var(--color-text);
+  --color-text-button: var(--color-text);
+  --color-background-button: var(--color-background);
+  /* to inherit */
+  font-family: var(--font-family-text);
+  color: var(--color-text);
   `} >
   <slot />
 </div>
 
 <svelte:head>
-  {#if google_font}
+  {#if googleFont}
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href={`https://fonts.googleapis.com/css2?family=${google_font}&display=swap`} rel="stylesheet">
+    <link href={`https://fonts.googleapis.com/css2?family=${googleFont}&display=swap`} rel="stylesheet">
   {/if}
 </svelte:head>
 

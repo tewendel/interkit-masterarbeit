@@ -283,7 +283,7 @@
 
   .container.size-s {
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: var(--border-radius);
     margin: 16px;
   }
 

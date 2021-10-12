@@ -185,6 +185,20 @@
     overflow: hidden;
     margin: 16px;
     height: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    border-radius: var(--border-radius-button);
+    min-width: 40px;
+    font-size: var(--font-size-regular);
+  }
+
+  :global(div.marker-container.selected) {
+    background-color: lightgrey;
+  }
+
+  :global(div.marker-container.selected img) {
+    filter: grayscale(1);
   }
 
   .marker_popup {
@@ -202,7 +216,7 @@
   .marker_popup_background {
     background-color: #fff;
     position: relative;
-    border-radius: 24px;
+    border-radius: var(--border-radius);
     border: 1px solid black;
   }
 
