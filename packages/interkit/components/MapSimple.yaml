@@ -36,8 +36,15 @@ fields:
   - type: checkbox
     name: showPopups
     defaultValue: TRUE
+  - type: checkbox
+    name: nearestElementMode
+    defaultValue: FALSE
   - type: "slot"
     name: "element"
+    slotProps:
+      - "element"
+  - type: "slot"
+    name: "button-bar"
     slotProps:
       - "element"
 toolboxCategory: Map
