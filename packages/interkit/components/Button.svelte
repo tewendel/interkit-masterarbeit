@@ -50,6 +50,7 @@
     color: var(--color-text-button);
     border-radius: var(--border-radius-button);
     background-color: var(--color-background-button);
+    box-shadow: var(--box-shadow);
     display: inline-flex;
     overflow: hidden;
     cursor: pointer;

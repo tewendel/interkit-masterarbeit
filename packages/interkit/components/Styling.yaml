@@ -32,8 +32,8 @@ fields:
   - name: borderWidth
     type: string
     defaultValue: "1px"
-  - name: shadowAmount
+  - name: boxShadow
     type: string
-    defaultValue: "0"
+    defaultValue: "none"
 toolboxCategory: Layout
 

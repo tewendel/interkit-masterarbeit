@@ -10,7 +10,7 @@
   export let borderRadius = '16px'
   export let borderRadiusButton = '16px'
   export let borderWidth = '1px'
-  export let shadowAmount = '0'
+  export let boxShadow = 'none'
 
   import { onMount } from 'svelte'
 
@@ -59,7 +59,7 @@
   --border-radius: ${borderRadius};
   --border-radius-button: ${borderRadiusButton};
   --border-width: ${borderWidth};
-  --shadow-amount: ${shadowAmount};
+  --box-shadow: ${boxShadow};
   /* derived defaults */
   --border-color: var(--color-text);
   --color-background-button-primary: var(--color-text);
