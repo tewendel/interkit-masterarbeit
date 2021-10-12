@@ -7,10 +7,10 @@ fields:
     defaultValue: Inter:wght@300;400;500
   - name: colorText
     type: string
-    defaultValue: "#32332"
+    defaultValue: "##32332E"
   - name: colorTextHeadline
     type: string
-    defaultValue: "#32332"
+    defaultValue: "##32332E"
   - name: colorTextButtonPrimary
     type: string
     defaultValue: "white"

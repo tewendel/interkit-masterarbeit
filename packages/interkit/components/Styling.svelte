@@ -1,8 +1,8 @@
 <script>
   
   export let googleFont = "Inter:wght@300;400;500"
-  export let colorText = '#32332'
-  export let colorTextHeadline = '#32332'
+  export let colorText = '##32332E'
+  export let colorTextHeadline = '##32332E'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
