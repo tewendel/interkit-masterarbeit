@@ -12,9 +12,9 @@
       scrollDirection = direction;
     }
   })
-  $: {
+  /*$: {
     console.log("scrollDirection", scrollDirection)
-  }
+  }*/
 
   const panel = {};
   const { registerPanel, selectedPanel, selectPanel } = getContext(TABS);

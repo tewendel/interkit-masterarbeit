@@ -13,7 +13,7 @@ const registerAction = ( {
     triggers,
     method
   }
-  console.log("registerAction", action)
+  //console.log("registerAction", action)
   globalActions.push(action)
 };
 

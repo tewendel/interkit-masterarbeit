@@ -10,7 +10,7 @@
   import Icon from './Icon.svelte'
   
   export let element; // alaways use prop if passed in directly 
-  console.log("ContentElement with element prop", element)
+  //console.log("ContentElement with element prop", element)
 
   // otherwise use global store if available
   let elementDetail = InterkitClient.getGlobalStore("elementDetail")

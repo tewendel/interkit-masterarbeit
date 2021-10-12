@@ -348,7 +348,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 // subKey is a special key you can use to prevent conflicts with other subs that have different column maps
 const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
 
-  console.log("getRowSubStore", columnMap)
+  //console.log("getRowSubStore", columnMap)
 
   // check if we got a sheetKey or sheetColumn
   let sheetKey;
@@ -361,14 +361,14 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
 
   // default subKey is the sheetKey
   if(!subKey) subKey = sheetKey;
-  console.log("using subKey", subKey)
+  //console.log("using subKey", subKey)
 
   if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        console.log("creating row subscription on sheet", sheetKey)
+        //console.log("creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
@@ -386,7 +386,7 @@ const getMediaFileSubStore = async () => {
   if(!mediaFileSub) {
     // no subscription to media files yet, set it up
     mediaFileSub = new Promise(async (resolve, reject) => {
-      console.log("creating subscription for mediafiles")
+      //console.log("creating subscription for mediafiles")
       let msub = await getSub("mediafiles", "mediafiles", {})
       resolve(msub);
     })
@@ -412,7 +412,7 @@ const getGlobalStore = (key) => {
     } catch (e) {
       console.log(e)
     }
-    console.log("localStorage store", key, persistedStore)
+    //console.log("localStorage store", key, persistedStore)
     globalStores[key] = writable(persistedStore);   
   }
   return globalStores[key]
@@ -568,7 +568,7 @@ const InterkitClient = {
     if(!sheetSub) {
       // no subscription to media files yet, set it up
       sheetSub = new Promise(async (resolve, reject) => {
-        console.log("creating subscription for sheets")
+        //console.log("creating subscription for sheets")
         let ssub = await getSub("sheets", "sheets", {})
         resolve(ssub);
       })

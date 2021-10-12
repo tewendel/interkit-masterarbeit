@@ -6,11 +6,11 @@
   export let inverse = false
   export let nopadding = false
   export let color = null;
-  export let type
-  export let text // primary | secondary | tertiary TODO
+  export let type = "secondary" // primary | secondary | tertiary TODO
+  export let text = undefined;
   
-  export let clickTrigger // set this to execute a trigger on button click
-  export let onClick // function to call on click if we are not using this with triggers
+  export let clickTrigger = null; // set this to execute a trigger on button click
+  export let onClick = null // function to call on click if we are not using this with triggers
 
 
   // get context from parent element, for example ContentElement and pass the payload to the action

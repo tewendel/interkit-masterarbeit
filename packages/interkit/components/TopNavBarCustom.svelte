@@ -1,9 +1,3 @@
-<script>
-
-  export let headline;
-
-</script>
-
 <div class="TopNavBarCustom">
   <nav class="TopNavBarCustom__Top">
     <div class="left TopNavBarCustom__Top__Left">

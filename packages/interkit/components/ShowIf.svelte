@@ -5,7 +5,7 @@
   let value = null
 
   InterkitClient.getUiKeyStore(uiKey).subscribe(v => {
-    console.log("change showIf store", uiKey, v)
+    //console.log("change showIf store", uiKey, v)
     value = v
   })
 

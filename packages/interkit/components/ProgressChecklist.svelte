@@ -6,7 +6,7 @@
   import Icon from './Icon.svelte'
 
   // import function that assembles html from map - not a svelte component because we need plain html in leaflet
-  import { createIconDivHTML } from './MapSimple.svelte'
+  import { createIconDivHTML } from './MapRenderer.svelte'
 
   export let customIconColumn;
   export let markerLabelColumn;
@@ -30,18 +30,21 @@
 
   // we need to preassemble the marker html here because it requires async call to createIconDivHTML
   let markerHTMLs = {};
-  const updateMarkerHTMLs = async (elements, elementProperties) => {
-    if(elements?.length)
-      for(let element of elements) {
+  const updateMarkerHTMLs = async () => {
+    if($elements?.length)
+      for(let element of $elements) {
         markerHTMLs[element.key] = await createIconDivHTML(element, {
-          elementProperties,
-          checkedProperty,
+          checked: $elementProperties?.[element.key]?.[checkedProperty] ? true : false, 
           markerCheckedIconAsset,
           markerIconAsset
         })
       }
   }
-  $: updateMarkerHTMLs($elements, $elementProperties)
+  $: {
+    $elements;
+    $elementProperties;
+    updateMarkerHTMLs()
+  }
 
 </script>
 

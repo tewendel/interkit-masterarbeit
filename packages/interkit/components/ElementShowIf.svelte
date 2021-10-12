@@ -5,13 +5,13 @@
 
   // get context from parent element, for example inside ContentElement
   const c = getContext("buttonBar");
-  console.log("ElementShowIf element from buttonPayload", c?.buttonPayload)
+  //console.log("ElementShowIf element from buttonPayload", c?.buttonPayload)
   let element = c?.buttonPayload // this is a store
 
   // otherwise use global store if available
   let elementDetail = InterkitClient.getGlobalStore("elementDetail")
   if(!element && elementDetail) {
-    console.log("ElementShowIf element from elementDetail", $elementDetail)
+    //console.log("ElementShowIf element from elementDetail", $elementDetail)
     element = elementDetail
   }
  
@@ -20,11 +20,11 @@
   export let property;
 
   let elementProperties = InterkitClient.getGlobalStore("elementProperties");
-  console.log("ElementShowIf getting elementProperties", elementProperties)
+  //console.log("ElementShowIf getting elementProperties", elementProperties)
   let value;
   $: {
     value = $elementProperties?.[$element?.key]?.[property]
-    console.log("updated value in ElementShowIf", $element?.key, property, value)
+    //console.log("updated value in ElementShowIf", $element?.key, property, value)
   }
 
 </script>
