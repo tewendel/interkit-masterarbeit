@@ -1,21 +1,16 @@
 <script>
   
-  let primary_color = "#27EBBC"
-  let font_family = "inter"
-  let google_font = "Inter:wght@200;300;400;500"
-  let background_color = "#FFFFFF"
-  let background_color_highlight = "#E7EB27"
-
-  export let colorText = 'inherit'
-  export let colorTextHeadline = 'inherit'
-  export let colorTextButtonPrimary = 'inherit'
-  export let colorBackground = 'inherit'
-  export let fontFamilyText = 'inherit'
-  export let fontFamilyHeadline = 'inherit'
-  export let borderRadius = 'inherit'
-  export let borderRadiusButton = 'inherit'
-  export let borderWidth = 'inherit'
-  export let shadowAmount = 'inherit'
+  export let googleFont = "Inter:wght@300;400;500"
+  export let colorText = '#32332'
+  export let colorTextHeadline = '#32332'
+  export let colorTextButtonPrimary = 'white'
+  export let colorBackground = 'white'
+  export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  export let borderRadius = '16px'
+  export let borderRadiusButton = '16px'
+  export let borderWidth = '1px'
+  export let shadowAmount = '0'
 
   import { onMount } from 'svelte'
 
@@ -34,7 +29,9 @@
 
   const baseFontStack = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
 
-  // could be DRYer, but it's only two of them...
+  
+/*
+  // detecting google fonts, but lacks precise definition
 
   const googleFont = /[\+:@]/.test(fontFamilyText) ? fontFamilyText : false
   if (googleFont) {
@@ -48,7 +45,7 @@
     fontFamilyHeadline = fontFamilyHeadline.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
   }
   if (fontFamilyHeadline !== 'inherit') fontFamilyText += ', ' + baseFontStack
-
+*/
   
 </script>
 
@@ -79,10 +76,6 @@
   {#if googleFont}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href={`https://fonts.googleapis.com/css2?family=${googleFont}&display=swap`} rel="stylesheet">
-  {/if}
-  {#if googleFontHeadline}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href={`https://fonts.googleapis.com/css2?family=${googleFontHeadline}&display=swap`} rel="stylesheet">
   {/if}
 </svelte:head>
 

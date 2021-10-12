@@ -4,6 +4,8 @@
   import { executeTrigger } from '../actions.js'
   import { onMount } from 'svelte'
 
+  import Styling from './Styling.svelte'
+
   let initComplete = false;
   
   onMount(async ()=>{
@@ -46,17 +48,19 @@
 <svelte:window on:popstate={popState}/>
 
 <div class="AppBase Theming" id="Theming">
-  {#if $projectId && initComplete}
-    <slot ></slot>
-    <slot name="viewport"></slot>
-  {:else}
-    <div class="Loading">
-      <p class="static-loading-indicator">laden....</p>
-      {#if $connectionIssue}
-      <button class="network-reload" on:click={retry}>verbinden</button>
-      {/if}
-    </div>
-  {/if}
+  <Styling>
+    {#if $projectId && initComplete}
+      <slot ></slot>
+      <slot name="viewport"></slot>
+    {:else}
+      <div class="Loading">
+        <p class="static-loading-indicator">laden....</p>
+        {#if $connectionIssue}
+        <button class="network-reload" on:click={retry}>verbinden</button>
+        {/if}
+      </div>
+    {/if}
+  </Styling>
 </div>
 
 <style>
@@ -187,10 +191,7 @@
     .AppBase {
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
       box-sizing: border-box;
-    }
-    
-
-    
+    }    
 
   </style>
 </svelte:head>
