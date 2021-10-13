@@ -39,6 +39,6 @@
     "../packages/*"
   ],
   "engines": {
-    "npm": "7"
+    "npm": ">=7"
   }
 }
