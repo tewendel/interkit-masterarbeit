@@ -30,7 +30,7 @@ export let tipOrderColumn;
 
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
 const targetElement = QRElementStore ? $QRElementStore : undefined
-const targetElementObj = util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn })
+const targetElementObj = targetElement ? util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn }) : undefined
 
 let dataRows; 
 
