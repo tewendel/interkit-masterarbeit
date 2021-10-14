@@ -17,6 +17,7 @@
     Column,
     Loading } from "carbon-components-svelte";
   import ReloadIcon from "carbon-icons-svelte/lib/Play20";
+  import ResetIcon from "carbon-icons-svelte/lib/Reset20";
   import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft20";
   import ArrowRight from "carbon-icons-svelte/lib/ArrowRight20";
   import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
@@ -93,6 +94,10 @@
   </div>
 
   <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
+  <Button kind="tertiary" icon={ResetIcon} on:click={() => { 
+    iframeRef.contentWindow.postMessage('clear_localStorage','*')
+    setTimeout(BundleServer.reloadPreview, 100)
+    }}>Reset & reload</Button>
   
   <br><br>
   <Grid>
