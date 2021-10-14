@@ -6,6 +6,8 @@
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
 
+  import MapRenderer from './MapRenderer.svelte'
+
   /*
   export let tipQrKeyColumn;
   export let tipImageColumn;
@@ -16,6 +18,7 @@
   export let onClose;
 
   export let tips; // array with just the tips for this element
+  export let targetElementObj;
 
   let tipIndex = 0;
 
@@ -56,6 +59,19 @@
 
     </div>
 
+    <div class="map">
+
+      <MapRenderer
+        height="100%"
+        showControls="FALSE"
+        mapId="qr-map"
+        markerData={[]}
+        mapFocus={targetElementObj.elementLocationColumn}
+      />
+
+
+    </div>
+
   </div>
 
 <style>
@@ -67,6 +83,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .container {
@@ -78,6 +95,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+    z-index: 1000;
   }
 
   .container .image {
@@ -113,6 +132,14 @@
 
   :global(.QRTips__Button__Bar span:not(:first-child)) {
     margin-left: 8px;
+  }
+
+  .map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
 

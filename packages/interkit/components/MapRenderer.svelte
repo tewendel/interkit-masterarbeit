@@ -147,7 +147,7 @@
   }
 
   onMount(async ()=>{
-    
+
     /* basic map setup */
 
     map = L.map(mapId, {
@@ -243,12 +243,11 @@
     map.zoomOut()
   }
 
-  $: if(mapFocus) {
-    //console.log(mapFocus);
+  $: if(mapFocus && map) {
+    console.log(mapFocus)
     let location = false
     if (mapFocus?.values?.position?.lat) {
       location = mapFocus?.values?.position
-      selectedElement = null;
     }
     else if (mapFocus?.lat) location = mapFocus
     if (location) {

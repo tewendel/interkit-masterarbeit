@@ -20,6 +20,7 @@ let running = true;
 let scanInterval;
     
 export let elementKeyColumn; // the column on a sheet to select an element (optional)
+export let elementLocationColumn;
 
 // columns for tips sheet
 export let tipQrKeyColumn;
@@ -29,7 +30,7 @@ export let tipOrderColumn;
 
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
 const targetElement = QRElementStore ? $QRElementStore : undefined
-const targetElementObj = util.rowToObject(targetElement, { elementKeyColumn })
+const targetElementObj = util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn })
 
 let dataRows; 
 
@@ -212,6 +213,7 @@ const close = () => {
         <QRTips 
           onClose={close}
           {tips}
+          {targetElementObj}
         />
       </svelte:fragment>
     </TopNavBarCustom>
