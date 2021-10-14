@@ -1,0 +1,29 @@
+name: TutorialSlideshow
+color: 230
+fields:
+  - type: string
+    name: mainTitle
+    defaultValue: "Welcome"
+  - type: string
+    name: completeTrigger
+    defaultValue: "tutorialDone"
+  - type: sheetColumn
+    name: imageColumn 
+    columnType: mediaFile
+    defaultValue: tutorial/image
+  - type: sheetColumn
+    name: backgroundImageColumn
+    columnType: mediaFile
+    defaultValue: tutorial/bgimage
+  - type: sheetColumn
+    name: titleColumn
+    columnType: string
+    defaultValue: tutorial/title
+  - type: sheetColumn
+    name: contentColumn
+    columnType: richText
+    defaultValue: tutorial/content
+  - type: number
+    name: orderColumn
+    defaultValue: 0
+toolboxCategory: "Sliders"

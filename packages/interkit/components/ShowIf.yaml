@@ -5,8 +5,14 @@ fields:
   - type: string
     name: uiKey
     defaultValue: showIf
+  - type: options
+    name: storeType
+    options: 
+      - uiKey
+      - globalStore
   - type: slot
     name: iftrue
   - type: slot
     name: else
+  
 toolboxCategory: "Conditionals"

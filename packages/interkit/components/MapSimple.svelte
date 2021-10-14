@@ -84,7 +84,7 @@
           rowsFiltered = [nearestElement]
         }
       } else {
-        rowsFiltered = [];
+        rowsFiltered = []
       }
     }
 
@@ -162,7 +162,6 @@
       {markerData}
       {markerClick}
       {mapClick}
-      elementProperties={$elementProperties}
       mapFocus={$mapFocus}
     />
 

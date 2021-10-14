@@ -6,57 +6,38 @@
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
 
-  /*
-  export let tipQrKeyColumn;
-  export let tipImageColumn;
-  export let tipTextColumn;
-  export let tipOrderColumn;
-  */
+  import MapRenderer from './MapRenderer.svelte'
+  import MultiStepContent from './MultiStepContent.svelte'
 
   export let onClose;
 
   export let tips; // array with just the tips for this element
-
-  let tipIndex = 0;
-
-  const incrIndex = () => {
-    if(tipIndex < tips.length - 1) {
-       tipIndex += 1;
-    } else {
-      onClose();
-    }
-  }
+  export let targetElementObj;
 
 </script>
 
   <div class="center-box">
   
-    <div class="container">
-
-      {#if tips?.length}
+      <MultiStepContent
+        slides = {tips}
+        {onClose}
+      />
         
-        <div class="image">
-          <MediaFileImage mediafileRef={tips[tipIndex].tipImageColumn}/>
-        </div>
-        
-        <h1>Hinweis {tipIndex + 1}</h1>
-        <p>{tips[tipIndex].tipTextColumn}</p>
+  </div>
 
-        <div class="QRTips__Button__Bar button-bar">
-          {#if tipIndex > 0}<Button text="Zurück" onClick={()=>{tipIndex -= 1}}/>{/if}
-          <Button text="Weiter" onClick={incrIndex}/>
-        </div>
-        
-      {:else}
+  <div class="map">
 
-        <p>Für diese Ziel gibt es keine Hinweise.</p>
-        <Button text="Weiter" onClick={incrIndex}/>
+    <MapRenderer
+      height="100%"
+      showControls="FALSE"
+      mapId="qr-map"
+      markerData={[]}
+      mapFocus={targetElementObj.elementLocationColumn}
+    />
 
-      {/if}
-
-    </div>
 
   </div>
+
 
 <style>
 
@@ -67,6 +48,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .container {
@@ -78,41 +60,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+    z-index: 1000;
   }
 
-  .container .image {
-    border: 1px solid black;
-    border-radius: var(--border-radius);
-    overflow: hidden;
+  .map {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    margin-bottom: 16px;
-    max-height: 200px;
-  }
-
-  h1, p {
-    text-align: center;
-  }
-
-  h1 {
-    font-size: var(--font-size-headline-1);
-    margin-bottom: 16px;
-  }
-
-  p {
-    font-size: var(--font-size-regular);
-    line-height: var(--line-height-regular);
-    margin-bottom: 16px;
-    width: 80%;
-  }
-
-  .button-bar {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 16px;
-  }
-
-  :global(.QRTips__Button__Bar span:not(:first-child)) {
-    margin-left: 8px;
+    height: 100%;
   }
 
 

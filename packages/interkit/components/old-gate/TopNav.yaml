@@ -1,0 +1,7 @@
+name: TopNav
+fields:
+  - type: slot
+    name: default
+  - type: string
+    name: label
+toolboxCategory: TopBar

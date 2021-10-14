@@ -21,13 +21,15 @@
   }
 
   div.active {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: hidden;
+    display: block;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: all;
+    background-color: white;
+    z-index: 1000;
   }
 
-  .subsection {
-  }
 
 </style>

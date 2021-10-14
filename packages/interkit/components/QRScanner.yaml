@@ -6,6 +6,10 @@ fields:
     columnType: string
     defaultValue: elements/qrKey
   - type: sheetColumn
+    name: elementLocationColumn
+    columnType: location
+    defaultValue: elements/position
+  - type: sheetColumn
     name: tipQrKeyColumn
     columnType: string
     defaultValue: tips/qrKey

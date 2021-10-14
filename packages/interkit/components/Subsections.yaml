@@ -1,0 +1,5 @@
+name: Subsections
+fields: 
+  - type: slot
+    name: default
+toolboxCategory: TopBar

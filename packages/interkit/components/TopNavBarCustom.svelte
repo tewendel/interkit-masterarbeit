@@ -46,6 +46,7 @@
   .content {
     flex: 1;
     overflow: hidden;
+    position: relative;
   }
   
 
