@@ -4,9 +4,10 @@
   const { registerSection, activeSection } = getContext("Subsections");
 
   export let title;
+  export let path;
 
   const key = {};
-  registerSection({key, title});
+  registerSection({key, title, path});
 
 </script>
 

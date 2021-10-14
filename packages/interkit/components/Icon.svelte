@@ -105,6 +105,10 @@
     background-image: url("../icons/Hint.svg");
   }
 
+  .icon-help {
+    background-image: url("../icons/Help.svg");
+  }
+
   .icon-archive {
     background-image: url("../icons/Archiv.svg");
   }

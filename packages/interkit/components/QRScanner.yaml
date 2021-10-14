@@ -25,4 +25,7 @@ fields:
     name: tipOrderColumn
     columnType: number
     defaultValue: tips/order
+  - type: string
+    name: closeTrigger
+    defaultValue: closeQR
 toolboxCategory: QR Scanner
