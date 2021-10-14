@@ -1,0 +1,14 @@
+name: SessionFlow
+title: SessionFlow
+toolboxCategory: Input
+fields:
+  - name: textElements
+    type: sheetKey
+  - name: restartTrigger
+    type: string  
+  - name: backgroundImageSrc
+    type: string
+    defaultValue: assets/background.png
+  - name: logoImageSrc
+    type: string
+    defaultValue: assets/logo.png    

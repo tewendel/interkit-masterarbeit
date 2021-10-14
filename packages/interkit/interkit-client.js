@@ -587,7 +587,9 @@ const InterkitClient = {
     localStorage.setItem(storeKey, JSON.stringify(value));
   },
 
-  // set property on an item in a global store and persist it
+  // Properties are additional user-specific attributes to elements
+  // they all exist in the same global store "elementProperties"
+  // setElementProperty sets a property on an item and persist it
   setElementProperty: (
       //store,  // a global store from getGlobalStore()
       key, // an id, typically a row key from database
