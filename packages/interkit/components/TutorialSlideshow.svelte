@@ -19,13 +19,15 @@
   
   const initSlides = async ()=> {
       // setup the subscription to the tip rows
-      const slideStore = await InterkitClient.getRowSubStore(titleColumn, {
+      const columnMap = {
         fgimage: imageColumn,
         bgimage: backgroundImageColumn,
         title: titleColumn,
         content: contentColumn,
         orderColumn
-      });
+      }
+
+      const slideStore = await InterkitClient.getRowSubStore(titleColumn, columnMap);
       
       // filter tips for targetElement and sort by order column
       slideUnsubscribe = slideStore.subscribe((data) => {

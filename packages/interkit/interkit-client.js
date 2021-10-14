@@ -359,9 +359,11 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   }
   //console.log("sheetKey", sheetKey)
 
+  // if we use a columnMap make this the subKey to avoid conflicts
+  if(columnMap && !subKey) subKey = JSON.stringify(columnMap)
+
   // default subKey is the sheetKey
   if(!subKey) subKey = sheetKey;
-  //console.log("using subKey", subKey)
 
   if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
