@@ -6,4 +6,6 @@ fields:
     name: default
   - type: string
     name: zIndex
+  - type: string
+    name: customStyle
 toolboxCategory: Layout

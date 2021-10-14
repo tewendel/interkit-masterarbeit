@@ -1,0 +1,7 @@
+name: Subsection
+fields:
+  - type: string
+    name: title
+  - type: slot
+    name: default
+toolboxCategory: TopBar

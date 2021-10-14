@@ -64,12 +64,12 @@
 <style>
 
   .container {
-    height: 100%;
     width: 100%;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
   }
   
 </style>

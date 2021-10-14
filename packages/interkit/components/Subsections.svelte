@@ -8,42 +8,27 @@
   let sections = [];
   let activeSection = writable(null);
 
-  const { setNavBarVisibility } = getContext("TopNav");
+  const topNavContext = getContext("TopNav");
 
   const selectSection = (section) => {
     activeSection.set(section);
-    setNavBarVisibility(false);
-    //console.log("activeSection", $activeSection)
+    topNavContext?.configureNavBar(
+      section.title, 
+      () => { activeSection.set(null) }
+    )
   }
 
   setContext("Subsections", {
       registerSection: ({key, title}) => {
-        //console.log("registerSection", title)
         sections.push({key, title})
         sections = sections;
-        //console.log(sections)
       },
       activeSection
   });
-
-  const closeSection = () => {
-    activeSection.set(null);
-    setNavBarVisibility(true);
-  }
         
 </script>
 
-{#if $activeSection}
-
-  <TopNavBar
-    icon="arrow-left"
-    onClick={closeSection}
-    pageOpen
-  >
-    {$activeSection.title}
-  </TopNavBar>
-  
-{:else}
+{#if !$activeSection}
 
   <ul class="Subsections">
     {#each sections as section}
@@ -61,7 +46,6 @@
 {/if}
 
 <slot></slot>
-
 
 <style> 
   li:hover {
@@ -81,5 +65,5 @@
   .entry_title {
     flex: 1;
   }
-
+ 
 </style>
