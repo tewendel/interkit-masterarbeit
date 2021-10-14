@@ -182,7 +182,7 @@
     height: 20vmin;
     width: 60vmin;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: var(--border-radius);
   }
 
 

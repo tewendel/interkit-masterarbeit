@@ -2,5 +2,38 @@ name: Styling
 fields:
   - name: default
     type: slot
+  - name: googleFont
+    type: string
+    defaultValue: Inter:wght@300;400;500
+  - name: colorText
+    type: string
+    defaultValue: "##32332E"
+  - name: colorTextHeadline
+    type: string
+    defaultValue: "##32332E"
+  - name: colorTextButtonPrimary
+    type: string
+    defaultValue: "white"
+  - name: colorBackground
+    type: string
+    defaultValue: "white"
+  - name: fontFamilyText
+    type: string
+    defaultValue: "Inter"
+  - name: fontFamilyHeadline
+    type: string
+    defaultValue: "Inter"
+  - name: borderRadius
+    type: string
+    defaultValue: "16px"
+  - name: borderRadiusButton
+    type: string
+    defaultValue: "16px"
+  - name: borderWidth
+    type: string
+    defaultValue: "1px"
+  - name: boxShadow
+    type: string
+    defaultValue: "none"
 toolboxCategory: Layout
 

@@ -90,7 +90,7 @@
     margin-left: 16px;
     margin-right: 16px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: var(--border-radius);
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -101,7 +101,7 @@
 
   .container .image {
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: var(--border-radius);
     overflow: hidden;
     width: 100%;
     margin-bottom: 16px;

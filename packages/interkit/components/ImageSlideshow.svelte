@@ -58,6 +58,7 @@
     scroll-snap-type: x mandatory;
     width: 100%;
     overflow: auto;
+    scrollbar-width: none;
   }
 
   .slider[data-slides-amount="1"] .slide {
@@ -69,6 +70,18 @@
     flex: none;
     scroll-snap-align: center;
     box-sizing: border-box;
+    overflow: hidden; /* so border-radius works, TODO check iOS */
+    border: var(--border-width) solid var(--border-color);
+  }
+
+  .slide:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+
+  .slide:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
 
   .slide + .slide {

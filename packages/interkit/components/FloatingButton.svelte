@@ -21,7 +21,7 @@
 
 <style>
   div {
-    border-radius: 10px;
+    border-radius: var(--border-radius-button);
     background: grey;
     position: absolute;
     left: var(--x);

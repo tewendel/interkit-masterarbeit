@@ -24,7 +24,7 @@
     top:0;
     width: 100vw;
     box-sizing:border-box;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
     padding: 20px;
     background-color: white;
     border: 1px black solid;
