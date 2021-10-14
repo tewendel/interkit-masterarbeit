@@ -21,4 +21,4 @@ fields:
     name: URLColumn
     columnType: string
     defaultValue: slideshow/url
-toolboxCategory: "Images"
+toolboxCategory: "Sliders"
