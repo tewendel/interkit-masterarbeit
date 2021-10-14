@@ -4,4 +4,6 @@ fields:
     name: title
   - type: slot
     name: default
+  - type: string
+    name: path
 toolboxCategory: TopBar
