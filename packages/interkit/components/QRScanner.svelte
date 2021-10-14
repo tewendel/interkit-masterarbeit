@@ -71,8 +71,8 @@ const initTips = async ()=> {
     // setup the subscription to the tip rows
     tipRowStore = await InterkitClient.getRowSubStore(tipQrKeyColumn, {
       tipQrKeyColumn,
-      tipImageColumn,
-      tipTextColumn,
+      image: tipImageColumn,
+      content: tipTextColumn,
       tipOrderColumn
     });
     console.log("$tipRowStore", $tipRowStore)
@@ -80,7 +80,8 @@ const initTips = async ()=> {
     // filter tips for targetElement and sort by order column
     tips = $tipRowStore
       .filter(t => t.tipQrKeyColumn == targetElementObj.elementKeyColumn)
-      .sort((a, b) => a.tipOrderColumn - b.tipOrderColumn)  
+      .sort((a, b) => a.tipOrderColumn - b.tipOrderColumn)
+      .map((t,i) => { return {...t, title: "Hinweis " +(i+1)} })  
     console.log("tips", tips)
 }
 
