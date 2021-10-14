@@ -46,6 +46,7 @@
     switch (event.data) {
       case "go_back": history.back(); break;
       case "go_forward": history.forward(); break;
+      case "clear_localStorage": localStorage.clear(); break;
     }
   }
 
