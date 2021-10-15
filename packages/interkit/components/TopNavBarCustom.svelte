@@ -23,16 +23,18 @@
     font-size: var(--font-size-headline-1);
   }
   nav {
-    height: 55px;
+    min-height: 55px;
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    border-bottom: 1px solid black;
-    padding-left: 16px;
-    padding-right: 16px;
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding-left: var(--distance-m);
+    padding-right: var(--distance-m);
+    padding-top: var(--distance-s);
+    padding-bottom: var(--distance-s);
   }
   
   :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {

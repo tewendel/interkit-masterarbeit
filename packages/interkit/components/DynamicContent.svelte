@@ -56,9 +56,9 @@
 
 <style>
   .container {
-    font-size: 14px;
-    line-height: 20px;
-    padding: 16px;
+    font-size: inherit;
+    line-height: 1.43;
+    padding: var(--distance-m);
   }
 
 </style>

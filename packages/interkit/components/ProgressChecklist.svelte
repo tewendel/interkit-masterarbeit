@@ -69,7 +69,7 @@
 <style>
 
   .container {
-    margin:  16px;
+    margin: var(--distance-m);
   }
 
   ul {
@@ -77,7 +77,7 @@
   }
 
   li {
-    margin: 10px; 
+    margin: var(--distance-s);
   }
 
   p {

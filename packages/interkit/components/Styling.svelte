@@ -1,8 +1,8 @@
 <script>
   
   export let googleFont = "Inter:wght@300;400;500"
-  export let colorText = '##32332E'
-  export let colorTextHeadline = '##32332E'
+  export let colorText = '#32332e'
+  export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
@@ -11,6 +11,7 @@
   export let borderRadiusButton = '16px'
   export let borderWidth = '1px'
   export let boxShadow = 'none'
+  export let distanceScaleFactor = '1.0'
 
   import { onMount } from 'svelte'
 
@@ -60,11 +61,19 @@
   --border-radius-button: ${borderRadiusButton};
   --border-width: ${borderWidth};
   --box-shadow: ${boxShadow};
+  --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
+  /* constant */
+  --distance-base: 1rem;
   /* derived defaults */
   --border-color: var(--color-text);
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
+  --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
+  --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1.41);
+  --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 1.0);
+  --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 1.41);
+  --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 2.0);
   /* to inherit */
   font-family: var(--font-family-text);
   color: var(--color-text);

@@ -45,8 +45,8 @@
 <style>
 
   .button {
-    padding: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.87);
+    padding: var(--distance-s);
+    border: var(--border-width) solid var(--border-color);
     color: var(--color-text-button);
     border-radius: var(--border-radius-button);
     background-color: var(--color-background-button);
