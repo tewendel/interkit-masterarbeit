@@ -1,8 +1,35 @@
 <script>
+  import { InterkitClient } from '../../index'
+  import {executeTrigger} from '../../actions'
   import Button from '../Button.svelte'
   import Input from '../Input.svelte'
+  import Modal from '../Modal.svelte'
 
   export let setStep = function(){}
+  export let restoredTrigger
+
+  let code = ""
+
+  let modalText
+  let modalDismissText = "Verstanden"
+  let dismissModalFunction
+
+  const send = async event => {
+    const result = await InterkitClient.loginTokenUser({userToken: code})
+    if (result.id) {
+      modalText = "Success"
+      dismissModalFunction = event => {
+        modalText = null
+      }
+    } else {
+      modalText = "try again"
+      dismissModalFunction = event => {
+        modalText = null
+        executeTrigger(restoredTrigger)
+      }
+    }
+  }
+
 </script>
 
 <div class="container">
@@ -13,8 +40,8 @@
     </small>
   </h2>
   <div class="buttons">
-    <Input type="text" placeholder="Session-ID" />
-    <Button on:click={() => setStep("enterCode")}>
+    <Input type="text" placeholder="Session-ID" bind:value={code} />
+    <Button on:click={send}>
       Bestätigen
     </Button>
   </div>
@@ -23,6 +50,12 @@
     Abbrechen
   </Button>
 </div>
+
+{#if modalText}
+  <Modal dismissText={modalDismissText} dismissFunction={dismissModalFunction}>
+    {modalText}
+  </Modal>
+{/if}
 
 <style>
   .container, .buttons {

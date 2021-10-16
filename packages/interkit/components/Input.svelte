@@ -1,8 +1,9 @@
 <script>
+  export let value
 
 </script>
 
-<input class="Input container" {...$$props} />
+<input bind:value={value} class="Input container" {...$$props} />
 
 <style>
   .container {

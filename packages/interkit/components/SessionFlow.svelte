@@ -6,6 +6,7 @@
   import EnterEmail from './SessionFlow/EnterEmail.svelte'
 
   export let restartTrigger
+  export let restoredTrigger
   export let backgroundImageSrc
   export let logoImageSrc
   export let textElements
@@ -14,13 +15,18 @@
 
   const setStep = newStep => step = newStep
 
+  //const text
+
 </script>
 
 <Flex2 style="background-color: white; background-image:url({backgroundImageSrc})">
   <div slot="first" class="first">
     <div class="frame">
       {#if step == "enterCode"}
-        <EnterCode {setStep} />
+        <EnterCode 
+          {restoredTrigger}
+          {setStep}
+        />
       {:else}
         <Start 
           {restartTrigger} 
