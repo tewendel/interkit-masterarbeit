@@ -1,0 +1,8 @@
+name: ShowIfLoggedIn
+title: Show If Logged In
+toolboxCategory: Project
+fields:
+  - type: slot
+    name: iftrue
+  - type: slot
+    name: else
