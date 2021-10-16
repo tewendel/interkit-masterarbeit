@@ -2,8 +2,14 @@ name: SessionFlow
 title: SessionFlow
 toolboxCategory: Input
 fields:
-  - name: textElements
-    type: sheetKey
+  - type: sheetColumn
+    name: keyColumn
+    columnType: string
+    defaultValue: settings/contentKey
+  - type: sheetColumn
+    name: contentColumn
+    columnType: richText
+    defaultValue: settings/content
   - name: restartTrigger
     type: string  
   - name: restoredTrigger

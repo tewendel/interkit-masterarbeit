@@ -1,20 +1,54 @@
 <script>
   import Button from '../Button.svelte'
   import {executeTrigger} from '../../actions'
+  import DynamicContent from '../DynamicContent.svelte'
 
   export let restartTrigger
   export let setStep = function(){}
+  export let keyColumn
+  export let contentColumn
+
 </script>
 
-<h2>
-  Marta Phänomene
-</h2>
-<p>Finde die 16 </p>
+<DynamicContent
+  {keyColumn}
+  {contentColumn}
+  contentKey="session.start.intro"
+  defaultContent="## Start"
+  format="richText"
+/>
 <Button on:click={() => executeTrigger(restartTrigger)}>
-  Neustarten
+  <DynamicContent
+    {keyColumn}
+    {contentColumn}
+    contentKey="session.start.new.button"
+    defaultContent="Neustarten"
+    inline
+  />
 </Button>
-Von vorne beginnen...
+
+<DynamicContent
+  {keyColumn}
+  {contentColumn}
+  contentKey="session.start.new.info"
+  defaultContent="Von vorne beginnen"
+  inline
+/>
+
 <Button on:click={() => setStep("enterCode")}>
-  Forfahren
+  <DynamicContent
+    {keyColumn}
+    {contentColumn}
+    contentKey="session.start.restore.button"
+    defaultContent="Forfahren"
+    inline
+  />
 </Button>
-Du hast
+
+<DynamicContent
+  {keyColumn}
+  {contentColumn}
+  contentKey="session.start.restore.info"
+  defaultContent="Du hast bereits eine Session-ID"
+  inline
+/>

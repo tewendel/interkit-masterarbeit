@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte'
+  import { InterkitClient, util } from '../'
   import Flex2 from './Flex2.svelte'
   import Button from './Button.svelte'
   import Start from './SessionFlow/Start.svelte'
@@ -9,13 +11,12 @@
   export let restoredTrigger
   export let backgroundImageSrc
   export let logoImageSrc
-  export let textElements
+  export let keyColumn
+  export let contentColumn
 
   let step = "start"
 
   const setStep = newStep => step = newStep
-
-  //const text
 
 </script>
 
@@ -26,11 +27,15 @@
         <EnterCode 
           {restoredTrigger}
           {setStep}
+          {keyColumn}
+          {contentColumn}
         />
       {:else}
         <Start 
           {restartTrigger} 
           {setStep}
+          {keyColumn}
+          {contentColumn}
         />
       {/if}
     </div>

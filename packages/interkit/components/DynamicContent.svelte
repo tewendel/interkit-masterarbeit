@@ -9,6 +9,8 @@
   export let contentColumn; // the column for the content
   export let contentKey; // the key to select the row by
   export let format; // the format to use to display it
+  export let defaultContent; // what to use instead
+  export let inline = false // add spacings or not
 
   // we first identify the sheet that contains our data
   let contentSheetKey = util.getSheetKey(contentColumn)
@@ -42,23 +44,43 @@
 
 </script>
 
-<div class="DynamicContent container" class:richtText={format == "richText"}>
-  {#if $rowStore}
-    {#if format == "richText"}
-      {#if content}
-        <MarkdownContent {content} />
+
+
+{#if $$slots.default}
+  <slot content={content || defaultContent}></slot>
+{:else}
+  <div class="DynamicContent container" class:richText={format == "richText"} class:inline>
+    {#if $rowStore}
+      {#if format == "richText"}
+        {#if content}
+          <MarkdownContent {content} />
+        {:else if defaultContent}
+          <MarkdownContent content={defaultContent} />
+        {/if}
+      {:else}
+        {#if content}
+          {content}
+        {:else if defaultContent}
+          { defaultContent}
+        {/if}
       {/if}
-    {:else}
-      {content}
     {/if}
-  {/if}
-</div>
+  </div>
+{/if}
 
 <style>
   .container {
     font-size: inherit;
     line-height: 1.43;
     padding: var(--distance-m);
+  }
+
+  .inline {
+    padding: 0;
+  }
+
+  .inline:not(.richText) {
+    display: inline;
   }
 
 </style>
