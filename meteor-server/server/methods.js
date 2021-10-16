@@ -115,6 +115,93 @@ const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKe
 
 Meteor.methods({
 
+  // create a front end user for a project
+  'createProjectUser': async function ({
+    projectId,
+    username,
+    email,
+    password,
+    projectData
+  }) {
+    if (!projectId) return false
+    Accounts.createUser({
+      username,
+      email,
+      password,
+      projectUserData: {
+        [projectId]: projectData
+      }
+    })
+  },
+
+  // create a front end user for a project, identified by a user token
+  'createProjectTokenUser': async function (params) {
+    console.log("createProjectTokenUser", params)
+    let {
+      projectId,
+        userToken,
+        projectData
+    } = params
+    if (!projectId) return false
+    if (!userToken) {
+      userToken = ""
+      while (userToken.length < 6) {
+        userToken += Math.random().toString(36).slice(2);
+      }
+    }
+    const username = uuidv4()
+    const userId = Accounts.createUser({
+      username,
+    })
+
+    const projectUserData = {
+      [projectId]: {
+        ...projectData,
+        userToken
+      }
+    }
+
+    Meteor.users.update(userId,{$set: { projectUserData }})
+
+    const user = Meteor.users.findOne(userId)
+    console.log("created token user", user)
+
+    return userToken
+  },
+
+  'generateLoginCredentialsForTokenUser': async function({
+    projectId,
+    userToken
+  } = {}){
+    if (!projectId || !userToken) return false
+    console.log("generateLoginCredentialsForTokenUser", projectId, userToken)
+    const user = Meteor.users.findOne({
+      projectUserData: {
+        [projectId]: {
+          userToken
+        }
+      }
+    })
+    //console.log("generateLoginCredentialsForTokenUser userId", user._id)
+    if (!user) { 
+      return {
+        error: user
+      }
+    } else {
+      // set a random password to be able to log in
+      const randomPassword = uuidv4()
+      Accounts.setPassword(
+        user._id,
+        randomPassword,
+        {logout:false}
+      )
+      return {
+        username: user.username,
+        password: randomPassword
+      }
+    }
+  },
+
   'resumeUserSession': async function (userAuth) {
      
     if(userAuth?.token) {

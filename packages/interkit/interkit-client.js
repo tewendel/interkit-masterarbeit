@@ -507,6 +507,54 @@ const InterkitClient = {
       return true;
     }
   },
+
+  // create a user that is identified by a project specific userToken
+  createProjectTokenUser: async ({ userToken, projectData }={}) => {
+    //console.log("createProjectTokenUser")
+    const result = await server.call("createProjectTokenUser", {
+      userToken,
+      projectId: get(projectId),
+      projectData
+    })
+    return result
+  },
+
+  loginTokenUser: async ({userToken}) => {
+    let credentials
+    try {
+      credentials = await InterkitClient.call("generateLoginCredentialsForTokenUser", {userToken})
+    } catch(error) {
+      return false
+    } finally {
+      try {
+        return await InterkitClient.login(credentials)
+      } catch (error) {
+        return error
+      }
+    }
+  },
+
+  createProjectTokenUserAndLogin: async ({ userToken, projectData }={}) => {
+    //console.log("createProjectTokenUser")
+    const token = await InterkitClient.call("createProjectTokenUser", {
+      userToken,
+      projectData
+    })
+    const userId = await InterkitClient.loginTokenUser({userToken: token})
+    return userId ? token : false
+  },
+
+  createProjectUser: async ({ username, password, email, projectData }) => {
+    const result = await InterkitClient.call("createProjectUser", {
+      username,
+      password,
+      email,
+      projectData
+    })
+    return result
+  },
+
+
   login: async ({username, password}) => {
     //console.log(server)
     let userAuthData = await server.login({
@@ -519,6 +567,7 @@ const InterkitClient = {
     userId.set(userAuthData.id);
     localStorage.setItem('userId', userAuthData.id);
     localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+    return userAuthData
   },
 
   logout: async () => {
@@ -529,7 +578,7 @@ const InterkitClient = {
   },
 
   // call a meteor method, add projectId to params if needed (allow method calls without params)
-  call: async (method, params) => {
+  call: async (method, params = {}) => {
 
     if(config && params && !params?.projectId) {
       console.log("adding projectId to method params", params, method)
