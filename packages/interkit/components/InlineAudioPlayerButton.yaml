@@ -1,0 +1,6 @@
+name: InlineAudioPlayerButton
+fields:
+  - name: audioColumn
+    type: sheetColumn
+    columnType: mediafile
+toolboxCategory: MediaPlayer

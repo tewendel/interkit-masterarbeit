@@ -49,6 +49,7 @@
   // s - used in dashboard slider and lists (TODO)
   // m - used in map - small image, short description only
   // l - used in full view
+  // slide - used in Slider
   // TODO: reorganize/generalize these styling options somehow?
 
   
@@ -331,7 +332,23 @@
     background-color: var(--color-background-highlight);
   }
 
+  .container.size-slide {
+    padding: 0;
+  }
 
+  .container.size-slide .picture {
+    grid-row: 1 / 4;
+  }
 
+  .container.size-slide .titles,
+  .container.size-slide .content {
+    display: none;
+  }
+
+  .container.size-slide .button-bar-container {
+    grid-column: 1;
+    grid-row: 3;
+    padding: var(--distance-s);
+  }
 
 </style>

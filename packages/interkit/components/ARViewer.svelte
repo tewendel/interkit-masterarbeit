@@ -195,8 +195,8 @@
   .close {
     position: absolute;
     z-index: 1;
-    top: 1em;
-    right: 1em;
+    top: var(--distance-m);
+    right: var(--distance-m);
   }
 
 

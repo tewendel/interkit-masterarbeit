@@ -25,7 +25,7 @@
 
 <style>
   .button {
-    flex:1;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,12 +36,12 @@
     color: var(--color-text);
     outline: none;
     border-style: solid;
-    border-width: 1px 0 0 0;
-    border-color: var(--text-color);
+    border-width: var(--border-width) 0 0 0;
+    border-color: var(--border-color);
   }
 
   .button:not(:first-child) {
-    border-left-width: 1px;
+    border-left-width: var(--border-width);
   }
 
   .button:active {

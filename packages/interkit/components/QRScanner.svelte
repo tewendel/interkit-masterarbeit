@@ -28,6 +28,8 @@ export let tipImageColumn;
 export let tipTextColumn;
 export let tipOrderColumn;
 
+export let closeTrigger;
+
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
 const targetElement = QRElementStore ? $QRElementStore : undefined
 const targetElementObj = targetElement ? util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn }) : undefined
@@ -178,7 +180,13 @@ onDestroy(()=>{
 
 });
 
-const close = () => {
+const closeQR = () => {
+  if(closeTrigger) {
+    executeTrigger(closeTrigger)
+  }
+}
+
+const closeTips = () => {
   showTips = false;
 }
 
@@ -206,13 +214,13 @@ const close = () => {
       headline="QR-Code Scannen"
     >
       <svelte:fragment slot="left">
-        <Button text="" onClick={close} type="secondary">
+        <Button text="" onClick={closeQR} type="secondary">
           <Icon type="arrow-left"/>
         </Button><span>QR-Code Scannen</span>
       </svelte:fragment>
       <svelte:fragment slot="content">
         <QRTips 
-          onClose={close}
+          onClose={closeTips}
           {tips}
           {targetElementObj}
         />

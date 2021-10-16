@@ -35,5 +35,8 @@ fields:
   - name: boxShadow
     type: string
     defaultValue: "none"
+  - name: distanceScaleFactor
+    type: string
+    defaultValue: "1.0"
 toolboxCategory: Layout
 

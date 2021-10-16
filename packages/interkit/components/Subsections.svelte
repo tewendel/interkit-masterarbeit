@@ -1,5 +1,7 @@
 <script>
 
+  import { InterkitClient } from '../'
+
   import { setContext, getContext } from 'svelte';
   import { writable } from 'svelte/store';
   import TopNavBar from './TopNavBar.svelte';
@@ -19,12 +21,29 @@
   }
 
   setContext("Subsections", {
-      registerSection: ({key, title}) => {
-        sections.push({key, title})
+      registerSection: ({key, title, path}) => {
+        sections.push({key, title, path})
         sections = sections;
       },
       activeSection
   });
+ 
+  const menuPath = InterkitClient.getUiKeyStore("menuPath");
+  $: {
+    if($menuPath) {
+      console.log("menuPath", $menuPath)
+      let pathSegments = $menuPath.split("/")
+      console.log(pathSegments)
+      for(let segment of pathSegments) {
+        let targetSection = sections.filter(s => s.path == segment)?.[0]    
+        if(targetSection) {
+          console.log("found targetSection", targetSection)
+          selectSection(targetSection)
+        }  
+      }
+    }
+  }
+
         
 </script>
 
