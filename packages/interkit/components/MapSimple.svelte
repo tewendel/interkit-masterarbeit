@@ -165,7 +165,7 @@
       mapFocus={$mapFocus}
     />
 
-    <div class="button-bar-container">
+    <div class="Map__Button__Bar button-bar-container">
       <slot name="button-bar" element={nearestElement}></slot>
     </div>
 
@@ -235,6 +235,10 @@
     bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  :global(.Map__Button__Bar .Button) {
+    margin-right: 8px;
   }
   
 </style>
