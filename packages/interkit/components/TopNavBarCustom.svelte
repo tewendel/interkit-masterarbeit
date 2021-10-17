@@ -19,8 +19,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    font-size: var(--font-size-headline-1);
+    background-color: white;    
   }
   nav {
     min-height: 55px;
@@ -41,6 +40,15 @@
     margin-left: 8px;
     display: inline-flex;
   }
+
+  :global(.TopNavBarCustom__Top__Right > *:not(:first-child)) {
+    margin-left: 8px;
+    display: inline-flex;
+  }
+
+  :global(.TopNavBarCustom__Top__Left span, .TopNavBarCustom__Top__Right span) {
+    font-size: var(--font-size-headline-1);
+  } 
 
   .right {
     text-align: right;

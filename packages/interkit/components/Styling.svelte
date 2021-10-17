@@ -1,10 +1,12 @@
 <script>
   
   export let googleFont = "Inter:wght@300;400;500"
+  export let googleFont2 = "Inter:wght@300;400;500"
   export let colorText = '#32332e'
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
+  export let colorBorder = 'black'
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let borderRadius = '16px'
@@ -12,6 +14,8 @@
   export let borderWidth = '1px'
   export let boxShadow = 'none'
   export let distanceScaleFactor = '1.0'
+
+  export let fontSizeHeadline1 = '30px';
 
   import { onMount } from 'svelte'
 
@@ -55,6 +59,7 @@
   --color-text-headline: ${colorTextHeadline};
   --color-text-button-primary: ${colorTextButtonPrimary};
   --color-background: ${colorBackground};
+  --color-border: ${colorBorder};
   --font-family-text: ${fontFamilyText};
   --font-family-headline: ${fontFamilyHeadline};
   --border-radius: ${borderRadius};
@@ -62,6 +67,7 @@
   --border-width: ${borderWidth};
   --box-shadow: ${boxShadow};
   --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
+  --font-size-headline-1: ${fontSizeHeadline1};
   /* constant */
   --distance-base: 1rem;
   /* derived defaults */
@@ -85,6 +91,10 @@
   {#if googleFont}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href={`https://fonts.googleapis.com/css2?family=${googleFont}&display=swap`} rel="stylesheet">
+  {/if}
+  {#if googleFont2}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href={`https://fonts.googleapis.com/css2?family=${googleFont2}&display=swap`} rel="stylesheet">
   {/if}
 </svelte:head>
 

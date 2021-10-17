@@ -5,6 +5,9 @@ fields:
   - name: googleFont
     type: string
     defaultValue: Inter:wght@300;400;500
+  - name: googleFont2
+    type: string
+    defaultValue: Inter:wght@300;400;500
   - name: colorText
     type: string
     defaultValue: "##32332E"

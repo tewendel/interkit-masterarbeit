@@ -72,7 +72,14 @@
 <style>
 
   .container {
-    margin: var(--distance-m);
+    padding: var(--distance-m);
+    background-color: var(--color-background);
+  }
+
+  .info {
+    background-color: white;
+    border: var(--border-width) solid var(--color-border);
+    border-radius:  var(--border-radius);
   }
 
   ul {

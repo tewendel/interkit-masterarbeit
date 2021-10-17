@@ -11,6 +11,7 @@
 <style>
 
   :global(.MarkdownContent h1) {
+    font-family: var(--font-family-headline);
     font-size: var(--font-size-headline-1);
     margin-bottom: 16px;
     font-weight: normal;
