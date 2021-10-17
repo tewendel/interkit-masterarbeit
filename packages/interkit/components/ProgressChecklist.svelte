@@ -74,6 +74,9 @@
   .container {
     padding: var(--distance-m);
     background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .info {
@@ -83,11 +86,13 @@
   }
 
   ul {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 80%;
   }
 
   li {
-    margin: var(--distance-s);
+    
   }
 
   p {

@@ -63,40 +63,43 @@
 
 </script>
 
-<div
-  class="container InlineAudioPlayerButton"
-  class:open={open}
-  on:click|capture={containerClick}
-  >
-  {#key mediafile}
-    {#if mediafile}
-      <audio controls="controls"
-        bind:this={audioElement}
-        bind:paused
-        bind:currentTime
-        bind:duration
-        on:playing={() => { playing = true; loading = false }}
-        >
-        <source src={encodeURI(mediafile.link)} type="audio/mpeg">
-      </audio>
-      <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
-        <Icon type="skip-backward" />
-      </div>
-      <div class="button" on:click={mainToggleClick} disabled={loading}>
-        <Icon type={ paused ? 'play' : 'pause' } />
-      </div>
-      <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
-        {util.formatDuration((open ? currentTime : duration) * 1000)}
-      </div>
-      <div class="button close" on:click={closeClick}>
-        <Icon type="close" />
-      </div>
-    {:else}
-      <Icon type="error" />
-      no mediafile
-    {/if}
-  {/key}
-</div>
+{#key mediafile}
+  {#if mediafile}
+    <span
+      class="container InlineAudioPlayerButton"
+      class:open={open}
+      on:click|capture={containerClick}
+      >
+        {#if mediafile}
+          <audio controls="controls"
+            bind:this={audioElement}
+            bind:paused
+            bind:currentTime
+            bind:duration
+            on:playing={() => { playing = true; loading = false }}
+            >
+            <source src={encodeURI(mediafile.link)} type="audio/mpeg">
+          </audio>
+          <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
+            <Icon type="skip-backward" />
+          </div>
+          <div class="button" on:click={mainToggleClick} disabled={loading}>
+            <Icon type={ paused ? 'play' : 'pause' } />
+          </div>
+          <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
+            {util.formatDuration((open ? currentTime : duration) * 1000)}
+          </div>
+          <div class="button close" on:click={closeClick}>
+            <Icon type="close" />
+          </div>
+        {:else}
+          <Icon type="error" />
+          no mediafile
+        {/if}
+      
+    </span>
+  {/if}
+{/key}
 
 <style>
 

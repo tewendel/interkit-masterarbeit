@@ -1,5 +1,7 @@
 <script>
 
+import { setContext } from "svelte"
+
 import { InterkitClient, util } from '../'
 
 import {onMount, onDestroy } from 'svelte';
@@ -9,8 +11,9 @@ import { executeTrigger } from '../actions'
 import Button from './Button.svelte'
 import Overlay from './Overlay.svelte'
 import TopNavBarCustom from './TopNavBarCustom.svelte'
-import QRTips from './QRTips.svelte'
 import Icon from './Icon.svelte'
+import MapRenderer from './MapRenderer.svelte'
+import MultiStepContent from './MultiStepContent.svelte'
 
 let video;
 let mediaStream;
@@ -33,6 +36,11 @@ export let closeTrigger;
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
 const targetElement = QRElementStore ? $QRElementStore : undefined
 const targetElementObj = targetElement ? util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn }) : undefined
+
+setContext("qr-scanner", {
+  mapOffset: 250,
+  targetElementObj 
+});
 
 let dataRows; 
 
@@ -219,11 +227,15 @@ const closeTips = () => {
         </Button><span>QR-Code Scannen</span>
       </svelte:fragment>
       <svelte:fragment slot="content">
-        <QRTips 
-          onClose={closeTips}
-          {tips}
-          {targetElementObj}
-        />
+        <div class="center-box">
+          <MultiStepContent
+            slides = {tips}
+            onClose = {closeTips}
+          />            
+        </div>
+        <div class="map">
+          <slot name="map"/>
+        </div>
       </svelte:fragment>
     </TopNavBarCustom>
   </Overlay>
@@ -271,6 +283,28 @@ const closeTips = () => {
     transform: translateX(-50%);
     left: 50%;
   }
+
+  .map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .center-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+
 
 </style>
   

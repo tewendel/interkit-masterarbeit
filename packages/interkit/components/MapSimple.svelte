@@ -8,6 +8,7 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
+  import ButtonBar from './ButtonBar.svelte'
 
   export let markerIconAsset; // default asset to use
   export let markerCheckedIconAsset; // checked asset
@@ -24,6 +25,7 @@
   export let showPopups; // "TRUE" if we should show popup on marker tap
   export let mapId; // id of the map
   export let nearestElementMode = "FALSE"; // mode to show only the nearest element
+  export let inline = "FALSE";
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
@@ -134,7 +136,7 @@
   
 </script>
 
-  <div class="map-component-container" class:inline="{nearestElementMode == "TRUE"}">
+  <div class="map-component-container" class:inline="{inline == "TRUE"}">
 
     {#if selectedElement}
       <div class="marker_popup" 
@@ -167,7 +169,9 @@
     />
 
     <div class="Map__Button__Bar button-bar-container">
-      <slot name="button-bar" element={nearestElement}></slot>
+      <ButtonBar>
+        <slot name="button-bar" element={nearestElement}></slot>
+      </ButtonBar>
     </div>
 
   </div>
@@ -226,6 +230,7 @@
     position: absolute;
     top: 16px;
     right: 16px;
+    z-index: 1;
   }
 
   .button-bar-container {

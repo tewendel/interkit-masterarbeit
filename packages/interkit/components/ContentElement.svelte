@@ -1,6 +1,5 @@
 <script>
 
-  import marked from "marked"
   import { setContext, getContext } from 'svelte';
   import { get, writable } from 'svelte/store'
   import { onMount } from 'svelte';
@@ -9,6 +8,8 @@
   import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import ButtonBar from './ButtonBar.svelte'
+  import MarkdownContent from './MarkdownContent.svelte'
   
   export let element; // alaways use prop if passed in directly 
   //console.log("ContentElement with element prop", element)
@@ -120,31 +121,30 @@
       
         <div class="short-description">
           {#if short_description}
-            {@html marked(short_description)}
+            <MarkdownContent content={short_description}/>
           {/if}
         </div>
         
         <div class="description">
           {#if description}
-            {@html marked(description)}
+            <MarkdownContent content={description}/>
           {/if}
         </div>
       
     </div>
 
-    <div class="button-bar-container">
-      <slot name="buttons">
-      </slot>
 
-      {#if distance}
-      <span class="distance">
+    <ButtonBar>    
+      <slot name="buttons">
+      </slot>{#if distance}<span class="distance">
         <Button type="secondary">
           <Icon type="location"/>
           {distance}
         </Button>
       </span>
       {/if}
-    </div>
+    </ButtonBar>
+    
     
 
   </section>
@@ -260,15 +260,6 @@
 
   .more_content:not(.show) {
     display: none;
-  }
-
-  /* button bar */
-
-
-  .button-bar-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
   }
 
   /* size variants */
