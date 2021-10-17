@@ -182,11 +182,9 @@
     border-radius: 25px;
     border: 1px solid black;
     overflow: hidden;
-    margin: 16px;
     height: auto;
     display: flex;
     flex-direction: row;
-    padding: 5px;
     border-radius: var(--border-radius-button);
     min-width: 40px;
     font-size: var(--font-size-regular);
