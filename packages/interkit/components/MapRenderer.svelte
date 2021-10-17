@@ -8,6 +8,7 @@
           selected,
           markerCheckedIconAsset,
           markerIconAsset
+          noPointer // show the little pointer
   */
   
   export const createIconDivHTML = async (element, options) => {
@@ -33,8 +34,8 @@
       markerSelected = true; 
 
     let html = `
-    <div class="marker-container ${markerSelected ? 'selected' : ''}">
-      ${labelSpan} <img src="${iconSrc}"/>
+    <div class="marker-container ${options.noPointer ? 'no-pointer' : ''}">
+      <div class="marker-content ${markerSelected ? 'selected' : ''}">${labelSpan} <img src="${iconSrc}"/></div>
     </div>
     `;
     
@@ -316,21 +317,41 @@
   }
 
   :global(div.marker-container) {
-    background-color: #fff;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    padding: 5px;
-    border-radius: 12px;
-    min-width: 40px;
-    font-size: var(--font-size-regular);
+    background-image: url("../icons/map_marker_tip.svg");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    width: 49px;
+    height: 42px;
   }
 
-  :global(div.marker-container.selected) {
+  :global(div.marker-container.no-pointer) {
+    background-image: none;
+  }
+
+  :global(div.marker-content) {
+    width: 49px;
+    height: 32px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 12px;
+    font-size: var(--font-size-regular);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  :global(div.marker-content img) {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  :global(.marker-content.selected) {
     background-color: lightgrey;
   }
 
-  :global(div.marker-container.selected img) {
+  :global(.marker-content.selected img) {
     filter: grayscale(1);
   }
 

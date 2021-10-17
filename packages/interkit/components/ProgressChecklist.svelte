@@ -33,10 +33,13 @@
   const updateMarkerHTMLs = async () => {
     if($elements?.length)
       for(let element of $elements) {
+        let checked = $elementProperties?.[element.key]?.[checkedProperty] ? true : false;
         markerHTMLs[element.key] = await createIconDivHTML(element, {
-          checked: $elementProperties?.[element.key]?.[checkedProperty] ? true : false, 
+          checked,
+          selected: checked, 
           markerCheckedIconAsset,
-          markerIconAsset
+          markerIconAsset,
+          noPointer: true
         })
       }
   }
