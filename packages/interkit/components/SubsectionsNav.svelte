@@ -52,7 +52,7 @@
       <Button on:click={back}>
         <Icon type="arrow-left" />
       </Button>
-      {subsectionLabels[subsectionLabels.length - 1]}
+      <span class="headline">{subsectionLabels[subsectionLabels.length - 1]}</span>
 
   </svelte:fragment>
 
@@ -71,3 +71,8 @@
 
 </TopNavBarCustom>
 
+<style>
+  span.headline {
+    font-size: var(--font-size-headline-1);
+  }
+</style>
