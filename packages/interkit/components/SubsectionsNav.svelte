@@ -58,9 +58,9 @@
 
   <svelte:fragment slot="right">
 
-      <Button on:click={close}>
-        <Icon type="close" />
-      </Button>
+        <Button on:click={close}>
+          <Icon type="close" />
+        </Button>
       
   </svelte:fragment>
 

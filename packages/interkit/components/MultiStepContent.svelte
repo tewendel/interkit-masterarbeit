@@ -92,6 +92,7 @@
     align-items: center;
     background-color: white;
     z-index: 1;
+    pointer-events: all;
   }
 
   .container .image {
