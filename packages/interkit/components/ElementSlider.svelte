@@ -50,7 +50,7 @@
 <div class="container">
   {#if dataRowsSorted}
     {#if dataRowsSorted.length === 0}
-      <slot name="emptyElement"></slot>
+      <div class="empty"><slot name="emptyElement"></slot></div>
     {:else}
       <Slider slides={dataRowsSorted} let:slide={row}>
         <slot name="contentElement" element={row} />
@@ -58,3 +58,10 @@
     {/if}
   {/if}
 </div>
+
+<style>
+
+  .empty {
+    margin-left: var(--distance-s);
+  }
+</style>

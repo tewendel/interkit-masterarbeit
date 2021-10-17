@@ -1,0 +1,10 @@
+name: DashboardSection
+fields:
+  - name: title
+    type: slot
+  - name: content
+    type: slot
+  - name: fullWidthContent
+    type: checkbox
+    defaultValue: "FALSE"
+toolboxCategory: Layout

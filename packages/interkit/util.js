@@ -131,6 +131,13 @@ export default {
     if(meters < 1000) d = meters + "m";
     else d = Math.floor(meters / 1000) + "km";
     return d;
+  },
+
+  getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   }
 
 }

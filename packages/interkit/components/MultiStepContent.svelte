@@ -91,7 +91,7 @@
     flex-direction: column;
     align-items: center;
     background-color: white;
-    z-index: 1000;
+    z-index: 1;
   }
 
   .container .image {

@@ -39,6 +39,10 @@
     }
   }
 
+  const close = () => {
+    baseBack();
+  }
+
 </script>
 
 <TopNavBarCustom>
@@ -50,6 +54,14 @@
       </Button>
       {subsectionLabels[subsectionLabels.length - 1]}
 
+  </svelte:fragment>
+
+  <svelte:fragment slot="right">
+
+      <Button on:click={close}>
+        <Icon type="close" />
+      </Button>
+      
   </svelte:fragment>
 
 
