@@ -3,6 +3,7 @@
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
   import Icon from './Icon.svelte';
+  import AspectRatio from './AspectRatio.svelte'
 
   export let mediafileRef
   export let url
@@ -16,26 +17,29 @@
 </script>
 
 <div class="ImageSlideshowSlide container">
-  <MediaFileImage mediafileRef={ mediafileRef } />
+  <AspectRatio aspectRatioType="square">
+  <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ mediafileRef } />
   <div class="ImageSlideshowSlide__titles titles">
-    {#if autoVia && via}
-      <div class="ImageSlideshowSlide__title-sub title-sub">via { via }</div>
+    {#if autoVia && via && !superTitle}
+      <div class="ImageSlideshowSlide__title-super title-super">via { via }</div>
     {:else}
-      <div class="ImageSlideshowSlide__title-sub title-sub">{ title }</div>
+      <div class="ImageSlideshowSlide__title-super title-super">{ superTitle }</div>
     {/if}
-    <div class="ImageSlideshowSlide__title-super title-super">{ superTitle }</div>
+    <div class="ImageSlideshowSlide__title title">{ title }</div>
   </div>
-  <a href={ url } class="ImageSlideshowSlide__button button">
+  <a href={ url } target={ "interkit-social" } class="ImageSlideshowSlide__button button">
     <Button>
       <Icon type="arrow-right"/>
     </Button>
   </a>
+  </AspectRatio>
 </div>
 
 <style>
 
   .container {
     position: relative;
+    height: 100%;
   }
 
   .titles {
@@ -48,12 +52,12 @@
     word-break: break-word;
   }
 
-  .title-super {
+  .title {
     font-size: 200%;
     font-weight: bold;
   }
 
-  .title-sub {
+  .title-super {
     text-transform: uppercase;
   }
 

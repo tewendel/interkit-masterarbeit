@@ -50,6 +50,10 @@
 
   img.fitDimension-height {
     height: 100%;
+  }
+
+  img.fitDimension-both {
+    height: 100%;
     width: 100%;
   }
 
