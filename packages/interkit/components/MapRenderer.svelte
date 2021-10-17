@@ -46,7 +46,7 @@
 
 <script>
 
-  import { onMount, setContext, onDestroy } from 'svelte'
+  import { onMount, getContext, setContext, onDestroy } from 'svelte'
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -85,6 +85,8 @@
       console.log("error parsinng defaultLocation")
     }
   }
+
+  let qrContext = getContext("qr-scanner");
   
   let map;
   let mapElement; 
@@ -214,13 +216,13 @@
   let nearestMapPosInit = false;
   const positionMapForNearestMode = () => {
     //nearestMapPosInit = true;
-    console.log("positioning map...")
+    /*console.log("positioning map...")
     console.log("user is at", $positionStore);
-    console.log("nearest element is at: ", nearestElement.markerPositionsColumn)
+    console.log("nearest element is at: ", nearestElement.markerPositionsColumn)*/
 
     let group = new L.featureGroup([L.marker($positionStore), L.marker(nearestElement.markerPositionsColumn)]);
     map.fitBounds(group.getBounds().pad(1), {animate: false})
-    map.panBy([0, 30], {animate: false});
+    map.panBy([0, qrContext?.mapOffset || 30], {animate: false});
   }
 
   $: {

@@ -24,6 +24,7 @@
   export let showPopups; // "TRUE" if we should show popup on marker tap
   export let mapId; // id of the map
   export let nearestElementMode = "FALSE"; // mode to show only the nearest element
+  export let inline = "FALSE";
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
@@ -134,7 +135,7 @@
   
 </script>
 
-  <div class="map-component-container" class:inline="{nearestElementMode == "TRUE"}">
+  <div class="map-component-container" class:inline="{inline == "TRUE"}">
 
     {#if selectedElement}
       <div class="marker_popup" 

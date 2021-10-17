@@ -37,6 +37,9 @@ fields:
     name: showPopups
     defaultValue: TRUE
   - type: checkbox
+    name: inline
+    defaultValue: FALSE
+  - type: checkbox
     name: nearestElementMode
     defaultValue: FALSE
   - type: "slot"
