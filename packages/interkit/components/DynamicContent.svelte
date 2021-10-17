@@ -10,7 +10,9 @@
   export let contentKey; // the key to select the row by
   export let format; // the format to use to display it
   export let defaultContent; // what to use instead
-  export let inline = "FALSE" // add spacings or not
+  export let inline = false // add spacings or not
+
+  if (typeof inline == "string") inline = inline === "TRUE" // blockly conversion
 
   // we first identify the sheet that contains our data
   let contentSheetKey = util.getSheetKey(contentColumn)
@@ -49,7 +51,7 @@
 {#if $$slots.default}
   <slot content={content || defaultContent}></slot>
 {:else}
-  <div class="DynamicContent container" class:richText={format == "richText"} class:inline={inline == "TRUE"}>
+  <div class="DynamicContent container" class:richText={format == "richText"} class:inline>
     {#if $rowStore}
       {#if format == "richText"}
         {#if content}
