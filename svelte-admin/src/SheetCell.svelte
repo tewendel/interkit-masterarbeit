@@ -35,7 +35,7 @@
 <style>
 
   .cell {
-    max-height: 1.5em;
+    max-height: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;

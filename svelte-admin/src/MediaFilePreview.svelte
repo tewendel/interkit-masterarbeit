@@ -34,7 +34,7 @@
   <img class="preview-image" src={encodeURI(mediafile.link)}/>
 {:else if mediafile?.type.split("/")?.[0] === "model"}
   {#if mediafile?.type.indexOf("model/gltf") === 0}
-    <model-viewer src={mediafile.link}/>
+    <model-viewer auto-rotate autoplay style="height: 3em; width: 3em" src={mediafile.link}/>
   {:else}
     3d model without preview
   {/if}
