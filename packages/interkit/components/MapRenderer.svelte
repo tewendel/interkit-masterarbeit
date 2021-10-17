@@ -73,6 +73,9 @@
 
   export let defaultLocation; // where to center the map by default [lat, lng]
   
+  export let nearestElementMode = "FALSE";
+  export let nearestElement;
+  
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
     try {
@@ -86,6 +89,7 @@
   let map;
   let mapElement; 
   
+  let positionStore = InterkitClient.getGlobalStore("userPosition")        
   let userIcon;
   let userPositionMarker;
   let geoWatch;
@@ -177,7 +181,6 @@
         }
         //console.log("currentPosition", JSON.stringify(currentPosition), err)
 
-        let positionStore = InterkitClient.getGlobalStore("userPosition")
         positionStore.set(currentPosition);
 
         if(!userIcon)
@@ -207,6 +210,29 @@
     })
       
   })
+
+  let nearestMapPosInit = false;
+  const positionMapForNearestMode = () => {
+    //nearestMapPosInit = true;
+    console.log("positioning map...")
+    console.log("user is at", $positionStore);
+    console.log("nearest element is at: ", nearestElement.markerPositionsColumn)
+
+    let group = new L.featureGroup([L.marker($positionStore), L.marker(nearestElement.markerPositionsColumn)]);
+    map.fitBounds(group.getBounds().pad(1), {animate: false})
+    map.panBy([0, 30], {animate: false});
+  }
+
+  $: {
+    if(nearestElementMode == "TRUE"
+      && !nearestMapPosInit
+      && $positionStore
+      && nearestElement
+      && map
+    ) {
+      positionMapForNearestMode();
+    }
+  }
 
   onDestroy(()=>{
     Geolocation.clearWatch(geoWatch)

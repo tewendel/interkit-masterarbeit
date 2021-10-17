@@ -26,7 +26,7 @@
   export let nearestElementMode = "FALSE"; // mode to show only the nearest element
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
-  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   
   let elementRows; // store with the elements we want to show
@@ -162,7 +162,8 @@
       {markerData}
       {markerClick}
       {mapClick}
-      mapFocus={$mapFocus}
+      {nearestElementMode}
+      {nearestElement}
     />
 
     <div class="Map__Button__Bar button-bar-container">

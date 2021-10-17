@@ -49,6 +49,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 1000;
+    pointer-events: none;
   }
 
   .container {
