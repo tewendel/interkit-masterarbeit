@@ -1,4 +1,5 @@
 name: DashboardSection
+colour: 100
 fields:
   - name: title
     type: slot

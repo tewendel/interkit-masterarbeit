@@ -1,6 +1,6 @@
 name: Button
 title: Button
-colour: 100
+colour: 300
 fields:
   - type: string
     name: text

@@ -1,4 +1,5 @@
 name: Styling
+colour: 100
 fields:
   - name: default
     type: slot

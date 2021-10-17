@@ -1,5 +1,6 @@
 name: SessionFlow
 title: SessionFlow
+colour: 300
 toolboxCategory: Input
 fields:
   - type: sheetColumn

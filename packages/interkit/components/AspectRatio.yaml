@@ -1,5 +1,6 @@
 name: AspectRatio
 title: Aspect Ratio
+colour: 100
 toolboxCategory: Layout
 fields:
   - name: aspectRatioType

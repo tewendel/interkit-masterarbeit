@@ -1,6 +1,6 @@
 name: ElementShowIf
 title: Element Show If
-color: 50
+colour: 50
 fields:
   - type: string
     name: property  

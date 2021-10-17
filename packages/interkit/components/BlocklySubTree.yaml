@@ -1,4 +1,5 @@
 name: BlocklySubTree
+colour: 260
 fields:
   - name: key
     type: string
