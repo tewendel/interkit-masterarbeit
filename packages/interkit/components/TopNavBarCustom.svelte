@@ -26,7 +26,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items:center;
     justify-content: space-between;
     box-sizing: border-box;
     border-bottom: var(--border-width) solid var(--color-border);
@@ -35,15 +35,29 @@
     padding-top: var(--distance-s);
     padding-bottom: var(--distance-s);
   }
-  
+
+
+  /*
+  .TopNavBarCustom__Top__Left,
+  .TopNavBarCustom__Top__Right {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex:1;
+    overflow: hidden;
+  }
+  */
+
+  :global(.TopNavBarCustom__Top__Left > *),
+  :global(.TopNavBarCustom__Top__Right > *) {
+    display: inline-flex;
+  }
+
   :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {
     margin-left: 8px;
-    display: inline-flex;
   }
 
   :global(.TopNavBarCustom__Top__Right > *:not(:first-child)) {
     margin-left: 8px;
-    display: inline-flex;
   }
 
   :global(.TopNavBarCustom__Top__Left span, .TopNavBarCustom__Top__Right span) {

@@ -5,6 +5,7 @@
   import { get, writable } from 'svelte/store'
   import { onMount } from 'svelte';
   import { InterkitClient, util } from '../'
+  import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -94,7 +95,9 @@
   <section class={`ContentElementAudio container size-${size}`}>
 
     <figure class="ContentElementAudio__Picture picture">
-      <MediaFileImage mediafileRef={imageRef} />    
+      <AspectRatio>
+        <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
+      </AspectRatio>
     </figure>
       
     <div class="ContentElementAudio_Titles titles">

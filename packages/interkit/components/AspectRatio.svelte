@@ -45,8 +45,8 @@
     height: 100%;
   }
   .standalone {
-    border: 1px solid black;
-    border-radius: 20px;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
     overflow: hidden;
   }
 </style>
