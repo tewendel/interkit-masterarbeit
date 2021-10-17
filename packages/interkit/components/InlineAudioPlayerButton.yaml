@@ -3,4 +3,5 @@ fields:
   - name: audioColumn
     type: sheetColumn
     columnType: mediafile
+    defaultValue: "elements/audio"
 toolboxCategory: MediaPlayer
