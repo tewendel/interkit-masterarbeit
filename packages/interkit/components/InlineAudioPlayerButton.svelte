@@ -65,7 +65,7 @@
 
 {#key mediafile}
   {#if mediafile}
-    <div
+    <span
       class="container InlineAudioPlayerButton"
       class:open={open}
       on:click|capture={containerClick}
@@ -97,7 +97,7 @@
           no mediafile
         {/if}
       
-    </div>
+    </span>
   {/if}
 {/key}
 

@@ -8,6 +8,7 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
+  import ButtonBar from './ButtonBar.svelte'
 
   export let markerIconAsset; // default asset to use
   export let markerCheckedIconAsset; // checked asset
@@ -168,7 +169,9 @@
     />
 
     <div class="Map__Button__Bar button-bar-container">
-      <slot name="button-bar" element={nearestElement}></slot>
+      <ButtonBar>
+        <slot name="button-bar" element={nearestElement}></slot>
+      </ButtonBar>
     </div>
 
   </div>
