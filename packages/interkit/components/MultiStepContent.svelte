@@ -4,6 +4,7 @@
   import { InterkitClient, util } from '../'
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
+  import AspectRatio from './AspectRatio.svelte'
 
   export let slides;
   /* array of objects with
@@ -44,18 +45,25 @@
   </div>
 
   <div class="container">
+
     
       {#if slides[slideIndex]?.image}
         <div class="image">
-          <MediaFileImage mediafileRef={slides[slideIndex].image}/>
+          <AspectRatio standalone>
+            <MediaFileImage mediafileRef={slides[slideIndex].image}/>
+          </AspectRatio>
         </div>
       {/if}
       
-      <span>{slides[slideIndex]?.supertitle || ""}</span>
-      <h1>{slides[slideIndex]?.title || ""}</h1>
-      <p>{slides[slideIndex]?.content || ""}</p>
+      {#key slideIndex}
+        <div class="content">
+          <span>{slides[slideIndex]?.supertitle || ""}</span>
+          <h1>{slides[slideIndex]?.title || ""}</h1>
+          <p>{slides[slideIndex]?.content || ""}</p>
+        </div>
+      {/key}
 
-      <div class="QRTips__Button__Bar button-bar">
+      <div class="Button__Bar button-bar">
         {#if slideIndex > 0}<Button text="Zurück" onClick={()=>{slideIndex -= 1}}/>{/if}
         {#if slideIndex < slides.length - 1 || onClose}
           <Button text="Weiter" onClick={incrIndex}/>
@@ -84,7 +92,7 @@
   .container {
     margin-left: 16px;
     margin-right: 16px;
-    border: 1px solid black;
+    border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     padding: 8px;
     display: flex;
@@ -93,15 +101,18 @@
     background-color: white;
     z-index: 1;
     pointer-events: all;
+    display: flex;
+    flex-direction: column;
   }
 
   .container .image {
-    border: 1px solid black;
-    border-radius: var(--border-radius);
-    overflow: hidden;
     width: 100%;
     margin-bottom: 16px;
-    max-height: 200px;
+  }
+
+  .container .content {
+    max-height: 30vh;
+    overflow-y: auto;
   }
 
   h1, p {
@@ -117,13 +128,15 @@
     font-size: var(--font-size-regular);
     line-height: var(--line-height-regular);
     margin-bottom: 16px;
-    width: 80%;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .button-bar {
     display: flex;
     flex-direction: row;
     margin-bottom: 16px;
+    padding-top: 8px;
   }
 
   :global(.QRTips__Button__Bar span:not(:first-child)) {
