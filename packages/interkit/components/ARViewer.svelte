@@ -32,17 +32,20 @@
   let iosLinkRef
   let androidLinkRef
 
-  const androidFallbackUrl = "https://developers.google.com/ar"
   const androidARmode = ARmode === "only" ? "ar_only" : "ar_preferred"
 
   const generateAndroidHref = url => 
-    `intent://` + 
-    `arvr.google.com/scene-viewer/1.0`+ 
-    `?file=${url}`+ 
-    `&mode=${androidARmode}` + 
-    `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` + 
-    `S.browser_fallback_url=${androidFallbackUrl};end;`
-
+  {
+      const androidFallbackUrl = window ?
+        encodeURIComponent(window.location.origin + window.location.pathname + "?android-ar-fallback")
+        : "https://developers.google.com/ar"
+      return `intent://` + 
+      `arvr.google.com/scene-viewer/1.0`+ 
+      `?file=${url}`+ 
+      `&mode=${androidARmode}` + 
+      `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` + 
+      `S.browser_fallback_url=${androidFallbackUrl};end;`
+  }
   let capability // video | ios | android
   let mode = "init" // init | video
 

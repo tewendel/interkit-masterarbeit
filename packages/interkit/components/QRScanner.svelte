@@ -89,7 +89,7 @@ const initTips = async ()=> {
     
     // filter tips for targetElement and sort by order column
     tips = $tipRowStore
-      .filter(t => t.tipQrKeyColumn == targetElementObj.elementKeyColumn)
+      .filter(t => t.tipQrKeyColumn == targetElementObj?.elementKeyColumn)
       .sort((a, b) => a.tipOrderColumn - b.tipOrderColumn)
       .map((t,i) => { return {...t, title: "Hinweis " +(i+1)} })  
     console.log("tips", tips)
