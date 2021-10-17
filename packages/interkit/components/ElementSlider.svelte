@@ -1,4 +1,4 @@
-<script x>
+<script>
 
   import { onMount, getContext, onDestroy } from 'svelte'
 
@@ -8,7 +8,7 @@
 
   export let dataSheetKey 
   export let sortColumn
-  export let unlockedProperty
+  export let unlockedProperty = "unlocked"
 
   let dataSheet
   let dataSub
@@ -53,7 +53,7 @@
       <slot name="emptyElement"></slot>
     {:else}
       <Slider slides={dataRowsSorted} let:slide={row}>
-        <slot name="contentElement" element={row} size={"slide"} />
+        <slot name="contentElement" element={row} />
       </Slider>
     {/if}
   {/if}

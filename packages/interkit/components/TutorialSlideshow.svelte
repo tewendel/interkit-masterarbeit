@@ -5,7 +5,6 @@
   import { executeTrigger } from '../actions'
   import MultiStepContent from './MultiStepContent.svelte'
 
-  export let mainTitle;
   export let completeTrigger;
 
   export let imageColumn;
@@ -50,8 +49,6 @@
 </script>
 
 <div class="container">
-
-  <h1>{mainTitle}</h1>
 
   <MultiStepContent
     {slides}
