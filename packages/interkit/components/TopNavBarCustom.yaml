@@ -6,6 +6,4 @@ fields:
     name: right
   - type: slot
     name: content
-    slotProps:
-      - element
 toolboxCategory: TopBar

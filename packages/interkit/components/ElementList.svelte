@@ -120,6 +120,8 @@
   })
 
   const onClick = (element) => {
+
+    console.log("onClick", element)
     
     // if we are in listNave, set the context
     if(listNavContext)
@@ -139,10 +141,10 @@
   {:else}
     <ul>
       {#each dataRowsSorted as row}
-      <li class="item" on:click={()=>{onClick(row)}}>
-        <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "l"}}></slot>
-        <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
-      </li>
+        <li class="item" on:click={()=>{onClick(row)}}>
+          <slot name="contentElement" element={{...row, size: bookmarkStore ? "s" : "l"}}></slot>
+          <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
+        </li>
       {/each}
     </ul>
   {/if}

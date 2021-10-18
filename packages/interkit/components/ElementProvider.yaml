@@ -1,0 +1,9 @@
+name: ElementProvider
+fields:
+  - type: string
+    name: globalStore
+  - type: slot
+    name: consumer
+    slotProps:
+      - element
+toolboxCategory: Elements

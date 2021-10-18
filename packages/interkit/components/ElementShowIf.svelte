@@ -3,28 +3,37 @@
   import { get } from 'svelte/store';
   import { InterkitClient, util } from '../'
 
-  // get context from parent element, for example inside ContentElement
-  const c = getContext("buttonBar");
-  //console.log("ElementShowIf element from buttonPayload", c?.buttonPayload)
-  let element = c?.buttonPayload // this is a store
+  // you can pass in an element via slot props (used in ElementList)
+  export let element;
+  if(element) console.log("ElementShowIf got element through prop", element)
 
-  // otherwise use global store if available
+  // get context from parent element, for example inside ContentElement
+  /*const c = getContext("buttonBar");
+  //console.log("ElementShowIf element from buttonPayload", c?.buttonPayload)
+  let elementStore = c?.buttonPayload // this is a store*/
+
+  /*// otherwise use global store if available
   let elementDetail = InterkitClient.getGlobalStore("elementDetail")
-  if(!element && elementDetail) {
+  if(!elementStore && elementDetail) {
     //console.log("ElementShowIf element from elementDetail", $elementDetail)
-    element = elementDetail
-  }
+    elementStore = elementDetail
+  }*/
  
-  //$: console.log("element store show if", $element)
+  //$: console.log("element store show if", $elementStore)
 
   export let property;
 
   let elementProperties = InterkitClient.getGlobalStore("elementProperties");
-  //console.log("ElementShowIf getting elementProperties", elementProperties)
+  console.log("ElementShowIf getting elementProperties", $elementProperties)
   let value;
   $: {
-    value = $elementProperties?.[$element?.key]?.[property]
-    //console.log("updated value in ElementShowIf", $element?.key, property, value)
+    if(element) {
+      value = $elementProperties?.[element?.key]?.[property]  
+      console.log("updated value from element", element, property, value)
+    } /*else {
+      value = $elementProperties?.[$elementStore?.key]?.[property]  
+    }*/
+    //console.log("updated value in ElementShowIf", element, $elementStore, property, value)
   }
 
 </script>

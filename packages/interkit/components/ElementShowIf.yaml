@@ -8,4 +8,6 @@ fields:
     name: iftrue
   - type: slot
     name: else
+hiddenProps: 
+  - element   
 toolboxCategory: "Conditionals"

@@ -139,7 +139,7 @@
       unsubElementRows()
   })
 
-  // set context for buttons in buttons slot and if we want to use ElementShowIf for the popup
+  // set context for buttons in buttons slot
   const buttonPayloadStore = writable(null)
   setContext("buttonBar", {
     buttonPayload: buttonPayloadStore

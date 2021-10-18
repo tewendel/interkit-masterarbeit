@@ -18,6 +18,7 @@
   let elementDetail = InterkitClient.getGlobalStore("elementDetail")
   if(!element && $elementDetail) {
     element = $elementDetail
+    console.log("using elementDetail store", element)
   }
 
   // otherwise get context from listNav
