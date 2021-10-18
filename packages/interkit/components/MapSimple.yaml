@@ -42,6 +42,9 @@ fields:
   - type: checkbox
     name: nearestElementMode
     defaultValue: FALSE
+  - type: checkbox
+    name: singleElementContext
+    defaultValue: FALSE
   - type: "slot"
     name: "element"
     slotProps:

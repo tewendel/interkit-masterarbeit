@@ -37,8 +37,9 @@ const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a s
 const targetElement = QRElementStore ? $QRElementStore : undefined
 const targetElementObj = targetElement ? util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn }) : undefined
 
+console.log("setting qr-scanner context with", targetElementObj)
 setContext("qr-scanner", {
-  mapOffset: 250,
+  mapOffset: [0, 150],
   targetElementObj 
 });
 

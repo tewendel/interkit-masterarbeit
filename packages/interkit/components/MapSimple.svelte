@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, setContext, onDestroy } from 'svelte'
+  import { onMount, setContext, getContext, onDestroy } from 'svelte'
   import { get, writable } from 'svelte/store'
   import { fly } from 'svelte/transition';
   
@@ -26,6 +26,14 @@
   export let mapId; // id of the map
   export let nearestElementMode = "FALSE"; // mode to show only the nearest element
   export let inline = "FALSE";
+  export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
+
+  const columnMap = {
+    customIconColumn,
+    markerLabelColumn,
+    hideOnMapColumn,
+    markerPositionsColumn
+  }
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
@@ -38,16 +46,18 @@
   let markerData; 
   let selectedElement;
   let nearestElement;
+
+  let singleElement;
+  
+  // retrieve row from qr scanner and convert to object with the columns specified in map
+  let qrContext = getContext("qr-scanner")
+  if(qrContext?.targetElementObj) {
+    singleElement = util.rowToObject(qrContext.targetElementObj.row, columnMap)
+    console.log("singleElement", singleElement)
+  }
   
   // set up subscription
   const initDataSubs = async () => {
-    
-    const columnMap = {
-      customIconColumn,
-      markerLabelColumn,
-      hideOnMapColumn,
-      markerPositionsColumn
-    }
     
     elementRows = await InterkitClient.getRowSubStore(markerPositionsColumn, columnMap, "mapMarkers");
     unsubElementRows = elementRows.subscribe((rowsArray)=>{
@@ -76,6 +86,11 @@
 
     // filter rows
     let rowsFiltered = markerRows.filter(r => r.hideOnMapColumn != "true")
+
+    // if singleElement is set, use only that
+    if(singleElement) {
+      rowsFiltered = [singleElement]
+    }
 
     // if nearestElementMode is set and we have a position, show only nearest element
     if(nearestElementMode == "TRUE") {
@@ -166,6 +181,7 @@
       {mapClick}
       {nearestElementMode}
       {nearestElement}
+      {singleElement}
     />
 
     <div class="Map__Button__Bar button-bar-container">

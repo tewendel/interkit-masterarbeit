@@ -75,7 +75,10 @@
   
   export let nearestElementMode = "FALSE";
   export let nearestElement;
-  
+
+  // mode to show a single Element and center the map on that (used in qr scanner)
+  export let singleElement;
+
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
     try {
@@ -116,8 +119,6 @@
   // goes over data and recreates markers
   const updateMarkers = async () => {
 
-    //console.log("updateMarkers", markerData)
-
     // clear old markers
     removeMarkers();
 
@@ -138,7 +139,8 @@
         });
         let icon = L.divIcon({
           html: iconHTML,
-          className: 'map-marker'
+          className: 'map-marker',
+          iconAnchor: [24.5, 42]
         });
 
         //console.log("adding marker to map", markerValue, icon)
@@ -160,7 +162,12 @@
     map = L.map(mapId, {
       zoomControl: false,
       attributionControl: false,
-    }).setView(defaultLocationLatLng, 14);  
+    }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
+     singleElement ? 17 : 14);  
+
+    if(singleElement) {
+      map.panBy(qrContext?.mapOffset, {animate: false});
+    }
 
     // default interkit map style
     L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
