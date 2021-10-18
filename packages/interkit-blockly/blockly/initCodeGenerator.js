@@ -75,13 +75,13 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
       // props
       for(let field of blockObject.fields) {
         if(field.type != "slot") {
-          code += attribute(block, field.name)
+          code += "   " + attribute(block, field.name)
         }
       }
       if(blockObject.hiddenProps) {
         code += blockObject.hiddenProps.map(p=>`{${p}}`).join(" ")
       }
-      code += `>`
+      code += `>\n`
 
       // slots
       for(let field of blockObject.fields) {
@@ -89,17 +89,17 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
           if(field.name != "default")
              code += (`<svelte:fragment slot="${field.name}"`
                    + (field?.slotProps ? field.slotProps.map(p=>` let:${p}={${p}}`).join(" ") : "")
-                   + ">")
+                   + ">\n")
 
           code += statements(block, field.name)
           
           if(field.name != "default")
-            code += "</svelte:fragment>"
+            code += "</svelte:fragment>\n"
         }        
       }
 
       // closing tag
-      code += `</${blockObject.name}>`
+      code += `</${blockObject.name}>\n`
 
       return code;
     }
