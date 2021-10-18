@@ -215,7 +215,7 @@ const closeTips = () => {
   {/if}
 </div>
 
-{#if showTips}
+{#if showTips && tips.length}
   <Overlay 
     zIndex=3
   >
