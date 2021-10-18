@@ -8,6 +8,10 @@ fields:
     type: sheetColumn
     columnType: string
     defaultValue: "elements/markerLabel"
+  - name: orderColumn
+    type: sheetColumn
+    columnType: number
+    defaultValue: "elements/categoryOrder"
   - type: string
     name: checkedProperty
     defaultValue: "checked"

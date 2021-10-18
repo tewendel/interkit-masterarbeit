@@ -10,6 +10,7 @@
 
   export let customIconColumn;
   export let markerLabelColumn;
+  export let orderColumn;
 
   export let markerIconAsset = "icons/Location.svg"; // default asset to use
   export let markerCheckedIconAsset = "icons/Check-Thin.svg"; // checked asset
@@ -17,11 +18,16 @@
 
   // retrieve the store with element objects
   let elements;
+  let elementsSorted;
   onMount(async () => {
     elements = await InterkitClient.getRowSubStore(customIconColumn, { 
       customIconColumn, 
-      markerLabelColumn
+      markerLabelColumn,
+      orderColumn
     }, "progressChecklist")
+    elements.subscribe((data)=>{
+      elementsSorted = data.sort((a, b) => a.orderColumn - b.orderColumn)
+    })
   })
 
   // the global store that contains element properties
@@ -53,10 +59,10 @@
 
 <div class="container">
 
-  {#if $elements?.length } 
+  {#if elementsSorted?.length } 
 
     <ul>
-      {#each $elements as element}
+      {#each elementsSorted as element}
         <li>{@html markerHTMLs?.[element.key]}</li>
       {/each}
     </ul>
