@@ -79,7 +79,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
         }
       }
       if(blockObject.hiddenProps) {
-        code += blockObject.hiddenProps.map(p=>`{${p}}`).join(" ")
+        code += "   " + blockObject.hiddenProps.map(p=>`{${p}}`).join(" ") + "\n"
       }
       code += `>\n`
 
