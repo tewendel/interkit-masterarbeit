@@ -139,14 +139,14 @@
       unsubElementRows()
   })
 
-  // set context for buttons in buttons slot
-  const buttonPayloadStore = writable(nearestElement?.row)
+  // set context for buttons in buttons slot and if we want to use ElementShowIf for the popup
+  const buttonPayloadStore = writable(null)
   setContext("buttonBar", {
     buttonPayload: buttonPayloadStore
   });
 
   // update store whenever it changes
-  $: buttonPayloadStore.set(nearestElement?.row)
+  $: buttonPayloadStore.set(selectedElement ? selectedElement : nearestElement?.row)
 
   
 </script>
@@ -156,7 +156,7 @@
     {#if selectedElement}
       <div class="marker_popup" 
         class:active={selectedElement ? true : false}
-        transition:fly="{{ y: 300, duration: 100, opacity: 1 }}"
+        in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
         <div class="marker_popup_background">
           <div class="marker_popup_close">
