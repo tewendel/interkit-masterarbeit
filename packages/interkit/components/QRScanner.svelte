@@ -55,9 +55,7 @@ const onScan = (code) => {
 
   let elementRow = elementRows?.[0]
   console.log(elementRow)
-
-  if(!elementRow) alert("Code nicht erkannt.", code)
-
+  
   let payload = {
     code,
     elementRow,

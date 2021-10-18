@@ -75,7 +75,7 @@
 
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   let distanceMeters;
-  let distance = "";
+  let distance;
 
   const calculateDistance = (userPosition) => {
     let elementPosition = util.rowVal(element, elementColumns.locationColumn);
@@ -85,9 +85,11 @@
     }
   }
 
+  /*
   $: {
     calculateDistance($userPositionStore)
   }
+  */
   
   
 </script>
