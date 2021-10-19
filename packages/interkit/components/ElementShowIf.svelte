@@ -5,7 +5,7 @@
 
   // you can pass in an element via slot props (used in ElementList)
   export let element;
-  if(element) console.log("ElementShowIf got element through prop", element)
+  //if(element) console.log("ElementShowIf got element through prop", element)
 
   // get context from parent element, for example inside ContentElement
   /*const c = getContext("buttonBar");
@@ -24,12 +24,12 @@
   export let property;
 
   let elementProperties = InterkitClient.getGlobalStore("elementProperties");
-  console.log("ElementShowIf getting elementProperties", $elementProperties)
+  //console.log("ElementShowIf getting elementProperties", $elementProperties)
   let value;
   $: {
     if(element) {
       value = $elementProperties?.[element?.key]?.[property]  
-      console.log("updated value from element", element, property, value)
+      //console.log("updated value from element", element, property, value)
     } /*else {
       value = $elementProperties?.[$elementStore?.key]?.[property]  
     }*/

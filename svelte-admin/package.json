@@ -28,6 +28,7 @@
     "ansi-to-html": "^0.6.14",
     "blockly": "^4.20201217.0",
     "carbon-components-svelte": "^0.32.1",
+    "codemirror": "^5.63.3",
     "dayjs": "^1.10.7",
     "envsub": "^4.0.7",
     "install": "^0.13.0",

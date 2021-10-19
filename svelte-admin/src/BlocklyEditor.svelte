@@ -19,6 +19,7 @@
   
   import InputModal from './InputModals/InputModal.svelte';
   import CodeHighlighter from './CodeHighlighter.svelte';
+  import ActionsEditor from './ActionsEditor.svelte';
 
   export let open;
   export let projectId;
@@ -234,30 +235,33 @@
       Blockly.svgResize(workspace);
   }
 
+  let selectedTab;
 
 </script>
 
-
-  <Tabs>
+  <Tabs bind:selected={selectedTab}>
       <Tab label="blockly" />
       <Tab label="App.svelte" />
+      <Tab label="actions.js" />
         <div slot="content">
           <TabContent>
               <div id="blocklyDiv" style="height: 500px; width: 100%;" use:watchResize={resizeBlockly}></div>
+              <br />
+              <Button on:click={()=>saveAndCompile(true)}>save</Button>
+              <br />
+              <br />
+              <Button on:click={createDatabase} size="small" kind="tertiary">check database</Button>
           </TabContent>
           <TabContent>
-            <CodeHighlighter code={generatedCode} />
+            <div class="scroll">
+              <CodeHighlighter code={generatedCode} />
+            </div>
+          </TabContent>
+          <TabContent>
+            <ActionsEditor {projectId} active={selectedTab == 2}/>
           </TabContent>
       </div>
   </Tabs>
-
-
-
-
-  <Button on:click={()=>saveAndCompile(true)}>save</Button>
-  <br />
-  <br />
-  <Button on:click={createDatabase} size="small" kind="tertiary">check database</Button>
   
   <InputModal
     type={openInputModal}
@@ -269,4 +273,10 @@
   />
 
 <style>
+
+  .scroll {
+    height: 500px;
+    overflow-y: auto;
+  }
+
 </style>

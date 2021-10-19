@@ -281,6 +281,7 @@ Meteor.methods({
   },
 
   'file.load': async ({filename, projectId}) => {
+      //console.log("file.load", filename, projectId)
       const filePath = getRepoPath(projectId) + "/src/" + filename;
       let data;
       let error;
@@ -293,11 +294,12 @@ Meteor.methods({
       } catch(e) {
         error = e;
       }
-
+      //console.log("data", data.toString());
       return {filename, content: data ? data.toString() : null, error};
   },
 
   'file.save': async ({file, projectId})  => {
+    //console.log("file.save", file, projectId)
     const filePath = getRepoPath(projectId) + "/src/" + file.filename;
     await fs.promises.writeFile(filePath, file.content)      
   },
