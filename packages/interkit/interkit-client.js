@@ -123,16 +123,20 @@ const loadConfig = async () => {
 
 const fetchWithTimeout = async (resource, options={timeout: 8000}) => { 
   const { timeout } = options;
-  
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-
-  const response = await fetch(resource, {
-    ...options,
-    signal: controller.signal  
-  });
-  clearTimeout(id);
-
+  var response = false;
+  if ('AbortController' in window) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    response = await fetch(resource, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+  } else {
+    console.log('no AbortController...')
+    // warning: this will never time out. TODO find a better polyfill?
+    response = await fetch(resource, { ...options })
+  }
   return response;
 }
 
