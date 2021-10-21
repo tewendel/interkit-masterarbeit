@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { resolveProjectPath } from './utils.mjs'
+import interkit_server from './interkit_server.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 
@@ -11,14 +12,16 @@ const get_app_files = async (req, res, next) => {
 
   const match = req.path.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
 
-  if (match == null) {
+  const defaultProject = interkit_server.getDefaultProject()
+
+  if (match == null && !defaultProject) {
     res.sendStatus(404)
     next();
     return;
   }
 
-  const slugOrId = match?.[1]
-  let subpath = match?.[2]
+  const slugOrId = match?.[1] || defaultProject.id
+  let subpath = match?.[2] || req.path
 
   const projectId = resolveProjectPath(slugOrId)
   

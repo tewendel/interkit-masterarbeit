@@ -51,7 +51,12 @@ const getProjectIdFromProjectSlug = (slug) => {
   }
 }
 
+const getDefaultProject = () => {
+  return projects.find(p => p.isDefaultProject) || false
+}
+
 export default {
   setup,
-  getProjectIdFromProjectSlug
+  getProjectIdFromProjectSlug,
+  getDefaultProject,
 }
