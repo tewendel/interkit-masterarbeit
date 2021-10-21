@@ -75,6 +75,7 @@
   
   export let nearestElementMode = "FALSE";
   export let nearestElement;
+  export let disableControls = "FALSE"
 
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
@@ -103,6 +104,8 @@
 
   let markers = [];
   let selectedMarker;
+
+  let manualPosition = false;
 
   $: {
     markerData;
@@ -166,10 +169,11 @@
      singleElement ? 17 : 14);  
 
     if(singleElement) {
+      console.log("qrContext", qrContext)
       map.panBy(qrContext?.mapOffset, {animate: false});
     }
 
-    if(nearestElementMode == "TRUE") {
+    if(disableControls == "TRUE") {
       map.dragging.disable();
       map.scrollWheelZoom.disable();
     }
@@ -222,29 +226,31 @@
       }
 
     })
+
+    /* autoposition map if user doesnt interact */
+    map.on('zoomstart', function() {
+      manualPosition = true;  
+    })
+    map.on('dragstart', function() {
+      manualPosition = true;
+    })
       
   })
 
-  let nearestMapPosInit = false;
-  const positionMapForNearestMode = () => {
-    //nearestMapPosInit = true;
-    /*console.log("positioning map...")
-    console.log("user is at", $positionStore);
-    console.log("nearest element is at: ", nearestElement.markerPositionsColumn)*/
-
+  const autoPositionMap = () => {
+    if(manualPosition) return;
+    if(singleElement) return;
+    
     let group = new L.featureGroup([L.marker($positionStore), L.marker(nearestElement.markerPositionsColumn)]);
     map.fitBounds(group.getBounds().pad(1), {animate: false})
-    map.panBy([0, qrContext?.mapOffset || 30], {animate: false});
+    map.panBy([0, qrContext?.mapOffset || 0], {animate: false});
   }
-
   $: {
-    if(nearestElementMode == "TRUE"
-      && !nearestMapPosInit
-      && $positionStore
+    if($positionStore
       && nearestElement
       && map
     ) {
-      positionMapForNearestMode();
+      autoPositionMap();
     }
   }
 

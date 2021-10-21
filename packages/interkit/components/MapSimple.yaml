@@ -43,6 +43,9 @@ fields:
     name: nearestElementMode
     defaultValue: FALSE
   - type: checkbox
+    name: disableControls
+    defaultValue: FALSE
+  - type: checkbox
     name: singleElementContext
     defaultValue: FALSE
   - type: "slot"
