@@ -42,7 +42,7 @@
   </div>
   <div slot="second" class="second">
 
-      Marta
+      <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
 
   </div>
 </Flex2>
