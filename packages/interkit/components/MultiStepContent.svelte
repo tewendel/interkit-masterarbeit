@@ -72,6 +72,12 @@
       
   </div>
 
+  <ul class="pagination">
+    {#each slides as slide, index}
+      <li class="pagination-item" class:pagination-item--active={index === slideIndex}></li>
+    {/each}
+  </ul>
+
 {/if}
   
 
@@ -113,6 +119,28 @@
   .container .content {
     max-height: 30vh;
     overflow-y: auto;
+  }
+
+  .pagination {
+    z-index: 1;
+    list-style-type: none;
+    margin: var(--distance-s) auto;
+    padding: 0;
+    display: flex;
+  }
+
+  .pagination-item {
+    /* TODO find better measurements */
+    width: calc(1.5 * var(--distance-xs));
+    height: calc(1.5 * var(--distance-xs));
+    margin: 0 calc(0.5 * var(--distance-xs));
+    padding: 0;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 50%;
+  }
+
+  .pagination-item--active {
+    background-color: var(--border-color);
   }
 
   h1, p {
