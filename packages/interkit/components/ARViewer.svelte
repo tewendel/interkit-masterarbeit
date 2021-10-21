@@ -97,7 +97,9 @@
 <div class="ARViewer container">
   {#if element}
     <div class="ARViewer__Close close">
-      <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
+      <Button>
+        <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
+      </Button>
     </div>
 
     {#if mode === "video"}
