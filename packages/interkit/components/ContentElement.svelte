@@ -306,11 +306,19 @@
   }
 
   .container.size-s-fill .picture {
-    /*position: absolute;
-    left: 0;
-    top: 0;*/
     grid-row: 1 / span 3;
     margin: -8px;
+    
+  }
+
+  .container.size-s-fill .picture:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right:0;
+    bottom:0;
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,0,0,0) 33%, rgba(0,0,0,0) 100%);
   }
 
   .container.size-m .controls {
