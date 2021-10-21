@@ -48,6 +48,9 @@ fields:
   - type: checkbox
     name: singleElementContext
     defaultValue: FALSE
+  - type: string
+    name: style
+    defaultValue: "interkit"
   - type: "slot"
     name: "element"
     slotProps:

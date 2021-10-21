@@ -53,6 +53,12 @@
   
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
+
+  // leak mapligreGL (the FOSS implementation of L.mapboxGL) into the window scope...
+  import 'maplibre-gl/dist/maplibre-gl.js';
+  import 'maplibre-gl/dist/maplibre-gl.css';
+  // ...so this can pick it up and provide the L.maplibreGL binding
+  import '@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl.js';
   
   import { Plugins, Capacitor } from '@capacitor/core';
   const { Geolocation, Permissions } = Plugins;
@@ -76,6 +82,8 @@
   export let nearestElementMode = "FALSE";
   export let nearestElement;
   export let disableControls = "FALSE"
+
+  export let style = 'interkit';
 
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
@@ -164,6 +172,7 @@
 
     map = L.map(mapId, {
       zoomControl: false,
+      maxZoom: 20,
       attributionControl: false,
     }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
      singleElement ? 17 : 14);  
@@ -178,11 +187,18 @@
       map.scrollWheelZoom.disable();
     }
 
-    // default interkit map style
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-      maxZoom: 20,
-      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    if (!style || style === 'interkit') {
+      // default interkit map style
+      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    } else {
+      L.maplibreGL({
+        // attribution: 'TODO',
+        style: style,
+      }).addTo(map);
+    }
 
     map.on("click", mapClick);
     

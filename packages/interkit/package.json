@@ -23,5 +23,8 @@
   "peerDependencies": {
     "svelte": "^3.35.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@maplibre/maplibre-gl-leaflet": "^0.0.15"
+  }
 }
