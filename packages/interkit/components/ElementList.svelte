@@ -165,8 +165,8 @@
   }
   .right-arrow {
     position:  absolute;
-    bottom: 10px;
-    right:  25px;
+    bottom: var(--distance-m);
+    right: var(--distance-m);
   }
 
 </style>

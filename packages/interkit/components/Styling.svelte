@@ -6,6 +6,7 @@
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
+  export let colorBackgroundHighlight = '#F0F6F6'
   export let colorBorder = 'black'
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
@@ -59,6 +60,7 @@
   --color-text-headline: ${colorTextHeadline};
   --color-text-button-primary: ${colorTextButtonPrimary};
   --color-background: ${colorBackground};
+  --color-background-highlight: ${colorBackgroundHighlight};
   --color-border: ${colorBorder};
   --font-family-text: ${fontFamilyText};
   --font-family-headline: ${fontFamilyHeadline};
@@ -79,10 +81,11 @@
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
-  --distance-s-m: calc(var(--distance-base) * var(--distance-scale-factor) * 3);
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --font-button: 400 12px/16px var(--font-family-text);
+  --font-body-2: 400 14px/21px var(--font-family-text);
+  --font-headline-3: 500 24px/32px var(--font-family-text);
   --font-headline-5: 500 16px/24px var(--font-family-text);
   /* to inherit */
   font-family: var(--font-family-text);

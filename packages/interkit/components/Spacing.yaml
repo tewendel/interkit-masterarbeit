@@ -1,0 +1,38 @@
+name: Spacing
+colour: 100
+toolboxCategory: Layout
+fields:
+  - name: top
+    type: options
+    options:
+      - xs
+      - s
+      - m
+      - l
+      - xl
+  - name: right
+    type: options
+    options:
+      - xs
+      - s
+      - m
+      - l
+      - xl
+  - name: bottom
+    type: options
+    options:
+      - xs
+      - s
+      - m
+      - l
+      - xl
+  - name: left
+    type: options
+    options:
+      - xs
+      - s
+      - m
+      - l
+      - xl     
+  - name: default
+    type: slot     

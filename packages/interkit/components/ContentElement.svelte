@@ -280,9 +280,9 @@
   }
 
   .container.size-s {
-    border: 1px solid black;
-    border-radius: var(--border-radius);
-    margin: 16px;
+    flex:1;
+    height: 100%;
+    width: 100%;
   }
 
   .container.size-s .short-description, .container.size-l .short-description {
@@ -297,15 +297,33 @@
     width: 50%;
   }
 
+  .container.size-s-fill .titles {
+    z-index: 1;
+  }
+
   .container.size-s .picture {
     width: 25%; 
+  }
+
+  .container.size-s-fill .picture {
+    /*position: absolute;
+    left: 0;
+    top: 0;*/
+    grid-row: 1 / span 3;
+    margin: -8px;
   }
 
   .container.size-m .controls {
     grid-row: 5;
   }
 
-  .container.size-s .distance, .container.size-s .content {
+  .container.size-s .distance, 
+  .container.size-s .content {
+    display: none;
+  }
+
+  .container.size-s-fill .distance, 
+  .container.size-s-fill .content {
     display: none;
   }
 
