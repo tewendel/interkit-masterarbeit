@@ -12,13 +12,14 @@
 
   const topNavContext = getContext("TopNav");
 
-  const selectSection = (section) => {
+  const selectSection = (section, registerBackMethod = true) => {
     activeSection.set(section);
     topNavContext?.configureNavBar(
       section.title, 
-      () => { activeSection.set(null) }
+      registerBackMethod ? () => { activeSection.set(null) } : null
     )
   }
+  
 
   setContext("Subsections", {
       registerSection: ({key, title, path}) => {
@@ -38,7 +39,7 @@
         let targetSection = sections.filter(s => s.path == segment)?.[0]    
         if(targetSection) {
           console.log("found targetSection", targetSection)
-          selectSection(targetSection)
+          selectSection(targetSection, false)
         }  
       }
     }

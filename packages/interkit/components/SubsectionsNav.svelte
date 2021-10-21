@@ -24,7 +24,9 @@
       configureNavBar: (label, fn) => {
         subsectionLabels.push(label);
         subsectionLabels = subsectionLabels;
-        backMethods.push(fn);
+        if(fn) {
+          backMethods.push(fn);
+        }
       }
   });
   
@@ -55,15 +57,6 @@
       <span class="headline">{subsectionLabels[subsectionLabels.length - 1]}</span>
 
   </svelte:fragment>
-
-  <svelte:fragment slot="right">
-
-        <Button on:click={close}>
-          <Icon type="close" />
-        </Button>
-      
-  </svelte:fragment>
-
 
   <svelte:fragment slot="content">
     <slot/>
