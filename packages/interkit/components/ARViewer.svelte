@@ -62,7 +62,7 @@
         // android 
         capability = "android"
       } else {
-        capability = "ios"
+        capability = "video"
       }
     } 
 
@@ -116,98 +116,102 @@
     
     {:else}
 
-      <div class="box">
+      <div class="inner-container">
 
-        <AspectRatio>
-          <MediaFileImage 
-            mediafileRef={element.imageFileRef} 
-            fitDimension="both"
-            objectFit="contain"
-          />
-        </AspectRatio>
+        <div class="box">
 
-        <div class="content">
+          <AspectRatio>
+            <MediaFileImage 
+              mediafileRef={element.imageFileRef} 
+              fitDimension="both"
+              objectFit="contain"
+            />
+          </AspectRatio>
 
-          <h1 class="headline">
-            Augmented Reality
-          </h1>
+          <div class="content">
 
-            {#if capability === "android"}
+            <h1 class="headline">
+              Augmented Reality
+            </h1>
+
+              {#if capability === "android"}
+
+                <div class="block">
+
+                  <div class="buttonContainer">
+                    <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
+                      <a 
+                        class="ARViewer__Link-android link-android"
+                        bind:this={androidLinkRef} 
+                        rel="external" 
+                        title={element.title} 
+                        href={generateAndroidHref(url)}
+                      >
+                        <Button flex="fill" size="large">
+                          {startButtonText}
+                        </Button>
+                      </a>
+                    </MediaFileResolver>
+                  </div>
+
+                  <div class="buttonInfo">
+                    <slot name="androidInfo"></slot>
+                  </div>
+
+                </div>
+
+              {/if}
+
+              {#if capability === "ios"}
+
+                <div class="block">
+
+                  <div class="buttonContainer">
+                    <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
+                      {startButtonText}
+                    </Button>
+                  </div>
+
+                  <div class="buttonInfo">
+                    <slot name="iosInfo"></slot>
+                  </div>
+
+                  <div style="position: absolute; z-index:-1; visibility: hidden">
+                    <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
+                      <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
+                        <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
+                          <img src={imgUrl} alt={element.title}/>
+                        </MediaFileResolver>
+                      </a>
+                    </MediaFileResolver>
+                  </div>
+
+                </div>
+
+              {/if}
 
               <div class="block">
 
                 <div class="buttonContainer">
-                  <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
-                    <a 
-                      class="ARViewer__Link-android link-android"
-                      bind:this={androidLinkRef} 
-                      rel="external" 
-                      title={element.title} 
-                      href={generateAndroidHref(url)}
-                    >
-                      <Button flex="fill" size="large">
-                        {startButtonText}
-                      </Button>
-                    </a>
-                  </MediaFileResolver>
-                </div>
-
-                <div class="buttonInfo">
-                  <slot name="androidInfo"></slot>
-                </div>
-
-              </div>
-
-            {/if}
-
-            {#if capability === "ios"}
-
-              <div class="block">
-
-                <div class="buttonContainer">
-                  <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
-                    {startButtonText}
+                  <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
+                    {videoButtonText}
                   </Button>
                 </div>
 
                 <div class="buttonInfo">
-                  <slot name="iosInfo"></slot>
+                  {#if capability === "video"}
+
+                    <slot name="videoOnlyInfo"></slot>
+
+                  {:else}
+
+                    <slot name="videoFallbackInfo"></slot>
+
+                  {/if}
                 </div>
-
-                <div style="position: absolute; z-index:-1; visibility: hidden">
-                  <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
-                    <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
-                      <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
-                        <img src={imgUrl} alt={element.title}/>
-                      </MediaFileResolver>
-                    </a>
-                  </MediaFileResolver>
-                </div>
-
               </div>
 
-            {/if}
-
-            <div class="block">
-
-              <div class="buttonContainer">
-                <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
-                  {videoButtonText}
-                </Button>
-              </div>
-
-              <div class="buttonInfo">
-                {#if capability === "video"}
-
-                  <slot name="videoOnlyInfo"></slot>
-
-                {:else}
-
-                  <slot name="videoFallbackInfo"></slot>
-
-                {/if}
-              </div>
-            </div>
+          </div>
 
         </div>
 
@@ -228,9 +232,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: var(--distance-m);
     box-sizing: border-box;
     text-align: center;
+  }
+
+  .inner-container {
+    padding: var(--distance-m);
   }
 
   .box {
