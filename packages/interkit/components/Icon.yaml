@@ -29,6 +29,7 @@ fields:
       - dashboard-full
       - ar
       - help
+      - hamburger-full
   - type: checkbox
     name: inverse
     defaultValue: FALSE

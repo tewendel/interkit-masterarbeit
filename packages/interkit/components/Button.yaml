@@ -11,6 +11,19 @@ fields:
     options: 
       - primary
       - secondary
+  - type: options
+    name: size
+    options: 
+      - medium
+      - small
+      - large
+    defaultValue: medium
+  - type: options
+    name: flex
+    options: 
+      - normal
+      - fill
+    defaultValue: normal
   - name: default
     type: slot
 toolboxCategory: Input
