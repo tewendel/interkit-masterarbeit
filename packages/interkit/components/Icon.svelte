@@ -140,4 +140,8 @@
   .icon-check {
     background-image: url("../icons/Check-Thin.svg"); 
   }
+
+  .icon-hamburger-full {
+    background-image: url("../icons/full/Menu.svg"); 
+  }
 </style>
