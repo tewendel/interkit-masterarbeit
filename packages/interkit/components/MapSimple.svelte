@@ -113,7 +113,7 @@
       element: r
     }})
 
-    console.log("updateMarkerData", markerData, mapId, $elementProperties)
+    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {
