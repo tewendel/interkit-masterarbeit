@@ -22,10 +22,14 @@ fields:
       - qr-scan
       - qr-scan-thin
       - archive
+      - archive-full
       - map
+      - map-full
       - dashboard
+      - dashboard-full
       - ar
       - help
+      - hamburger-full
   - type: checkbox
     name: inverse
     defaultValue: FALSE

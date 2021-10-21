@@ -1,4 +1,5 @@
 <script>
+  import { InterkitClient } from '../'
   import { getContext } from 'svelte';
   import { TABS } from './BottomMenu.svelte';
 
@@ -8,15 +9,36 @@
   registerTab(tab);
 
   export let label
+  export let key
+
+  const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");
+  $: {
+    if(bottomMenuKey) {
+      console.log($bottomMenuKey)
+      if(key == $bottomMenuKey) {
+        selectTab(tab)
+      }
+    }
+  }
+
+  const selectTabStore = (tab) => {
+    InterkitClient.setUiKey("bottomMenuKey", key);    
+  }
+  
+  
 </script>
 
 
 <button 
     class="BottomMenuButton button"
     class:selected="{$selectedTab === tab}"  
-    on:click="{() => selectTab(tab)}"
+    on:click="{() => selectTabStore(tab)}"
   >
-  <slot />
+  {#if $selectedTab === tab}
+    <slot name="selectedIcon"/>
+  {:else}
+    <slot name="defaultIcon"/>
+  {/if}
   <span class="BottomMenuButton__Text text">
     {label}
   </span>  

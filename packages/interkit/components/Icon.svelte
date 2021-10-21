@@ -113,12 +113,24 @@
     background-image: url("../icons/Archiv.svg");
   }
 
+  .icon-archive-full {
+    background-image: url("../icons/full/Archiv.svg");
+  }
+
   .icon-dashboard {
     background-image: url("../icons/Dashboard.svg"); 
   }
 
+  .icon-dashboard-full {
+    background-image: url("../icons/full/Dashboard.svg");  
+  }
+
   .icon-map {
     background-image: url("../icons/Map.svg"); 
+  }
+
+  .icon-map-full {
+    background-image: url("../icons/full/Map.svg"); 
   }
 
   .icon-ar {
@@ -127,5 +139,9 @@
 
   .icon-check {
     background-image: url("../icons/Check-Thin.svg"); 
+  }
+
+  .icon-hamburger-full {
+    background-image: url("../icons/full/Menu.svg"); 
   }
 </style>

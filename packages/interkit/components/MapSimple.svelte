@@ -26,6 +26,7 @@
   export let mapId; // id of the map
   export let nearestElementMode = "FALSE"; // mode to show only the nearest element
   export let inline = "FALSE";
+  export let disableControls = "FALSE";
   export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
 
   const columnMap = {
@@ -92,16 +93,14 @@
       rowsFiltered = [singleElement]
     }
 
-    // if nearestElementMode is set and we have a position, show only nearest element
-    if(nearestElementMode == "TRUE") {
-      if($userPositionStore) {
-        let markerRows_sorted = [...rowsFiltered].filter(r => r.markerPositionsColumn).sort(distanceSort)
-        if(markerRows_sorted.length) {
-          nearestElement = markerRows_sorted[0]
+    if($userPositionStore) {
+      let markerRows_sorted = [...rowsFiltered].filter(r => r.markerPositionsColumn).sort(distanceSort)
+      if(markerRows_sorted.length) {
+        nearestElement = markerRows_sorted[0]
+        // if nearestElementMode is set and we have a position, show only nearest element
+        if(nearestElementMode == "TRUE") {
           rowsFiltered = [nearestElement]
         }
-      } else {
-        rowsFiltered = []
       }
     }
 
@@ -113,6 +112,8 @@
       selected: selectedElement?.key == r.key ? true : false,
       element: r
     }})
+
+    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {
@@ -182,6 +183,7 @@
       {nearestElementMode}
       {nearestElement}
       {singleElement}
+      {disableControls}
     />
 
     <div class="Map__Button__Bar button-bar-container">
