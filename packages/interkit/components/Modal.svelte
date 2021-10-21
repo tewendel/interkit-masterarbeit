@@ -1,6 +1,7 @@
 <script>
   import { executeTrigger } from '../actions'
   import Button from './Button.svelte'
+  import ButtonBar from './ButtonBar.svelte'
 
   // blockly
   export let dismissText
@@ -28,12 +29,12 @@
     <slot name="content"></slot>
     <slot></slot>
   </div>
-  <div class="Modal__Buttons buttons">
-    <Button on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
+  <ButtonBar>
+    <Button flex="fill" on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
     {#if helpText}
       <Button on:click={event => onClick(event, helpFunction, helpTrigger)} text={helpText} />
     {/if}
-  </div>
+  </ButtonBar>
 </div>
 
 <style>
@@ -44,9 +45,14 @@
     width: 100vw;
     box-sizing:border-box;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
-    padding: 20px;
     background-color: white;
     border: 1px black solid;
     border-top: none;
+  }
+
+  .content {
+    padding: var(--distance-s);
+    max-height: 55vh;
+    overflow-y: auto;
   }
 </style>

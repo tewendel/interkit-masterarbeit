@@ -68,18 +68,22 @@
   --box-shadow: ${boxShadow};
   --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
   --font-size-headline-1: ${fontSizeHeadline1};
+  --distance-base: 8px;
   /* constant */
-  --distance-base: 1rem;
+  --distance-tiny: 2px;
   /* derived defaults */
   --border-color: var(--color-text);
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
-  --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1.41);
-  --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 1.0);
-  --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 1.41);
-  --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 2.0);
+  --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
+  --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
+  --distance-s-m: calc(var(--distance-base) * var(--distance-scale-factor) * 3);
+  --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
+  --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
+  --font-button: 400 12px/16px var(--font-family-text);
+  --font-headline-5: 500 16px/24px var(--font-family-text);
   /* to inherit */
   font-family: var(--font-family-text);
   color: var(--color-text);

@@ -18,7 +18,7 @@
     line-height: var(--font-size-headline-1);
   }
   
-  :global(.MarkdownContent p) {
+  :global(.MarkdownContent p:not(:last-of-type)) {
     margin-bottom: 1em;    
   }
 
