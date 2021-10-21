@@ -270,6 +270,19 @@ Meteor.methods({
     }
   },
 
+  'project.makeDefaultProject': async ({ projectId }) => {
+    console.log("makeDefaultProject", projectId, Meteor.userId())
+    if (Projects.findOne(projectId)) {
+      const resUnset = Projects.update({ _id: { $ne: projectId }}, { $set: { isDefaultProject: false } }, { multi: true})
+      const resSet = Projects.update({ _id: projectId }, { $set: { isDefaultProject: true } })
+      console.log("isDefaultProject result", resSet, resUnset)
+      return true
+    } else {
+      return false
+    }
+
+  },
+
   // add a file to a project
   'file.create': async ({ filename, projectId }) => {
       const filePath = getRepoPath(projectId) + "/" + filename;

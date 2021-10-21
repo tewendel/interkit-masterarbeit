@@ -7,6 +7,7 @@
     } from "carbon-components-svelte";
   import ImportProject from './ImportProject.svelte'
   import { InterkitClient } from 'interkit'
+  import { BundleServer} from './BundleServer'
 
   export let projectId
   export let currentProject
@@ -23,6 +24,7 @@
 
   const cancelSlug = () => slug = $currentProject.slug
   const saveSlug = async () => await InterkitClient.call("project.setSlug", {projectId, slug})
+  const makeDefaultProject = async () => await InterkitClient.call("project.makeDefaultProject", {projectId})
 
   const exportEndpoint = `${INTERKIT_SERVER_URL}/export/`
 
@@ -55,6 +57,32 @@
     {/if}
   </Column>
 </Row>
+
+
+<h4>
+  Default Project
+</h4>
+<p>
+  {#if $currentProject.isDefaultProject}
+    This project is the default project served at 
+    <a href={BundleServer.getServerURL()} target="_blank">
+      {BundleServer.getServerURL()}
+    </a>
+  {:else}
+  <p>
+    The default project will be served at 
+    <a href={BundleServer.getServerURL()} target="_blank">
+      {BundleServer.getServerURL()}
+    </a>
+  </p>
+    <Button 
+      kind="ghost"
+      on:click={makeDefaultProject}
+    >
+    Make this project the default project
+    </Button>
+  {/if}
+</p>
 
 <h4>Import/Export Database & Media</h4>
 
