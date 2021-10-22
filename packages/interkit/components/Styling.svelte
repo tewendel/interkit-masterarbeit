@@ -1,7 +1,7 @@
 <script>
   
-  export let googleFont = "Inter:wght@300;400;500"
-  export let googleFont2 = "Inter:wght@300;400;500"
+  export let googleFont = "Inter:wght@400;500;600;700" // regular medium semi-bold bold
+  export let googleFont2 = "Inter:wght@400;500;600;700"
   export let colorText = '#32332e'
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
@@ -56,6 +56,9 @@
 </script>
 
 <div class="style" style={`
+
+  /* from user */
+
   --color-text: ${colorText};
   --color-text-headline: ${colorTextHeadline};
   --color-text-button-primary: ${colorTextButtonPrimary};
@@ -71,25 +74,52 @@
   --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
   --font-size-headline-1: ${fontSizeHeadline1};
   --distance-base: 8px;
+
   /* constant */
+
   --distance-tiny: 2px;
+
   /* derived defaults */
+
   --border-color: var(--color-text);
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
+
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
-  --font-button: 400 12px/16px var(--font-family-text);
+  
+  --font-headline-1: 400 48px/56px var(--font-family-headline);
+  --font-headline-2: 400 30px/36px var(--font-family-headline);
+  --font-headline-3: 400 24px/32px var(--font-family-headline);
+  --font-headline-4: 700 20px/24px var(--font-family-headline);
+  --font-headline-5: 700 16px/24px var(--font-family-headline);
+  --font-body-1: 400 16px/24px var(--font-family-text);
   --font-body-2: 400 14px/21px var(--font-family-text);
-  --font-headline-3: 500 24px/32px var(--font-family-text);
-  --font-headline-5: 500 16px/24px var(--font-family-text);
+  --font-subtitle-1: 400 16px/24px var(--font-family-text);
+  --font-subtitle-2: 500 14px/24px var(--font-family-text);
+  --font-button: 600 12px/16px var(--font-family-text);
+  --font-caption: 400 12px/16px var(--font-family-text);
+  --font-caption-bold: 700 12px/16px var(--font-family-text);
+  --font-overline: 500 10px/12px var(--font-family-text);
+
+  --letter-spacing-headline-2: -0.5px;
+  --letter-spacing-headline-3: -0.25px;
+  --letter-spacing-headline-4: -0.25px;
+  --letter-spacing-headline-5: -0.02em;
+  --letter-spacing-body-1: -0.25px;
+  --letter-spacing-subtitle-1: -0.15px;
+  --letter-spacing-subtitle-2: 0.1px;
+  --letter-spacing-overline: 1.5px;
+
   /* to inherit */
+
   font-family: var(--font-family-text);
   color: var(--color-text);
+
   `} >
   <slot />
 </div>

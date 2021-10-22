@@ -2,53 +2,75 @@
   import Button from '../Button.svelte'
   import {executeTrigger} from '../../actions'
   import DynamicContent from '../DynamicContent.svelte'
+  import ButtonPanel from '../ButtonPanel.svelte'
 
   export let restartTrigger
   export let setStep = function(){}
   export let keyColumn
   export let contentColumn
 
+  const columns = {
+    keyColumn,
+    contentColumn
+  }
+
 </script>
 
-<DynamicContent
-  {keyColumn}
-  {contentColumn}
-  contentKey="session.start.intro"
-  defaultContent="## Start"
-  format="richText"
-/>
-<Button on:click={() => executeTrigger(restartTrigger)}>
-  <DynamicContent
-    {keyColumn}
-    {contentColumn}
-    contentKey="session.start.new.button"
-    defaultContent="Neustarten"
-    inline
-  />
-</Button>
+<div class="container">
+  <div class="content">
+    <DynamicContent
+      {...columns}
+      contentKey="session.start.intro"
+      defaultContent="## Start"
+      format="richText"
+    />
+  </div>
 
-<DynamicContent
-  {keyColumn}
-  {contentColumn}
-  contentKey="session.start.new.info"
-  defaultContent="Von vorne beginnen"
-  inline
-/>
+  <div class="content">
 
-<Button on:click={() => setStep("enterCode")}>
-  <DynamicContent
-    {keyColumn}
-    {contentColumn}
-    contentKey="session.start.restore.button"
-    defaultContent="Forfahren"
-    inline
-  />
-</Button>
+    <DynamicContent
+      {...columns}
+      contentKey="session.start.new.info"
+      defaultContent="Von vorne beginnen"
+      let:content={infoText}
+    >
+      <ButtonPanel {infoText}>
+        <Button flex="fill" size="large" on:click={() => executeTrigger(restartTrigger)}>
+          <DynamicContent
+            {...columns}
+            contentKey="session.start.new.button"
+            defaultContent="Neustarten"
+            inline
+          />
+        </Button>
+      </ButtonPanel>
+    </DynamicContent>
 
-<DynamicContent
-  {keyColumn}
-  {contentColumn}
-  contentKey="session.start.restore.info"
-  defaultContent="Du hast bereits eine Session-ID"
-  inline
-/>
+  </div>
+
+  <div class="content buttonPanel">
+    <DynamicContent
+      {...columns}
+      contentKey="session.start.restore.info"
+      defaultContent="Du hast bereits eine Session-ID"
+      let:content={infoText}
+    >
+      <ButtonPanel {infoText}>
+        <Button flex="fill" size="large" on:click={() => setStep("enterCode")}>
+          <DynamicContent
+            {...columns}
+            contentKey="session.start.restore.button"
+            defaultContent="Forfahren"
+            inline
+          />
+        </Button>
+      </ButtonPanel>
+    </DynamicContent>
+  </div>
+</div>
+
+<style>
+  .content + .content {
+    margin-top: var(--distance-s);
+  }
+</style>
