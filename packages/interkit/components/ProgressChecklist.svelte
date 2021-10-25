@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount } from 'svelte'
+  import { onMount, getContext } from 'svelte'
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte'
   import Icon from './Icon.svelte'
@@ -16,29 +16,28 @@
   export let markerCheckedIconAsset = "icons/Check-Thin.svg"; // checked asset
   export let checkedProperty = "checked" // what property to use for the checkmark
 
-  // retrieve the store with element objects
-  let elements;
-  let elementsSorted;
-  onMount(async () => {
-    elements = await InterkitClient.getRowSubStore(customIconColumn, { 
-      customIconColumn, 
-      markerLabelColumn,
-      orderColumn
-    }, "progressChecklist")
-    elements.subscribe((data)=>{
-      elementsSorted = data.sort((a, b) => a.orderColumn - b.orderColumn)
-    })
-  })
-
-  // the global store that contains element properties
   const elementProperties = InterkitClient.getGlobalStore("elementProperties");
-  if(!$elementProperties) elementProperties.set({}); 
+
+  let elementsContext = getContext("elementsProvider");
+  if(!elementsContext) alert("ProgressChecklist needs elementsContextProvider as parent");
+  let elementsStore = elementsContext?.elements;
+
+  const columnMap = {
+    customIconColumn, 
+    markerLabelColumn,
+    orderColumn
+  }
+
+  let elements;
+  elementsStore.subscribe((data)=>{
+    elements = data.map(e => util.rowToObject(e.row, columnMap));
+  })
 
   // we need to preassemble the marker html here because it requires async call to createIconDivHTML
   let markerHTMLs = {};
   const updateMarkerHTMLs = async () => {
-    if($elements?.length)
-      for(let element of $elements) {
+    if(elements?.length)
+      for(let element of elements) {
         let checked = $elementProperties?.[element.key]?.[checkedProperty] ? true : false;
         markerHTMLs[element.key] = await createIconDivHTML(element, {
           checked,
@@ -50,7 +49,7 @@
       }
   }
   $: {
-    $elements;
+    elements;
     $elementProperties;
     updateMarkerHTMLs()
   }
@@ -59,10 +58,10 @@
 
 <div class="container">
 
-  {#if elementsSorted?.length } 
+  {#if elements?.length } 
 
     <ul>
-      {#each elementsSorted as element}
+      {#each elements as element}
         <li>{@html markerHTMLs?.[element.key]}</li>
       {/each}
     </ul>

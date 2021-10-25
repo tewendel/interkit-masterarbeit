@@ -14,7 +14,7 @@
   const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");
   $: {
     if(bottomMenuKey) {
-      console.log($bottomMenuKey)
+      //console.log($bottomMenuKey)
       if(key == $bottomMenuKey) {
         selectTab(tab)
       }
