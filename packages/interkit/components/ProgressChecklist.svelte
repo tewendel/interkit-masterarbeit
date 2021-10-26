@@ -68,10 +68,8 @@
 
   {/if}
 
-  <div class="info">
-    <slot name="text"/>
-  </div>
-
+  <slot name="text"/>
+  
 </div>
 
 <style>
@@ -82,12 +80,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .info {
-    background-color: white;
-    border: var(--border-width) solid var(--color-border);
-    border-radius:  var(--border-radius);
   }
 
   ul {
