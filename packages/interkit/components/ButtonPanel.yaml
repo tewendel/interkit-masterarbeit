@@ -1,0 +1,7 @@
+name: ButtonPanel
+fields:
+  - name: default
+    type: slot
+  - name: infoText
+    type: string
+toolboxCategory: Input
