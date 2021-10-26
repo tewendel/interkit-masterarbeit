@@ -30,16 +30,19 @@
     <slot></slot>
   </div>
   <ButtonBar>
-    <Button flex="fill" type="primary" on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
+    {#if dismissText}<Button flex="fill" type="primary" on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
+    {/if}
     {#if helpText}
       <Button on:click={event => onClick(event, helpFunction, helpTrigger)} text={helpText} />
     {/if}
+    <slot name="buttons"/>
   </ButtonBar>
 </div>
 
 <style>
   .container {
     position: fixed;
+    z-index: 1;
     top:0;
     left:0;
     width: 100vw;

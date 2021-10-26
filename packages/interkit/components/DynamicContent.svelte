@@ -11,8 +11,11 @@
   export let format; // the format to use to display it
   export let defaultContent; // what to use instead
   export let inline = false // add spacings or not
+  export let centerContent = false // center content
 
-  if (typeof inline == "string") inline = inline === "TRUE" // blockly conversion
+  // blockly conversion
+  if (typeof inline == "string") inline = inline === "TRUE" 
+  if (typeof centerContent == "string") centerContent = centerContent === "TRUE"
 
   // we first identify the sheet that contains our data
   let contentSheetKey = util.getSheetKey(contentColumn)
@@ -55,7 +58,7 @@
 {#if $$slots.default}
   <slot content={content || defaultContent}></slot>
 {:else}
-  <div class="DynamicContent container" class:richText={format == "richText"} class:inline>
+  <div class="DynamicContent container" class:richText={format == "richText"} class:inline style={`--text-align: ${centerContent ? "center" : "left"}`}>
     {#if $rowStore}
       {#if format == "richText"}
         {#if content}
@@ -88,5 +91,7 @@
   .inline:not(.richText) {
     display: inline;
   }
+
+
 
 </style>
