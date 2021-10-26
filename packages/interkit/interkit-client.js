@@ -418,13 +418,13 @@ const subscribeUserProjectDataStore = async () => {
       let msub = await getSub("users", "user.projectUserData", {})
       resolve(msub);
     })
+    let sub = await userProjectDataSub;
+    //console.log("subscribeUserProjectDataStore", sub, sub.data)
+    // subscribe to user project data
+    sub.data.subscribe(d => {
+      userProjectDataStore.set(d?.[0].projectUserData[get(projectId)] || {})
+    })
   }
-  let sub = await userProjectDataSub;
-  //console.log("subscribeUserProjectDataStore", sub, sub.data)
-  // subscribe to user project data
-  sub.data.subscribe(d => {
-    userProjectDataStore.set(d?.[0].projectUserData[get(projectId)] || {})
-  })
 }
 
 const getUiKeyStore = uiKey => {

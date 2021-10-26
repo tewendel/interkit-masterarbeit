@@ -22,4 +22,7 @@ fields:
   - name: inline
     type: checkbox
     defaultValue: "TRUE"
+  - name: centerContent
+    type: checkbox
+    defaultValue: "FALSE"
 toolboxCategory: "Basics"
