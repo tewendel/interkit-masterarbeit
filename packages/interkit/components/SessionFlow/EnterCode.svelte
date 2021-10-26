@@ -15,21 +15,22 @@
   let code = ""
 
   let modalText
-  let modalDismissText = "Verstanden"
   let dismissModalFunction
 
   const send = async event => {
     const result = await InterkitClient.loginTokenUser({userToken: code})
+    executeTrigger(restoredTrigger)
+    //console.log(result)
     if (result.id) {
       modalText = "session.entercode.modal.success"
       dismissModalFunction = event => {
         modalText = null
+        executeTrigger(restoredTrigger)
       }
     } else {
       modalText = "session.entercode.modal.tryagain"
       dismissModalFunction = event => {
         modalText = null
-        executeTrigger(restoredTrigger)
       }
     }
   }
@@ -106,7 +107,7 @@
     defaultContent="Verstanden"
     let:content={modalDismissText}
   >
-    <Modal dismissText={modalDismissText} dismissFunction={dismissModalFunction}>
+    <Modal dismissText={modalDismissText} >
       <DynamicContent
         {...columns}
         contentKey={modalText}

@@ -420,7 +420,7 @@ const subscribeUserProjectDataStore = async () => {
     })
   }
   let sub = await userProjectDataSub;
-  console.log("subscribeUserProjectDataStore", sub, sub.data)
+  //console.log("subscribeUserProjectDataStore", sub, sub.data)
   // subscribe to user project data
   sub.data.subscribe(d => {
     userProjectDataStore.set(d?.[0].projectUserData[get(projectId)] || {})
@@ -548,14 +548,11 @@ const loginTokenUser = async ({ userToken }) => {
   let credentials
   try {
     credentials = await InterkitClient.call("generateLoginCredentialsForTokenUser", { userToken })
+    console.log(credentials)
+    const user = await InterkitClient.login(credentials)
+    return user
   } catch (error) {
     return false
-  } finally {
-    try {
-      return await InterkitClient.login(credentials)
-    } catch (error) {
-      return error
-    }
   }
 }
 
@@ -687,12 +684,33 @@ const getElementProperty = (
   return value;
 }
 
+const loadElementPropertiesFromUser = async () => {
+  const userProjectData = get(userProjectDataStore)
+  if (!userProjectData) {
+    // wait for data
+    userProjectDataStore.subscribe(data => {
+      if (!data?.elementProperties) return false
+      const elementPropertiesStore = getGlobalStore("elementProperties");
+      elementPropertiesStore.set(data?.elementProperties)
+      return true
+    })
+  } else {
+    // same but now
+    if (!userProjectData?.elementProperties) return false
+    const elementPropertiesStore = getGlobalStore("elementProperties");
+    elementPropertiesStore.set(userProjectData?.elementProperties)
+    return true
+  }
+
+}
+
 const saveElementPropertiesToUser = async () => {
   const elementProperties = getGlobalStore("elementProperties");
   let storeData = get(elementProperties)
+  console.log("saving elementProperties", storeData)
   let result
   try {
-    result = await InterkitClient.call("saveElementProperties", { elementProperties: storeData })
+    result = await InterkitClient.call("user.saveElementProperties", { elementProperties: storeData })
   } catch (error) {
     return false
   } finally { }
@@ -727,6 +745,15 @@ const callGlobalMethod = (key, options) => {
 projectId.subscribe(subscribeUserProjectDataStore)
 userId.subscribe(subscribeUserProjectDataStore)
 
+// restore elementProperties from user --> not necessary because they are also in the localstorage 
+//
+// userProjectDataStore.subscribe(data => {
+//   const elementProperties = data?.elementProperties
+//   if (elementProperties) {
+//     initElementProperties(elementProperties)
+//   }
+// })
+
 const InterkitClient = {
   userId,
   config,
@@ -753,6 +780,7 @@ const InterkitClient = {
   setElementProperty,
   getElementProperty,
   saveElementPropertiesToUser,
+  loadElementPropertiesFromUser,
   getUiKeyStore,
   takeUiSnapshot,
   restoreUiSnapshot,
