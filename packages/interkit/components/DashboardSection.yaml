@@ -8,4 +8,6 @@ fields:
   - name: fullWidthContent
     type: checkbox
     defaultValue: "FALSE"
+  - name: cssClass
+    type: string
 toolboxCategory: Layout

@@ -56,7 +56,7 @@
 
 </script>
 
-<div class="container">
+<div class="Progress__Checklist container">
 
   {#if elements?.length } 
 

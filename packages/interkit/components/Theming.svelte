@@ -5,6 +5,8 @@
 
   let config = InterkitClient.config;
 
+  $: console.log("theming", cssFile, $config)
+
 </script>
 
 <svelte:head>

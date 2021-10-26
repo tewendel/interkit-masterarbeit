@@ -1,0 +1,8 @@
+name: Theming
+fields: 
+  - name: cssFile
+    type: string
+    defaultValue: "public/global.css"
+  - name: jsFile
+    type: string
+toolboxCategory: Layout
