@@ -50,13 +50,13 @@
   .slide:first-child {
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
-    margin-left: var(--distance-m);
+    margin-left: var(--distance-s);
   }
 
   .slide:last-child {
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
-    margin-right: var(--distance-m);
+    margin-right: var(--distance-s);
   }
 
   .slide + .slide {
