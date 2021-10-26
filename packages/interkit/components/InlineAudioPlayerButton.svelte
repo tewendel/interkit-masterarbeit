@@ -133,6 +133,11 @@
     display: inline-flex;
   }
 
+  :global(.ButtonPanel) .button {
+    padding-top: var(--distance-s);
+    padding-bottom: var(--distance-s);
+  }
+
   .time {
     text-align: center;
     min-width: 3.5em;
