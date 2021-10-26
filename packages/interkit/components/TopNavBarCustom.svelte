@@ -1,9 +1,12 @@
+<script>
+</script>
+
 <div class="TopNavBarCustom">
   <nav class="TopNavBarCustom__Top">
-    <div class="left TopNavBarCustom__Top__Left">
+    <div class="left TopNavBarCustom__Top__Left" >
       <slot name="left"/>
     </div>
-    <div class="right TopNavBarCustom__Top__Right">
+    <div class="right TopNavBarCustom__Top__Right" >
       <slot name="right"/>
     </div>
   </nav>
@@ -37,19 +40,22 @@
   }
 
 
-  /*
+  
   .TopNavBarCustom__Top__Left,
   .TopNavBarCustom__Top__Right {
     white-space: nowrap;
     text-overflow: ellipsis;
-    flex:1;
     overflow: hidden;
   }
-  */
+
+  .left {
+    flex: 1;
+  }
+  
 
   :global(.TopNavBarCustom__Top__Left > *),
   :global(.TopNavBarCustom__Top__Right > *) {
-    display: inline-flex;
+    /*display: inline-flex;*/
   }
 
   :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {

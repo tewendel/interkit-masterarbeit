@@ -5,6 +5,7 @@
   import Button from './Button.svelte';
   import MediaFileImage from './MediaFileImage.svelte';
   import AspectRatio from './AspectRatio.svelte'
+  import MarkdownContent from './MarkdownContent.svelte'
 
   export let slides;
   /* array of objects with
@@ -59,7 +60,7 @@
         <div class="content">
           <span>{slides[slideIndex]?.supertitle || ""}</span>
           <h1>{slides[slideIndex]?.title || ""}</h1>
-          <p>{slides[slideIndex]?.content || ""}</p>
+          <MarkdownContent content={slides[slideIndex]?.content || ""}/>
         </div>
       {/key}
 

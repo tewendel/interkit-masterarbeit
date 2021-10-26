@@ -1,0 +1,21 @@
+name: ElementsContextProvider
+fields: 
+  - name: sheetKey
+    type: sheetId
+  - name: sortColumn
+    type: sheetColumn
+  - name: hideColumn
+    type: sheetColumn
+  - name: excludePropertiesAny
+    type: string
+  - name: includePropertiesAny
+    type: string
+  - name: discoverableColumn
+    type: sheetColumn
+    defaultValue: elements/discoverable
+  - name: discoverProperty
+    type: string
+    defaultValue: discovered
+  - name: default
+    type: slot
+toolboxCategory: Elements

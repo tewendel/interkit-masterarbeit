@@ -30,7 +30,7 @@
     <slot></slot>
   </div>
   <ButtonBar>
-    <Button flex="fill" on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
+    <Button flex="fill" type="primary" on:click={event => onClick(event, dismissFunction, dismissTrigger)} text={dismissText} />
     {#if helpText}
       <Button on:click={event => onClick(event, helpFunction, helpTrigger)} text={helpText} />
     {/if}

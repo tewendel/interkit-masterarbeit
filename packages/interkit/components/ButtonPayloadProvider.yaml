@@ -1,0 +1,11 @@
+name: ButtonPayloadProvider
+fields:
+  - name: keyColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: "elements/humanReadableKey"
+  - name: key
+    type: string
+  - name: default
+    type: slot
+toolboxCategory: Input

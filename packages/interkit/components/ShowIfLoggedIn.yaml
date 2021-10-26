@@ -1,6 +1,7 @@
 name: ShowIfLoggedIn
 title: Show If Logged In
-toolboxCategory: Project
+colour: 50
+toolboxCategory: Conditionals
 fields:
   - type: slot
     name: iftrue

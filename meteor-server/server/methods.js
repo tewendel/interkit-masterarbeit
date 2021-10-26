@@ -176,13 +176,9 @@ Meteor.methods({
     if (!projectId || !userToken) return false
     console.log("generateLoginCredentialsForTokenUser", projectId, userToken)
     const user = Meteor.users.findOne({
-      projectUserData: {
-        [projectId]: {
-          userToken
-        }
-      }
+      [`projectUserData.${projectId}.userToken`] : userToken
     })
-    //console.log("generateLoginCredentialsForTokenUser userId", user._id)
+    console.log("generateLoginCredentialsForTokenUser userId", user?._id)
     if (!user) { 
       return {
         error: user
@@ -217,6 +213,16 @@ Meteor.methods({
     }
 
     return false;
+  },
+
+  // save project data to user
+  'user.saveElementProperties': async function ({projectId, elementProperties}) {
+    const result = Meteor.users.update(Meteor.userId(), {
+      $set: {
+        [`projectUserData.${projectId}.elementProperties`] : elementProperties
+      }
+    })
+    return result
   },
 
   // create repo  

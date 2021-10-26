@@ -2,19 +2,9 @@ name: ElementSlider
 toolboxCategory: "Lists"
 color: 230
 fields:
-  - name: dataSheetKey
-    type: sheetId
-    defaultValue: elements
   - name: contentElement
     type: slot
     slotProps:
       - "element"
-  - name: sortColumn
-    type: sheetColumn
-    defaultValue: ""
-    columnType: number
-  - name: unlockedProperty
-    type: string
-    defaultValue: ""
   - name: emptyElement
     type: slot

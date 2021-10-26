@@ -4,8 +4,10 @@
   import { onMount } from 'svelte';
 
   import MediaFileResolver from './MediaFileResolver.svelte'
+  import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import AspectRatio from './AspectRatio.svelte'
   import { executeTrigger } from '../actions'
 
   // slots:
@@ -96,6 +98,7 @@
 
 <div class="ARViewer container">
   {#if element}
+
     <div class="ARViewer__Close close">
       <Button>
         <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
@@ -110,64 +113,111 @@
           <source src={url} >
         </MediaFileResolver>
       </video>
-
+    
     {:else}
 
-      {#if capability === "android"}
+      <div class="inner-container">
 
-        <slot name="androidInfo"></slot>
+        <div class="box">
 
-        <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
-          <a 
-            class="ARViewer__Link-android link-android"
-            bind:this={androidLinkRef} 
-            rel="external" 
-            title={element.title} 
-            href={generateAndroidHref(url)}
-          >
-            <Button inverse>
-              {startButtonText}
-            </Button>
-          </a>
-        </MediaFileResolver>
-      {/if}
+          <AspectRatio>
+            <MediaFileImage 
+              mediafileRef={element.imageFileRef} 
+              fitDimension="both"
+              objectFit="contain"
+            />
+          </AspectRatio>
 
-      {#if capability === "ios"}
+          <div class="content">
 
-        <slot name="iosInfo"></slot>
+            <h1 class="headline">
+              Augmented Reality
+            </h1>
 
-        <Button inverse on:click={() => iosLinkRef.click()}>
-          {startButtonText}
-        </Button>
+              {#if capability === "android"}
 
-        <div style="position: absolute; z-index:-1; visibility: hidden">
-          <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
-            <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
-              <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
-                <img src={imgUrl} alt={element.title}/>
-              </MediaFileResolver>
-            </a>
-          </MediaFileResolver>
+                <div class="block">
+
+                  <div class="buttonContainer">
+                    <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
+                      <a 
+                        class="ARViewer__Link-android link-android"
+                        bind:this={androidLinkRef} 
+                        rel="external" 
+                        title={element.title} 
+                        href={generateAndroidHref(url)}
+                      >
+                        <Button flex="fill" size="large">
+                          {startButtonText}
+                        </Button>
+                      </a>
+                    </MediaFileResolver>
+                  </div>
+
+                  <div class="buttonInfo">
+                    <slot name="androidInfo"></slot>
+                  </div>
+
+                </div>
+
+              {/if}
+
+              {#if capability === "ios"}
+
+                <div class="block">
+
+                  <div class="buttonContainer">
+                    <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
+                      {startButtonText}
+                    </Button>
+                  </div>
+
+                  <div class="buttonInfo">
+                    <slot name="iosInfo"></slot>
+                  </div>
+
+                  <div style="position: absolute; z-index:-1; visibility: hidden">
+                    <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
+                      <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
+                        <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
+                          <img src={imgUrl} alt={element.title}/>
+                        </MediaFileResolver>
+                      </a>
+                    </MediaFileResolver>
+                  </div>
+
+                </div>
+
+              {/if}
+
+              <div class="block">
+
+                <div class="buttonContainer">
+                  <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
+                    {videoButtonText}
+                  </Button>
+                </div>
+
+                <div class="buttonInfo">
+                  {#if capability === "video"}
+
+                    <slot name="videoOnlyInfo"></slot>
+
+                  {:else}
+
+                    <slot name="videoFallbackInfo"></slot>
+
+                  {/if}
+                </div>
+              </div>
+
+          </div>
+
         </div>
 
-      {/if}
+      </div>
 
-      {#if capability === "video"}
-
-        <slot name="videoOnlyInfo"></slot>
-
-      {:else}
-
-        <br />
-        <slot name="videoFallbackInfo"></slot>
-
-      {/if}
-
-      <Button type="secondary" on:click={() => mode = "video"}>
-        {videoButtonText}
-      </Button>
-
-    {/if}
+    {/if} 
 
   {/if}
 </div>
@@ -176,11 +226,53 @@
   .container {
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,1);
+    flex:1;
+    background-color: var(--color-background-highlight);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .inner-container {
+    padding: var(--distance-m);
+  }
+
+  .box {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    border-width: var(--border-width);
+    border-color: var(--border-color);
+    border-style: solid;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .content {
+    padding: var(--distance-s);
+  }
+
+  .buttonContainer {
+    padding: 0 var(--distance-xl);
+    display: flex;
+  }
+
+  .headline, .block {
+    padding: var(--distance-s);
+  }
+
+  .block:not(:first-child) {
+    margin-top: var(--distance-s);
+  }
+
+  .headline {
+    font: var(--font-headline-3);
+  }
+
+  .buttonInfo {
+    padding-top: var(--distance-s);
+    font: var(--font-body-2);
   }
 
   a img {

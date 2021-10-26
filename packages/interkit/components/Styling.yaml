@@ -21,6 +21,9 @@ fields:
   - name: colorBackground
     type: string
     defaultValue: "white"
+  - name: colorBackgroundHighlight
+    type: string,
+    defaultValue: "#F0F6F6"
   - name: fontFamilyText
     type: string
     defaultValue: "Inter"

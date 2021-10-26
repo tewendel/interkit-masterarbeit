@@ -41,15 +41,16 @@
   const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   
-  let elementRows; // store with the elements we want to show
-  let unsubElementRows; // unsubscribe method to this store
-  
-  let markerRows;
+  let markerObjects;
   let markerData; 
   let selectedElement;
   let nearestElement;
-
   let singleElement;
+
+  let elementsContext = getContext("elementsProvider");
+  let elements = elementsContext?.elements;
+  let unsubElements; // unsubscribe method to this store
+  let markerObjs; // where we store the objects
   
   // retrieve row from qr scanner and convert to object with the columns specified in map
   let qrContext = getContext("qr-scanner")
@@ -57,13 +58,15 @@
     singleElement = util.rowToObject(qrContext.targetElementObj.row, columnMap)
     console.log("singleElement", singleElement)
   }
+
+  if(!elements && !singleElement) alert("MapSimple needs elementsContextProvider or QRScanner context");
   
   // set up subscription
   const initDataSubs = async () => {
     
-    elementRows = await InterkitClient.getRowSubStore(markerPositionsColumn, columnMap, "mapMarkers");
-    unsubElementRows = elementRows.subscribe((rowsArray)=>{
-      markerRows = rowsArray;
+    // convert elements to objects with the columns we need
+    unsubElements = elements.subscribe((data)=>{
+      markerObjs = data.map(e => util.rowToObject(e.row, columnMap));
       updateMarkerData();
     })
   }
@@ -81,32 +84,33 @@
   // preprocess data for marker creation in map renderer
   const updateMarkerData = async () => {
 
-    if(!markerRows) {
+    if(!markerObjs) {
       markerData = [];
       return
     }
 
-    // filter rows
-    let rowsFiltered = markerRows.filter(r => r.hideOnMapColumn != "true")
+    // start with the full set of data
+    let selectedData = [...markerObjs];
 
     // if singleElement is set, use only that
     if(singleElement) {
-      rowsFiltered = [singleElement]
+      selectedData = [singleElement]
     }
 
+    // find nearest element
     if($userPositionStore) {
-      let markerRows_sorted = [...rowsFiltered].filter(r => r.markerPositionsColumn).sort(distanceSort)
-      if(markerRows_sorted.length) {
-        nearestElement = markerRows_sorted[0]
+      let markerObjs_sorted = [...selectedData].filter(r => r.markerPositionsColumn).sort(distanceSort)
+      if(markerObjs_sorted.length) {
+        nearestElement = markerObjs_sorted[0]
         // if nearestElementMode is set and we have a position, show only nearest element
         if(nearestElementMode == "TRUE") {
-          rowsFiltered = [nearestElement]
+          selectedData = [nearestElement]
         }
       }
     }
 
     // prepare data for marker production
-    markerData = rowsFiltered.map(r=> {return {
+    markerData = selectedData.map(r=> {return {
       location: (r.markerPositionsColumn?.lat && r.markerPositionsColumn?.lng) ?
                 r.markerPositionsColumn : undefined,
       checked: $elementProperties?.[r.key]?.[checkedProperty] ? true : false, 
@@ -137,8 +141,8 @@
   })
 
   onDestroy(()=>{
-    if(unsubElementRows)
-      unsubElementRows()
+    if(unsubElements)
+      unsubElements()
   })
 
   // set context for buttons in buttons slot

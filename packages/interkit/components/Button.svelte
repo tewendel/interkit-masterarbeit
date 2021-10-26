@@ -58,7 +58,9 @@
     text-overflow: ellipsis;
     cursor: pointer;
     align-items: center;
+    justify-content: center;
     user-select: none;
+    text-align: center;
   }
 
   .button.normal {
@@ -89,7 +91,7 @@
 
   .primary {
     color: var(--color-text-button-primary);
-    background-color: var(--color-background-button-primary)
+    background-color: var(--color-background-button-primary);
   }
 
   span.button {

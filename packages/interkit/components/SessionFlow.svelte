@@ -18,9 +18,11 @@
 
   const setStep = newStep => step = newStep
 
+  const bgImgStyleString = backgroundImageSrc ? `background-image:url(${backgroundImageSrc})` : ""
+
 </script>
 
-<Flex2 style="background-color: white; background-image:url({backgroundImageSrc})">
+<Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString};">
   <div slot="first" class="first">
     <div class="frame">
       {#if step == "enterCode"}
@@ -42,7 +44,9 @@
   </div>
   <div slot="second" class="second">
 
-      Marta
+    <div class="logoContainer">
+      <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
+    </div>
 
   </div>
 </Flex2>
@@ -55,22 +59,33 @@
   }
 
   .first {
-    padding: 20vw 20px 0 20px;
+    padding: 20vw var(--distance-m) 0 var(--distance-m);
     align-items: stretch;
   }
 
   .second {
-    padding: 10vw 20px;
+    padding: 10vw var(--distance-m);
   }
 
   .frame {
-    background-color: white;
+    background-color: var(--color-background);
     border-radius: var(--border-radius);
     border: solid black var(--border-width);
     width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: var(--distance-m);
     text-align: center;
   }
+
+  .logoContainer {
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius-button);
+    overflow: hidden;
+    margin: 0 var(--distance-xl);
+    padding: var(--distance-s);
+    background-color: var(--color-background);
+  }
+
 </style>
