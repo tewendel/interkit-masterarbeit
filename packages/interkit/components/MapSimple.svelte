@@ -249,6 +249,7 @@
     position: relative;
     border-radius: var(--border-radius);
     border: 1px solid black;
+    overflow: hidden;
   }
 
   .marker_popup.active {
@@ -257,9 +258,17 @@
 
   .marker_popup_close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 1;
+    top: var(--distance-s);
+    right: var(--distance-s);
+    z-index: 10;
+  }
+
+  .marker_popup_close :global(.Button) {
+    border: none;
+    padding: 0;
+    width: calc(var(--distance-s) * 3);
+    height: calc(var(--distance-s) * 3);
+    filter: invert(1); /* TODO provide proper svg */
   }
 
   .button-bar-container {

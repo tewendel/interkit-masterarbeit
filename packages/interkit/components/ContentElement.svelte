@@ -161,9 +161,9 @@
   .container {
     display: grid;
     grid-template-rows: auto auto auto;
-    padding: 8px;
     font-size: var(--font-size-regular);
   }
+
   .picture {
     grid-column: 1;
     grid-row: 1 / span 2;
@@ -230,9 +230,8 @@
   /* elements */
 
   .titles {
-    padding-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: var(--distance-m);
+    padding-bottom: 0;
   }
 
   .subtitle {
@@ -241,7 +240,7 @@
   }
 
   .content {
-    padding: 8px;
+    padding: var(--distance-s) var(--distance-m);
   }
 
   .description {
