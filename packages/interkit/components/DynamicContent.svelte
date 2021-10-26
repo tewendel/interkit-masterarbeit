@@ -20,6 +20,13 @@
   let contentRow;
   let content;
 
+  let userProjectData = InterkitClient.userProjectDataStore
+  let userToken = ""
+
+  userProjectData.subscribe( data => {
+    userToken = data?.userToken
+  })
+
   // subscribe to the rows in that sheet
   let rowStore;
   onMount(async () => {
@@ -29,6 +36,7 @@
   const addSpecialElements = (c) => {
     let result = c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
     result = result?.replace("[version]", JSON.stringify(get(InterkitClient.config)?.bundle_version))
+    result = result?.replace("[userToken]", userToken)
     return result
   }
 

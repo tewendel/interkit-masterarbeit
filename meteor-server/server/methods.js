@@ -219,6 +219,16 @@ Meteor.methods({
     return false;
   },
 
+  // save project data to user
+  'user.saveElementProperties': async function ({projectId, elementProperties}) {
+    const result = Meteor.users.update(Meteor.userId(), {
+      $set: {
+        [`projectUserData.${projectId}.elementProperties`] : elementProperties
+      }
+    })
+    return result
+  },
+
   // create repo  
   'project.create': async ({ name }) => {
 

@@ -34,9 +34,13 @@ let userId = writable(null);
 // a global store to store the state history of stores relavant to the UI
 let uiHistoryStore = writable([])
 
+ // reactive user data related to this project
+let userProjectDataStore = writable();
+
 // centrally store all subscriptions to sheets, using sheetKey as key on this object
 let rowSubs = {};
 let mediaFileSub;
+let userProjectDataSub;
 let sheetSub;
 
 // can probably be deprecated - used to make sure last subcription is closed
@@ -255,6 +259,10 @@ const checkForUpdates = async () => {
   single: track a single document or an array
   columnMap: column keys for conversion into more convenient objects
 
+  returns {
+    data // a svelte store
+  }
+
   -> components should not use this directly but use getRowSubStore (see below)
 */
 
@@ -401,6 +409,19 @@ const getMediaFileSubStore = async () => {
   return sub?.data;
 }
 
+const getUserProjectDataStore = async () => {
+  if (!userProjectDataSub) {
+    // no subscription to userProjectData yet, set it up
+    userProjectDataSub = new Promise(async (resolve, reject) => {
+      //console.log("creating subscription for userProjectData")
+      let msub = await getSub("user", "user.projectUserData", {})
+      resolve(msub);
+    })
+  }
+  let sub = await userProjectDataSub;
+  return sub?.data;
+}
+
 const getUiKeyStore = uiKey => {
   const key = "uiKey_" + uiKey
   if (!globalStores[key]) {
@@ -496,6 +517,7 @@ const InterkitClient = {
   userId,
   config,
   projectId,
+  userProjectDataStore,
   connectionIssue,
   connect,
   initApp: async () => {
@@ -571,6 +593,11 @@ const InterkitClient = {
     userId.set(userAuthData.id);
     localStorage.setItem('userId', userAuthData.id);
     localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+    // subscribe to user project data
+    const subStore = getUserProjectDataStore()
+    if (subStore) {
+      subStore.subscribe(s => userProjectData.set(s))
+    }
     return userAuthData
   },
 
@@ -669,6 +696,18 @@ const InterkitClient = {
     const elementProperties = getGlobalStore("elementProperties");
     let value = get(elementProperties)?.[elementKey]?.[property]
     return value;
+  },
+
+  saveElementPropertiesToUser: async () => {
+    const elementProperties = getGlobalStore("elementProperties");
+    let storeData = get(elementProperties)
+    let result
+    try {
+      result = await InterkitClient.call("saveElementProperties", { elementProperties: storeData })
+    } catch (error) {
+      return false
+    } finally {}
+    return result
   },
 
   getUiKeyStore,
