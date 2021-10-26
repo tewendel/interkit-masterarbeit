@@ -34,9 +34,13 @@ let userId = writable(null);
 // a global store to store the state history of stores relavant to the UI
 let uiHistoryStore = writable([])
 
+ // reactive user data related to this project
+let userProjectDataStore = writable();
+
 // centrally store all subscriptions to sheets, using sheetKey as key on this object
 let rowSubs = {};
 let mediaFileSub;
+let userProjectDataSub;
 let sheetSub;
 
 // can probably be deprecated - used to make sure last subcription is closed
@@ -255,6 +259,10 @@ const checkForUpdates = async () => {
   single: track a single document or an array
   columnMap: column keys for conversion into more convenient objects
 
+  returns {
+    data // a svelte store
+  }
+
   -> components should not use this directly but use getRowSubStore (see below)
 */
 
@@ -401,6 +409,24 @@ const getMediaFileSubStore = async () => {
   return sub?.data;
 }
 
+const subscribeUserProjectDataStore = async () => {
+  if (!server || !get(userId) || !get(projectId)) return
+  if (!userProjectDataSub) {
+    // no subscription to userProjectData yet, set it up
+    userProjectDataSub = new Promise(async (resolve, reject) => {
+      //console.log("creating subscription for userProjectData")
+      let msub = await getSub("users", "user.projectUserData", {})
+      resolve(msub);
+    })
+  }
+  let sub = await userProjectDataSub;
+  //console.log("subscribeUserProjectDataStore", sub, sub.data)
+  // subscribe to user project data
+  sub.data.subscribe(d => {
+    userProjectDataStore.set(d?.[0].projectUserData[get(projectId)] || {})
+  })
+}
+
 const getUiKeyStore = uiKey => {
   const key = "uiKey_" + uiKey
   if (!globalStores[key]) {
@@ -409,6 +435,7 @@ const getUiKeyStore = uiKey => {
   return globalStores[key]
 }
 
+// get a local persistant store by key or initialize a new one if it doens't exist
 const getGlobalStore = (key) => {
   if(!globalStores[key]) {
     let persistedStoreJSON = localStorage.getItem(key)
@@ -492,63 +519,54 @@ const restoreUiSnapshot = id => {
   }
 }
 
-const InterkitClient = {
-  userId,
-  config,
-  projectId,
-  connectionIssue,
-  connect,
-  initApp: async () => {
-    await loadConfig();
-    await getProjectId();
-    
-    let updating = false;
-    if(Capacitor.isNative) {
-      updating = await checkForUpdates();
-    }
-    if(!updating) {
-      await connect()
-      return true;
-    }
-  },
+const initApp = async () => {
+  await loadConfig();
+  await getProjectId();
 
-  // create a user that is identified by a project specific userToken
-  createProjectTokenUser: async ({ userToken, projectData }={}) => {
-    //console.log("createProjectTokenUser")
-    const result = await server.call("createProjectTokenUser", {
-      userToken,
-      projectId: get(projectId),
-      projectData
-    })
-    return result
-  },
+  let updating = false;
+  if (Capacitor.isNative) {
+    updating = await checkForUpdates();
+  }
+  if (!updating) {
+    await connect()
+    return true;
+  }
+}
 
-  loginTokenUser: async ({userToken}) => {
-    let credentials
-    try {
-      credentials = await InterkitClient.call("generateLoginCredentialsForTokenUser", {userToken})
-    } catch(error) {
-      return false
-    } finally {
-      try {
-        return await InterkitClient.login(credentials)
-      } catch (error) {
-        return error
-      }
-    }
-  },
+// create a user that is identified by a project specific userToken
+const createProjectTokenUser = async ({ userToken, projectData } = {}) => {
+  //console.log("createProjectTokenUser")
+  const result = await server.call("createProjectTokenUser", {
+    userToken,
+    projectId: get(projectId),
+    projectData
+  })
+  return result
+}
 
-  createProjectTokenUserAndLogin: async ({ userToken, projectData }={}) => {
-    //console.log("createProjectTokenUser")
-    const token = await InterkitClient.call("createProjectTokenUser", {
-      userToken,
-      projectData
-    })
-    const userId = await InterkitClient.loginTokenUser({userToken: token})
-    return userId ? token : false
-  },
+const loginTokenUser = async ({ userToken }) => {
+  let credentials
+  try {
+    credentials = await InterkitClient.call("generateLoginCredentialsForTokenUser", { userToken })
+    console.log(credentials)
+    const user = await InterkitClient.login(credentials)
+    return user
+  } catch (error) {
+    return false
+  }
+}
 
-  createProjectUser: async ({ username, password, email, projectData }) => {
+const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) => {
+  //console.log("createProjectTokenUser")
+  const token = await InterkitClient.call("createProjectTokenUser", {
+    userToken,
+    projectData
+  })
+  const userId = await InterkitClient.loginTokenUser({ userToken: token })
+  return userId ? token : false
+}
+
+const createProjectUser = async ({ username, password, email, projectData }) => {
     const result = await InterkitClient.call("createProjectUser", {
       username,
       password,
@@ -556,151 +574,220 @@ const InterkitClient = {
       projectData
     })
     return result
-  },
+  }
 
 
-  login: async ({username, password}) => {
-    //console.log(server)
-    let userAuthData = await server.login({
-      password,
-      user: {
-        username
-      }
-    });
-    console.log(userAuthData)
-    userId.set(userAuthData.id);
-    localStorage.setItem('userId', userAuthData.id);
-    localStorage.setItem('userAuth', JSON.stringify(userAuthData))
-    return userAuthData
-  },
+const login = async ({ username, password }) => {
+  //console.log(server)
+  let userAuthData = await server.login({
+    password,
+    user: {
+      username
+    }
+  });
+  console.log(userAuthData)
+  userId.set(userAuthData.id);
+  localStorage.setItem('userId', userAuthData.id);
+  localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+  return userAuthData
+}
 
-  logout: async () => {
+const  logout = async () => {
     await server.logout();
     userId.set(null);
     localStorage.setItem('userId', null);
     localStorage.setItem('userAuth', null);
-  },
+  }
 
-  // call a meteor method, add projectId to params if needed (allow method calls without params)
-  call: async (method, params = {}) => {
+// call a meteor method, add projectId to params if needed (allow method calls without params)
+const   call = async (method, params = {}) => {
 
-    if(config && params && !params?.projectId) {
+    if (config && params && !params?.projectId) {
       console.log("adding projectId to method params", params, method)
       params.projectId = get(projectId);
     }
 
-    if(params && !params?.projectId) {
+    if (params && !params?.projectId) {
       console.log("warning, call to method before projectId has been retreived:" + method)
-    } 
-    
+    }
+
     let response = await server.call(method, params);
     return response
-  },
+  }
 
-  getSub,
-  getRowSubStore,
-  getMediaFileSubStore,
-  getMediaFile: async (key) => {
-    if(key) {
-      let store = await getMediaFileSubStore()
-      let mediafile = get(store)?.find(m => m.meta.key == key)
-      if(mediafile) {
-        mediafile.link = 
+
+const getMediaFile = async (key) => {
+  if (key) {
+    let store = await getMediaFileSubStore()
+    let mediafile = get(store)?.find(m => m.meta.key == key)
+    if (mediafile) {
+      mediafile.link =
         `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
-      } else {
-        //console.log("mediafile not found", key, get(store))
-      }
-      return mediafile
     } else {
-      console.log("call of getMediaFile with no key", key, typeof key)
+      //console.log("mediafile not found", key, get(store))
     }
-  },
-
-  getUploadEndpoint: () => 
-    `${get(config)?.INTERKIT_SERVER_URL}/mediaUpload`,
-
-  getSheet: async (key) => {
-    if(!sheetSub) {
-      // no subscription to media files yet, set it up
-      sheetSub = new Promise(async (resolve, reject) => {
-        //console.log("creating subscription for sheets")
-        let ssub = await getSub("sheets", "sheets", {})
-        resolve(ssub);
-      })
-    }    
-    let sub = await sheetSub;
-    let sheet = get(sub?.data)?.find(m => m.key == key)
-    return sheet
-  },
-
-  // get a local persistant store by key or initialize a new one if it doens't exist
-  getGlobalStore,
-
-  setGlobalStore: (storeKey, value) => {
-    let store = InterkitClient.getGlobalStore(storeKey);
-    store.set(value)
-    localStorage.setItem(storeKey, JSON.stringify(value));
-  },
-
-  // Properties are additional user-specific attributes to elements
-  // they all exist in the same global store "elementProperties"
-  // setElementProperty sets a property on an item and persist it
-  setElementProperty: (
-      //store,  // a global store from getGlobalStore()
-      key, // an id, typically a row key from database
-      property, // name of the property
-      value // value of the property
-      ) => {
-    const elementProperties = getGlobalStore("elementProperties");
-    let storeData = get(elementProperties)
-    if(!storeData) storeData = {}
-    if(!storeData[key]) storeData[key] = {};
-    storeData[key][property] = value;
-    console.log("setElementProperty", key, property, value, storeData)
-    elementProperties.set(storeData);
-    localStorage.setItem("elementProperties", JSON.stringify(storeData));
-  },
-
-  getElementProperty: (
-    //store, // a global store from getGlobalStore()
-    elementKey, // rowKey of the element to check
-    property // name of the property, for example "bookmarked"
-  ) => {
-    const elementProperties = getGlobalStore("elementProperties");
-    let value = get(elementProperties)?.[elementKey]?.[property]
-    return value;
-  },
-
-  getUiKeyStore,
-
-  takeUiSnapshot,
-  restoreUiSnapshot,
-
-  getUiHistoryStore: () => {
-    return uiHistoryStore
-  },
-  
-  setUiKey: (uiKey, value) => {
-    const store = getUiKeyStore(uiKey)
-    //console.log(`change ${uiKey} from ${get(uiKey)} to ${value}`)
-    console.log(`change ${uiKey} to ${value}`)
-    store.set(value)
-  },
-
-  registerGlobalMethod: (key, method) => {
-    //console.log("registerGlobalMethod", key)
-    globalMethods[key] = method;
-  },
-
-  callGlobalMethod: (key, options) => {    
-    if(globalMethods[key]) {
-      //console.log("callGlobalMethod", key)
-      globalMethods[key](options);
-    } else {
-      console.log("global method not fouund", key);
-    }
+    return mediafile
+  } else {
+    console.log("call of getMediaFile with no key", key, typeof key)
   }
 }
 
+const getUploadEndpoint = () =>
+    `${get(config)?.INTERKIT_SERVER_URL}/mediaUpload`
+
+const getSheet = async (key) => {
+  if (!sheetSub) {
+    // no subscription to media files yet, set it up
+    sheetSub = new Promise(async (resolve, reject) => {
+      //console.log("creating subscription for sheets")
+      let ssub = await getSub("sheets", "sheets", {})
+      resolve(ssub);
+    })
+  }
+  let sub = await sheetSub;
+  let sheet = get(sub?.data)?.find(m => m.key == key)
+  return sheet
+}
+
+const setGlobalStore = (storeKey, value) => {
+  let store = InterkitClient.getGlobalStore(storeKey);
+  store.set(value)
+  localStorage.setItem(storeKey, JSON.stringify(value));
+}
+
+// Properties are additional user-specific attributes to elements
+// they all exist in the same global store "elementProperties"
+// setElementProperty sets a property on an item and persist it
+const setElementProperty = (
+  //store,  // a global store from getGlobalStore()
+  key, // an id, typically a row key from database
+  property, // name of the property
+  value // value of the property
+) => {
+  const elementProperties = getGlobalStore("elementProperties");
+  let storeData = get(elementProperties)
+  if (!storeData) storeData = {}
+  if (!storeData[key]) storeData[key] = {};
+  storeData[key][property] = value;
+  console.log("setElementProperty", key, property, value, storeData)
+  elementProperties.set(storeData);
+  localStorage.setItem("elementProperties", JSON.stringify(storeData));
+}
+
+const getElementProperty = (
+  //store, // a global store from getGlobalStore()
+  elementKey, // rowKey of the element to check
+  property // name of the property, for example "bookmarked"
+) => {
+  const elementProperties = getGlobalStore("elementProperties");
+  let value = get(elementProperties)?.[elementKey]?.[property]
+  return value;
+}
+
+const loadElementPropertiesFromUser = async () => {
+  const userProjectData = get(userProjectDataStore)
+  if (!userProjectData) {
+    // wait for data
+    userProjectDataStore.subscribe(data => {
+      if (!data?.elementProperties) return false
+      const elementPropertiesStore = getGlobalStore("elementProperties");
+      elementPropertiesStore.set(data?.elementProperties)
+      return true
+    })
+  } else {
+    // same but now
+    if (!userProjectData?.elementProperties) return false
+    const elementPropertiesStore = getGlobalStore("elementProperties");
+    elementPropertiesStore.set(userProjectData?.elementProperties)
+    return true
+  }
+
+}
+
+const saveElementPropertiesToUser = async () => {
+  const elementProperties = getGlobalStore("elementProperties");
+  let storeData = get(elementProperties)
+  console.log("saving elementProperties", storeData)
+  let result
+  try {
+    result = await InterkitClient.call("user.saveElementProperties", { elementProperties: storeData })
+  } catch (error) {
+    return false
+  } finally { }
+  return result
+}
+
+const getUiHistoryStore = () => {
+  return uiHistoryStore
+}
+
+const setUiKey = (uiKey, value) => {
+  const store = getUiKeyStore(uiKey)
+  //console.log(`change ${uiKey} from ${get(uiKey)} to ${value}`)
+  console.log(`change ${uiKey} to ${value}`)
+  store.set(value)
+}
+
+const registerGlobalMethod = (key, method) => {
+  //console.log("registerGlobalMethod", key)
+  globalMethods[key] = method;
+}
+
+const callGlobalMethod = (key, options) => {
+  if (globalMethods[key]) {
+    //console.log("callGlobalMethod", key)
+    globalMethods[key](options);
+  } else {
+    console.log("global method not fouund", key);
+  }
+}
+
+projectId.subscribe(subscribeUserProjectDataStore)
+userId.subscribe(subscribeUserProjectDataStore)
+
+// restore elementProperties from user --> not necessary because they are also in the localstorage 
+//
+// userProjectDataStore.subscribe(data => {
+//   const elementProperties = data?.elementProperties
+//   if (elementProperties) {
+//     initElementProperties(elementProperties)
+//   }
+// })
+
+const InterkitClient = {
+  userId,
+  config,
+  projectId,
+  userProjectDataStore,
+  connectionIssue,
+  connect,
+  initApp,
+  createProjectTokenUser,
+  loginTokenUser,
+  createProjectTokenUserAndLogin,
+  createProjectUser,
+  login,
+  logout,
+  call,
+  getSub,
+  getRowSubStore,
+  getMediaFileSubStore,
+  getMediaFile,
+  getUploadEndpoint,
+  getSheet,
+  getGlobalStore,
+  setGlobalStore,
+  setElementProperty,
+  getElementProperty,
+  saveElementPropertiesToUser,
+  loadElementPropertiesFromUser,
+  getUiKeyStore,
+  takeUiSnapshot,
+  restoreUiSnapshot,
+  getUiHistoryStore,
+  setUiKey,
+  registerGlobalMethod,
+  callGlobalMethod
+}
 
 export default InterkitClient;

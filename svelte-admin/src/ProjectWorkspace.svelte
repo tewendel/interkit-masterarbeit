@@ -8,6 +8,7 @@
   import RepositoryEditor from "./RepositoryEditor.svelte"
   import MediaManager from "./MediaManager.svelte"
   import ProjectEditor from "./ProjectEditor.svelte"
+  import UsersManager from './UsersManager.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -29,6 +30,7 @@
         <Tab label="Media" />
         <Tab label="Components" />
         <Tab label="Repo" />
+        <Tab label="Users" />
         <Tab label="Project" />
         <div slot="content">
           <TabContent>
@@ -42,6 +44,9 @@
           </TabContent>
           <TabContent>
             <RepositoryEditor {projectId} open={selected === 3}/>
+          </TabContent>
+          <TabContent>
+            <UsersManager {projectId} />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />

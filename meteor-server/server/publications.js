@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
@@ -54,3 +55,14 @@ Meteor.methods({'row.get': ({key, projectId})=>{
   return row;
 }})
 
+Meteor.publish("projectUsers", ({projectId}) => {
+  const cursor = Meteor.users.find({ [`projectUserData.${projectId}`] : { $exists:true }}, { fields: { services: false } });
+  console.log(projectId, cursor.count())
+  return cursor
+});
+
+Meteor.publish("user.projectUserData", ({ projectId }) => {
+  const cursor = Meteor.users.find(Meteor.userId(), { fields: { [`projectUserData.${projectId}`]: true } });
+  console.log("user.projectUserData", projectId, cursor.count())
+  return cursor
+});

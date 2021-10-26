@@ -58,7 +58,7 @@
 <button on:click={upload}>Upload</button>
 <br/><br/>
 
-<h3> media in this project </h3>
+<h3> media in this project ({(mediafilesArray||[]).length})</h3>
 
 <MediaFileList mediafiles={mediafilesArray} {projectId}/>
 
