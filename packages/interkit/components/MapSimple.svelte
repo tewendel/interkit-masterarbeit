@@ -208,15 +208,20 @@
 
   .map-component-container.inline {
     position: relative;
-    border-radius: 25px;
     border: 1px solid black;
     overflow: hidden;
     height: auto;
     display: flex;
     flex-direction: row;
-    border-radius: var(--border-radius-button);
     min-width: 40px;
     font-size: var(--font-size-regular);
+  }
+
+  /* need to be very cautious for iOS */
+  .map-component-container.inline,
+  .map-component-container.inline :global(.Map__Container),
+  .map-component-container.inline :global(.map) {
+    border-radius: var(--border-radius-button);
   }
 
   :global(div.marker-container.selected) {
