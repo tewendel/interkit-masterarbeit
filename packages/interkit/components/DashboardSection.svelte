@@ -1,13 +1,15 @@
 <script>
   export let fullWidthContent = "FALSE"
-
+  export let cssClass;
 </script>
 
-<div class="title">
-  <slot name="title"/>
-</div>
+{#if $$slots.title}
+  <div class="title">
+    <slot name="title"/>
+  </div>
+{/if}
 
-<div class="content" class:fullWidth={fullWidthContent == "TRUE"}>
+<div class="Dashboard__Section content {cssClass}" class:fullWidth={fullWidthContent == "TRUE"}>
   <slot name="content"/>
 </div>
 
