@@ -48,7 +48,7 @@
 
 </script>
 
-<div class="container">
+<div class="container TutorialSlideshow">
 
   <MultiStepContent
     {slides}
@@ -67,6 +67,14 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    min-height: 100vh;
+  }
+
+  :global(.Subsection.help) .container {
+    min-height: auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--distance-l);
   }
   
 </style>

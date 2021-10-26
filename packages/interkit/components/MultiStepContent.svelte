@@ -46,7 +46,6 @@
   </div>
 
   <div class="container">
-
     
       {#if slides[slideIndex]?.image}
         <div class="image">
@@ -65,9 +64,9 @@
       {/key}
 
       <div class="Button__Bar button-bar">
-        {#if slideIndex > 0}<Button text="Zurück" onClick={()=>{slideIndex -= 1}}/>{/if}
+        {#if slideIndex > 0}<Button text="Zurück" onClick={()=>{slideIndex -= 1}} flex="fill" />{/if}
         {#if slideIndex < slides.length - 1 || onClose}
-          <Button text="Weiter" onClick={incrIndex}/>
+          <Button text="Weiter" onClick={incrIndex} flex="fill" type="primary" />
         {/if}
       </div>
       
@@ -130,6 +129,11 @@
     display: flex;
   }
 
+  :global(.TutorialSlideshow) .pagination {
+    margin-top: var(--distance-l);
+    margin-bottom: var(--distance-l);
+  }
+
   .pagination-item {
     /* TODO find better measurements */
     width: calc(1.5 * var(--distance-xs));
@@ -162,15 +166,27 @@
   }
 
   .button-bar {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    margin-bottom: 16px;
-    padding-top: 8px;
+    padding-top: var(--distance-m);
+    gap: var(--distance-s);
   }
 
   :global(.QRTips__Button__Bar span:not(:first-child)) {
     margin-left: 8px;
   }
 
+  :global(.TutorialSlideshow) .MultiStepContent__Image__Container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  :global(.TutorialSlideshow) .container {
+    margin-top: auto;
+  }
 
 </style>
