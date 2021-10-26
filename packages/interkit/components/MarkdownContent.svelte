@@ -10,6 +10,10 @@
 
 <style>
 
+  :global(.MarkdownContent) {
+    text-align: var(--text-align) ;
+  }
+
   :global(.MarkdownContent h1) {
     font-family: var(--font-family-headline);
     font-size: var(--font-size-headline-1);
