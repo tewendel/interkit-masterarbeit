@@ -41,7 +41,8 @@
     width: 85%;
     flex: none;
     scroll-snap-align: center;
-    box-sizing: border-box;
+    /* important that they all are exactly the same width (only the first one has a border-left), otherwise it confuses AspectRatio */
+    box-sizing: content-box;
     overflow: hidden; /* so border-radius works, TODO check iOS */
     border: var(--border-width) solid var(--border-color);
   }
@@ -49,13 +50,13 @@
   .slide:first-child {
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
-    margin-left: var(--distance-m);
+    margin-left: var(--distance-s);
   }
 
   .slide:last-child {
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
-    margin-right: var(--distance-m);
+    margin-right: var(--distance-s);
   }
 
   .slide + .slide {
