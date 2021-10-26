@@ -128,8 +128,9 @@
   }
 
   .button {
-    padding: var(--distance-s);
+    padding: 0 var(--distance-s);
     cursor: pointer;
+    display: inline-flex;
   }
 
   .time {
