@@ -141,6 +141,10 @@
     background-image: url("../icons/Check-Thin.svg"); 
   }
 
+  .icon-copy {
+    background-image: url("../icons/full/Copy.svg"); 
+  }
+
   .icon-hamburger-full {
     background-image: url("../icons/full/Menu.svg"); 
   }

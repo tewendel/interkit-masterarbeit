@@ -11,7 +11,7 @@
 
 </script>
 
-<div class:active={key == $activeSection?.key} class="Subsection">
+<div class:active={key == $activeSection?.key} class="Subsection {path}">
   <slot></slot>
 </div>
 
