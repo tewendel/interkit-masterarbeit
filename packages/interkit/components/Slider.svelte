@@ -41,7 +41,8 @@
     width: 85%;
     flex: none;
     scroll-snap-align: center;
-    box-sizing: border-box;
+    /* important that they all are exactly the same width (only the first one has a border-left), otherwise it confuses AspectRatio */
+    box-sizing: content-box;
     overflow: hidden; /* so border-radius works, TODO check iOS */
     border: var(--border-width) solid var(--border-color);
   }
