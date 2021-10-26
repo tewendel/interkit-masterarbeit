@@ -1,0 +1,5 @@
+name: ButtonBar
+fields:
+  - name: default
+    type: slot
+toolboxCategory: Input
