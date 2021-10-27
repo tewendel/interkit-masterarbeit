@@ -117,7 +117,7 @@
   }
 
   .container .content {
-    max-height: 30vh;
+    max-height: 32vh;
     overflow-y: auto;
   }
 
