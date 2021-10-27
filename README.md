@@ -9,7 +9,9 @@ Interkit is a flexible authoring system for browser-based real world experiences
 - app-bundler compiles and bundles projects
 - check the readmes in individual components for setup and running
 
-Interkit is being developed in the context of the Offene Welten project (in the framework of Digitalfonds der Kulturstiftung des Bundes).
+More information: https://interkit.app
+
+Interkit is being developed in the context of the [Offene Welten](https://offenewelten.de/) project (in the framework of Digitalfonds der Kulturstiftung des Bundes).
 
 ### quick start
 
