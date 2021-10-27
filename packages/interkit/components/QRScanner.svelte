@@ -31,6 +31,11 @@ export let tipImageColumn;
 export let tipTextColumn;
 export let tipOrderColumn;
 
+export let nextButtonText = "Nächster Hinweis"
+export let backButtonText = "Zurück"
+export let skipButtonText = "Jetzt Scannen"
+export let finalButtonText = "Jetzt Scannen"
+
 export let closeTrigger;
 
 const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
@@ -90,7 +95,7 @@ const initTips = async ()=> {
     tips = $tipRowStore
       .filter(t => t.tipQrKeyColumn == targetElementObj?.elementKeyColumn)
       .sort((a, b) => a.tipOrderColumn - b.tipOrderColumn)
-      .map((t,i) => { return {...t, title: "Hinweis " +(i+1)} })  
+      .map((t,i) => { return {...t, title: "Such-Hinweis " +(i+1)} })  
     console.log("tips", tips)
 }
 
@@ -208,7 +213,7 @@ const closeTips = () => {
   {/if}
   {#if targetElement && tips?.length}
     <div class="tip-button-container">
-      <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
+      <Button text="Such-Hinweise zeigen" onClick={()=>showTips = true}/>
     </div>
   {/if}
 </div>
@@ -230,7 +235,11 @@ const closeTips = () => {
           <MultiStepContent
             slides = {tips}
             onClose = {closeTips}
-          />            
+            {nextButtonText}
+            backButtonText = {null}
+            {skipButtonText}
+            {finalButtonText}
+          />
         </div>
         <div class="map">
           <slot name="map"/>
@@ -301,6 +310,8 @@ const closeTips = () => {
     position: relative;
     z-index: 1000;
     pointer-events: none;
+    padding: var(--distance-s);
+    box-sizing: border-box;
   }
 
 

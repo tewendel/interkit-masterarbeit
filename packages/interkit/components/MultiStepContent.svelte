@@ -18,7 +18,12 @@
   */
 
   export let onClose;
-  
+
+  export let nextButtonText = "Weiter"
+  export let backButtonText = "Zurück"
+  export let skipButtonText = null
+  export let finalButtonText = null
+
   let slideIndex = 0;
 
   const incrIndex = () => {
@@ -64,9 +69,18 @@
       {/key}
 
       <div class="Button__Bar button-bar">
-        {#if slideIndex > 0}<Button text="Zurück" onClick={()=>{slideIndex -= 1}} flex="fill" />{/if}
-        {#if slideIndex < slides.length - 1 || onClose}
-          <Button text="Weiter" onClick={incrIndex} flex="fill" type="primary" />
+        {#if slideIndex > 0 && backButtonText}<Button text={backButtonText} onClick={()=>{slideIndex -= 1}} flex="fill" />{/if}
+        {#if slideIndex < slides.length - 1}
+          <Button text={nextButtonText} onClick={incrIndex} flex="fill" type="primary" />
+        {/if}
+        {#if !finalButtonText && slideIndex == slides.length - 1 && onClose}
+          <Button text={nextButtonText} onClick={incrIndex} flex="fill" type="primary" />
+        {/if}
+        {#if finalButtonText && slideIndex == slides.length - 1 && onClose} 
+          <Button text={finalButtonText} onClick={onClose} flex="fill" type="primary" />
+        {/if}
+        {#if skipButtonText && slideIndex < slides.length - 1 && onClose} 
+          <Button text={skipButtonText} onClick={onClose} flex="fill" type="secondary" />
         {/if}
       </div>
       
@@ -109,6 +123,8 @@
     pointer-events: all;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .container .image {

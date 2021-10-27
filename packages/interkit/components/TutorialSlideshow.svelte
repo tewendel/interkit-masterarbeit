@@ -68,6 +68,8 @@
     align-items: center;
     overflow: hidden;
     min-height: 100vh;
+    padding: var(--distance-m);
+    box-sizing: border-box;
   }
 
   :global(.Subsection.help) .container {
