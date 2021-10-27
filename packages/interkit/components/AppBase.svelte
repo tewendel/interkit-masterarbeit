@@ -74,6 +74,8 @@
 <style>
   .AppBase {
     height: 100%;
+    pointer-events: all;
+    touch-action: auto;
   }
   :global(html),
   :global(body) {
@@ -82,6 +84,8 @@
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
+    pointer-events: none;
+    touch-action: none;
   }
 
   /* default font */
