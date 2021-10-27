@@ -41,15 +41,19 @@
     list-style-type: decimal; 
     list-style-position: inside; 
   }
-  :global(ul ul, ol ul) { 
+  :global(.MarkdownContent ul ul, .MarkdownContent ol ul) { 
     list-style-type: circle; 
     list-style-position: inside; 
     margin-left: 15px; 
   }
-  :global(ol ol, ul ol) { 
+  :global(.MarkdownContent ol ol, .MarkdownContent ul ol) { 
     list-style-type: lower-latin; 
     list-style-position: inside; 
     margin-left: 15px; 
+  }
+
+  :global(.MarkdownContent a) {
+    word-break: break-all;
   }
 
 </style>
