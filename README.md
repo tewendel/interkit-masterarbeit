@@ -1,8 +1,8 @@
 # Interkit
 
-Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games and experiences, and more. 
+Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games, and more. 
 
-*It is currently in early alpha stage*
+*It is currently in early alpha stage.*
 
 - meteor-server reads and writes project files to repositories 
 - svelte-admin is the authoring tool (Redaktionssystem)
