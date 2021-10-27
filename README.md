@@ -1,8 +1,12 @@
-proof of concept for creating, editing, compiling and bundling svelte apps with a meteor/svelte authoring system
+# Interkit
+
+Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games and experiences, and more. 
+
+*It is currently in early alpha stage*
 
 - meteor-server reads and writes project files to repositories 
+- svelte-admin is the authoring tool (Redaktionssystem)
 - app-bundler compiles and bundles projects
-
 - check the readmes in individual components for setup and running
 
 ### quick start
@@ -92,3 +96,9 @@ git pull
 docker build -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
 docker-compose up -d --build
 ````
+
+### Contributing
+
+It is too early to seriously collaborate but let us know if you're interested. See contac tinformation on http://interkit.app
+
+Interkit development is funded by Offene Welten (Teil des Digitalfonds der Kulturstiftung des Bundes)
