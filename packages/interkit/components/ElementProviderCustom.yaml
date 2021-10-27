@@ -1,0 +1,22 @@
+name: ElementProviderCustom
+fields:
+  - name: srcKeyColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: "elements/humanReadableKey"
+  - name: srcKey
+    type: string
+  - name: srcGlobalStore
+    type: string
+  - name: targetContext
+    type: string
+  - name: targetGlobalStore
+    type: string
+  - name: elementProp
+    type: checkbox
+    defaultValue: "FALSE"
+  - name: consumer
+    type: slot
+    slotProps: 
+      - element
+toolboxCategory: Elements
