@@ -22,7 +22,7 @@
 
 </script>
 
-<Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString};">
+<Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString}; background-repeat: no-repeat; background-size: cover;">
   <div slot="first" class="first">
     <div class="frame">
       {#if step == "enterCode"}
