@@ -30,6 +30,30 @@
     margin-top: 1em;
     margin-bottom: 1em;
   }
+  :global(.MarkdownContent li) {
+    margin-bottom: 1em;
+  }
+  :global(.MarkdownContent ul) { 
+    list-style-type: '- '; 
+    list-style-position: inside; 
+  }
+  :global(.MarkdownContent ol) { 
+    list-style-type: decimal; 
+    list-style-position: inside; 
+  }
+  :global(.MarkdownContent ul ul, .MarkdownContent ol ul) { 
+    list-style-type: circle; 
+    list-style-position: inside; 
+    margin-left: 15px; 
+  }
+  :global(.MarkdownContent ol ol, .MarkdownContent ul ol) { 
+    list-style-type: lower-latin; 
+    list-style-position: inside; 
+    margin-left: 15px; 
+  }
 
+  :global(.MarkdownContent a) {
+    word-break: break-all;
+  }
 
 </style>

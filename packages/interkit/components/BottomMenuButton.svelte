@@ -54,7 +54,7 @@
     justify-content: center;
     /*height: 3em;*/
     font-family: var(--font-family);
-    background-color: var(--color-background);
+    background-color: var(--color-background-highlight);
     color: var(--color-text);
     outline: none;
     border-style: solid;
