@@ -12,6 +12,7 @@
   export let titleColumn;
   export let contentColumn;
   export let orderColumn;
+  export let superTitle = 'Anleitung';
 
   let slides;
   let slideUnsubscribe;
@@ -50,10 +51,14 @@
 
 <div class="container TutorialSlideshow">
 
-  <MultiStepContent
-    {slides}
-    onClose = {completeTrigger ? onClose : null}
-  />
+  <h1 class="title">{superTitle}</h1>
+
+  <div class="content">
+    <MultiStepContent
+      {slides}
+      onClose = {completeTrigger ? onClose : null}
+    />
+  </div>
 
 </div>
 
@@ -63,18 +68,39 @@
   .container {
     width: 100%;
     background-color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: calc(1.25 * var(--font-size-headline-1));
+    padding: calc(1.25 * var(--font-size-headline-1)) 0;
+    line-height: 1;
+    flex-grow: 0;
+    text-align: center;
+  }
+
+  .content {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    min-height: 100vh;
+    position: relative;
   }
+
+  /* TODO remove these hacky selectors */
 
   :global(.Subsection.help) .container {
     min-height: auto;
     position: relative;
     overflow: hidden;
     padding-top: var(--distance-l);
+  }
+
+  :global(.Subsection.help) .title {
+    display: none;
   }
   
 </style>
