@@ -52,7 +52,7 @@
 
   div {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto !important;
     height: 100%;
   }
 
