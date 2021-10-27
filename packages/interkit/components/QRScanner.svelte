@@ -202,14 +202,14 @@ const closeTips = () => {
 <div id="scanner-container">
   <canvas id="canvas"></canvas>
   {#if loading}
-    <div class="loadingMessage" hidden="">⌛ Warte auf Kamera...</div>
+    <div class="loadingMessage" hidden="">Warte auf Kamera...</div>
   {:else}
-    {#if targetElement && tips?.length}
-      <div class="tip-button-container">
-        <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
-      </div>
-    {/if}
     <div class="qr-frame"></div>
+  {/if}
+  {#if targetElement && tips?.length}
+    <div class="tip-button-container">
+      <Button text="Hinweise zeigen" onClick={()=>showTips = true}/>
+    </div>
   {/if}
 </div>
 
