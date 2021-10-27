@@ -278,6 +278,17 @@
     grid-row: 5;
   }
 
+  .container.size-l {
+    padding: var(--distance-s);
+  }
+
+  .container.size-l figure {
+    border: var(--border-width) solid var(--border-color);
+    margin: var(--distance-s);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
   .container.size-s {
     flex:1;
     height: 100%;
