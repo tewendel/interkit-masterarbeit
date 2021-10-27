@@ -18,9 +18,11 @@
     top:0;
     bottom:0;
     pointer-events: none;
+    touch-action: none;
   }
 
   :global(.Overlay > *) {
-    pointer-events: all
+    pointer-events: all;
+    touch-action: auto;
   }
 </style>

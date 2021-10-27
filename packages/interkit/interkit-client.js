@@ -422,7 +422,7 @@ const subscribeUserProjectDataStore = async () => {
     //console.log("subscribeUserProjectDataStore", sub, sub.data)
     // subscribe to user project data
     sub.data.subscribe(d => {
-      userProjectDataStore.set(d?.[0].projectUserData[get(projectId)] || {})
+      userProjectDataStore.set(d?.[0]?.projectUserData?.[get(projectId)] || null)
     })
   }
 }

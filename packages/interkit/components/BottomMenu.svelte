@@ -113,8 +113,13 @@
     position: relative;
     width: 100%;
     pointer-events: none;
+    touch-action: none;
     display: flex;
     overflow: hidden;
+  }
+  :global(.media-player > *) {
+    pointer-events: all;
+    touch-action: auto;
   }
 
   .media-player.active {
