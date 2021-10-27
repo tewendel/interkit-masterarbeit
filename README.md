@@ -4,14 +4,16 @@ Interkit is a flexible authoring system for browser-based real world experiences
 
 *It is currently in early alpha stage.*
 
-- meteor-server reads and writes project files to repositories 
-- svelte-admin is the authoring tool (Redaktionssystem)
-- app-bundler compiles and bundles projects
-- check the readmes in individual components for setup and running
-
 More information: https://interkit.app
 
 Interkit is being developed in the context of the [Offene Welten](https://offenewelten.de/) project (in the framework of Digitalfonds der Kulturstiftung des Bundes).
+
+### overview
+
+- meteor-server reads and writes project files to repositories 
+- svelte-admin is the authoring tool (Redaktionssystem)
+- app-bundler compiles and bundles projects
+- **check the readmes in individual components for setup and running**
 
 ### quick start
 
