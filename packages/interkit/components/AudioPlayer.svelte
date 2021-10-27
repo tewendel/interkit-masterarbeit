@@ -447,6 +447,7 @@
     position: relative;
     z-index: 1000;
     pointer-events: auto;
+    touch-action: auto;
     bottom:0;
     transition: height .5s;
     height: 0;

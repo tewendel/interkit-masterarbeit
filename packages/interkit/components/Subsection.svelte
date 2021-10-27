@@ -28,6 +28,7 @@
     height: 100%;
     width: 100%;
     pointer-events: all;
+    touch-action: auto;
     background-color: white;
     z-index: 1000;
   }
