@@ -31,11 +31,11 @@
     <DynamicContent
       {...columns}
       contentKey="session.start.new.info"
-      defaultContent="Von vorne beginnen"
+      
       let:content={infoText}
     >
       <ButtonPanel {infoText}>
-        <Button flex="fill" size="large" on:click={() => executeTrigger(restartTrigger)}>
+        <Button type="primary" flex="fill" size="large" on:click={() => executeTrigger(restartTrigger)}>
           <DynamicContent
             {...columns}
             contentKey="session.start.new.button"
@@ -52,11 +52,11 @@
     <DynamicContent
       {...columns}
       contentKey="session.start.restore.info"
-      defaultContent="Du hast bereits eine Session-ID"
+      
       let:content={infoText}
     >
       <ButtonPanel {infoText}>
-        <Button flex="fill" size="large" on:click={() => setStep("enterCode")}>
+        <Button type="ghost" flex="fill" size="medium" on:click={() => setStep("enterCode")}>
           <DynamicContent
             {...columns}
             contentKey="session.start.restore.button"
