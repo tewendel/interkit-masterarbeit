@@ -87,6 +87,8 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    padding: var(--distance-m);
+    box-sizing: border-box;
     position: relative;
   }
 
@@ -96,7 +98,6 @@
     min-height: auto;
     position: relative;
     overflow: hidden;
-    padding-top: var(--distance-l);
   }
 
   :global(.Subsection.help) .title {
