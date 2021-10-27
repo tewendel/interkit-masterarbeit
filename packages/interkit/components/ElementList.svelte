@@ -31,7 +31,9 @@
       {#each $elements as element}
         <li class="item" on:click={()=>{onClick(element)}}>
           <slot name="contentElement" element={{...element.row, size: "l"}}></slot>
-          <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
+          {#if selectTrigger}
+            <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
+          {/if}
         </li>
       {/each}
     </ul>
