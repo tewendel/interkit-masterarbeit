@@ -42,7 +42,7 @@
 
 </script>
 
-<div class="container">
+<div class="SessionFlow__EnterCode container">
   <div class="content">
     <DynamicContent
       {...columns}

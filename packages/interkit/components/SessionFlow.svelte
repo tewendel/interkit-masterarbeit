@@ -22,34 +22,36 @@
 
 </script>
 
-<Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString};">
-  <div slot="first" class="first">
-    <div class="frame">
-      {#if step == "enterCode"}
-        <EnterCode 
-          {restoredTrigger}
-          {setStep}
-          {keyColumn}
-          {contentColumn}
-        />
-      {:else}
-        <Start 
-          {restartTrigger} 
-          {setStep}
-          {keyColumn}
-          {contentColumn}
-        />
-      {/if}
+<div class="SessionFlow">
+  <Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString};">
+    <div slot="first" class="first">
+      <div class="frame">
+        {#if step == "enterCode"}
+          <EnterCode 
+            {restoredTrigger}
+            {setStep}
+            {keyColumn}
+            {contentColumn}
+          />
+        {:else}
+          <Start 
+            {restartTrigger} 
+            {setStep}
+            {keyColumn}
+            {contentColumn}
+          />
+        {/if}
+      </div>
     </div>
-  </div>
-  <div slot="second" class="second">
+    <div slot="second" class="second">
 
-    <div class="logoContainer">
-      <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
+      <div class="logoContainer">
+        <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
+      </div>
+
     </div>
-
-  </div>
-</Flex2>
+  </Flex2>
+</div>
 
 <style>
   .first, .second {
