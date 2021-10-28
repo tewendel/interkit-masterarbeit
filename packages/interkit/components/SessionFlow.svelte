@@ -22,7 +22,7 @@
 
 </script>
 
-<div class="SessionFlow">
+<div class="SessionFlow container">
   <Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString}; background-repeat: no-repeat; background-size: cover;">
     <div slot="first" class="first">
       <div class="frame">
@@ -54,6 +54,12 @@
 </div>
 
 <style>
+
+  .container {
+    height: 100%;
+    flex: 1;
+    overflow-y: auto;
+  }
   .first, .second {
     display: flex;
     justify-content: center;
