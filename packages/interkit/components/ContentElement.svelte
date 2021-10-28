@@ -328,7 +328,7 @@
     top: 0;
     right:0;
     bottom:0;
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,0,0,0) 33%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 33%, rgba(255,255,255,0) 100%);
   }
 
   .container.size-m .controls {
