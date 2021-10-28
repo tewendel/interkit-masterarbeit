@@ -107,7 +107,10 @@
     defaultContent="Verstanden"
     let:content={modalDismissText}
   >
-    <Modal dismissText={modalDismissText} >
+    <Modal 
+        dismissText={modalDismissText} 
+        dismissFunction={dismissModalFunction}
+      >
       <DynamicContent
         {...columns}
         contentKey={modalText}
