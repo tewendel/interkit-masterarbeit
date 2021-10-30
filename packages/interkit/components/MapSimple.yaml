@@ -51,6 +51,8 @@ fields:
   - type: string
     name: style
     defaultValue: "interkit"
+  - type: string
+    name: clickTrigger
   - type: "slot"
     name: "element"
     slotProps:
