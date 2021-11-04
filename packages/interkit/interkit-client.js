@@ -396,6 +396,23 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   }
 }
 
+// returns the row store for a given sheet, created one if not available or waits for subscription to complete
+// returns only one row
+// if a columnMap is passed in, returns the converted object store
+// subKey is a special key you can use to prevent conflicts with other subs that have different column maps
+const getOneRowSubStore = async (sheetKeyOrSheetColumn, query, filterFunction) => {
+
+  let data = await getRowSubStore(sheetKeyOrSheetColumn) // query not used yet
+
+  const rowStore = writable()
+  
+  data.subscribe( rows => {
+    rowStore.set(rows.filter(filterFunction)?.[0])
+  })
+
+  return rowStore
+}
+
 const getMediaFileSubStore = async () => {
   if(!mediaFileSub) {
     // no subscription to media files yet, set it up
@@ -771,6 +788,7 @@ const InterkitClient = {
   call,
   getSub,
   getRowSubStore,
+  getOneRowSubStore,
   getMediaFileSubStore,
   getMediaFile,
   getUploadEndpoint,
