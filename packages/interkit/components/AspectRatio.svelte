@@ -31,7 +31,7 @@
     height: 0;
     overflow: hidden;
     padding-top: var(--aspect-ratio);
-    background: white;
+    /*background: white; /* why? */
     position: relative;
     width: 100%;
     box-sizing: border-box;
