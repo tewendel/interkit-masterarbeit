@@ -389,6 +389,8 @@ Meteor.methods({
         values[colKey] = newVal 
        //console.log(value)
         Rows.update({_id: row._id}, {$set: {values}});
+        // return the updated row
+        return Rows.findOne({ key: rowKey, projectId })
       } else {
         console.log("updateValue: row not found")
       }
