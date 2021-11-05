@@ -452,6 +452,15 @@ const getUiKeyStore = uiKey => {
   return globalStores[key]
 }
 
+const getUiKey = uiKey => {
+  const key = "uiKey_" + uiKey
+  if (globalStores[key]) {
+    return get(globalStores[key])
+  } else {
+    return false
+  }
+}
+
 // get a local persistant store by key or initialize a new one if it doens't exist
 const getGlobalStore = (key) => {
   if(!globalStores[key]) {
@@ -804,6 +813,7 @@ const InterkitClient = {
   restoreUiSnapshot,
   getUiHistoryStore,
   setUiKey,
+  getUiKey,
   registerGlobalMethod,
   callGlobalMethod
 }
