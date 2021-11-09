@@ -592,12 +592,13 @@ const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) =
   return userId ? token : false
 }
 
-const createProjectUser = async ({ username, password, email, projectData }) => {
+const createProjectUser = async ({ username, password, email, projectData, projectId }) => {
     const result = await InterkitClient.call("createProjectUser", {
       username,
       password,
       email,
-      projectData
+      projectData,
+      projectId
     })
     return result
   }

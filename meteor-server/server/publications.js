@@ -57,7 +57,7 @@ Meteor.methods({'row.get': ({key, projectId})=>{
 
 Meteor.publish("projectUsers", ({projectId}) => {
   const cursor = Meteor.users.find({ [`projectUserData.${projectId}`] : { $exists:true }}, { fields: { services: false } });
-  console.log(projectId, cursor.count())
+  console.log("publish projectUsers", projectId, cursor.count())
   return cursor
 });
 

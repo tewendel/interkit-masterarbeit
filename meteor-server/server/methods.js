@@ -123,15 +123,23 @@ Meteor.methods({
     password,
     projectData
   }) {
-    if (!projectId) return false
-    Accounts.createUser({
+    if (!projectId) {
+      console.warn("createProjectUser: missing projectId")
+      return false
+    }
+    const userId = Accounts.createUser({
       username,
       email,
       password,
-      projectUserData: {
-        [projectId]: projectData
-      }
     })
+
+    const projectUserData = {
+      [projectId]: projectData
+    }
+
+    Meteor.users.update(userId, { $set: { projectUserData } })
+
+    console.log("createProjectUser", userId)
   },
 
   // create a front end user for a project, identified by a user token
