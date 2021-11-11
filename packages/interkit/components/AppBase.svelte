@@ -7,6 +7,11 @@
   import Styling from './Styling.svelte'
 
   let initComplete = false;
+
+  const bypassDesktopFallback = /\bbypassDesktopFallback=1\b/.test(document.location.search + document.location.hash)
+  const desktopMQ = '(min-width: 600px)';
+  let isDesktop = !bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches
+  let fallbackIframeSrc = `//${document.location.host}${document.location.pathname}${document.location.search?document.location.search:'?'}&desktop=1${document.location.hash}`
   
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp()  
@@ -58,8 +63,20 @@
 <div class="AppBase Theming" id="Theming">
   <Styling>
     {#if $projectId && initComplete}
-      <slot ></slot>
-      <slot name="viewport"></slot>
+      {#if isDesktop}
+        <div class="fallback">
+          <div class="fallback-slot">
+            fallback
+            <slot name="desktopfallback"></slot>
+            slot
+            <button on:click={() => { isDesktop = false }}>full</button>
+          </div>
+          <iframe class="fallback-iframe" src={fallbackIframeSrc}></iframe>
+        </div>
+      {:else}
+        <slot ></slot>
+        <slot name="viewport"></slot>
+      {/if}
     {:else}
       <div class="Loading">
         <p class="static-loading-indicator">laden....</p>
@@ -204,6 +221,20 @@
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
       box-sizing: border-box;
     }    
+
+    .fallback {
+      display: flex;
+    }
+
+    .fallback-slot {
+      flex-grow: 1;
+    }
+
+    .fallback-iframe {
+      flex-grow: 0;
+      width: 400px;
+      height: 720px;
+    }
 
   </style>
 </svelte:head>
