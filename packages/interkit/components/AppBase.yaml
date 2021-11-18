@@ -5,5 +5,13 @@ fields:
   - type: slot
     name: viewport
   - type: slot
-    name: desktopfallback
+    name: fallbackContent
+  - type: slot
+    name: fallbackButtons
+  - type: string
+    name: fallbackTitle
+  - type: string
+    name: fallbackText
+  - type: string
+    name: fallbackQrImageSrc
 toolboxCategory: Basics

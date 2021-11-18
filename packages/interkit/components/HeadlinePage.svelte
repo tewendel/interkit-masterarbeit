@@ -4,7 +4,7 @@
 
 </script>
 
-<h1>{headline}</h1>
+<h1 class="HeadlinePage">{headline}</h1>
 
 <style>
 
