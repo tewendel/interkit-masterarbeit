@@ -5,19 +5,12 @@
   import { onMount } from 'svelte'
 
   import Styling from './Styling.svelte'
-  import Button from './Button.svelte'
-  import Icon from './Icon.svelte'
-
-  export let fallbackTitle;
-  export let fallbackText;
-  export let fallbackQrImageSrc;
 
   let initComplete = false;
 
   const bypassDesktopFallback = /\bbypassDesktopFallback=1\b/.test(document.location.search + document.location.hash)
   const desktopMQ = '(min-width: 600px)';
   let isDesktop = !bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches
-  let fallbackIframeSrc = `//${document.location.host}${document.location.pathname}${document.location.search?document.location.search:'?'}&desktop=1${document.location.hash}`
   
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp()  
@@ -69,43 +62,10 @@
 <div class="AppBase Theming" id="Theming">
   <Styling>
     {#if $projectId && initComplete}
-      {#if isDesktop}
-        <div class="fallback-wrap">
-          <div class="fallback Fallback">
-            <div class="fallback-text">
-              <slot name="desktopfallback">
-                <h1 class="fallback-text-headline Fallback__Text__Headline">{fallbackTitle}</h1>
-                <p class="fallback-text-text Fallback__Text__Text">{fallbackText}</p>
-              </slot>
-            </div>
-            <figure class="fallback-qr">
-              <img class="fallback-qr-img" alt="QR" src={fallbackQrImageSrc} />
-              <caption class="fallback-qr-caption">Scanne den QR-Code mit deinem Smartphone um die Webapp zu öffnen</caption>
-            </figure>
-            <nav class="fallback-buttons">
-              <div>
-                <Button
-                    text="Ganzer Bildschirm"
-                    on:click={() => { isDesktop = false }}
-                    size="large"
-                    type="secondary"
-                    flex="normal"
-                  >
-                  <Icon type="position" />
-                </Button>
-                <div class="fallback-small">
-                  Wenn Du ein Tablet verwendest, kannst Du hier in die Vollansicht wechseln
-                </div>
-              </div>
-              <div>
-                <slot name="fallbackButtons"></slot>
-              </div>
-            </nav>
-            <div class="fallback-preview">
-              <iframe class="fallback-preview-iframe Fallback__Preview__Iframe" src={fallbackIframeSrc}></iframe>
-            </div>
-          </div>
-        </div>
+      {#if $$slots.desktopFallback && isDesktop}
+        <slot name="desktopFallback">
+          <!-- FIXME receive "event" from child, set isDesktop=false -->
+        </slot>
       {:else}
         <slot ></slot>
         <slot name="viewport"></slot>
@@ -254,50 +214,6 @@
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
       box-sizing: border-box;
     }    
-
-    .fallback-wrap {
-      max-height: 100vh;
-      overflow-y: scroll;
-    }
-
-    .fallback {
-      display: grid;
-      grid-template-columns: 2.5fr 2.5fr 1fr 360px;
-      grid-template-rows: auto auto;
-      grid-template-areas:
-        "txt txt n ifr"
-        "qr  btn n ifr";
-      grid-gap: var(--distance-m);
-      padding: var(--distance-xl);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .fallback-text {
-      grid-area: txt;
-    }
-
-    .fallback-qr {
-      grid-area: qr;
-      align-self: end;
-    }
-
-    .fallback-buttons {
-      grid-area: btn;
-      align-self: end;
-    }
-
-    .fallback-preview {
-      grid-area: ifr;
-    }
-
-    .fallback-preview-iframe {
-      width: 360px;
-      height: 720px;
-      border: 12px solid black;
-      border-radius: 48px;
-      overflow: hidden;
-    }
 
   </style>
 </svelte:head>
