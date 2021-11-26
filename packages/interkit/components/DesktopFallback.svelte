@@ -1,13 +1,9 @@
 <script>
 
-  import { createEventDispatcher } from 'svelte';
+  import { setContext, getContext } from 'svelte';
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
-
-	const dispatch = createEventDispatcher();
-
-  export let clickFullscreen;
 
   export let title;
   export let text;
@@ -17,6 +13,8 @@
 
   const iframeWidth = 340;
   const iframeHeight = 720;
+
+  const isDesktop = getContext('isDesktop');
 
 </script>
 
@@ -42,7 +40,7 @@
       <div class="buttons-fullscreen">
         <Button
           text="Ganzer Bildschirm"
-          on:click={() => { /* FIXME tell parent to go full */ }}
+          on:click={() => { isDesktop.set(false) }}
           size="large"
           type="secondary"
           flex="normal"
