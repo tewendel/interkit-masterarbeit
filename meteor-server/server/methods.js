@@ -414,6 +414,27 @@ Meteor.methods({
     }
   },
 
+  'row.duplicate': ({ key, projectId }) => {
+    if (key && projectId && Meteor.userId()) {
+      if (Meteor.isServer) {
+        console.log("row.duplicate", key, projectId)
+        let row = Rows.findOne({ key, projectId })
+        if (row) {
+          delete row._id
+          const newKey = uuidv4()
+          Rows.insert({
+            ...row,
+            key: newKey,
+          })
+          // console.log("addRow", key)
+          return {
+            rowKey: newKey
+          }
+        }
+      }
+    }
+  },
+
   'sheet.updateHeader': ({sheetKey, projectId, colKey, newVal, newType, newReference, options, newColKey}) => {
     console.log('sheet.updateHeader', sheetKey, projectId, colKey, newVal, newType, newReference, newColKey)
     let sheet = Sheets.findOne({key: sheetKey, projectId});
