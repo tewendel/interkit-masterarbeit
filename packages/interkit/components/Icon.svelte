@@ -148,4 +148,13 @@
   .icon-hamburger-full {
     background-image: url("../icons/full/Menu.svg"); 
   }
+
+  .icon-full-screen-thin {
+    background-image: url("../icons/Full-Screen-Thin.svg");
+  }
+
+  .icon-full-screen-full {
+    background-image: url("../icons/Full-Screen-Full.svg");
+  }
+
 </style>

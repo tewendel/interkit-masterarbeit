@@ -4,4 +4,6 @@ colour: 130
 fields:
   - type: slot
     name: viewport
+  - type: slot
+    name: desktopFallback
 toolboxCategory: Basics

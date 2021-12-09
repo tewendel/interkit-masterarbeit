@@ -9,6 +9,7 @@
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
   export let flex = "normal" // normal | fill
   export let text = undefined;
+  export let clickType = 'payloadTrigger'; // link | linkTargetBlank
   
   export let clickTrigger = null; // set this to execute a trigger on button click
   export let onClick = null // function to call on click if we are not using this with triggers
@@ -32,17 +33,30 @@
 
 </script>
 
-<span 
-    on:click
-    on:click={handleClick}
-    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
-    class:primary={type==='primary'}
-    class:nopadding 
-  >
-  <slot/>
-  { text || "" }
+{#if clickType === 'payloadTrigger'}
+  <span 
+      on:click
+      on:click={handleClick}
+      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
+      class:primary={type==='primary'}
+      class:nopadding 
+    >
+    <slot/>
+    { text || "" }
+  </span>
+{:else}
+  <a
+      href={clickTrigger}
+      target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
+      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
+      class:primary={type==='primary'}
+      class:nopadding 
+    >
+    <slot/>
+    { text || "" }
+  </a>
+{/if}
 
-</span>
 
 <style>
 
@@ -61,6 +75,7 @@
     justify-content: center;
     user-select: none;
     text-align: center;
+    text-decoration: none;
   }
 
   .button.normal {
