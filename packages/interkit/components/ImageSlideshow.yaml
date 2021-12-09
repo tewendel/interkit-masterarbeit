@@ -2,9 +2,6 @@ name: ImageSlideshow
 title: Image Slideshow
 color: 230
 fields:
-  - type: sheetId
-    name: slideshowSheetKey
-    defaultValue: slideshow
   - type: sheetColumn
     name: imageColumn #, titleColumn, superTitleColumn, URLColumn
     columnType: mediaFile

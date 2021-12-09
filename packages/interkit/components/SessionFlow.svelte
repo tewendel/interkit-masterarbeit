@@ -22,36 +22,44 @@
 
 </script>
 
-<Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString}; background-repeat: no-repeat; background-size: cover;">
-  <div slot="first" class="first">
-    <div class="frame">
-      {#if step == "enterCode"}
-        <EnterCode 
-          {restoredTrigger}
-          {setStep}
-          {keyColumn}
-          {contentColumn}
-        />
-      {:else}
-        <Start 
-          {restartTrigger} 
-          {setStep}
-          {keyColumn}
-          {contentColumn}
-        />
-      {/if}
+<div class="SessionFlow container">
+  <Flex2 style="background-color: var(--color-background-highlight); {bgImgStyleString}; background-repeat: no-repeat; background-size: cover;">
+    <div slot="first" class="first">
+      <div class="frame">
+        {#if step == "enterCode"}
+          <EnterCode 
+            {restoredTrigger}
+            {setStep}
+            {keyColumn}
+            {contentColumn}
+          />
+        {:else}
+          <Start 
+            {restartTrigger} 
+            {setStep}
+            {keyColumn}
+            {contentColumn}
+          />
+        {/if}
+      </div>
     </div>
-  </div>
-  <div slot="second" class="second">
+    <div slot="second" class="second">
 
-    <div class="logoContainer">
-      <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
+      <div class="logoContainer">
+        <img alt="logo" src={logoImageSrc} on:click={() => setStep("start")} />
+      </div>
+
     </div>
-
-  </div>
-</Flex2>
+  </Flex2>
+</div>
 
 <style>
+
+  .container {
+    height: 100%;
+    flex: 1;
+    overflow-y: auto;
+  }
   .first, .second {
     display: flex;
     justify-content: center;

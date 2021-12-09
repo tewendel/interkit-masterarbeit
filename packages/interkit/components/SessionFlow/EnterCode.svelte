@@ -42,7 +42,7 @@
 
 </script>
 
-<div class="container">
+<div class="SessionFlow__EnterCode container">
   <div class="content">
     <DynamicContent
       {...columns}
@@ -107,7 +107,10 @@
     defaultContent="Verstanden"
     let:content={modalDismissText}
   >
-    <Modal dismissText={modalDismissText} >
+    <Modal 
+        dismissText={modalDismissText} 
+        dismissFunction={dismissModalFunction}
+      >
       <DynamicContent
         {...columns}
         contentKey={modalText}

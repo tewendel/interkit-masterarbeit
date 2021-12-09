@@ -5,6 +5,8 @@
   import { fly } from 'svelte/transition';
   
   import { InterkitClient, util } from '../'
+  import { executeTrigger } from '../actions'
+
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
@@ -29,6 +31,8 @@
   export let disableControls = "FALSE";
   export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
   export let style = "interkit"; // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
+
+  export let clickTrigger;
 
   const columnMap = {
     customIconColumn,
@@ -154,10 +158,16 @@
   // update store whenever it changes
   $: buttonPayloadStore.set(selectedElement ? selectedElement : nearestElement?.row)
 
+  const containerClick = () => {
+    if(clickTrigger) {
+      executeTrigger(clickTrigger)
+    }
+  }
+
   
 </script>
 
-  <div class="map-component-container" class:inline="{inline == "TRUE"}">
+  <div class="map-component-container" on:click={containerClick} class:inline="{inline == "TRUE"}">
 
     {#if selectedElement}
       <div class="marker_popup" 

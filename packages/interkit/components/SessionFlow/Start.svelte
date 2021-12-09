@@ -16,7 +16,7 @@
 
 </script>
 
-<div class="container">
+<div class="SessionFlow__Start container">
   <div class="content">
     <DynamicContent
       {...columns}
