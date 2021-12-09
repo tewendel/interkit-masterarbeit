@@ -51,9 +51,11 @@
           Wenn Du ein Tablet verwendest, kannst Du hier in die Vollansicht wechseln
         </div>
       </div>
-      <div>
-        <slot name="buttons"></slot>
-      </div>
+      {#if $$slots.buttons}
+        <div class="buttons-slot">
+          <slot name="buttons"></slot>
+        </div>
+      {/if}
     </nav>
     <div class="preview">
       <iframe class="preview-iframe DesktopFallback__Preview__Iframe" src={iframeSrc}></iframe>
@@ -115,19 +117,28 @@ caption {
 
 .buttons {
   grid-area: btn;
-  align-self: end;
   margin-bottom: var(--distance-xl);
+}
+
+@media (min-width: 1000px) {
+  .buttons {
+    align-self: end;
+  }
 }
 
 .buttons-fullscreen {
   text-align: center;
-  margin-bottom: var(--distance-xl);
 }
 
 /* FIXME pbly not the smartest way to do this */
 .buttons-fullscreen :global(.Button) {
   padding-left: var(--distance-m);
   padding-right: var(--distance-m);
+  margin-bottom: var(--distance-m);
+}
+
+.buttons-slot {
+  margin-top: var(--distance-xl);
 }
 
 .preview {
