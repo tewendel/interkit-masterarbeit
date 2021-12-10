@@ -112,6 +112,7 @@
 }
 
 caption {
+  display: block;
   width: 100%;
 }
 
