@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
@@ -66,3 +66,17 @@ Meteor.publish("user.projectUserData", ({ projectId }) => {
   console.log("user.projectUserData", projectId, cursor.count())
   return cursor
 });
+
+
+Meteor.publish("messages", ({projectId, channel_key, userId}) => {
+  let messages = Messages.find({
+    projectId, 
+    channel_key: channel_key ? channel_key : "DEFAULT",
+    $or: [
+           {sender: userId}, 
+           {recipients: userId} 
+        ]
+  });
+  return messages;
+});
+

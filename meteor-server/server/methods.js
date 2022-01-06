@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -433,5 +433,30 @@ Meteor.methods({
       Sheets.update({_id: sheet._id}, {$set: {name: name}});
     }
   },
+
+  'message.send': ({projectId, channel_key, sender, payload}) => {
+    Messages.insert({
+      projectId,
+      sender,
+      recipients: [],
+      channel_key,
+      payload      
+    })
+    
+    // this is where the message will need to be processed by the project server logic
+    
+    // for now we add a fake response message adressed to the user
+    Messages.insert({
+      projectId,
+      recipients: [sender],
+      channel_key,
+      payload: {
+        type: "text",
+        text: "ok"
+      }      
+    })
+
+
+  }
   
 });

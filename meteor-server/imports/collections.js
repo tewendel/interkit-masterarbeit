@@ -27,3 +27,17 @@ export const Rows = new Mongo.Collection('rows');
   [colKey]: 
 }
 */
+
+export const Messages = new Mongo.Collection('messages');
+
+/*
+- projectId
+- sender <userId>
+- recipients <userId>
+- outputOrder
+- channel_key
+- payload {
+    - type // "text"
+    - text
+}
+*/
