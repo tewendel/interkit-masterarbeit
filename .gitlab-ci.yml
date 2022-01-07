@@ -1,6 +1,6 @@
 stages:
-  - prepare
   - publish
+  - prepare
   - build
   - deploy
 
@@ -118,5 +118,5 @@ publish-package:
       - tar -a -cf interkit.tar.gz packages/interkit
   artifacts:
     paths:
-      - myproject.tar.gz
+      - interkit.tar.gz
 
