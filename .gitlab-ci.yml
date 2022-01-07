@@ -115,7 +115,7 @@ deploy-demo:
 publish-package:
   stage: publish
   script:
-      - cd packages && tar -a -cf ../interkit.tar.gz interkit && cd -
+      - cd packages/interkit && tar -a -cf ../../interkit.tar.gz * && cd -
   artifacts:
     paths:
       - interkit.tar.gz
