@@ -117,6 +117,7 @@ publish-package:
   script:
       - cd packages && tar -a -cf ../interkit.tar.gz interkit && cd -
   artifacts:
+    expire_in: 5 yrs
     paths:
       - interkit.tar.gz
 
