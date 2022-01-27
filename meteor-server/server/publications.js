@@ -8,6 +8,12 @@ Meteor.publish('projects', function() {
   return projects;
 });
 
+Meteor.publish('project', function(projectId) {
+  //console.log("project sub")
+  let projects = Projects.find({_id: projectId});
+  return projects;
+});
+
 // get all the sheets in a project
 const getSheets = ({projectId}) => {
   if(projectId)
@@ -68,7 +74,7 @@ Meteor.publish("user.projectUserData", ({ projectId }) => {
 });
 
 
-Meteor.publish("messages", ({projectId, channel_key, userId}) => {
+Meteor.publish("messages", ({projectId, channel_key = "DEFAULT", userId}) => {
   let messages = Messages.find({
     projectId, 
     channel_key: channel_key ? channel_key : "DEFAULT",

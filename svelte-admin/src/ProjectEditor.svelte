@@ -8,6 +8,7 @@
   import ImportProject from './ImportProject.svelte'
   import { InterkitClient } from 'interkit'
   import { BundleServer} from './BundleServer'
+  import ProjectServerInfo from './ProjectServerInfo.svelte'
 
   export let projectId
   export let currentProject
@@ -89,6 +90,9 @@
 <ImportProject {projectId} />
 
 <Button size="small" href={exportEndpoint + `?projectId=${projectId}`}>Export DB & Media (.zip)</Button>
+
+<h4> Project Server</h4>
+<ProjectServerInfo {currentProject} />
 
 <h4>Snapshots (coming soon)</h4>
 

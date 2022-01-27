@@ -276,6 +276,51 @@ Meteor.methods({
     }
   },
 
+  'project.projectServer.init': async ({ projectId }) => {
+    //console.log("project.projectServer.init", projectId)
+    const res = Projects.update({_id: projectId}, { $set: { projectServer: {
+      status: "init",
+      messages: [
+        {
+          type: "system",
+          text: "Initializing project server...",
+          date: new Date()
+        }
+      ]
+    } } })
+    //console.log("project.projectServer.init result", res)
+    return res
+  },
+
+  'project.projectServer.addMessage': async ({ projectId, message }) => {
+    if (!message.date) {
+      message.date = new Date()
+    }
+    //console.log("project.projectServer.addMessage", projectId, message)
+    const res = Projects.update({_id: projectId}, { $push: { 'projectServer.messages': message } })
+    //console.log("project.projectServer.addMessage result", res)
+    return res
+  },
+
+  'project.projectServer.setStatus': async ({ projectId, status }) => {
+    //console.log("project.projectServer.setStatus", projectId, status)
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.status': status } })
+    //console.log("project.projectServer.setStatus result", res)
+    return res
+  },
+
+  'project.projectServer.start': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': "start" } })
+  },
+
+  'project.projectServer.stop': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': "stop" } })
+  },
+
+  'project.projectServer.resetRequestedAction': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': null } })
+  },
+
   'project.makeDefaultProject': async ({ projectId }) => {
     console.log("makeDefaultProject", projectId, Meteor.userId())
     if (Projects.findOne(projectId)) {

@@ -2,6 +2,27 @@ import { Mongo } from 'meteor/mongo';
 
 export const Projects = new Mongo.Collection('projects');
 
+/*
+- name
+- slug
+- isDefaultProject <bool>
+- history [
+    {
+      event <string> // create_project, ...
+    }
+  ]
+- projectServer {
+    status: <string>, // running, stopped, ...
+    actionRequested: <string> // start, stop, null
+    messages: [{
+      type: <string>, // stdout, stderr, system, ...
+      text: <string>,
+      date: <datetime>
+    }]
+  }
+// - uiState
+*/
+
 export const Sheets = new Mongo.Collection('sheets');
 
 /*
