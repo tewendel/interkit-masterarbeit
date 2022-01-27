@@ -10,7 +10,7 @@
     "dev:server": "cd meteor-server && npm start",
     "dev:admin": "cd svelte-admin && npm run dev",
     "dev:bundler": "cd app-bundler && npm run dev",
-    "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\""
+    "dev": "concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\""
   },
   "engines": {
     "node": "16",
@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "jsqr": "^1.3.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }
