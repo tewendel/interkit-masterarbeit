@@ -11,6 +11,8 @@ import '../imports/collections.js';
 import './publications.js';
 import './methods.js';
 
+import { Projects } from '../imports/collections.js';
+
 Meteor.startup(() => {
   // code to run on server at startup
 
@@ -28,6 +30,11 @@ Meteor.startup(() => {
     }
   }
 
+  Projects.update(
+    { projectServer: {$exists: true} }, 
+    { $set: {"projectServer.actionRequested": null} }, 
+    { multi: true }
+  )
 
 });
 
