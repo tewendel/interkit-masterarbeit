@@ -60,5 +60,9 @@ export const Messages = new Mongo.Collection('messages');
 - payload {
     - type // "text"
     - text
-}
+  }
+- createdAt <Date>
+- handledAt <Date>
+- handledBy <array>
+- origin <string> // null (=user?), handler, cron
 */

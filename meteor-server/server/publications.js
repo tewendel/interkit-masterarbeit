@@ -74,15 +74,32 @@ Meteor.publish("user.projectUserData", ({ projectId }) => {
 });
 
 
-Meteor.publish("messages", ({projectId, channel_key = "DEFAULT", userId}) => {
-  let messages = Messages.find({
-    projectId, 
-    channel_key: channel_key ? channel_key : "DEFAULT",
-    $or: [
-           {sender: userId}, 
-           {recipients: userId} 
-        ]
-  });
+Meteor.publish("messages", ({projectId, channel_key, origin, userId}) => {
+  let query = {projectId};
+  if (channel_key) {
+    query.channel_key = channel_key;
+  }
+  if (userId) {
+    query.$or = [
+      {sender: userId}, 
+      {recipients: userId} 
+    ]
+  }
+  if (origin) {
+    query.origin = origin;
+  }
+  console.log(query)
+  let messages = Messages.find(query, {sort: {createdAt: -1}});
   return messages;
 });
 
+Meteor.publish("messages.unhandled", ({projectId}) => {
+  let query = {
+    projectId,
+    handledAt: { $exists: false },
+    origin: { $not: { $in: ["handler"] } }
+  }
+  let messages = Messages.find(query, {sort: {createdAt: -1}});
+  console.log("messages.unhandled count: " + messages.count(), messages.fetch())
+  return messages;
+});

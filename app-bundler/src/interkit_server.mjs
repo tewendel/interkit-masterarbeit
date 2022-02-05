@@ -30,7 +30,7 @@ const setup = async () => {
 
   server.on('error', (e) => {
     // global errors from server
-    console.log("connection to interkit server failed")
+    console.log("interkit server error", e)
   });
 
   let projectsSub = server.subscribe("projects");

@@ -3,6 +3,7 @@
   import { onMount } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
+  import Button from './Button.svelte'
 
   export let channel_key = "DEFAULT"
 
@@ -13,10 +14,17 @@
 
     userId = get(InterkitClient.userId);
     let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId})
-    messageStore = sub.data;
+    messageStore = sub.data
 
     console.log("userId", get(InterkitClient.userId))
   })
+
+  $: {
+    if ($messageStore) {
+      $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
+    }
+  }
+    
 
   const sendMessage = (messageText) => {
     InterkitClient.call("message.send", {
@@ -49,7 +57,7 @@
 {/if}
 
 <input type="text" bind:value={messageText} on:keydown={handleKeydown}/>
-<button on:click={submit}>send</button>
+<Button on:click={submit}>send</Button>
 
 <style>
 

@@ -302,6 +302,13 @@ Meteor.methods({
     return res
   },
 
+  'project.projectServer.clearMessages': async ({ projectId }) => {
+    //console.log("project.projectServer.clearMessags", projectId)
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.messages': [] } })
+    //console.log("project.projectServer.clearMessags result", res)
+    return res
+  },
+
   'project.projectServer.setStatus': async ({ projectId, status }) => {
     //console.log("project.projectServer.setStatus", projectId, status)
     const res = Projects.update({_id: projectId}, { $set: { 'projectServer.status': status } })
@@ -479,17 +486,20 @@ Meteor.methods({
     }
   },
 
-  'message.send': ({projectId, channel_key, sender, payload}) => {
+  'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     Messages.insert({
       projectId,
       sender,
-      recipients: [],
+      recipients,
       channel_key,
-      payload      
+      payload,
+      origin,
+      createdAt: new Date()
     })
     
     // this is where the message will need to be processed by the project server logic
     
+    /*
     // for now we add a fake response message adressed to the user
     Messages.insert({
       projectId,
@@ -500,8 +510,13 @@ Meteor.methods({
         text: "ok"
       }      
     })
+    */
 
+  },
 
+  'message.setHandled': ({messageId, handledBy = []}) => {
+    console.log("message.setHandled", messageId, handledBy)
+    Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
   }
   
 });

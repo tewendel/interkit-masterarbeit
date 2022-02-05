@@ -38,11 +38,15 @@
     InterkitClient.call('project.projectServer.stop', {projectId: $currentProject._id})
   }
 
+  function clear() {
+    InterkitClient.call('project.projectServer.clearMessages', {projectId: $currentProject._id})
+  }
+
 </script>
 
-<div class="container">
+<div class="container" data-status={$currentProject?.projectServer?.status}>
   {#if status && status != "init"}
-    <Button on:click={() => status === "running" ? stop() : start() } size="small" kind="secondary" disabled={actionRequested}>
+    <Button on:click={() => status === "running" ? stop() : start() } size="small" kind="secondary" disabled={!!actionRequested}>
       {#if status === "running"}
         Stop
       {:else}
@@ -53,6 +57,9 @@
   <span class="status">
     Status: {$currentProject?.projectServer?.status}
   </span>
+  <Button on:click={() => clear() } size="small" kind="tertiary">
+    Clear Log
+  </Button>
   <div class="messages">
     {#each messages as message}
       <div class="message">
@@ -76,6 +83,14 @@
     display: inline-flex;
     padding: 1ex 1em;
   }
+  .status:before {
+    content: "●";
+    padding-right: 0.5em;
+    color: transparent;
+  }
+  [data-status="running"] .status:before {
+    color: #4f9f52;
+  }
   .messages {
     max-height: 300px;
     overflow-y: scroll;
@@ -87,6 +102,7 @@
   }
   .message {
     padding: 0.5ex;
+    white-space: pre-wrap;
   }
   .message + .message {
     border-bottom: 1px solid lightgrey;
