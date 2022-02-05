@@ -20,7 +20,7 @@ Interkit is being developed in the context of the [Offene Welten](https://offene
 1) install all packages
 
 ````
-npm run install:all
+npm install
 ````
 
 you may additionally need to install meteor with
