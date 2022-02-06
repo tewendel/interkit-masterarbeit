@@ -17,7 +17,7 @@ function getProjectPath(projectId) {
 }
 
 // check if folders exist to for all projects and setup starter if they don't
-function ensureRepositories(projects) {
+async function ensureRepositories(projects) {
   //console.log(projects)
   for (let project of projects) {
     const projectId = project.id
@@ -28,11 +28,10 @@ function ensureRepositories(projects) {
       const lastCreateEvent = projectHistoryCreateEvents[projectHistoryCreateEvents.length-1] || {}
       const sourceProjectId = lastCreateEvent?.props?.sourceProjectId
       if (sourceProjectId) {
-        duplicateRepository(project, sourceProjectId)
+        await duplicateRepository(project, sourceProjectId)
       } else {
-        setupNewRepository(project)
+        await setupNewRepository(project)
       }
-      
     }
   }
 }

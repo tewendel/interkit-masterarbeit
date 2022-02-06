@@ -1,0 +1,11 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="AppBase" id="ZRUHk3aCGOiRK+,1oTYx" x="187" y="86">
+    <data>{"origin":"interkit"}</data>
+    <statement name="viewport">
+      <block type="HeadlinePage" id="qCPsEH(DXPAYqe1bE4X5">
+        <field name="headline">Welcome</field>
+        <data>{"origin":"interkit"}</data>
+      </block>
+    </statement>
+  </block>
+</xml>

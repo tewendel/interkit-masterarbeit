@@ -11,7 +11,7 @@ const execPromise = promisify(exec)
 const compile_project = async function (projectId, dev=false) {
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
 
-  const command_npm = `cd ${projectPath} && npm install`
+  const command_npm = `cd ${projectPath} && npm install && cd server && npm install`
   const command_build = `cd ${projectPath} && npm run build`
   const command_build_dev = `cd ${projectPath} && npm run build:dev`
 

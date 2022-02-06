@@ -100,6 +100,6 @@ Meteor.publish("messages.unhandled", ({projectId}) => {
     origin: { $not: { $in: ["handler"] } }
   }
   let messages = Messages.find(query, {sort: {createdAt: -1}});
-  console.log("messages.unhandled count: " + messages.count(), messages.fetch())
+  // console.log("messages.unhandled count: " + messages.count(), messages.fetch())
   return messages;
 });

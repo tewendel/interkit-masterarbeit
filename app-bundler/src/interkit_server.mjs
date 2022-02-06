@@ -39,8 +39,8 @@ const setup = async () => {
 
   let reactiveCollection = server.collection('projects').reactive();
 
-  reactiveCollection.onChange((newData) => {
-    ensureRepositories(newData)
+  reactiveCollection.onChange( async (newData) => {
+    await ensureRepositories(newData)
     updateProjectServers(newData)
     projects = newData
   });

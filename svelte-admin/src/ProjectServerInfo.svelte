@@ -30,11 +30,12 @@
   });
 
   function start() {
-    
+    actionRequested = true // simple optimistic ui
     InterkitClient.call('project.projectServer.start', {projectId: $currentProject._id})
   }
 
   function stop() {
+    actionRequested = true // simple optimistic ui
     InterkitClient.call('project.projectServer.stop', {projectId: $currentProject._id})
   }
 
@@ -92,7 +93,7 @@
     color: #4f9f52;
   }
   .messages {
-    max-height: 300px;
+    height: 300px;
     overflow-y: scroll;
     display:flex;
     flex-direction: column-reverse;
