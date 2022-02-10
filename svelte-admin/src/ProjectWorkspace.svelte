@@ -9,6 +9,7 @@
   import MediaManager from "./MediaManager.svelte"
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
+  import NodeEditor from './NodeEditor.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -32,6 +33,7 @@
         <Tab label="Repo" />
         <Tab label="Users" />
         <Tab label="Project" />
+        <Tab label="Nodes" />
         <div slot="content">
           <TabContent>
             <Sheets {projectId}/>
@@ -50,6 +52,9 @@
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
+          </TabContent>
+          <TabContent>
+            <NodeEditor {projectId} />
           </TabContent>
         </div>
       </Tabs>
