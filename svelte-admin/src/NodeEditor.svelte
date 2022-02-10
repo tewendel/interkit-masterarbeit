@@ -1,9 +1,12 @@
 <script>
 
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import { onMount } from 'svelte'
-  import NodeGraph from './NodeGraph.svelte'
+
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+
   import { boardsApi as api } from './BundleServer.js'
+
+  import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
 
   const useCodeMirror = true
@@ -41,10 +44,10 @@
 
   let editMode = false
 
-  let editNodeId = null;
+  let editNodeId = null
 
-  const setCurrentBoardData = (boardData)=>{
-    currentBoardData = boardData;
+  const setCurrentBoardData = (boardData) => {
+    currentBoardData = boardData
   }
 
   let boards = []
@@ -181,7 +184,6 @@
         return n
       })
     }
-    console.log('saveBoard', boardId, body)
     body = JSON.stringify(body)
     api(projectId, '/' + boardId, { method: 'put', body })
       .then(async res => {
