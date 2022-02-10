@@ -73,41 +73,6 @@ function method (main) {
   }
 }
 
-/* TODO move to NodeEditor 
-const parseNode = nodeCode => {
-  const moveToIds = Array.from(nodeCode.matchAll(parseREmoveTo)).map(m => m[1])
-  return {
-    connections: moveToIds
-  }
-}
-*/
-
-/*
-const getNode = (handle) => {
-  const id = handle.match(nodeFileNameRE)?.[1]
-  const node = {}
-  return fs.readFile(handle)
-    .then(file => {
-      const fileStr = file.toString()
-      let json
-      try {
-        json = JSON.parse(fileStr)
-      } catch (e) {
-        console.warn('error parsing JSON in ' + handle)
-        json = {}
-      }
-      return {
-        ...json,
-        ...{
-          path: handle,
-          id,
-          code: fileStr
-        }
-      }
-    })
-}
-*/
-
 const getNode = handle => fs.readFile(handle).then(file => file.toString())
 
 const api = {
@@ -137,7 +102,7 @@ api.boards.read = method(
         const id = file.match(nodeFileNameRE)?.[2]
         const contents = await getNode(projectBoardPath(params.projectId, [file]))
         const node = board.nodes.find(_ => _.id === id)
-        console.log(id, contents, node)
+        // console.log(id, contents, node)
         if (node) {
           node.contents = contents
           node.path = file
@@ -163,7 +128,7 @@ api.boards.create = method(
   async (handle, params) => {
     const board = newEmptyBoard(params)
     // wx: fail if path exists
-    console.log('create', handle, params)
+    // console.log('create', handle, params)
     return fs.appendFile(handle, JSON.stringify(board), { flag: 'wx' })
       .then(() => board)
   }
@@ -196,7 +161,7 @@ api.boards.delete = method(
 api.nodes.create = method(
   async (handle, params) => {
     const data = newEmptyNode
-    console.log('api.nodes.create', handle)
+    // console.log('api.nodes.create', handle)
     return fs.appendFile(handle, data, { flag: 'wx' })
       .then(() => getNode(handle))
   }

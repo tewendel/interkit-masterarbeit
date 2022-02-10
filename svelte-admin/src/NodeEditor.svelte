@@ -16,27 +16,6 @@
 
   export let projectId
 
-  /*
-  const api = function (resource, init) {
-    console.info('api', resource, init)
-    // return fetch(resouce, init)
-    return new Promise((resolve, reject) => {
-      if (resource === '/api/scriptNode' && init.method === 'POST') {
-        resolve({
-          json: function () {
-            return []
-          }
-        })
-      }
-      resolve({
-        json: function () {
-          return []
-        }
-      })
-    })
-  }
-  */
-
   const genericErrorHandler = error => {
     let msg = ''
     if (!error) {
@@ -64,43 +43,10 @@
 
   let editNodeId = null;
 
-  const setEditNodeId = async (nodeId)=>{
-    console.log("setEditNodeId", nodeId)
-    if(nodeId) {
-      // XXX
-      const res = await api(projectId, "/api/scriptNode/" + nodeId);
-      const json = await res.json();
-      console.log("loaded node", json)
-      
-      if(!currentBoardData || currentBoardData._id != json.board) {
-        currentBoardId = json.board;  
-        loadBoardData()
-      }
-    }
-    
-    editNodeId = nodeId
-  };
-
-  let playerNodeId = null;
-  const updatePlayerNodeId = (nodeId)=>{
-    console.log("updatePlayerNodeId", nodeId);
-    playerNodeId = nodeId
-  }
-  let currentBoardIdSelect = null;
-  const setCurrentBoardId = (boardId)=>{
-    console.log("setCurrentBoardId"); 
-    currentBoardId = boardId;
-    currentBoardIdSelect = currentBoardId;
-  };
-  let currentBoardData = null;
   const setCurrentBoardData = (boardData)=>{
     currentBoardData = boardData;
   }
-  const reloadBoardData = ()=>{
-    //if(currentBoardData) currentBoardData.expired = true;
-    loadBoardData();
-  }
-  let playerId;
+
   let boards = []
   let board = null
   let currentBoardId = null
@@ -176,52 +122,7 @@
       .catch(genericErrorHandler)
   }
 
-  /*
-  const checkBoardSelect = ()=> {
-    if($boardCodeChanged) {
-      currentBoardIdSelect = currentBoardId
-      alert("unsaved code changes")
-      return;
-    }
-    // get value from select element
-    currentBoardId = currentBoardIdSelect;
-    loadBoardData();
-  }
-  */
-  const loadBoardData = async ()=>{
-    
-    if(currentBoardId == "new") {
-      createBoard();
-      return;
-    }
-    console.log("reloading board data", currentBoardId);
-    editMode = false;
-    tabNavigation = "boards";
-    if(currentBoardId) {
-      // XXX
-      const res = await api("/api/board/" + currentBoardId + "?$embed=scriptNodes");
-      const json = await res.json();
-      setCurrentBoardData(json);
-      currentBoardIdSelect = currentBoardId;
-      if(!json.startingNode) {
-        alert("warning: no starting node set");
-      }
-    } else {
-      setCurrentBoardData(null);
-    }
-  }
   const createBoard = () => {
-    /*
-    let newBoard = {
-      new: true,
-      key: "",
-      name: "",
-      scriptNodes: [],
-      library: "",
-      // project: project._id,
-      listed: true
-    }
-    */
     let c = 0
     let newBoardId
     let newBoardIdDefault
@@ -243,12 +144,14 @@
       })
       .catch(genericErrorHandler)
   }
+
   const deleteCurrentBoard = () => {
     if (window.confirm('really?') === false) {
       return
     }
     deleteBoard(currentBoardId)
   }
+
   const deleteBoard = boardId => {
     api(projectId, '/' + boardId, { method: 'delete' })
       .then(async res => {
@@ -260,10 +163,7 @@
       })
       .catch(genericErrorHandler)
   }
-  const closeBoard = ()=>{
-    setCurrentBoardData(null);  
-    setEditNodeId(null);
-  }
+
   const saveCurrentBoard = () => {
     saveBoard(currentBoardId, board)
   }
@@ -305,7 +205,6 @@
     createNode(currentBoardId, newNodeId)
   }
 
-  // this is here because new nodes can be created from board and from editor
   const createNode = async (boardId, name) => { 
     api(projectId, `/${boardId}/nodes/${name}`, { method: 'post' })
       .catch(genericErrorHandler)
@@ -349,53 +248,13 @@
       .finally(() => { loadBoard(boardId) })
   }
 
-  /* XXX
-  const createNode = async (name, boardId)=>{
-    let newNode = {
-      name: name,
-      board: boardId,
-      script: `function onArrive() {\n\n}\n\nfunction onReceive (input) {\n\n}`,
-      multiPlayer: false,
-      posX: 100,
-      posY: 100
-    }
-    let response = await api("/api/scriptNode", {
-      method: "POST",
-      headers: {
-        // 'authorization': $token,
-        'Content-Type': 'application/json'
-        },
-      body: JSON.stringify(newNode)
-    });
-    if (response.ok) {
-      let json = await response.json();
-      console.log(json);
-      return json._id;
-    }
-  }
-  */
-
   onMount(async () => {
-    //playerId = await findOrCreatePlayer();
-    //await initSocket(playerId);
-    //console.log("playerId set for project workspace", playerId);
     loadBoardList();
-    // createBoard()
   })
 
 </script>
 
 <div class="layout">
-  <!--
-  <Tabs type="container">
-    <Tab label="a1" />
-    <Tab label="a2" />
-    <div slot="content">
-      <TabContent>aaaaa1</TabContent>
-      <TabContent>bbbbbb2</TabContent>
-    </div>
-  </Tabs>
-  -->
   <div class="ui">
     <button on:click={refresh}>refresh</button>
     <select bind:value={currentBoardId}>

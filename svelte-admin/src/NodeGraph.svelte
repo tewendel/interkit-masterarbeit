@@ -36,21 +36,11 @@
     )
   }
 
-  const saveNodePosition = async (id, x, y)=> {
-    await fetch("/api/scriptNode/" + id, {
-          method: 'PUT',
-          headers: {
-            // 'authorization': $token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({posX: x, posY: y})
-        })    
-  }  
-
   const getNodeById = id => nodes.find(n => n.id === id)
   const getNodeIndexById = id => nodes.findIndex(n => n.id === id)
 
   const saveCanvasOffset = async (x, y)=> {
+    return // TODO
     await fetch("/api/board/" + currentBoardData.id, {
           method: 'PUT',
           headers: {
@@ -62,6 +52,7 @@
   }
 
   const saveCanvasZoom = async (z)=> {
+    return // TODO
     await fetch("/api/board/" + currentBoardData.id, {
           method: 'PUT',
           headers: {
@@ -72,46 +63,6 @@
         })    
   }
 
-
-  let playersAtNode = {}
-
-  const loadActivePlayers = async ()=> {
-    let res = await fetch("/api/boardLog?"
-      + "board=" + currentBoardData.id
-      + "&$sort=-updatedAt"
-    )
-    let boardLogs = await res.json() 
-    //console.log(boardLogs)
-
-    playersAtNode = {}
-    if(boardLogs.docs) {
-      boardLogs.docs.forEach(boardLog=>{
-        // if currentNode is set for this board and player
-        if(boardLog.currentNode) {
-          if(!playersAtNode[boardLog.currentNode]) {
-            playersAtNode[boardLog.currentNode] = []
-          }
-          // save 
-          playersAtNode[boardLog.currentNode].push(boardLog.player)
-        }
-      })
-    }
-
-    //console.log(playersAtNode)
-    
-  }
-
-  /*
-
-  let loadActivePlayersInterval;
-
-  onMount(async () => {
-    await loadActivePlayers();
-    loadActivePlayersInterval = setInterval(async ()=>{
-      await loadActivePlayers();
-    }, 20000)
-  })
- */
 
   export const updateConnections = () => {
     connections = []
@@ -155,42 +106,6 @@
   }
   
   let connections = [];
-
-  /* XXX
-  $: {
-    connections = [];
-    if(nodes) {
-      for(let j = 0; j < nodes.length; j++) {
-
-        let fromX = nodes[j].posX + rectWidth / 2;
-        let fromY = nodes[j].posY + rectHeight / 2;
-        nodes[j].connectionIds.forEach((id)=>{
-          let i = getNodeIndexById(id);
-          if(i > -1 && i != j) {
-            let to = nodes[i];
-            let toX = to.posX + rectWidth / 2;
-            let toY = to.posY + rectHeight / 2;
-            let dx = toX - fromX;
-            let dy = toY - fromY;
-            let l = Math.sqrt((dx * dx) + (dy * dy));
-            let shorter = 1.0 - (70.0/l);
-            let toXs = fromX + dx * shorter;
-            let toYs = fromY + dy * shorter;
-            connections.push({
-              fromX,
-              fromY,
-              toX: toXs,
-              toY: toYs
-            })
-          }
-        });
-      }
-    } else {
-      nodes = [];
-    }
-  }
- */
-
   
 </script>
 
@@ -222,7 +137,6 @@
   }}
   on:mouseup={()=>{
     if (dragging !== false) {
-      // saveNode(nodes[dragging])
      console.log('dispatching boardchanged')
       dispatch('boardchanged', { targetNode: nodes[dragging] })
       dragging = false
@@ -245,15 +159,6 @@
   </defs>
       
   {#each connections as c}
-    <!--
-      <line 
-        x1={c.fromX} 
-        y1={c.fromY} 
-        x2={c.toX} 
-        y2={c.toY}
-        marker-mid="url(#arrowhead)"
-        marker-end="url(#arrowhead)"
-        />-->
       <polyline
         marker-mid="url(#arrowhead)"
         marker-end="url(#arrowhead)"
@@ -275,7 +180,6 @@
         on:click={()=>{
           if(Date.now() - dragStart < 250) {
             editNodeId = node.id
-            //  setEditNodeId(node.id)
           }
           }}
       >
@@ -305,7 +209,6 @@
           x={node.posX+10}
           y={node.posY+48}
         >
-          {#if playerNodeId == node.id}playing{/if}
         </text>
         <text 
           class="script-node-attribute"
@@ -313,14 +216,6 @@
           y={node.posY+61}
         >
           {#if currentBoardData.startingNode == node.id}starting node{/if}
-        </text>
-        <text
-          on:click={()=>alert("playerIds: " + playersAtNode[node.id])}
-          class="playerCounter"
-          x={node.posX+85}
-          y={node.posY+61}
-        >
-          {playersAtNode[node.id] ? playersAtNode[node.id].length : ""}
         </text>
 
       </g>
@@ -341,14 +236,6 @@ polyline {
 }
 
 svg {
-  /*XXX
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 0;
-  */
   position: relative;
 }
 
