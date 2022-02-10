@@ -112,6 +112,12 @@
       >
       <polygon points="0 0, 10 3.5, 0 7" />
     </marker>
+    <marker
+      id="dot" markerWidth="10" markerHeight="10"
+      refX="5" refY="5" orient="auto"
+      >
+      <circle r="5" cx="5" cy="5" />
+    </marker>
   </defs>
 
   <g transform="translate({board.offsetX},{board.offsetY}) scale({board.zoom},{board.zoom})">
@@ -128,6 +134,7 @@
 
     {#each nodes as node, index}
       <g
+        class={`node ${node.id === board.startId ? 'node--start' : ''}`}
         on:mousedown|stopPropagation={(e) => {
           console.log("mousedown", node.id)
           dragging = index
@@ -141,6 +148,16 @@
           }
         }}
         >
+        {#if node.id === board.startId}
+          <polyline
+            marker-start="url(#dot)"
+            marker-mid="url(#arrowhead)"
+            marker-end="url(#arrowhead)"
+            points={`${node.posX-rectWidth*0.5},${node.posY-rectWidth*0.5}
+              ${node.posX-rectWidth*0.25},${node.posY-rectWidth*0.25}
+              ${node.posX+rectWidth*0.5},${node.posY+rectWidth*0.5}`}
+            />
+        {/if}
         <rect
           x={node.posX}
           y={node.posY}

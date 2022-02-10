@@ -9,10 +9,12 @@ const newEmptyBoard = params => ({
 })
 
 const newEmptyNode = 'export const onMessage = async (msg, api) => {\n  // do something\n}'
+const startNodeId = 'start'
 
 const handleREnodeId = /[a-z0-9]+_([a-z0-9]+)\.js$/
 const nodeFileNameRE = /^([a-z0-9]+)_([a-z0-9]+)\.js$/
 const boardFileNameRE = /^([a-z0-9]+).json$/
+const startNodeMetaCommentRE = /(\/\/|\/\*)\s*start!/
 
 const projectBoardPath = (projectId, boardIdOrPath, nodeId, suffix) => {
   const p = [
@@ -96,6 +98,8 @@ api.boards.read = method(
     board.nodes = board.nodes || []
     board.nodes.forEach(node => { node.contents = null })
     const allFiles = await fs.readdir(handlePrefix)
+    let startIdByFilename
+    let startIdByMetaComment
     await Promise.all(allFiles
       .filter(file => file.substr(0, params.boardId.length + 1) === params.boardId + '_')
       .map(async file => {
@@ -103,6 +107,12 @@ api.boards.read = method(
         const contents = await getNode(projectBoardPath(params.projectId, [file]))
         const node = board.nodes.find(_ => _.id === id)
         // console.log(id, contents, node)
+        if (!startIdByMetaComment && startNodeMetaCommentRE.test(contents)) {
+          startIdByMetaComment = id
+        }
+        if (id === startNodeId && contents !== null) {
+          startIdByFilename = id
+        }
         if (node) {
           node.contents = contents
           node.path = file
@@ -120,6 +130,8 @@ api.boards.read = method(
       })
     )
     board.nodes = board.nodes.filter(node => node.contents !== null)
+    let startId = startIdByMetaComment || (startIdByFilename || board.nodes[0]?.id)
+    board.startId = startId
     return board
   }
 )
@@ -163,7 +175,6 @@ api.boards.delete = method(
 api.nodes.create = method(
   async (handle, params) => {
     const data = newEmptyNode
-    // console.log('api.nodes.create', handle)
     return fs.appendFile(handle, data, { flag: 'wx' })
       .then(() => getNode(handle))
   }
