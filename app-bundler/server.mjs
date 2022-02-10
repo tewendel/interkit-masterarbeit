@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as io from 'socket.io';
 import http from 'http';
@@ -14,6 +15,7 @@ import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
+import { api as board_node_api } from './src/api_boards.mjs'
 
 const PORT = process.env.PORT
 
@@ -58,6 +60,22 @@ app.get('/git/status/:projectId', get_git_status)
 // get component configuration yamls
 app.get('/components/:projectId', get_yamls)
 
+// app.use(express.urlencoded({ extended: true }))
+
+//TODO add validation/RegEx to all params?
+const rawBodyParser = bodyParser.raw({ type: '*/*' })
+app.get('/boards/:projectId', board_node_api.boards.list)
+app.post('/boards/:projectId/:boardId([a-z0-9]+)', board_node_api.boards.create)
+app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
+app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
+app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
+
+// dont need it, build it into read board
+// app.get('/boards/:projectId/:boardId/nodes', board_node_api.nodes.list)
+app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', board_node_api.nodes.create)
+app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
+app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
+app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)
 
 //app.use(express.static('public', { index: false }))
 
