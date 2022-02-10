@@ -10,8 +10,6 @@
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  // import Board from './Board.svelte'
-  // import EditNode from './EditNode.svelte'
   import { InterkitClient } from 'interkit'
 
 
