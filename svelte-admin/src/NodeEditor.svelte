@@ -101,12 +101,14 @@
   const processBoard = board => {
     if (!Array.isArray(board.nodes))
       board.nodes = []
+    if (!board.offsetX) board.offsetX = 0
+    if (!board.offsetY) board.offsetY = 0
+    if (!board.zoom) board.zoom = 1.0
     board.nodes.forEach(node => {
       if (isNaN(node.posX)) node.posX = 10
       if (isNaN(node.posY)) node.posY = 10
       if (typeof node.id !== 'string')
         node.id = 'node_' + Math.random().toString(36).substr(2)
-      // TODO connections
       return node
     })
     return board
@@ -264,7 +266,12 @@
       {/each}
     </select>
     <button on:click={createBoard}>create board</button>
-    <button on:click={deleteCurrentBoard}>delete board</button>
+    <button
+      on:click={deleteCurrentBoard}
+      disabled={!board}
+      >
+      delete board
+    </button>
     <button
       on:click={createNodeInCurrentBoard}
       disabled={!board}
@@ -288,7 +295,7 @@
     <NodeGraph
       {projectId}
       boardId={currentBoardId}
-      currentBoardData={board}
+      bind:board
       nodes={board.nodes}
       on:boardchanged={saveCurrentBoard}
       bind:editNodeId

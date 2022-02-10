@@ -1,5 +1,4 @@
 <script foo>
-  // import { token } from './stores.js';  
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
 
@@ -11,58 +10,16 @@
   const parseREmoveTo = /moveTo\s*\(\s*["']([a-z0-9]+)["']/g
 
   export let projectId
-  export let boardId
+  // export let boardId
   
-  export let nodes = [];
-  export let setEditNodeId;
-  export let editNodeId;
+  export let nodes = []
+  export let editNodeId
 
-  export let playerNodeId;
-  export let currentBoardData;
-
-  const saveNode = async (node) => {
-    const body = {
-      code: node.code,
-      posX: node.posX,
-      posY: node.posY
-    }
-    api(
-      projectId,
-      `/${boardId}/nodes/${node.id}`,
-      {
-        method: 'put',
-        body: JSON.stringify(body)
-      }
-    )
-  }
+  export let playerNodeId
+  export let board
 
   const getNodeById = id => nodes.find(n => n.id === id)
   const getNodeIndexById = id => nodes.findIndex(n => n.id === id)
-
-  const saveCanvasOffset = async (x, y)=> {
-    return // TODO
-    await fetch("/api/board/" + currentBoardData.id, {
-          method: 'PUT',
-          headers: {
-            // 'authorization': $token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({offsetX: x, offsetY: y})
-        })    
-  }
-
-  const saveCanvasZoom = async (z)=> {
-    return // TODO
-    await fetch("/api/board/" + currentBoardData.id, {
-          method: 'PUT',
-          headers: {
-            // 'authorization': $token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({zoom: z})
-        })    
-  }
-
 
   export const updateConnections = () => {
     connections = []
@@ -82,90 +39,96 @@
 
   $: nodes, updateConnections()
 
-  let mouseX;
-  let mouseY;
-  let offsetX;
-  let offsetY;
-  let rectWidth = 100;
-  let rectHeight = 70;
+  let mouseX
+  let mouseY
+  let offsetX
+  let offsetY
+  let rectWidth = 100
+  let rectHeight = 70
   let dragging = false
-  let dragStart;
+  let dragStart
 
-  let canvasDragging = false;
-  let canvasDragStartX = 0;
-  let canvasDragStartY = 0;
-  let zoomStep = 0.1;
-  let canvasOffsetX;
-  let canvasOffsetY;
-  let zoom;
+  let canvasDragging = false
+  let canvasDragStartX = 0
+  let canvasDragStartY = 0
+  const zoomStep = 0.1
+  const minZoom = 0.1
   
-  $: {
-    canvasOffsetX = currentBoardData.offsetX ? currentBoardData.offsetX : 0;
-    canvasOffsetY = currentBoardData.offsetY ? currentBoardData.offsetY : 0;
-    zoom = currentBoardData.zoom ? currentBoardData.zoom : 1;
+  let connections = []
+
+  const zoom = dir => {
+    board.zoom = Math.max(board.zoom + zoomStep * dir, minZoom)
+    dispatch('boardchanged')
   }
-  
-  let connections = [];
+
+  const resetCanvas = () => {
+    board.zoom = 1.0
+    board.offsetX = 0
+    board.offsetY = 0
+    dispatch('boardchanged')
+  }
   
 </script>
 
   <div class="scale-controls">
-    <button on:click={()=>{zoom -= zoomStep; saveCanvasZoom(zoom);}}>-</button>
-    <button on:click={()=>{zoom += zoomStep; saveCanvasZoom(zoom);}}>+</button>
+    <button on:click={() => { zoom(-1) }}>-</button>
+    <button on:click={() => { resetCanvas() }}>0</button>
+    <button on:click={() => { zoom(1) }}>+</button>
   </div>
 
  <svg
   class="nodegraph"
   on:mousedown={()=>{
     canvasDragging = true;
-    canvasDragStartX = mouseX - canvasOffsetX;
-    canvasDragStartY = mouseY - canvasOffsetY;
+    canvasDragStartX = mouseX - board.offsetX
+    canvasDragStartY = mouseY - board.offsetY
   }}
-  on:mousemove={(e)=>{
+  on:mousemove={(e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;         
     // update dragging node
     if (dragging !== false) {
-      nodes[dragging].posX = mouseX - offsetX;
-      nodes[dragging].posY = mouseY - offsetY;  
+      // FIXME dragging is off when zoom != 1.0
+      nodes[dragging].posX = mouseX - offsetX
+      nodes[dragging].posY = mouseY - offsetY
     } else {
-      if(canvasDragging) {
-        canvasOffsetX = mouseX - canvasDragStartX;
-        canvasOffsetY = mouseY - canvasDragStartY;
+      if (canvasDragging) {
+        board.offsetX = mouseX - canvasDragStartX
+        board.offsetY = mouseY - canvasDragStartY
       }
     }
   }}
-  on:mouseup={()=>{
+  on:mouseup={() => {
     if (dragging !== false) {
-     console.log('dispatching boardchanged')
       dispatch('boardchanged', { targetNode: nodes[dragging] })
       dragging = false
     }
-
-    if(canvasDragging) {
+    if (canvasDragging) {
+      dispatch('boardchanged')
       canvasDragging = false;
-      saveCanvasOffset(canvasOffsetX, canvasOffsetY);
     }
   }}
  >
 
-  <g transform="translate({canvasOffsetX},{canvasOffsetY}) scale({zoom},{zoom})">
+ <g transform="translate({board.offsetX},{board.offsetY}) scale({board.zoom},{board.zoom})">
   
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-          refX="0" refY="3.5" orient="auto">
+    <marker
+      id="arrowhead" markerWidth="10" markerHeight="7" 
+      refX="0" refY="3.5" orient="auto"
+      >
       <polygon points="0 0, 10 3.5, 0 7" />
     </marker>
   </defs>
       
   {#each connections as c}
-      <polyline
-        marker-mid="url(#arrowhead)"
-        marker-end="url(#arrowhead)"
-        points={`${c.fromX},${c.fromY}
-          ${(c.fromX+c.toX)/2},${(c.fromY+c.toY)/2}
-          ${c.toX},${c.toY}`}
-        />
+    <polyline
+      marker-mid="url(#arrowhead)"
+      marker-end="url(#arrowhead)"
+      points={`${c.fromX},${c.fromY}
+        ${(c.fromX+c.toX)/2},${(c.fromY+c.toY)/2}
+        ${c.toX},${c.toY}`}
+      />
   {/each}
 
   {#each nodes as node, index}
@@ -215,7 +178,7 @@
           x={node.posX+10}
           y={node.posY+61}
         >
-          {#if currentBoardData.startingNode == node.id}starting node{/if}
+          {#if board.startingNode == node.id}starting node{/if}
         </text>
 
       </g>
