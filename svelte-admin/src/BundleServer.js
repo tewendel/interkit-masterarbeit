@@ -75,6 +75,11 @@ const loadBlockData = async (projectId) => {
   return resJSON 
 }
 
+const boardsApi = (projectId, resource, init) => fetch(
+  bundleServerURL + '/boards/' + projectId + resource,
+  init
+)
+
 export const BundleServer = {
   connect,
   getServerURL: () => bundleServerURL,
@@ -86,3 +91,4 @@ export const BundleServer = {
   loadBlockData
 }
 
+export { boardsApi }
