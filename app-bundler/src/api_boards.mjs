@@ -127,10 +127,12 @@ api.boards.read = method(
 api.boards.create = method(
   async (handle, params) => {
     const board = newEmptyBoard(params)
+    const startNodeHandle = projectBoardPath(params.projectId, params.boardId, startNodeId)
     // wx: fail if path exists
-    // console.log('create', handle, params)
-    return fs.appendFile(handle, JSON.stringify(board), { flag: 'wx' })
-      .then(() => board)
+    return Promise.all([
+      fs.appendFile(handle, JSON.stringify(board), { flag: 'wx' }),
+      fs.appendFile(startNodeHandle, newEmptyNode, { flag: 'wx' })
+    ])
   }
 )
 

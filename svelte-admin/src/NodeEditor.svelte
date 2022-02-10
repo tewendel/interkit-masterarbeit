@@ -144,8 +144,8 @@
         const json = await res.json()
         errorify(json)
         await loadBoardList()
-        currentBoardId = json.result.name
-        await loadBoard(currentBoardId)
+        await loadBoard(newBoardId)
+        currentBoardId = newBoardId
       })
       .catch(genericErrorHandler)
   }
