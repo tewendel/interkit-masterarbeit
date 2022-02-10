@@ -8,7 +8,7 @@ const newEmptyBoard = params => ({
   nodes: []
 })
 
-const newEmptyNode = 'function foo () {\n}'
+const newEmptyNode = 'export const onMessage = async (msg, api) => {\n  // do something\n}'
 
 const handleREnodeId = /[a-z0-9]+_([a-z0-9]+)\.js$/
 const nodeFileNameRE = /^([a-z0-9]+)_([a-z0-9]+)\.js$/
