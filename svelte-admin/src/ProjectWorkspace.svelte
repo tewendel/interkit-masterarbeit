@@ -5,7 +5,7 @@
   import ComponentEditor from './ComponentEditor.svelte'
   import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
-  import RepositoryEditor from "./RepositoryEditor.svelte"
+  import RepositoryTab from "./RepositoryTab.svelte"
   import MediaManager from "./MediaManager.svelte"
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
@@ -30,7 +30,7 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Repo" />
+        <Tab label="Repository" />
         <Tab label="Users" />
         <Tab label="Project" />
         <Tab label="Nodes" />
@@ -45,7 +45,7 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryEditor {projectId} open={selected === 3}/>
+            <RepositoryTab {projectId} open={selected === 3}/>
           </TabContent>
           <TabContent>
             <UsersManager {projectId} />

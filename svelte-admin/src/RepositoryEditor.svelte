@@ -9,6 +9,8 @@
   let commitInfo = "?"
   let bundleServerURL
 
+  let selectedTab
+
   onMount( async () => {
     bundleServerURL = await InterkitClient.call("bundler.getUrl")
     BundleServer.connect(bundleServerURL)
@@ -30,27 +32,16 @@
 
 </script>
 
-<code>
-local dev:  cd ../repositories/projects/{projectId}
-<br />
-dockerized: cd /var/repositories/projects/{projectId}
-</code>
-
 {#if open}
   <p>
   commit: <b>{ commitInfo }</b>
   </p>
-  <iframe src="{bundleServerURL}/fs/fs/{projectId}">
-  </iframe>
 {/if}
 
 <style>
-  iframe {
-    width: 100%;
-    height: 80vh;
-  }
-
   p {
     margin: 1ex 0;
   }
 </style>
+
+
