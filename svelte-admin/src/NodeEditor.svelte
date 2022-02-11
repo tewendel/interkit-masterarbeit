@@ -1,9 +1,12 @@
 <script>
 
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import { onMount } from 'svelte'
-  import NodeGraph from './NodeGraph.svelte'
+
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+
   import { boardsApi as api } from './BundleServer.js'
+
+  import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
 
   const useCodeMirror = true
@@ -41,10 +44,10 @@
 
   let editMode = false
 
-  let editNodeId = null;
+  let editNodeId = null
 
-  const setCurrentBoardData = (boardData)=>{
-    currentBoardData = boardData;
+  const setCurrentBoardData = (boardData) => {
+    currentBoardData = boardData
   }
 
   let boards = []
@@ -101,12 +104,14 @@
   const processBoard = board => {
     if (!Array.isArray(board.nodes))
       board.nodes = []
+    if (!board.offsetX) board.offsetX = 0
+    if (!board.offsetY) board.offsetY = 0
+    if (!board.zoom) board.zoom = 1.0
     board.nodes.forEach(node => {
       if (isNaN(node.posX)) node.posX = 10
       if (isNaN(node.posY)) node.posY = 10
       if (typeof node.id !== 'string')
         node.id = 'node_' + Math.random().toString(36).substr(2)
-      // TODO connections
       return node
     })
     return board
@@ -139,8 +144,8 @@
         const json = await res.json()
         errorify(json)
         await loadBoardList()
-        currentBoardId = json.result.name
-        await loadBoard(currentBoardId)
+        await loadBoard(newBoardId)
+        currentBoardId = newBoardId
       })
       .catch(genericErrorHandler)
   }
@@ -179,7 +184,6 @@
         return n
       })
     }
-    console.log('saveBoard', boardId, body)
     body = JSON.stringify(body)
     api(projectId, '/' + boardId, { method: 'put', body })
       .then(async res => {
@@ -264,7 +268,12 @@
       {/each}
     </select>
     <button on:click={createBoard}>create board</button>
-    <button on:click={deleteCurrentBoard}>delete board</button>
+    <button
+      on:click={deleteCurrentBoard}
+      disabled={!board}
+      >
+      delete board
+    </button>
     <button
       on:click={createNodeInCurrentBoard}
       disabled={!board}
@@ -288,7 +297,7 @@
     <NodeGraph
       {projectId}
       boardId={currentBoardId}
-      currentBoardData={board}
+      bind:board
       nodes={board.nodes}
       on:boardchanged={saveCurrentBoard}
       bind:editNodeId

@@ -1,68 +1,37 @@
-<script foo>
-  // import { token } from './stores.js';  
+<script>
+
+  import { onMount } from 'svelte'
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
 
   import { boardsApi as api } from './BundleServer.js'
 
-  import { onMount } from 'svelte'
-
   // N.B. this also finds invalid code
   const parseREmoveTo = /moveTo\s*\(\s*["']([a-z0-9]+)["']/g
 
-  export let projectId
-  export let boardId
-  
-  export let nodes = [];
-  export let setEditNodeId;
-  export let editNodeId;
+  export let nodes = []
+  export let editNodeId
+  export let board
 
-  export let playerNodeId;
-  export let currentBoardData;
+  const rectWidth = 100
+  const rectHeight = 70
 
-  const saveNode = async (node) => {
-    const body = {
-      code: node.code,
-      posX: node.posX,
-      posY: node.posY
-    }
-    api(
-      projectId,
-      `/${boardId}/nodes/${node.id}`,
-      {
-        method: 'put',
-        body: JSON.stringify(body)
-      }
-    )
-  }
+  let mouseX
+  let mouseY
+  let offsetX
+  let offsetY
+  let dragging = false
+  let dragStart
+  let canvasDragging = false
+  let canvasDragStartX = 0
+  let canvasDragStartY = 0
+  const zoomStep = 0.1
+  const minZoom = 0.1
+
+  let connections = []
 
   const getNodeById = id => nodes.find(n => n.id === id)
   const getNodeIndexById = id => nodes.findIndex(n => n.id === id)
-
-  const saveCanvasOffset = async (x, y)=> {
-    return // TODO
-    await fetch("/api/board/" + currentBoardData.id, {
-          method: 'PUT',
-          headers: {
-            // 'authorization': $token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({offsetX: x, offsetY: y})
-        })    
-  }
-
-  const saveCanvasZoom = async (z)=> {
-    return // TODO
-    await fetch("/api/board/" + currentBoardData.id, {
-          method: 'PUT',
-          headers: {
-            // 'authorization': $token,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({zoom: z})
-        })    
-  }
-
 
   export const updateConnections = () => {
     connections = []
@@ -82,83 +51,78 @@
 
   $: nodes, updateConnections()
 
-  let mouseX;
-  let mouseY;
-  let offsetX;
-  let offsetY;
-  let rectWidth = 100;
-  let rectHeight = 70;
-  let dragging = false
-  let dragStart;
-
-  let canvasDragging = false;
-  let canvasDragStartX = 0;
-  let canvasDragStartY = 0;
-  let zoomStep = 0.1;
-  let canvasOffsetX;
-  let canvasOffsetY;
-  let zoom;
-  
-  $: {
-    canvasOffsetX = currentBoardData.offsetX ? currentBoardData.offsetX : 0;
-    canvasOffsetY = currentBoardData.offsetY ? currentBoardData.offsetY : 0;
-    zoom = currentBoardData.zoom ? currentBoardData.zoom : 1;
+  const zoom = dir => {
+    board.zoom = Math.max(board.zoom + zoomStep * dir, minZoom)
+    dispatch('boardchanged')
   }
-  
-  let connections = [];
-  
+
+  const resetCanvas = () => {
+    board.zoom = 1.0
+    board.offsetX = 0
+    board.offsetY = 0
+    dispatch('boardchanged')
+  }
+
 </script>
 
-  <div class="scale-controls">
-    <button on:click={()=>{zoom -= zoomStep; saveCanvasZoom(zoom);}}>-</button>
-    <button on:click={()=>{zoom += zoomStep; saveCanvasZoom(zoom);}}>+</button>
-  </div>
+<div class="scale-controls">
+  <button on:click={() => { zoom(-1) }}>-</button>
+  <button on:click={() => { resetCanvas() }}>0</button>
+  <button on:click={() => { zoom(1) }}>+</button>
+</div>
 
- <svg
+<svg
   class="nodegraph"
-  on:mousedown={()=>{
-    canvasDragging = true;
-    canvasDragStartX = mouseX - canvasOffsetX;
-    canvasDragStartY = mouseY - canvasOffsetY;
+  on:mousedown={() => {
+    canvasDragging = true
+    canvasDragStartX = mouseX - board.offsetX
+    canvasDragStartY = mouseY - board.offsetY
   }}
-  on:mousemove={(e)=>{
-    mouseX = e.clientX;
-    mouseY = e.clientY;         
+  on:mousemove={(e) => {
+    mouseX = e.clientX
+    mouseY = e.clientY
     // update dragging node
     if (dragging !== false) {
-      nodes[dragging].posX = mouseX - offsetX;
-      nodes[dragging].posY = mouseY - offsetY;  
+      // FIXME dragging is off when zoom != 1.0
+      nodes[dragging].posX = mouseX - offsetX
+      nodes[dragging].posY = mouseY - offsetY
     } else {
-      if(canvasDragging) {
-        canvasOffsetX = mouseX - canvasDragStartX;
-        canvasOffsetY = mouseY - canvasDragStartY;
+      if (canvasDragging) {
+        board.offsetX = mouseX - canvasDragStartX
+        board.offsetY = mouseY - canvasDragStartY
       }
     }
   }}
-  on:mouseup={()=>{
+  on:mouseup={() => {
     if (dragging !== false) {
-     console.log('dispatching boardchanged')
       dispatch('boardchanged', { targetNode: nodes[dragging] })
       dragging = false
     }
-
-    if(canvasDragging) {
+    if (canvasDragging) {
+      dispatch('boardchanged')
       canvasDragging = false;
-      saveCanvasOffset(canvasOffsetX, canvasOffsetY);
     }
   }}
- >
+  >
 
-  <g transform="translate({canvasOffsetX},{canvasOffsetY}) scale({zoom},{zoom})">
-  
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-          refX="0" refY="3.5" orient="auto">
+    <marker
+      id="arrowhead" markerWidth="10" markerHeight="7"
+      refX="0" refY="3.5" orient="auto"
+      >
       <polygon points="0 0, 10 3.5, 0 7" />
     </marker>
+    <marker
+      id="dot" markerWidth="10" markerHeight="10"
+      refX="5" refY="5" orient="auto"
+      >
+      <circle r="5" cx="5" cy="5" />
+    </marker>
   </defs>
-      
-  {#each connections as c}
+
+  <g transform="translate({board.offsetX},{board.offsetY}) scale({board.zoom},{board.zoom})">
+
+    {#each connections as c}
       <polyline
         marker-mid="url(#arrowhead)"
         marker-end="url(#arrowhead)"
@@ -166,74 +130,68 @@
           ${(c.fromX+c.toX)/2},${(c.fromY+c.toY)/2}
           ${c.toX},${c.toY}`}
         />
-  {/each}
+    {/each}
 
-  {#each nodes as node, index}
+    {#each nodes as node, index}
       <g
-        on:mousedown|stopPropagation={(e)=>{
-            console.log("mousedown", node.id);
-            dragging = index // getNodeIndexById(node.id);
-            dragStart = Date.now();
-            offsetX = mouseX - node.posX;
-            offsetY = mouseY - node.posY;
-          }}
-        on:click={()=>{
-          if(Date.now() - dragStart < 250) {
+        class={`node ${node.id === board.startId ? 'node--start' : ''}`}
+        on:mousedown|stopPropagation={(e) => {
+          console.log("mousedown", node.id)
+          dragging = index
+          dragStart = Date.now()
+          offsetX = mouseX - node.posX
+          offsetY = mouseY - node.posY
+        }}
+        on:click={() => {
+          if (Date.now() - dragStart < 250) {
             editNodeId = node.id
           }
-          }}
-      >
+        }}
+        >
+        {#if node.id === board.startId}
+          <polyline
+            marker-start="url(#dot)"
+            marker-mid="url(#arrowhead)"
+            marker-end="url(#arrowhead)"
+            points={`${node.posX-rectWidth*0.5},${node.posY-rectWidth*0.5}
+              ${node.posX-rectWidth*0.25},${node.posY-rectWidth*0.25}
+              ${node.posX+rectWidth*0.5},${node.posY+rectWidth*0.5}`}
+            />
+        {/if}
         <rect
           x={node.posX}
           y={node.posY}
           width={rectWidth}
           height={rectHeight}
-        />
-        <text 
+          />
+        <text
           class="script-node"
           x={node.posX+10}
           y={node.posY+20}
-        >
+          >
           {node.id}
           {#if node.modified}*{/if}
         </text>
-        <text 
+        <text
           class="script-node-attribute"
           x={node.posX+10}
           y={node.posY+35}
-        >
+          >
           {#if editNodeId == node.id}editing{/if}
         </text>
-        <text 
-          class="script-node-attribute"
-          x={node.posX+10}
-          y={node.posY+48}
-        >
-        </text>
-        <text 
+        <text
           class="script-node-attribute"
           x={node.posX+10}
           y={node.posY+61}
-        >
-          {#if currentBoardData.startingNode == node.id}starting node{/if}
+          >
+          {#if board.startingNode == node.id}starting node{/if}
         </text>
-
       </g>
-
-      />
-  {/each}  
-  
+    {/each}
   </g>
 </svg>
 
-
 <style>
-
-line,
-polyline {
-  stroke: black;
-  stroke-width: 1;
-}
 
 svg {
   position: relative;
@@ -244,17 +202,21 @@ svg:hover {
 }
 
 rect {
-    fill: #efe9d0;
-    stroke:black;
-    stroke-width:1;
-  }
+  fill: #efe9d0;
+  stroke: black;
+  stroke-width: 1;
+}
 
+polyline {
+  stroke: black;
+  stroke-width: 1;
+}
 
 .script-node {
-    fill: black;
-    user-select: none;
-    z-index: 1;
-  }
+  fill: black;
+  user-select: none;
+  z-index: 1;
+}
 
 .script-node-attribute {
   fill: gray;
@@ -275,11 +237,6 @@ g:hover {
 
 .scale-controls button {
   width: 1.5em;
-}
-
-.playerCounter {
-  fill: gray;
-  font-size: 10px;
 }
 
 </style>
