@@ -113,6 +113,42 @@
     }
   }
 
+  const debugGeo = false // display an overlay with current values
+  let currentSpeed
+  let smoothSpeed = 0.0
+  let normalizedSpeed = false
+  let compassHeading = false
+  let geoHeading = false
+  let combinedHeading
+
+  const deviceorientationListener = evt => {
+    if (evt.alpha && typeof evt.alpha === 'number') {
+      compassHeading = 360.0 - evt.alpha
+      return
+    }
+    compassHeading = false
+  }
+
+  const vlerpAngles = (a1, a2, f1, f2) => {
+    a1 = a1 * Math.PI / 180
+    a2 = a2 * Math.PI / 180
+    return Math.atan2(
+      Math.sin(a1) * f1 + Math.sin(a2) * f2,
+      Math.cos(a1) * f1 + Math.cos(a2) * f2
+    ) * 180 / Math.PI
+  }
+
+  $: {
+    if (compassHeading !== false && geoHeading !== false) {
+      combinedHeading = vlerpAngles(
+        compassHeading, geoHeading,
+        1.0 - normalizedSpeed, normalizedSpeed
+      )
+    } else {
+      combinedHeading = geoHeading || compassHeading
+    }
+  }
+
   let qrContext = getContext("qr-scanner");
   
   let map;
@@ -123,7 +159,6 @@
   let userPositionMarker;
   let geoWatch;
   let currentPosition;
-  let hasHeading = false // heading direction
 
   let markers = [];
   let selectedMarker;
@@ -220,6 +255,9 @@
     /* watch user position */
 
     let lastErrorCode;
+    // try onMount...
+    window.addEventListener('deviceorientation', deviceorientationListener)
+
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {
@@ -228,7 +266,22 @@
           heading: position.coords.heading,
           speed: position.coords.speed,
         }
-        //console.log("currentPosition", JSON.stringify(currentPosition), err)
+
+        if ('speed' in currentPosition && typeof currentPosition.speed === 'number') {
+          currentSpeed = currentPosition.speed
+          smoothSpeed = currentSpeed * 0.5 + smoothSpeed * 0.5
+          /* speed comes in meters per second, we clamp it between [0.5..2] and normalize
+           * i.e. speed<1.8km/h -> 0, speed>7.2km/h -> 1
+           */
+          normalizedSpeed = Math.min(1.0, Math.max(0.0, smoothSpeed - 0.5) / 1.5)
+          if (currentPosition.speed > 0) {
+            geoHeading = currentPosition?.heading !== false && currentPosition.heading !== null
+              ? currentPosition.heading
+              : false
+          }
+        }
+
+        // console.log('geoHeading', geoHeading, 'smoothSpeed', smoothSpeed, 'normalizedSpeed', normalizedSpeed, "currentPosition", JSON.stringify(currentPosition), err)
 
         positionStore.set(currentPosition);
 
@@ -265,7 +318,6 @@
     map.on('dragstart', function() {
       manualPosition = true;
     })
-      
   })
 
   const autoPositionMap = () => {
@@ -286,8 +338,10 @@
     }
   }
 
-  onDestroy(()=>{
+  onDestroy(() => {
+    console.log('MapRenderer destroy')
     Geolocation.clearWatch(geoWatch)
+    window.removeEventListener(deviceorientationListener)
   })
 
   const panToUserPosition = async () => {
@@ -337,7 +391,6 @@
     }
   }
 
-  $: hasHeading = currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null && currentPosition?.speed > 0
 
   const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");    
 
@@ -353,9 +406,21 @@
 
 <div 
     class="Map__Container container" 
-    class:hasHeading
-    style={`--map-heading: ${currentPosition?.heading || 0}deg; height: ${height};`}
+    class:hasHeading={combinedHeading !== false}
+    style={`--map-heading: ${combinedHeading || 0}deg; height: ${height};`}
   >
+  {#if debugGeo}
+    <div style="position: fixed; z-index: 10000; top: 0; left: 0; color: red">
+      comb/geo/comp<br/>
+      { typeof combinedHeading === 'number' ? Math.round(combinedHeading) : combinedHeading }
+      { typeof geoHeading === 'number' ? Math.round(geoHeading) : geoHeading }
+      { typeof compassHeading === 'number' ? Math.round(compassHeading) : compassHeading }<br/>
+      currSpd/smthSpd/normSpd<br/>
+      { Math.round(currentSpeed * 100) / 100 }
+      { Math.round(smoothSpeed * 100) / 100 }
+      { Math.round(normalizedSpeed * 100) / 100 }
+    </div> 
+  {/if}
 
   {#if showControls == "TRUE"}
     <div class="Map__Controls controls">
