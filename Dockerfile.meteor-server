@@ -1,11 +1,8 @@
-ARG INTERKIT_BASE_TAG=latest
-FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
-
 # Dockerfile for deployment
 # source: https://github.com/disney/meteor-base/blob/master/example/default.dockerfile
 
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.4 AS meteor-base
+FROM geoffreybooth/meteor-base:2.5.6 AS meteor-base
 
 ARG BUILD_SOURCE_PATH=./meteor-server
 
@@ -16,7 +13,7 @@ COPY ${BUILD_SOURCE_PATH}/package*.json $APP_SOURCE_FOLDER/
 RUN meteor npm install -g npm@7
 
 # copy interkit-packages
-COPY --from=interkit-packages /packages /packages
+# COPY --from=interkit-packages /packages /packages
 
 # install meteor app dependencies
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
@@ -42,14 +39,6 @@ COPY --from=meteor-base $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
 # Copy in app bundle
 COPY --from=meteor-base $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
-
-# Copy repositories folder
-ARG BUILD_REPOSITORIES_PATH=./repositories
-ARG BUILD_CONTAINER_REPOSITORIES_PATH=/var/repositories
-
-RUN echo COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
-COPY ${BUILD_REPOSITORIES_PATH} ${BUILD_CONTAINER_REPOSITORIES_PATH}
-
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 

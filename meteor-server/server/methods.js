@@ -3,13 +3,6 @@ import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
-const fs = require('fs')
-const fse = require('fs-extra');
-
-const getRepoPath = (projectId) => {
-  return process.env.REPOSITORIES_PATH + "/projects/" + projectId
-}
-
 const addColumn = async ({sheetKey, projectId, colKey, name, type, reference, options}) => {
 
   console.log("addColumn with reference", reference)
@@ -257,11 +250,6 @@ Meteor.methods({
       return duplicateProject(projectId)
   },
 
-  'project.list': async ({ projectId }) => {
-      const files = await fs.promises.readdir(getRepoPath(projectId))
-      return files;
-  },
-
   'project.setSlug': async ({ projectId, slug }) => {
     console.log("setSlug", projectId, slug, Projects.findOne({ slug }), Meteor.userId() )
     if (!Projects.findOne({ slug }) ) {
@@ -347,40 +335,6 @@ Meteor.methods({
       return false
     }
 
-  },
-
-  // add a file to a project
-  'file.create': async ({ filename, projectId }) => {
-      const filePath = getRepoPath(projectId) + "/" + filename;
-      if (!fs.existsSync(filePath)) {
-        await fs.promises.writeFile(filePath, "")      
-      } else {
-        console.log("File already exists.");
-      }
-  },
-
-  'file.load': async ({filename, projectId}) => {
-      //console.log("file.load", filename, projectId)
-      const filePath = getRepoPath(projectId) + "/src/" + filename;
-      let data;
-      let error;
-
-      try {
-        // check if file exists
-        await fs.promises.access(filePath, fs.constants.F_OK)
-        // read data
-        data = await fs.promises.readFile(filePath)
-      } catch(e) {
-        error = e;
-      }
-      //console.log("data", data.toString());
-      return {filename, content: data ? data.toString() : null, error};
-  },
-
-  'file.save': async ({file, projectId})  => {
-    //console.log("file.save", file, projectId)
-    const filePath = getRepoPath(projectId) + "/src/" + file.filename;
-    await fs.promises.writeFile(filePath, file.content)      
   },
 
   'bundler.getUrl': async () => {

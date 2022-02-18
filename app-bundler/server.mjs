@@ -16,6 +16,7 @@ import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
 import { api as board_node_api } from './src/api_boards.mjs'
+import { api as project_files_api } from './src/api_project_files.mjs'
 
 const PORT = process.env.PORT
 
@@ -76,6 +77,15 @@ app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', board_node_api.
 app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
 app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
 app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)
+
+
+// src files
+app.post('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
+app.get('/src/:projectId/:filename', project_files_api.read)
+app.put('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
+app.delete('/src/:projectId/:filename', project_files_api.delete)
+
+
 
 //app.use(express.static('public', { index: false }))
 

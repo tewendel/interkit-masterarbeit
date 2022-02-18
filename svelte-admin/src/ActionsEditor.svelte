@@ -14,7 +14,7 @@
 
   const load = async () => {
     console.log("loading actions.js")
-    let codeFile = await InterkitClient.call("file.load", {filename, projectId})    
+    let codeFile = await BundleServer.loadSrcFile({filename, projectId})    
     //console.log("codeFile", codeFile)
     code = codeFile?.content
   }
@@ -24,7 +24,7 @@
       filename,
       content: code
     }
-    await InterkitClient.call("file.save", {file: actionsFile, projectId})
+    await BundleServer.saveSrcFile({file: actionsFile, projectId})    
   }
 
   const saveAndCompile = async (dev=false)=>{

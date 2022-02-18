@@ -1,7 +1,6 @@
 <script>
   import YAML from "yaml"
   import ConfigForm from './ConfigForm.svelte'; 
-  import {InterkitClient} from 'interkit'
   import { BundleServer } from './BundleServer.js'
 
 
@@ -27,7 +26,7 @@
   
   const openFile = async (filename) => {
     //console.log("open file", filename)
-    currentFile = await InterkitClient.call("file.load", {filename, projectId})  
+    currentFile = await  BundleServer.loadSrcFile({filename, projectId});
     
     // file wasn't found
     if(currentFile.error?.code == "ENOENT") {
@@ -62,7 +61,7 @@
   }
 
   const saveFile = async () => {
-    await InterkitClient.call("file.save", {file: currentFile, projectId})
+    await BundleServer.saveSrcFile({file: currentFile, projectId})
     if(configObj) {
       initConfig(currentFile.content)
     }

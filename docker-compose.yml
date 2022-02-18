@@ -13,14 +13,12 @@ services:
     expose:
       - 3000
     volumes:
-      - projects:/var/repositories/projects
       - mediafiles:/var/mediafiles
     depends_on:
       - mongo
     environment:
       ROOT_URL: $INTERKIT_SERVER_URL
       MONGO_URL: mongodb://mongo:27017/meteor
-      REPOSITORIES_PATH: /var/repositories
       MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
       BUNDLER_URL: $INTERKIT_BUNDLER_URL

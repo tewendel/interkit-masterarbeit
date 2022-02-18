@@ -139,7 +139,7 @@
 
     workspace.addChangeListener(myUpdateFunction);
 
-    blocklyXML = await InterkitClient.call("file.load", {filename: blocklyXMLFile, projectId})  
+    blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
     if(blocklyXML.content) {
       //console.log("blocklyXML", blocklyXML.content)
       let xml = Blockly.Xml.textToDom(blocklyXML.content);
@@ -212,14 +212,14 @@
       filename: blocklyXMLFile,
       content: xml_text
     }
-    await InterkitClient.call("file.save", {file, projectId})
+    await BundleServer.saveSrcFile({file, projectId})    
 
     let appSvelteFile = {
       filename: "App.svelte",
       content: generatedCode
     }
 
-    await InterkitClient.call("file.save", {file: appSvelteFile, projectId})
+    await BundleServer.saveSrcFile({file: appSvelteFile, projectId})    
   }
 
   const saveAndCompile = async (dev=false)=>{

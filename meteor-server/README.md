@@ -1,8 +1,11 @@
 # setup
 
-`npm install`
+````
+npm install
+cp .env.example .env
+````
 
-- set absolute path of project respositories directory REPOSITORIES_PATH in .env
+- set values in .env
 
 # run
 
@@ -12,5 +15,5 @@
 
 - based on [this](https://github.com/disney/meteor-base)
 - after meteor update
-  - change both FROM to math the new meteor and node versions
+  - change both FROM to match the new meteor and node versions
 - check [this](https://github.com/disney/meteor-base/blob/master/example/app-with-native-dependencies.dockerfile) if building native dependencies is required
