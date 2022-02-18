@@ -4,6 +4,13 @@ colour: 300
 fields:
   - type: string
     name: text
+  - type: options
+    name: clickType
+    options:
+      - payloadTrigger
+      - link
+      - linkTargetBlank
+    defaultValue: payloadTrigger
   - type: string
     name: clickTrigger
   - type: options

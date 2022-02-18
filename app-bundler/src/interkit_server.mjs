@@ -1,6 +1,7 @@
 import simpleDDP from 'simpleddp'; // ES6
 import ws from 'isomorphic-ws';
 import { ensureRepositories } from './filesystem.mjs'
+import { updateProjectServers } from './project_server.mjs'
 
 const opts = {
   endpoint: process.env.INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL || process.env.INTERKIT_SERVER_WEBSOCKETS_URL,
@@ -9,12 +10,13 @@ const opts = {
 };
 
 let projects = []
+let server = null
 
 const setup = async () => {
 
-  console.log("connecting to " + opts.endpoint)
+  console.log("connecting to " + opts.endpoint + "...")
 
-  const server = new simpleDDP(opts);
+  server = new simpleDDP(opts);
 
   server.on('connected', () => {
     // do something
@@ -28,6 +30,7 @@ const setup = async () => {
 
   server.on('error', (e) => {
     // global errors from server
+    console.log("interkit server error", e)
   });
 
   let projectsSub = server.subscribe("projects");
@@ -36,8 +39,9 @@ const setup = async () => {
 
   let reactiveCollection = server.collection('projects').reactive();
 
-  reactiveCollection.onChange((newData) => {
-    ensureRepositories(newData)
+  reactiveCollection.onChange( async (newData) => {
+    await ensureRepositories(newData)
+    updateProjectServers(newData)
     projects = newData
   });
 }
@@ -55,8 +59,13 @@ const getDefaultProject = () => {
   return projects.find(p => p.isDefaultProject) || false
 }
 
+const call = (method, params) => {
+  return server.call(method, params)
+}
+
 export default {
   setup,
   getProjectIdFromProjectSlug,
   getDefaultProject,
+  call
 }

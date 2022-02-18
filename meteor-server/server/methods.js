@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -284,6 +284,58 @@ Meteor.methods({
     }
   },
 
+  'project.projectServer.init': async ({ projectId }) => {
+    //console.log("project.projectServer.init", projectId)
+    const res = Projects.update({_id: projectId}, { $set: { projectServer: {
+      status: "init",
+      messages: [
+        {
+          type: "system",
+          text: "Initializing project server...",
+          date: new Date()
+        }
+      ]
+    } } })
+    //console.log("project.projectServer.init result", res)
+    return res
+  },
+
+  'project.projectServer.addMessage': async ({ projectId, message }) => {
+    if (!message.date) {
+      message.date = new Date()
+    }
+    //console.log("project.projectServer.addMessage", projectId, message)
+    const res = Projects.update({_id: projectId}, { $push: { 'projectServer.messages': message } })
+    //console.log("project.projectServer.addMessage result", res)
+    return res
+  },
+
+  'project.projectServer.clearMessages': async ({ projectId }) => {
+    //console.log("project.projectServer.clearMessags", projectId)
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.messages': [] } })
+    //console.log("project.projectServer.clearMessags result", res)
+    return res
+  },
+
+  'project.projectServer.setStatus': async ({ projectId, status }) => {
+    //console.log("project.projectServer.setStatus", projectId, status)
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.status': status } })
+    //console.log("project.projectServer.setStatus result", res)
+    return res
+  },
+
+  'project.projectServer.start': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': "start" } })
+  },
+
+  'project.projectServer.stop': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': "stop" } })
+  },
+
+  'project.projectServer.resetRequestedAction': async ({ projectId }) => {
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': null } })
+  },
+
   'project.makeDefaultProject': async ({ projectId }) => {
     console.log("makeDefaultProject", projectId, Meteor.userId())
     if (Projects.findOne(projectId)) {
@@ -464,5 +516,38 @@ Meteor.methods({
       Sheets.update({_id: sheet._id}, {$set: {name: name}});
     }
   },
+
+  'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
+    Messages.insert({
+      projectId,
+      sender,
+      recipients,
+      channel_key,
+      payload,
+      origin,
+      createdAt: new Date()
+    })
+    
+    // this is where the message will need to be processed by the project server logic
+    
+    /*
+    // for now we add a fake response message adressed to the user
+    Messages.insert({
+      projectId,
+      recipients: [sender],
+      channel_key,
+      payload: {
+        type: "text",
+        text: "ok"
+      }      
+    })
+    */
+
+  },
+
+  'message.setHandled': ({messageId, handledBy = []}) => {
+    console.log("message.setHandled", messageId, handledBy)
+    Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
+  }
   
 });

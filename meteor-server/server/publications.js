@@ -1,10 +1,16 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
   let projects = Projects.find({});
   //console.log(projects.fetch())
+  return projects;
+});
+
+Meteor.publish('project', function(projectId) {
+  //console.log("project sub")
+  let projects = Projects.find({_id: projectId});
   return projects;
 });
 
@@ -70,4 +76,34 @@ Meteor.publish("user.projectUserData", ({ projectId }) => {
 Meteor.publish("user", ({ projectId }) => {
   const cursor = Meteor.users.find(Meteor.userId());
   return cursor
+});
+
+Meteor.publish("messages", ({projectId, channel_key, origin, userId}) => {
+  let query = {projectId};
+  if (channel_key) {
+    query.channel_key = channel_key;
+  }
+  if (userId) {
+    query.$or = [
+      {sender: userId}, 
+      {recipients: userId} 
+    ]
+  }
+  if (origin) {
+    query.origin = origin;
+  }
+  console.log(query)
+  let messages = Messages.find(query, {sort: {createdAt: -1}});
+  return messages;
+});
+
+Meteor.publish("messages.unhandled", ({projectId}) => {
+  let query = {
+    projectId,
+    handledAt: { $exists: false },
+    origin: { $not: { $in: ["handler"] } }
+  }
+  let messages = Messages.find(query, {sort: {createdAt: -1}});
+  // console.log("messages.unhandled count: " + messages.count(), messages.fetch())
+  return messages;
 });

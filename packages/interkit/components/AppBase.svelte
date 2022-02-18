@@ -2,11 +2,17 @@
 
   import { InterkitClient } from '../'
   import { executeTrigger } from '../actions.js'
-  import { onMount } from 'svelte'
+  import { onMount, setContext } from 'svelte'
+  import { writable } from 'svelte/store';
 
   import Styling from './Styling.svelte'
 
   let initComplete = false;
+
+  const bypassDesktopFallback = /\bbypassDesktopFallback=1\b/.test(document.location.search + document.location.hash)
+  const desktopMQ = '(min-width: 600px)';
+  const isDesktop = writable(!bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches);
+  setContext('isDesktop', isDesktop)
   
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp()  
@@ -58,8 +64,12 @@
 <div class="AppBase Theming" id="Theming">
   <Styling>
     {#if $projectId && initComplete}
-      <slot ></slot>
-      <slot name="viewport"></slot>
+      {#if $$slots.desktopFallback && $isDesktop}
+        <slot name="desktopFallback" />
+      {:else}
+        <slot ></slot>
+        <slot name="viewport"></slot>
+      {/if}
     {:else}
       <div class="Loading">
         <p class="static-loading-indicator">laden....</p>

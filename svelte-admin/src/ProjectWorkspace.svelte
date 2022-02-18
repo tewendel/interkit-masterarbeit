@@ -5,10 +5,11 @@
   import ComponentEditor from './ComponentEditor.svelte'
   import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
-  import RepositoryEditor from "./RepositoryEditor.svelte"
+  import RepositoryTab from "./RepositoryTab.svelte"
   import MediaManager from "./MediaManager.svelte"
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
+  import NodeEditor from './NodeEditor.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -29,9 +30,10 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Repo" />
+        <Tab label="Repository" />
         <Tab label="Users" />
         <Tab label="Project" />
+        <Tab label="Nodes" />
         <div slot="content">
           <TabContent>
             <Sheets {projectId}/>
@@ -43,13 +45,16 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryEditor {projectId} open={selected === 3}/>
+            <RepositoryTab {projectId} open={selected === 3}/>
           </TabContent>
           <TabContent>
             <UsersManager {projectId} />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
+          </TabContent>
+          <TabContent>
+            <NodeEditor {projectId} />
           </TabContent>
         </div>
       </Tabs>

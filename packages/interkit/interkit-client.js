@@ -619,7 +619,7 @@ const login = async ({ username, password }) => {
   return userAuthData
 }
 
-const  logout = async () => {
+const logout = async () => {
     await server.logout();
     userId.set(null);
     localStorage.setItem('userId', null);
@@ -627,7 +627,7 @@ const  logout = async () => {
   }
 
 // call a meteor method, add projectId to params if needed (allow method calls without params)
-const   call = async (method, params = {}) => {
+const call = async (method, params = {}) => {
 
     if (config && params && !params?.projectId) {
       console.log("adding projectId to method params", params, method)
