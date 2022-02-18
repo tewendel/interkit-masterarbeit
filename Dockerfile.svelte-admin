@@ -1,13 +1,13 @@
-ARG INTERKIT_BASE_TAG=latest
-FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
 FROM node:16-alpine
 
 ARG BUILD_SOURCE_PATH=./svelte-admin
 
 WORKDIR /app
 
-# copy shared files
-COPY --from=interkit-packages /packages /packages
+# copy shared files and install dependencies
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-blockly && npm ci
 
 # copy app files and install dependencies
 COPY ${BUILD_SOURCE_PATH} ./

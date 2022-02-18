@@ -1,14 +1,13 @@
-ARG INTERKIT_BASE_TAG=latest
-FROM interkit/interkit-packages:${INTERKIT_BASE_TAG} AS interkit-packages
 FROM node:16
-
 
 ARG BUILD_REPOSITORIES_PATH=./repositories
 
 WORKDIR /app
 
-# copy shared files
-COPY --from=interkit-packages /packages /packages
+# copy shared files and install dependencies
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit-blockly && npm ci
 
 # install dependencies
 COPY ./app-bundler/package*json ./
@@ -21,7 +20,7 @@ RUN npm ci
 COPY ./app-bundler ./
 
 # copy shared files AGAIN for starters
-COPY --from=interkit-packages /packages /var/packages
+RUN cp -r /packages /var/packages
 
 # set repositories path in container
 ENV REPOSITORIES_PATH=/var/repositories

@@ -1,6 +1,5 @@
 stages:
   - publish
-  - prepare
   - build
   - deploy
 
@@ -17,31 +16,19 @@ variables:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
 
-docker-build-base:
-  <<: *build
-  stage: prepare
-  script:
-    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
-    - docker build --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG -f Dockerfile.interkit-packages -t interkit/interkit-packages:$INTERKIT_BASE_TAG .
-    - docker push interkit/interkit-packages:$INTERKIT_BASE_TAG
-
 docker-build-server:
-  # Official docker image.
   image: docker:$DOCKER_IMAGE_TAG
   stage: build
   services:
     - docker:dind
-  #needs:
-  #  - docker-build-base
   before_script:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
     - docker pull interkit/server-base:$INTERKIT_BASE_TAG || true
     - docker pull interkit/server:$INTERKIT_BASE_TAG || true
-    - docker build --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --target meteor-base --cache-from interkit/server-packages:$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG -t interkit/server-base:$INTERKIT_BASE_TAG -f Dockerfile.meteor-server .
-    - docker build --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG --cache-from interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_IMAGE_TAG -f Dockerfile.meteor-server .
+    - docker build --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --target meteor-base --cache-from interkit/server-base:$INTERKIT_BASE_TAG -t interkit/server-base:$INTERKIT_BASE_TAG -f Dockerfile.meteor-server .
+    - docker build --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG --cache-from interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_IMAGE_TAG -f Dockerfile.meteor-server .
     - docker push interkit/server-base:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_IMAGE_TAG
@@ -58,9 +45,8 @@ docker-build-bundler:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
     - docker pull interkit/bundler:$INTERKIT_BASE_TAG || true
-    - docker build  --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler .
+    - docker build  --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler .
     - docker push interkit/bundler:$INTERKIT_BASE_TAG
     - docker push interkit/bundler:$INTERKIT_IMAGE_TAG
 
@@ -76,9 +62,8 @@ docker-build-admin:
     - apk add --no-cache docker-compose
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    - docker pull interkit/interkit-packages:$INTERKIT_BASE_TAG || true
     - docker pull interkit/admin:$INTERKIT_BASE_TAG || true
-    - docker build  --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/interkit-packages:$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin .
+    - docker build --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin .
     - docker push interkit/admin:$INTERKIT_BASE_TAG
     - docker push interkit/admin:$INTERKIT_IMAGE_TAG
 

@@ -35,9 +35,6 @@
     },
     "testModule": "tests/main.js"
   },
-  "workspaces": [
-    "../packages/*"
-  ],
   "engines": {
     "npm": ">=7"
   }

@@ -75,6 +75,25 @@ const loadBlockData = async (projectId) => {
   return resJSON 
 }
 
+const loadSrcFile = async ({filename, projectId}) => {
+  const res = await fetch(bundleServerURL + "/src/" + projectId + "/" + filename)
+  const resJSON = await res.json()
+  if (resJSON.result) {
+    return resJSON.result
+  }
+}
+
+const saveSrcFile = async ({file, projectId}) => {
+  const res = await fetch(bundleServerURL + "/src/" + projectId + "/" + file.filename, { 
+    method: "POST",
+    body: file.content
+  })
+  const resJSON = await res.json()
+  if (resJSON.result) {
+    return resJSON.result
+  }
+}
+
 const boardsApi = (projectId, resource, init) => fetch(
   bundleServerURL + '/boards/' + projectId + resource,
   init
@@ -88,7 +107,9 @@ export const BundleServer = {
   reloadPreview,
   duplicateProject,
   gitStatus,
-  loadBlockData
+  loadBlockData,
+  loadSrcFile,
+  saveSrcFile
 }
 
 export { boardsApi }
