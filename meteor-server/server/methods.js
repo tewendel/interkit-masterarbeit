@@ -123,15 +123,23 @@ Meteor.methods({
     password,
     projectData
   }) {
-    if (!projectId) return false
-    Accounts.createUser({
+    if (!projectId) {
+      console.warn("createProjectUser: missing projectId")
+      return false
+    }
+    const userId = Accounts.createUser({
       username,
       email,
       password,
-      projectUserData: {
-        [projectId]: projectData
-      }
     })
+
+    const projectUserData = {
+      [projectId]: projectData
+    }
+
+    Meteor.users.update(userId, { $set: { projectUserData } })
+
+    console.log("createProjectUser", userId)
   },
 
   // create a front end user for a project, identified by a user token
@@ -441,6 +449,8 @@ Meteor.methods({
         values[colKey] = newVal 
        //console.log(value)
         Rows.update({_id: row._id}, {$set: {values}});
+        // return the updated row
+        return Rows.findOne({ key: rowKey, projectId })
       } else {
         console.log("updateValue: row not found")
       }
@@ -452,6 +462,27 @@ Meteor.methods({
       if (Meteor.isServer) {
         console.log("row.delete", key, projectId)
         Rows.remove({key, projectId})
+      }
+    }
+  },
+
+  'row.duplicate': ({ key, projectId }) => {
+    if (key && projectId && Meteor.userId()) {
+      if (Meteor.isServer) {
+        console.log("row.duplicate", key, projectId)
+        let row = Rows.findOne({ key, projectId })
+        if (row) {
+          delete row._id
+          const newKey = uuidv4()
+          Rows.insert({
+            ...row,
+            key: newKey,
+          })
+          // console.log("addRow", key)
+          return {
+            rowKey: newKey
+          }
+        }
       }
     }
   },

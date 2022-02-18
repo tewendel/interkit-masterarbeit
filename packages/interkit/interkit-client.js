@@ -396,6 +396,23 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   }
 }
 
+// returns the row store for a given sheet, created one if not available or waits for subscription to complete
+// returns only one row
+// if a columnMap is passed in, returns the converted object store
+// subKey is a special key you can use to prevent conflicts with other subs that have different column maps
+const getOneRowSubStore = async (sheetKeyOrSheetColumn, query, filterFunction) => {
+
+  let data = await getRowSubStore(sheetKeyOrSheetColumn) // query not used yet
+
+  const rowStore = writable()
+  
+  data.subscribe( rows => {
+    rowStore.set(rows.filter(filterFunction)?.[0])
+  })
+
+  return rowStore
+}
+
 const getMediaFileSubStore = async () => {
   if(!mediaFileSub) {
     // no subscription to media files yet, set it up
@@ -433,6 +450,15 @@ const getUiKeyStore = uiKey => {
     globalStores[key] = writable();
   }
   return globalStores[key]
+}
+
+const getUiKey = uiKey => {
+  const key = "uiKey_" + uiKey
+  if (globalStores[key]) {
+    return get(globalStores[key])
+  } else {
+    return false
+  }
 }
 
 // get a local persistant store by key or initialize a new one if it doens't exist
@@ -566,12 +592,13 @@ const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) =
   return userId ? token : false
 }
 
-const createProjectUser = async ({ username, password, email, projectData }) => {
+const createProjectUser = async ({ username, password, email, projectData, projectId }) => {
     const result = await InterkitClient.call("createProjectUser", {
       username,
       password,
       email,
-      projectData
+      projectData,
+      projectId
     })
     return result
   }
@@ -771,6 +798,7 @@ const InterkitClient = {
   call,
   getSub,
   getRowSubStore,
+  getOneRowSubStore,
   getMediaFileSubStore,
   getMediaFile,
   getUploadEndpoint,
@@ -786,6 +814,7 @@ const InterkitClient = {
   restoreUiSnapshot,
   getUiHistoryStore,
   setUiKey,
+  getUiKey,
   registerGlobalMethod,
   callGlobalMethod
 }

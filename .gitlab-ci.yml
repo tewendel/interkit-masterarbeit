@@ -1,4 +1,5 @@
 stages:
+  - publish
   - prepare
   - build
   - deploy
@@ -111,4 +112,12 @@ deploy-demo:
     url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
   stage: deploy
 
+publish-package:
+  stage: publish
+  script:
+      - cd packages && tar -a -cf ../interkit.tar.gz interkit && cd -
+  artifacts:
+    expire_in: 5 yrs
+    paths:
+      - interkit.tar.gz
 
