@@ -16,4 +16,7 @@ RUN npm ci
 # build
 RUN npm run build
 
+# clean
+RUN npm prune --production && rm -rf /packages
+
 CMD ["npm", "start"]
