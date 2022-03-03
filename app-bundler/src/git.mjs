@@ -36,6 +36,14 @@ async function gitCommit(projectPath, message = "some commit") {
   return sha
 }
 
+async function gitCheckout(projectPath, sha="master") {
+  await git.checkout({
+    fs,
+    dir: projectPath,
+    ref: sha
+  })
+}
+
 async function gitLatestCommit(projectPath, branch = "master") {
   let commits = []
   try {
@@ -54,10 +62,25 @@ async function gitLatestCommit(projectPath, branch = "master") {
   }
 }
 
+async function gitUnstagedChanges(projectPath) {
+  const repo = {
+    fs,
+    dir: projectPath
+  }
+  const FILE = 0, WORKDIR = 2, STAGE = 3
+  const filenames = (await git.statusMatrix(repo))
+    .filter(row => row[WORKDIR] !== row[STAGE])
+    .map(row => row[FILE])
+  // console.log("unstaged changes:", filenames)
+  return filenames
+}
+
 
 export {
   gitAddAll,
   gitLatestCommit,
   gitAdd,
-  gitCommit
+  gitCommit,
+  gitCheckout,
+  gitUnstagedChanges
 }

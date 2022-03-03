@@ -20,7 +20,7 @@ export const Projects = new Mongo.Collection('projects');
       date: <datetime>
     }]
   }
-// - uiState
+- uiState
 */
 
 export const Sheets = new Mongo.Collection('sheets');

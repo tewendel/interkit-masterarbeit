@@ -34,6 +34,8 @@
     "kind-of": "^5.1.0",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
+    "node-watch": "^0.7.3",
+    "picomatch": "^2.3.1",
     "simpleddp": "^2.2.4",
     "simpleddp-core": "^1.0.6",
     "sirv-cli": "^1.0.0",
