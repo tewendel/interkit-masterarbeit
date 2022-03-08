@@ -20,7 +20,7 @@ services:
         #- "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.letsencrypt.acme.email=info@interkit.app"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-      - "--providers.docker.network=frontproxy"
+      #- "--providers.docker.network=frontproxy"
     ports:
       - "80:80"
       - "443:443"
