@@ -14,6 +14,8 @@ import { put_duplicate_project } from './src/put_duplicate_project.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
+import { get_git_commitAll } from './src/get_git_commitAll.mjs'
+import { get_git_checkout } from './src/get_git_checkout.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
 import { api as board_node_api } from './src/api_boards.mjs'
 import { api as project_files_api } from './src/api_project_files.mjs'
@@ -55,8 +57,11 @@ app.get('/compile/:projectId', get_compile)
 // duplicate app repository
 app.put('/app/:projectId', put_duplicate_project)
 
-// git status
+// git 
 app.get('/git/status/:projectId', get_git_status)
+app.get('/git/commitAll/:projectId', get_git_commitAll) // a method that triggers a change
+app.get('/git/checkout/:projectId', get_git_checkout) // a method that triggers a change
+
 
 // get component configuration yamls
 app.get('/components/:projectId', get_yamls)

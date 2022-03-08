@@ -1,12 +1,15 @@
 /* functions to watch projects files and update the project collection */
 
+import path from 'path'
 import match from 'minimatch'
 import watch from 'node-watch'
+import debounce from 'debounce'
 
 import { getProjectPath } from './filesystem.mjs'
 import interkit_server from './interkit_server.mjs'
 import {
-  gitUnstagedChanges
+  gitUnstagedChanges,
+  gitLog
 } from './git.mjs'
 
 const watchedProjectIds = []
@@ -15,11 +18,20 @@ const updateGit = async function(projectId) {
   const projectPath = getProjectPath(projectId)
   const data = {
     unstagedChanges: await gitUnstagedChanges(projectPath),
+    log: await gitLog(projectPath)
   }
   interkit_server.call('project.updateUiState', {
     projectId: projectId, 
     section: 'git',
     data
+  })
+}
+
+const updateFiles = async function(projectId, watchedFiles) {
+  interkit_server.call('project.updateUiState', {
+    projectId: projectId, 
+    section: 'files',
+    data: watchedFiles
   })
 }
 
@@ -33,8 +45,16 @@ const runUpdater = async function(projectId) {
   if (watchedProjectIds.includes(projectId)) return false
   watchedProjectIds.push(projectId)
 
+  // prepare tracking files
+  const watchedFiles = {}
+
+  // prepare updater methods
+  const updateProjectFilesDebounced = debounce( wF =>updateFiles(projectId, wF), 100)
+  const updateGitDebounced = debounce(() => updateGit(projectId), 100)
+
   // watch project path and trigger updaters
   const projectPath = getProjectPath(projectId)
+
   watch(projectPath, {
     recursive: true,
     delay: 500,
@@ -47,8 +67,11 @@ const runUpdater = async function(projectId) {
       return true
     }
   }, function(event, filename) {
-    // console.log('file %s of project %s changed.', filename, projectId);
-    updateGit(projectId)
+    const file = path.relative(projectPath, filename)
+    // console.log('file %s of project %s changed.', file, projectId)
+    watchedFiles[file] = Date.now()
+    updateGitDebounced()
+    updateProjectFilesDebounced(watchedFiles)
   });
 }
 
@@ -60,4 +83,5 @@ const runUpdaters = async function(projects) {
 
 export {
   runUpdaters,
+  updateGit,
 }

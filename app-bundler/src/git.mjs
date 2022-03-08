@@ -36,12 +36,25 @@ async function gitCommit(projectPath, message = "some commit") {
   return sha
 }
 
-async function gitCheckout(projectPath, sha="master") {
-  await git.checkout({
+async function gitCommitAll(projectPath, message = "some commit") {
+  const files = await gitUnstagedChanges(projectPath)
+  console.log("git commitAll:", files)
+  for (let file of files) {
+    await gitAdd(projectPath, file)
+  }
+  return await gitCommit(projectPath, message)
+}
+
+async function gitCheckout(projectPath) {
+  console.log("git checkout")
+  const result =  await git.checkout({
     fs,
     dir: projectPath,
-    ref: sha
+    force: true,
+    ref: 'master'
   })
+  console.log("git checkout:", result)
+  return result
 }
 
 async function gitLatestCommit(projectPath, branch = "master") {
@@ -60,6 +73,24 @@ async function gitLatestCommit(projectPath, branch = "master") {
     sha: commit ? commit.oid.substr(0,7) : "0",
     message: commit ? commit.commit.message : "(error)"
   }
+}
+
+async function gitLog(projectPath, branch = "master") {
+  let commits = []
+  try {
+    commits = await git.log({
+      fs,
+      dir: projectPath,
+    })
+  } catch (error) {
+    console.warn(error)
+  }
+  return commits.map(entry => {
+    return {
+      ...entry,
+      date: new Date(entry.commit.author.timestamp * 1000),
+    }
+  })
 }
 
 async function gitUnstagedChanges(projectPath) {
@@ -81,6 +112,8 @@ export {
   gitLatestCommit,
   gitAdd,
   gitCommit,
+  gitCommitAll,
   gitCheckout,
-  gitUnstagedChanges
+  gitUnstagedChanges,
+  gitLog
 }
