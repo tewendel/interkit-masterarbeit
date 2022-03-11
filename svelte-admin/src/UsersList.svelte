@@ -13,6 +13,8 @@
     { key: "username", value: "username" },
     { key: "createdAt", value: "createdAt" },
     { key: "userToken", value: "userToken" },
+    { key: "lastHeartbeat", value: "lastHeartbeat" },
+    { key: "pushnotificationRegistrationToken", value: "pushnotificationRegistrationToken" },
   ];
 
   let rows = [];
@@ -23,7 +25,9 @@
       .map(user => {
         return {
           ...user,
-          userToken: user?.projectUserData?.[projectId]?.userToken
+          userToken: user?.projectUserData?.[projectId]?.userToken,
+          lastHeartbeat: user?.projectUserData?.[projectId]?.lastHeartbeat,
+          pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken
         }
     })
     : []
