@@ -31,6 +31,8 @@ try {
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
+let pushnotificationRegistrationToken = writable(null)
+
 // a global store to store the state history of stores relavant to the UI
 let uiHistoryStore = writable([])
 
@@ -603,6 +605,46 @@ const createProjectUser = async ({ username, password, email, projectData, proje
     return result
   }
 
+const pushnotificationMessageUser = async ({ userId, msg }) => {
+  await InterkitClient.call(
+    'pushnotificationMessageUser',
+    { userId, msg }
+  )
+}
+
+const saveUserPushnotificationRegistrationToken = async () => {
+  if (!userId || !pushnotificationRegistrationToken) {
+    console.log('saveUserPushnotificationRegistrationToken bailing, because somethings missing', { userId, pushnotificationRegistrationToken })
+    return
+  }
+  let result
+  try {
+    const token = get(InterkitClient.pushnotificationRegistrationToken)
+    result = await InterkitClient.call(
+      'user.savePushnotificationRegistrationToken',
+      { token }
+    )
+  } catch (error) {
+    console.error('saveUserPushnotificationRegistrationToken error', error)
+    return false
+  }
+  return result
+}
+
+// these can be very async so we listen to both and the handler acts when both are set
+userId.subscribe(saveUserPushnotificationRegistrationToken)
+pushnotificationRegistrationToken.subscribe(saveUserPushnotificationRegistrationToken)
+
+const userHeartbeat = async () => {
+  let result
+  try {
+    result = await InterkitClient.call('user.heartbeat')
+  } catch (error) {
+    console.error('userHeartbeat error', error)
+    return false
+  }
+  return result
+}
 
 const login = async ({ username, password }) => {
   //console.log(server)
@@ -783,6 +825,7 @@ userId.subscribe(subscribeUserProjectDataStore)
 
 const InterkitClient = {
   userId,
+  pushnotificationRegistrationToken,
   config,
   projectId,
   userProjectDataStore,
@@ -793,6 +836,8 @@ const InterkitClient = {
   loginTokenUser,
   createProjectTokenUserAndLogin,
   createProjectUser,
+  saveUserPushnotificationRegistrationToken,
+  userHeartbeat,
   login,
   logout,
   call,

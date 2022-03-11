@@ -25,6 +25,22 @@
 
   import { Plugins } from '@capacitor/core';
   const { SplashScreen } = Plugins;
+  import * as pushNotifications from '../pushnotifications.js'
+
+  (async () => {
+    console.log('pushNotifications...')
+    pushNotifications.startHeartbeat()
+    await pushNotifications.registerNotifications()
+      .then(async () => {
+        console.log('pushNotifications addListeners...')
+        await pushNotifications.addListeners()
+        await pushNotifications.getDeliveredNotifications()
+      })
+      .catch(e => {
+        console.error('pushNotifications', e)
+        InterkitClient.pushnotificationRegistrationToken.set('(web)')
+      })
+  })()
 
   $: {
     if(initComplete) {
