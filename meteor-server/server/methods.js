@@ -106,6 +106,15 @@ const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKe
   }    
 }
 
+const updateUserProjectData = async (userId, projectId, key, value) => {
+  // write projectData updates to user
+  Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.${key}`] : value 
+    }
+  })  
+}
+
 Meteor.methods({
 
   // create a front end user for a project
@@ -471,6 +480,7 @@ Meteor.methods({
     }
   },
 
+
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     Messages.insert({
       projectId,
@@ -481,27 +491,55 @@ Meteor.methods({
       origin,
       createdAt: new Date()
     })
-    
-    // this is where the message will need to be processed by the project server logic
-    
-    /*
-    // for now we add a fake response message adressed to the user
-    Messages.insert({
-      projectId,
-      recipients: [sender],
-      channel_key,
-      payload: {
-        type: "text",
-        text: "ok"
-      }      
-    })
-    */
-
   },
 
   'message.setHandled': ({messageId, handledBy = []}) => {
     console.log("message.setHandled", messageId, handledBy)
     Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
+  },
+
+  'user.get': ({userId}) => {
+    const user = Meteor.users.findOne(userId)
+    return user;
+  },
+
+  'user.getProjectUserData': ({userId, projectId}) => {
+    const user = Meteor.users.findOne(userId);
+    console.log("getProjectUserData", user)
+    return user?.projectUserData[projectId]; 
+  },
+
+  'user.updateUserProjectData': ({userId, projectId, key, value}) => {
+    updateUserProjectData(userId, projectId, key, value);
+  },
+
+  'user.moveTo': ({projectId, userId, boardId, nodeId}) => {
+    console.log("user.moveTo")
+
+    // get user
+    const user = Meteor.users.findOne(userId)
+    if(!user) {
+      console.log("user.moveTo - user not found")
+      return;
+    }  
+    console.log(user);  
+
+    // TODO: move this logic to the project server!
+
+    // get boardState
+    let boardState = user?.projectUserData[projectId]?.boardState;
+    if(!boardState) {
+      boardState = {}
+    }
+
+    // modify boardState
+    boardState = {...boardState, [boardId]: {
+      status: "arriving",
+      nodeId
+    }}
+    console.log("boardState", boardState);
+
+    updateUserProjectData(userId, projectId, "boardState", boardState)
   }
   
 });

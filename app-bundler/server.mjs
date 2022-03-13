@@ -15,7 +15,10 @@ import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
-import { api as board_node_api } from './src/api_boards.mjs'
+
+//import { api as board_node_api } from './src/api_boards.mjs'
+import { api as board_node_api } from 'interkit/project-boards-nodes.js'
+
 import { api as project_files_api } from './src/api_project_files.mjs'
 
 const PORT = process.env.PORT
