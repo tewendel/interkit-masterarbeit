@@ -509,6 +509,21 @@ Meteor.methods({
     Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
   },
 
+  'message.submitChoice': ({projectId, channel_key, sender, messageId, selectedKey}) => {
+    console.log("### selecting ", messageId, selectedKey)
+    Messages.update({_id: messageId}, {$set: {selectedChoiceKey: selectedKey}})
+
+    Messages.insert({
+      projectId,
+      sender,
+      recipients: [],
+      channel_key,
+      payload: {type: "select", key: selectedKey},
+      origin: undefined,
+      createdAt: new Date()
+    })
+  },
+
   'user.get': ({userId}) => {
     const user = Meteor.users.findOne(userId)
     return user;

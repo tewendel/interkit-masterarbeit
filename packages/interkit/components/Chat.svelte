@@ -44,11 +44,15 @@
   }
 
   const submitChoice = (message, selectedKey) => {
-    console.log("selected", selectedKey, message)
-    InterkitClient.call("message.submitChoice", {
-      messageId: message.id,
-      selectedKey
-    })
+    if(!message?.selectedChoiceKey) {
+      console.log("selected", selectedKey, message)
+      InterkitClient.call("message.submitChoice", {
+        sender: userId,
+        channel_key, 
+        messageId: message.id,
+        selectedKey
+      })
+    }
   } 
 
   let messageText

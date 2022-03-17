@@ -24,7 +24,10 @@
     {#if message?.payload?.choice}
       <ul>  
         {#each Object.keys(message?.payload?.choice) as key}
-          <li class="choice-option" on:click={()=>{submitChoice(message, key)}}>{message.payload.choice[key]}</li>
+          <li class="choice-option" on:click={()=>{submitChoice(message, key)}}>
+            {message.payload.choice[key]}
+            {#if message?.selectedChoiceKey == key}(selected){/if}
+          </li>
         {/each}
       </ul>
     {/if}

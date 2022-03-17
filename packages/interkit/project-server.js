@@ -8,6 +8,14 @@ const subscribeMessages = async (server, projectId) => {
   return reactiveMessagesCollection
 }
 
+const subscribeUnselected = async (server, projectId) => {
+  let messagesSub = server.subscribe("choices.unselected", { projectId });
+  await messagesSub.ready();
+
+  let reactiveMessagesCollection = server.collection('messages').reactive();
+  return reactiveMessagesCollection  
+}
+
 const subscribeUsers = async (server, projectId) => {
   let usersSub = server.subscribe("projectUsers", { projectId });
   await usersSub.ready();
@@ -144,6 +152,9 @@ const setupMessageHandling = async ({
   console.log("project server found board data: ", boardData);
 
   reactiveMessagesCollection.onChange(async (messages) => {
+
+    // console.log("messages onChange", messages)
+
     // TODO: sort by date to ensure that the newest message is processed first
     const unhandledMessages = messages.filter(message => !handledMessageIds.includes(message.id))
     // prevent not handling over double handling by blocking second execution before processing
