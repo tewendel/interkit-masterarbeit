@@ -138,6 +138,7 @@
 <style>
   .style {
     display: contents;
+    height: 100%;
   }
 
   :global(html),
