@@ -1,6 +1,8 @@
 <script>
 
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
+
+  import { InterkitClient } from 'interkit'
 
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
 
@@ -18,6 +20,44 @@
   const nodeIdRE = boardIdRE
 
   export let projectId
+
+  // the following is boilerplate copied from usersmanager
+  // could be centralized; or better: just subscribe to one user
+  let usersStore
+  let unsubscribe
+  let usersArray
+  let subHandle
+  $: resetSub(projectId)
+  const resetSub = async (projectId) => {
+    if(subHandle) await subHandle.stop()
+    subHandle = await InterkitClient.getSub('users', 'projectUsers', {projectId})
+    usersStore = subHandle.data
+    unsubscribe = usersStore.subscribe((data) => {
+      console.log("project users", data)
+      usersArray = data;
+    })
+  }
+
+  onDestroy(unsubscribe);
+
+  export let previewUserId
+
+  let userNodes = []
+  const updateUserNodes = () => {
+    userNodes = usersArray?.map(user => {
+      const boardState = user.projectUserData?.[projectId]?.boardState?.[currentBoardId]
+      const atNode = boardState ? board?.nodes.find(node => node.id === boardState.nodeId) : undefined
+      return {
+        //user,
+        id: user.id,
+        boardState,
+        atNode,
+        isPreviewUser: user.id === previewUserId
+      }
+    })
+  }
+
+  $: usersArray, projectId, currentBoardId, board, previewUserId, updateUserNodes()
 
   const genericErrorHandler = error => {
     let msg = ''
@@ -299,7 +339,9 @@
       boardId={currentBoardId}
       bind:board
       nodes={board.nodes}
-      on:boardchanged={saveCurrentBoard}
+      {userNodes}
+      {previewUserId}
+      on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
       bind:editNodeId
       bind:this={nodeGraph}
       />
