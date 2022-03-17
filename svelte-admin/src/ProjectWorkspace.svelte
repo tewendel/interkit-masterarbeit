@@ -23,6 +23,13 @@
   let rightPaneHidden = false;
   const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
 
+  let previewUserId
+
+  window.addEventListener('message', evt => {
+    console.log('received postMessage from iframe', evt, evt.data)
+    if (evt.data && evt.data.userId) previewUserId = evt.data.userId
+  })
+
   $: {
     const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
     repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
@@ -55,13 +62,13 @@
             <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
           </TabContent>
           <TabContent>
-            <UsersManager {projectId} />
+            <UsersManager {projectId} {previewUserId} />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
           </TabContent>
           <TabContent>
-            <NodeEditor {projectId} />
+            <NodeEditor {projectId} {previewUserId} />
           </TabContent>
         </div>
       </Tabs>

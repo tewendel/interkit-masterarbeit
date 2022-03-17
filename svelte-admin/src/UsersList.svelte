@@ -1,11 +1,12 @@
 <script>
 
-  import { onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { DataTable, OverflowMenu, OverflowMenuItem, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
   import { InterkitClient, util } from 'interkit';
 
   export let users; // this should be an array, not a store
   export let projectId;
+  export let previewUserId
 
   let userId = InterkitClient.userId
 
@@ -85,6 +86,9 @@
         {:else if cell.key === 'username'}
           {#if row.id === $userId}
             &#x1F464;&#xFE0E;
+          {/if}
+          {#if row.id === previewUserId}
+            &#x1F4F1;&#xFE0E;
           {/if}
           { cell.value }
         {:else}
