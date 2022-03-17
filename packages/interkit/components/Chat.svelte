@@ -4,6 +4,7 @@
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Button from './Button.svelte'
+  import Message from './Chat/Message.svelte';
 
   export let channel_key = "DEFAULT"
 
@@ -32,6 +33,14 @@
       channel_key, 
       payload: {type: "text", text: messageText}
     })
+  }
+
+  const submitChoice = (message, selectedKey) => {
+    console.log("selected", selectedKey, message)
+    InterkitClient.call("message.submitChoice", {
+      messageId: message.id,
+      selectedKey
+    })
   } 
 
   let messageText
@@ -51,7 +60,9 @@
 {#if messageStore}
   <ul>
     {#each $messageStore as message}
-      <li class:userMessage="{message?.sender === userId}">{message?.payload?.text}</li>
+      <li class:userMessage="{message?.sender === userId}">
+        <Message {message} {submitChoice}/>
+      </li>
     {/each}
   </ul>
 {/if}
