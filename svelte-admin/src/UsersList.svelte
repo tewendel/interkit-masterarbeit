@@ -11,6 +11,7 @@
 
   const headers = [
     { key: "username", value: "username" },
+    { key: "id", value: "id" },
     { key: "createdAt", value: "createdAt" },
     { key: "userToken", value: "userToken" },
   ];
