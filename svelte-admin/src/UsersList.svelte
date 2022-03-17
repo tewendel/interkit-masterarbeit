@@ -19,7 +19,7 @@
   // add links to list of mediafiles
   $: {
     rows = users ? users
-      .filter(user => user.id !== $userId) // hide own user
+      // .filter(user => user.id !== $userId) // hide own user
       .map(user => {
         return {
           ...user,
@@ -81,6 +81,11 @@
                 <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
               </OverflowMenu>
             {/if}
+        {:else if cell.key === 'username'}
+          {#if row.id === $userId}
+            &#x1F464;&#xFE0E;
+          {/if}
+          { cell.value }
         {:else}
           <span class="truncate">
             {cell.value || ""}
