@@ -81,7 +81,7 @@ app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
 
 // dont need it, build it into read board
 // app.get('/boards/:projectId/:boardId/nodes', board_node_api.nodes.list)
-app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', board_node_api.nodes.create)
+app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', rawBodyParser, board_node_api.nodes.create)
 app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
 app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
 app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)

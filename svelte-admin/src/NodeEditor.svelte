@@ -10,6 +10,7 @@
 
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
+  import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
 
   const useCodeMirror = true
 
@@ -234,23 +235,46 @@
       .catch(genericErrorHandler)
   }
 
+  let showNewNodeModal = false
+  let newNodeId
+  let newNodeContent
+
+  const submitNewNodeModal = () => {
+    if (!newNodeContent) {
+      window.alert('no content provided')
+      return
+    }
+    if (!nodeIdRE.test(newNodeId)) {
+      window.alert('You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.')
+    } else {
+      createNode(currentBoardId, newNodeId, newNodeContent)
+      showNewNodeModal = false
+    }
+  }
+
   const createNodeInCurrentBoard = () => {
     let c = 0
-    let newNodeId
     let newNodeIdDefault
     while (!newNodeIdDefault || (board.nodes.findIndex(node => node.id === newNodeIdDefault) > -1 && c < 1000)) {
       c++
       newNodeIdDefault = 'node' + c
     }
-    while (newNodeId === undefined || !nodeIdRE.test(newNodeId)) {
-      newNodeId = window.prompt('Please enter an ID for the new node. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newNodeId || newNodeIdDefault)
-    }
-    if (newNodeId === null) return
-    createNode(currentBoardId, newNodeId)
+    showNewNodeModal = true
+    newNodeId = newNodeIdDefault
+    // while (newNodeId === undefined || !nodeIdRE.test(newNodeId)) {
+    //   newNodeId = window.prompt('Please enter an ID for the new node. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newNodeId || newNodeIdDefault)
+    // }
+    // if (newNodeId === null) return
+    // createNode(currentBoardId, newNodeId)
   }
 
-  const createNode = async (boardId, name) => { 
-    api(projectId, `/${boardId}/nodes/${name}`, { method: 'post' })
+  const createNode = async (boardId, name, body) => { 
+    console.log('createNode', body)
+    api(projectId, `/${boardId}/nodes/${name}`, { method: 'post', body })
+      .then(async res => {
+        const json = await res.json()
+        errorify(json)
+      })
       .catch(genericErrorHandler)
       .finally(() => { loadBoard(boardId) })
   }
@@ -358,6 +382,15 @@
       />
   {/if}
 </div>
+
+{#if showNewNodeModal}
+  <NodeEditorNewNodeModal
+    bind:templateText={newNodeContent}
+    bind:nodeId={newNodeId}
+    close={() => { showNewNodeModal = false }}
+    submit={submitNewNodeModal}
+    />
+{/if}
 
 <style>
 

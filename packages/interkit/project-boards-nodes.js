@@ -197,8 +197,8 @@ api.boards.delete = expressify(
 )
 
 api.nodes.create = expressify(
-  async (handle, params) => {
-    const data = newEmptyNode
+  async (handle, params, req) => {
+    const data = req.body.toString()
     return fs.appendFile(handle, data, { flag: 'wx' })
       .then(() => getNode(handle))
   }
