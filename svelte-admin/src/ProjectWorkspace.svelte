@@ -17,9 +17,16 @@
   export let currentProject
   
   let selected
+  let repoNotice
+  let editorFilesKey = "init"
 
   let rightPaneHidden = false;
   const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
+
+  $: {
+    const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
+    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
+  }
 
 </script>
 
@@ -30,7 +37,7 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Repository" />
+        <Tab label={ "Repository " + repoNotice } />
         <Tab label="Users" />
         <Tab label="Project" />
         <Tab label="Nodes" />
@@ -45,7 +52,7 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryTab {projectId} open={selected === 3}/>
+            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
           </TabContent>
           <TabContent>
             <UsersManager {projectId} />

@@ -69,6 +69,18 @@ const gitStatus = async (projectId) => {
   return resJSON
 }
 
+const gitCheckoutHead = async (projectId) => {
+  const res = await fetch(bundleServerURL + "/git/checkout/" + projectId)
+  const resJSON = await res.json()
+  return resJSON
+}
+
+const gitCommitAll = async (projectId, message) => {
+  const res = await fetch(bundleServerURL + "/git/commitAll/" + projectId + "/?message=" + message)
+  const resJSON = await res.json()
+  return resJSON
+}
+
 const loadBlockData = async (projectId) => {
   const res = await fetch(bundleServerURL + "/components/" + projectId)
   const resJSON = await res.json()
@@ -107,6 +119,8 @@ export const BundleServer = {
   reloadPreview,
   duplicateProject,
   gitStatus,
+  gitCommitAll,
+  gitCheckoutHead,
   loadBlockData,
   loadSrcFile,
   saveSrcFile

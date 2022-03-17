@@ -343,7 +343,18 @@ Meteor.methods({
     } else {
       return false
     }
+  },
 
+  // update a section in project uiState
+  // -> project.uiState[section] = data
+  'project.updateUiState': async ({ projectId, section, data }) => {
+    const res = Projects.update({
+        _id: projectId,
+    }, {
+        $set: {
+          [`uiState.${section}`]: data
+        }
+    });
   },
 
   'bundler.getUrl': async () => {
