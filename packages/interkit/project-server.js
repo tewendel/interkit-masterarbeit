@@ -63,7 +63,7 @@ const checkCurrentNode = async (server, userId, projectId, boardId, boardData) =
   if(!boardState) {
     await initialiseBoardState(server, projectId, userId, boardData);
   } else {
-    if(boardState[boardId].status == "arrived") {
+    if(boardState[boardId]?.status == "arrived") {
       return boardState[boardId].nodeId;
     }
   }
