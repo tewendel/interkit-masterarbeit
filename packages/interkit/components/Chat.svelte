@@ -4,6 +4,7 @@
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Button from './Button.svelte'
+  import Message from './Chat/Message.svelte';
 
   export let channel_key = "DEFAULT"
 
@@ -40,6 +41,14 @@
       channel_key, 
       payload: {type: "text", text: messageText}
     })
+  }
+
+  const submitChoice = (message, selectedKey) => {
+    console.log("selected", selectedKey, message)
+    InterkitClient.call("message.submitChoice", {
+      messageId: message.id,
+      selectedKey
+    })
   } 
 
   let messageText
@@ -63,14 +72,11 @@
     bind:this={messagesScrollContainer}
     >
     {#if messageStore}
-      <ul class="messages">
+      <div class="messages">
         {#each $messageStore as message}
-          <li class="message" class:message__user="{message?.sender === userId}">
-            <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
-            <div>{message?.payload?.text}</div>
-          </li>
+          <Message {message} {submitChoice} isByUser={message?.sender === userId} />
         {/each}
-      </ul>
+      </div>
     {:else}
       Ø
     {/if}
@@ -105,26 +111,6 @@
   .input {
     flex-grow: 0;
     flex-shrink: 1;
-  }
-
-  ul, li {
-    margin: 0;
-    padding: 0;
-  }
-
-  .message {
-    border-radius: var(--border-radius);
-    background: rgba(0, 0, 0, 0.1);
-    padding: var(--distance-s);
-    margin: var(--distance-m) 0;
-    width: auto;
-    align-self: flex-start;
-  }
-
-  .message__user {
-    color: gray;
-    text-align: right;
-    align-self: flex-end;
   }
 
 </style>

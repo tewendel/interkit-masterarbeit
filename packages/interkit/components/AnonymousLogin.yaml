@@ -1,0 +1,5 @@
+name: AnonymousLogin
+fields:
+  - type: slot
+    name: default
+toolboxCategory: Basics

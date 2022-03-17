@@ -1,5 +1,22 @@
-const send = function(text) {
+const sendText = function(text, options) {
+    const {message, server, projectId} = this
+    //console.log(this)
+    server.call('message.send', {
+      projectId, 
+      channel_key: message.channel_key, 
+      //sender, 
+      recipients: [message.sender],
+      origin: "handler",
+      payload: {
+        type: 'text',
+        text,
+        options
+      }
+    })
+}
+const send = sendText;
 
+const sendChoice = function(choice, options) {
   const {message, server, projectId} = this
   //console.log(this)
   server.call('message.send', {
@@ -9,11 +26,13 @@ const send = function(text) {
     recipients: [message.sender],
     origin: "handler",
     payload: {
-      type: 'text',
-      text,
+      type: 'choice',
+      choice,
+      options
     }
   })
 }
+
 
 const moveTo = function(nodeId) { 
   const {server, projectId, boardId, userId} = this
@@ -29,5 +48,7 @@ const moveTo = function(nodeId) {
 
 export default {
   send,
+  sendText,
+  sendChoice,
   moveTo
 }
