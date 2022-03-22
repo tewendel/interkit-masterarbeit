@@ -18,7 +18,7 @@ function getProjectPath(projectId) {
 
 // check if folders exist to for all projects and setup starter if they don't
 async function ensureRepositories(projects) {
-  //console.log(projects)
+  //console.log("ensureRepositories", projects)
   for (let project of projects) {
     const projectId = project.id
     const projectPath = getProjectPath(projectId)
