@@ -23,11 +23,16 @@
 
     {#if message?.payload?.type == "choice"}
       {#if message?.payload?.choice}
-        <ul>  
+        <ul
+          class:selected={message?.selectedChoiceKey}
+        >  
           {#each Object.keys(message?.payload?.choice) as key}
-            <li class="choice-option" on:click={()=>{submitChoice(message, key)}}>
+            <li 
+              class="choice-option" 
+              on:click={()=>{submitChoice(message, key)}}
+              class:selected={message?.selectedChoiceKey == key}
+            >
               {message.payload.choice[key]}
-              {#if message?.selectedChoiceKey == key}(selected){/if}
             </li>
           {/each}
         </ul>
@@ -52,9 +57,27 @@
     text-align: right;
     align-self: flex-end;
   }
+  
+  li.choice-option {
+    padding: 5px;
+    border-radius: 5px;    
+  }
 
-  .choice-option:hover {
+  li.choice-option:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
+  ul:not(.selected) .choice-optio:hover {
     cursor: pointer;
   }
+  
+  ul:not(.selected) li.choice-option {
+    background-color: yellow;
+  }
+
+  li.choice-option.selected {
+    background-color: gray;
+  }
+
 
 </style>

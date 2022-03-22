@@ -44,10 +44,10 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label={ "Repository " + repoNotice } />
-        <Tab label="Users" />
+        <Tab label="Interactions" />
         <Tab label="Project" />
-        <Tab label="Nodes" />
+        <Tab label="Users" />
+        <Tab label={ "Repository " + repoNotice } />
         <div slot="content">
           <TabContent>
             <Sheets {projectId}/>
@@ -59,17 +59,18 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
-          </TabContent>
-          <TabContent>
-            <UsersManager {projectId} {previewUserId} />
+            <NodeEditor {projectId} {previewUserId} />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
           </TabContent>
           <TabContent>
-            <NodeEditor {projectId} {previewUserId} />
+            <UsersManager {projectId} {previewUserId} />
           </TabContent>
+          <TabContent>
+            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
+          </TabContent>
+          
         </div>
       </Tabs>
     </div>
