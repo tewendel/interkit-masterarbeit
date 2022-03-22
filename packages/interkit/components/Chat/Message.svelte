@@ -67,7 +67,7 @@
     margin-bottom: 5px;
   }
 
-  ul:not(.selected) .choice-optio:hover {
+  ul:not(.selected) .choice-option:hover {
     cursor: pointer;
   }
   

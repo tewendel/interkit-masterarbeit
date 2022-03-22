@@ -540,7 +540,7 @@ Meteor.methods({
   },
 
   'user.moveTo': ({projectId, userId, boardId, nodeId}) => {
-    console.log("user.moveTo")
+    console.log("user.moveTo", projectId, userId, boardId, nodeId)
 
     // get user
     const user = Meteor.users.findOne(userId)

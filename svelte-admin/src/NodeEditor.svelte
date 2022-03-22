@@ -316,6 +316,16 @@
       .finally(() => { loadBoard(boardId) })
   }
 
+  const moveTo = () => {
+    console.log("moveTo", editNodeId, previewUserId, currentBoardId)
+    InterkitClient.call("user.moveTo", {
+      projectId,
+      userId: previewUserId,
+      boardId: currentBoardId,
+      nodeId: editNodeId
+    })
+  }
+ 
   onMount(async () => {
     loadBoardList();
   })
@@ -372,15 +382,20 @@
   {:else}
     <div class="nodegraph"></div>
   {/if}
-  {#if useCodeMirror}
-    <CodeEditor bind:code={editorContents} />
-  {:else}
-    <textarea
-      class="editor"
-      bind:value={editorContents}
-      disabled={editorContents === null}
-      />
-  {/if}
+  <div>
+    {#if editNodeId}
+      <h3>{editNodeId} <button on:click={moveTo}>moveTo</button></h3>
+    {/if}
+    {#if useCodeMirror}
+      <CodeEditor bind:code={editorContents} />
+    {:else}
+      <textarea
+        class="editor"
+        bind:value={editorContents}
+        disabled={editorContents === null}
+        />
+    {/if}
+  </div>
 </div>
 
 {#if showNewNodeModal}
