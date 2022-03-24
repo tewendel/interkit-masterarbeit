@@ -113,7 +113,7 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
 
           let handlerName = boardId + "_" + nodeId;
           if (handlers[handlerName].onArrive) {
-            handlers[boardId + "_" + nodeId].onArrive(api)                      
+            handlers[boardId + "_" + nodeId]?.onArrive(api)                      
           } else {
             console.warn(`handler ${handlerName} has no onArrive method`)            
           }
