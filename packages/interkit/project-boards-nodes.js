@@ -8,7 +8,10 @@ const newEmptyBoard = params => ({
   nodes: []
 })
 
-const newEmptyNode = 'export const onMessage = async (msg, api) => {\n  // do something\n}'
+const newEmptyNode = `
+export const onArrive = async (api) => {\n // do something\n}\n
+export const onMessage = async (msg, api) => {\n  // do something\n}
+`
 const startNodeId = 'start'
 
 const handleREnodeId = /[a-z0-9]+_([a-z0-9]+)\.js$/

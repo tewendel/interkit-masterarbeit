@@ -30,7 +30,7 @@ export const onMessage = async (msg, api) => {
       `
     },
     {
-      label: 'respond to input',
+      label: 'respond to text input',
       value: `
 export const onArrive = async (api) => {
   // do something when the user arrives
@@ -40,6 +40,32 @@ export const onArrive = async (api) => {
 export const onMessage = async (msg, api) => {
   // respond to message content
   api.sendText("aha, your name is " + msg.payload.text + "!")
+}
+`
+    },
+    {
+      label: 'branch depending on text input',
+      value: `
+export const onArrive = async (api) => {
+  api.sendText("where do you want to go?")
+}
+
+export const onMessage = async (msg, api) => {
+  switch(msg.payload.text) {
+    case "berlin":
+      api.sendText("moving to berlin...")
+      api.moveTo("space")
+      break;
+
+    case "home":
+      api.sendText("going home...")
+      api.moveTo("home")
+      break;
+
+    default:
+      api.sendText("i don't understand. sending you to space...")
+      api.moveTo("space")
+  }
 }
 `
     },
@@ -60,8 +86,35 @@ export const onMessage = async (msg, api) => {
   }
 }
 `
-    }
-  ]
+},
+{
+      label: 'branch depending on button input',
+      value: `
+export const onArrive = async (api) => {
+  api.sendText("where do you want to go?")
+  api.sendChoice({a: "berlin", b: "home"})
+}
+
+export const onMessage = async (msg, api) => {
+  switch(msg.payload.key) {
+    case "a":
+      api.sendText("moving to berlin...")
+      api.moveTo("space")
+      break;
+
+    case "b":
+      api.sendText("going home...")
+      api.moveTo("home")
+      break;
+
+    default:
+      api.sendText("i don't understand. sending you to space...")
+      api.moveTo("space")
+  }
+}
+`
+    },
+ ]
 
   let selected = templates[0].value
 
