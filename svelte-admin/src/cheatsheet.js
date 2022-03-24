@@ -1,10 +1,10 @@
 export const cheatsheetContents = 
 `
-const onArrive = async (api) => {
+export const onArrive = async (api) => {
   // do something
 } 
 
-const onMessage = async (msg, api) => {
+export const onMessage = async (msg, api) => {
   // do something
 } 
 
