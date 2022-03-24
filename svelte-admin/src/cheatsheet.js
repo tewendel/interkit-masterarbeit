@@ -24,7 +24,7 @@ if(msg.payload.text == "foo") {
 
 // send a choice
 api.sendChoice({
-  a: "option a"
+  a: "option a",
   b: "option b"
 })
 
