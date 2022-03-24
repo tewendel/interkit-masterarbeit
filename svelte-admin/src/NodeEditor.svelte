@@ -14,9 +14,7 @@
 
   const useCodeMirror = true
 
-  let cheatsheetContents = `// this is a comment
-api.sendText("say hi!")
-`
+  import { cheatsheetContents } from './cheatsheet.js'
 
   // TODO this could be centralized somewhere.
   // theoretically, usefully between admin AND bundler,
@@ -399,11 +397,12 @@ api.sendText("say hi!")
         disabled={editorContents === null}
         />
     {/if}
-    <Accordion>
-      <AccordionItem title="Cheatsheet">
+    <!--Accordion>
+      <AccordionItem title="Cheatsheet"-->
         {#if useCodeMirror}
-          (click once if blank)
-          <CodeEditor bind:code={cheatsheetContents} readOnly={true} class="cheatsheet" />
+          <br>
+          <p>Cheatsheet (click to activate)</p>
+          <CodeEditor code={cheatsheetContents} readOnly={true} class="cheatsheet" />
         {:else}
           <textarea
             class="cheatsheet"
@@ -411,8 +410,8 @@ api.sendText("say hi!")
             readonly="readonly"
             />
         {/if}
-      </AccordionItem>
-    </Accordion>
+      <!--/AccordionItem>
+    </Accordion-->
   </div>
 </div>
 
