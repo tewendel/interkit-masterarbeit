@@ -4,7 +4,7 @@
 
   import { InterkitClient } from 'interkit'
 
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { Tabs, Tab, TabContent, Accordion, AccordionItem } from "carbon-components-svelte";
 
   import { boardsApi as api } from './BundleServer.js'
 
@@ -13,6 +13,10 @@
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
 
   const useCodeMirror = true
+
+  let cheatsheetContents = `// this is a comment
+api.sendText("say hi!")
+`
 
   // TODO this could be centralized somewhere.
   // theoretically, usefully between admin AND bundler,
@@ -387,7 +391,7 @@
       <h3>{editNodeId} <button on:click={moveTo}>moveTo</button></h3>
     {/if}
     {#if useCodeMirror}
-      <CodeEditor bind:code={editorContents} />
+      <CodeEditor bind:code={editorContents} class="editor" />
     {:else}
       <textarea
         class="editor"
@@ -395,6 +399,20 @@
         disabled={editorContents === null}
         />
     {/if}
+    <Accordion>
+      <AccordionItem title="Cheatsheet">
+        {#if useCodeMirror}
+          (click once if blank)
+          <CodeEditor bind:code={cheatsheetContents} readOnly={true} class="cheatsheet" />
+        {:else}
+          <textarea
+            class="cheatsheet"
+            value={cheatsheetContents}
+            readonly="readonly"
+            />
+        {/if}
+      </AccordionItem>
+    </Accordion>
   </div>
 </div>
 
@@ -437,6 +455,12 @@
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.cheatsheet {
+  grid-area: right;
+  width: 100%;
+  border: 1px solid #aaa;
 }
 
 </style>
