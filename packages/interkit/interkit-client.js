@@ -82,6 +82,15 @@ const connect = async (url) => {
 
   let result = await server.call("resumeUserSession", get(userAuth))
   //console.log("resumeUserSession result", result)
+
+  // these can be very async so we listen to both and the handler acts when both are set
+  userId.subscribe(saveUserPushnotificationRegistrationToken)
+  pushnotificationRegistrationToken.subscribe(saveUserPushnotificationRegistrationToken)
+  InterkitClient.saveUserPushnotificationRegistrationToken()
+
+  // on app load the client is not necessarily connected yet, so we do it here, too
+  InterkitClient.userHeartbeat() 
+
   if(result) {
     // login again
     userId.set(get(userAuth)?.id);
@@ -548,6 +557,7 @@ const restoreUiSnapshot = id => {
 }
 
 const initApp = async () => {
+
   await loadConfig();
   await getProjectId();
 
@@ -614,12 +624,16 @@ const pushnotificationMessageUser = async ({ userId, msg }) => {
 
 const saveUserPushnotificationRegistrationToken = async () => {
   if (!userId || !pushnotificationRegistrationToken) {
-    console.log('saveUserPushnotificationRegistrationToken bailing, because somethings missing', { userId, pushnotificationRegistrationToken })
+    console.log('saveUserPushnotificationRegistrationToken bailing, because something\'s missing', { userId, pushnotificationRegistrationToken })
     return
   }
   let result
   try {
     const token = get(InterkitClient.pushnotificationRegistrationToken)
+    if (!token) {
+      console.log('saveUserPushnotificationRegistrationToken bailing, because no token', token)
+      return
+    }
     result = await InterkitClient.call(
       'user.savePushnotificationRegistrationToken',
       { token }
@@ -631,16 +645,12 @@ const saveUserPushnotificationRegistrationToken = async () => {
   return result
 }
 
-// these can be very async so we listen to both and the handler acts when both are set
-userId.subscribe(saveUserPushnotificationRegistrationToken)
-pushnotificationRegistrationToken.subscribe(saveUserPushnotificationRegistrationToken)
-
 const userHeartbeat = async () => {
   let result
   try {
-    result = await InterkitClient.call('user.heartbeat')
+    result = await InterkitClient.call('user.heartbeat', { userId: get(InterkitClient.userId) })
   } catch (error) {
-    console.error('userHeartbeat error', error)
+    console.error('userHeartbeat error, maybe called before connect?', error)
     return false
   }
   return result

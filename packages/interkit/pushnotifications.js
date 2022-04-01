@@ -1,10 +1,11 @@
 import { InterkitClient } from './'
+import { get } from "svelte/store"
 
 import { Plugins } from '@capacitor/core'
 
 const { PushNotifications } = Plugins;
 
-const heartbeatDelay = 30000 // 30 seconds
+const heartbeatDelay = 10000 // milliseconds
 
 const addListeners = async () => {
   await PushNotifications.addListener('registration', token => {
@@ -50,12 +51,22 @@ const getDeliveredNotifications = async () => {
   // TODO do something with them? maybe just throw them out, since app is being opened
 }
 
+const heartbeat = () => {
+  if (document.visibilityState === 'hidden' || document.webkitVisibilityState === 'hidden' || document.hidden === true) {
+    // tab is invisible, skipping beat
+    console.log('</3')
+    return
+  }
+  console.log('<3')
+  // const userId = get(InterkitClient.userId)
+  InterkitClient.userHeartbeat()
+}
+
 const startHeartbeat = () => {
   console.log('startHeartbeat')
-  window.setInterval(() => {
-    // console.log('<3')
-    InterkitClient.userHeartbeat()
-  }, heartbeatDelay)
+  heartbeat()
+  window.setInterval(heartbeat, heartbeatDelay)
+  document.addEventListener('visibilitychange', heartbeat)
 }
 
 export {

@@ -17,6 +17,11 @@
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp()  
     executeTrigger("start")
+    // we're doing this here, maybe again, to be sure,
+    // because the async interdependencies
+    // (capacitor plugin, interkit client, meteor)
+    // are hard to get completely right
+    InterkitClient.saveUserPushnotificationRegistrationToken()
   });
 
   let config = InterkitClient.config;
