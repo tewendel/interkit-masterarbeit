@@ -112,12 +112,12 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
           }
 
           let handlerName = boardId + "_" + nodeId;
+          await setArrivalStatus(server, projectId, user.id, boardState, boardId, boardState[boardId].nodeId, "arrived")
           if (handlers[handlerName]?.onArrive) {
             await handlers[boardId + "_" + nodeId]?.onArrive(api)
           } else {
             console.warn(`handler ${handlerName} has no onArrive method`)            
           }
-          await setArrivalStatus(server, projectId, user.id, boardState, boardId, boardState[boardId].nodeId, "arrived")
         }
 
       } else {
