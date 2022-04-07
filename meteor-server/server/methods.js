@@ -238,17 +238,21 @@ Meteor.methods({
     return result
   },
 
-  'user.heartbeat': async function ({ projectId, userId }) {
+  'user.heartbeat': async function ({ projectId, userId, isAwake }) {
     // Meteor.userId() is not super reliable?
     userId = userId || Meteor.userId()
-    console.log('heartbeat', projectId, userId)
+    console.log('heartbeat', projectId, userId, isAwake)
     if (!userId) {
       console.log('heartbeat w/o userId, skipping')
       return
     }
     const result = Meteor.users.update(userId, {
       $set: {
-        [`projectUserData.${projectId}.lastHeartbeat`] : new Date()
+        // isAwake===false forces "asleep" by setting into the past, slightly over threshold
+        // (we could use start of epoch (and lose some stats), or a dedicated bool to be cleaner)
+        [`projectUserData.${projectId}.lastHeartbeat`] : isAwake === false
+          ? new Date(+(new Date()) - pushnotifications.heartbeatOldMinAge - 1000)
+          : new Date()
       }
     })
     return result
@@ -512,57 +516,10 @@ Meteor.methods({
       createdAt: new Date()
     })
 
-    // TODO: do something with messageResult, like: if not messageResult, don't send push?
-
-    // note: Meteor needs a Date object, not a number
-    const heartbeatOld = new Date(new Date() - pushnotifications.heartbeatOldMinAge * 1000) // 3min ago
-    const recipientsEligibleForPush = Meteor.users.find({
-      _id: { $in: recipients },
-      // ...with heartbeats older than...
-      [`projectUserData.${projectId}.lastHeartbeat`]: {
-        $lt: heartbeatOld
-      },
-      [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
-        $not: { $in: ['', '(web)'] }
-      }
-    })
-    const recipientsRegistrationTokens = recipientsEligibleForPush.map(user =>
-      user.projectUserData?.[projectId]?.pushnotificationRegistrationToken
-    )
-    if (recipientsEligibleForPush.count() === 0) {
-      console.log('no eligible recipients, not sending push notifications')
-    } else {
-      console.log('recipientsEligibleForPush', recipientsEligibleForPush.count())
-      console.log('recipientsRegistrationTokens', recipientsRegistrationTokens)
-      const messaging = pushnotifications.init(projectId)
-      messaging.sendMulticast({ // solo would be .send()
-        notification: {
-          // TODO
-          title: `Notification from ${projectId}`,
-          body: JSON.stringify(payload)
-        },
-        data: {
-          foo: 'bar',
-        },
-        // solo would be token: string
-        tokens: recipientsRegistrationTokens
-      })
-        .then((response) => {
-          console.log(`message.send sent push ${response.successCount} successes`)
-          if (response.failureCount > 0) {
-            const failedTokens = []
-            response.responses.forEach((resp, idx) => {
-              if (!resp.success) {
-                failedTokens.push(recipientsRegistrationTokens[idx])
-              }
-            })
-            // TODO do something with failedTokens
-            console.error(`${response.failureCount} tokens failed: `, failedTokens)
-          }
-        })
-        .catch((error) => { console.log('message.send push error', error) })
+    if (messageResult) {
+      // TODO: there is no return value here, no way to report errors to admin?
+      pushnotifications.send({ projectId, Meteor, recipients, payload })
     }
-    // TODO: there is no return value here, no way to report errors to admin
 
     // this is where the message will need to be processed by the project server logic
     

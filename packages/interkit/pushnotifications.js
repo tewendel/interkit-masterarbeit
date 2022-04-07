@@ -19,13 +19,19 @@ const addListeners = async () => {
   });
 
   await PushNotifications.addListener('pushNotificationReceived', notification => {
+    // if tab is visible & still does receive a push notification,
+    // we "handle" it hereby & it "disappears"
+    // TODO could be used to focus a "chat tab"
     console.log('Push notification received: ', notification);
-    // TODO
-    alert('got push:' + JSON.stringify(notification))
+    // alert('got push:' + JSON.stringify(notification))
   });
 
   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-    // TODO not sure if this is necessary
+    // TODO not sure if we need this. it sends OS/FCM stuff about the notification, like
+    // (on Android) actionId: tap, very long IDs, google.delivered_priority and
+    // collapse_key (which holds the bundle id, like 'interkit.app.cs3')
+    // alert('push action performed:' + JSON.stringify(notification))
+    // TODO could be used to focus a "chat tab"?
     console.log('Push notification action performed', notification.actionId, notification.inputValue);
   });
 }
@@ -52,14 +58,11 @@ const getDeliveredNotifications = async () => {
 }
 
 const heartbeat = () => {
-  if (document.visibilityState === 'hidden' || document.webkitVisibilityState === 'hidden' || document.hidden === true) {
-    // tab is invisible, skipping beat
-    console.log('</3')
-    return
-  }
-  console.log('<3')
-  // const userId = get(InterkitClient.userId)
-  InterkitClient.userHeartbeat()
+  const isTabHidden = document.visibilityState === 'hidden' ||
+    document.webkitVisibilityState === 'hidden' ||
+    document.hidden === true
+  // console.log('<3', !isTabHidden)
+  InterkitClient.userHeartbeat(!isTabHidden)
 }
 
 const startHeartbeat = () => {

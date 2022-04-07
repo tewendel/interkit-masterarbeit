@@ -11,7 +11,7 @@
  *    create a row with a special key `configFCMKey`, paste the JSON in value.
  *    see {@link module:meteor-server/pushnotifications~getFCMserviceAccountFromDB getFCMserviceAccountFromDB}  
  *    Note: the sheet + special key can be changed, see constants.
- * 2. if these sheet does not exist, we check if a JSON file is present
+ * 2. if this sheet does not exist, we check if a JSON file is present
  *    see {@link module:meteor-server/pushnotifications~getFCMserviceAccountFromFS getFCMserviceAccountFromFS}
  *     1. in a path provided by .env var FCM_CREDENTIALS_PATH,
  *        file name ${projectId}_firebase-admin.json,
@@ -44,7 +44,7 @@ const pushers = {}
  * the closer, the less fals positives we get...
  * @default
  */
-const heartbeatOldMinAge = 2 * 60 // seconds
+const heartbeatOldMinAge = 2 * 60 * 1000 // milliseconds
 
 /**
  * Name of the sheet where we store credentials for FCM
@@ -57,6 +57,12 @@ const configSheetName = 'config'
  * @default
  */
 const configFCMKey = 'firebaseAdminCredentials'
+
+/**
+ * If a message has no text, send this as the notification body
+ * @default
+ */
+const fallbackNotificationBody = '\u2709' // ENVELOPE
 
 /**
  * Retrieve FCM credentials from the Database
@@ -126,25 +132,88 @@ const getFCMserviceAccount = (projectId) => {
  */
 const init = (projectId) => {
   if (projectId in pushers) return pushers[projectId]
-  try {
-    const pusher = (() => {
-      const serviceAccount = getFCMserviceAccount(projectId)
-      if (!serviceAccount) throw new Error('no firebase credentials')
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
-      });
-      // TODO not sure if this will be closure-scoped.
-      // maybe initializeApp returns an app, that messaging() can take as argument?
-      return admin.messaging()
-    })()
-    pushers[projectId] = pusher
-    return pusher
-  } catch (error) {
-    console.error('init error', error)
+  const pusher = (() => {
+    const serviceAccount = getFCMserviceAccount(projectId)
+    if (!serviceAccount) throw new Error('no firebase credentials')
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+    // TODO not sure if this will be closure-scoped.
+    // maybe initializeApp returns an app, that messaging() can take as argument?
+    return admin.messaging()
+  })()
+  pushers[projectId] = pusher
+  return pusher
+}
+
+/**
+ * Send push notifications
+ * @param {string} projectId
+ * @param {Meteor} Meteor
+ * @param {Array} recipients ids
+ * @param {Object} payload
+ */
+const send = ({ projectId, Meteor, recipients, payload }) => {
+  let messaging
+  // note: Meteor needs a Date object, not a number
+  const heartbeatOld = new Date(new Date() - heartbeatOldMinAge) // 3min ago
+  const recipientsEligibleForPush = Meteor.users.find({
+    _id: { $in: recipients },
+    // ...with heartbeats older than...
+    /*XXX
+    [`projectUserData.${projectId}.lastHeartbeat`]: {
+      $lt: heartbeatOld
+    },
+    */
+    [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
+      $not: { $in: ['', '(web)'] }
+    }
+  })
+  const recipientsRegistrationTokens = recipientsEligibleForPush.map(user =>
+    user.projectUserData?.[projectId]?.pushnotificationRegistrationToken
+  )
+  if (recipientsEligibleForPush.count() === 0) {
+    console.log('no eligible recipients, not sending push notifications')
+  } else {
+    console.log('recipientsEligibleForPush', recipientsEligibleForPush.count())
+    console.log('recipientsRegistrationTokens', recipientsRegistrationTokens)
+    try {
+      messaging = init(projectId)
+      console.log('FCM messaging', messaging)
+    } catch (err) {
+      console.error('error setting up push notifications, bailing')
+      return false
+    }
+    messaging.sendMulticast({ // solo would be .send()
+      notification: {
+        // TODO
+        // title: `Notification from ${projectId}`,
+        body: payload.text || fallbackNotificationBody
+      },
+      data: {
+        // foo: 'bar',
+      },
+      // solo would be token: string
+      tokens: recipientsRegistrationTokens
+    })
+      .then((response) => {
+        console.log(`message.send sent push ${response.successCount} successes`)
+        if (response.failureCount > 0) {
+          const failedTokens = []
+          response.responses.forEach((resp, idx) => {
+            if (!resp.success) {
+              failedTokens.push(recipientsRegistrationTokens[idx])
+            }
+          })
+          // TODO do something with failedTokens
+          console.error(`${response.failureCount} tokens failed: `, failedTokens)
+        }
+      })
+      .catch((error) => { console.log('message.send push error', error) })
   }
 }
 
 export {
-  init,
-  heartbeatOldMinAge 
+  send,
+  heartbeatOldMinAge
 }

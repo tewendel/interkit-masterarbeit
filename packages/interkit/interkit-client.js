@@ -89,7 +89,7 @@ const connect = async (url) => {
   InterkitClient.saveUserPushnotificationRegistrationToken()
 
   // on app load the client is not necessarily connected yet, so we do it here, too
-  InterkitClient.userHeartbeat() 
+  InterkitClient.userHeartbeat(true) 
 
   if(result) {
     // login again
@@ -645,10 +645,10 @@ const saveUserPushnotificationRegistrationToken = async () => {
   return result
 }
 
-const userHeartbeat = async () => {
+const userHeartbeat = async (isAwake) => {
   let result
   try {
-    result = await InterkitClient.call('user.heartbeat', { userId: get(InterkitClient.userId) })
+    result = await InterkitClient.call('user.heartbeat', { isAwake, userId: get(InterkitClient.userId) })
   } catch (error) {
     console.error('userHeartbeat error, maybe called before connect?', error)
     return false
