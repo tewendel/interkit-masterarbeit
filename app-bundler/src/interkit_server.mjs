@@ -49,7 +49,7 @@ const setup = async () => {
 }
 
 const getProjectIdFromProjectSlug = (slug) => {
-  const project = projects.find( p => (p.slug && p.slug != "" && p.slug === slug) )
+  const project = projects.find( p => (p.slug && (p.slug !== "" && p.slug === slug || p.name !== '' && p.name === slug)) )
   if (project) {
     return project.id
   } else {

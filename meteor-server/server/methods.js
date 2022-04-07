@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
+import * as pushnotifications from '../imports/pushnotifications.js'
+import pushnotificationCredentials from '../firebase-admin-credentials.js'
 
 const addColumn = async ({sheetKey, projectId, colKey, name, type, reference, options}) => {
 
@@ -230,6 +232,36 @@ Meteor.methods({
     const result = Meteor.users.update(Meteor.userId(), {
       $set: {
         [`projectUserData.${projectId}.elementProperties`] : elementProperties
+      }
+    })
+    return result
+  },
+
+  'user.savePushnotificationRegistrationToken': async function ({projectId, token}) {
+    const result = Meteor.users.update(Meteor.userId(), {
+      $set: {
+        [`projectUserData.${projectId}.lastHeartbeat`] : new Date(),
+        [`projectUserData.${projectId}.pushnotificationRegistrationToken`] : token
+      }
+    })
+    return result
+  },
+
+  'user.heartbeat': async function ({ projectId, userId, isAwake }) {
+    // Meteor.userId() is not super reliable?
+    userId = userId || Meteor.userId()
+    // console.log('heartbeat', projectId, userId, isAwake)
+    if (!userId) {
+      console.log('heartbeat w/o userId, skipping')
+      return
+    }
+    const result = Meteor.users.update(userId, {
+      $set: {
+        // isAwake===false forces "asleep" by setting into the past, slightly over threshold
+        // (we could use start of epoch (and lose some stats), or a dedicated bool to be cleaner)
+        [`projectUserData.${projectId}.lastHeartbeat`] : isAwake === false
+          ? new Date(+(new Date()) - pushnotifications.heartbeatOldMinAge - 1000)
+          : new Date()
       }
     })
     return result
@@ -491,19 +523,6 @@ Meteor.methods({
     }
   },
 
-
-  'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
-    Messages.insert({
-      projectId,
-      sender,
-      recipients,
-      channel_key,
-      payload,
-      origin,
-      createdAt: new Date()
-    })
-  },
-
   'message.setHandled': ({messageId, handledBy = []}) => {
     console.log("message.setHandled", messageId, handledBy)
     Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
@@ -522,6 +541,40 @@ Meteor.methods({
       origin: undefined,
       createdAt: new Date()
     })
+  },
+
+  'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
+    const userId = Meteor.userId()
+    console.log('message.send', { payload, recipients, sender, userId })
+    const messageResult = Messages.insert({
+      projectId,
+      sender,
+      recipients,
+      channel_key,
+      payload,
+      origin,
+      createdAt: new Date()
+    })
+
+    if (messageResult) {
+      // TODO: there is no return value here, no way to report errors to admin?
+      pushnotifications.send({ projectId, Meteor, recipients, payload })
+    }
+
+    // this is where the message will need to be processed by the project server logic
+    
+    /*
+    // for now we add a fake response message adressed to the user
+    Messages.insert({
+      projectId,
+      recipients: [sender],
+      channel_key,
+      payload: {
+        type: "text",
+        text: "ok"
+      }      
+    })
+    */
   },
 
   'user.get': ({userId}) => {

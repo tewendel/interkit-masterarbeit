@@ -31,6 +31,8 @@ try {
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
+let pushnotificationRegistrationToken = writable(null)
+
 // a global store to store the state history of stores relavant to the UI
 let uiHistoryStore = writable([])
 
@@ -80,6 +82,15 @@ const connect = async (url) => {
 
   let result = await server.call("resumeUserSession", get(userAuth))
   //console.log("resumeUserSession result", result)
+
+  // these can be very async so we listen to both and the handler acts when both are set
+  userId.subscribe(saveUserPushnotificationRegistrationToken)
+  pushnotificationRegistrationToken.subscribe(saveUserPushnotificationRegistrationToken)
+  InterkitClient.saveUserPushnotificationRegistrationToken()
+
+  // on app load the client is not necessarily connected yet, so we do it here, too
+  InterkitClient.userHeartbeat(true) 
+
   if(result) {
     // login again
     userId.set(get(userAuth)?.id);
@@ -546,6 +557,7 @@ const restoreUiSnapshot = id => {
 }
 
 const initApp = async () => {
+
   await loadConfig();
   await getProjectId();
 
@@ -603,6 +615,46 @@ const createProjectUser = async ({ username, password, email, projectData, proje
     return result
   }
 
+const pushnotificationMessageUser = async ({ userId, msg }) => {
+  await InterkitClient.call(
+    'pushnotificationMessageUser',
+    { userId, msg }
+  )
+}
+
+const saveUserPushnotificationRegistrationToken = async () => {
+  if (!userId || !pushnotificationRegistrationToken) {
+    console.log('saveUserPushnotificationRegistrationToken bailing, because something\'s missing', { userId, pushnotificationRegistrationToken })
+    return
+  }
+  let result
+  try {
+    const token = get(InterkitClient.pushnotificationRegistrationToken)
+    if (!token) {
+      console.log('saveUserPushnotificationRegistrationToken bailing, because no token', token)
+      return
+    }
+    result = await InterkitClient.call(
+      'user.savePushnotificationRegistrationToken',
+      { token }
+    )
+  } catch (error) {
+    console.error('saveUserPushnotificationRegistrationToken error', error)
+    return false
+  }
+  return result
+}
+
+const userHeartbeat = async (isAwake) => {
+  let result
+  try {
+    result = await InterkitClient.call('user.heartbeat', { isAwake, userId: get(InterkitClient.userId) })
+  } catch (error) {
+    console.error('userHeartbeat error, maybe called before connect?', error)
+    return false
+  }
+  return result
+}
 
 const login = async ({ username, password }) => {
   //console.log(server)
@@ -783,6 +835,7 @@ userId.subscribe(subscribeUserProjectDataStore)
 
 const InterkitClient = {
   userId,
+  pushnotificationRegistrationToken,
   config,
   projectId,
   userProjectDataStore,
@@ -793,6 +846,8 @@ const InterkitClient = {
   loginTokenUser,
   createProjectTokenUserAndLogin,
   createProjectUser,
+  saveUserPushnotificationRegistrationToken,
+  userHeartbeat,
   login,
   logout,
   call,

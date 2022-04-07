@@ -2,5 +2,6 @@
   "appId": "interkit.app.viewer",
   "appName": "interkit bundle viewer",
   "webDir": "public",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
 }
