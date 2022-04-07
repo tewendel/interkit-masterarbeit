@@ -1,9 +1,10 @@
 <script>
 
-  import { onMount } from "svelte"
+  import { onMount, tick } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Button from './Button.svelte'
+  import Message from './Chat/Message.svelte';
 
   export let channel_key = "DEFAULT"
 
@@ -22,9 +23,17 @@
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
+      scrollDown()
     }
   }
-    
+
+  let messagesScrollContainer
+
+  const scrollDown = async () => {
+    await tick()
+    const top = messagesScrollContainer?.scrollHeight
+    messagesScrollContainer?.scrollTo({ top: top, behavior: 'smooth' })
+  }
 
   const sendMessage = (messageText) => {
     InterkitClient.call("message.send", {
@@ -32,6 +41,18 @@
       channel_key, 
       payload: {type: "text", text: messageText}
     })
+  }
+
+  const submitChoice = (message, selectedKey) => {
+    if(!message?.selectedChoiceKey) {
+      console.log("selected", selectedKey, message)
+      InterkitClient.call("message.submitChoice", {
+        sender: userId,
+        channel_key, 
+        messageId: message.id,
+        selectedKey
+      })
+    }
   } 
 
   let messageText
@@ -48,30 +69,52 @@
 
 </script>
 
-{#if messageStore}
-  <ul>
-    {#each $messageStore as message}
-      <li class:userMessage="{message?.sender === userId}">{message?.payload?.text}</li>
-    {/each}
-  </ul>
-{/if}
-
-<input type="text" bind:value={messageText} on:keydown={handleKeydown}/>
-<Button on:click={submit}>send</Button>
+<div class="root">
+  <div
+    class="messages-container"
+    class:messages__empty={!messageStore || $messageStore.length === 0}
+    bind:this={messagesScrollContainer}
+    >
+    {#if messageStore}
+      <div class="messages">
+        {#each $messageStore as message}
+          <Message {message} {submitChoice} isByUser={message?.sender === userId} />
+        {/each}
+      </div>
+    {:else}
+      Ø
+    {/if}
+  </div>
+  <div class="input">
+    <input type="text" bind:value={messageText} on:keydown={handleKeydown}/>
+    <Button on:click={submit}>send</Button>
+  </div>
+</div>
 
 <style>
 
-  ul, li {
-    width: 100%;
+  .root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
-  li.userMessage {
-    color: gray;
-    text-align: right;
+  .messages-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
-  ul {
-    margin-bottom: 1em;
+  .messages {
+    display: flex;
+    flex-direction: column;
+    padding: var(--distance-m);
+  }
+
+  .input {
+    flex-grow: 0;
+    flex-shrink: 1;
   }
 
 </style>

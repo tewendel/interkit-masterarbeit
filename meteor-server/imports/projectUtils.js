@@ -14,7 +14,7 @@ duplicateProject = async function (projectId) {
   console.log("duplicating project " + projectId + " to " + newProjectId)
   let projectData = await getAllOfProject(projectId)
 
-  //console.log(projectData)
+  console.log(projectData)
 
   // determine new name
   const newProjectName = "Copy of " + projectData.project.name
@@ -40,11 +40,22 @@ duplicateProject = async function (projectId) {
     })
   ]
 
-  // inset docs
+  // insert docs
   // uses https://github.com/mikowals/batch-insert
   if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
   if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
+  
+  /* problem: this throws an error 
+      reason: newProjectData.project.uiState.files contains "." characters in keys. 
+   */
+  // for now do not duplicate uiState
+  newProjectData.project.uiState = undefined;
+
+  console.log("newProjectData", newProjectData.project.history)
+
   Projects.insert(newProjectData.project)
+
+  console.log("inserted project")
 
   return newProjectId
 }

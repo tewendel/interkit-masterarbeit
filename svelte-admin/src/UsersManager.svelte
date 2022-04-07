@@ -4,7 +4,9 @@
   import { InterkitClient } from 'interkit'
   import UsersList from './UsersList.svelte'
   import { Form, TextInput, Button } from "carbon-components-svelte"
+
   export let projectId
+  export let previewUserId
 
   let username
   let email
@@ -38,7 +40,7 @@
 
 </script>
 
-<UsersList users={usersArray} {projectId}/>
+<UsersList users={usersArray} {projectId} {previewUserId} />
 
 <br><br>
 

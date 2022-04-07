@@ -12,6 +12,7 @@
   export let nodes = []
   export let editNodeId
   export let board
+  export let userNodes
 
   const rectWidth = 100
   const rectHeight = 70
@@ -188,6 +189,24 @@
         </text>
       </g>
     {/each}
+
+    {#each userNodes as userNode}
+      {#if userNode.atNode}
+      <g
+        class="usernode"
+        style={`transform: translate(${userNode.atNode.posX + Math.random() * (rectWidth - 10)}px,${userNode.atNode.posY + Math.random() * (rectHeight - 10)}px)`}
+        >
+        <circle
+          cx="0" cy="0"
+          r={userNode.isPreviewUser ? 5 : 3}
+          fill={userNode.isPreviewUser ? 'red' : 'black'}
+          stroke={userNode.isPreviewUser ? 'black' : '0'}
+          opacity={userNode.isPreviewUser ? 1 : 0.2}
+          />
+        <text x="6" y="10">{userNode.id}</text>
+      </g>
+      {/if}
+    {/each}
   </g>
 </svg>
 
@@ -210,6 +229,18 @@ rect {
 polyline {
   stroke: black;
   stroke-width: 1;
+}
+
+g.usernode {
+  transition: transform 1s;
+}
+
+g.usernode text {
+  display: none;
+}
+
+g.usernode:hover text {
+  display: block;
 }
 
 .script-node {

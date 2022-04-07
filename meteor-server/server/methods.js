@@ -108,6 +108,15 @@ const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKe
   }    
 }
 
+const updateUserProjectData = async (userId, projectId, key, value) => {
+  // write projectData updates to user
+  Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.${key}`] : value 
+    }
+  })  
+}
+
 Meteor.methods({
 
   // create a front end user for a project
@@ -366,7 +375,18 @@ Meteor.methods({
     } else {
       return false
     }
+  },
 
+  // update a section in project uiState
+  // -> project.uiState[section] = data
+  'project.updateUiState': async ({ projectId, section, data }) => {
+    const res = Projects.update({
+        _id: projectId,
+    }, {
+        $set: {
+          [`uiState.${section}`]: data
+        }
+    });
   },
 
   'bundler.getUrl': async () => {
@@ -503,6 +523,26 @@ Meteor.methods({
     }
   },
 
+  'message.setHandled': ({messageId, handledBy = []}) => {
+    console.log("message.setHandled", messageId, handledBy)
+    Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
+  },
+
+  'message.submitChoice': ({projectId, channel_key, sender, messageId, selectedKey}) => {
+    console.log("### selecting ", messageId, selectedKey)
+    Messages.update({_id: messageId}, {$set: {selectedChoiceKey: selectedKey}})
+
+    Messages.insert({
+      projectId,
+      sender,
+      recipients: [],
+      channel_key,
+      payload: {type: "select", key: selectedKey},
+      origin: undefined,
+      createdAt: new Date()
+    })
+  },
+
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     const userId = Meteor.userId()
     console.log('message.send', { payload, recipients, sender, userId })
@@ -515,6 +555,7 @@ Meteor.methods({
       origin,
       createdAt: new Date()
     })
+  },
 
     if (messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
@@ -536,11 +577,48 @@ Meteor.methods({
     })
     */
 
+  'user.get': ({userId}) => {
+    const user = Meteor.users.findOne(userId)
+    return user;
   },
 
-  'message.setHandled': ({messageId, handledBy = []}) => {
-    console.log("message.setHandled", messageId, handledBy)
-    Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})
+  'user.getProjectUserData': ({userId, projectId}) => {
+    const user = Meteor.users.findOne(userId);
+    console.log("getProjectUserData", user)
+    return user?.projectUserData[projectId]; 
+  },
+
+  'user.updateUserProjectData': ({userId, projectId, key, value}) => {
+    updateUserProjectData(userId, projectId, key, value);
+  },
+
+  'user.moveTo': ({projectId, userId, boardId, nodeId}) => {
+    console.log("user.moveTo", projectId, userId, boardId, nodeId)
+
+    // get user
+    const user = Meteor.users.findOne(userId)
+    if(!user) {
+      console.log("user.moveTo - user not found")
+      return;
+    }  
+    console.log(user);  
+
+    // TODO: move this logic to the project server!
+
+    // get boardState
+    let boardState = user?.projectUserData[projectId]?.boardState;
+    if(!boardState) {
+      boardState = {}
+    }
+
+    // modify boardState
+    boardState = {...boardState, [boardId]: {
+      status: "arriving",
+      nodeId
+    }}
+    console.log("boardState", boardState);
+
+    updateUserProjectData(userId, projectId, "boardState", boardState)
   }
   
 });

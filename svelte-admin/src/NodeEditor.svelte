@@ -1,15 +1,20 @@
 <script>
 
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
 
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { InterkitClient } from 'interkit'
+
+  import { Tabs, Tab, TabContent, Accordion, AccordionItem } from "carbon-components-svelte";
 
   import { boardsApi as api } from './BundleServer.js'
 
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
+  import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
 
   const useCodeMirror = true
+
+  import { cheatsheetContents } from './cheatsheet.js'
 
   // TODO this could be centralized somewhere.
   // theoretically, usefully between admin AND bundler,
@@ -18,6 +23,44 @@
   const nodeIdRE = boardIdRE
 
   export let projectId
+
+  // the following is boilerplate copied from usersmanager
+  // could be centralized; or better: just subscribe to one user
+  let usersStore
+  let unsubscribe
+  let usersArray
+  let subHandle
+  $: resetSub(projectId)
+  const resetSub = async (projectId) => {
+    if(subHandle) await subHandle.stop()
+    subHandle = await InterkitClient.getSub('users', 'projectUsers', {projectId})
+    usersStore = subHandle.data
+    unsubscribe = usersStore.subscribe((data) => {
+      console.log("project users", data)
+      usersArray = data;
+    })
+  }
+
+  onDestroy(unsubscribe);
+
+  export let previewUserId
+
+  let userNodes = []
+  const updateUserNodes = () => {
+    userNodes = usersArray?.map(user => {
+      const boardState = user.projectUserData?.[projectId]?.boardState?.[currentBoardId]
+      const atNode = boardState ? board?.nodes.find(node => node.id === boardState.nodeId) : undefined
+      return {
+        //user,
+        id: user.id,
+        boardState,
+        atNode,
+        isPreviewUser: user.id === previewUserId
+      }
+    })
+  }
+
+  $: usersArray, projectId, currentBoardId, board, previewUserId, updateUserNodes()
 
   const genericErrorHandler = error => {
     let msg = ''
@@ -194,23 +237,46 @@
       .catch(genericErrorHandler)
   }
 
+  let showNewNodeModal = false
+  let newNodeId
+  let newNodeContent
+
+  const submitNewNodeModal = () => {
+    if (!newNodeContent) {
+      window.alert('no content provided')
+      return
+    }
+    if (!nodeIdRE.test(newNodeId)) {
+      window.alert('You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.')
+    } else {
+      createNode(currentBoardId, newNodeId, newNodeContent)
+      showNewNodeModal = false
+    }
+  }
+
   const createNodeInCurrentBoard = () => {
     let c = 0
-    let newNodeId
     let newNodeIdDefault
     while (!newNodeIdDefault || (board.nodes.findIndex(node => node.id === newNodeIdDefault) > -1 && c < 1000)) {
       c++
       newNodeIdDefault = 'node' + c
     }
-    while (newNodeId === undefined || !nodeIdRE.test(newNodeId)) {
-      newNodeId = window.prompt('Please enter an ID for the new node. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newNodeId || newNodeIdDefault)
-    }
-    if (newNodeId === null) return
-    createNode(currentBoardId, newNodeId)
+    showNewNodeModal = true
+    newNodeId = newNodeIdDefault
+    // while (newNodeId === undefined || !nodeIdRE.test(newNodeId)) {
+    //   newNodeId = window.prompt('Please enter an ID for the new node. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newNodeId || newNodeIdDefault)
+    // }
+    // if (newNodeId === null) return
+    // createNode(currentBoardId, newNodeId)
   }
 
-  const createNode = async (boardId, name) => { 
-    api(projectId, `/${boardId}/nodes/${name}`, { method: 'post' })
+  const createNode = async (boardId, name, body) => { 
+    console.log('createNode', body)
+    api(projectId, `/${boardId}/nodes/${name}`, { method: 'post', body })
+      .then(async res => {
+        const json = await res.json()
+        errorify(json)
+      })
       .catch(genericErrorHandler)
       .finally(() => { loadBoard(boardId) })
   }
@@ -252,6 +318,16 @@
       .finally(() => { loadBoard(boardId) })
   }
 
+  const moveTo = () => {
+    console.log("moveTo", editNodeId, previewUserId, currentBoardId)
+    InterkitClient.call("user.moveTo", {
+      projectId,
+      userId: previewUserId,
+      boardId: currentBoardId,
+      nodeId: editNodeId
+    })
+  }
+ 
   onMount(async () => {
     loadBoardList();
   })
@@ -299,23 +375,54 @@
       boardId={currentBoardId}
       bind:board
       nodes={board.nodes}
-      on:boardchanged={saveCurrentBoard}
+      {userNodes}
+      {previewUserId}
+      on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
       bind:editNodeId
       bind:this={nodeGraph}
       />
   {:else}
     <div class="nodegraph"></div>
   {/if}
-  {#if useCodeMirror}
-    <CodeEditor bind:code={editorContents} />
-  {:else}
-    <textarea
-      class="editor"
-      bind:value={editorContents}
-      disabled={editorContents === null}
-      />
-  {/if}
+  <div>
+    {#if editNodeId}
+      <h3>{editNodeId} <button on:click={moveTo}>moveTo</button></h3>
+    {/if}
+    {#if useCodeMirror}
+      <CodeEditor bind:code={editorContents} class="editor" />
+    {:else}
+      <textarea
+        class="editor"
+        bind:value={editorContents}
+        disabled={editorContents === null}
+        />
+    {/if}
+    <!--Accordion>
+      <AccordionItem title="Cheatsheet"-->
+        {#if useCodeMirror}
+          <br>
+          <p>Cheatsheet (click to activate)</p>
+          <CodeEditor code={cheatsheetContents} readOnly={true} class="cheatsheet" />
+        {:else}
+          <textarea
+            class="cheatsheet"
+            value={cheatsheetContents}
+            readonly="readonly"
+            />
+        {/if}
+      <!--/AccordionItem>
+    </Accordion-->
+  </div>
 </div>
+
+{#if showNewNodeModal}
+  <NodeEditorNewNodeModal
+    bind:templateText={newNodeContent}
+    bind:nodeId={newNodeId}
+    close={() => { showNewNodeModal = false }}
+    submit={submitNewNodeModal}
+    />
+{/if}
 
 <style>
 
@@ -347,6 +454,12 @@
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.cheatsheet {
+  grid-area: right;
+  width: 100%;
+  border: 1px solid #aaa;
 }
 
 </style>

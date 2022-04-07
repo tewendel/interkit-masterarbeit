@@ -36,6 +36,27 @@ async function gitCommit(projectPath, message = "some commit") {
   return sha
 }
 
+async function gitCommitAll(projectPath, message = "some commit") {
+  const files = await gitUnstagedChanges(projectPath)
+  console.log("git commitAll:", files)
+  for (let file of files) {
+    await gitAdd(projectPath, file)
+  }
+  return await gitCommit(projectPath, message)
+}
+
+async function gitCheckout(projectPath) {
+  console.log("git checkout")
+  const result =  await git.checkout({
+    fs,
+    dir: projectPath,
+    force: true,
+    ref: 'master'
+  })
+  console.log("git checkout:", result)
+  return result
+}
+
 async function gitLatestCommit(projectPath, branch = "master") {
   let commits = []
   try {
@@ -54,10 +75,45 @@ async function gitLatestCommit(projectPath, branch = "master") {
   }
 }
 
+async function gitLog(projectPath, branch = "master") {
+  let commits = []
+  try {
+    commits = await git.log({
+      fs,
+      dir: projectPath,
+    })
+  } catch (error) {
+    console.warn(error)
+  }
+  return commits.map(entry => {
+    return {
+      ...entry,
+      date: new Date(entry.commit.author.timestamp * 1000),
+    }
+  })
+}
+
+async function gitUnstagedChanges(projectPath) {
+  const repo = {
+    fs,
+    dir: projectPath
+  }
+  const FILE = 0, WORKDIR = 2, STAGE = 3
+  const filenames = (await git.statusMatrix(repo))
+    .filter(row => row[WORKDIR] !== row[STAGE])
+    .map(row => row[FILE])
+  // console.log("unstaged changes:", filenames)
+  return filenames
+}
+
 
 export {
   gitAddAll,
   gitLatestCommit,
   gitAdd,
-  gitCommit
+  gitCommit,
+  gitCommitAll,
+  gitCheckout,
+  gitUnstagedChanges,
+  gitLog
 }

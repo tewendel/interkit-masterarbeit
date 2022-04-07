@@ -17,9 +17,23 @@
   export let currentProject
   
   let selected
+  let repoNotice
+  let editorFilesKey = "init"
 
   let rightPaneHidden = false;
   const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
+
+  let previewUserId
+
+  window.addEventListener('message', evt => {
+    console.log('received postMessage from iframe', evt, evt.data)
+    if (evt.data && evt.data.userId) previewUserId = evt.data.userId
+  })
+
+  $: {
+    const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
+    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
+  }
 
 </script>
 
@@ -30,10 +44,10 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Repository" />
-        <Tab label="Users" />
+        <Tab label="Interactions" />
         <Tab label="Project" />
-        <Tab label="Nodes" />
+        <Tab label="Users" />
+        <Tab label={ "Repository " + repoNotice } />
         <div slot="content">
           <TabContent>
             <Sheets {projectId}/>
@@ -45,17 +59,18 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <RepositoryTab {projectId} open={selected === 3}/>
-          </TabContent>
-          <TabContent>
-            <UsersManager {projectId} />
+            <NodeEditor {projectId} {previewUserId} />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
           </TabContent>
           <TabContent>
-            <NodeEditor {projectId} />
+            <UsersManager {projectId} {previewUserId} />
           </TabContent>
+          <TabContent>
+            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
+          </TabContent>
+          
         </div>
       </Tabs>
     </div>

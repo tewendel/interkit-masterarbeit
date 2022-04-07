@@ -1,11 +1,12 @@
 <script>
 
-  import { onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { DataTable, OverflowMenu, OverflowMenuItem, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
   import { InterkitClient, util } from 'interkit';
 
   export let users; // this should be an array, not a store
   export let projectId;
+  export let previewUserId
 
   let userId = InterkitClient.userId
 
@@ -15,6 +16,7 @@
 
   const headers = [
     { key: "username", value: "username" },
+    { key: "id", value: "id" },
     { key: "createdAt", value: "createdAt" },
     { key: "userToken", value: "userToken" },
     { key: "lastHeartbeat", value: "lastHeartbeat" },
@@ -26,7 +28,7 @@
   // add links to list of mediafiles
   $: {
     rows = users ? users
-      .filter(user => user.id !== $userId) // hide own user
+      // .filter(user => user.id !== $userId) // hide own user
       .map(user => {
         return {
           ...user,
@@ -103,6 +105,14 @@
                 <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
               </OverflowMenu>
             {/if}
+        {:else if cell.key === 'username'}
+          {#if row.id === $userId}
+            &#x1F464;&#xFE0E;
+          {/if}
+          {#if row.id === previewUserId}
+            &#x1F4F1;&#xFE0E;
+          {/if}
+          { cell.value }
         {:else if cell.key === 'ctrls'}
           <input type="checkbox" bind:group={usersSelection} name="usersSelection" value={row} />
         {:else}

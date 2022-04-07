@@ -14,8 +14,13 @@ import { put_duplicate_project } from './src/put_duplicate_project.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
+import { get_git_commitAll } from './src/get_git_commitAll.mjs'
+import { get_git_checkout } from './src/get_git_checkout.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
-import { api as board_node_api } from './src/api_boards.mjs'
+
+//import { api as board_node_api } from './src/api_boards.mjs'
+import { api as board_node_api } from 'interkit/project-boards-nodes.js'
+
 import { api as project_files_api } from './src/api_project_files.mjs'
 
 const PORT = process.env.PORT
@@ -55,8 +60,11 @@ app.get('/compile/:projectId', get_compile)
 // duplicate app repository
 app.put('/app/:projectId', put_duplicate_project)
 
-// git status
+// git 
 app.get('/git/status/:projectId', get_git_status)
+app.get('/git/commitAll/:projectId', get_git_commitAll) // a method that triggers a change
+app.get('/git/checkout/:projectId', get_git_checkout) // a method that triggers a change
+
 
 // get component configuration yamls
 app.get('/components/:projectId', get_yamls)
@@ -73,7 +81,7 @@ app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
 
 // dont need it, build it into read board
 // app.get('/boards/:projectId/:boardId/nodes', board_node_api.nodes.list)
-app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', board_node_api.nodes.create)
+app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', rawBodyParser, board_node_api.nodes.create)
 app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
 app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
 app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)

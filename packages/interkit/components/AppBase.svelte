@@ -9,6 +9,8 @@
 
   let initComplete = false;
 
+  let userId = InterkitClient.userId
+
   const bypassDesktopFallback = /\bbypassDesktopFallback=1\b/.test(document.location.search + document.location.hash)
   const desktopMQ = '(min-width: 600px)';
   const isDesktop = writable(!bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches);
@@ -23,6 +25,12 @@
     // are hard to get completely right
     InterkitClient.saveUserPushnotificationRegistrationToken()
   });
+
+  // tell frame parent (=admin) the userId
+  // TODO check if we're not leaking a secret, if so, take special precautions
+  // like adding an extra (querystring) param to signal that app is running within iframe
+  // esp. the '*' targetOrigin is not very safe (would replacing the port be OK?)
+  $: window.parent.postMessage({ userId: $userId }, '*')
 
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;

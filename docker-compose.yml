@@ -25,6 +25,7 @@ services:
       ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.server-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_SERVER_HOST}`)"
     networks:
       - frontproxy
@@ -56,6 +57,7 @@ services:
       INTERKIT_IMAGE_TAG: $INTERKIT_IMAGE_TAG
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.admin-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
     networks:
       - frontproxy
@@ -82,8 +84,9 @@ services:
       INTERKIT_SERVER_URL: $INTERKIT_SERVER_URL
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.bundler-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
-      - "traefik.http.middlewares.bundler-${INTERKIT_IMAGE_TAG}.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.bundler-${INTERKIT_IMAGE_TAG}.headers.accesscontrolalloworiginlist=*"
     networks:
       - frontproxy
       - default

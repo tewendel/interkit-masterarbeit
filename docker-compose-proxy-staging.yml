@@ -3,21 +3,24 @@ version: '3.2'
 services:
 
   traefik:
-    image: "traefik:v2.4"
+    image: "traefik:v2.6"
     restart: always
-    container_name: "traefik"
     command:
-      - "--log.level=DEBUG"
+      - "--log.level=WARN"
       - '--api.dashboard=true'
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls.certresolver=letsencrypt"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
         #- "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.letsencrypt.acme.email=info@interkit.app"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      #- "--providers.docker.network=frontproxy"
     ports:
       - "80:80"
       - "443:443"
@@ -26,7 +29,6 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - frontproxy
-      - default
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.demo.interkit.app`)"

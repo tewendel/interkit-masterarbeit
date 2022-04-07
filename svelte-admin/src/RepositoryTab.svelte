@@ -4,6 +4,7 @@
   import RepositoryEditor from './RepositoryEditor.svelte'
 
   export let projectId
+  export let currentProject
   export const open = false
 
   let selectedTab
@@ -15,7 +16,7 @@
   <Tab label="cloudcmd" />
   <div slot="content">
     <TabContent>
-        <RepositoryEditor {projectId} open={selectedTab == 0} />
+        <RepositoryEditor {projectId} {currentProject} open={selectedTab == 0} />
     </TabContent>
     <TabContent>
       <CloudCmd {projectId} open={selectedTab == 1} />
