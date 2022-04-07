@@ -160,18 +160,16 @@ const send = ({ projectId, Meteor, recipients, payload }) => {
   const recipientsEligibleForPush = Meteor.users.find({
     _id: { $in: recipients },
     // ...with heartbeats older than...
-    /*XXX
     [`projectUserData.${projectId}.lastHeartbeat`]: {
       $lt: heartbeatOld
     },
-    */
     [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
       $not: { $in: ['', '(web)'] }
     }
   })
   const recipientsRegistrationTokens = recipientsEligibleForPush.map(user =>
     user.projectUserData?.[projectId]?.pushnotificationRegistrationToken
-  )
+  ).filter(token => !!token)
   if (recipientsEligibleForPush.count() === 0) {
     console.log('no eligible recipients, not sending push notifications')
   } else {
