@@ -3,7 +3,6 @@ import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
-import pushnotificationCredentials from '../firebase-admin-credentials.js'
 
 const addColumn = async ({sheetKey, projectId, colKey, name, type, reference, options}) => {
 
