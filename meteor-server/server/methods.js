@@ -250,7 +250,7 @@ Meteor.methods({
   'user.heartbeat': async function ({ projectId, userId, isAwake }) {
     // Meteor.userId() is not super reliable?
     userId = userId || Meteor.userId()
-    console.log('heartbeat', projectId, userId, isAwake)
+    // console.log('heartbeat', projectId, userId, isAwake)
     if (!userId) {
       console.log('heartbeat w/o userId, skipping')
       return
@@ -555,7 +555,6 @@ Meteor.methods({
       origin,
       createdAt: new Date()
     })
-  },
 
     if (messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
@@ -576,6 +575,7 @@ Meteor.methods({
       }      
     })
     */
+  },
 
   'user.get': ({userId}) => {
     const user = Meteor.users.findOne(userId)

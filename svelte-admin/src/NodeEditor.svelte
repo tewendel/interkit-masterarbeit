@@ -50,11 +50,13 @@
     userNodes = usersArray?.map(user => {
       const boardState = user.projectUserData?.[projectId]?.boardState?.[currentBoardId]
       const atNode = boardState ? board?.nodes.find(node => node.id === boardState.nodeId) : undefined
+      const rndSeed = [(((+user.createdAt) & 0xff00) >> 8) / 256, ((+user.createdAt) & 0xff) / 256]
       return {
         //user,
         id: user.id,
         boardState,
         atNode,
+        rndSeed,
         isPreviewUser: user.id === previewUserId
       }
     })

@@ -194,7 +194,7 @@
       {#if userNode.atNode}
       <g
         class="usernode"
-        style={`transform: translate(${userNode.atNode.posX + Math.random() * (rectWidth - 10)}px,${userNode.atNode.posY + Math.random() * (rectHeight - 10)}px)`}
+        style={`transform: translate(${userNode.atNode.posX + userNode.rndSeed[0] * (rectWidth - 10)}px,${userNode.atNode.posY + userNode.rndSeed[1] * (rectHeight - 10)}px)`}
         >
         <circle
           cx="0" cy="0"
