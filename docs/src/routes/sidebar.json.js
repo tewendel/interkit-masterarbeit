@@ -9,11 +9,20 @@ export async function get({ params }) {
   const guides = await getFiles(import.meta.glob('./guides/**.(svx|svelte)'));
   const theory = await getFiles(import.meta.glob('./theory/**.(svx|svelte)'));
 
-  const items = {
-    guides,
-    components,
-    theory
-  }
+  const items = [
+    {
+      title: "Guides",
+      items: guides
+    },
+    {
+      title: "Components",
+      items: components
+    },
+    {
+      title: "Theory",
+      items: theory
+    }
+  ]
 
   if (items) {
     
@@ -36,7 +45,9 @@ const getFiles = async function(files)  {
   Object.entries(files).map(async ([path, page]) => {
     const { metadata } = {}//await page();
     const filename = path.split('/').pop();
-    return { ...metadata, filename, path };
+    // remove file extension
+    const uri = path.substring(1).replace(/\.[^/.]+$/, "");
+    return { ...metadata, filename, path: uri };
   })
   
 );
