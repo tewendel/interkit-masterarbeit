@@ -32,7 +32,7 @@ export async function get({ params }) {
       items: [
         {
           title: '"Project Server"',
-          path: "/guides/project-server"
+          path: "/theory/project-server"
         }
       ]
     },

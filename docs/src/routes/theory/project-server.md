@@ -1,11 +1,11 @@
 # Project server
 
-````mermaid
+```mermaid
 graph TD
 
     Bundler[Bundler]
     Project(Project Server)
-    Server{Meteor Server}
+    Server(MeteorServer)
     Admin[Admin UI]
 
     Bundler -->|shell, env| Project
@@ -14,4 +14,4 @@ graph TD
     Server --- |ws| Admin 
     Server --- |ws| Bundler 
 
-````
+```
