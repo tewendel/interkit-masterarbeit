@@ -11,7 +11,7 @@
     {#each items as item}
       <li>
         <a href="{item.path}">
-          {item.filename}
+          {item.title}
         </a>
       </li>
     {/each}

@@ -1,46 +1,62 @@
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */
-
-
 export async function get({ params }) {
-  console.log("query")
-  const components = await getFiles(import.meta.glob('./components/**.(svx|svelte)'));
-  const guides = await getFiles(import.meta.glob('./guides/**.(svx|svelte)'));
-  const theory = await getFiles(import.meta.glob('./theory/**.(svx|svelte)'));
 
   const items = [
     {
-      title: "Guides",
-      items: guides
+      title: "Components",
+      items: [
+        {
+          title: "SimpleMap",
+          path: "/components/SimpleMap"
+        },
+        {
+          title: "Example MArkdown",
+          path: "/components/markdown"
+        },
+        {
+          title: "example svelte.md",
+          path: "/components/sveltemd"
+        }
+      ]
     },
     {
-      title: "Components",
-      items: components
+      title: "Guides",
+      items: [
+
+      ]
     },
     {
       title: "Theory",
-      items: theory
+      items: [
+        {
+          title: '"Project Server"',
+          path: "/guides/project-server"
+        }
+      ]
+    },
+    {
+      title: "Contribute",
+      items: [
+        {
+          title: "Docs",
+          path: "/contribute/docs"
+        },
+      ]
     }
   ]
 
-  if (items) {
-    
-
-    return {
-      body: {
-        items
-      }
-    };
-  }
   return {
-    status: 503,
-    body: undefined
+    body: {
+      items
+    }
   };
 }
 
-
-const getFiles = async function(files)  {
+/*
+const getFiles = async function(path, ext)  {
+  const files = await import.meta.glob('./components/*\.(' + ext.join + ')$');
   const items = await Promise.all(
   Object.entries(files).map(async ([path, page]) => {
     const { metadata } = {}//await page();
@@ -52,4 +68,4 @@ const getFiles = async function(files)  {
   
 );
   return items.sort((a, b) => b.filename - a.filename);
-}
+}*/
