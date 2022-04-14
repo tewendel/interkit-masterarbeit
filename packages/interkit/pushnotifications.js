@@ -5,6 +5,19 @@ import { Plugins } from '@capacitor/core'
 
 const { PushNotifications } = Plugins;
 
+/**
+ * Consider heartbeats for push notification eligibility?
+ * If true: current implementation might have performance problems,
+ * since every hearbeat causes a user collection onChange.
+ * If false: every device receives a push notification. Where the app
+ * is still active/visible, the OS does not display a notification,
+ * instead, the app can react in a handler (e.g. route to a tab or
+ * trigger a poll, update the "new message small red badge counters").
+ * See pushNotificationReceived handler.
+ * This flag must be (kept manually) in sync with its counterpart in
+ * meteor-server/imports/pushnotifications.js !!!
+ * @default
+ */
 const enableHeartbeat = false
 const heartbeatDelay = 10000 // milliseconds
 
