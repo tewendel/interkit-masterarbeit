@@ -78,6 +78,7 @@ app.post('/boards/:projectId/:boardId([a-z0-9]+)', board_node_api.boards.create)
 app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
 app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
 app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
+app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId([a-z0-9]+)/:newNodeId([a-z0-9]+)', board_node_api.boards.renameNode)
 
 // dont need it, build it into read board
 // app.get('/boards/:projectId/:boardId/nodes', board_node_api.nodes.list)

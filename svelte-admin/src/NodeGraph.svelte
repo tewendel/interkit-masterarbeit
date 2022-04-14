@@ -13,6 +13,10 @@
   export let editNodeId
   export let board
   export let userNodes
+  export let _update
+
+  // this hack forces a redraw, reacting to any node content modifications
+  $: nodes._update = _update
 
   const rectWidth = 100
   const rectHeight = 70
@@ -164,6 +168,8 @@
           y={node.posY}
           width={rectWidth}
           height={rectHeight}
+          class:node__editing={editNodeId === node.id}
+          class:node__modified={node.modified}
           />
         <text
           class="script-node"
@@ -178,7 +184,7 @@
           x={node.posX+10}
           y={node.posY+35}
           >
-          {#if editNodeId == node.id}editing{/if}
+          <!--{#if editNodeId == node.id}editing{/if}-->
         </text>
         <text
           class="script-node-attribute"
@@ -229,6 +235,18 @@ rect {
 polyline {
   stroke: black;
   stroke-width: 1;
+}
+
+.node__editing {
+  filter: drop-shadow(0.3em 0.3em black);
+}
+
+.node__modified {
+  filter: drop-shadow(0.3em 0.3em red);
+}
+
+.node__editing.node__modified {
+  filter: drop-shadow(0.3em 0.3em black) drop-shadow(0.3em 0.3em red);
 }
 
 g.usernode {

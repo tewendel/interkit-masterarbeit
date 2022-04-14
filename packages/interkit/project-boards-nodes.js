@@ -127,6 +127,7 @@ lib.boards.read = async (handle, params) => {
       const contents = await getNode(projectBoardPath(params.relative, params.projectId, [file]))
       const node = board.nodes.find(_ => _.id === id)
       // console.log(id, contents, node)
+      // TODO deleteme?
       if (!startIdByMetaComment && startNodeMetaCommentRE.test(contents)) {
         startIdByMetaComment = id
       }
@@ -135,7 +136,7 @@ lib.boards.read = async (handle, params) => {
       }
       if (node) {
         node.contents = contents
-        node.path = file
+        // node.path = file
         node.modified = false
       } else {
         board.nodes.push({
@@ -143,7 +144,7 @@ lib.boards.read = async (handle, params) => {
           posX: 10,
           posY: 10,
           contents,
-          path: file,
+          // path: file,
           modified: false
         })
       }
@@ -196,6 +197,31 @@ api.boards.delete = expressify(
     return Promise.all(
       files.map(file => fs.unlink(projectBoardPath(false, params.projectId, [file])))
     )
+  }
+)
+
+api.boards.renameNode = expressify(
+  async (handle, params) => {
+    const { projectId, boardId, oldNodeId, newNodeId } = params
+    const boardHandle = projectBoardPath(false, projectId, boardId)
+    let board
+    try {
+      board = await fs.readFile(boardHandle)
+        .then(file => JSON.parse(file.toString()))
+      console.log('board before update', board)
+      const node = board?.nodes
+        ?.find(node => node.id === oldNodeId)
+      if (!node) throw new Error(`node '${oldNodeId}' not found in board json`)
+      node.id = newNodeId
+      console.log('board after update', board)
+      await fs.writeFile(boardHandle, JSON.stringify(board))
+    } catch (err) {
+      console.warn('error updating board json', err)
+    }
+    const oldHandle = projectBoardPath(false, projectId, boardId, oldNodeId)
+    const newHandle = projectBoardPath(false, projectId, boardId, newNodeId)
+    console.log('renaming', oldHandle, '->', newHandle)
+    return fs.rename(oldHandle, newHandle)
   }
 )
 

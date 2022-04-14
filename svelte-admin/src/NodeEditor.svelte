@@ -108,7 +108,7 @@
   $: currentBoardId, (() => { editNodeId = null })()
 
   let editorContents
-  $: currentBoardId, editNodeId, updateEditorContents()
+  $: currentBoardId, editNodeId, board, updateEditorContents()
 
   const updateEditorContents = () => {
     editorContents = board?.nodes?.find(node => node.id === editNodeId)?.contents
@@ -122,21 +122,37 @@
       if (node.contents !== editorContents) {
         console.log('set modified', node)
         node.modified = true
+        updateNodesModified()
       }
       node.contents = editorContents
       nodeGraph.updateConnections()
     }
   })()
 
+  let nodesModifiedCount = 0
+  let editNodeModified = false
+  const updateNodesModified = () => {
+    // I failed to do this idiomatically reactive
+    nodesModifiedCount = board?.nodes?.filter(node => node.modified).length
+    editNodeModified = board?.nodes?.find(node => node.id === editNodeId)?.modified
+  }
+  $: editNodeId, updateNodesModified()
+
+
   const refresh = async () => {
+    if (nodesModifiedCount) {
+      if (window.confirm('Your unsaved changes to nodes will be lost. Continue?') !== true) {
+        return
+      }
+    }
     if (currentBoardId) {
       await loadBoard(currentBoardId)
     }
     await loadBoardList()
   } 
 
-  const loadBoardList = () => {
-    api(projectId, '/')
+  const loadBoardList = async () => {
+    await api(projectId, '/')
       .then(async res => {
         const json = await res.json()
         errorify(json)
@@ -305,6 +321,12 @@
     saveNode(currentBoardId, editNodeId, editorContents)
   }
 
+  const saveModifiedNodes = () => {
+    board?.nodes
+      .filter(node => node.modified)
+      .forEach(node => saveNode(currentBoardId, node.id, node.contents))
+  }
+
   const saveNode = (boardId, nodeId, body) => {
     api(projectId, `/${boardId}/nodes/${nodeId}`, { method: 'put', body })
       .then(async res => {
@@ -313,8 +335,42 @@
         const node = board?.nodes?.find(_ => _.id === nodeId)
         if (node) {
           console.log('set modified false', node)
+          node.contents = json.result
           node.modified = false
+          updateNodesModified()
         }
+      })
+      .catch(genericErrorHandler)
+  }
+
+  const renameCurrentNode = async () => {
+    if (nodesModifiedCount) {
+      window.alert('Please save all nodes first.')
+      return
+    }
+    const newNodeId = window.prompt('new name', editNodeId)
+    if (!newNodeId) {
+      window.alert('No name provided.')
+      return
+    }
+    if (newNodeId === editNodeId) {
+      window.alert('No change.')
+      return
+    }
+    if (board?.nodes?.find(node => node.id === newNodeId)) {
+      if (window.confirm(`There already exists a node with the name '${newNodeId}', renaming will overwrite it. Continue?`) !== true) {
+        return
+      }
+    }
+    await renameNode(currentBoardId, editNodeId, newNodeId)
+    editNodeId = newNodeId
+  }
+
+  const renameNode = async (boardId, oldNodeId, newNodeId) => { 
+    api(projectId, `/${boardId}/renamenode/${oldNodeId}/${newNodeId}`, { method: 'put' })
+      .then(async res => {
+        const json = await res.json()
+        errorify(json)
       })
       .catch(genericErrorHandler)
       .finally(() => { loadBoard(boardId) })
@@ -331,7 +387,8 @@
   }
  
   onMount(async () => {
-    loadBoardList();
+    await loadBoardList();
+    if (boards.length) currentBoardId = boards[0]
   })
 
 </script>
@@ -359,16 +416,11 @@
       add node
     </button>
     <button
-      on:click={deleteCurrentNode}
-      disabled={!board || !editNodeId}
+      on:click={saveModifiedNodes}
+      disabled={!nodesModifiedCount}
       >
-      delete node
-    </button>
-    <button
-      on:click={saveCurrentNode}
-      disabled={!board || !editNodeId}
-      >
-      save node
+      save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
+      {#if nodesModifiedCount}&#x1f534;{/if}
     </button>
   </div>
   {#if board}
@@ -377,6 +429,7 @@
       boardId={currentBoardId}
       bind:board
       nodes={board.nodes}
+      _update={nodesModifiedCount}
       {userNodes}
       {previewUserId}
       on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
@@ -388,7 +441,28 @@
   {/if}
   <div>
     {#if editNodeId}
-      <h3>{editNodeId} <button on:click={moveTo}>moveTo</button></h3>
+      <h3>
+        {editNodeId}
+        <button
+          on:click={saveCurrentNode}
+          disabled={!board || !editNodeId || !editNodeModified }
+          >
+          save
+        </button>
+        <button
+          on:click={deleteCurrentNode}
+          disabled={!board || !editNodeId}
+          >
+          delete
+        </button>
+        <button
+          on:click={renameCurrentNode}
+          disabled={!board || !editNodeId}
+          >
+          rename
+        </button>
+        <button on:click={moveTo}>moveTo</button>
+      </h3>
     {/if}
     {#if useCodeMirror}
       <CodeEditor bind:code={editorContents} class="editor" />
