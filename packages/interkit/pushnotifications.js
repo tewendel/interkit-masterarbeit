@@ -5,6 +5,7 @@ import { Plugins } from '@capacitor/core'
 
 const { PushNotifications } = Plugins;
 
+const enableHeartbeat = false
 const heartbeatDelay = 10000 // milliseconds
 
 const addListeners = async () => {
@@ -27,7 +28,9 @@ const addListeners = async () => {
   });
 
   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-    // TODO not sure if we need this. it sends OS/FCM stuff about the notification, like
+    // after the OS receives & displays the notification & users taps it,
+    // we can handle the event here.
+    // it sends OS/FCM stuff about the notification, like
     // (on Android) actionId: tap, very long IDs, google.delivered_priority and
     // collapse_key (which holds the bundle id, like 'interkit.app.cs3')
     // alert('push action performed:' + JSON.stringify(notification))
@@ -66,6 +69,10 @@ const heartbeat = () => {
 }
 
 const startHeartbeat = () => {
+  if (!enableHeartbeat) {
+    console.log('heartbeat disabled')
+    return
+  }
   console.log('startHeartbeat')
   heartbeat()
   window.setInterval(heartbeat, heartbeatDelay)
@@ -76,5 +83,6 @@ export {
   registerNotifications,
   addListeners,
   getDeliveredNotifications,
+  enableHeartbeat,
   startHeartbeat
 }

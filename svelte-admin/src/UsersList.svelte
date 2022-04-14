@@ -20,9 +20,12 @@
     { key: "id", value: "id" },
     { key: "createdAt", value: "createdAt" },
     { key: "userToken", value: "userToken" },
-    { key: "lastHeartbeat", value: "lastHeartbeat" },
-    { key: "pushnotificationRegistrationToken", value: "pushnotificationRegistrationToken" },
-    { key: "ctrls" },
+    ...(InterkitClient.usersEnableHeartbeat
+      ? [{ key: "lastHeartbeat", value: "lastHeartbeat" }]
+      : []
+    ),
+    { key: "pushnotificationRegistrationToken", value: "push token" },
+    { key: "ctrls", value: "☑" },
   ];
 
   let rows = [];
