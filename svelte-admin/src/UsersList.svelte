@@ -13,6 +13,7 @@
   let usersSelection = []
 
   let quickMsgText = 'hello'
+  let quickMsgChannel = 'board1'
 
   const headers = [
     { key: "username", value: "username" },
@@ -70,7 +71,7 @@
     InterkitClient.call('message.send', {
       projectId,
       sender: userId,
-      channel_key: 'DEFAULT',
+      channel_key: quickMsgChannel,
       recipients: usersSelection.map(_ => _._id),
       payload: {
         type: 'text',
@@ -127,7 +128,8 @@
 
   <div>
     quick message
-    <input bind:value={quickMsgText} />
+    <label>msg txt <input bind:value={quickMsgText} /></label>
+    <label>channel <input bind:value={quickMsgChannel} /><label>
     <button on:click={()=>{quickMsgSend()}} disabled={usersSelection.length===0}>send</button><br/>
     {#if usersSelection.length}
       …to {usersSelection.map(_ => _._id).join(', ')}
