@@ -20,7 +20,7 @@
     { key: "id", value: "id" },
     { key: "createdAt", value: "createdAt" },
     { key: "userToken", value: "userToken" },
-    ...(InterkitClient.usersEnableHeartbeat
+    ...(InterkitClient.userEnableHeartbeat
       ? [{ key: "lastHeartbeat", value: "lastHeartbeat" }]
       : []
     ),
