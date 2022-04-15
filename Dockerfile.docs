@@ -1,0 +1,22 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+# copy shared files and install dependencies
+COPY /packages /packages
+RUN cd /packages/interkit && npm ci
+#RUN cd /packages/interkit-blockly && npm ci
+
+# copy app files and install dependencies
+COPY sites/docs ./docs
+WORKDIR /app/docs
+RUN npm ci
+
+# build
+RUN npm run build
+
+# clean
+RUN npm prune --production && rm -rf /packages
+
+EXPOSE 3000
+CMD ["node", "build"]

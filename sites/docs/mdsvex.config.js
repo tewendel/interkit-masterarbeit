@@ -1,5 +1,10 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-//import mermaid from 'remark-mermaid';
+
+// mermaid not working yet, see 
+// - https://github.com/pngwn/MDsveX/issues/304
+// - https://github.com/pngwn/MDsveX/issues/93
+import { remarkMermaid } from 'remark-mermaidjs';
+
 import sveld from "mdsvex-sveld";
 
 const config = defineConfig({

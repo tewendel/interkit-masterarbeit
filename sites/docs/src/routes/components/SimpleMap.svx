@@ -1,7 +1,0 @@
-# SimpleMap
-
-## Component Signature
-
-```docs
-../../../../../packages/interkit/components/Button.svelte
-```

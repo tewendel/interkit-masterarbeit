@@ -8,16 +8,16 @@ export async function get({ params }) {
       title: "Components",
       items: [
         {
-          title: "SimpleMap",
-          path: "/components/SimpleMap"
+          title: "MapSimple",
+          path: "/components/MapSimple"
         },
         {
-          title: "Example MArkdown",
-          path: "/components/markdown"
+          title: "ElementList",
+          path: "/components/ElementList"
         },
         {
-          title: "example svelte.md",
-          path: "/components/sveltemd"
+          title: "ContentElement",
+          path: "/components/ContentElement"
         }
       ]
     },

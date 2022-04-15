@@ -2,7 +2,7 @@
 	"name": "docs",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
+		"dev": "svelte-kit dev --port 3010",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
@@ -19,10 +19,15 @@
 		"mdsvex": "^0.10.5",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
-		"svelte": "^3.44.0"
+		"svelte": "^3.44.0",
+		"svelte-highlight": "^6.0.1"
 	},
 	"type": "module",
 	"dependencies": {
-		"mdsvex-sveld": "^1.0.3"
+		"@sveltejs/adapter-node": "^1.0.0-next.73",
+		"mdsvex-sveld": "^1.0.3",
+		"mermaid": "^9.0.0",
+		"puppeteer": "^13.5.2",
+		"remark-mermaidjs": "^2.1.1"
 	}
 }
