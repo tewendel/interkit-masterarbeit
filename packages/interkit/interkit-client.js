@@ -10,6 +10,8 @@ import { Capacitor } from '@capacitor/core';
 
 import util from './util.js';
 
+import { enableHeartbeat as userEnableHeartbeat } from './pushnotifications.js'
+
 // this store holds the basic data from interkit.config.json
 let config = writable(null); 
 
@@ -847,6 +849,7 @@ const InterkitClient = {
   createProjectTokenUserAndLogin,
   createProjectUser,
   saveUserPushnotificationRegistrationToken,
+  userEnableHeartbeat,
   userHeartbeat,
   login,
   logout,

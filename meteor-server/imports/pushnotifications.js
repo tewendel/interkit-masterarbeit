@@ -37,6 +37,21 @@ import { Sheets, Rows } from './collections.js';
 const pushers = {}
 
 /**
+ * Consider heartbeats for push notification eligibility?
+ * If true: current implementation might have performance problems,
+ * since every hearbeat causes a user collection onChange.
+ * If false: every device receives a push notification. Where the app
+ * is still active/visible, the OS does not display a notification,
+ * instead, the app can react in a handler (e.g. route to a tab or
+ * trigger a poll, update the "new message small red badge counters").
+ * See packages/interkit/pushnotifications.js:pushNotificationReceived
+ * This flag must be (kept manually) in sync with its counterpart in
+ * packages/interkit/pushnotifications.js !!!
+ * @default
+ */
+const enableHeartbeat = false
+
+/**
  * How long ago must a heartbeat be so we consider the recipient
  * eligible for a push notification?
  * should be larger than the heartbeat delay defined in
@@ -156,16 +171,21 @@ const init = (projectId) => {
 const send = ({ projectId, Meteor, recipients, payload }) => {
   let messaging
   // note: Meteor needs a Date object, not a number
-  const heartbeatOld = new Date(new Date() - heartbeatOldMinAge) // 3min ago
+  const heartbeatOld = new Date(new Date() - heartbeatOldMinAge)
   const recipientsEligibleForPush = Meteor.users.find({
     _id: { $in: recipients },
-    // ...with heartbeats older than...
-    [`projectUserData.${projectId}.lastHeartbeat`]: {
-      $lt: heartbeatOld
-    },
     [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
       $not: { $in: ['', '(web)'] }
-    }
+    },
+    ...(enableHeartbeat
+      ? {
+        // ...with heartbeats older than...
+        [`projectUserData.${projectId}.lastHeartbeat`]: {
+          $lt: heartbeatOld
+        },
+      }
+      : {}
+    )
   })
   const recipientsRegistrationTokens = recipientsEligibleForPush.map(user =>
     user.projectUserData?.[projectId]?.pushnotificationRegistrationToken
