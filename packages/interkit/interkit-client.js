@@ -18,6 +18,7 @@ let config = writable(null);
 // this store holds the projctId that is loaded with info from the config
 let projectId = writable(null);
 let connectionIssue = writable(false);
+let connected = writable(false);
 
 let server;
 
@@ -78,6 +79,15 @@ const connect = async (url) => {
     reconnectInterval: 5000
   };
   server = new simpleDDP(opts, [simpleDDPLogin]);
+
+  server.on('connected', () => {
+    connected.set(true);
+  });
+
+  server.on('disconnected', () => {
+    connected.set(false);
+  });
+
   // this needs to be done once in the client app
   await server.connect();
   console.log("connected")
@@ -297,7 +307,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
   await sub.sub.ready();
-  //console.log("sub ready", pub)
+  console.log("sub ready", pub)
 
   if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
   subscriptionCounter[pub] += 1;
@@ -395,7 +405,7 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        //console.log("creating row subscription on sheet", sheetKey)
+        console.log("creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
@@ -839,6 +849,7 @@ const InterkitClient = {
   userId,
   pushnotificationRegistrationToken,
   config,
+  connected,
   projectId,
   userProjectDataStore,
   connectionIssue,
