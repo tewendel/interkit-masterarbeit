@@ -20,8 +20,8 @@ export async function get({ params }) {
           path: "/components/ContentElement"
         },
         {
-          title: "ElementProvider",
-          path: "/components/ElementProvider"
+          title: "ElementsContextProvider",
+          path: "/components/ElementsContextProvider"
         }        
       ]
     },
