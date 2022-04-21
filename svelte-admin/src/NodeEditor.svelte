@@ -10,9 +10,12 @@
 
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
+  import CodeEditorStringy from './CodeEditorStringy.svelte'
+  import CodeEditorExporty from './CodeEditorExporty.svelte'
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
 
   const useCodeMirror = true
+  let editorMode = 2
 
   import { cheatsheetContents } from './cheatsheet.js'
 
@@ -42,6 +45,10 @@
   }
 
   onDestroy(unsubscribe);
+
+  // force update of the SVG hack
+  // TODO: some sort of debounce
+  let _update = 0
 
   export let previewUserId
 
@@ -127,6 +134,7 @@
       node.contents = editorContents
       nodeGraph.updateConnections()
     }
+    updateNodeMetadata()
   })()
 
   let nodesModifiedCount = 0
@@ -135,9 +143,16 @@
     // I failed to do this idiomatically reactive
     nodesModifiedCount = board?.nodes?.filter(node => node.modified).length
     editNodeModified = board?.nodes?.find(node => node.id === editNodeId)?.modified
+    _update++
   }
   $: editNodeId, updateNodesModified()
 
+  const updateNodeMetadata = () => {
+    board?.nodes?.forEach(node => {
+      node._color = Math.random()
+    })
+    _update++
+  }
 
   const refresh = async () => {
     if (nodesModifiedCount) {
@@ -385,6 +400,32 @@
       nodeId: editNodeId
     })
   }
+
+  let syntaxCheckMessage = ''
+  let syntaxCheckStatus = ''
+
+  $: editorContents, () => { syntaxCheckMessage = ''; syntaxCheckStatus = '' }
+
+  const syntaxCheck = () => {
+    let code = editorContents
+    // export are only allowed in modules
+    code = code.replace(/^\s*export\b/gm, '/*xprt*/')
+    try {
+      eval(code)
+      syntaxCheckStatus = 'ok'
+      syntaxCheckMessage = 'no <i>syntactical</i> errors<br/><small>errors still might occur when the code runs</small>'
+    } catch (err) {
+      syntaxCheckStatus = 'bad'
+      syntaxCheckMessage = `<b>${err.message}</b>`
+      if (err.lineNumber) {
+        syntaxCheckMessage += `<br/>at line <b>${err.lineNumber}</b>`
+        if (err.columnNumber) syntaxCheckMessage += `, column <b>${err.columnNumber}</b>`
+      }
+      if (err.stack) {
+        syntaxCheckMessage += `<pre>${err.stack}</pre>`
+      }
+    }
+  }
  
   onMount(async () => {
     await loadBoardList();
@@ -429,7 +470,7 @@
       boardId={currentBoardId}
       bind:board
       nodes={board.nodes}
-      _update={nodesModifiedCount}
+      {_update}
       {userNodes}
       {previewUserId}
       on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
@@ -462,17 +503,43 @@
           rename
         </button>
         <button on:click={moveTo}>moveTo</button>
+        <button on:click={syntaxCheck}>quickCheck</button>
       </h3>
     {/if}
-    {#if useCodeMirror}
-      <CodeEditor bind:code={editorContents} class="editor" />
-    {:else}
-      <textarea
-        class="editor"
-        bind:value={editorContents}
-        disabled={editorContents === null}
-        />
-    {/if}
+    <Tabs bind:selected={editorMode} autoWidth={true}>
+      <Tab label="Strings" />
+      <Tab label="Handlers" />
+      <Tab label="Full" />
+    </Tabs>
+    <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
+      otherwise two-way binds are a hot mess -->
+        {#if editorMode === 0}
+          <CodeEditorStringy bind:code={editorContents} class="editor" />
+        {:else if editorMode === 1}
+          <CodeEditorExporty
+            code={editorContents}
+            on:codechange={evt => { editorContents = evt.detail }}
+            />
+        {:else if editorMode === 2}
+          {#if useCodeMirror}
+            <CodeEditor
+              code={editorContents}
+              on:codechange={evt => { editorContents = evt.detail }}
+              class="editor"
+              />
+          {:else}
+            <textarea
+              class="editor"
+              bind:value={editorContents}
+              disabled={editorContents === null}
+              />
+          {/if}
+        {/if}
+      {#if syntaxCheckMessage}
+        <div class={`syntaxcheck syntaxcheck__status-${syntaxCheckStatus}`}>
+          {@html syntaxCheckMessage}
+        </div>
+      {/if}
     <!--Accordion>
       <AccordionItem title="Cheatsheet"-->
         {#if useCodeMirror}
@@ -536,6 +603,35 @@
   grid-area: right;
   width: 100%;
   border: 1px solid #aaa;
+}
+
+.syntaxcheck {
+  background: white;
+  border: solid #888 1px;
+  border-left-width: 4px;
+  margin: 1em 0;
+  padding: 0.5em;
+}
+
+.syntaxcheck :global(b) {
+  font-weight: bold;
+}
+
+.syntaxcheck :global(pre) {
+  white-space: pre-wrap;
+  font-family: monospace;
+  max-height: 5em;
+  overflow-y: scroll;
+  font-size: 80%;
+  margin-top: 0.5em;
+}
+
+.syntaxcheck__status-ok {
+  border-left-color: green;
+}
+
+.syntaxcheck__status-bad {
+  border-left-color: red;
 }
 
 </style>

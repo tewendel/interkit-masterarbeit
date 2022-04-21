@@ -17,7 +17,7 @@
   export let language = "javascript";
 
   onMount(()=>{
-    //console.log("mount");
+    console.log("CodeEditor mount");
     //console.log(language);
     editor = CodeMirror.fromTextArea(textArea, {
       lineNumbers: true,
@@ -26,12 +26,18 @@
       lineWrapping: false
     });
     editor.refresh();
-    editor.on("change", ()=>{editorChanged = true; code = editor.getValue(); dispatch('change', {code})})
+    editor.on("change", ()=>{
+      editorChanged = true
+      code = editor.getValue()
+      dispatch('change', {code})
+      dispatch('codechange', code)
+    })
   })
 
   afterUpdate(()=>{
     if(!editorChanged) {
       editor.getDoc().setValue(code ? code : "");
+      window.setTimeout(() => { editor.refresh() }, 200)
     }
     editorChanged = false;
   })
@@ -43,7 +49,6 @@
 </script>
 
 <textarea bind:this={textArea} value={code}></textarea>  
-
 
 <style>
 

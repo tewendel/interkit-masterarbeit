@@ -41,6 +41,7 @@
   export const updateConnections = () => {
     connections = []
     nodes.forEach(fromNode => {
+      // if (!fromNode.contents) return
       const fromX = fromNode.posX + rectWidth / 2
       const fromY = fromNode.posY + rectHeight / 2
       const moveTos = [...fromNode.contents.matchAll(parseREmoveTo)].map(_ => _[1])
@@ -67,6 +68,10 @@
     board.offsetY = 0
     dispatch('boardchanged')
   }
+
+  const nodeMetaStyle = node => `fill: ${node?.contents?.match(/\/\/ *color *: *(#?\w+)/)?.[1]};`
+  const nodeMetaExcerpt = node => node?.contents?.match(/\/\/ *info *: *(.*)/)?.[1] || ''
+  const nodeMetaExcerptFontsize = node => Math.max(10, 32 - 2 * (nodeMetaExcerpt(node)?.length || 0)) + 'px'
 
 </script>
 
@@ -168,8 +173,10 @@
           y={node.posY}
           width={rectWidth}
           height={rectHeight}
+          class="node"
           class:node__editing={editNodeId === node.id}
           class:node__modified={node.modified}
+          style={nodeMetaStyle(node)}
           />
         <text
           class="script-node"
@@ -182,9 +189,10 @@
         <text
           class="script-node-attribute"
           x={node.posX+10}
-          y={node.posY+35}
+          y={node.posY+55}
+          style={`font-size: ${nodeMetaExcerptFontsize(node)}`}
           >
-          <!--{#if editNodeId == node.id}editing{/if}-->
+          {nodeMetaExcerpt(node)}
         </text>
         <text
           class="script-node-attribute"
@@ -205,7 +213,7 @@
         <circle
           cx="0" cy="0"
           r={userNode.isPreviewUser ? 5 : 3}
-          fill={userNode.isPreviewUser ? 'red' : 'black'}
+          fill={userNode.isPreviewUser ? 'darkblue' : 'black'}
           stroke={userNode.isPreviewUser ? 'black' : '0'}
           opacity={userNode.isPreviewUser ? 1 : 0.2}
           />
