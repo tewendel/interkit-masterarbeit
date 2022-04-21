@@ -18,6 +18,7 @@ let config = writable(null);
 // this store holds the projctId that is loaded with info from the config
 let projectId = writable(null);
 let connectionIssue = writable(false);
+let connected = writable(false);
 
 let server;
 
@@ -78,6 +79,15 @@ const connect = async (url) => {
     reconnectInterval: 5000
   };
   server = new simpleDDP(opts, [simpleDDPLogin]);
+
+  server.on('connected', () => {
+    connected.set(true);
+  });
+
+  server.on('disconnected', () => {
+    connected.set(false);
+  });
+
   // this needs to be done once in the client app
   await server.connect();
   console.log("connected")
@@ -297,7 +307,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
   await sub.sub.ready();
-  //console.log("sub ready", pub)
+  console.log("sub ready", pub, pubArgs)
 
   if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
   subscriptionCounter[pub] += 1;
@@ -368,6 +378,12 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   return sub;
 }
 
+// this gets a sub to messages of specified channel
+const getMessageSub = async (channel_key) => {
+  let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId: get(userId)}, m=>m.channel_key==channel_key)
+  return sub;
+}
+
 // returns the row store for a given sheet, created one if not available or waits for subscription to complete
 // if a columnMap is passed in, returns the converted object store
 // subKey is a special key you can use to prevent conflicts with other subs that have different column maps
@@ -395,7 +411,7 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        //console.log("creating row subscription on sheet", sheetKey)
+        console.log("creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
@@ -839,6 +855,7 @@ const InterkitClient = {
   userId,
   pushnotificationRegistrationToken,
   config,
+  connected,
   projectId,
   userProjectDataStore,
   connectionIssue,
@@ -855,6 +872,7 @@ const InterkitClient = {
   logout,
   call,
   getSub,
+  getMessageSub,
   getRowSubStore,
   getOneRowSubStore,
   getMediaFileSubStore,

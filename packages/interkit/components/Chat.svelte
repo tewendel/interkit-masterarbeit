@@ -13,16 +13,25 @@
 
   onMount(async () => {
 
-    userId = get(InterkitClient.userId);
-    let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId})
+    // if a globalStore has been set, use that
+    let channelKeyDynamic = InterkitClient.getGlobalStore("chatChannelKey");
+    if(get(channelKeyDynamic)) {
+      channel_key = get(channelKeyDynamic)
+    }    
+
+    console.log("getting sub with channel", channel_key)
+
+    let sub = await InterkitClient.getMessageSub(channel_key);
     messageStore = sub.data
 
-    console.log("userId", get(InterkitClient.userId))
+    userId = get(InterkitClient.userId)
+    console.log("userId", userId)
   })
 
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
+      console.log("message update", $messageStore)
       scrollDown()
     }
   }
@@ -70,6 +79,7 @@
 </script>
 
 <div class="root">
+  <span>channel {channel_key}</span>
   <div
     class="messages-container"
     class:messages__empty={!messageStore || $messageStore.length === 0}

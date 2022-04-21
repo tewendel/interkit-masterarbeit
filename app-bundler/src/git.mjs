@@ -23,6 +23,15 @@ async function gitAdd(projectPath, filepath) {
   git.add({ ...repo, filepath })
 }
 
+async function gitStatus(projectPath, filepath) {
+  const repo = {
+    fs,
+    dir: projectPath
+  }
+  git.status({ ...repo, filepath })
+}
+
+
 async function gitCommit(projectPath, message = "some commit") {
   let sha = await git.commit({
     fs,
@@ -40,6 +49,13 @@ async function gitCommitAll(projectPath, message = "some commit") {
   const files = await gitUnstagedChanges(projectPath)
   console.log("git commitAll:", files)
   for (let file of files) {
+    const status = await gitStatus(projectPath, file);
+    if (status === '*deleted') {
+      // TODO: fix staging of removed file
+      // https://github.com/isomorphic-git/isomorphic-git/issues/1042
+      // https://github.com/isomorphic-git/isomorphic-git/issues/1099
+        return git.remove({dir, file});
+    }
     await gitAdd(projectPath, file)
   }
   return await gitCommit(projectPath, message)

@@ -6,12 +6,14 @@
     "install:admin": "cd svelte-admin && npm install",
     "install:bundler": "cd app-bundler && npm install",
     "install:packages": "cd packages/interkit && npm install && cd ../interkit-blockly && npm install",
-    "install:all": "npm run install:packages && npm run install:server && npm run install:admin && npm run install:bundler",
+    "install:docs": "cd sites/docs && npm install",
+    "install:all": "npm run install:packages && npm run install:server && npm run install:admin && npm run install:bundler && npm run install:docs",
     "postinstall": "npm run install:all",
     "dev:server": "cd meteor-server && npm start",
     "dev:admin": "cd svelte-admin && npm run dev",
     "dev:bundler": "cd app-bundler && npm run dev",
-    "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\""
+    "dev:docs": "cd sites/docs && npm run dev",
+    "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold,bgYellow.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\" \"npm:dev:docs\""
   },
   "engines": {
     "node": "16",

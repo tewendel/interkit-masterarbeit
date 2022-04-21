@@ -8,6 +8,13 @@
   // name of the trigger to activate on select
   export let selectTrigger
 
+  /*
+    @example
+    <Button>
+      Text
+    </Button>
+  */
+
   let elementsContext = getContext("elementsProvider");
   if(!elementsContext) alert("ElementList needs elementsContextProvider as parent");
   let elements = elementsContext?.elements;

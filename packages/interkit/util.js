@@ -1,4 +1,6 @@
 import { getDistance } from 'geolib';
+import { getContext } from 'svelte';
+import { get } from 'svelte/store';
 
 const colKey = (sheetColumn) => {
     return sheetColumn?.split("/")?.[1]
@@ -138,6 +140,24 @@ export default {
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  },
+
+  extractContextProp(propValue) {
+
+    if(propValue.includes("$ElementProvider")) { // only implemented for ElementProvider for now
+      console.log("getting channel_key from context...")
+      const parts = propValue.split(".");
+      const attributeName = parts[1]; 
+
+      let context = getContext("ElementProvider");
+      let element = get(context?.element); // we assume for now this is always a store containing a row
+      let extractedValue = element?.values?.[attributeName];
+      console.log("retrieved", extractedValue)
+      return extractedValue
+    } else {
+      return propValue
+    }
+
   }
 
 }

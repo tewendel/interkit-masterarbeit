@@ -114,7 +114,7 @@ const getAllOfProject = async function (projectId)  {
   const files = getMediaFiles({ projectId }).fetch()
 
   return {
-    project,
+    project: {...project, uiState: undefined},
     sheets,
     rows,
     files

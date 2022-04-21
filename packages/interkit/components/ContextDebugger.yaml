@@ -1,0 +1,13 @@
+name: ContextDebugger
+title: ContextDebugger
+color: 230
+fields:
+- name: context
+  type: string
+  defaultValue: items
+- type: options
+  name: type
+  options:
+    - list
+    - object
+toolboxCategory: Debug

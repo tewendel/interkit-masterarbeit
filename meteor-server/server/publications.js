@@ -92,7 +92,7 @@ Meteor.publish("messages", ({projectId, channel_key, origin, userId}) => {
   if (origin) {
     query.origin = origin;
   }
-  console.log(query)
+  console.log("message sub with query", query)
   let messages = Messages.find(query, {sort: {createdAt: -1}});
   return messages;
 });
