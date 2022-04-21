@@ -544,7 +544,7 @@ Meteor.methods({
 
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     const userId = Meteor.userId()
-    console.log('message.send', { payload, recipients, sender, userId })
+    console.log('message.send', { payload, channel_key, recipients, sender, userId })
     const messageResult = Messages.insert({
       projectId,
       sender,
