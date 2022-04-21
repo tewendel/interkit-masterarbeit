@@ -5,6 +5,13 @@
 
 # ElementProvider
 
+## basic idea
+
+gets the contents of specified global store and provides them 
+* as slot prop "element" to consumer (for example for ContentElement)
+* additionally in ElementProvider context as {element: store}
+
+
 ```docs
 ../../packages/interkit/components/ElementProvider.svelte
 ```

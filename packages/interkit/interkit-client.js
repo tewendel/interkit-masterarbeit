@@ -307,7 +307,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
   await sub.sub.ready();
-  console.log("sub ready", pub)
+  console.log("sub ready", pub, pubArgs)
 
   if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
   subscriptionCounter[pub] += 1;
@@ -375,6 +375,12 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 
   sub.status = "subscribed";
 
+  return sub;
+}
+
+// this gets a sub to messages of specified channel
+const getMessageSub = async (channel_key) => {
+  let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId: get(userId)}, m=>m.channel_key==channel_key)
   return sub;
 }
 
@@ -866,6 +872,7 @@ const InterkitClient = {
   logout,
   call,
   getSub,
+  getMessageSub,
   getRowSubStore,
   getOneRowSubStore,
   getMediaFileSubStore,

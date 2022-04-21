@@ -22,7 +22,15 @@ export async function get({ params }) {
         {
           title: "ElementsContextProvider",
           path: "/components/ElementsContextProvider"
-        }        
+        },
+        {
+          title: "ElementProvider",
+          path: "/components/ElementProvider"
+        },
+        {
+          title: "Chat",
+          path: "/components/Chat"
+        },        
       ]
     },
     {

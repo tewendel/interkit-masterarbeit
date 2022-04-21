@@ -7,7 +7,10 @@
 
   export let keyColumn; // the column for the human readable keys 
   export let contentColumn; // the column for the content
+  
   export let contentKey; // the key to select the row by
+  let real_contentKey = util.extractContextProp(contentKey); // support providing this via ElementProvider context
+
   export let format; // the format to use to display it
   export let defaultContent; // what to use instead
   export let inline = false // add spacings or not
@@ -38,16 +41,16 @@
     return result
   }
 
-  const updateContent = async (contentSheetKey, contentKey, rows) => {
+  const updateContent = async (contentSheetKey, _contentKey, rows) => {
     if(rows) {
-      contentRow = rows.find(r => util.rowVal(r, keyColumn) == contentKey);
+      contentRow = rows.find(r => util.rowVal(r, keyColumn) == _contentKey);
       let original_content = util.rowVal(contentRow, contentColumn)
       content = addSpecialElements(original_content);
     }    
   }
 
   $: {
-    updateContent(contentSheetKey, contentKey, $rowStore)
+    updateContent(contentSheetKey, real_contentKey, $rowStore)
     $userProjectData // trigger this function
   }
 

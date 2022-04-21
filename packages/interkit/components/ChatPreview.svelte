@@ -1,9 +1,11 @@
 <script>
 
-  import { onMount } from "svelte"
+  import { onMount, getContext } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import { executeTrigger } from '../actions'
+
+  import util from '../util.js';
 
   import Message from './Chat/Message.svelte';
 
@@ -13,13 +15,14 @@
   export let channel_key = "DEFAULT"
   export let selectTrigger
 
+  let real_channel_key = util.extractContextProp(channel_key);
+
   let messageStore;
   let userId;
 
   onMount(async () => {
 
-    userId = get(InterkitClient.userId);
-    let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId})
+    let sub = await InterkitClient.getMessageSub(real_channel_key);
     messageStore = sub.data
 
     console.log("userId", get(InterkitClient.userId))
@@ -36,13 +39,14 @@
 
   const onClick = (element) => {
     if(selectTrigger)
-      executeTrigger(selectTrigger)
+      executeTrigger(selectTrigger, real_channel_key)
   }
 
 </script>
 
 
 <div>
+  <div>{real_channel_key}</div>
   {#if latestMessage}
     <Message message={latestMessage} preview/>
   {/if}
