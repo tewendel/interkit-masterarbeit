@@ -128,6 +128,7 @@ deploy-demo:
     name: $CI_COMMIT_BRANCH
     url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
   stage: deploy
+  allow_failure: true
 
 publish-package:
   stage: publish_packages
