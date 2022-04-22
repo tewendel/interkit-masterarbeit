@@ -86,6 +86,8 @@ deploy-docs:
   # Official docker image.
   image: docker:$DOCKER_IMAGE_TAG
   stage: deploy
+  needs:
+    - docker-build-docs
   before_script:
     - apk add --no-cache curl
   script:
@@ -96,6 +98,10 @@ deploy-docs:
 .deploy: &deploy
   stage: deploy
   image: ubuntu
+  needs:
+    - docker-build-server
+    - docker-build-bundler
+    - docker-build-admin
   #only:
   #  - main
   before_script:
