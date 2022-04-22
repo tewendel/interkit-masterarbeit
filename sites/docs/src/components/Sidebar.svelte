@@ -11,3 +11,15 @@
     items={section.items} 
   />
 {/each}
+
+<hr />
+
+<a href="https://interkit.app">
+  Website
+</a>
+
+<br>
+
+<a href="https://gitlab.interkit.app">
+  Repository
+</a>

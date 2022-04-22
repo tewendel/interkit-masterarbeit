@@ -27,7 +27,9 @@
 <div class="container">
   <header class="header">
     <h1>
-      Interkit docs
+      <a href="/">
+        Interkit docs
+      </a>
     </h1>
   </header>
   <nav class="sidebar">
