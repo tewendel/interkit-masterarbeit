@@ -13,7 +13,12 @@
     "dev:admin": "cd svelte-admin && npm run dev",
     "dev:bundler": "cd app-bundler && npm run dev",
     "dev:docs": "cd sites/docs && npm run dev",
-    "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold,bgYellow.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\" \"npm:dev:docs\""
+    "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold,bgYellow.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\" \"npm:dev:docs\"",
+    "docker:build:server": "docker build . -f Dockerfile.meteor-server",
+    "docker:build:admin": "docker build . -f Dockerfile.svelte-admin",
+    "docker:build:bundler": "docker build . -f Dockerfile.app-bundler",
+    "docker:build:docs": "docker build . -f Dockerfile.docs",
+    "docker:build:all": "npm run docker:build:server && npm run docker:build:admin && npm run docker:build:bundler && npm run docker:build:docs"
   },
   "engines": {
     "node": "16",
