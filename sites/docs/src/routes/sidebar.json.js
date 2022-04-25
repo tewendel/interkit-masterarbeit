@@ -30,7 +30,15 @@ export async function get({ params }) {
         {
           title: "Chat",
           path: "/components/Chat"
-        },        
+        },
+        {
+          title: "SubsectionsNav",
+          path: "/components/SubsectionsNav"
+        },
+        {
+          title: "Subsection",
+          path: "/components/Subsection"
+        },                                
       ]
     },
     {
