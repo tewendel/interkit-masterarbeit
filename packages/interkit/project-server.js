@@ -158,7 +158,11 @@ const setupMessageHandling = async ({
 
     // TODO: sort by date to ensure that the newest message is processed first
     const unhandledMessages = messages.filter(message => !handledMessageIds.includes(message.id))
-    // prevent not handling over double handling by blocking second execution before processing
+    // because onChange gets called with all messages each time a new message appears, 
+    // and this can happen while a message is being processed, we make sure to handle each only once
+
+    // before processing, we add the message to handledMessageIds - so that we don't process it again if
+    // this function is called again before processing is complete
     handledMessageIds.push(...unhandledMessages.map(message => message.id))
     
     // handle each unhandled message
