@@ -5,6 +5,15 @@ export async function get({ params }) {
 
   const items = [
     {
+      title: "Guides",
+      items: [
+        {
+          title: 'How to build an app',
+          path: "/guides/build_app"
+        }
+      ]
+    },
+    {
       title: "Components",
       items: [
         {
@@ -39,12 +48,6 @@ export async function get({ params }) {
           title: "Subsection",
           path: "/components/Subsection"
         },                                
-      ]
-    },
-    {
-      title: "Guides",
-      items: [
-
       ]
     },
     {
