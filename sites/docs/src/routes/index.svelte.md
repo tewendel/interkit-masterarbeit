@@ -3,13 +3,18 @@
 
 ## Structure
 
-- Components
-  - Description of blockly components
-- Guides
-  - How to archive something
-- Theory
-  - How the system and it's components work
-- Contribute
-  - How to contribute to the project
+### Guides
 
-  
+How to archive something
+
+### Components
+
+Description of UI components
+
+### Theory
+
+How the system and it's components work
+
+### Contribute
+
+How to contribute to the project

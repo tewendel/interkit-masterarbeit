@@ -76,8 +76,8 @@ docker-build-docs:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
-    - docker pull interkit/docs/latest || true
-    - docker build . -t interkit/docs:latest -f Dockerfile.docs
+    - docker pull interkit/docs:latest || true
+    - docker build . -t interkit/docs:latest -f Dockerfile.docs --cache-from interkit/docs:latest
     - docker push interkit/docs:latest
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
