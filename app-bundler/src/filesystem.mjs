@@ -27,10 +27,11 @@ async function ensureRepositories(projects) {
       const projectHistoryCreateEvents = project.history && Array.isArray(project.history) && project.history.filter(e => e.event === "create_project") || []
       const lastCreateEvent = projectHistoryCreateEvents[projectHistoryCreateEvents.length-1] || {}
       const sourceProjectId = lastCreateEvent?.props?.sourceProjectId
+      const template = lastCreateEvent?.props?.template
       if (sourceProjectId) {
         await duplicateRepository(project, sourceProjectId)
       } else {
-        await setupNewRepository(project)
+        await setupNewRepository(project, template)
       }
     }
   }
@@ -89,10 +90,10 @@ async function duplicateRepository(project, sourceProjectId) {
 
 }
 
-async function setupNewRepository(project, sourceProjectId=false) {
+async function setupNewRepository(project, template="starter") {
   const projectId = project.id
   
-  const starterPath = process.env.REPOSITORIES_PATH + "/starters/starter"
+  const starterPath = process.env.REPOSITORIES_PATH + "/starters/" + template
   const projectPath = getProjectPath(projectId)
   const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
 

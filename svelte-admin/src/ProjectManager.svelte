@@ -17,7 +17,8 @@
     UnorderedList,
     ListItem,
     Tile,
-    DataTable, Link
+    DataTable, Link,
+    Button, TextInput, Form, Dropdown, FormGroup
   } from "carbon-components-svelte";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import Copy16 from "carbon-icons-svelte/lib/Copy16";
@@ -31,6 +32,11 @@
   let projects;
   let currentProject;
   let newProjectName;
+  let newProjectTemplateIndex = 0
+  let newProjectItems = [
+    { id: "starter", text: "Empty" },
+    { id: "chat", text: "Chat example" },
+  ]
 
   const destroyProjectsSub = async () => {
     if (sub) {
@@ -52,7 +58,7 @@
   }
 
   const createProject = async () => {
-    await InterkitClient.call("project.create", {name: newProjectName})
+    await InterkitClient.call("project.create", {name: newProjectName, template: newProjectItems[newProjectTemplateIndex].id })
     newProjectName = null;
   }
 
@@ -128,8 +134,29 @@
   {#if !currentProjectId}
   <Row>
     <div class="project-create-form">
-          <input bind:value={newProjectName}>
-          <button on:click={createProject}>create project</button>
+      <Form>
+        <FormGroup legendText="New project" style="display: flex">
+          <TextInput 
+            bind:value={newProjectName} 
+            label="New project"
+            placeholder="Enter project title..."
+          />
+          <Dropdown
+            hideLabel
+            inline
+            titleText="Template"
+            placeholder="Select template"
+            bind:selectedIndex={newProjectTemplateIndex}
+            items={newProjectItems}
+          />
+          <Button 
+            size="field"
+            on:click={createProject}
+            >
+            create project
+          </Button>
+        </FormGroup>
+      </Form>
     </div>
   </Row>
   {/if}

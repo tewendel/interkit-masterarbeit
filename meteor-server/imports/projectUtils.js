@@ -140,4 +140,5 @@ const makeProjectHistoryEntry = function(eventName, eventProps) {
 export {
   duplicateProject,
   getAllOfProject,
+  makeProjectHistoryEntry
 }

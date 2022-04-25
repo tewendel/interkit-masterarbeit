@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "private": true,
+  "name": "interkit-project-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js"
+  },
+  "workspaces": [
+    "../../../../packages/*"
+  ],
+  "engines": {
+    "node": "^16",
+    "npm": "^7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

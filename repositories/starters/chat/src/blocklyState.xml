@@ -1,0 +1,27 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="AppBase" id="R;[r(#2$u(r-TP_]MA!c" x="106" y="35">
+    <data>{"origin":"interkit"}</data>
+    <statement name="viewport">
+      <block type="ShowIfLoggedIn" id="a(+H5UvC:;|$Q2}*L4%`">
+        <data>{"origin":"interkit"}</data>
+        <statement name="iftrue">
+          <block type="Chat" id="d`ZE.6W9NnoL+/bt*h~U">
+            <field name="channel_key">test</field>
+            <data>{"origin":"interkit"}</data>
+          </block>
+        </statement>
+        <statement name="else">
+          <block type="SessionFlow" id="_O%y,06p_|=OuI_zW!B_">
+            <field name="keyColumn" value="settings/contentKey" text="settings/contentKey" columnType="string" refKey="undefined" options="undefined" fieldType="sheetColumn"></field>
+            <field name="contentColumn" value="settings/content" text="settings/content" columnType="richText" refKey="undefined" options="undefined" fieldType="sheetColumn"></field>
+            <field name="restartTrigger">createNewUser</field>
+            <field name="restoredTrigger"></field>
+            <field name="backgroundImageSrc">assets/background.png</field>
+            <field name="logoImageSrc">assets/logo.png</field>
+            <data>{"origin":"interkit"}</data>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

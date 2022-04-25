@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
-import { duplicateProject, exportProject } from '../imports/projectUtils.js'
+import { duplicateProject, exportProject, makeProjectHistoryEntry } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
 
@@ -267,10 +267,21 @@ Meteor.methods({
   },
 
   // create repo  
-  'project.create': async ({ name }) => {
+  'project.create': async ({ name, template }) => {
+    
+    const doc = { 
+      name, 
+      slug: name,
+      history: [
+        makeProjectHistoryEntry("create_project", {
+          template,
+        })
+      ]
+    }
 
-      let projectId = await Projects.insert({ name, slug: name });
-      // bundler will be notified via subscription
+    let projectId = await Projects.insert(doc);
+
+    // bundler will be notified via subscription
   },
 
   'project.remove': async ({ projectId }) => {
