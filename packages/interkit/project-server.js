@@ -151,6 +151,7 @@ const setupMessageHandling = async ({
   }
   console.log("project server found board data: ", boardData);
 
+  // this gets called many times, for each message that is found through the subscriptions
   reactiveMessagesCollection.onChange(async (messages) => {
 
     // console.log("messages onChange", messages)
@@ -162,6 +163,7 @@ const setupMessageHandling = async ({
     
     // handle each unhandled message
     for (let message of unhandledMessages) {
+      console.log("handling message", message)
       let handledBy = []
 
       // determine board
@@ -195,17 +197,16 @@ const setupMessageHandling = async ({
           //}
         } else {
           console.warn(`handler ${handlerName} has no onMessage method`)
-        }
-        
-        // save handled state to server so it is not handled again
-        try {
-          await server.call("message.setHandled", { messageId: message.id, handledBy })
-        } catch (e) {
-          console.error(e)
-        }
-      
+        }      
       } else {
          console.log("user does not have a current node, message not handled!")
+      }
+
+      // save handled state to server so it is not handled again
+      try {
+        await server.call("message.setHandled", { messageId: message.id, handledBy })
+      } catch (e) {
+        console.error(e)
       }
     
     }
