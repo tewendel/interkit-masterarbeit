@@ -1,7 +1,7 @@
 stages:
   - build_images
-  - publish_packages
-  - deploy
+  - publish
+  - deploy_demo
 
 variables:
   DOCKER_IMAGE_TAG: 20
@@ -85,7 +85,7 @@ docker-build-docs:
 deploy-docs:
   # Official docker image.
   image: docker:$DOCKER_IMAGE_TAG
-  stage: deploy
+  stage: publish
   needs:
     - docker-build-docs
   before_script:
@@ -127,11 +127,11 @@ deploy-demo:
   environment:
     name: $CI_COMMIT_BRANCH
     url: 'https://${CI_COMMIT_BRANCH}.demo.interkit.app'
-  stage: deploy
-  allow_failure: true
+  stage: deploy_demo
+  #allow_failure: true
 
 publish-package:
-  stage: publish_packages
+  stage: publish
   script:
       - cd packages && tar -a -cf ../interkit.tar.gz interkit && cd -
   artifacts:
