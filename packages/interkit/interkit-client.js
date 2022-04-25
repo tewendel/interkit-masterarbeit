@@ -307,7 +307,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
   await sub.sub.ready();
-  console.log("sub ready", pub, pubArgs)
+  //console.log("sub ready", pub, pubArgs)
 
   if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
   subscriptionCounter[pub] += 1;
@@ -342,7 +342,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   }
 
   sub.reactiveCollection.onChange((newData)=>{
-    // console.log("onChange", col, newData)
+    //console.log("onChange", col, newData)
     
     if (bufferedWritesFlushAt === null) {
       bufferedWritesFlushAt = new Date().valueOf() + bufferedWritesMaxAge;
@@ -700,7 +700,7 @@ const logout = async () => {
 const call = async (method, params = {}) => {
 
     if (config && params && !params?.projectId) {
-      console.log("adding projectId to method params", params, method)
+      //console.log("adding projectId to method params", params, method)
       params.projectId = get(projectId);
     }
 

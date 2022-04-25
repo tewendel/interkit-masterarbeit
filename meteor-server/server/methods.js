@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
 import { duplicateProject, exportProject } from '../imports/projectUtils.js'
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
@@ -522,6 +522,33 @@ Meteor.methods({
     }
   },
 
+  'channel.create': ({projectId, boardId}) => {
+    console.log("channels insert", projectId, boardId)
+    if(Channels.find({projectId, boardId})?.fetch()?.length) {
+      console.log("channel already exists")
+      return;
+    }
+    Channels.insert({projectId, boardId, active: true})
+  },
+
+  'channel.delete': ({projectId, boardId}) => {
+    let channels = Channels.find({projectId, boardId}).fetch()
+    if(channels.length >= 1) {
+      Channels.remove({_id: channels[0]._id})
+    } else {
+      console.log("channel.delete - channel not found", projectId, boardId)
+    }
+  },
+
+  'channel.setProperty': ({projectId, boardId, property, value}) => {
+    let channnels = Channels.find({projectId, boardId})
+    if(channels.length > 1) {
+      Channels.update({_id: channels[0]._id}, {$set: {[property]: value}})
+    } else {
+      console.log("channel.setProperty - channel not found", projectId, boardId)
+    }
+  },
+ 
   'message.setHandled': ({messageId, handledBy = []}) => {
     console.log("message.setHandled", messageId, handledBy)
     Messages.update({_id: messageId}, {$set: {handledAt: new Date(), handledBy}})

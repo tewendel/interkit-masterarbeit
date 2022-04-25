@@ -1,6 +1,7 @@
 <script>
 
   import { onMount, onDestroy } from 'svelte'
+  import { get } from 'svelte/store'
 
   import { InterkitClient } from 'interkit'
 
@@ -30,14 +31,23 @@
   // the following is boilerplate copied from usersmanager
   // could be centralized; or better: just subscribe to one user
   let usersStore
-  let unsubscribe
   let usersArray
   let subHandle
+  
+  let channelsStore
+  let channelsSubHandle
+
+  let unsubscribe
+  
   $: resetSub(projectId)
   const resetSub = async (projectId) => {
     if(subHandle) await subHandle.stop()
     subHandle = await InterkitClient.getSub('users', 'projectUsers', {projectId})
     usersStore = subHandle.data
+    
+    channelsSubHandle = await InterkitClient.getSub("channels", "channels", {projectId})
+    channelsStore = channelsSubHandle.data;
+    
     unsubscribe = usersStore.subscribe((data) => {
       console.log("project users", data)
       usersArray = data;
@@ -164,6 +174,32 @@
       await loadBoard(currentBoardId)
     }
     await loadBoardList()
+  }
+
+  // checks if there is a channel for each board
+  const boardChannelSync = () => {
+    console.log("boardChannelSync", $channelsStore, boards)
+    // get channels collection
+    let channels = get(channelsStore)
+    for(let board of boards) {
+      if(!channels?.some(c => c.boardId == board)) {
+        console.log("channel for board not found, creating...", board)
+        InterkitClient.call("channel.create", {boardId: board, projectId})
+      } else {
+        console.log("channel found", board)
+      }
+    }
+
+    for(let channel of channels) {
+      if(!boards.includes(channel.boardId)) {
+        console.log("board not found for channel, deleting", channel.boardId)
+        InterkitClient.call("channel.delete", {boardId: channel.boardId, projectId})
+      }
+    }
+  }
+
+  $: {
+    if($channelsStore && boards) boardChannelSync()
   } 
 
   const loadBoardList = async () => {

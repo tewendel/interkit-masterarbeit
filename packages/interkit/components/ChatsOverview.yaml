@@ -1,0 +1,7 @@
+name: ChatsOverview
+title: ChatsOverview
+colour: 100
+fields:
+  - type: string
+    name: selectTrigger
+toolboxCategory: Chat

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows, Messages } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
@@ -76,6 +76,14 @@ Meteor.publish("user.projectUserData", ({ projectId }) => {
 Meteor.publish("user", ({ projectId }) => {
   const cursor = Meteor.users.find(Meteor.userId());
   return cursor
+});
+
+Meteor.publish("channels", ({projectId}) => {
+  let query = {projectId};
+  console.log("channels sub with query", query);
+  let channels = Channels.find(query, {sort: {createdAt: -1}});
+  //console.log(channels.fetch());
+  return channels;
 });
 
 Meteor.publish("messages", ({projectId, channel_key, origin, userId}) => {

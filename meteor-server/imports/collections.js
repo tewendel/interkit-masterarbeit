@@ -66,3 +66,12 @@ export const Messages = new Mongo.Collection('messages');
 - handledBy <array>
 - origin <string> // null (=user?), handler, cron
 */
+
+export const Channels = new Mongo.Collection('channels');
+
+/*
+- projectId
+- boardId
+- active <bool>
+- group <bool>
+*/
