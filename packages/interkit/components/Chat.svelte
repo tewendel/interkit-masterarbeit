@@ -3,8 +3,8 @@
   import { onMount, tick } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
-  import Button from './Button.svelte'
   import Message from './Chat/Message.svelte';
+  import ChatInput from './Chat/ChatInput.svelte';
 
   export let channel_key = "DEFAULT"
 
@@ -64,18 +64,6 @@
     }
   } 
 
-  let messageText
-  const submit = () => {
-    sendMessage(messageText)
-    messageText = ""
-  }
-
-  const handleKeydown = (event)=>{
-    if (event.which === 13) {
-      submit();
-    }
-  }
-
 </script>
 
 <div class="root">
@@ -87,8 +75,14 @@
     >
     {#if messageStore}
       <div class="messages">
-        {#each $messageStore as message}
-          <Message {message} {submitChoice} isByUser={message?.sender === userId} />
+        {#each $messageStore as message, index}
+          <Message 
+            {message} 
+            {submitChoice} 
+            isByUser={message?.sender === userId} 
+            lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
+            previousMessage={$messageStore[index-1]}
+          />
         {/each}
       </div>
     {:else}
@@ -96,8 +90,7 @@
     {/if}
   </div>
   <div class="input">
-    <input type="text" bind:value={messageText} on:keydown={handleKeydown}/>
-    <Button on:click={submit}>send</Button>
+    <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
   </div>
 </div>
 
@@ -107,6 +100,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: var(--color-background-highlight);
   }
 
   .messages-container {

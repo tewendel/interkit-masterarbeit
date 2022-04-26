@@ -9,6 +9,7 @@
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
   export let flex = "normal" // normal | fill
   export let text = undefined;
+  export let selected = false
   export let clickType = 'payloadTrigger'; // link | linkTargetBlank
   
   export let clickTrigger = null; // set this to execute a trigger on button click
@@ -39,6 +40,8 @@
       on:click={handleClick}
       class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
       class:primary={type==='primary'}
+      class:selected={selected}
+      class:Button--selected={selected}
       class:nopadding 
     >
     <slot/>
@@ -50,6 +53,8 @@
       target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
       class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
       class:primary={type==='primary'}
+      class:selected={selected}
+      class:Button--selected={selected}
       class:nopadding 
     >
     <slot/>
@@ -102,6 +107,10 @@
     height: 56px;
     padding: 0 var(--distance-s-m);
     font: var(--font-headline-5);
+  }
+
+  .button.selected {
+    background-color: var(--color-background-highlight);
   }
 
   .primary {

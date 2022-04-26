@@ -1,0 +1,28 @@
+  name: Flex2
+  title: Flex2
+  # green
+  color: 230
+  fields:
+    - type: options
+      name: direction
+      defaultValue: column
+      options:
+        - column
+        - row
+    - type: options
+      name: size1
+      defaultValue: fill
+      options:
+        - fill
+        - min
+    - type: slot
+      name: first
+    - type: options
+      name: size2
+      defaultValue: fill
+      options:
+        - min 
+        - fill
+    - type: slot
+      name: second
+  toolboxCategory: "Layout"
