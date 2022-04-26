@@ -54,6 +54,10 @@ export async function get({ params }) {
       title: "Theory",
       items: [
         {
+          title: "Collection Schemas",
+          path: "/theory/collections"
+        },
+        {
           title: '"Project Server"',
           path: "/theory/project-server"
         }
@@ -65,6 +69,10 @@ export async function get({ params }) {
         {
           title: "Docs",
           path: "/contribute/docs"
+        },
+        {
+          title: "Component CSS",
+          path: "/contribute/component_css"
         },
       ]
     }
