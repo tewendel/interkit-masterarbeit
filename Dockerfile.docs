@@ -12,11 +12,15 @@ COPY sites/docs ./docs
 WORKDIR /app/docs
 RUN npm ci
 
+# copy other files that are imported in the docs
+COPY meteor-server /meteor-server
+COPY app-bundler /app-bundler
+
 # build
 RUN npm run build
 
 # clean
-RUN npm prune --production && rm -rf /packages
+RUN npm prune --production && rm -rf /packages && rm -rf /meteor-server && rm -rf /app-bundler
 
 EXPOSE 3000
 CMD ["node", "build"]
