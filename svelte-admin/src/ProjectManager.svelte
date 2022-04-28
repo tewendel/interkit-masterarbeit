@@ -36,6 +36,7 @@
   let newProjectItems = [
     { id: "starter", text: "Empty" },
     { id: "chat", text: "Chat example" },
+    { id: "list", text: "List example" },
   ]
 
   const destroyProjectsSub = async () => {

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+
+	<title>interkit app</title>
+
+	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='stylesheet' href='build/bundle.css'>
+
+	<script>
+		window.onerror = function (msg, source, lineNo, columnNo, error) {
+			// function to execute error handling
+			window.parent.postMessage({ msg, source, lineNo, columnNo }, "*")
+			return false
+		}
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var src = (new URLSearchParams(window.location.search)).get('dev') ? 'build/bundle_dev.js' : 'build/bundle.js'
+			var scriptTag = document.createElement('script');
+			scriptTag.setAttribute('defer', true);
+			scriptTag.setAttribute('src', src);
+			document.head.appendChild(scriptTag);
+		})
+	</script>
+
+</head>
+
+<body>
+	<div class="Loading" style="padding: 20px">laden...</div>
+</body>
+</html>
