@@ -19,10 +19,14 @@
 
   let real_channel_key = util.extractContextProp(channel_key);
 
+  let channelsStore;
   let messageStore;
   let userId;
 
   onMount(async () => {
+
+    let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
+    channelsStore = channelsSubHandle.data;
 
     let sub = await InterkitClient.getMessageSub(real_channel_key);
     messageStore = sub.data
@@ -30,14 +34,21 @@
     console.log("userId", get(InterkitClient.userId))
   })
 
-  let latestMessage
-
+  let latestMessage  
+  let currentChannel; 
+  
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => b.createdAt - a.createdAt)
       latestMessage = $messageStore[0];
     }
   }
+
+  $: {
+      if($channelsStore) {
+        currentChannel = $channelsStore.find(c => c.boardId == channel_key)
+      }
+    }
 
   const onClick = (element) => {
     if(selectTrigger)
@@ -48,12 +59,17 @@
 
 <div class="ChatPreview container" on:click={onClick}>
   <div class="ChatPreview__title title">
-    {real_channel_key}
+    {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
   </div>
   <div class="ChatPreview__image image">
     <ChatChannelImage channel_key={real_channel_key}/>
   </div>
   <div class="ChatPreview__message message">
+    {#if currentChannel?.label}
+      <span class="ChatPreview__label label">
+        {currentChannel?.label}
+      </span>  
+    {/if}
     {#if latestMessage}
       <MessagePreview message={latestMessage} />
     {/if}
