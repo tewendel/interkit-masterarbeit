@@ -44,7 +44,7 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Interactions" />
+        <Tab label="Chat" />
         <Tab label="Project" />
         <Tab label="Users" />
         <Tab label={ "Repository " + repoNotice } />

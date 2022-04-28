@@ -91,6 +91,7 @@
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
+  --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
   
   --font-headline-1: 400 48px/56px var(--font-family-headline);
   --font-headline-2: 400 30px/36px var(--font-family-headline);
