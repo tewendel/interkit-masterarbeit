@@ -128,6 +128,11 @@
     let columnType = column?.type
     //console.log(columnType)
 
+    if(columnType === "undefined") {
+      alert(`Column '${columnName}' has type undefined, please edit (click on column header cell) and set a type.`)
+      return
+    }
+
     if(columnType == "string") {
       let newVal = prompt("Update " + columnName, cell.value)
       if(newVal != null) {

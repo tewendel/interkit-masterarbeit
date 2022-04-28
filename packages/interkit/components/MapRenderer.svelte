@@ -13,8 +13,10 @@
   
   export const createIconDivHTML = async (element, options) => {
 
+    let title = element?.markerTitleColumn;
     let label = element?.markerLabelColumn;
-    let labelSpan = label ? `<span>${label}</span>`: "";
+
+    let labelSpan = label ? `<span class="marker-content-label">${label}</span>`: "";
     
     // get custom marker icon if available
     let mediafileRef = element?.customIconColumn;
@@ -33,8 +35,13 @@
     if(options.selected)
       markerSelected = true; 
 
+    const titleDiv = title
+      ? `<div class="marker-title ${markerSelected ? 'selected' : ''}">${title}</div>`
+      : ''
+
     let html = `
     <div class="marker-container ${options.noPointer ? 'no-pointer' : ''}">
+      ${titleDiv}
       <div class="marker-content ${markerSelected ? 'selected' : ''}">${labelSpan} <img src="${iconSrc}"/></div>
     </div>
     `;
@@ -386,6 +393,7 @@
     background-position: bottom center;
     width: 49px;
     height: 42px;
+    position: relative;
   }
 
   :global(div.marker-container.no-pointer) {
@@ -393,6 +401,7 @@
   }
 
   :global(div.marker-content) {
+    position: relative;
     width: 49px;
     height: 32px;
     background-color: #fff;
@@ -405,10 +414,39 @@
     align-items: center;
   }
 
+  :global(div.marker-content::after) {
+    content: "";
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 100%;
+    left: calc(50% - 7px);
+    width: 15px;
+    height: 10px;
+    border-top: 10px solid var(--color-border);
+    /* note: the tip is not perfectly rounded, but at 1px this shouldn't matter */
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+  }
+
   :global(div.marker-content img) {
     width: 20px;
     height: 20px;
     object-fit: contain;
+  }
+
+  :global(div.marker-title) {
+    position: absolute;
+    top: -1.8em;
+    left: 50%;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    max-width: 12em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* TODO this is not to spec, which is not blurry + un-hardcode color. */
+    text-shadow: 0 0 1px #e5e5e5;
   }
 
   :global(.marker-content.selected) {

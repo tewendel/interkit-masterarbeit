@@ -2,6 +2,7 @@
 
 // column types
 export const columnTypes = {
+  undefined: "undefined",
   string: "String",
   location: "Location",
   sheetRef: "SheetRef",

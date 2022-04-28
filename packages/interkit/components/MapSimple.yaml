@@ -10,11 +10,15 @@ fields:
   - type: "sheetColumn"
     name: "customIconColumn"
     columnType: "mediaFile"
-    defaultValue: "elements/mapMarkerIcon"    
+    defaultValue: "elements/mapMarkerIcon"
   - type: "sheetColumn"
     name: "markerLabelColumn"
     columnType: "string"
-    defaultValue: "elements/markerLabel"    
+    defaultValue: "elements/markerLabel"
+  - type: "sheetColumn"
+    name: "markerTitleColumn"
+    columnType: "string"
+    defaultValue: "elements/markerTitle"
   - type: string
     name: checkedProperty
     defaultValue: "checked"
