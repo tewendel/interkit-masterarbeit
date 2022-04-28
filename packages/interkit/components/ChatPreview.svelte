@@ -7,7 +7,7 @@
 
   import util from '../util.js';
 
-  import Message from './Chat/Message.svelte';
+  import MessagePreview from './Chat/MessagePreview.svelte';
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -45,14 +45,24 @@
 </script>
 
 
-<div>
+<div class="ChatPreview container" on:click={onClick}>
   <div>{real_channel_key}</div>
   {#if latestMessage}
-    <Message message={latestMessage} preview/>
+    <div class="latestMessage">
+      <MessagePreview message={latestMessage} />
+    </div>
   {/if}
-
-  {#if selectTrigger}
-    <Button type="secondary" on:click={onClick}><Icon type="arrow-right"/></Button>
-  {/if}
-
 </div>
+
+<style>
+  .container {
+    font: var(--font-headline-4);
+    letter-spacing: var(--letter-spacing-headline-4);
+    cursor: pointer;
+    padding: var(--distance-s);
+  }
+
+  .latestMessage {
+    margin-top: var(--distance-tiny);
+  }
+</style>
