@@ -113,6 +113,10 @@
     background-color: var(--color-background-highlight);
   }
 
+  .button.ghost {
+    border: none;
+  }
+
   .primary {
     color: var(--color-text-button-primary);
     background-color: var(--color-background-button-primary);

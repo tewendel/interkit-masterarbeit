@@ -115,7 +115,7 @@
     align-self: start;
   }
 
-  .label {
+  .message .label {
     font: var(--font-caption-bold);
     color: var(--color-background);
     background-color: var(--color-text);
@@ -124,7 +124,7 @@
     margin-right: 0.5ex;
   }
 
-  .text {
+  .message .text {
     top: var(--distance-tiny);
     position: relative;
   }

@@ -25,7 +25,7 @@
 <div class="ChatInput container">
   <input class="ChatInput__input input" type="text" bind:value={messageText} on:keydown={handleKeydown}/>
   <Button on:click={submit} type="ghost">
-    <Icon type="send"></Icon>
+    <Icon type="Full-Send"></Icon>
   </Button>
 </div>
 
