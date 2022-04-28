@@ -54,6 +54,20 @@
 
     const close = () => { showImageSelectModal = false};
 
+    const changeLabel = () => {
+        let newLabel = prompt("Change label", currentChannel.label)
+        if(typeof newLabel == "string") {
+            InterkitClient.call('channel.setProperty', {projectId, boardId, property: "label", value: newLabel});
+        }
+    }
+
+    const changeTitle = () => {
+        let newLabel = prompt("Change title", currentChannel.title)
+        if(typeof newLabel == "string") {
+            InterkitClient.call('channel.setProperty', {projectId, boardId, property: "title", value: newLabel});
+        }
+    }
+
     
 </script>
 
@@ -62,6 +76,18 @@
     on:click={addChannelImageToBoard}
 >
     add image  
+</button>
+
+<button
+    on:click={changeTitle}
+>
+    change title
+</button>
+
+<button
+    on:click={changeLabel}
+>
+    change label
 </button>
 
 
