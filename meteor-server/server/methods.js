@@ -534,15 +534,17 @@ Meteor.methods({
   },
 
   'channel.create': ({projectId, boardId}) => {
-    console.log("channels insert", projectId, boardId)
-    if(Channels.find({projectId, boardId})?.fetch()?.length) {
-      console.log("channel already exists")
+    console.log("channel.create", projectId, boardId)
+    let channels = Channels.find({projectId, boardId}).fetch()
+    if(channels.length) {
+      console.log("channel already exists, aborting")
       return;
     }
     Channels.insert({projectId, boardId, active: true})
   },
 
   'channel.delete': ({projectId, boardId}) => {
+    console.log("channel.delete")
     let channels = Channels.find({projectId, boardId}).fetch()
     if(channels.length) {
       Channels.remove({_id: channels[0]._id})
