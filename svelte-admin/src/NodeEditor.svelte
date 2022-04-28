@@ -14,7 +14,8 @@
   import CodeEditorStringy from './CodeEditorStringy.svelte'
   import CodeEditorExporty from './CodeEditorExporty.svelte'
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
-
+  import ChannelEditor from './ChannelEditor.svelte'
+  
   const useCodeMirror = true
   let editorMode = 2
 
@@ -499,6 +500,7 @@
       save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
       {#if nodesModifiedCount}&#x1f534;{/if}
     </button>
+    <ChannelEditor boardId={currentBoardId} {projectId}/>
   </div>
   {#if board}
     <NodeGraph

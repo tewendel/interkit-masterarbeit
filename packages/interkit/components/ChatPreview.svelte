@@ -11,6 +11,8 @@
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import MediaFileImage from "./MediaFileImage.svelte";
+  import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
   export let channel_key = "DEFAULT"
   export let selectTrigger
@@ -46,7 +48,11 @@
 
 
 <div>
-  <div>{real_channel_key}</div>
+  <div class="preview-image">
+    <div>{real_channel_key}</div>
+    <ChatChannelImage channel_key={real_channel_key}/>
+  </div>
+
   {#if latestMessage}
     <Message message={latestMessage} preview/>
   {/if}
@@ -56,3 +62,10 @@
   {/if}
 
 </div>
+
+<style>
+  .preview-image {
+    width: 200px;
+  }
+
+</style>

@@ -5,6 +5,7 @@
   import { InterkitClient } from "../"
   import Message from './Chat/Message.svelte';
   import ChatInput from './Chat/ChatInput.svelte';
+  import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
   export let channel_key = "DEFAULT"
 
@@ -67,7 +68,10 @@
 </script>
 
 <div class="root">
-  <span>channel {channel_key}</span>
+  <div class="channel-info-overlay">
+    <span>channel {channel_key}</span>
+    <ChatChannelImage channel_key={channel_key}/>
+  </div>
   <div
     class="messages-container"
     class:messages__empty={!messageStore || $messageStore.length === 0}
@@ -101,6 +105,13 @@
     flex-direction: column;
     height: 100%;
     background-color: var(--color-background-highlight);
+  }
+
+  .channel-info-overlay {
+    position: absolute;
+    width: 200px;
+    top: 0px;
+    left: 0px;
   }
 
   .messages-container {
