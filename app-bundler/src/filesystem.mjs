@@ -3,7 +3,7 @@ import fs from 'fs'
 import fse from 'fs-extra'
 import git from 'isomorphic-git'
 
-import { gitAddAll, gitAdd, gitCommit } from './git.mjs'
+import { gitAddAll, gitAdd, gitCommit, gitCloneProject } from './git.mjs'
 import { compile_project } from './get_compile.mjs'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
@@ -28,10 +28,11 @@ async function ensureRepositories(projects) {
       const lastCreateEvent = projectHistoryCreateEvents[projectHistoryCreateEvents.length-1] || {}
       const sourceProjectId = lastCreateEvent?.props?.sourceProjectId
       const template = lastCreateEvent?.props?.template
+      const gitRepository = lastCreateEvent?.props?.gitRepository
       if (sourceProjectId) {
         await duplicateRepository(project, sourceProjectId)
       } else {
-        await setupNewRepository(project, template)
+        await setupNewRepository(project, template, gitRepository)
       }
     }
   }
@@ -90,7 +91,7 @@ async function duplicateRepository(project, sourceProjectId) {
 
 }
 
-async function setupNewRepository(project, template="starter") {
+async function setupNewRepository(project, template="starter", gitRepository) {
   const projectId = project.id
   
   const starterPath = process.env.REPOSITORIES_PATH + "/starters/" + template
@@ -104,8 +105,19 @@ async function setupNewRepository(project, template="starter") {
   try {
     if (!fs.existsSync(projectPath)) {
       await fs.promises.mkdir(projectPath);
-      await git.init({ fs, dir: projectPath });
-      await fse.copySync(starterPath, projectPath)
+
+      if (gitRepository) {
+        console.log("clone new app from " + gitRepository)
+        try {
+          await gitCloneProject(projectPath, gitRepository)
+        } catch (err) {
+          console.error(err)
+        }
+      } else {
+        await git.init({ fs, dir: projectPath });
+        await fse.copySync(starterPath, projectPath)
+      }
+      
       await fs.promises.writeFile(
         path.join(projectPath, "public/interkit.config.json"),
         interkitConfigJson

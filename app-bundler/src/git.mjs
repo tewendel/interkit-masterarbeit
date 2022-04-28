@@ -1,5 +1,6 @@
 import git from 'isomorphic-git'
 import fs from 'fs'
+import http from 'isomorphic-git/http/node//index.cjs'
 
 async function gitAddAll(projectPath) {
   const repo = {
@@ -122,6 +123,15 @@ async function gitUnstagedChanges(projectPath) {
   return filenames
 }
 
+async function gitCloneProject(projectPath, url) {
+  await git.clone({
+    fs,
+    dir: projectPath,
+    http,
+    url,
+  })
+}
+
 
 export {
   gitAddAll,
@@ -131,5 +141,6 @@ export {
   gitCommitAll,
   gitCheckout,
   gitUnstagedChanges,
-  gitLog
+  gitLog,
+  gitCloneProject
 }

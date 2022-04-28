@@ -32,6 +32,7 @@
   let projects;
   let currentProject;
   let newProjectName;
+  let gitRepository;
   let newProjectTemplateIndex = 0
   let newProjectItems = [
     { id: "starter", text: "Empty" },
@@ -59,7 +60,12 @@
   }
 
   const createProject = async () => {
-    await InterkitClient.call("project.create", {name: newProjectName, template: newProjectItems[newProjectTemplateIndex].id })
+    await InterkitClient.call("project.create", {
+      name: newProjectName, 
+      template: newProjectItems[newProjectTemplateIndex].id,
+      gitRepository,
+
+    })
     newProjectName = null;
   }
 
@@ -149,6 +155,11 @@
             placeholder="Select template"
             bind:selectedIndex={newProjectTemplateIndex}
             items={newProjectItems}
+          />
+          <TextInput 
+            bind:value={gitRepository} 
+            label="Public Git Repository"
+            placeholder="optional: Git Repository URL"
           />
           <Button 
             size="field"

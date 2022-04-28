@@ -267,7 +267,7 @@ Meteor.methods({
   },
 
   // create repo  
-  'project.create': async ({ name, template }) => {
+  'project.create': async ({ name, template, gitRepository }) => {
     
     const doc = { 
       name, 
@@ -275,6 +275,7 @@ Meteor.methods({
       history: [
         makeProjectHistoryEntry("create_project", {
           template,
+          gitRepository
         })
       ]
     }
