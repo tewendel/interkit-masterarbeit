@@ -27,6 +27,7 @@
 
     userId = get(InterkitClient.userId)
     console.log("userId", userId)
+
   })
 
   $: {
@@ -34,6 +35,9 @@
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
       console.log("message update", $messageStore)
       scrollDown()
+      
+      // mark all in channel as seen
+      InterkitClient.call("channel.seeAll", {userId, boardId: channel_key});
     }
   }
 

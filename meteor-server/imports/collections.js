@@ -65,6 +65,7 @@ export const Messages = new Mongo.Collection('messages');
 - handledAt <Date>
 - handledBy <array>
 - origin <string> // null (=user?), handler, cron
+- seen // array of userIds that have seen the message
 */
 
 export const Channels = new Mongo.Collection('channels');
@@ -76,4 +77,5 @@ export const Channels = new Mongo.Collection('channels');
 - title <string> // "Goserider Platz"
 - label <string> // "Gruppenchat"
 - image <mediaFile red {type: "mediafile", value: "id"}>
+- lastMessageSent <Date>
 */

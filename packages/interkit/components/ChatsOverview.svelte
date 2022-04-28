@@ -7,6 +7,7 @@
   export let selectTrigger;
 
   let channelsStore;
+  let channelsSorted;
 
   onMount(async () => {
     // find out what chat channels exist
@@ -15,19 +16,25 @@
     channelsStore = channelsSubHandle.data;
   })
 
+  $: {
+    if($channelsStore) {
+      channelsSorted = $channelsStore.sort((a,b)=>{return (b?.lastMessageSent - a?.lastMessageSent)})
+      console.log("channelsSorted", channelsSorted)
+    }
+  }
+
   /* TODO: sort channels by date of most recent message */
 
 
 </script>
 
-
-<h1>Chats</h1>
-
-{#if $channelsStore}
-  {#each $channelsStore as channel}
-    <ChatPreview
-      channel_key={channel.boardId}
-      {selectTrigger}
-    />
+{#if channelsSorted}
+  {#each channelsSorted as channel}
+    {#key channel}
+      <ChatPreview
+        channel_key={channel.boardId}
+        {selectTrigger}
+      />
+    {/key}
   {/each}
 {/if}

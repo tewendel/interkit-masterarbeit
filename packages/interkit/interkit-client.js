@@ -289,6 +289,10 @@ const checkForUpdates = async () => {
   -> components should not use this directly but use getRowSubStore (see below)
 */
 
+/*
+  important notice: simpleDDP internally groups all messages from the same collection but different subscriptions into the same storage
+*/
+
 const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, columnMap) => {
   
   // setup the store
@@ -380,7 +384,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 
 // this gets a sub to messages of specified channel
 const getMessageSub = async (channel_key) => {
-  let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId: get(userId)}, m=>m.channel_key==channel_key)
+  let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId: get(userId)}, m => m.channel_key == channel_key)
   return sub;
 }
 
