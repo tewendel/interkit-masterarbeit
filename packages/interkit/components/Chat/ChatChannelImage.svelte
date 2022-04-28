@@ -27,5 +27,14 @@
 </script>
     
 {#if channelImage}
-    <MediaFileImage mediafileRef={channelImage}/>
+  <div class="ChatChannelImage container">
+    <MediaFileImage fitDimension="both" mediafileRef={channelImage}/>
+  </div>
 {/if}
+
+<style>
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+</style>
