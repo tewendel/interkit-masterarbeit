@@ -51,7 +51,7 @@
 
   <svelte:fragment slot="left">
 
-      <Button on:click={back}>
+      <Button type="ghost" on:click={back}>
         <Icon type="arrow-left" />
       </Button>
       <span class="headline">{subsectionLabels[subsectionLabels.length - 1]}</span>
