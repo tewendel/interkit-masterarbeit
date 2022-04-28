@@ -561,6 +561,14 @@ Meteor.methods({
       console.log("channel.setProperty - channel not found", projectId, boardId)
     }
   },
+
+  'channel.seeAll': ({projectId, boardId, userId}) => {
+    console.log("channel.seeAll", boardId, userId)
+    Messages.update(
+      {projectId, channel_key: boardId, seen: {"$nin": [userId]}}, 
+      {$push: {seen: userId}}
+    );
+  },
  
   'message.setHandled': ({messageId, handledBy = []}) => {
     console.log("message.setHandled", messageId, handledBy)
@@ -598,22 +606,14 @@ Meteor.methods({
     if (messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
       pushnotifications.send({ projectId, Meteor, recipients, payload })
-    }
 
-    // this is where the message will need to be processed by the project server logic
+      // use this to sort channels by latest messages - see if this causes problems
+      let channel = Channels.find({projectId, boardId: channel_key}).fetch()
+      if(channel.length) {
+        Channels.update({_id: channel[0]._id}, {$set: {lastMessageSent: Date.now()}}) 
+      }
+    }
     
-    /*
-    // for now we add a fake response message adressed to the user
-    Messages.insert({
-      projectId,
-      recipients: [sender],
-      channel_key,
-      payload: {
-        type: "text",
-        text: "ok"
-      }      
-    })
-    */
   },
 
   'user.get': ({userId}) => {

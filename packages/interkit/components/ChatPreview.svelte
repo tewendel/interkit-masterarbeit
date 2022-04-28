@@ -22,16 +22,27 @@
   let channelsStore;
   let messageStore;
   let userId;
+  let numUnseen;
 
   onMount(async () => {
 
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
 
-    let sub = await InterkitClient.getMessageSub(real_channel_key);
+    //let sub = await InterkitClient.getMessageSub(real_channel_key);
+    let sub = await InterkitClient.getSub("messages", "messages.last", {channel_key}, m => m.channel_key == channel_key)
     messageStore = sub.data
 
-    console.log("userId", get(InterkitClient.userId))
+    userId = get(InterkitClient.userId);
+
+    const filterUnseen = (m) => { return (m.channel_key == real_channel_key && !(m?.seen?.includes(userId))) }
+
+    let subUnseen = await InterkitClient.getSub("messages", "messages.unseen", {channel_key, userId}, filterUnseen)
+    subUnseen.data.subscribe(unseenMessages=>{
+      console.log("unseen", unseenMessages)
+      numUnseen = unseenMessages.length;
+    })
+   
   })
 
   let latestMessage  
@@ -39,6 +50,7 @@
   
   $: {
     if ($messageStore) {
+      console.log("messageStore update", $messageStore)
       $messageStore = $messageStore.sort((a, b) => b.createdAt - a.createdAt)
       latestMessage = $messageStore[0];
     }
@@ -60,6 +72,7 @@
 <div class="ChatPreview container" on:click={onClick}>
   <div class="ChatPreview__title title">
     {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
+    ({#if numUnseen}{numUnseen}{/if})
   </div>
   <div class="ChatPreview__image image">
     <ChatChannelImage channel_key={real_channel_key}/>
@@ -74,6 +87,7 @@
       <MessagePreview message={latestMessage} />
     {/if}
   </div>
+  
 </div>
 
 <style>

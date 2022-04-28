@@ -19,7 +19,7 @@
     $: {
       if($channelsStore) {
         currentChannel = $channelsStore.find(c => c.boardId == channel_key)
-        console.log("currentChannel ChatChannelImage", currentChannel)
+        //console.log("currentChannel ChatChannelImage", currentChannel)
         channelImage = currentChannel?.image;
       }
     }
