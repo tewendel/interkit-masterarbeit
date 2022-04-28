@@ -14,7 +14,9 @@
 
 <script>
   import Sidebar from "../components/Sidebar.svelte";
-  
+
+  import 'prismjs/themes/prism.css'
+
   export let data;
 
   //console.log("data", data);
