@@ -1,0 +1,7 @@
+name: ChatTitle
+title: ChatTitle
+colour: 100
+fields:
+  - type: string
+    name: channel_key
+toolboxCategory: Chat
