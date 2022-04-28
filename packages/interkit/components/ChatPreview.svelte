@@ -7,7 +7,7 @@
 
   import util from '../util.js';
 
-  import Message from './Chat/Message.svelte';
+  import MessagePreview from './Chat/MessagePreview.svelte';
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -46,26 +46,22 @@
 
 </script>
 
-
-<div>
-  <div class="preview-image">
-    <div>{real_channel_key}</div>
-    <ChatChannelImage channel_key={real_channel_key}/>
-  </div>
-
+<div class="ChatPreview container" on:click={onClick}>
+  <div>{real_channel_key}</div>
+  <ChatChannelImage channel_key={real_channel_key}/>
   {#if latestMessage}
-    <Message message={latestMessage} preview/>
+    <div class="latestMessage">
+      <MessagePreview message={latestMessage} />
+    </div>
   {/if}
-
-  {#if selectTrigger}
-    <Button type="secondary" on:click={onClick}><Icon type="arrow-right"/></Button>
-  {/if}
-
 </div>
 
 <style>
-  .preview-image {
-    width: 200px;
+  .container {
+    font: var(--font-headline-4);
+    letter-spacing: var(--letter-spacing-headline-4);
+    cursor: pointer;
+    padding: var(--distance-s);
   }
 
 </style>
