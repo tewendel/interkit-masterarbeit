@@ -136,6 +136,7 @@
   .input {
     flex-grow: 0;
     flex-shrink: 1;
+    border-top: 1px solid var(--color-border);
   }
 
 </style>

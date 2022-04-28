@@ -18,6 +18,7 @@ fields:
     options: 
       - primary
       - secondary
+      - ghost
   - type: options
     name: size
     options: 

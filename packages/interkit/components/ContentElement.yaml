@@ -27,7 +27,14 @@ fields:
   - name: buttons
     type: slot
   - name: size
-    type: string
+    type: options
+    defaultValue: m
+    options:
+      - l
+      - s
+      - s-fill
+      - xs
+      - slide
 hiddenProps: 
   - element
 toolboxCategory: Elements

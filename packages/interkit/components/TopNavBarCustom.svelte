@@ -38,24 +38,16 @@
     padding-top: var(--distance-s);
     padding-bottom: var(--distance-s);
   }
-
-
   
   .TopNavBarCustom__Top__Left,
   .TopNavBarCustom__Top__Right {
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .left {
     flex: 1;
-  }
-  
-
-  :global(.TopNavBarCustom__Top__Left > *),
-  :global(.TopNavBarCustom__Top__Right > *) {
-    /*display: inline-flex;*/
   }
 
   :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {

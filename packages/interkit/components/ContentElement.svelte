@@ -96,31 +96,31 @@
 
 {#if element}
 
-  <section class={`ContentElementAudio container size-${size}`}>
+  <section class={`ContentElement ContentElementAudio container size-${size}`}>
 
-    <figure class="ContentElementAudio__Picture picture">
+    <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
       <AspectRatio>
         <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
       </AspectRatio>
     </figure>
       
-    <div class="ContentElementAudio_Titles titles">
+    <div class="ContentElement__Title ContentElementAudio_Titles titles">
 
-      <h4 class="ContentElementAudio__SubTitle subtitle">
+      <h4 class="ContentElement__SubTitle ContentElementAudio__SubTitle subtitle">
         {#if supertext}
           <span>{supertext}</span>
         {/if}
       </h4>
 
       {#key title}
-      <h3 class="ContentElementAudio__Title title">
+      <h3 class="ContentElement__Title ContentElementAudio__Title title">
         {title}
       </h3>
       {/key}
 
     </div>
 
-    <div class="ContentElementAudio__Content content">
+    <div class="ContentElement__Content ContentElementAudio__Content content">
       
         <div class="short-description">
           {#if short_description}
@@ -352,7 +352,7 @@
     display: none;
   }
 
-  .ContentElementAudio__Bookmark_extra {
+  .ContentElement__Bookmark_extra {
     display: none;
   }
 

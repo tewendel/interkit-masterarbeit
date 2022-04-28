@@ -42,7 +42,10 @@
     let html = `
     <div class="marker-container ${options.noPointer ? 'no-pointer' : ''}">
       ${titleDiv}
-      <div class="marker-content ${markerSelected ? 'selected' : ''}">${labelSpan} <img src="${iconSrc}"/></div>
+      <div class="marker-content
+        ${!label ? 'marker-content__no-label' : ''}
+        ${markerSelected ? 'selected' : ''}
+        ">${labelSpan} <img src="${iconSrc}"/></div>
     </div>
     `;
     
@@ -434,6 +437,11 @@
     width: 20px;
     height: 20px;
     object-fit: contain;
+  }
+
+  :global(div.marker-content.marker-content__no-label img) {
+    width: 32px;
+    height: 32px;
   }
 
   :global(div.marker-title) {

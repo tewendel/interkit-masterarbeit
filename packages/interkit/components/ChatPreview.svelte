@@ -79,12 +79,14 @@
   </div>
   <div class="ChatPreview__message message">
     {#if currentChannel?.label}
-      <span class="ChatPreview__label label">
+      <span class="ChatPreview__message__label label">
         {currentChannel?.label}
       </span>  
     {/if}
     {#if latestMessage}
-      <MessagePreview message={latestMessage} />
+      <span class="ChatPreview__message__text text">
+        <MessagePreview message={latestMessage} />
+      </span>
     {/if}
   </div>
   
@@ -125,6 +127,20 @@
     grid-column: 2;
     overflow: hidden;
     align-self: start;
+  }
+
+  .message .label {
+    font: var(--font-caption-bold);
+    color: var(--color-background);
+    background-color: var(--color-text);
+    padding: var(--distance-tiny) var(--distance-s);
+    float:left;
+    margin-right: 0.5ex;
+  }
+
+  .message .text {
+    top: var(--distance-tiny);
+    position: relative;
   }
 
 
