@@ -47,13 +47,17 @@
 </script>
 
 <div class="ChatPreview container" on:click={onClick}>
-  <div>{real_channel_key}</div>
-  <ChatChannelImage channel_key={real_channel_key}/>
-  {#if latestMessage}
-    <div class="latestMessage">
+  <div class="ChatPreview__title title">
+    {real_channel_key}
+  </div>
+  <div class="ChatPreview__image image">
+    <ChatChannelImage channel_key={real_channel_key}/>
+  </div>
+  <div class="ChatPreview__message message">
+    {#if latestMessage}
       <MessagePreview message={latestMessage} />
-    </div>
-  {/if}
+    {/if}
+  </div>
 </div>
 
 <style>
@@ -61,7 +65,37 @@
     font: var(--font-headline-4);
     letter-spacing: var(--letter-spacing-headline-4);
     cursor: pointer;
-    padding: var(--distance-s);
+    display: grid;
+    grid-template-columns: var(--distance-xxl) auto;
+    grid-template-rows: auto auto;
+    width: 100%;
+    height: var(--distance-xxl);
+    padding: 0 var(--distance-s);
+    box-sizing: border-box;
   }
+
+  .image {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    padding: var(--distance-s);
+    align-self: stretch;
+  }
+
+  .title {
+    grid-row: 1;
+    grid-column: 2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-self: end;
+  }
+
+  .message {
+    grid-row: 2;
+    grid-column: 2;
+    overflow: hidden;
+    align-self: start;
+  }
+
 
 </style>

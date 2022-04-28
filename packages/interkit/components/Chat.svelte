@@ -69,7 +69,7 @@
 
 <div class="root">
   <div class="channel-info-overlay">
-    <span>channel {channel_key}</span>
+    <!--span>channel {channel_key}</span-->
     <ChatChannelImage channel_key={channel_key}/>
   </div>
   <div
@@ -109,9 +109,11 @@
 
   .channel-info-overlay {
     position: absolute;
-    width: 200px;
-    top: 0px;
-    left: 0px;
+    width: 96px;
+    height: 96px;
+    top: var(--distance-m);
+    left: var(--distance-s);
+    z-index: 1;
   }
 
   .messages-container {
@@ -124,7 +126,7 @@
   .messages {
     display: flex;
     flex-direction: column;
-    padding: var(--distance-m);
+    padding: calc(96px + var(--distance-l) ) var(--distance-m) var(--distance-m) var(--distance-m);
   }
 
   .input {
