@@ -17,6 +17,7 @@
   export let markerPositionsColumn; // where the markers are
   export let customIconColumn; // a custom mediafile as icon for each element
   export let markerLabelColumn; // a short custom string for the marker (eg "01")
+  export let markerTitleColumn; // a short custom string to appear above the marker, outside the bubble (eg "Foo Station")
   export let hideOnMapColumn; // option on elements to hide on map
   export let checkedProperty = "checked" // what property to use for the checkmark
   
@@ -37,6 +38,7 @@
   const columnMap = {
     customIconColumn,
     markerLabelColumn,
+    markerTitleColumn,
     hideOnMapColumn,
     markerPositionsColumn
   }
@@ -232,6 +234,10 @@
   .map-component-container.inline :global(.Map__Container),
   .map-component-container.inline :global(.map) {
     border-radius: var(--border-radius-button);
+  }
+
+  :global(.marker-content-label) {
+    font-weight: bold;
   }
 
   :global(div.marker-container.selected) {

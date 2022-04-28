@@ -77,7 +77,7 @@
         rndSeed,
         isPreviewUser: user.id === previewUserId
       }
-    })
+    }) || []
   }
 
   $: usersArray, projectId, currentBoardId, board, previewUserId, updateUserNodes()
