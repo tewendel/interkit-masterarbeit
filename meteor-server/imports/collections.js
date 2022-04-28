@@ -74,4 +74,5 @@ export const Channels = new Mongo.Collection('channels');
 - boardId
 - active <bool>
 - group <bool>
+- image <mediaFile red {type: "mediafile", value: "id"}>
 */

@@ -7,6 +7,77 @@ fields:
       - arrow-down
       - arrow-left
       - arrow-right
+
+      - Thin-AR          
+      - Thin-Archiv      
+      - Thin-Arrow-Left  
+      - Thin-Arrow-Right 
+      - Thin-Bookmark    
+      - Thin-Camera      
+      - Thin-Chat        
+      - Thin-Check       
+      - Thin-Close-Circle
+      - Thin-Close       
+      - Thin-Copy        
+      - Thin-Dashboard   
+      - Thin-Dropdown-Up 
+      - Thin-Dropdown    
+      - Thin-Filter      
+      - Thin-Forward-15  
+      - Thin-FullScreen  
+      - Thin-Hint        
+      - Thin-Layer       
+      - Thin-Location    
+      - Thin-Map         
+      - Thin-Menu        
+      - Thin-Microphone  
+      - Thin-Minus       
+      - Thin-Pause       
+      - Thin-Phaenomen   
+      - Thin-Play        
+      - Thin-Plus        
+      - Thin-Position    
+      - Thin-QR-Scan     
+      - Thin-Replay-30   
+      - Thin-Settings    
+      - Thin-Social      
+      - Thin-to_Gallery  
+      - Thin-zoom-In     
+
+      - Full-AR          
+      - Full-Archiv      
+      - Full-Bookmark    
+      - Full-Camera      
+      - Full-Chat        
+      - Full-Check       
+      - Full-Close-Circle
+      - Full-Copy        
+      - Full-Dashboard   
+      - Full-Date        
+      - Full-Drag        
+      - Full-FullScreen  
+      - Full-GroupChat   
+      - Full-Help        
+      - Full-Layer       
+      - Full-List        
+      - Full-Location    
+      - Full-Map         
+      - Full-Menu        
+      - Full-Microphone  
+      - Full-More-1      
+      - Full-More        
+      - Full-Pause       
+      - Full-Phaenomen   
+      - Full-Play        
+      - Full-QR-Scan     
+      - Full-Send        
+      - Full-Settings    
+      - Full-SingleChat  
+      - Full-Social      
+      - Full-Splitscreen 
+      - Full-Warning     
+      - Full-to_Gallery
+
       - close
       - play
       - settings

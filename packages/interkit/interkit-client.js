@@ -302,7 +302,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       pubArgs.projectId = get(projectId);
     }
   }
-  //console.log(col, pub, pubArgs)
+  console.log("getSub", col, pub, pubArgs)
 
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);

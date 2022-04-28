@@ -14,7 +14,8 @@
   import CodeEditorStringy from './CodeEditorStringy.svelte'
   import CodeEditorExporty from './CodeEditorExporty.svelte'
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
-
+  import ChannelEditor from './ChannelEditor.svelte'
+  
   const useCodeMirror = true
   let editorMode = 2
 
@@ -190,12 +191,14 @@
       }
     }
 
+    /* this caused problems wih everything being deleted before boards where loaded
     for(let channel of channels) {
       if(!boards.includes(channel.boardId)) {
         console.log("board not found for channel, deleting", channel.boardId)
-        InterkitClient.call("channel.delete", {boardId: channel.boardId, projectId})
+        //InterkitClient.call("channel.delete", {boardId: channel.boardId, projectId})
       }
     }
+    */
   }
 
   $: {
@@ -277,6 +280,7 @@
         if (currentBoardId === boardId) currentBoardId = null
         board = []
         loadBoardList()
+        InterkitClient.call("channel.delete", {boardId, projectId})
       })
       .catch(genericErrorHandler)
   }
@@ -499,6 +503,7 @@
       save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
       {#if nodesModifiedCount}&#x1f534;{/if}
     </button>
+    <ChannelEditor boardId={currentBoardId} {projectId}/>
   </div>
   {#if board}
     <NodeGraph

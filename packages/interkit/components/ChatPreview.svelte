@@ -11,6 +11,8 @@
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import MediaFileImage from "./MediaFileImage.svelte";
+  import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
   export let channel_key = "DEFAULT"
   export let selectTrigger
@@ -44,9 +46,9 @@
 
 </script>
 
-
 <div class="ChatPreview container" on:click={onClick}>
   <div>{real_channel_key}</div>
+  <ChatChannelImage channel_key={real_channel_key}/>
   {#if latestMessage}
     <div class="latestMessage">
       <MessagePreview message={latestMessage} />
@@ -62,7 +64,4 @@
     padding: var(--distance-s);
   }
 
-  .latestMessage {
-    margin-top: var(--distance-tiny);
-  }
 </style>
