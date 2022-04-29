@@ -76,7 +76,13 @@
 <div class="ChatPreview container" on:click={onClick}>
   <div class="ChatPreview__title title">
     {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
-    {#if numUnseen}({numUnseen}){/if}
+    <span class="ChatPreview__details details">
+      {#if numUnseen}
+        <span class="ChatPreview__details__unseen unseen">
+          {numUnseen}
+        </span>
+      {/if}
+    </span>
   </div>
   <div class="ChatPreview__image image">
     <ChatChannelImage channel_key={real_channel_key}/>
@@ -124,6 +130,17 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     align-self: end;
+  }
+
+  .title .details {
+    float:right;
+  }
+
+  .title .unseen {
+    font: var(--font-caption-bold);
+    color: var(--color-background);
+    background-color: var(--color-text);
+    padding: var(--distance-tiny) var(--distance-s);
   }
 
   .message {
