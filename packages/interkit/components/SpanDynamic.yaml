@@ -1,0 +1,7 @@
+name: SpanDynamic
+fields:
+  - name: globalStore
+    type: string
+  - name: sheetColumn
+    type: sheetColumn
+toolboxCategory: Basics
