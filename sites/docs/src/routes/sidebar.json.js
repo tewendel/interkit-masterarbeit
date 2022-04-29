@@ -10,7 +10,11 @@ export async function get({ params }) {
         {
           title: 'How to build an app',
           path: "/guides/build_app"
-        }
+        },
+        {
+          title: 'How to setup your own interkit server',
+          path: "/guides/server_setup"
+        },
       ]
     },
     {
