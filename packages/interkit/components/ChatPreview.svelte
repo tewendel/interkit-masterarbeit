@@ -72,7 +72,7 @@
 <div class="ChatPreview container" on:click={onClick}>
   <div class="ChatPreview__title title">
     {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
-    ({#if numUnseen}{numUnseen}{/if})
+    {#if numUnseen}({numUnseen}){/if}
   </div>
   <div class="ChatPreview__image image">
     <ChatChannelImage channel_key={real_channel_key}/>

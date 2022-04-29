@@ -567,7 +567,8 @@ Meteor.methods({
     console.log("channel.seeAll", boardId, userId)
     Messages.update(
       {projectId, channel_key: boardId, seen: {"$nin": [userId]}}, 
-      {$push: {seen: userId}}
+      {$push: {seen: userId}},
+      {multi: true}
     );
   },
  
