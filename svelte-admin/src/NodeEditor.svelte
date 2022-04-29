@@ -489,7 +489,8 @@
       disabled={!board}
       >
       delete board
-    </button>
+    </button><br>
+    <ChannelEditor boardId={currentBoardId} {projectId}/>
     <button
       on:click={createNodeInCurrentBoard}
       disabled={!board}
@@ -503,7 +504,7 @@
       save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
       {#if nodesModifiedCount}&#x1f534;{/if}
     </button>
-    <ChannelEditor boardId={currentBoardId} {projectId}/>
+    
   </div>
   {#if board}
     <NodeGraph
