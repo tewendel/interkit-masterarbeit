@@ -9,7 +9,8 @@ import { getProjectPath } from './filesystem.mjs'
 import interkit_server from './interkit_server.mjs'
 import {
   gitUnstagedChanges,
-  gitLog
+  gitLog,
+  gitListRemotes,
 } from './git.mjs'
 
 const watchedProjectIds = []
@@ -18,7 +19,8 @@ const updateGit = async function(projectId) {
   const projectPath = getProjectPath(projectId)
   const data = {
     unstagedChanges: await gitUnstagedChanges(projectPath),
-    log: await gitLog(projectPath)
+    log: await gitLog(projectPath),
+    remotes: await gitListRemotes(projectPath),
   }
   interkit_server.call('project.updateUiState', {
     projectId: projectId, 

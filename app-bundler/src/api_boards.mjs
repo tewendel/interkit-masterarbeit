@@ -147,7 +147,7 @@ api.boards.create = method(
     const startNodeHandle = projectBoardPath(params.projectId, params.boardId, startNodeId)
     // wx: fail if path exists
     return Promise.all([
-      fs.appendFile(handle, JSON.stringify(board), { flag: 'wx' }),
+      fs.appendFile(handle, JSON.stringify(board, null, 2), { flag: 'wx' }),
       fs.appendFile(startNodeHandle, newEmptyNode, { flag: 'wx' })
     ])
   }
@@ -158,7 +158,7 @@ api.boards.update = method(
   async (handle, params, req) => {
     const data = JSON.parse(req.body.toString())
     data.nodes.forEach(node => { delete node.contents })
-    return fs.writeFile(handle, JSON.stringify(data))
+    return fs.writeFile(handle, JSON.stringify(data, null, 2))
       .then(() => data)
   }
 )

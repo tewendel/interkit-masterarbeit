@@ -16,6 +16,13 @@ async function gitAddAll(projectPath) {
   )
 }
 
+async function gitListRemotes(projectPath) {
+  return await git.listRemotes({
+    fs,
+    dir: projectPath,
+  })
+}
+
 async function gitAdd(projectPath, filepath) {
   const repo = {
     fs,
@@ -132,7 +139,6 @@ async function gitCloneProject(projectPath, url) {
   })
 }
 
-
 export {
   gitAddAll,
   gitLatestCommit,
@@ -142,5 +148,6 @@ export {
   gitCheckout,
   gitUnstagedChanges,
   gitLog,
-  gitCloneProject
+  gitCloneProject,
+  gitListRemotes
 }

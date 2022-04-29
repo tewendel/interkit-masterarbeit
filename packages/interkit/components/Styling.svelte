@@ -1,7 +1,7 @@
 <script>
   
-  export let googleFont = "Inter:wght@400;500;600;700" // regular medium semi-bold bold
-  export let googleFont2 = "Inter:wght@400;500;600;700"
+  export let googleFont = "Inter:wght@400;500;600;700;900" // regular medium semi-bold bold bolder
+  export let googleFont2 = "Inter:wght@400;500;600;700;900"
   export let colorText = '#32332e'
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
@@ -93,28 +93,82 @@
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
   
-  --font-headline-1: 400 48px/56px var(--font-family-headline);
-  --font-headline-2: 400 30px/36px var(--font-family-headline);
-  --font-headline-3: 400 24px/32px var(--font-family-headline);
-  --font-headline-4: 700 20px/24px var(--font-family-headline);
-  --font-headline-5: 700 16px/24px var(--font-family-headline);
-  --font-body-1: 400 16px/24px var(--font-family-text);
-  --font-body-2: 400 14px/21px var(--font-family-text);
-  --font-subtitle-1: 400 16px/24px var(--font-family-text);
-  --font-subtitle-2: 500 14px/24px var(--font-family-text);
-  --font-button: 600 12px/16px var(--font-family-text);
-  --font-caption: 400 12px/16px var(--font-family-text);
-  --font-caption-bold: 700 12px/16px var(--font-family-text);
-  --font-overline: 500 10px/12px var(--font-family-text);
+  /**************************************/
+  /* Typography - Interface             */
+  /**************************************/
 
+  /* Interface/Headline 1 */
+  --font-headline-1: 400 48px/56px var(--font-family-headline);
+  
+  /* Interface/Headline 2 */
+  --font-headline-2: 400 30px/36px var(--font-family-headline);
   --letter-spacing-headline-2: -0.5px;
+
+  /* Interface/Headline 3 */
+  --font-headline-3: 400 24px/28px var(--font-family-headline);
   --letter-spacing-headline-3: -0.25px;
+  
+  /* Interface/Headline 4 */
+  --font-headline-4: 700 20px/24px var(--font-family-headline);
   --letter-spacing-headline-4: -0.25px;
+  
+  /* Interface/Headline 5 */
+  --font-headline-5: 700 16px/24px var(--font-family-headline);
   --letter-spacing-headline-5: -0.02em;
-  --letter-spacing-body-1: -0.25px;
-  --letter-spacing-subtitle-1: -0.15px;
+  
+  /* Interface/Body 1 */
+  --font-body-1: 400 16px/24px var(--font-family-text);
+  --letter-spacing-body-1: 0.25px;
+  
+  /* Interface/Body 2 */
+  --font-body-2: 400 14px/21px var(--font-family-text);
+  --letter-spacing-body-2: 0.25px;
+  
+  /* Interface/Subtitle 1 */
+  --font-subtitle-1: 400 16px/21px var(--font-family-text);
+  --letter-spacing-subtitle-1: 0.15px;
+  
+  /* Interface/Subtitle 2 */
+  --font-subtitle-2: 500 14px/18px var(--font-family-text);
   --letter-spacing-subtitle-2: 0.1px;
+
+  /* Interface/Button */
+  --font-button: 600 12px/16px var(--font-family-text);
+
+  /* Interface/Caption */
+  --font-caption: 400 12px/16px var(--font-family-text);
+
+  /* Interface/Caption - Bold */
+  --font-caption-bold: 700 12px/16px var(--font-family-text);
+
+  /* Interface/Overline */
+  --font-overline: 500 10px/12px var(--font-family-text);
   --letter-spacing-overline: 1.5px;
+
+  /**************************************/
+  /* Typography - Content               */
+  /**************************************/
+  
+  /* Content/Headline 1 */
+  --font-content-headline-1: 900 48px/56px var(--font-family-headline);
+  --letter-spacing-content-headline-1: -1px;
+
+  /* Content/Headline 3 */
+  --font-content-headline-3: 900 24px/28px var(--font-family-headline);
+  --letter-spacing-content-headline-3: -0.5px;
+
+  /* Content/Headline 4 */
+  --font-content-headline-4: 900 20px/24px var(--font-family-headline);
+  
+  /* Content/Body 1 */
+  --font-content-body-1: 400 16px/24px var(--font-family-text);
+  --letter-spacing-content-body-1: 0.25px;
+
+  /* Content/Body 2 */
+  --font-content-body-2: 400 14px/24px var(--font-family-text);
+  --letter-spacing-content-body-2: 0px;
+
+  
 
   /* to inherit */
 

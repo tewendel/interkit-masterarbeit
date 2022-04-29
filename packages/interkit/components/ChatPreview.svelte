@@ -68,9 +68,15 @@
 </script>
 
 <div class="ChatPreview container" on:click={onClick}>
-  <div class="ChatPreview__title title">
-    {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
-    {#if numUnseen}({numUnseen}){/if}
+  <div class="ChatPreview__top top">
+    <span class="ChatPreview__title title">
+      {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
+    </span>
+    {#if numUnseen}
+      <span class="ChatPreview__unseen unseen">
+        {numUnseen}
+      </span>
+    {/if}
   </div>
   <div class="ChatPreview__image image">
     <ChatChannelImage channel_key={real_channel_key}/>
@@ -111,13 +117,28 @@
     align-self: stretch;
   }
 
-  .title {
+  .top {
     grid-row: 1;
     grid-column: 2;
+    align-self: end;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    align-self: end;
+    flex: 1;
+    align-self: center;
+  }
+
+  .unseen {
+    font: var(--font-caption-bold);
+    color: var(--color-background);
+    background-color: var(--color-text);
+    padding: var(--distance-tiny) var(--distance-s);
+    align-self: center;
   }
 
   .message {

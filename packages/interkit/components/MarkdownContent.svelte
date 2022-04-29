@@ -15,11 +15,21 @@
   }
 
   :global(.MarkdownContent h1) {
-    font-family: var(--font-family-headline);
-    font-size: var(--font-size-headline-1);
-    margin-bottom: 16px;
-    font-weight: normal;
-    line-height: var(--font-size-headline-1);
+    font: var(--font-content-headline-1);
+    letter-spacing: var(--letter-spacing-content-headline-1);
+    margin-bottom: var(--distance-m);
+  }
+
+  :global(.MarkdownContent h2) {
+    font: var(--font-content-headline-3);
+    letter-spacing: var(--letter-spacing-content-headline-3);
+    margin-bottom: var(--distance-m);
+  }
+
+  :global(.MarkdownContent h3, .MarkdownContent h4, .MarkdownContent h5) {
+    font: var(--font-content-headline-4);
+    letter-spacing: var(--letter-spacing-content-headline-4);
+    margin-bottom: var(--distance-m);
   }
   
   :global(.MarkdownContent p:not(:last-of-type)) {

@@ -44,53 +44,81 @@
 
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
   $: log = $currentProject?.uiState?.git?.log || []
+  $: remotes = $currentProject?.uiState?.git?.remotes || []
 
 </script>
 {#if open}
 
-  {#if unstagedFiles && unstagedFiles.length > 0}
-    <Accordion>
-      <AccordionItem title={unstagedFiles.length + " changed files"}>
-        <UnorderedList>
-        
-        {#each unstagedFiles as file}
-            <ListItem>
-            {file}
-            </ListItem>
+  {#if remotes.length > 0}
+    <h3>
+      Remotes
+    </h3>
+    <section>
+      <UnorderedList>
+        {#each remotes as remote}
+          <ListItem>
+            <strong>{remote.remote}</strong> {remote.url}
+          </ListItem>
         {/each}
-        </UnorderedList>
-      </AccordionItem>
-    </Accordion>
+      </UnorderedList>
+    </section>
   {/if}
 
   {#if unstagedFiles && unstagedFiles.length > 0}
-    <Button on:click={commitAll}>Commit all changed files</Button>
-    <Button disabled={loadingCheckoutHead} kind="tertiary" on:click={checkoutHead}>
-      Discard Changes
-      {#if loadingCheckoutHead}
-        <InlineLoading />
-      {/if}
-    </Button>
-    <TextInput labelText="Commit Message" bind:value={commitMessage} hideLabel placeholder="Enter commit message..." />
+    <h3>
+      Unstaged Changes
+    </h3>
+    <section>
+      <Accordion>
+        <AccordionItem title={unstagedFiles.length + " changed files"}>
+          <UnorderedList>
+          
+          {#each unstagedFiles as file}
+              <ListItem>
+              {file}
+              </ListItem>
+          {/each}
+          </UnorderedList>
+        </AccordionItem>
+      </Accordion>
+    </section>
+  {/if}
+
+  {#if unstagedFiles && unstagedFiles.length > 0}
+    <section>
+      <Button on:click={commitAll}>Commit all changed files</Button>
+      <Button disabled={loadingCheckoutHead} kind="tertiary" on:click={checkoutHead}>
+        Discard Changes
+        {#if loadingCheckoutHead}
+          <InlineLoading />
+        {/if}
+      </Button>
+      <TextInput labelText="Commit Message" bind:value={commitMessage} hideLabel placeholder="Enter commit message..." />
+    </section>
   {/if}
 
   {#if log && log.length > 0}
-    <Accordion>
-      {#each log as entry}
-        <AccordionItem title={entry.date + ": " + entry.commit.message}>
-          <pre>
-            {JSON.stringify(entry, null, 2)}
-          </pre>
-        </AccordionItem>
-      {/each}
-    </Accordion>
+    <h3>
+      Commit Log
+    </h3>
+    <section>
+      <Accordion>
+        {#each log as entry}
+          <AccordionItem title={entry.date + ": " + entry.commit.message}>
+            <pre>
+              {JSON.stringify(entry, null, 2)}
+            </pre>
+          </AccordionItem>
+        {/each}
+      </Accordion>
+    </section>
   {/if}
 
 {/if}
 
 <style>
-  p {
-    margin: 1ex 0;
+  section {
+    margin: 1ex 0 1em 0;
   }
 </style>
 

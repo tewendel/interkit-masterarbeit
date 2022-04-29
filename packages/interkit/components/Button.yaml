@@ -19,6 +19,7 @@ fields:
       - primary
       - secondary
       - ghost
+      - link
   - type: options
     name: size
     options: 

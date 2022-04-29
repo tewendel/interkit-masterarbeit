@@ -39,7 +39,7 @@
         <li class="item" on:click={()=>{onClick(element)}}>
           <slot name="contentElement" element={{...element.row, size: "l"}}></slot>
           {#if selectTrigger}
-            <span class="right-arrow"><Button type="secondary"><Icon type="arrow-right"/></Button></span>
+            <span class="right-arrow"><Button type="link"><Icon type="arrow-right"/></Button></span>
           {/if}
         </li>
       {/each}
