@@ -114,7 +114,14 @@
   }
 
   .button.ghost {
+    background-color: transparent;
+  }
+
+  .button.link {
     border: none;
+    background-color: transparent;
+    padding-left: var(--distance-xs);
+    padding-right: var(--distance-xs);
   }
 
   .primary {
