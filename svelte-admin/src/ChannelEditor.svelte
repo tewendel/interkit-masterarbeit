@@ -4,7 +4,7 @@
 
     import MediaFileSelect from './InputModals/MediaFileSelect.svelte';
 
-    export let boardId;
+    export let channel_key;
     export let projectId;
 
     let value;
@@ -16,7 +16,7 @@
 
     const channelImageSubmit = (data) => {
         console.log("new image value", value)
-        InterkitClient.call('channel.setProperty', {projectId, boardId, property: "image", value});
+        InterkitClient.call('channel.setProperty', {projectId, channel_key, property: "image", value});
     }
 
     let connected = InterkitClient.connected;
@@ -36,8 +36,8 @@
     }
     
     let currentChannel;
-    const updateChannel = (channels, _boardId) => {
-        currentChannel = channels.find(c => c.boardId == _boardId)
+    const updateChannel = (channels, _channel_key) => {
+        currentChannel = channels.find(c => c.channel_key == _channel_key)
         console.log("currentChannel", currentChannel)
         if(currentChannel?.image) {
             value = currentChannel.image;
@@ -48,7 +48,7 @@
 
     $: {
         if($channelsStore) {
-            updateChannel($channelsStore, boardId)
+            updateChannel($channelsStore, channel_key)
         }
     }
 
@@ -57,14 +57,14 @@
     const changeLabel = () => {
         let newLabel = prompt("Change label", currentChannel.label)
         if(typeof newLabel == "string") {
-            InterkitClient.call('channel.setProperty', {projectId, boardId, property: "label", value: newLabel});
+            InterkitClient.call('channel.setProperty', {projectId, channel_key, property: "label", value: newLabel});
         }
     }
 
     const changeTitle = () => {
         let newLabel = prompt("Change title", currentChannel.title)
         if(typeof newLabel == "string") {
-            InterkitClient.call('channel.setProperty', {projectId, boardId, property: "title", value: newLabel});
+            InterkitClient.call('channel.setProperty', {projectId, channel_key, property: "title", value: newLabel});
         }
     }
 

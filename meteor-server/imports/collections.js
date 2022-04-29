@@ -72,7 +72,7 @@ export const Channels = new Mongo.Collection('channels');
 
 /*
 - projectId
-- boardId
+- channel_key
 - active <bool>
 - title <string> // "Goserider Platz"
 - label <string> // "Gruppenchat"

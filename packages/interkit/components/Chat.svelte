@@ -33,7 +33,7 @@
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
-      console.log("message update", $messageStore)
+      // console.log("message update", $messageStore)
       scrollDown()
       
       // mark all in channel as seen

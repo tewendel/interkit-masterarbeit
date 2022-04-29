@@ -24,7 +24,7 @@
     subHandle = await InterkitClient.getSub('users', 'projectUsers', {projectId});
     usersStore = subHandle.data
     unsubscribe = usersStore.subscribe((data)=>{
-      console.log("project users", data)
+      //console.log("project users", data)
       usersArray = data;
     })    
   }

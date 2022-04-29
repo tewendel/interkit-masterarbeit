@@ -18,7 +18,7 @@
   
     $: {
       if($channelsStore) {
-        currentChannel = $channelsStore.find(c => c.boardId == channel_key)
+        currentChannel = $channelsStore.find(c => c.channel_key == channel_key)
         //console.log("currentChannel ChatChannelImage", currentChannel)
         channelImage = currentChannel?.image;
       }

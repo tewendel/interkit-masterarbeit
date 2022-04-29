@@ -9,16 +9,13 @@
 
   import MessagePreview from './Chat/MessagePreview.svelte';
 
-  import Button from './Button.svelte'
-  import Icon from './Icon.svelte'
-  import MediaFileImage from "./MediaFileImage.svelte";
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
   export let channel_key = "DEFAULT"
   export let selectTrigger
 
   let real_channel_key = util.extractContextProp(channel_key);
-
+  
   let channelsStore;
   let messageStore;
   let userId;
@@ -27,23 +24,19 @@
   onMount(async () => {
 
     userId = get(InterkitClient.userId);
-    console.log("ChatPreview onMount found userId", userId)
+    //console.log("ChatPreview onMount found userId", userId)
 
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
 
-    const messageFilter = m => (m.channel_key == channel_key) 
-
-    //let sub = await InterkitClient.getMessageSub(real_channel_key);
-    let sub = await InterkitClient.getSub("messages", "messages.last", {channel_key, userId}, m => m.channel_key == channel_key)
+    const messageFilter = m => (m.channel_key == real_channel_key) 
+    let sub = await InterkitClient.getSub("messages", "messages.last", {channel_key: real_channel_key, userId}, messageFilter)
     messageStore = sub.data
 
-
     const filterUnseen = (m) => { return (m.channel_key == real_channel_key && !(m?.seen?.includes(userId))) }
-
-    let subUnseen = await InterkitClient.getSub("messages", "messages.unseen", {channel_key, userId}, filterUnseen)
+    let subUnseen = await InterkitClient.getSub("messages", "messages.unseen", {channel_key: real_channel_key, userId}, filterUnseen)
     subUnseen.data.subscribe(unseenMessages=>{
-      console.log("unseen", unseenMessages)
+      //console.log("unseen", unseenMessages)
       numUnseen = unseenMessages.length;
     })
    
@@ -54,7 +47,7 @@
   
   $: {
     if ($messageStore) {
-      console.log("messageStore update", $messageStore)
+      //console.log("messageStore update", $messageStore)
       $messageStore = $messageStore.sort((a, b) => b.createdAt - a.createdAt)
       latestMessage = $messageStore[0];
     }
@@ -62,7 +55,8 @@
 
   $: {
       if($channelsStore) {
-        currentChannel = $channelsStore.find(c => c.boardId == channel_key)
+        currentChannel = $channelsStore.find(c => c.channel_key == real_channel_key)
+        //console.log("currentChannel", currentChannel, real_channel_key)
       }
     }
 

@@ -534,39 +534,39 @@ Meteor.methods({
     }
   },
 
-  'channel.create': ({projectId, boardId}) => {
-    console.log("channel.create", projectId, boardId)
-    let channels = Channels.find({projectId, boardId}).fetch()
+  'channel.create': ({projectId, channel_key}) => {
+    console.log("channel.create", projectId, channel_key)
+    let channels = Channels.find({projectId, channel_key}).fetch()
     if(channels.length) {
       console.log("channel already exists, aborting")
       return;
     }
-    Channels.insert({projectId, boardId, active: true})
+    Channels.insert({projectId, channel_key, active: true})
   },
 
-  'channel.delete': ({projectId, boardId}) => {
+  'channel.delete': ({projectId, channel_key}) => {
     console.log("channel.delete")
-    let channels = Channels.find({projectId, boardId}).fetch()
+    let channels = Channels.find({projectId, channel_key}).fetch()
     if(channels.length) {
       Channels.remove({_id: channels[0]._id})
     } else {
-      console.log("channel.delete - channel not found", projectId, boardId)
+      console.log("channel.delete - channel not found", projectId, channel_key)
     }
   },
 
-  'channel.setProperty': ({projectId, boardId, property, value}) => {
-    let channels = Channels.find({projectId, boardId}).fetch()
+  'channel.setProperty': ({projectId, channel_key, property, value}) => {
+    let channels = Channels.find({projectId, channel_key}).fetch()
     if(channels.length) {
       Channels.update({_id: channels[0]._id}, {$set: {[property]: value}})
     } else {
-      console.log("channel.setProperty - channel not found", projectId, boardId)
+      console.log("channel.setProperty - channel not found", projectId, channel_key)
     }
   },
 
-  'channel.seeAll': ({projectId, boardId, userId}) => {
-    console.log("channel.seeAll", boardId, userId)
+  'channel.seeAll': ({projectId, channel_key, userId}) => {
+    console.log("channel.seeAll", channel_key, userId)
     Messages.update(
-      {projectId, channel_key: boardId, seen: {"$nin": [userId]}}, 
+      {projectId, channel_key: channel_key, seen: {"$nin": [userId]}}, 
       {$push: {seen: userId}},
       {multi: true}
     );
@@ -608,12 +608,6 @@ Meteor.methods({
     if (messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
       pushnotifications.send({ projectId, Meteor, recipients, payload })
-
-      // use this to sort channels by latest messages - see if this causes problems
-      let channel = Channels.find({projectId, boardId: channel_key}).fetch()
-      if(channel.length) {
-        Channels.update({_id: channel[0]._id}, {$set: {lastMessageSent: Date.now()}}) 
-      }
     }
     
   },

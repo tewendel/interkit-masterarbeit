@@ -50,7 +50,7 @@
     channelsStore = channelsSubHandle.data;
     
     unsubscribe = usersStore.subscribe((data) => {
-      console.log("project users", data)
+      //console.log("project users", data)
       usersArray = data;
     })
   }
@@ -183,9 +183,9 @@
     // get channels collection
     let channels = get(channelsStore)
     for(let board of boards) {
-      if(!channels?.some(c => c.boardId == board)) {
+      if(!channels?.some(c => c.channel_key == board)) {
         console.log("channel for board not found, creating...", board)
-        InterkitClient.call("channel.create", {boardId: board, projectId})
+        InterkitClient.call("channel.create", {channel_key: board, projectId})
       } else {
         console.log("channel found", board)
       }
@@ -193,9 +193,9 @@
 
     /* this caused problems wih everything being deleted before boards where loaded
     for(let channel of channels) {
-      if(!boards.includes(channel.boardId)) {
-        console.log("board not found for channel, deleting", channel.boardId)
-        //InterkitClient.call("channel.delete", {boardId: channel.boardId, projectId})
+      if(!boards.includes(channel.channel_key)) {
+        console.log("board not found for channel, deleting", channel.channel_key)
+        //InterkitClient.call("channel.delete", {channel_key: channel.channel_key, projectId})
       }
     }
     */
@@ -280,7 +280,7 @@
         if (currentBoardId === boardId) currentBoardId = null
         board = []
         loadBoardList()
-        InterkitClient.call("channel.delete", {boardId, projectId})
+        InterkitClient.call("channel.delete", {channel_key: boardId, projectId})
       })
       .catch(genericErrorHandler)
   }
@@ -490,7 +490,7 @@
       >
       delete board
     </button><br>
-    <ChannelEditor boardId={currentBoardId} {projectId}/>
+    <ChannelEditor channel_key={currentBoardId} {projectId}/>
     <button
       on:click={createNodeInCurrentBoard}
       disabled={!board}
