@@ -115,10 +115,12 @@ Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit}) => 
   return messages;
 });
 
-Meteor.publish("messages.last", ({projectId, channel_key}) => {
+Meteor.publish("messages.last", ({projectId, channel_key, userId}) => {
+  console.log("subscribing to messages.last with", projectId, channel_key, userId)
   let query = {
     projectId,
-    channel_key
+    channel_key,
+    $or: [{ sender: userId }, { recipients: userId }]
   }
   let options = {
     sort: {createdAt: -1},
@@ -138,13 +140,14 @@ Meteor.publish("messages.unseen", ({projectId, channel_key, userId}) => {
   let query = {
     projectId,
     channel_key,
-    seen: {"$nin": [userId]}
+    seen: {"$nin": [userId]},
+    $or: [{ sender: userId }, { recipients: userId }]
   }
   let options = {
     sort: {createdAt: -1},
   }
   let messages = Messages.find(query, options);
-  console.log(messages.fetch())
+  //console.log(messages.fetch())
   return messages;
 });
 

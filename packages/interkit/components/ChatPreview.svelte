@@ -26,14 +26,18 @@
 
   onMount(async () => {
 
+    userId = get(InterkitClient.userId);
+    console.log("ChatPreview onMount found userId", userId)
+
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
 
+    const messageFilter = m => (m.channel_key == channel_key) 
+
     //let sub = await InterkitClient.getMessageSub(real_channel_key);
-    let sub = await InterkitClient.getSub("messages", "messages.last", {channel_key}, m => m.channel_key == channel_key)
+    let sub = await InterkitClient.getSub("messages", "messages.last", {channel_key, userId}, m => m.channel_key == channel_key)
     messageStore = sub.data
 
-    userId = get(InterkitClient.userId);
 
     const filterUnseen = (m) => { return (m.channel_key == real_channel_key && !(m?.seen?.includes(userId))) }
 
