@@ -1,5 +1,5 @@
 import { Random } from 'meteor/random'
-import { Projects, Sheets, Rows } from './collections.js';
+import { Projects, Sheets, Rows, Channels } from './collections.js';
 import { getMediaFiles, duplicateProjectFile } from './mediaServer.js'
 
 require('dotenv').config({
@@ -44,6 +44,7 @@ duplicateProject = async function (projectId) {
   // uses https://github.com/mikowals/batch-insert
   if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
   if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
+  if (newProjectData.channels.length > 0) Channels.batchInsert(newProjectData.channels)
   
   /* problem: this throws an error 
       reason: newProjectData.project.uiState.files contains "." characters in keys. 
@@ -67,6 +68,7 @@ const transformProjectData = function(projectData, newProjectId, newProjectName=
     project: { ...projectData.project, _id: newProjectId, name: newProjectName },
     sheets: projectData.sheets.map(sheet => ({ ...sheet, projectId: newProjectId, _id: Random.id() })),
     rows: projectData.rows.map(row => ({ ...row, projectId: newProjectId, _id: Random.id() })),
+    channels: projectData.channels.map(channel => ({ ...channel, projectId: newProjectId, _id: Random.id() }))
   }
   return newProjectData
 }
@@ -81,11 +83,13 @@ export const replaceProjectData = function (projectData, projectId, meta) {
   // remove existing stuff
   Sheets.remove({ projectId })
   Rows.remove({ projectId })
+  Channels.remove({ projectId })
 
   // inset docs
   // uses https://github.com/mikowals/batch-insert
   if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
   if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
+  if (newProjectData.channels.length > 0) Channels.batchInsert(newProjectData.channels)
   addImportHistoryToProject(projectId, meta)
 }
 
@@ -101,6 +105,7 @@ export const importProjectData = function (projectData, newProjectName, newProje
   // uses https://github.com/mikowals/batch-insert
   if (newProjectData.rows.length > 0) Rows.batchInsert(newProjectData.rows)
   if (newProjectData.sheets.length > 0) Sheets.batchInsert(newProjectData.sheets)
+  if (newProjectData.channels.length > 0) Channels.batchInsert(newProjectData.channels)
   Projects.insert(newProjectData.project)
   addImportHistoryToProject(newProjectId, meta)
 }
@@ -112,12 +117,14 @@ const getAllOfProject = async function (projectId)  {
   const sheets = Sheets.find({ projectId }).fetch()
   const rows = Rows.find({ projectId }).fetch()
   const files = getMediaFiles({ projectId }).fetch()
+  const channels = Channels.find({ projectId }).fetch()
 
   return {
     project: {...project, uiState: undefined},
     sheets,
     rows,
-    files
+    files,
+    channels
   }
 }
 

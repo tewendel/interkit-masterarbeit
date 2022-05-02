@@ -114,6 +114,7 @@
   }
 
   let boards = []
+  let boardsLoaded = false;
   let board = null
   let currentBoardId = null
 
@@ -191,18 +192,16 @@
       }
     }
 
-    /* this caused problems wih everything being deleted before boards where loaded
     for(let channel of channels) {
-      if(!boards.includes(channel.channel_key)) {
+      if(boardsLoaded && !boards.includes(channel.channel_key)) {
         console.log("board not found for channel, deleting", channel.channel_key)
-        //InterkitClient.call("channel.delete", {channel_key: channel.channel_key, projectId})
+        InterkitClient.call("channel.delete", {channel_key: channel.channel_key, projectId})
       }
     }
-    */
   }
 
   $: {
-    if($channelsStore && boards) boardChannelSync()
+    if($channelsStore && boards && boardsLoaded) boardChannelSync()
   } 
 
   const loadBoardList = async () => {
@@ -212,6 +211,7 @@
         errorify(json)
         boards = json.result
         console.log('loadBoardList', boards)
+        boardsLoaded = true;
       })
       .catch(genericErrorHandler)
   }
@@ -280,7 +280,7 @@
         if (currentBoardId === boardId) currentBoardId = null
         board = []
         loadBoardList()
-        InterkitClient.call("channel.delete", {channel_key: boardId, projectId})
+        //InterkitClient.call("channel.delete", {channel_key: boardId, projectId})
       })
       .catch(genericErrorHandler)
   }
