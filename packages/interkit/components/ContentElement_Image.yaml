@@ -1,0 +1,11 @@
+name: ContentElement_Image
+fields: 
+  - name: imageColumn
+    type: sheetColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - name: buttons
+    type: slot
+hiddenProps: 
+  - element
+toolboxCategory: Elements
