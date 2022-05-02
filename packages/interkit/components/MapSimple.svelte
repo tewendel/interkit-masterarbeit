@@ -44,7 +44,7 @@
   }
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
-  const mapFocus = InterkitClient.getGlobalStore("mapFocus") // not using this at the moment
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus") 
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   
   let markerObjects;
@@ -202,6 +202,7 @@
       {singleElement}
       {disableControls}
       {style}
+      mapFocus={$mapFocus}
     />
 
     <div class="Map__Button__Bar button-bar-container">
