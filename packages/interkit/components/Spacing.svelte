@@ -8,7 +8,7 @@
 
 <div 
   class="container" 
-  style="padding: var(--distance-{top}) var(--distance-{right}) var(--distance-{bottom}) var(--distance-{left})"
+  style="--distance-none: 0; padding: var(--distance-{top}) var(--distance-{right}) var(--distance-{bottom}) var(--distance-{left})"
   >
   <slot />
 </div>

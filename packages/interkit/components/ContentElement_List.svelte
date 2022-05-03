@@ -24,7 +24,7 @@
 
 {#if element}
 
-  <section class={`ContentElement container`}>
+  <section class={`ContentElement ContentElement_List container`}>
 
     <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
       <AspectRatio>
@@ -32,12 +32,12 @@
       </AspectRatio>
     </figure>
       
-    <div>
+    <div class="content">
 
       {#key title}
-      <h3 class="title">
-        {title}
-      </h3>
+        <h3 class="title">
+          {title}
+        </h3>
       {/key}
 
       <h4>
@@ -57,8 +57,26 @@
 {/if}
 
 <style>
+  .container {
+    margin: 0 var(--distance-m) var(--distance-m) var(--distance-m);
+  }
+  .content {
+    padding: var(--distance-m) var(--distance-l) var(--distance-s) var(--distance-m);
+  }
+  .title {
+    font: var(--font-content-headline-3);
+    letter-spacing: var(--letter-spacing-content-headline-3);
+    padding-bottom: var(--distance-tiny);
+  }
   .subtitleTag {
-    color: #888;
+    font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
+    filter: brightness(2.75);
+    padding-right: var(--distance-s);
+  }
+  .subtitle {
+    font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
   }
 
 </style>
