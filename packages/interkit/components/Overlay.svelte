@@ -17,6 +17,8 @@
     right:0;
     top:0;
     bottom:0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
+    box-sizing: border-box;
     pointer-events: none;
     touch-action: none;
   }
