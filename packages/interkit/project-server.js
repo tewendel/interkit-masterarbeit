@@ -26,7 +26,7 @@ const subscribeUsers = async (server, projectId) => {
 
 // updates the boardState of a user on the server
 const updateBoardState = async (server, projectId, userId, boardState) => {
-   await server.call("user.updateUserProjectData", {
+   return await server.call("user.updateUserProjectData", {
     userId,
     projectId,
     key: "boardState",
@@ -55,7 +55,9 @@ const setArrivalStatus = async (server, projectId, userId, boardState, boardId, 
   let newBoardState = {...boardState}
   newBoardState[boardId].nodeId = nodeId
   newBoardState[boardId].status = status
-  await updateBoardState(server, projectId, userId, newBoardState);
+  const result = await updateBoardState(server, projectId, userId, newBoardState);
+  //console.log("setArrivalStatus", result)
+  return result
 }
 
 // checks which node the user is on for a current node
@@ -92,13 +94,22 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
     }
 
     for(let boardId of boards) {
+
+      const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
+      const updatedBoardState = updatedProjectData?.boardState;
  
-      if(boardState[boardId]) {
+      if(updatedBoardState?.[boardId]) {
+
+        // console.log("got updatedBoardState for", boardId, updatedBoardState?.[boardId])
 
         // user is just arriving
-        if(boardState[boardId].status == "arriving") {
-          
-          let nodeId = boardState[boardId].nodeId;
+        if(updatedBoardState[boardId].status == "arriving") {
+
+          // updating arrival in boardState so that this never runs twice
+          const result = await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, updatedBoardState[boardId].nodeId, "arrived")
+          console.log("status updated, now running onArrive", result)
+
+          let nodeId = updatedBoardState[boardId].nodeId;
           
           console.log(`user ${user.id} arriving in node ${nodeId} on board ${boardId}`)
           
@@ -112,7 +123,7 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
           }
 
           let handlerName = boardId + "_" + nodeId;
-          await setArrivalStatus(server, projectId, user.id, boardState, boardId, boardState[boardId].nodeId, "arrived")
+          
           if (handlers[handlerName]?.onArrive) {
             await handlers[boardId + "_" + nodeId]?.onArrive(api)
           } else {
@@ -225,7 +236,7 @@ const setupMessageHandling = async ({
   // process on each change
   reactiveUsersCollection.onChange(async (users) => {
     console.log("users collection onChange")
-    processUserArrivals(server, projectId, projectApi, handlers, users, boards, boardData);
+    await processUserArrivals(server, projectId, projectApi, handlers, users, boards, boardData);
   })
 }
 

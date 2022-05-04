@@ -617,7 +617,7 @@ const loginTokenUser = async ({ userToken }) => {
 }
 
 const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) => {
-  //console.log("createProjectTokenUser")
+  console.log("createProjectTokenUserAndLogin")
   const token = await InterkitClient.call("createProjectTokenUser", {
     userToken,
     projectData

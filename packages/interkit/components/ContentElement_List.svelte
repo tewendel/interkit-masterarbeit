@@ -5,7 +5,7 @@
   import MediaFileImage from './MediaFileImage.svelte'
   
   export let element; // must be used with a prop (ElementList oder ElementProvider)
-  console.log("contentElement_List with prop", element);
+  //console.log("contentElement_List with prop", element);
   if(!element) {
     alert("this needs an element prop, for example from ElementList or ElementProvider")
   }
