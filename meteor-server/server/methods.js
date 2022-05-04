@@ -628,6 +628,15 @@ Meteor.methods({
     return true;
   },
 
+  'users.getForNode': ({projectId, boardId, nodeId}) => {
+    let nodeIdKey = `projectUserData.${projectId}.boardState.${boardId}.nodeId`
+    let statusKey = `projectUserData.${projectId}.boardState.${boardId}.status`
+    let query = {[nodeIdKey]: nodeId, [statusKey]: "arrived"};
+    console.log("users.getForNode query", query)
+    let users = Meteor.users.find(query).fetch();
+    return users;
+  },
+
   'user.moveTo': async ({projectId, userId, boardId, nodeId}) => {
     console.log("user.moveTo", projectId, userId, boardId, nodeId)
 

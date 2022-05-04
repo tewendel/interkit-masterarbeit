@@ -33,6 +33,8 @@ if(msg.payload.key == "a") {
   // do something
 }
 
+// forward a message to other users currently in this node
+api.echo(msg)
 
 
 

@@ -53,7 +53,8 @@
     InterkitClient.call("message.send", {
       sender: userId,
       channel_key, 
-      payload: {type: "text", text: messageText}
+      payload: {type: "text", text: messageText},
+      origin: "user"
     })
   }
 

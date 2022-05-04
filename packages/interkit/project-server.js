@@ -154,13 +154,13 @@ const setupMessageHandling = async ({
   // read boards from file system and get info for each
   
   const boards = await boardNodeUtil.boards.list("./handlers");
-  console.log("project server found boards: ", boards);
+  // console.log("project server found boards: ", boards);
 
   const boardData = {};
   for(let board of boards) {
     boardData[board] = await boardNodeUtil.boards.readFromProject(projectId, board)
   }
-  console.log("project server found board data: ", boardData);
+  // console.log("project server found board data: ", boardData);
 
   // this gets called many times, for each message that is found through the subscriptions
   reactiveMessagesCollection.onChange(async (messages) => {
@@ -179,12 +179,17 @@ const setupMessageHandling = async ({
     // handle each unhandled message
     for (let message of unhandledMessages) {
       console.log("handling message", message)
+      
       let handledBy = []
 
       // determine board
       let boardId = message.channel_key;
       console.log("determined board", boardId);
 
+      // check which node the user is on
+      let currentNodeId = await checkCurrentNode(server, message?.sender, projectId, boardId, boardData)
+      console.log("determined current node", currentNodeId)
+      
       // put interkit objects in api that gets passed to handler
       const api = {
         ...projectApi, 
@@ -192,13 +197,10 @@ const setupMessageHandling = async ({
         server, 
         projectId, 
         userId: message?.sender,
-        boardId
+        boardId,
+        nodeId: currentNodeId
       }
 
-      // check which node the user is on
-      let currentNodeId = await checkCurrentNode(server, message?.sender, projectId, boardId, boardData)
-      console.log("determined current node", currentNodeId)
-      
       if(currentNodeId) {
 
         let handlerName = boardId + "_" + currentNodeId
@@ -235,7 +237,7 @@ const setupMessageHandling = async ({
   
   // process on each change
   reactiveUsersCollection.onChange(async (users) => {
-    console.log("users collection onChange")
+    //console.log("users collection onChange")
     await processUserArrivals(server, projectId, projectApi, handlers, users, boards, boardData);
   })
 }
