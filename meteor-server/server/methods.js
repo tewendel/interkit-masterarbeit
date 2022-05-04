@@ -116,6 +116,14 @@ const updateUserProjectData = async (userId, projectId, key, value) => {
   })  
 }
 
+const getUserProjectData = (userId, projectId) => {
+  const user = Meteor.users.findOne(userId);
+  //console.log("getProjectUserData", user)
+  let data = user?.projectUserData[projectId];
+  if(!data) data = {}
+  return data;
+}
+
 Meteor.methods({
 
   // create a front end user for a project
@@ -618,14 +626,28 @@ Meteor.methods({
   },
 
   'user.getProjectUserData': ({userId, projectId}) => {
-    const user = Meteor.users.findOne(userId);
-    //console.log("getProjectUserData", user)
-    return user?.projectUserData[projectId]; 
+    return getUserProjectData(userId, projectId)
   },
 
   'user.updateUserProjectData': async ({userId, projectId, key, value}) => {
     await updateUserProjectData(userId, projectId, key, value);
     return true;
+  },
+
+  'user.getUserVar': ({userId, projectId, varName}) => {
+    let userProjectData = getUserProjectData(userId, projectId);
+    return userProjectData?.userVars?.[varName]
+  },
+
+  'user.setUserVar': async ({userId, projectId, varName, value}) => {
+    console.log("user.setUserVar", varName, value)
+    let userProjectData = getUserProjectData(userId, projectId);
+    let userVars = userProjectData.userVars
+    if(!userVars) {
+      userVars = {};
+    }
+    userVars[varName] = value
+    await updateUserProjectData(userId, projectId, "userVars", userVars)
   },
 
   'users.getForNode': ({projectId, boardId, nodeId}) => {

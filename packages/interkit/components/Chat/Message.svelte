@@ -11,9 +11,9 @@
 
 </script>
 
-{(preview && !message.origin) ? "You:" : ""}
-
-{message?.payload?.options?.label ? message.payload.options.label : ""} 
+{#if message?.payload?.options?.label}
+<span class="message-label">{message?.payload?.options?.label}</span> 
+{/if}
 
 {#if message?.payload?.type == "text" || message?.payload?.type == "choice"}   
   <div 
@@ -65,6 +65,11 @@
     font: var(--font-body-1);
     position: relative;
     margin-bottom: var(--distance-s);
+  }
+
+  .message-label {
+    font: var(--font-caption-bold);
+    margin-bottom: var(--distance-xs);
   }
 
   .message__bubble {

@@ -33,8 +33,14 @@ if(msg.payload.key == "a") {
   // do something
 }
 
-// forward a message to other users currently in this node
+// forward a message to other users currently in this node, uses user variable "name" as label
 api.echo(msg)
+
+// get a variable for this user
+await api.getUserVar("name")
+
+// set a variable for this user
+await setUserVar("name", "alice")
 
 
 
