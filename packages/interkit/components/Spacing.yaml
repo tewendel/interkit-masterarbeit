@@ -5,6 +5,7 @@ fields:
   - name: top
     type: options
     options:
+      - none
       - xs
       - s
       - m
@@ -13,6 +14,7 @@ fields:
   - name: right
     type: options
     options:
+      - none
       - xs
       - s
       - m
@@ -21,6 +23,7 @@ fields:
   - name: bottom
     type: options
     options:
+      - none
       - xs
       - s
       - m
@@ -29,6 +32,7 @@ fields:
   - name: left
     type: options
     options:
+      - none
       - xs
       - s
       - m

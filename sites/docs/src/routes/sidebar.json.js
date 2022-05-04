@@ -15,6 +15,10 @@ export async function get({ params }) {
           title: 'How to setup your own interkit server',
           path: "/guides/server_setup"
         },
+        {
+          title: 'Setup push notifications',
+          path: "/guides/push_setup"
+        }
       ]
     },
     {

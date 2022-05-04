@@ -115,14 +115,21 @@
     height: 100%;
     pointer-events: all;
     touch-action: auto;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
+    box-sizing: border-box;
   }
+
+  :global(html) {
+    min-height: calc(100% + env(safe-area-inset-top));
+  }
+
   :global(html),
   :global(body) {
     height: 100%;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    background-color: #FFFFFF;
+    background-color: var(--color-background-highlight);
     pointer-events: none;
     touch-action: none;
   }
@@ -238,11 +245,6 @@
       padding: 5px;
       margin-top: 5px;
     }
-
-    .AppBase {
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
-      box-sizing: border-box;
-    }    
 
   </style>
 </svelte:head>
