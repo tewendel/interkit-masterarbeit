@@ -1,9 +1,9 @@
 <script>
-    import { onMount } from 'svelte'
     import { InterkitClient } from 'interkit';
 
     import MediaFileSelect from './InputModals/MediaFileSelect.svelte';
-
+    import MediaFilePreview from './MediaFilePreview.svelte';
+    
     export let channel_key;
     export let projectId;
 
@@ -71,25 +71,24 @@
     
 </script>
 
+<div class="container">
 
-<button
-    on:click={addChannelImageToBoard}
->
-    add image  
-</button>
+{#if currentChannel}
+    <span>Title: {currentChannel.title} <button
+        on:click={changeTitle}
+    >change</button>
+    </span>
+    <span>Label: {currentChannel.label} <button
+        on:click={changeLabel}
+    >change</button>
+    </span>
+    <span>Image: <MediaFilePreview {projectId} key={currentChannel.image.value}/> <button
+        on:click={addChannelImageToBoard}
+    >change</button>
+    </span>
+{/if}
 
-<button
-    on:click={changeTitle}
->
-    change title
-</button>
-
-<button
-    on:click={changeLabel}
->
-    change label
-</button>
-
+</div>
 
 {#if showImageSelectModal}
   <MediaFileSelect
@@ -99,3 +98,10 @@
     bind:value={value}
   />
 {/if}
+
+
+<style>
+    .container {
+        margin: 10px 0px 10px 0px;
+    }
+</style>
