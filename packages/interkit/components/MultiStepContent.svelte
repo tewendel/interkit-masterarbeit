@@ -135,6 +135,7 @@
   .container .content {
     max-height: 32vh;
     overflow-y: auto;
+    padding-bottom: var(--distance-xs)
   }
 
   .pagination {
@@ -185,7 +186,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding-top: var(--distance-m);
+    padding-top: var(--distance-s);
     gap: var(--distance-s);
   }
 

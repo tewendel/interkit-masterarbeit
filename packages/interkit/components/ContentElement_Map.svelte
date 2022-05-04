@@ -46,7 +46,7 @@
       </AspectRatio>
     </figure>
       
-    <div>
+    <div class="content">
 
       {#key title}
       <h3 class="title">
@@ -79,6 +79,10 @@
 <style>
   .subtitleTag {
     color: #888;
+  }
+
+  .content {
+    padding: var(--distance-s);
   }
 
 </style>
