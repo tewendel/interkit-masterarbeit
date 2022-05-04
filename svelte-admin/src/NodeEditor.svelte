@@ -475,55 +475,60 @@
 </script>
 
 <div class="layout">
-  <div class="ui">
-    <button on:click={refresh}>refresh</button>
-    <select bind:value={currentBoardId}>
-      <option value={null}>(select)</option>
-      {#each boards as boardId}
-        <option value={boardId}>{boardId}</option>
-      {/each}
-    </select>
-    <button on:click={createBoard}>create board</button>
-    <button
-      on:click={deleteCurrentBoard}
-      disabled={!board}
-      >
-      delete board
-    </button>
-    <button
-      on:click={createNodeInCurrentBoard}
-      disabled={!board}
-      >
-      add node
-    </button>
-    <button
-      on:click={saveModifiedNodes}
-      disabled={!nodesModifiedCount}
-      >
-      save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
-      {#if nodesModifiedCount}&#x1f534;{/if}
-    </button>
-    <br>
-    <ChannelEditor channel_key={currentBoardId} {projectId}/>
-    
+
+  <div class="board-column">
+
+    <div class="ui">
+      <button on:click={refresh}>refresh</button>
+      <select bind:value={currentBoardId}>
+        <option value={null}>(select)</option>
+        {#each boards as boardId}
+          <option value={boardId}>{boardId}</option>
+        {/each}
+      </select>
+      <button on:click={createBoard}>create board</button>
+      <button
+        on:click={deleteCurrentBoard}
+        disabled={!board}
+        >
+        delete board
+      </button><br>
+      <ChannelEditor channel_key={currentBoardId} {projectId}/>
+      <button
+        on:click={createNodeInCurrentBoard}
+        disabled={!board}
+        >
+        add node
+      </button>
+      <button
+        on:click={saveModifiedNodes}
+        disabled={!nodesModifiedCount}
+        >
+        save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
+        {#if nodesModifiedCount}&#x1f534;{/if}
+      </button><br>
+    </div>
+
+    {#if board}
+      <NodeGraph
+        {projectId}
+        boardId={currentBoardId}
+        bind:board
+        nodes={board.nodes}
+        {_update}
+        {userNodes}
+        {previewUserId}
+        on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
+        bind:editNodeId
+        bind:this={nodeGraph}
+        />
+    {:else}
+      <div class="nodegraph"></div>
+    {/if}
+
   </div>
-  {#if board}
-    <NodeGraph
-      {projectId}
-      boardId={currentBoardId}
-      bind:board
-      nodes={board.nodes}
-      {_update}
-      {userNodes}
-      {previewUserId}
-      on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
-      bind:editNodeId
-      bind:this={nodeGraph}
-      />
-  {:else}
-    <div class="nodegraph"></div>
-  {/if}
-  <div>
+
+  <div class="node-column">
     {#if editNodeId}
       <h3 class="node-menu">
         {editNodeId}
@@ -623,6 +628,7 @@
 
 .ui {
   grid-area: ui;
+  padding-bottom: 10px;
 }
 
 .nodegraph,
@@ -633,6 +639,15 @@
   box-shadow: inset 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
+}
+
+.board-column {
+  height: 70vh;
+}
+
+.node-column {
+  padding-top: 5px;
+
 }
 
 .node-menu {
