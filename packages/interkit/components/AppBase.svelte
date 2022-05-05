@@ -43,10 +43,10 @@
   (async () => {
     console.log('pushNotifications...')
     pushNotifications.startHeartbeat()
+    await pushNotifications.addListeners()
     await pushNotifications.registerNotifications()
       .then(async () => {
         console.log('pushNotifications addListeners...')
-        await pushNotifications.addListeners()
         await pushNotifications.getDeliveredNotifications()
       })
       .catch(e => {
