@@ -41,7 +41,7 @@
   >
     <div
         class="message__bubble"
-        on:click={() => { showOptions = true }}
+        on:click={() => { if (message?.payload?.type !== 'choice') showOptions = true }}
       >
       <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
       {#if message?.payload?.type == "text"}  
