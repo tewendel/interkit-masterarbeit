@@ -82,9 +82,15 @@
         on:click={changeLabel}
     >change</button>
     </span>
-    <span>Image: <MediaFilePreview {projectId} key={currentChannel.image.value}/> <button
+    <span>Image:
+      {#if currentChannel.image}
+        <MediaFilePreview {projectId} key={currentChannel.image.value}/>
+      {:else}
+        no image
+      {/if}
+      <button
         on:click={addChannelImageToBoard}
-    >change</button>
+        >change</button>
     </span>
 {/if}
 
