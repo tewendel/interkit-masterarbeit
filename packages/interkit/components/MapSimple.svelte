@@ -31,8 +31,9 @@
   export let inline = "FALSE";
   export let disableControls = "FALSE";
   export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
-  export let style = "interkit"; // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
-
+  export let style // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
+  export let apiKey 
+  
   export let clickTrigger;
 
   const columnMap = {
@@ -202,6 +203,7 @@
       {singleElement}
       {disableControls}
       {style}
+      {apiKey}
       mapFocus={$mapFocus}
     />
 

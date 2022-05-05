@@ -54,7 +54,8 @@ fields:
     defaultValue: FALSE
   - type: string
     name: style
-    defaultValue: "interkit"
+  - type: string
+    name: apiKey
   - type: string
     name: clickTrigger
   - type: "slot"

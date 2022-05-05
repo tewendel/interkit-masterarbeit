@@ -93,7 +93,11 @@
   export let nearestElement;
   export let disableControls = "FALSE"
 
-  export let style = 'interkit';
+  export let style;
+  
+  const tileLayer = "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+  export let apiKey;
+  
 
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
@@ -197,11 +201,11 @@
       map.scrollWheelZoom.disable();
     }
 
-    if (!style || style === 'interkit') {
+    if (apiKey) {
       // default interkit map style
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+      console.log("using tileLayer", tileLayer)
+      L.tileLayer(tileLayer + "?api_key=" + apiKey, {
+        maxZoom: 20
       }).addTo(map);
     } else {
       L.maplibreGL({
