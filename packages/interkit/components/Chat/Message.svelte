@@ -1,6 +1,11 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   import MessageDate from "./MessageDate.svelte";
   import Button from "../Button.svelte";
+  import Icon from "../Icon.svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let message
   export let preview = false
@@ -8,6 +13,19 @@
   export let isByUser = false
   export let lastFromSender = false
   export let previousMessage = null
+
+  let showOptions = false
+
+  const startMessageOptionDialog = () => {
+    if (window.confirm('Möchtest du diese Nachricht oder diesen Benutzer wegen unangemessener Inhalte an das Moderationsteam melden? Wir kümmern uns innerhalb von 24 Stunden darum.') === true) {
+      report()
+    }
+    showOptions = false
+  }
+
+  const report = () => {
+    dispatch('report', { message })
+  }
 
 </script>
 
@@ -23,6 +41,7 @@
   >
     <div
         class="message__bubble"
+        on:click={() => { showOptions = true }}
       >
       <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
       {#if message?.payload?.type == "text"}  
@@ -53,6 +72,15 @@
       {/if}
     </div>
     <MessageDate {message} {previousMessage} {lastFromSender} />
+    {#if showOptions}
+      <div
+        class="message__options"
+        on:click={() => { startMessageOptionDialog() }}
+        >
+        <Icon type="Full-Warning" height="1.2em" />
+        Inhalte melden
+      </div>
+    {/if}
   </div>
 {/if}
 
@@ -129,6 +157,18 @@
 
   .message--choice {
     min-width: 50%;
+  }
+
+  .message__options {
+    font: var(--font-caption);
+    padding: var(--distance-s);
+    cursor: pointer;
+    text-align: right;
+  }
+
+  .message__options :global(.icon) {
+    vertical-align: middle;
+    vertical-align: text-top;
   }
   
   li.choice-option {

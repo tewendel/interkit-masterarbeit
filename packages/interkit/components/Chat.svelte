@@ -9,6 +9,8 @@
 
   export let channel_key = "DEFAULT"
 
+  const reportsChannelKey = 'REPORTS'
+
   let messageStore;
   let userId;
 
@@ -70,6 +72,21 @@
     }
   } 
 
+  const sendReport = async (message) => {
+    const reportText = 'user reported message:\n\n' + JSON.stringify(message)
+    // console.log('reporting', { reportText, reportsChannelKey, sender: userId })
+    let ret = await InterkitClient.call("message.send", {
+      sender: userId,
+      channel_key: reportsChannelKey,
+      payload: {
+        type: "text",
+        text: reportText
+      },
+      origin: "user"
+    })
+    // console.log('report call ret', ret)
+  }
+
 </script>
 
 <div class="root">
@@ -91,6 +108,7 @@
             isByUser={message?.sender === userId} 
             lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
             previousMessage={$messageStore[index-1]}
+            on:report={ event => sendReport(event.detail.message) }
           />
         {/each}
       </div>
