@@ -112,8 +112,6 @@
           />
         {/each}
       </div>
-    {:else}
-      Ø
     {/if}
   </div>
   <div class="input">

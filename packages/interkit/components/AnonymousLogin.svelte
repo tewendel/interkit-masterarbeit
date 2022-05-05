@@ -20,7 +20,5 @@
 
 {#if $userId}
   <slot></slot>
-{:else}
-  <h1>no user</h1>
 {/if}
 
