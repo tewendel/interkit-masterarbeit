@@ -68,6 +68,10 @@ export async function get({ params }) {
         {
           title: '"Project Server"',
           path: "/theory/project-server"
+        },
+        {
+          title: 'Server Architecture',
+          path: "/theory/server-architecture"
         }
       ]
     },
