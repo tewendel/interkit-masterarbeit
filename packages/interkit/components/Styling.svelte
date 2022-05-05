@@ -195,9 +195,4 @@
     display: contents;
     height: 100%;
   }
-
-  :global(html),
-  :global(body) {
-    height: 100%;
-  }
 </style>
