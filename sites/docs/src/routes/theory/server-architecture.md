@@ -32,14 +32,14 @@ graph TD
     server === |ddp| redaktion 
     server === |ddp| projectserver
 
-    server --- |tcp| db
-    server --- |mount| media
+    server -.- |tcp| db
+    server -.- |mount| media
 
     bundler --- |http| app
-    bundler --- |directory| starter
-    bundler --- |mount| repositories
+    bundler -.- |directory| starter
+    bundler -.- |mount| repositories
     bundler --- |http| redaktion
-    bundler --> |process| projectserver
+    bundler -.-> |process| projectserver
 
     admin ----- |http| redaktion
         
