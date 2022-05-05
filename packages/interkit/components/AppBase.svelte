@@ -6,6 +6,7 @@
   import { writable } from 'svelte/store';
 
   import Styling from './Styling.svelte'
+  import Overlay from './Overlay.svelte'
 
   let initComplete = false;
 
@@ -92,21 +93,23 @@
 
 <div class="AppBase Theming" id="Theming">
   <Styling>
-    {#if $projectId && initComplete}
-      {#if $$slots.desktopFallback && $isDesktop}
-        <slot name="desktopFallback" />
-      {:else}
-        <slot ></slot>
-        <slot name="viewport"></slot>
-      {/if}
-    {:else}
-      <div class="Loading">
-        <p class="static-loading-indicator">laden....</p>
-        {#if $connectionIssue}
-        <button class="network-reload" on:click={retry}>verbinden</button>
+    <Overlay zIndex={0}>
+      {#if $projectId && initComplete}
+        {#if $$slots.desktopFallback && $isDesktop}
+          <slot name="desktopFallback" />
+        {:else}
+          <slot ></slot>
+          <slot name="viewport"></slot>
         {/if}
-      </div>
-    {/if}
+      {:else}
+        <div class="Loading">
+          <p class="static-loading-indicator">laden....</p>
+          {#if $connectionIssue}
+          <button class="network-reload" on:click={retry}>verbinden</button>
+          {/if}
+        </div>
+      {/if}
+    </Overlay>
   </Styling>
 </div>
 
@@ -120,7 +123,7 @@
   }
 
   :global(html) {
-    min-height: calc(100% + env(safe-area-inset-top));
+    /*min-height: calc(100% + env(safe-area-inset-top));*/
   }
 
   :global(html),
@@ -129,7 +132,6 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
-    background-color: var(--color-background-highlight);
     pointer-events: none;
     touch-action: none;
   }
