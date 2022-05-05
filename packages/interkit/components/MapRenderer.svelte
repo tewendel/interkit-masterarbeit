@@ -185,7 +185,7 @@
       maxZoom: 20,
       attributionControl: false,
     }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
-     singleElement ? 17 : 14);  
+     singleElement ? 17 : 13);  
 
     if(singleElement) {
       console.log("qrContext", qrContext)
@@ -264,6 +264,7 @@
   })
 
   const autoPositionMap = () => {
+    if(defaultLocation) return;
     if(manualPosition) return;
     if(singleElement) return;
     
