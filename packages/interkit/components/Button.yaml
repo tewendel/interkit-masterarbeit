@@ -20,6 +20,7 @@ fields:
       - secondary
       - ghost
       - link
+      - spacer
   - type: options
     name: size
     options: 

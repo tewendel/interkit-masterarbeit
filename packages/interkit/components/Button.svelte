@@ -5,7 +5,7 @@
 
   export let nopadding = false
   export let color = null;
-  export let type = "secondary" // primary | secondary | ghost | link
+  export let type = "secondary" // primary | secondary | ghost | link | spacer
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
   export let flex = "normal" // normal | fill
   export let text = undefined;
@@ -122,6 +122,11 @@
     background-color: transparent;
     padding-left: var(--distance-xs);
     padding-right: var(--distance-xs);
+  }
+
+  .button.spacer {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .primary {
