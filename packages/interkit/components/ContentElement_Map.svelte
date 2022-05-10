@@ -39,13 +39,13 @@
 {#if element}
 
   <section class={`ContentElement container`}>
-
+      
     <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
-      <AspectRatio>
+      <AspectRatio aspectRatioType="square">
         <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
       </AspectRatio>
     </figure>
-      
+
     <div class="content">
 
       {#key title}
@@ -64,7 +64,9 @@
         {/if}
       </h4>
 
-      <slot name="special"></slot>
+      <div class="special">
+        <slot name="special"></slot>
+      </div>
       
     </div>
 
@@ -77,12 +79,39 @@
 {/if}
 
 <style>
-  .subtitleTag {
-    color: #888;
+  .container {
   }
-
   .content {
-    padding: var(--distance-s);
+    padding: var(--distance-m) var(--distance-xl) var(--distance-s) var(--distance-m);
+
+  }
+  .picture {
+    margin: var(--distance-s) var(--distance-m) var(--distance-s) var(--distance-s);
+    border-radius: var(--border-radius-button);
+    overflow: hidden;
+    width: 96px;
+    height: 96px;
+    float: left;
+  }
+  .title {
+    font: var(--font-content-headline-3);
+    letter-spacing: var(--letter-spacing-content-headline-3);
+    padding-bottom: var(--distance-tiny);
+  }
+  .subtitleTag {
+    font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
+    filter: brightness(2.75);
+    padding-right: var(--distance-s);
+  }
+  .subtitle {
+    font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
+  }
+  .special {
+    margin-top: var(--distance-s);
+    font: var(--font-subtitle-2);
+    letter-spacing: var(--letter-spacing-subtitle-2);
   }
 
 </style>
