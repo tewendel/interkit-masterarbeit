@@ -46,6 +46,14 @@ await api.getUserVar("name")
 // set a variable for this user
 await api.setUserVar("name", "alice")
 
+// load rows from a sheet
+await api.getRows("elements")
+
+// add a row to a sheet
+await api.addRow("elements", {title: "hello"})
+
+// update a row
+await api.updateRow("elements", "sheetKey", {title: "bye"})
 
 
 
