@@ -75,7 +75,25 @@ const echo = async function(msg) {
   })
 }
 
+// load all the rows in a sheet
+const getRows = async function(sheetKey) {
+  const {server, projectId} = this
+  const rows = await server.call('sheet.getRows', {sheetKey, projectId})  
+  return rows;
+}
 
+// create a new row with values
+const addRow = async function(sheetKey, values) {
+  const {server, projectId} = this
+  const rowKey = await server.call('sheet.addRow', {sheetKey, projectId})
+  await server.call('row.updateValues', {projectId, rowKey: rowKey.rowKey, values});
+}
+
+// update a row
+const updateRow = async function(sheetKey, rowKey, values) {
+  const {server, projectId} = this
+  await server.call('row.updateValues', {projectId, rowKey, values});
+}
 
 export default {
   send,
@@ -84,5 +102,8 @@ export default {
   moveTo,
   echo,
   setUserVar,
-  getUserVar
+  getUserVar,
+  getRows,
+  addRow,
+  updateRow
 }

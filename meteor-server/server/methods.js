@@ -465,6 +465,12 @@ Meteor.methods({
     return addRow({sheetKey, projectId})
   },
 
+  'sheet.getRows': ({sheetKey, projectId}) => {
+    console.log("sheet.getRows", sheetKey, projectId)
+    const rows = Rows.find({sheetKey: sheetKey, projectId}).fetch();
+    return rows;
+  },
+ 
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
     console.log(rowKey, projectId, colKey, newVal);
     if(rowKey && projectId && colKey) {
@@ -473,6 +479,20 @@ Meteor.methods({
         let values = row.values
         values[colKey] = newVal 
        //console.log(value)
+        Rows.update({_id: row._id}, {$set: {values}});
+        // return the updated row
+        return Rows.findOne({ key: rowKey, projectId })
+      } else {
+        console.log("updateValue: row not found")
+      }
+    }
+  },
+
+  'row.updateValues': ({rowKey, projectId, values}) => {
+    console.log("row.updateValues", rowKey, projectId, values);
+    if(rowKey && projectId && values) {
+      let row = Rows.findOne({key: rowKey, projectId})
+      if(row) {
         Rows.update({_id: row._id}, {$set: {values}});
         // return the updated row
         return Rows.findOne({ key: rowKey, projectId })
