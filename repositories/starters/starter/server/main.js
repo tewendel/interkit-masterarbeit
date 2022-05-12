@@ -6,7 +6,7 @@ import { readdirSync } from "fs";
 /* get projectId */
 
 const projectId = process.env.INTERKIT_PROJECT_ID
-console.log("projectId: " + projectId)
+// console.log("projectId: " + projectId)
 
 /* import handlers */
 
@@ -17,7 +17,7 @@ for (let file of files) {
 
     let handler = await import(dir + "/" + file)
     handlers[file.substring(0, file.length - 3)] = handler
-    console.log(`imported ${file}`)
+    // console.log(`imported ${file}`)
 }
 
 /* setup server connection */

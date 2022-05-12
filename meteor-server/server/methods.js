@@ -353,7 +353,16 @@ Meteor.methods({
       message.date = new Date()
     }
     //console.log("project.projectServer.addMessage", projectId, message)
-    const res = Projects.update({_id: projectId}, { $push: { 'projectServer.messages': message } })
+    const res = Projects.update({_id: projectId}, { 
+      $push: {
+          'projectServer.messages': {
+            $each: [ message ],
+            $sort: { date: -1 },
+            $slice: 500 // limit the number of messages
+          }
+        }
+      })
+    
     //console.log("project.projectServer.addMessage result", res)
     return res
   },
