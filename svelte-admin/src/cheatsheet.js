@@ -53,7 +53,7 @@ await api.getRows("elements")
 await api.addRow("elements", {title: "hello"})
 
 // update a row
-await api.updateRow("elements", "sheetKey", {title: "bye"})
+await api.updateRow("elements", "rowKey", {title: "bye"})
 
 
 
