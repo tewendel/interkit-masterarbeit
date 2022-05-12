@@ -1,8 +1,9 @@
 <script>
   import { InterkitClient } from 'interkit'
   import { DataTable, OverflowMenu, OverflowMenuItem, Button, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
-  import Add16 from "carbon-icons-svelte/lib/Add16";
-  import Delete16 from "carbon-icons-svelte/lib/Delete16";
+  import Add from "carbon-icons-svelte/lib/Add.svelte";
+  // import Delete from "carbon-icons-svelte/lib/Delete.svelte";
+  import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import InputModal from './InputModals/InputModal.svelte';
   import SheetCell from './SheetCell.svelte';
   import { columnTypes } from './baseConfig.js';
@@ -261,7 +262,7 @@
     <small>{$currentSheet.key}</small> 
   </h4>
   <Button size="small" on:click={rename}>Rename</Button> 
-  <Button size="small" on:click={remove} icon={Delete16}>Remove Sheet</Button>
+  <Button size="small" on:click={remove} icon={TrashCan}>Remove Sheet</Button>
 
   <br><br>
 
@@ -312,7 +313,7 @@
     
     </DataTable>
   </div>
-  <Button size="small" icon={Add16} on:click={createRow}>Add Row</Button>
+  <Button size="small" icon={Add} on:click={createRow}>Add Row</Button>
 {/if}
 
 <InputModal
