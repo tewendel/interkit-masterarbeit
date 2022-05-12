@@ -40,7 +40,7 @@ api.echo(msg)
 await api.getUserVar("name")
 
 // set a variable for this user
-await setUserVar("name", "alice")
+await api.setUserVar("name", "alice")
 
 
 
