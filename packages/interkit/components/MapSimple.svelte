@@ -277,8 +277,8 @@
 
   .marker_popup_close {
     position: absolute;
-    top: var(--distance-s);
-    right: var(--distance-s);
+    top: var(--distance-m);
+    right: var(--distance-m);
     z-index: 10;
   }
 

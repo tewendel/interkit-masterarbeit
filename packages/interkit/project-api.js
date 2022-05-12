@@ -16,6 +16,24 @@ const sendText = function(text, options) {
 }
 const send = sendText;
 
+const sendImage = function (mediafileKey, options) {
+  const { message, server, projectId } = this
+  console.log('sendImage', mediafileKey)
+  server.call('message.send', {
+    projectId,
+    channel_key: message.channel_key,
+    //sender,
+    recipients: [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'image',
+      // text,
+      mediafileKey,
+      options
+    }
+  })
+}
+
 const sendChoice = function(choice, options) {
   const {message, server, projectId} = this
   //console.log(this)
@@ -98,6 +116,7 @@ const updateRow = async function(sheetKey, rowKey, values) {
 export default {
   send,
   sendText,
+  sendImage,
   sendChoice,
   moveTo,
   echo,

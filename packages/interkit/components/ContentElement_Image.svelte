@@ -34,7 +34,7 @@
     </figure>
       
     <ButtonBar>    
-      <slot name="buttons"></slot>
+      <slot class="xyz" name="buttons"></slot>
     </ButtonBar>
 
   </section>
@@ -42,5 +42,7 @@
 {/if}
 
 <style>
-
+  figure {
+    padding-bottom: var(--distance-s);
+  }
 </style>

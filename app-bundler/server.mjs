@@ -10,7 +10,6 @@ import { get_config } from './src/get_config.mjs'
 import { get_local_config } from './src/get_local_config.mjs'
 import { get_project_id } from './src/get_project_id.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
-import { put_duplicate_project } from './src/put_duplicate_project.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
@@ -56,9 +55,6 @@ app.get('/project_id/:projectSlug', get_project_id)
 
 // compile a bundle for a given app
 app.get('/compile/:projectId', get_compile)
-
-// duplicate app repository
-app.put('/app/:projectId', put_duplicate_project)
 
 // git 
 app.get('/git/status/:projectId', get_git_status)

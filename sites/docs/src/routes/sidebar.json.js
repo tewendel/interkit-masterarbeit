@@ -5,12 +5,17 @@ export async function get({ params }) {
 
   const items = [
     {
-      title: "Guides",
+      title: "Basics",
       items: [
         {
           title: 'How to build an app',
-          path: "/guides/build_app"
+          path: "/basics/build_app"
         },
+      ]
+    },
+    {
+      title: "Guides",
+      items: [
         {
           title: 'How to setup your own interkit server',
           path: "/guides/server_setup"
@@ -68,6 +73,10 @@ export async function get({ params }) {
         {
           title: '"Project Server"',
           path: "/theory/project-server"
+        },
+        {
+          title: 'Server Architecture',
+          path: "/theory/server-architecture"
         }
       ]
     },
