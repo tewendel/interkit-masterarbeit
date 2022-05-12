@@ -153,6 +153,12 @@ Meteor.methods({
     console.log("createProjectUser", userId)
   },
 
+  'users.delete': async function (ids) {
+    console.log('deleteProjectUsers', ids)
+    const result = await Meteor.users.remove({ _id: { $in: ids } })
+    return result
+  },
+
   // create a front end user for a project, identified by a user token
   'createProjectTokenUser': async function (params) {
     console.log("createProjectTokenUser", params)
