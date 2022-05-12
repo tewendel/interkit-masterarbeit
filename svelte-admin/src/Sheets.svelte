@@ -3,7 +3,7 @@
   import { onDestroy } from 'svelte'
   import Sheet from './Sheet.svelte'
   import { Button } from "carbon-components-svelte";
-  import Add16 from "carbon-icons-svelte/lib/Add16";
+  import Add from "carbon-icons-svelte/lib/Add.svelte";
   import { InterkitClient } from 'interkit'
 
   export let projectId
@@ -58,7 +58,7 @@
   {/if}
 
   <br>
-  <Button icon={Add16} size="small" on:click={createSheet}>Create Sheet</Button>
+  <Button icon={Add} size="small" on:click={createSheet}>Create Sheet</Button>
 
 {/if}
 

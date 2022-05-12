@@ -627,15 +627,20 @@ const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) =
 }
 
 const createProjectUser = async ({ username, password, email, projectData, projectId }) => {
-    const result = await InterkitClient.call("createProjectUser", {
-      username,
-      password,
-      email,
-      projectData,
-      projectId
-    })
-    return result
-  }
+  const result = await InterkitClient.call("createProjectUser", {
+    username,
+    password,
+    email,
+    projectData,
+    projectId
+  })
+  return result
+}
+
+const deleteProjectUsers = async (ids) => {
+  const result = await InterkitClient.call('deleteProjectUsers', ids)
+  return result
+}
 
 const pushnotificationMessageUser = async ({ userId, msg }) => {
   await InterkitClient.call(
@@ -805,6 +810,16 @@ const loadElementPropertiesFromUser = async () => {
 
 }
 
+const usersMoveTo = async ({ userIds, projectId, boardId, nodeId }) => {
+  // TODO this is stupidly sequentialized. better implement users.moveTo
+  for (const userId of userIds) {
+    await InterkitClient.call(
+      'user.moveTo',
+      { projectId, userId, boardId, nodeId }
+    )
+  }
+}
+
 const saveElementPropertiesToUser = async () => {
   const elementProperties = getGlobalStore("elementProperties");
   let storeData = get(elementProperties)
@@ -869,6 +884,7 @@ const InterkitClient = {
   loginTokenUser,
   createProjectTokenUserAndLogin,
   createProjectUser,
+  deleteProjectUsers,
   saveUserPushnotificationRegistrationToken,
   userEnableHeartbeat,
   userHeartbeat,
@@ -889,6 +905,7 @@ const InterkitClient = {
   getElementProperty,
   saveElementPropertiesToUser,
   loadElementPropertiesFromUser,
+  usersMoveTo,
   getUiKeyStore,
   takeUiSnapshot,
   restoreUiSnapshot,

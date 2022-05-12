@@ -16,11 +16,10 @@
     Row,
     Column,
     Loading } from "carbon-components-svelte";
-  import ReloadIcon from "carbon-icons-svelte/lib/Play20";
-  import ResetIcon from "carbon-icons-svelte/lib/Reset20";
-  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft20";
-  import ArrowRight from "carbon-icons-svelte/lib/ArrowRight20";
-  import ReloadCompileIcon from "carbon-icons-svelte/lib/SkipForward20";
+  import ReloadIcon from "carbon-icons-svelte/lib/Play.svelte";
+  import ResetIcon from "carbon-icons-svelte/lib/Reset.svelte";
+  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft.svelte";
+  import ArrowRight from "carbon-icons-svelte/lib/ArrowRight.svelte";
 
   export let projectId, previewURL = "";
   export let currentProject;
