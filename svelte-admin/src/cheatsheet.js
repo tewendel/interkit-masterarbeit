@@ -14,6 +14,10 @@ api.moveTo("node1")
 // send a text message to player
 api.sendText("hello")
 
+// send an image message to player
+// (to get its key, go to Media tab, open ⋮ menu, copy key)
+api.sendImage("f00ba420-0123-4567-89abcdef012356789")
+
 // add a label
 api.sendText("hello", {label: "bot"})
 

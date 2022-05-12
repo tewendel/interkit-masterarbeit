@@ -4,6 +4,7 @@
   import MessageDate from "./MessageDate.svelte";
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
+  import MediaFileImage from "../MediaFileImage.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -33,43 +34,51 @@
 <span class="message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
-{#if message?.payload?.type == "text" || message?.payload?.type == "choice"}   
+{#if ['text', 'choice', 'image'].indexOf(message?.payload?.type) > -1}   
   <div 
-    class="message  message--{message.payload.type}"
+    class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
     class:message__lastFromSender={lastFromSender}
   >
     <div
-        class="message__bubble"
-        on:click={() => { if (message?.payload?.type !== 'choice') showOptions = true }}
+      class="message__bubble"
+      on:click={() => { if (message?.payload?.type !== 'choice') showOptions = true }}
       >
-      <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
-      {#if message?.payload?.type == "text"}  
-        {message?.payload?.text}
-      {/if}
-
-      {#if message?.payload?.type == "choice"}
-        {#if message?.payload?.choice}
-          <ul
-            class="message__choices"
-            class:selected={message?.selectedChoiceKey}
-          >  
-            {#each Object.keys(message?.payload?.choice) as key}
-              <li 
-                class="choice-option" 
-              >
-                <Button
-                  on:click={()=>{submitChoice(message, key)}}
-                  selected={message?.selectedChoiceKey == key}
-                  flex="fill"
+      <div class="message__contents">
+        <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
+        {#if message?.payload?.type == "text"}  
+          {message?.payload?.text}
+        {:else if message?.payload?.type == "image"}
+          <MediaFileImage
+            mediafileRef={{
+              type: 'mediafile',
+              value: message?.payload?.mediafileKey
+            }}
+            doFallback={true}
+            />
+        {:else if message?.payload?.type == "choice"}
+          {#if message?.payload?.choice}
+            <ul
+              class="message__choices"
+              class:selected={message?.selectedChoiceKey}
+            >  
+              {#each Object.keys(message?.payload?.choice) as key}
+                <li 
+                  class="choice-option" 
                 >
-                  {message.payload.choice[key]}
-                </Button>
-              </li>
-            {/each}
-          </ul>
+                  <Button
+                    on:click={()=>{submitChoice(message, key)}}
+                    selected={message?.selectedChoiceKey == key}
+                    flex="fill"
+                  >
+                    {message.payload.choice[key]}
+                  </Button>
+                </li>
+              {/each}
+            </ul>
+          {/if}
         {/if}
-      {/if}
+      </div>
     </div>
     <MessageDate {message} {previousMessage} {lastFromSender} />
     {#if showOptions}
@@ -101,14 +110,21 @@
   }
 
   .message__bubble {
+    position: relative;
+    font: var(--font-body-1);
+  }
+
+  .message__contents {
     border-radius: var(--border-radius);
+    overflow: hidden;
     background-color: var(--color-background);
     border-width: var(--border-width);
     border-color: var(--color-border);
     border-style: solid;
+  }
+
+  .message:not(.message--image) .message__contents {
     padding: var(--distance-s);
-    font: var(--font-body-1);
-    position: relative;
   }
 
   .message--choice, .message__user {
@@ -116,11 +132,11 @@
     align-self: flex-end;
   }
 
-  .message:not(.message__user):not(.message--choice) .message__bubble {
+  .message:not(.message__user):not(.message--choice) .message__contents {
     border-bottom-left-radius: 0;
   }
 
-  .message__user .message__bubble {
+  .message__user .message__contents {
     border-bottom-right-radius: 0;
   }
 
@@ -128,31 +144,29 @@
     margin-bottom: var(--distance-m);
   }
 
-  /* css triangle */
-  .message:not(.message--choice).message__lastFromSender .message__bubble::after {
-    content: "";
+  /* css triangle base */
+  .message.message__lastFromSender .message__bubble::after {
     position: absolute;
     bottom: -10px;
     width: 0;
     height: 0;
+    border-style: solid;
   }
 
-  /* attach css triangle */
-  .message:not(.message__user) .message__bubble::after {
-    left: calc( 10px - var(--border-width) );
-    margin-left: -10px;
-    border-style: solid;
-    border-width: 10px 10px 0 0px;
-    border-color: var(--color-border) transparent transparent transparent;
-  }
-
-  /* attach css triangle */
-  .message__user .message__bubble::after {
-    right: calc( 10px - var(--border-width) );
-    margin-right: -10px;
-    border-style: solid;
+  /* ◥ */
+  .message.message__user .message__bubble::after {
+    content: "";
+    right: 0;
     border-width: 0 10px 10px 0;
     border-color: transparent var(--color-border) transparent transparent;
+  }
+
+  /* ◤ */
+  .message:not(.message__user):not(.message--choice) .message__bubble::after {
+    content: "";
+    left: 0;
+    border-width: 10px 10px 0 0px;
+    border-color: var(--color-border) transparent transparent transparent;
   }
 
   .message--choice {
