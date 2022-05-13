@@ -9,7 +9,11 @@ require('dotenv').config( {
 
 import '../imports/collections.js';
 import './publications.js';
-import './methods.js';
+
+import './projectMethods.js';
+import './sheetMethods.js';
+import './userMethods.js';
+import './chatMethods.js';
 
 import { Projects } from '../imports/collections.js';
 

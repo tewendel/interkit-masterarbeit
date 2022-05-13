@@ -79,3 +79,13 @@ export const Channels = new Mongo.Collection('channels');
 - image <mediaFile red {type: "mediafile", value: "id"}>
 - lastMessageSent <Date>
 */
+
+export const ScheduledEvents = new Mongo.Collection('scheduled_events');
+
+/*
+- projectId
+- type // "message", "moveTo"
+- status // "scheduled", "done"
+- time // execution time
+- payload // object, depends on type
+*/
