@@ -20,9 +20,9 @@
     DataTable, Link,
     Button, TextInput, Form, Dropdown, FormGroup
   } from "carbon-components-svelte";
-  import Delete16 from "carbon-icons-svelte/lib/Delete16";
-  import Copy16 from "carbon-icons-svelte/lib/Copy16";
-  import Edit16 from "carbon-icons-svelte/lib/Edit16";
+  import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+  import Copy from "carbon-icons-svelte/lib/Copy.svelte";
+  import Edit from "carbon-icons-svelte/lib/Edit.svelte";
 
   export let params = {}
 
@@ -119,9 +119,9 @@
         <span slot="cell" let:row let:cell>
           {#if cell.key === 'action'}
             <div class="actions">
-              <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit16 /></span>
-              <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy16 /></span>
-              <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <Delete16 /></span>
+              <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit /></span>
+              <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy /></span>
+              <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <TrashCan /></span>
             </div>
           {:else}
             
