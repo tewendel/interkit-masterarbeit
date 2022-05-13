@@ -13,23 +13,29 @@ import './methods.js';
 
 import { Projects } from '../imports/collections.js';
 
+function seedUser(username, password) {
+  if (Meteor.users.find({ username }).count() == 0) {
+    console.log('seeding admin user');
+    Accounts.createUser({
+      username,
+      password,
+    });
+  } else {
+    if (password) {
+      // always override admin password with password from ENV
+      Accounts.setPassword(Accounts.findUserByUsername(username)._id, password, { logout: false })
+    }
+  }
+}
+
 Meteor.startup(() => {
   // code to run on server at startup
 
   // see if there is an admin user, otherwise seed one
-  if (Meteor.users.find({ username: 'admin' }).count() == 0) {
-    console.log('seeding admin user');
-    Accounts.createUser({
-      username: 'admin',
-      password: `${process.env.ADMIN_PASSWORD}`,
-    });
-  } else {
-    if (process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.length && process.env.ADMIN_PASSWORD.length > 0 ) {
-      // always override admin password with password from ENV
-      Accounts.setPassword(Accounts.findUserByUsername("admin")._id, process.env.ADMIN_PASSWORD, { logout: false })
-    }
-  }
+  seedUser('admin', process.env.ADMIN_PASSWORD);
+  seedUser('bundler', process.env.BUNDLER_PASSWORD);
 
+  // reset admin UI
   Projects.update(
     { projectServer: {$exists: true} }, 
     { $set: {"projectServer.actionRequested": null} }, 
