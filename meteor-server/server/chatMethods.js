@@ -1,7 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
-import { duplicateProject, exportProject, makeProjectHistoryEntry } from '../imports/projectUtils.js'
-import { v4 as uuidv4 } from 'uuid';
+import { Messages, Channels, ScheduledEvents } from '../imports/collections.js';
 import * as pushnotifications from '../imports/pushnotifications.js'
 
 Meteor.methods({
@@ -83,5 +81,13 @@ Meteor.methods({
     }
     
   },
+
+  'schedule.message': () => {
+
+  },
+
+  'schedule.moveTo': () => {
+
+  }
   
 });
