@@ -78,6 +78,12 @@ Meteor.publish("user", ({ projectId }) => {
   return cursor
 });
 
+Meteor.publish("user.bundler.status", () => {
+  const cursor = Meteor.users.find({ username: 'bundler' }, { fields: { 'status': true, username: true } });
+  return cursor
+});
+
+
 Meteor.publish("channels", ({projectId}) => {
   let query = {projectId};
   console.log("channels sub with query", query);

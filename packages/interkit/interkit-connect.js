@@ -33,7 +33,7 @@ const setup = async (opts={}, user={}) => {
 
   server.on('connected', async () => {
 
-    console.log("connected to interkit server", user)
+    console.log("connected to interkit server")
 
     if (user.username) {
       if (user.password) {

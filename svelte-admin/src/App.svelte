@@ -5,6 +5,7 @@
   import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
   import { BundleServer } from './BundleServer'
   import Login from './Login.svelte';
+  import SystemStatusBar from './SystemStatusBar.svelte';
 
   import { onMount } from 'svelte'
 
@@ -31,8 +32,12 @@
 
 </script>
 
-<Header company="interkit" platformName={$currentProjectName || "Redaktionssystem"} href="/">
-  <!--HeaderNav>
+<Header 
+  company="interkit" 
+  platformName={$currentProjectName || "Redaktionssystem"} 
+  href="/"
+  >
+  <HeaderNav>
     <HeaderNavItem text="Projekt" />
     <HeaderNavItem href="/" text="Link 2" />
     <HeaderNavItem href="/" text="Link 3" />
@@ -41,7 +46,12 @@
       <HeaderNavItem href="/" text="Link 2" />
       <HeaderNavItem href="/" text="Link 3" />
     </HeaderNavMenu>
-  </HeaderNav-->
+  </HeaderNav>
+  <div class="status">
+    {#if $userId}
+      <SystemStatusBar />
+    {/if}
+  </div>
 </Header>
 
 <!-- set transform: none; to allow modal to be position fixed -->
@@ -54,3 +64,11 @@
   {/if}
 
 </Content>
+
+<style>
+  .status {
+    width: 100%;
+    padding: 1em;
+    text-align: right;
+  }
+</style>

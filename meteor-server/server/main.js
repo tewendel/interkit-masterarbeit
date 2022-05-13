@@ -15,7 +15,7 @@ import { Projects } from '../imports/collections.js';
 
 function seedUser(username, password) {
   if (Meteor.users.find({ username }).count() == 0) {
-    console.log('seeding admin user');
+    console.log('seeding user "' + username + '"');
     Accounts.createUser({
       username,
       password,
@@ -33,6 +33,7 @@ Meteor.startup(() => {
 
   // see if there is an admin user, otherwise seed one
   seedUser('admin', process.env.ADMIN_PASSWORD);
+  // setup bundler user
   seedUser('bundler', process.env.BUNDLER_PASSWORD);
 
   // reset admin UI
