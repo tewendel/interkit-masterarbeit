@@ -69,6 +69,7 @@
                   <Button
                     on:click={()=>{submitChoice(message, key)}}
                     selected={message?.selectedChoiceKey == key}
+                    height="auto"
                     flex="fill"
                   >
                     {message.payload.choice[key]}
