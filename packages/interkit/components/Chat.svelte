@@ -39,7 +39,7 @@
       scrollDown()
       
       // mark all in channel as seen
-      InterkitClient.call("channel.seeAll", {userId, boardId: channel_key});
+      InterkitClient.call("channel.seeAll", {userId, channel_key});
     }
   }
 

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../imports/collections.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
@@ -161,4 +161,14 @@ Meteor.publish("messages.unhandled", ({projectId}) => {
   let messages = Messages.find(query, {sort: {createdAt: -1}});
   // console.log("messages.unhandled count: " + messages.count(), messages.fetch())
   return messages;
+});
+
+// provides unexecuted events sorted by execTime
+Meteor.publish("scheduled_events", ({projectId}) => {
+  let query = {
+    projectId,
+    status: "scheduled"
+  }
+  let events = ScheduledEvents.find(query, {sort: {execTime: -1}});
+  return events;
 });

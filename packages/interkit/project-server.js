@@ -24,6 +24,36 @@ const subscribeUsers = async (server, projectId) => {
   return reactiveUsersCollection 
 }
 
+let scheduledEvents;
+const subscribeScheduledEvents = async (server, projectId) => {
+  const events = server.subscribe("scheduled_events", { projectId });
+  await events.ready();
+  scheduledEvents = server.collection('scheduled_events').reactive();
+}
+
+// this is called regularly and checks if any events need to be processed
+const processEvents = async (server) => {
+
+  // retrieve the events;
+  const events = scheduledEvents.data();
+  const now = new Date();
+  if(events.length) {
+    console.log("scheduled events: ", events.length)
+  }
+  const eventsToProcess = events.filter(e => e.status == "scheduled" && e.execTime.getTime() < now.getTime())
+  if(eventsToProcess.length) {
+    console.log("now processing:", eventsToProcess);
+  }
+  for(let event of eventsToProcess) {
+    // set event status to done
+    await server.call("events.setDone", {_id: event.id})
+
+    // call the method
+    await server.call(event.method, event.payload)    
+  }
+}
+
+
 // updates the boardState of a user on the server
 const updateBoardState = async (server, projectId, userId, boardState) => {
    return await server.call("user.updateUserProjectData", {
@@ -240,6 +270,11 @@ const setupMessageHandling = async ({
     //console.log("users collection onChange")
     await processUserArrivals(server, projectId, projectApi, handlers, users, boards, boardData);
   })
+
+  // subscribe to scheduled events and process regularly
+  await subscribeScheduledEvents(server, projectId);
+  await processEvents(server);
+  setInterval(()=>{processEvents(server)}, 2000);
 }
 
 
