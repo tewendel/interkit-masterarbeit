@@ -308,6 +308,11 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   }
   //console.log("getSub", col, pub, pubArgs)
 
+  if (!server) {
+    console.warn("server not initialised, aborting getSub");
+    return
+  }
+
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
   await sub.sub.ready();
