@@ -6,6 +6,7 @@
   
   let sub = null;
   let bundlerIsOnline = null;
+  let connected = false;
 
   onMount(async ()=>{
     // subscribe to the status of the bundler
@@ -19,13 +20,23 @@
     if (sub) {
       sub.data.subscribe((data)=>{
         bundlerIsOnline = data?.status?.online;
-        console.log('status', status);
       })
     }
-  })  
+  })
+
+  InterkitClient.connected.subscribe( c =>{
+    connected = c;
+  })
 </script>
 
 <span>
+  
+  {#if connected}
+    <Checkmark title="Connected to server" />
+  {:else}
+    <Warning title="Disconnected from server" /> Server is offline
+  {/if}
+  &nbsp;
   {#if bundlerIsOnline}
     <Checkmark title="Bundler is online" />
   {:else}

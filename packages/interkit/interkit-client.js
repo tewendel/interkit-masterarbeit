@@ -879,7 +879,7 @@ const InterkitClient = {
   userId,
   pushnotificationRegistrationToken,
   config,
-  connected,
+  connected, // svelte store
   projectId,
   userProjectDataStore,
   connectionIssue,
