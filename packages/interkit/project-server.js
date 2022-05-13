@@ -37,9 +37,13 @@ const processEvents = async (server) => {
   // retrieve the events;
   const events = scheduledEvents.data();
   const now = new Date();
-  console.log("processEvents", events);
+  if(events.length) {
+    console.log("scheduled events: ", events.length)
+  }
   const eventsToProcess = events.filter(e => e.status == "scheduled" && e.execTime.getTime() < now.getTime())
-  console.log("found event to process now", eventsToProcess);
+  if(eventsToProcess.length) {
+    console.log("now processing:", eventsToProcess);
+  }
   for(let event of eventsToProcess) {
     // set event status to done
     await server.call("events.setDone", {_id: event.id})
