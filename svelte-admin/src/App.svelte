@@ -37,7 +37,7 @@
   platformName={$currentProjectName || "Redaktionssystem"} 
   href="/"
   >
-  <HeaderNav>
+  <!--HeaderNav>
     <HeaderNavItem text="Projekt" />
     <HeaderNavItem href="/" text="Link 2" />
     <HeaderNavItem href="/" text="Link 3" />
@@ -46,7 +46,7 @@
       <HeaderNavItem href="/" text="Link 2" />
       <HeaderNavItem href="/" text="Link 3" />
     </HeaderNavMenu>
-  </HeaderNav>
+  </HeaderNav-->
   <div class="status">
     {#if $userId}
       <SystemStatusBar />
