@@ -37,6 +37,10 @@ if(msg.payload.key == "a") {
   // do something
 }
 
+// delays (this works for sentText, sendChoice, sendImage and moveTo)
+api.sendText("hello", {delay: 10}) // send the message 10 seconds later
+api.sendText("hello", {delay: {hours: 1, minutes: 30}}) // 1 hour, 30 minutes later
+
 // forward a message to other users currently in this node, uses user variable "name" as label
 api.echo(msg)
 

@@ -1,7 +1,19 @@
+const callWithDelay = (server, method, methodParams, options) => {
+  if(options?.delay) {
+    server.call('events.schedule', {
+      projectId: methodParams.projectId,
+      method,
+      delay: options.delay, 
+      payload: methodParams 
+    })
+  } else {
+    server.call(method, methodParams)
+  }
+}
+
 const sendText = function(text, options) {
     const {message, server, projectId} = this
-    //console.log(this)
-    server.call('message.send', {
+    const methodParams = {
       projectId, 
       channel_key: message.channel_key, 
       //sender, 
@@ -12,14 +24,15 @@ const sendText = function(text, options) {
         text,
         options
       }
-    })
+    }
+    callWithDelay(server, "message.send", methodParams, options)
 }
 const send = sendText;
 
 const sendImage = function (mediafileKey, options) {
   const { message, server, projectId } = this
   console.log('sendImage', mediafileKey)
-  server.call('message.send', {
+  const methodParams = {
     projectId,
     channel_key: message.channel_key,
     //sender,
@@ -31,13 +44,14 @@ const sendImage = function (mediafileKey, options) {
       mediafileKey,
       options
     }
-  })
+  }
+  callWithDelay(server, "message.send", methodParams, options)
 }
 
 const sendChoice = function(choice, options) {
   const {message, server, projectId} = this
   //console.log(this)
-  server.call('message.send', {
+  const methodParams = {
     projectId, 
     channel_key: message.channel_key, 
     //sender, 
@@ -48,18 +62,19 @@ const sendChoice = function(choice, options) {
       choice,
       options
     }
-  })
+  }
+  callWithDelay(server, "message.send", methodParams, options)
 }
 
-const moveTo = function(nodeId) { 
+const moveTo = function(nodeId, options) { 
   const {server, projectId, boardId, userId} = this
-
-  server.call('user.moveTo', {
+  const methodParams = {
     projectId,
     userId,
     boardId,
     nodeId
-  })
+  }
+  callWithDelay(server, "user.moveTo", methodParams, options)
 }
 
 const getUserVar = async function(varName) {

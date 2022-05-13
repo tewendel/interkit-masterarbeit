@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages, Channels, ScheduledEvents } from '../imports/collections.js';
+import { add } from 'date-fns'
 import * as pushnotifications from '../imports/pushnotifications.js'
 
 Meteor.methods({
@@ -61,7 +62,8 @@ Meteor.methods({
       createdAt: new Date()
     })
   },
-
+  
+  // this actually sends the message right now
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     const userId = Meteor.userId()
     console.log('message.send', { payload, channel_key, recipients, sender, userId })
@@ -81,13 +83,31 @@ Meteor.methods({
     }
     
   },
-
-  'schedule.message': () => {
-
+  
+  // schedules an event for later
+  // execution is managed in project-server.js
+  // delay is {minutes: 3, seconds: 30} from now
+  // payload depends on type "message" or "moveTo" - see those methods
+  'events.schedule': ({projectId, method, delay, payload}) => {
+    let execTime;
+    if(typeof delay == "object") execTime = add(new Date(), delay)
+    if(typeof delay == "number") execTime = add(new Date(), {seconds: delay})
+    if(!execTime) {
+      console.log("invalid delay, not scheduling event")
+      return;
+    }
+    console.log("events.schedule", delay, execTime)
+    ScheduledEvents.insert({
+      projectId,
+      method,
+      execTime,
+      status: "scheduled",
+      payload
+    })
   },
 
-  'schedule.moveTo': () => {
-
+  'events.setDone': ({_id}) => {
+    ScheduledEvents.update({_id}, {$set: {status: "done"}})
   }
-  
+
 });

@@ -84,8 +84,8 @@ export const ScheduledEvents = new Mongo.Collection('scheduled_events');
 
 /*
 - projectId
-- type // "message", "moveTo"
+- method // "message.send", "user.moveTo"
 - status // "scheduled", "done"
-- time // execution time
+- execTime // execution time
 - payload // object, depends on type
 */
