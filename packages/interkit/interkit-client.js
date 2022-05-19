@@ -812,11 +812,22 @@ const loadElementPropertiesFromUser = async () => {
 
 const usersMoveTo = async ({ userIds, projectId, boardId, nodeId }) => {
   // TODO this is stupidly sequentialized. better implement users.moveTo
+  const successful = []
+  const errored = []
   for (const userId of userIds) {
-    await InterkitClient.call(
+    const usersMovedCount = await InterkitClient.call(
       'user.moveTo',
       { projectId, userId, boardId, nodeId }
     )
+    if (usersMovedCount === 1) {
+      successful.push(userId)
+    } else {
+      errored.push(userId)
+    }
+  }
+  return {
+    successful,
+    errored
   }
 }
 

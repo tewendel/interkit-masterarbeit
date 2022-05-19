@@ -25,6 +25,9 @@
 
   let previewUserId
 
+  let nodeEditorBoardId
+  let nodeEditorNodeId
+
   window.addEventListener('message', evt => {
     console.log('received postMessage from iframe', evt, evt.data)
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
@@ -59,13 +62,22 @@
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
           <TabContent>
-            <NodeEditor {projectId} {previewUserId} />
+            <NodeEditor
+              on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
+              {projectId}
+              {previewUserId}
+              />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
           </TabContent>
           <TabContent>
-            <UsersManager {projectId} {previewUserId} />
+            <UsersManager
+              {projectId}
+              {previewUserId}
+              moveToBoardId={nodeEditorBoardId}
+              moveToNodeId={nodeEditorNodeId}
+              />
           </TabContent>
           <TabContent>
             <RepositoryTab {projectId} {currentProject} open={selected === 3}/>

@@ -36,8 +36,9 @@
   let quickMsgResult = ''
 
   let openMoveTo = false
-  let batchMoveToBoardId = ''
-  let batchMoveToNodeId = ''
+  export let moveToBoardId = ''
+  export let moveToNodeId = ''
+  let moveToResult = ''
 
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE')
 
@@ -149,12 +150,17 @@
   }
 
   const batchMoveTo = async () => {
-    await InterkitClient.usersMoveTo({
+    const result = await InterkitClient.usersMoveTo({
       userIds: usersSelection,
       projectId,
-      boardId: batchMoveToBoardId,
-      nodeId: batchMoveToNodeId
+      boardId: moveToBoardId,
+      nodeId: moveToNodeId
     })
+    console.log('batchMoveTo result', result)
+    moveToResult  = `sucessfully moved ${result.successful.length} users, ${result.errored.length} errors`
+    if (result.errored.length) {
+      moveToResult += '. error ids: ' + result.errored.join(' ')
+    }
   }
 
   const quickMsgSend = async () => {
@@ -242,7 +248,7 @@
     {#if usersSelection.length}
       <ButtonSet>
         <Button kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
-        <Button icon={Movement} on:click={() => { openMoveTo = true }}>moveTo</Button>
+        <Button icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
         <Button icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
         <Button icon={TrashCan} on:click={batchDelete}>Delete</Button>
       </ButtonSet>
@@ -270,15 +276,22 @@
 <Modal
   bind:open={openMoveTo}
   modalHeading="moveTo"
-  primaryButtonText="move"
-  secondaryButtonText="Cancel"
+  primaryButtonText={moveToResult?'move again':'move'}
+  secondaryButtonText={moveToResult?'done':'cancel'}
   on:click:button--secondary={() => { openMoveTo = false }}
   on:submit={() => { batchMoveTo() }}
   >
-  <div>…to {usersSelection.join(', ')}</div>
+  <p>move users <b>{usersSelection.join(', ')}</b> to…</p>
   <!-- TODO make these selects -->
-  <label>boardId <input bind:value={batchMoveToBoardId} /></label>
-  <label>nodeId <input bind:value={batchMoveToNodeId} /><label>
+  <p>
+    <label>boardId <input bind:value={moveToBoardId} /></label>
+    <label>nodeId <input bind:value={moveToNodeId} /><label>
+  </p>
+  <p>hint: select a node in the chat tab to auto-fill these inputs</p>
+  {#if moveToResult}
+    <hr/>
+    <p>{moveToResult}</p>
+  {/if}
 </Modal>
 
 <style>

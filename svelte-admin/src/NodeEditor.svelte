@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { get } from 'svelte/store'
 
   import { InterkitClient } from 'interkit'
@@ -15,6 +15,8 @@
   import CodeEditorExporty from './CodeEditorExporty.svelte'
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
   import ChannelEditor from './ChannelEditor.svelte'
+
+  const dispatch = createEventDispatcher()
   
   const useCodeMirror = true
   let editorMode = 2
@@ -125,6 +127,8 @@
   }
 
   $: currentBoardId, (() => { editNodeId = null })()
+
+  $: currentBoardId, editNodeId, (() => { dispatch('nodeselected', { boardId: currentBoardId, nodeId: editNodeId }) })()
 
   let editorContents
   $: currentBoardId, editNodeId, board, updateEditorContents()
@@ -431,14 +435,15 @@
       .finally(() => { loadBoard(boardId) })
   }
 
-  const moveTo = () => {
+  const moveTo = async () => {
     console.log("moveTo", editNodeId, previewUserId, currentBoardId)
-    InterkitClient.call("user.moveTo", {
+    const usersMovedCount = InterkitClient.call("user.moveTo", {
       projectId,
       userId: previewUserId,
       boardId: currentBoardId,
       nodeId: editNodeId
     })
+    console.log(`moveTo: moved ${usersMovedCount} users`)
   }
 
   let syntaxCheckMessage = ''

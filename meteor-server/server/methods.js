@@ -109,11 +109,12 @@ const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKe
 
 const updateUserProjectData = async (userId, projectId, key, value) => {
   // write projectData updates to user
-  await Meteor.users.update(userId, {
+  const usersModifiedCount = await Meteor.users.update(userId, {
     $set: {
-      [`projectUserData.${projectId}.${key}`] : value 
+      [`projectUserData.${projectId}.${key}`] : value
     }
-  })  
+  })
+  return usersModifiedCount
 }
 
 const getUserProjectData = (userId, projectId) => {
@@ -698,10 +699,10 @@ Meteor.methods({
     console.log("user.moveTo", projectId, userId, boardId, nodeId)
 
     // get user
-    const user = Meteor.users.findOne(userId)
+    const user = await Meteor.users.findOne(userId)
     if(!user) {
       console.log("user.moveTo - user not found")
-      return;
+      return false
     }  
     console.log(user);  
 
@@ -720,7 +721,8 @@ Meteor.methods({
     }}
     console.log("boardState", boardState);
 
-    await updateUserProjectData(userId, projectId, "boardState", boardState)
+    const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", boardState)
+    return usersUpdatedCount
   }
   
 });

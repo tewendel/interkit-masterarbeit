@@ -8,6 +8,9 @@
   export let projectId
   export let previewUserId
 
+  export let moveToBoardId
+  export let moveToNodeId
+
   let username
   let email
   let password
@@ -40,7 +43,13 @@
 
 </script>
 
-<UsersList users={usersArray} {projectId} {previewUserId} />
+<UsersList
+  users={usersArray}
+  {projectId}
+  {previewUserId}
+  {moveToBoardId}
+  {moveToNodeId}
+  />
 
 <br><br>
 
