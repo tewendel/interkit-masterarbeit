@@ -1,10 +1,13 @@
 <script>
+  import { setContext } from 'svelte';
   import { InterkitClient } from '../'
   import { getContext } from 'svelte';
   import { TABS } from './BottomMenu.svelte';
 
   const tab = {};
   const { registerTab, selectTab, selectedTab } = getContext(TABS);
+
+  setContext('iconHeight', '20px');
 
   registerTab(tab);
 
@@ -35,9 +38,15 @@
     on:click="{() => selectTabStore(tab)}"
   >
   {#if $selectedTab === tab}
-    <slot name="selectedIcon"/>
+    {#if $$slots.selectedIcon}
+      <span class="icon icon-selected">
+        <slot name="selectedIcon" />
+      </span>
+    {/if}
   {:else}
-    <slot name="defaultIcon"/>
+    <span class="icon">
+      <slot name="defaultIcon"/>
+    </span>
   {/if}
   <span class="BottomMenuButton__Text text">
     {label}
@@ -54,7 +63,7 @@
     justify-content: center;
     /*height: 3em;*/
     font-family: var(--font-family);
-    background-color: var(--color-background-highlight);
+    background-color: var(--color-background);
     color: var(--color-text);
     outline: none;
     border-style: solid;
@@ -62,9 +71,22 @@
     border-color: var(--border-color);
   }
 
-  .button:not(:first-child) {
-    border-left-width: var(--border-width);
+  .button .icon {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--border-width);
+    border-radius: var(--border-radius-button);
+    padding: var(--distance-xs) var(--distance-m);
   }
+
+  .button .icon-selected {
+    border-color: var(--color-border);
+    background-color: var(--color-background-highlight);
+  }
+
+  /*.button:not(:first-child) {
+    border-left-width: var(--border-width);
+  }*/
 
   .button:active {
     filter: brightness(90%);
@@ -72,6 +94,7 @@
 
   .button .text {
     font-size: var(--font-size-buttons);
+    font: var(--font-caption);
   }
 
   /*
