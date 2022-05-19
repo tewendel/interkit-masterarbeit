@@ -67,7 +67,7 @@
 
 <style>
   .status {
-    width: 100%;
+    flex: 1;
     padding: 1em;
     text-align: right;
   }
