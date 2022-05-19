@@ -8,7 +8,10 @@ let server = null
 
 const setup = async () => {
 
-  server = await serverSetup()
+  server = await serverSetup({},{
+    username: "bundler",
+    password: process.env.BUNDLER_PASSWORD
+  })
   
   let projectsSub = server.subscribe("projects");
 
