@@ -48,6 +48,7 @@
     username: true,
     id: true,
     createdAt: true,
+    online: true,
     boards: true,
     userToken: false,
     pushToken: false
@@ -73,6 +74,11 @@
     ...(showCol.createdAt ? [{
       key: "createdAt",
       value: "createdAt",
+      sort: trivialSort
+    }] : []),
+    ...(showCol.online ? [{
+      key: "status.online",
+      value: "online",
       sort: trivialSort
     }] : []),
     ...(showCol.boards ? [{
@@ -232,6 +238,8 @@
           {/if}
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
+        {:else if cell.key === 'status.online'}
+          <span title={(cell.value ? "online" : "offline")} class="cell__1line">{ (cell.value ? "online" : "-") }</span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
