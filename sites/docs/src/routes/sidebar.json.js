@@ -30,6 +30,10 @@ export async function get({ params }) {
       title: "Components",
       items: [
         {
+          title: "Button",
+          path: "/components/Button"
+        },
+        {
           title: "MapSimple",
           path: "/components/MapSimple"
         },
