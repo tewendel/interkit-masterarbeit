@@ -225,7 +225,8 @@ Meteor.methods({
     }  
     console.log(user);  
 
-    // TODO: move this logic to the project server!
+    // check if node exists
+    
 
     // get boardState
     let boardState = user?.projectUserData[projectId]?.boardState;

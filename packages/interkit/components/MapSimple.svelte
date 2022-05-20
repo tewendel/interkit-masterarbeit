@@ -33,6 +33,8 @@
   export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
   export let style // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
   export let apiKey 
+
+  export let closeButtonLabel = "Schließen"
   
   export let clickTrigger;
 
@@ -177,12 +179,13 @@
         class:active={selectedElement ? true : false}
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
+        <div class="marker_popup_close">
+          <Button type="secondary" on:click={mapClick}>
+            <Icon type="close" />
+            <span>{closeButtonLabel}</span>
+          </Button>
+        </div>
         <div class="marker_popup_background">
-          <div class="marker_popup_close">
-            <Button class="marker_popup_close" on:click={mapClick}>
-              <Icon type="close" />
-            </Button>
-          </div>
           {#if selectedElement}
             <slot name="element" element={{...selectedElement, size: "m"}}></slot>
           {/if}
@@ -263,31 +266,22 @@
 
   }
 
+  .marker_popup_close {
+    position: absolute;
+    top: calc(-40px - var(--distance-s));
+    z-index: 10;
+  }
+
   .marker_popup_background {
     background-color: #fff;
     position: relative;
     border-radius: var(--border-radius);
-    border: 1px solid black;
+    border: 1px solid lightgray;
     overflow: hidden;
   }
 
   .marker_popup.active {
     display: block; 
-  }
-
-  .marker_popup_close {
-    position: absolute;
-    top: var(--distance-m);
-    right: var(--distance-m);
-    z-index: 10;
-  }
-
-  .marker_popup_close :global(.Button) {
-    border: none;
-    padding: 0;
-    width: calc(var(--distance-s) * 3);
-    height: calc(var(--distance-s) * 3);
-    filter: invert(1); /* TODO provide proper svg */
   }
 
   .button-bar-container {

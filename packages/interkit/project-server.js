@@ -1,5 +1,7 @@
 import { lib as boardNodeUtil } from './project-boards-nodes.js'
 
+let boardData;
+
 const subscribeMessages = async (server, projectId) => {
   let messagesSub = server.subscribe("messages.unhandled", { projectId });
   await messagesSub.ready();
@@ -142,6 +144,15 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
           let nodeId = updatedBoardState[boardId].nodeId;
           
           console.log(`user ${user.id} arriving in node ${nodeId} on board ${boardId}`)
+
+          // check if node exists
+          const nodeIds = boardData[boardId].nodes.map(n => n.id)
+          // console.log("checking if node exists in", nodeIds);
+          if(!nodeIds.includes(nodeId)) {
+            console.log("warning: moving user into non-existant node, movig to starting node", boardData[boardId].startId)
+            nodeId = boardData[boardId].startId;
+            await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, nodeId, "arrived")
+          }
           
           const api = {
             ...projectApi, 
@@ -186,7 +197,7 @@ const setupMessageHandling = async ({
   const boards = await boardNodeUtil.boards.list("./handlers");
   // console.log("project server found boards: ", boards);
 
-  const boardData = {};
+  boardData = {};
   for(let board of boards) {
     boardData[board] = await boardNodeUtil.boards.readFromProject(projectId, board)
   }
@@ -234,7 +245,7 @@ const setupMessageHandling = async ({
       if(currentNodeId) {
 
         let handlerName = boardId + "_" + currentNodeId
-        if (handlers[handlerName].onMessage) {
+        if (handlers[handlerName]?.onMessage) {
           console.log(`handling message ${message.id} with ${handlerName}`)
           // allow parallel execution... should handler be required to be synchronous and return something?
           handlers[handlerName].onMessage(message, api)
