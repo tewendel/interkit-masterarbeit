@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, tick } from "svelte"
+  import { onMount, onDestroy, tick } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Message from './Chat/Message.svelte';
@@ -11,6 +11,7 @@
 
   const reportsChannelKey = 'REPORTS'
 
+  let sub;
   let messageStore;
   let userId;
 
@@ -24,12 +25,20 @@
 
     console.log("getting sub with channel", channel_key)
 
-    let sub = await InterkitClient.getMessageSub(channel_key);
+    sub = await InterkitClient.getMessageSub(channel_key);
     messageStore = sub.data
 
     userId = get(InterkitClient.userId)
     console.log("userId", userId)
 
+  })
+
+  onDestroy(async () => {
+    /*
+    // this creates problems on resubscription
+    if(sub)
+      await sub.sub.stop();
+    */
   })
 
   $: {
