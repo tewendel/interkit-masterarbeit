@@ -2,7 +2,7 @@
   import "carbon-components-svelte/css/g10.css"; // all g10 g100 g90 white
 
   import Router, { querystring } from 'svelte-spa-router'
-  import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
+  import ProjectManager, { currentProjectName, currentProjectServerStatus } from './ProjectManager.svelte'
   import { BundleServer } from './BundleServer'
   import Login from './Login.svelte';
   import SystemStatusBar from './SystemStatusBar.svelte';
@@ -49,7 +49,7 @@
   </HeaderNav-->
   <div class="status">
     {#if $userId}
-      <SystemStatusBar />
+      <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
     {/if}
   </div>
 </Header>
