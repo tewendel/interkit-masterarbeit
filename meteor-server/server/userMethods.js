@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
+import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
 
 const updateUserProjectData = async (userId, projectId, key, value) => {
   // write projectData updates to user
@@ -73,6 +74,8 @@ Meteor.methods({
     const userId = Accounts.createUser({
       username,
     })
+
+    addUsersToRoles(userId, ['projectuser'])
 
     const projectUserData = {
       [projectId]: {

@@ -9,6 +9,8 @@ require('dotenv').config( {
 
 import '../imports/collections.js';
 import './publications.js';
+import './userRolesSetup.js';
+import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
 
 import './projectMethods.js';
 import './sheetMethods.js';
@@ -17,7 +19,7 @@ import './chatMethods.js';
 
 import { Projects } from '../imports/collections.js';
 
-function seedUser(username, password) {
+function seedUser(username, password, role) {
   if (Meteor.users.find({ username }).count() == 0) {
     console.log('seeding user "' + username + '"');
     Accounts.createUser({
@@ -30,15 +32,21 @@ function seedUser(username, password) {
       Accounts.setPassword(Accounts.findUserByUsername(username)._id, password, { logout: false })
     }
   }
+  if (role) {
+    let user = Accounts.findUserByUsername(username)
+    if (user) {
+      addUsersToRoles(user, role);
+    }
+  }
 }
 
 Meteor.startup(() => {
   // code to run on server at startup
 
   // see if there is an admin user, otherwise seed one
-  seedUser('admin', process.env.ADMIN_PASSWORD);
+  seedUser('admin', process.env.ADMIN_PASSWORD, 'admin');
   // setup bundler user
-  seedUser('bundler', process.env.BUNDLER_PASSWORD);
+  seedUser('bundler', process.env.BUNDLER_PASSWORD, 'bundler');
 
   // reset admin UI
   Projects.update(

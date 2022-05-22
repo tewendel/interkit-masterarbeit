@@ -39,6 +39,17 @@
   let batchMoveToBoardId = ''
   let batchMoveToNodeId = ''
 
+  let roleAssignmentStore = null
+
+  onMount(async () => {
+    console.log("sub role-assignment")
+    let sub = await InterkitClient.getSub("role-assignment", "roleAssignment")
+    console.log(sub)
+    roleAssignmentStore = sub.data
+  })
+
+  $: if (roleAssignmentStore) console.log($roleAssignmentStore)
+
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE')
 
   const trivialSort = (a, b) => a < b ? -1 : 1
@@ -46,12 +57,13 @@
   let showCol = {
     userIcon: true,
     username: true,
+    roles: false,
     id: true,
     createdAt: true,
     online: true,
     boards: true,
     userToken: false,
-    pushToken: false
+    pushToken: false,
   }
 
   let headers
@@ -66,6 +78,11 @@
       value: "username",
       sort: trivialSort
     }] : []),
+    ...(showCol.roles ? [{
+      key: "roles",
+      value: "roles",
+      sort: trivialSort
+    }] : []),    
     ...(showCol.id ? [{
       key: "id",
       value: "id",
@@ -121,7 +138,13 @@
           userToken: user?.projectUserData?.[projectId]?.userToken,
           lastHeartbeat: user?.projectUserData?.[projectId]?.lastHeartbeat,
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
-          boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState)
+          boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState),
+          roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
+            if (roleAssignment.user._id === user.id) {
+              acc.push(roleAssignment.role._id)
+            }
+            return acc
+          }, []).join(", ")
         }
     })
     : []
