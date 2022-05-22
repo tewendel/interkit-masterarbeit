@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../imports/collections.js';
+import {userIsInRoles} from '../imports/userRoles.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
@@ -178,3 +179,18 @@ Meteor.publish("scheduled_events", ({projectId}) => {
   let events = ScheduledEvents.find(query, {sort: {execTime: -1}});
   return events;
 });
+
+// publish roleAssignments
+Meteor.publish("roleAssignment", function () {
+  if (this.userId) {
+    if (userIsInRoles(this.userId, ['admin'])) {
+      // console.log("publishing ALL roleAssignments to admin user ", this.userId)
+      return Meteor.roleAssignment.find({});
+    } else {
+      // console.log("publishing LIMITED roleAssignments to user ", this.userId)
+      return Meteor.roleAssignment.find({ 'user._id': this.userId });
+    }
+  } else {
+    this.ready()
+  }
+})
