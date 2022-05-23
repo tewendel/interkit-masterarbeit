@@ -116,6 +116,7 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
   //console.log("processUserArrivals", users);
 
   for(let user of users) {
+    if (!user?.projectUserData) continue; // skip user that don't have project, especially the projectserver login user
     let boardState = user?.projectUserData[projectId]?.boardState;
     
     //console.log("boardState", user, boardState)
@@ -257,7 +258,7 @@ const setupMessageHandling = async ({
           console.warn(`handler ${handlerName} has no onMessage method`)
         }      
       } else {
-         console.log("user does not have a current node, message not handled!")
+        console.log("user does not have a current node, message not handled!")
       }
 
       // save handled state to server so it is not handled again

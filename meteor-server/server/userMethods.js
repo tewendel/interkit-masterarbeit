@@ -1,7 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random'
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
 import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
+import { seedUser } from '../imports/userUtils.js';
+
+let projectServerPasswords = {}
 
 const updateUserProjectData = async (userId, projectId, key, value) => {
   // write projectData updates to user
@@ -245,6 +249,18 @@ Meteor.methods({
     console.log("boardState", boardState);
 
     await updateUserProjectData(userId, projectId, "boardState", boardState)
+  },
+
+  'user.registerProjectServerUser': async ({projectId}) => {
+    const username = 'projectserver_'+projectId
+    let password = projectServerPasswords[projectId] || Random.secret();
+    // TODO save this in project collection and expose only to admin and author
+    projectServerPasswords[projectId] = password;
+    seedUser('projectserver_'+projectId, password, 'projectserver')
+    return {
+      username,
+      password
+    }
   }
   
 });
