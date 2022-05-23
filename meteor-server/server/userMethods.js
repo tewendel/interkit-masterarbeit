@@ -228,9 +228,6 @@ Meteor.methods({
     }  
     console.log(user);  
 
-    // check if node exists
-    
-
     // get boardState
     let boardState = user?.projectUserData[projectId]?.boardState;
     if(!boardState) {
