@@ -8,8 +8,8 @@ import interkit_server from "./interkit_server.mjs"
 let servers = []
 
 // react to change in projects
-function updateProjectServers(projects) {
-  ensureProjectServers(projects)
+async function updateProjectServers(projects) {
+  await ensureProjectServers(projects)
   // check actions
   for (let project of projects) {
     const action = project?.projectServer?.actionRequested
@@ -47,7 +47,7 @@ async function ensureProjectServers(projects) {
           const result = await interkit_server.call("project.projectServer.init", { projectId })
           console.log(result)
           // setup & start project server
-          startServer(projectId)
+          // startServer(projectId) <-- will get trigeered by ensureProjectServers on the next run (NOTE: may crash if there is another change, needs improvements)
         }
       }
     }
