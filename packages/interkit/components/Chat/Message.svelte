@@ -8,6 +8,7 @@
 
   const dispatch = createEventDispatcher();
 
+
   export let message
   export let preview = false
   export let submitChoice = () => {}
@@ -16,6 +17,16 @@
   export let previousMessage = null
 
   let showOptions = false
+
+  let choiceSubmitted = false;
+  const submitChoiceLocal = (message, key) => {
+    if(choiceSubmitted) {
+      console.log("prevented double submission")
+      return;
+    }
+    choiceSubmitted = true; 
+    submitChoice(message, key);
+  }
 
   const startMessageOptionDialog = () => {
     if (window.confirm('Möchtest du diese Nachricht oder diesen Benutzer wegen unangemessener Inhalte an das Moderationsteam melden? Wir kümmern uns innerhalb von 24 Stunden darum.') === true) {
@@ -67,7 +78,7 @@
                   class="choice-option" 
                 >
                   <Button
-                    on:click={()=>{submitChoice(message, key)}}
+                    on:click={()=>{submitChoiceLocal(message, key)}}
                     selected={message?.selectedChoiceKey == key}
                     height="auto"
                     flex="fill"
