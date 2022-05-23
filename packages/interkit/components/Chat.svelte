@@ -52,6 +52,25 @@
     }
   }
 
+  // initialize chat interface and watch user data for changes
+  const defaultChatInterface = {
+    text: true
+  }
+  let chatInterface = defaultChatInterface;
+  const updateChatInterface = (config) => {
+    if(!config) {
+      chatInterface = defaultChatInterface
+    } else {
+      chatInterface = config
+    }
+    console.log("chatInterface updated", chatInterface)
+  }
+  const userProjectData = InterkitClient.userProjectDataStore;
+  $: {
+    console.log("userProjectDataStore updated", $userProjectData)
+    updateChatInterface($userProjectData?.boardState?.[channel_key]?.interfaceConfig)
+  }
+
   let messagesScrollContainer
 
   const scrollDown = async () => {
@@ -123,9 +142,11 @@
       </div>
     {/if}
   </div>
-  <div class="input">
-    <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
-  </div>
+  {#if chatInterface.text}
+    <div class="input">
+      <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
+    </div>
+  {/if}
 </div>
 
 <style>

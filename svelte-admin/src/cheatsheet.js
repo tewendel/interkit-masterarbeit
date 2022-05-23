@@ -59,7 +59,9 @@ await api.addRow("elements", {title: "hello"})
 // update a row
 await api.updateRow("elements", "rowKey", {title: "bye"})
 
-
+// hide the interface for sending messages (persists for each board)
+api.setInterface({text: false})
+api.setInterface({text: true}) // turn is back on 
 
 
 
