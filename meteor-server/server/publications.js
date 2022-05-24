@@ -151,10 +151,11 @@ Meteor.publish("messages.unseen", ({projectId, channel_key, userId}) => {
     $or: [{ sender: userId }, { recipients: userId }]
   }
   let options = {
-    sort: {createdAt: -1},
+    //sort: {createdAt: -1},
+    //fields: {_id:1, channel_key: 1, seen: 1}
   }
   let messages = Messages.find(query, options);
-  //console.log(messages.fetch())
+  //console.log("messages.unseen", messages.fetch())
   return messages;
 });
 
