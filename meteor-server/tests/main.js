@@ -1,4 +1,6 @@
 import assert from "assert";
+//import "./messages.js"
+import "./messages-publication-query.js"
 
 describe("meteor-svelte-test", function () {
   it("package.json has correct name", async function () {

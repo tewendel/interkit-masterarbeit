@@ -1,6 +1,7 @@
 stages:
   - build_images
   - publish
+  - test
   - deploy_demo
 
 variables:
@@ -139,3 +140,9 @@ publish-package:
     paths:
       - interkit.tar.gz
 
+test-server:
+  image: geoffreybooth/meteor-base:2.5.6
+  stage: test
+  script:
+    - meteor npm install
+    - meteor npm test
