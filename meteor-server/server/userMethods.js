@@ -24,6 +24,22 @@ const getUserProjectData = (userId, projectId) => {
   return data;
 }
 
+const getBoardState = (projectId, userId, boardId) => {
+  // get user
+  const user = Meteor.users.findOne(userId)
+  if(!user) {
+    console.log("getBoardState - user not found")
+    return;
+  }  
+  // get boardState
+  let boardState = user?.projectUserData[projectId]?.boardState;
+  if(!boardState?.[boardId]) { 
+    console.log("boardState not found for board", boardId, boardState)
+    return;
+  }
+  return boardState;
+}
+
 Meteor.methods({
 
   // create a front end user for a project
@@ -223,32 +239,21 @@ Meteor.methods({
 
   'user.moveTo': async ({projectId, userId, boardId, nodeId}) => {
     console.log("user.moveTo", projectId, userId, boardId, nodeId)
-
-    // get user
-    const user = Meteor.users.findOne(userId)
-    if(!user) {
-      console.log("user.moveTo - user not found")
-      return;
-    }  
-    console.log(user);  
-
-    // check if node exists
-    
-
-    // get boardState
-    let boardState = user?.projectUserData[projectId]?.boardState;
-    if(!boardState) {
-      boardState = {}
+    let boardState = getBoardState(projectId, userId, boardId);
+    if(boardState) {
+      boardState[boardId].status = "arriving"
+      boardState[boardId].nodeId = nodeId
+      console.log("boardState", boardState);
+      await updateUserProjectData(userId, projectId, "boardState", boardState)
     }
+  },
 
-    // modify boardState
-    boardState = {...boardState, [boardId]: {
-      status: "arriving",
-      nodeId
-    }}
-    console.log("boardState", boardState);
-
-    await updateUserProjectData(userId, projectId, "boardState", boardState)
+  'user.setBoardInterface': async ({interfaceConfig, projectId, userId, boardId}) => {
+    let boardState = getBoardState(projectId, userId, boardId);
+    if(boardState) {
+      boardState[boardId].interfaceConfig = interfaceConfig;
+      await updateUserProjectData(userId, projectId, "boardState", boardState)
+    }
   },
 
   'user.registerProjectServerUser': async ({projectId}) => {
@@ -261,6 +266,6 @@ Meteor.methods({
       username,
       password
     }
-  }
-  
+  },
+
 });

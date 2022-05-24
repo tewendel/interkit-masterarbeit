@@ -128,6 +128,15 @@ const updateRow = async function(sheetKey, rowKey, values) {
   await server.call('row.updateValues', {projectId, rowKey, values});
 }
 
+
+// set interface for this board
+const setInterface = async function(interfaceConfig) {
+  const {server, projectId, boardId, userId} = this
+  await server.call('user.setBoardInterface', {interfaceConfig, projectId, userId, boardId})
+}
+
+
+
 export default {
   send,
   sendText,
@@ -139,5 +148,6 @@ export default {
   getUserVar,
   getRows,
   addRow,
-  updateRow
+  updateRow,
+  setInterface
 }

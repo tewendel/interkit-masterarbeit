@@ -111,10 +111,30 @@ const checkCurrentNode = async (server, userId, projectId, boardId, boardData) =
   }
 }
 
-// goes over users and boards and processes any pending arrivals
-const processUserArrivals = async (server, projectId, projectApi, handlers, users, boards, boardData) => {
-  //console.log("processUserArrivals", users);
+// we need to make sure this function cannot be called multiple times at almost the same time 
+let processingQueue = [];
+let processingQueueRunning = false;
+const processUserArrivals = async (server, projectId, projectApi, handlers, users, boards, boardData) => {  
+  processingQueue.push({
+    server, projectId, projectApi, handlers, users, boards, boardData      
+  })
+  await executeQueue();
+}
 
+const executeQueue = async () => {
+  if(!processingQueueRunning && processingQueue.length) {
+    processingQueueRunning = true;
+    await doProcessUserArrivals(processingQueue[0]);
+    processingQueue.shift();
+    processingQueueRunning = false;
+    await executeQueue();
+  }
+}
+
+// goes over users and boards and processes any pending arrivals
+const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, users, boards, boardData}) => {  
+  //console.log("processUserArrivals", users);
+  
   for(let user of users) {
     if (!user?.projectUserData) continue; // skip user that don't have project, especially the projectserver login user
     let boardState = user?.projectUserData[projectId]?.boardState;
@@ -128,21 +148,21 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
 
     for(let boardId of boards) {
 
-      const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
-      const updatedBoardState = updatedProjectData?.boardState;
- 
-      if(updatedBoardState?.[boardId]) {
-
-        // console.log("got updatedBoardState for", boardId, updatedBoardState?.[boardId])
+      if(boardState?.[boardId]) {
 
         // user is just arriving
-        if(updatedBoardState[boardId].status == "arriving") {
+        if(boardState[boardId].status == "arriving") {
 
+          // make sure we have the updated information on this to prevent multiple onArrive calls
+          const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
+          const updatedBoardState = updatedProjectData?.boardState;
+          if(updatedBoardState[boardId].status != "arriving") return
+ 
           // updating arrival in boardState so that this never runs twice
           const result = await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, updatedBoardState[boardId].nodeId, "arrived")
           console.log("status updated, now running onArrive", result)
 
-          let nodeId = updatedBoardState[boardId].nodeId;
+          let nodeId = boardState[boardId].nodeId;
           
           console.log(`user ${user.id} arriving in node ${nodeId} on board ${boardId}`)
 
@@ -150,9 +170,9 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
           const nodeIds = boardData[boardId].nodes.map(n => n.id)
           // console.log("checking if node exists in", nodeIds);
           if(!nodeIds.includes(nodeId)) {
-            console.log("warning: moving user into non-existant node, movig to starting node", boardData[boardId].startId)
+            console.log("warning: moving user into non-existant node, moving to starting node", boardData[boardId].startId)
             nodeId = boardData[boardId].startId;
-            await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, nodeId, "arrived")
+            await setArrivalStatus(server, projectId, user.id, boardState, boardId, nodeId, "arrived")
           }
           
           const api = {
