@@ -1,3 +1,6 @@
+import pkg from 'geolib';
+const { getDistance } = pkg;
+
 const callWithDelay = (server, method, methodParams, options) => {
   if(options?.delay) {
     server.call('events.schedule', {
@@ -65,6 +68,25 @@ const sendChoice = function(choice, options) {
   }
   callWithDelay(server, "message.send", methodParams, options)
 }
+
+const requestLocation = async function(prompt, options) {
+  const {message, server, projectId} = this
+  //console.log(this)
+  const methodParams = {
+    projectId, 
+    channel_key: message.channel_key, 
+    //sender, 
+    recipients: [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'requestLocation',
+      prompt: prompt,
+      cancel: options?.cancel
+    }
+  }
+  callWithDelay(server, "message.send", methodParams, options)
+}
+
 
 const moveTo = function(nodeId, options) { 
   const {server, projectId, boardId, userId} = this
@@ -135,7 +157,11 @@ const setInterface = async function(interfaceConfig) {
   await server.call('user.setBoardInterface', {interfaceConfig, projectId, userId, boardId})
 }
 
-
+const distance = (pos1, pos2) => { 
+  return (pos1.lat && pos2.lat) ? 
+    getDistance({latitude: pos1.lat, longitude: pos1.lng}, {latitude: pos2.lat, longitude: pos2.lng}, 1)
+    : null 
+}
 
 export default {
   send,
@@ -149,5 +175,7 @@ export default {
   getRows,
   addRow,
   updateRow,
-  setInterface
+  setInterface,
+  requestLocation,
+  distance
 }

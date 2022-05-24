@@ -63,8 +63,16 @@ await api.updateRow("elements", "rowKey", {title: "bye"})
 api.setInterface({text: false})
 api.setInterface({text: true}) // turn is back on 
 
+// present the user with a button to send their location
+api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
 
-
+// respond to location
+if(msg.payload.type == "locationResponse") {
+  // do something
+  if(api.distance(msg.payload.location, {lat: 56, lng: 12}) < 100) {
+    api.sendText("you're close!")
+  }
+}
 
 `
 

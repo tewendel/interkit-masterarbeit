@@ -7,6 +7,9 @@
   import ChatInput from './Chat/ChatInput.svelte';
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
+  import { Plugins } from '@capacitor/core';
+  const { Geolocation } = Plugins;
+
   export let channel_key = "DEFAULT"
 
   const reportsChannelKey = 'REPORTS'
@@ -98,7 +101,19 @@
         selectedKey
       })
     }
-  } 
+  }
+  
+  const submitLocation = async (message) => {
+    let location = await Geolocation.getCurrentPosition();
+    console.log("sending location", location)
+    
+    InterkitClient.call("message.submitLocation", {
+      sender: userId,
+      channel_key, 
+      messageId: message.id,
+      location: {lng: location.coords.longitude, lat: location.coords.latitude},
+    })
+  }
 
   const sendReport = async (message) => {
     const reportText = 'user reported message:\n\n' + JSON.stringify(message)
@@ -133,6 +148,7 @@
           <Message 
             {message} 
             {submitChoice} 
+            {submitLocation}
             isByUser={message?.sender === userId} 
             lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
             previousMessage={$messageStore[index-1]}

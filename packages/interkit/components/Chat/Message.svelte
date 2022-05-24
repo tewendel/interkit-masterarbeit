@@ -8,10 +8,10 @@
 
   const dispatch = createEventDispatcher();
 
-
   export let message
   export let preview = false
   export let submitChoice = () => {}
+  export let submitLocation = () => {}
   export let isByUser = false
   export let lastFromSender = false
   export let previousMessage = null
@@ -39,13 +39,22 @@
     dispatch('report', { message })
   }
 
+  const submitLocationLocal = (message) => {
+    if(choiceSubmitted) {
+      console.log("prevented double submission")
+      return;
+    }
+    choiceSubmitted = true; 
+    submitLocation(message);
+  }
+
 </script>
 
 {#if message?.payload?.options?.label}
 <span class="message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
-{#if ['text', 'choice', 'image'].indexOf(message?.payload?.type) > -1}   
+{#if ['text', 'choice', 'image', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
@@ -53,7 +62,7 @@
   >
     <div
       class="message__bubble"
-      on:click={() => { if (message?.payload?.type !== 'choice') showOptions = true }}
+      on:click={() => { if (message?.payload?.type !== 'choice' && message?.payload?.type !== 'requestLocation') showOptions = true }}
       >
       <div class="message__contents">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
@@ -89,6 +98,23 @@
               {/each}
             </ul>
           {/if}
+        {:else if message?.payload?.type == "requestLocation"}
+          <ul
+            class="message__choices"
+          >  
+            <li 
+              class="choice-option" 
+            >
+              <Button
+                on:click={()=>{if(!message?.submitted) submitLocationLocal(message)}}
+                selected={message?.submitted}
+                height="auto"
+                flex="fill"
+              >
+                {message.payload.prompt}
+              </Button>
+            </li>
+          </ul>
         {/if}
       </div>
     </div>
@@ -139,12 +165,13 @@
     padding: var(--distance-s);
   }
 
-  .message--choice, .message__user {
+  .message--choice, .message__user,
+  .message--requestLocation, .message__user {
     text-align: right;
     align-self: flex-end;
   }
 
-  .message:not(.message__user):not(.message--choice) .message__contents {
+  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__contents {
     border-bottom-left-radius: 0;
   }
 
@@ -174,14 +201,14 @@
   }
 
   /* ◤ */
-  .message:not(.message__user):not(.message--choice) .message__bubble::after {
+  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__bubble::after {
     content: "";
     left: 0;
     border-width: 10px 10px 0 0px;
     border-color: var(--color-border) transparent transparent transparent;
   }
 
-  .message--choice {
+  .message--choice, .message--requestLocation {
     min-width: 50%;
   }
 

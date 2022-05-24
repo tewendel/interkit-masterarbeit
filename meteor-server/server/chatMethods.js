@@ -62,6 +62,21 @@ Meteor.methods({
       createdAt: new Date()
     })
   },
+
+  'message.submitLocation': ({projectId, channel_key, sender, messageId, location}) => {
+    console.log("message.submitLocation", location)
+    Messages.update({_id: messageId}, {$set: {submitted: true}})
+
+    Messages.insert({
+      projectId,
+      sender,
+      recipients: [],
+      channel_key,
+      payload: {type: "locationRespose", location},
+      origin: undefined,
+      createdAt: new Date()
+    })
+  },
   
   // this actually sends the message right now
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
