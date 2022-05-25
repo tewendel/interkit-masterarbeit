@@ -43,7 +43,7 @@ services:
     environment:
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: meteor
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
     restart: always

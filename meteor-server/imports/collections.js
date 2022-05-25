@@ -54,7 +54,7 @@ export const Messages = new Mongo.Collection('messages');
 /*
 - projectId
 - sender <userId>
-- recipients <userId>
+- recipients [<userId>]
 - outputOrder
 - channel_key
 - payload {
