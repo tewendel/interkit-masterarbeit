@@ -11,11 +11,22 @@
   export let message
   export let preview = false
   export let submitChoice = () => {}
+  export let submitLocation = () => {}
   export let isByUser = false
   export let lastFromSender = false
   export let previousMessage = null
 
   let showOptions = false
+
+  let choiceSubmitted = false;
+  const submitChoiceLocal = (message, key) => {
+    if(choiceSubmitted) {
+      console.log("prevented double submission")
+      return;
+    }
+    choiceSubmitted = true; 
+    submitChoice(message, key);
+  }
 
   const startMessageOptionDialog = () => {
     if (window.confirm('Möchtest du diese Nachricht oder diesen Benutzer wegen unangemessener Inhalte an das Moderationsteam melden? Wir kümmern uns innerhalb von 24 Stunden darum.') === true) {
@@ -28,13 +39,24 @@
     dispatch('report', { message })
   }
 
+  const submitLocationLocal = async (message, canceled=false) => {
+    if(choiceSubmitted) {
+      console.log("prevented double submission")
+      return;
+    }
+    if(await submitLocation(message, canceled)) {
+      console.log("seeting choiceSubmitted to true")
+      choiceSubmitted = true; 
+    }
+  }
+
 </script>
 
 {#if message?.payload?.options?.label}
 <span class="message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
-{#if ['text', 'choice', 'image'].indexOf(message?.payload?.type) > -1}   
+{#if ['text', 'choice', 'image', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
@@ -42,7 +64,7 @@
   >
     <div
       class="message__bubble"
-      on:click={() => { if (message?.payload?.type !== 'choice') showOptions = true }}
+      on:click={() => { if (message?.payload?.type !== 'choice' && message?.payload?.type !== 'requestLocation') showOptions = true }}
       >
       <div class="message__contents">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
@@ -67,8 +89,9 @@
                   class="choice-option" 
                 >
                   <Button
-                    on:click={()=>{submitChoice(message, key)}}
+                    on:click={()=>{submitChoiceLocal(message, key)}}
                     selected={message?.selectedChoiceKey == key}
+                    height="auto"
                     flex="fill"
                   >
                     {message.payload.choice[key]}
@@ -77,6 +100,37 @@
               {/each}
             </ul>
           {/if}
+        {:else if message?.payload?.type == "requestLocation"}
+          <ul
+            class="message__choices"
+          >  
+            <li 
+              class="choice-option" 
+            >
+              <Button
+                on:click={()=>{if(!message?.submitted) submitLocationLocal(message)}}
+                selected={message?.submitted && !message?.canceled}
+                height="auto"
+                flex="fill"
+              >
+                {message.payload.prompt}
+              </Button>
+            </li>
+            {#if message.payload.cancel}
+             <li 
+              class="choice-option" 
+              >
+                <Button
+                  on:click={()=>{if(!message?.submitted) submitLocationLocal(message, true)}}
+                  selected={message?.canceled}
+                  height="auto"
+                  flex="fill"
+                >
+                  {message.payload.cancel}
+                </Button>
+              </li>
+            {/if}
+          </ul>
         {/if}
       </div>
     </div>
@@ -127,12 +181,13 @@
     padding: var(--distance-s);
   }
 
-  .message--choice, .message__user {
+  .message--choice, .message__user,
+  .message--requestLocation, .message__user {
     text-align: right;
     align-self: flex-end;
   }
 
-  .message:not(.message__user):not(.message--choice) .message__contents {
+  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__contents {
     border-bottom-left-radius: 0;
   }
 
@@ -162,14 +217,14 @@
   }
 
   /* ◤ */
-  .message:not(.message__user):not(.message--choice) .message__bubble::after {
+  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__bubble::after {
     content: "";
     left: 0;
     border-width: 10px 10px 0 0px;
     border-color: var(--color-border) transparent transparent transparent;
   }
 
-  .message--choice {
+  .message--choice, .message--requestLocation {
     min-width: 50%;
   }
 

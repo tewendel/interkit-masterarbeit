@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects, Sheets, Rows, Messages, Channels } from '../imports/collections.js';
+import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../imports/collections.js';
+import {userIsInRoles} from '../imports/userRoles.js';
 
 Meteor.publish('projects', function() {
   //console.log("projects sub")
@@ -78,6 +79,12 @@ Meteor.publish("user", ({ projectId }) => {
   return cursor
 });
 
+Meteor.publish("user.bundler.status", () => {
+  const cursor = Meteor.users.find({ username: 'bundler' }, { fields: { 'status': true, username: true } });
+  return cursor
+});
+
+
 Meteor.publish("channels", ({projectId}) => {
   let query = {projectId};
   console.log("channels sub with query", query);
@@ -144,10 +151,11 @@ Meteor.publish("messages.unseen", ({projectId, channel_key, userId}) => {
     $or: [{ sender: userId }, { recipients: userId }]
   }
   let options = {
-    sort: {createdAt: -1},
+    //sort: {createdAt: -1},
+    //fields: {_id:1, channel_key: 1, seen: 1}
   }
   let messages = Messages.find(query, options);
-  //console.log(messages.fetch())
+  //console.log("messages.unseen", messages.fetch())
   return messages;
 });
 
@@ -162,3 +170,28 @@ Meteor.publish("messages.unhandled", ({projectId}) => {
   // console.log("messages.unhandled count: " + messages.count(), messages.fetch())
   return messages;
 });
+
+// provides unexecuted events sorted by execTime
+Meteor.publish("scheduled_events", ({projectId}) => {
+  let query = {
+    projectId,
+    status: "scheduled"
+  }
+  let events = ScheduledEvents.find(query, {sort: {execTime: -1}});
+  return events;
+});
+
+// publish roleAssignments
+Meteor.publish("roleAssignment", function () {
+  if (this.userId) {
+    if (userIsInRoles(this.userId, ['admin'])) {
+      // console.log("publishing ALL roleAssignments to admin user ", this.userId)
+      return Meteor.roleAssignment.find({});
+    } else {
+      // console.log("publishing LIMITED roleAssignments to user ", this.userId)
+      return Meteor.roleAssignment.find({ 'user._id': this.userId });
+    }
+  } else {
+    this.ready()
+  }
+})

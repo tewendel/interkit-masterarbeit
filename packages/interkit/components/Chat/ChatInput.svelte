@@ -8,15 +8,17 @@
   const dispatch = createEventDispatcher();
 
   const submit = () => {
-    dispatch('submit', {
-      messageText
-    });
-    messageText = ""
+    if(messageText && messageText != "") {
+      dispatch('submit', {
+        messageText
+      });
+      messageText = ""
+    }
   }
 
   const handleKeydown = (event)=>{
     if (event.which === 13) {
-      submit()
+        submit()
     }
   }
 

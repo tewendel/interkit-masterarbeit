@@ -2,9 +2,10 @@
   import "carbon-components-svelte/css/g10.css"; // all g10 g100 g90 white
 
   import Router, { querystring } from 'svelte-spa-router'
-  import ProjectManager, { currentProjectName } from './ProjectManager.svelte'
+  import ProjectManager, { currentProjectName, currentProjectServerStatus } from './ProjectManager.svelte'
   import { BundleServer } from './BundleServer'
   import Login from './Login.svelte';
+  import SystemStatusBar from './SystemStatusBar.svelte';
 
   import { onMount } from 'svelte'
 
@@ -31,7 +32,11 @@
 
 </script>
 
-<Header company="interkit" platformName={$currentProjectName || "Redaktionssystem"} href="/">
+<Header 
+  company="interkit" 
+  platformName={$currentProjectName || "Redaktionssystem"} 
+  href="/"
+  >
   <!--HeaderNav>
     <HeaderNavItem text="Projekt" />
     <HeaderNavItem href="/" text="Link 2" />
@@ -42,6 +47,11 @@
       <HeaderNavItem href="/" text="Link 3" />
     </HeaderNavMenu>
   </HeaderNav-->
+  <div class="status">
+    {#if $userId}
+      <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
+    {/if}
+  </div>
 </Header>
 
 <!-- set transform: none; to allow modal to be position fixed -->
@@ -54,3 +64,11 @@
   {/if}
 
 </Content>
+
+<style>
+  .status {
+    flex: 1;
+    padding: 1em;
+    text-align: right;
+  }
+</style>

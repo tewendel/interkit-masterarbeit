@@ -82,7 +82,7 @@
   .container {
   }
   .content {
-    padding: var(--distance-m) var(--distance-xl) var(--distance-s) var(--distance-m);
+    padding: var(--distance-m) var(--distance-m) var(--distance-s) var(--distance-m);
 
   }
   .picture {

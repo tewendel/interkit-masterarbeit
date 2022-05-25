@@ -1,5 +1,7 @@
 import { lib as boardNodeUtil } from './project-boards-nodes.js'
 
+let boardData;
+
 const subscribeMessages = async (server, projectId) => {
   let messagesSub = server.subscribe("messages.unhandled", { projectId });
   await messagesSub.ready();
@@ -23,6 +25,36 @@ const subscribeUsers = async (server, projectId) => {
   let reactiveUsersCollection = server.collection('users').reactive();
   return reactiveUsersCollection 
 }
+
+let scheduledEvents;
+const subscribeScheduledEvents = async (server, projectId) => {
+  const events = server.subscribe("scheduled_events", { projectId });
+  await events.ready();
+  scheduledEvents = server.collection('scheduled_events').reactive();
+}
+
+// this is called regularly and checks if any events need to be processed
+const processEvents = async (server) => {
+
+  // retrieve the events;
+  const events = scheduledEvents.data();
+  const now = new Date();
+  if(events.length) {
+    console.log("scheduled events: ", events.length)
+  }
+  const eventsToProcess = events.filter(e => e.status == "scheduled" && e.execTime.getTime() < now.getTime())
+  if(eventsToProcess.length) {
+    console.log("now processing:", eventsToProcess);
+  }
+  for(let event of eventsToProcess) {
+    // set event status to done
+    await server.call("events.setDone", {_id: event.id})
+
+    // call the method
+    await server.call(event.method, event.payload)    
+  }
+}
+
 
 // updates the boardState of a user on the server
 const updateBoardState = async (server, projectId, userId, boardState) => {
@@ -79,10 +111,30 @@ const checkCurrentNode = async (server, userId, projectId, boardId, boardData) =
   }
 }
 
-// goes over users and boards and processes any pending arrivals
-const processUserArrivals = async (server, projectId, projectApi, handlers, users, boards, boardData) => {
-  //console.log("processUserArrivals", users);
+// we need to make sure this function cannot be called multiple times at almost the same time 
+let processingQueue = [];
+let processingQueueRunning = false;
+const processUserArrivals = async (server, projectId, projectApi, handlers, users, boards, boardData) => {  
+  processingQueue.push({
+    server, projectId, projectApi, handlers, users, boards, boardData      
+  })
+  await executeQueue();
+}
 
+const executeQueue = async () => {
+  if(!processingQueueRunning && processingQueue.length) {
+    processingQueueRunning = true;
+    await doProcessUserArrivals(processingQueue[0]);
+    processingQueue.shift();
+    processingQueueRunning = false;
+    await executeQueue();
+  }
+}
+
+// goes over users and boards and processes any pending arrivals
+const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, users, boards, boardData}) => {  
+  //console.log("processUserArrivals", users);
+  
   for(let user of users) {
     let boardState = user?.projectUserData[projectId]?.boardState;
     
@@ -95,23 +147,32 @@ const processUserArrivals = async (server, projectId, projectApi, handlers, user
 
     for(let boardId of boards) {
 
-      const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
-      const updatedBoardState = updatedProjectData?.boardState;
- 
-      if(updatedBoardState?.[boardId]) {
-
-        // console.log("got updatedBoardState for", boardId, updatedBoardState?.[boardId])
+      if(boardState?.[boardId]) {
 
         // user is just arriving
-        if(updatedBoardState[boardId].status == "arriving") {
+        if(boardState[boardId].status == "arriving") {
 
+          // make sure we have the updated information on this to prevent multiple onArrive calls
+          const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
+          const updatedBoardState = updatedProjectData?.boardState;
+          if(updatedBoardState[boardId].status != "arriving") return
+ 
           // updating arrival in boardState so that this never runs twice
           const result = await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, updatedBoardState[boardId].nodeId, "arrived")
           console.log("status updated, now running onArrive", result)
 
-          let nodeId = updatedBoardState[boardId].nodeId;
+          let nodeId = boardState[boardId].nodeId;
           
           console.log(`user ${user.id} arriving in node ${nodeId} on board ${boardId}`)
+
+          // check if node exists
+          const nodeIds = boardData[boardId].nodes.map(n => n.id)
+          // console.log("checking if node exists in", nodeIds);
+          if(!nodeIds.includes(nodeId)) {
+            console.log("warning: moving user into non-existant node, moving to starting node", boardData[boardId].startId)
+            nodeId = boardData[boardId].startId;
+            await setArrivalStatus(server, projectId, user.id, boardState, boardId, nodeId, "arrived")
+          }
           
           const api = {
             ...projectApi, 
@@ -156,7 +217,7 @@ const setupMessageHandling = async ({
   const boards = await boardNodeUtil.boards.list("./handlers");
   // console.log("project server found boards: ", boards);
 
-  const boardData = {};
+  boardData = {};
   for(let board of boards) {
     boardData[board] = await boardNodeUtil.boards.readFromProject(projectId, board)
   }
@@ -204,7 +265,7 @@ const setupMessageHandling = async ({
       if(currentNodeId) {
 
         let handlerName = boardId + "_" + currentNodeId
-        if (handlers[handlerName].onMessage) {
+        if (handlers[handlerName]?.onMessage) {
           console.log(`handling message ${message.id} with ${handlerName}`)
           // allow parallel execution... should handler be required to be synchronous and return something?
           handlers[handlerName].onMessage(message, api)
@@ -240,6 +301,11 @@ const setupMessageHandling = async ({
     //console.log("users collection onChange")
     await processUserArrivals(server, projectId, projectApi, handlers, users, boards, boardData);
   })
+
+  // subscribe to scheduled events and process regularly
+  await subscribeScheduledEvents(server, projectId);
+  await processEvents(server);
+  setInterval(()=>{processEvents(server)}, 2000);
 }
 
 

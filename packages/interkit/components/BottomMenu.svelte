@@ -133,9 +133,8 @@
 
   .buttons {
     width: 100%;
-    background: white;
     display: flex;
-    height: 55px;
+    height: 64px;
   }
 
 

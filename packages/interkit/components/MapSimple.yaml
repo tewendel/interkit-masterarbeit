@@ -58,6 +58,9 @@ fields:
     name: apiKey
   - type: string
     name: clickTrigger
+  - type: string
+    name: closeButtonLabel
+    defaultValue: "Schließen"
   - type: "slot"
     name: "element"
     slotProps:

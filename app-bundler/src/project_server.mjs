@@ -58,8 +58,9 @@ function setupServerProcess(projectId) {
   const projectPath = getProjectPath(projectId)
   const serverPath = projectPath + "/server"
   console.log(`running projectServer process for project ${projectId}`)
-  const proc = spawn('npm', ['start'], {
+  const proc = spawn('nodemon', ['npm', 'start'], {
     cwd: serverPath,
+    stdio: ['pipe', 'pipe', 'pipe', 'ipc'], // enable IPC
     env: {
       ...process.env,
       INTERKIT_PROJECT_ID: projectId,
@@ -90,6 +91,16 @@ function setupServerProcess(projectId) {
       text: `exited with code ${code}`
     }})
   });
+  proc.on('message', function (event) {
+    if (event.type === 'start') {
+      console.log('nodemon started');
+      interkit_server.call("project.projectServer.setStatus", { projectId, status: "running" })
+    } else if (event.type === 'crash') {
+      console.log('script crashed for some reason');
+      interkit_server.call("project.projectServer.setStatus", { projectId, status: "crashed" })
+    }
+    //console.log('message', event);
+  });
   return proc
 }
 
@@ -101,7 +112,10 @@ function startServer(projectId) {
       proc: setupServerProcess(projectId)
     })
   } else {
-    if (server.proc) console.warn(`projectServer ${projectId} already running`)
+    if (server.proc) {
+      server.proc.emit('restart'); // currently without effect
+      console.warn(`projectServer ${projectId} already running`)
+    }
     else {
       server.proc = setupServerProcess(projectId)
     }

@@ -33,7 +33,7 @@
       </AspectRatio>
     </figure>
       
-    <ButtonBar>    
+    <ButtonBar right>    
       <slot class="xyz" name="buttons"></slot>
     </ButtonBar>
 

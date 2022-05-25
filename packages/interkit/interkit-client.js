@@ -194,7 +194,7 @@ const getProjectId = async() => {
     if(result) {
       _projectId = await result.text();
     } else {
-      console.log("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+      alert.log("couldn't retrieve projectId from slug " + get(config)?.project_slug);
     }
   } 
   console.log("INTERKIT_PROJECT_ID", _projectId);
@@ -307,6 +307,11 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
     }
   }
   //console.log("getSub", col, pub, pubArgs)
+
+  if (!server) {
+    console.warn("server not initialised, aborting getSub");
+    return
+  }
 
   // setup the subscription
   sub.sub = server.sub(pub, [pubArgs]);
@@ -885,7 +890,7 @@ const InterkitClient = {
   userId,
   pushnotificationRegistrationToken,
   config,
-  connected,
+  connected, // svelte store
   projectId,
   userProjectDataStore,
   connectionIssue,

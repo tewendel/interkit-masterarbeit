@@ -8,6 +8,7 @@
   export let type = "secondary" // primary | secondary | ghost | link | spacer
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
   export let flex = "normal" // normal | fill
+  export let height = "fixed" // fixed | auto
   export let text = undefined;
   export let selected = false
   export let clickType = 'payloadTrigger'; // link | linkTargetBlank
@@ -29,7 +30,7 @@
       executeTrigger(clickTrigger, buttonPayload ? $buttonPayload : undefined)
 
     if(onClick)
-      onClick();
+      onClick(buttonPayload ? $buttonPayload : undefined);
   }
 
 </script>
@@ -38,7 +39,7 @@
   <span 
       on:click
       on:click={handleClick}
-      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
+      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
       class:primary={type==='primary'}
       class:selected={selected}
       class:Button--selected={selected}
@@ -51,7 +52,7 @@
   <a
       href={clickTrigger}
       target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
-      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex}`}
+      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
       class:primary={type==='primary'}
       class:selected={selected}
       class:Button--selected={selected}
@@ -81,6 +82,7 @@
     user-select: none;
     text-align: center;
     text-decoration: none;
+    box-sizing: border-box;
   }
 
   .button.normal {
@@ -92,21 +94,33 @@
   }
 
   .button.small {
-    height: 32px;
-    padding: 0 var(--distance-s);
+    min-height: 32px;
+    padding: var(--distance-tiny) var(--distance-s);
     font: var(--font-button);
+  }
+
+  .button.small.height-fixed {
+    height: 32px;
   }
 
   .button.medium {
-    height: 40px;
-    padding: 0 var(--distance-m);
+    min-height: 40px;
+    padding: var(--distance-tiny) var(--distance-m);
     font: var(--font-button);
   }
 
+  .button.medium.height-fixed {
+    height: 40px;
+  }
+
   .button.large {
-    height: 56px;
-    padding: 0 var(--distance-s-m);
+    min-height: 56px;
+    padding: var(--distance-tiny) var(--distance-s-m);
     font: var(--font-headline-5);
+  }
+
+  .button.large.height-fixed {
+    height: 56px;
   }
 
   .button.selected {

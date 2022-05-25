@@ -30,7 +30,7 @@
   let nodeEditorNodeId
 
   window.addEventListener('message', evt => {
-    console.log('received postMessage from iframe', evt, evt.data)
+    // console.log('received postMessage from iframe', evt, evt.data)
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
   })
 

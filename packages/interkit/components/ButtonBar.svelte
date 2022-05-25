@@ -1,17 +1,8 @@
-<div class="ButtonBar container"
-  bind:this={container}
-  on:scroll|passive={scrolled}
-  class:left={isLeft}
-  class:right={isRight}
-  >
-  <div class="wrap">
-    <slot/>
-  </div>
-</div>
-
 <script>
 
   import { onMount } from 'svelte';
+
+  export let right = false;
 
   let container
 
@@ -30,6 +21,18 @@
   })
 
 </script>
+
+<div class="ButtonBar container"
+  bind:this={container}
+  on:scroll|passive={scrolled}
+  class:left={isLeft}
+  class:right={isRight}
+  >
+  <div class="wrap" class:right>
+    <slot/>
+  </div>
+</div>
+
 
 <style>
 
@@ -62,6 +65,11 @@
 
   .wrap > :global(*) { /* wow */
     flex-shrink: 0;
+  }
+
+  .wrap.right {
+    display: flex;
+    justify-content: flex-end;
   }
 
 </style>
