@@ -194,7 +194,7 @@ const getProjectId = async() => {
     if(result) {
       _projectId = await result.text();
     } else {
-      console.log("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+      alert.log("couldn't retrieve projectId from slug " + get(config)?.project_slug);
     }
   } 
   console.log("INTERKIT_PROJECT_ID", _projectId);
