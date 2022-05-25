@@ -9,6 +9,7 @@
     
     let channelsStore;    
     onMount(async () => {      
+      console.log("onMount ChatChannelImage")
       let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
       channelsStore = channelsSubHandle.data;
     })
