@@ -154,6 +154,7 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
 
           // make sure we have the updated information on this to prevent multiple onArrive calls
           const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
+          console.log("loaded updatedProjectData", updatedProjectData)
           const updatedBoardState = updatedProjectData?.boardState;
           if(updatedBoardState[boardId].status != "arriving") return
  

@@ -1,16 +1,16 @@
 import pkg from 'geolib';
 const { getDistance } = pkg;
 
-const callWithDelay = (server, method, methodParams, options) => {
+const callWithDelay = async (server, method, methodParams, options) => {
   if(options?.delay) {
-    server.call('events.schedule', {
+    await server.call('events.schedule', {
       projectId: methodParams.projectId,
       method,
       delay: options.delay, 
       payload: methodParams 
     })
   } else {
-    server.call(method, methodParams)
+    await server.call(method, methodParams)
   }
 }
 
@@ -88,7 +88,7 @@ const requestLocation = async function(prompt, options) {
 }
 
 
-const moveTo = function(nodeId, options) { 
+const moveTo = async function(nodeId, options) { 
   const {server, projectId, boardId, userId} = this
   const methodParams = {
     projectId,
@@ -96,7 +96,7 @@ const moveTo = function(nodeId, options) {
     boardId,
     nodeId
   }
-  callWithDelay(server, "user.moveTo", methodParams, options)
+  await callWithDelay(server, "user.moveTo", methodParams, options)
 }
 
 const getUserVar = async function(varName) {
