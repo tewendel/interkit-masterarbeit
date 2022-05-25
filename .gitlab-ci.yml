@@ -147,5 +147,6 @@ test-server:
   image: geoffreybooth/meteor-base:2.5.6
   stage: test
   script:
+    - cd meteor-server
     - meteor npm install
     - meteor npm test
