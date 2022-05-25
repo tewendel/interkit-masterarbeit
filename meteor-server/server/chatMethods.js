@@ -63,16 +63,16 @@ Meteor.methods({
     })
   },
 
-  'message.submitLocation': ({projectId, channel_key, sender, messageId, location}) => {
+  'message.submitLocation': ({projectId, channel_key, sender, messageId, location, canceled}) => {
     console.log("message.submitLocation", location)
-    Messages.update({_id: messageId}, {$set: {submitted: true}})
+    Messages.update({_id: messageId}, {$set: {submitted: true, canceled}})
 
     Messages.insert({
       projectId,
       sender,
       recipients: [],
       channel_key,
-      payload: {type: "locationRespose", location},
+      payload: canceled ? {type: "locatioRequestCanceled"} : {type: "locationRespose", location},
       origin: undefined,
       createdAt: new Date()
     })
