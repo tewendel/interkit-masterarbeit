@@ -656,6 +656,12 @@ Meteor.methods({
     
   },
 
+  'messages.delete': async function (ids) {
+    console.log('messages.delete', ids)
+    const result = await Messages.remove({ _id: { $in: ids } })
+    return result
+  },
+
   'user.get': ({userId}) => {
     const user = Meteor.users.findOne(userId)
     return user;

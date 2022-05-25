@@ -9,6 +9,7 @@
   import MediaManager from "./MediaManager.svelte"
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
+  import MessagesManager from './MessagesManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
   import { InterkitClient } from 'interkit'
 
@@ -50,6 +51,7 @@
         <Tab label="Chat" />
         <Tab label="Project" />
         <Tab label="Users" />
+        <Tab label="Messages" />
         <Tab label={ "Repository " + repoNotice } />
         <div slot="content">
           <TabContent>
@@ -77,6 +79,11 @@
               {previewUserId}
               moveToBoardId={nodeEditorBoardId}
               moveToNodeId={nodeEditorNodeId}
+              />
+          </TabContent>
+          <TabContent>
+            <MessagesManager
+              {projectId}
               />
           </TabContent>
           <TabContent>

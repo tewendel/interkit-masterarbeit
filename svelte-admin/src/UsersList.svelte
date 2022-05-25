@@ -40,7 +40,17 @@
   export let moveToNodeId = ''
   let moveToResult = ''
 
-  const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE')
+  const createdAtdateTimeFormatLocaleOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    weekday: undefined,
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+    second: '2-digit'
+  }
+  const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
 
   const trivialSort = (a, b) => a < b ? -1 : 1
 
