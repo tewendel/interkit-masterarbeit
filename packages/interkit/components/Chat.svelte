@@ -103,16 +103,28 @@
     }
   }
   
-  const submitLocation = async (message) => {
-    let location = await Geolocation.getCurrentPosition();
-    console.log("sending location", location)
-    
+  const submitLocation = async (message, canceled = false) => {
+    let location;
+    let error;
+    if(!canceled) {
+      try {
+        location = await Geolocation.getCurrentPosition();
+      } 
+      catch(e) {
+        alert("Error obtaining geolocation. You may need to give the app permission.")
+        error = e;
+        return false;
+      }
+      console.log("sending location", location)
+    }    
     InterkitClient.call("message.submitLocation", {
       sender: userId,
       channel_key, 
       messageId: message.id,
-      location: {lng: location.coords.longitude, lat: location.coords.latitude},
+      location: location ? {lng: location.coords.longitude, lat: location.coords.latitude} : undefined,
+      canceled
     })
+    return true
   }
 
   const sendReport = async (message) => {
