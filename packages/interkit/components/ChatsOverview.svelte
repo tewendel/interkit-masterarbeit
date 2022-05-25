@@ -9,13 +9,14 @@
 
   let channelsStore;
   let channelsSorted;
+  let channelOrder = {};
   let channelLastMessageStores;
   let userId;
 
   onMount(async () => {
     userId = get(InterkitClient.userId);
     // find out what chat channels exist
-    console.log("getting channel sub")
+    console.log("onMount ChatsOverview")
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
   })
@@ -34,17 +35,20 @@
         return new Date(messagesSorted[0].createdAt)
       }
     }
-    /*for(let channel of get(channelsStore)) {
-      console.log("channel", channel.channel_key, get(channelLastMessageStores[channel._id]), getDate(channel))
-    }*/
-
+    
     // sort the channels by latest messages
     channelsSorted = [...get(channelsStore)].sort((a,b)=>getDate(b) - getDate(a))
+
+    // save the order
+    for(let i = 0; i < channelsSorted.length; i++) {
+      channelOrder[channelsSorted[i].channel_key] = i;
+    }
+    channelOrder = channelOrder;
   }
 
   // set up the message subscriptions for all the channels
   const setupLatestMessageSubs = async (channels) => {
-    //console.log("setupLatestMessageSubs", channels)
+    console.log("setupLatestMessageSubs", channels)
     if(!channels) return;
     let newStores = {};
     if(channels) {
@@ -70,13 +74,26 @@
 
 </script>
 
-{#if channelsSorted}
-  {#each channelsSorted as channel}
-    {#key channel}
-      <ChatPreview
-        channel_key={channel.channel_key}
-        {selectTrigger}
-      />
-    {/key}
+<div class="sort-container">
+{#if $channelsStore}
+  {#each $channelsStore as channel}
+      <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
+        <ChatPreview
+          channel_key={channel.channel_key}
+          {selectTrigger}
+        />
+      </div>
   {/each}
 {/if}
+</div>
+
+
+<style>
+  .sort-container {
+    display: flex;
+    flex-direction: column; 
+  }
+
+
+
+</style>

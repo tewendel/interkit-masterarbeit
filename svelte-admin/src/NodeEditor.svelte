@@ -238,6 +238,7 @@
         const json = await res.json()
         errorify(json)
         board = processBoard(json.result)
+        console.log("loadBoard", board)
       })
       .catch(genericErrorHandler)
   }
