@@ -52,6 +52,14 @@ docker network create frontproxy
 docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d
 ````
 
+#### security considerations
+
+- ⚠️ Make sure that `INTERKIT_BUNDLER_PASSWORD` in `.env` contains a random string
+- you can use `openssl rand -hex 16` to generate a random string
+- it is used to authenticate the connection from bundler to server
+- repeat `docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d` after changing the password on a running system
+
+
 ### deploy multiple versions on one server instance for staging
 
 ````

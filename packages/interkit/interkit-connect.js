@@ -1,5 +1,12 @@
+/**
+ * Serverside connection to interkit (project-server)
+ */
+
 import simpleDDP from 'simpleddp'; // ES6
 import ws from 'isomorphic-ws';
+import { simpleDDPLogin } from "simpleddp-plugin-login";
+
+let userAuth = null;
 
 const defaultOpts = {
   endpoint: process.env.INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL || process.env.INTERKIT_SERVER_WEBSOCKETS_URL,
@@ -7,7 +14,7 @@ const defaultOpts = {
   reconnectInterval: 5000
 };
 
-const setup = async (opts={}) => {
+const setup = async (opts={}, user={}) => {
 
   opts = {...defaultOpts, ...opts}
 
@@ -15,11 +22,38 @@ const setup = async (opts={}) => {
 
   console.log("connecting to " + opts.endpoint + "...")
 
-  const server = new simpleDDP(opts);
+  const server = new simpleDDP(opts, [simpleDDPLogin]);
 
-  server.on('connected', () => {
-    // do something
+  // observe connection
+  const logInterval = setInterval(() => {
+    if (!server.connected) {
+      console.log("trying to connect to interkit server at " + opts.endpoint + "...")
+    }
+  }, 10000);
+
+  server.on('connected', async () => {
+
     console.log("connected to interkit server")
+
+    if (user.username) {
+      if (user.password) {
+        console.log("logging in as " + user.username + "...")
+        try {
+          userAuth = await server.login({
+            password: user.password,
+            user: {
+              username: user.username
+            }
+          });
+          console.log("Logged in as '" + user.username + "'")
+        } catch (e) {
+          console.log("login failed")
+          console.log(e)
+        }
+      } else {
+        console.warn("cannot log into interkit server as '" + user.username + "' because password is missing")
+      }
+    }
   });
 
   server.on('disconnected', () => {

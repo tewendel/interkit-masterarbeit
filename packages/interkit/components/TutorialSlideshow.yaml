@@ -2,7 +2,7 @@ name: TutorialSlideshow
 color: 230
 fields:
   - type: string
-    name: mainTitle
+    name: superTitle
     defaultValue: "Welcome"
   - type: string
     name: completeTrigger

@@ -9,7 +9,7 @@ const get_project_id =  async (req, res) => {
 
   const projectSlug = req.params.projectSlug;
   const projectId = resolveProjectPath(projectSlug); // TODO use ./interkit_server/getProjectIdFromProjectSlug ?
-  if(projectId) {
+  if(projectId && projectId !== projectSlug) { // do not return the slug if it hasn't resolved
     try {
       res.send(projectId)
     } catch (error) {

@@ -1,7 +1,13 @@
 <script>
+  import { getContext } from 'svelte';
+
   export let type
   export let height = "25px"
   export let inverse = false
+
+  const iconHeightOverride = getContext("iconHeight")
+
+  if (iconHeightOverride) height = iconHeightOverride
 
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 

@@ -1,6 +1,7 @@
 <script context="module">
   import { writable } from 'svelte/store';
   export let currentProjectName = writable(null);
+  export let currentProjectServerStatus = writable(null);
 </script>
 
 <script>
@@ -78,6 +79,7 @@
   $: {
     currentProjectName.set($currentProject ? $currentProject.name : null)
   }
+  $: $currentProjectServerStatus = $currentProject?.projectServer?.status
 
   // add "id" for carbon table
   $: projectRows = projects ? $projects.map( p => ({...p, id: p.id})) : []

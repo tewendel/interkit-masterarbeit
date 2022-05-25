@@ -37,6 +37,10 @@ if(msg.payload.key == "a") {
   // do something
 }
 
+// delays (this works for sentText, sendChoice, sendImage and moveTo)
+api.sendText("hello", {delay: 10}) // send the message 10 seconds later
+api.sendText("hello", {delay: {hours: 1, minutes: 30}}) // 1 hour, 30 minutes later
+
 // forward a message to other users currently in this node, uses user variable "name" as label
 api.echo(msg)
 
@@ -55,10 +59,23 @@ await api.addRow("elements", {title: "hello"})
 // update a row
 await api.updateRow("elements", "rowKey", {title: "bye"})
 
+// hide the interface for sending messages (persists for each board)
+api.setInterface({text: false})
+api.setInterface({text: true}) // turn is back on 
 
+// present the user with a button to send their location
+api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
 
-
-
+// respond to location
+if(msg.payload.type == "locationResponse") {
+  // do something
+  if(api.distance(msg.payload.location, {lat: 56, lng: 12}) < 100) {
+    api.sendText("you're close!")
+  }
+}
+if(msg.payload.type == "locatioRequestCanceled") {
+  api.sendText("ok")
+}
 
 `
 

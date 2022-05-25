@@ -9,7 +9,7 @@
   }
 
   $: {
-    console.log("user changed: ", $userId);
+    console.log("AnonymousLogin - user changed: ", $userId);
     if(!$userId) {
       createUser()  
     }
@@ -19,6 +19,8 @@
 </script>
 
 {#if $userId}
-  <slot></slot>
+  {#key $userId}
+    <slot></slot>
+  {/key}
 {/if}
 

@@ -1,7 +1,22 @@
+import pkg from 'geolib';
+const { getDistance } = pkg;
+
+const callWithDelay = (server, method, methodParams, options) => {
+  if(options?.delay) {
+    server.call('events.schedule', {
+      projectId: methodParams.projectId,
+      method,
+      delay: options.delay, 
+      payload: methodParams 
+    })
+  } else {
+    server.call(method, methodParams)
+  }
+}
+
 const sendText = function(text, options) {
     const {message, server, projectId} = this
-    //console.log(this)
-    server.call('message.send', {
+    const methodParams = {
       projectId, 
       channel_key: message.channel_key, 
       //sender, 
@@ -12,14 +27,15 @@ const sendText = function(text, options) {
         text,
         options
       }
-    })
+    }
+    callWithDelay(server, "message.send", methodParams, options)
 }
 const send = sendText;
 
 const sendImage = function (mediafileKey, options) {
   const { message, server, projectId } = this
   console.log('sendImage', mediafileKey)
-  server.call('message.send', {
+  const methodParams = {
     projectId,
     channel_key: message.channel_key,
     //sender,
@@ -31,13 +47,14 @@ const sendImage = function (mediafileKey, options) {
       mediafileKey,
       options
     }
-  })
+  }
+  callWithDelay(server, "message.send", methodParams, options)
 }
 
 const sendChoice = function(choice, options) {
   const {message, server, projectId} = this
   //console.log(this)
-  server.call('message.send', {
+  const methodParams = {
     projectId, 
     channel_key: message.channel_key, 
     //sender, 
@@ -48,18 +65,38 @@ const sendChoice = function(choice, options) {
       choice,
       options
     }
-  })
+  }
+  callWithDelay(server, "message.send", methodParams, options)
 }
 
-const moveTo = function(nodeId) { 
-  const {server, projectId, boardId, userId} = this
+const requestLocation = async function(prompt, options) {
+  const {message, server, projectId} = this
+  //console.log(this)
+  const methodParams = {
+    projectId, 
+    channel_key: message.channel_key, 
+    //sender, 
+    recipients: [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'requestLocation',
+      prompt: prompt,
+      cancel: options?.cancel
+    }
+  }
+  callWithDelay(server, "message.send", methodParams, options)
+}
 
-  server.call('user.moveTo', {
+
+const moveTo = function(nodeId, options) { 
+  const {server, projectId, boardId, userId} = this
+  const methodParams = {
     projectId,
     userId,
     boardId,
     nodeId
-  })
+  }
+  callWithDelay(server, "user.moveTo", methodParams, options)
 }
 
 const getUserVar = async function(varName) {
@@ -113,6 +150,19 @@ const updateRow = async function(sheetKey, rowKey, values) {
   await server.call('row.updateValues', {projectId, rowKey, values});
 }
 
+
+// set interface for this board
+const setInterface = async function(interfaceConfig) {
+  const {server, projectId, boardId, userId} = this
+  await server.call('user.setBoardInterface', {interfaceConfig, projectId, userId, boardId})
+}
+
+const distance = (pos1, pos2) => { 
+  return (pos1.lat && pos2.lat) ? 
+    getDistance({latitude: pos1.lat, longitude: pos1.lng}, {latitude: pos2.lat, longitude: pos2.lng}, 1)
+    : null 
+}
+
 export default {
   send,
   sendText,
@@ -124,5 +174,8 @@ export default {
   getUserVar,
   getRows,
   addRow,
-  updateRow
+  updateRow,
+  setInterface,
+  requestLocation,
+  distance
 }
