@@ -17,7 +17,8 @@ const resolveProjectPath = (slug) => {
   if (validateProjectSlug(slug)) {
     projectId = interkit_server.getProjectIdFromProjectSlug(slug)
   }
-  if (projectId && validateProjectId(projectId)) {
+  if (!projectId) projectId = slug
+  if (validateProjectId(projectId)) {
     return projectId
   } else {
     //if (res) res.sendStatus(404)
