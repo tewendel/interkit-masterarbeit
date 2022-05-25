@@ -89,3 +89,9 @@ export const ScheduledEvents = new Mongo.Collection('scheduled_events');
 - execTime // execution time
 - payload // object, depends on type
 */
+
+if (Meteor.isServer && Messages._driver.mongo._oplogHandle) {
+  console.log('oplog is enabled');
+} else {
+  console.log('oplog is NOT enabled !!');
+}
