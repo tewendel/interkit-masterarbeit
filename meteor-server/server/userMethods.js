@@ -5,11 +5,12 @@ import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
 
 const updateUserProjectData = async (userId, projectId, key, value) => {
   // write projectData updates to user
-  await Meteor.users.update(userId, {
+  const usersModifiedCount = await Meteor.users.update(userId, {
     $set: {
       [`projectUserData.${projectId}.${key}`] : value 
     }
-  })  
+  })
+  return usersModifiedCount
 }
 
 const getUserProjectData = (userId, projectId) => {
@@ -240,8 +241,10 @@ Meteor.methods({
       boardState[boardId].status = "arriving"
       boardState[boardId].nodeId = nodeId
       console.log("boardState", boardState);
-      await updateUserProjectData(userId, projectId, "boardState", boardState)
+      const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", boardState)
+      return usersUpdatedCount
     }
+    return false
   },
 
   'user.setBoardInterface': async ({interfaceConfig, projectId, userId, boardId}) => {
