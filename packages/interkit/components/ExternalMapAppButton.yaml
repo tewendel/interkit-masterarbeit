@@ -1,0 +1,13 @@
+name: ExternalMapAppButton
+toolboxCategory: "Input"
+color: 230
+fields: 
+  - type: string
+    name: label
+    defaultValue: "Navigate"
+  - name: locationColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: elements/position
+
+
