@@ -30,7 +30,7 @@
       executeTrigger(clickTrigger, buttonPayload ? $buttonPayload : undefined)
 
     if(onClick)
-      onClick();
+      onClick(buttonPayload ? $buttonPayload : undefined);
   }
 
 </script>
