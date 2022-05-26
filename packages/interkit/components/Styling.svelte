@@ -6,7 +6,7 @@
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
-  export let colorBackgroundHighlight = '#F0F6F6'
+  export let colorBackgroundHighlight = '#E5E5E5'
   export let colorBorder = 'black'
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
