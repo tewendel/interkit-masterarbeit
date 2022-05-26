@@ -8,8 +8,8 @@ import interkit_server from "./interkit_server.mjs"
 let servers = []
 
 // react to change in projects
-function updateProjectServers(projects) {
-  ensureProjectServers(projects)
+async function updateProjectServers(projects) {
+  await ensureProjectServers(projects)
   // check actions
   for (let project of projects) {
     const action = project?.projectServer?.actionRequested
@@ -47,14 +47,15 @@ async function ensureProjectServers(projects) {
           const result = await interkit_server.call("project.projectServer.init", { projectId })
           console.log(result)
           // setup & start project server
-          startServer(projectId)
+          // startServer(projectId) <-- will get trigeered by ensureProjectServers on the next run (NOTE: may crash if there is another change, needs improvements)
         }
       }
     }
   }
 }
 
-function setupServerProcess(projectId) {
+async function setupServerProcess(projectId) {
+  const userCredentials = await interkit_server.call("user.registerProjectServerUser", { projectId })
   const projectPath = getProjectPath(projectId)
   const serverPath = projectPath + "/server"
   console.log(`running projectServer process for project ${projectId}`)
@@ -64,6 +65,7 @@ function setupServerProcess(projectId) {
     env: {
       ...process.env,
       INTERKIT_PROJECT_ID: projectId,
+      INTERKIT_PROJECT_SERVER_SECRET: userCredentials.username + ":" + userCredentials.password
     }
   });
   interkit_server.call("project.projectServer.setStatus", { projectId, status: "running" })
@@ -104,12 +106,12 @@ function setupServerProcess(projectId) {
   return proc
 }
 
-function startServer(projectId) {
+async function startServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
   if (!server) {
     servers.push({
       projectId,
-      proc: setupServerProcess(projectId)
+      proc: await setupServerProcess(projectId)
     })
   } else {
     if (server.proc) {
@@ -117,7 +119,7 @@ function startServer(projectId) {
       console.warn(`projectServer ${projectId} already running`)
     }
     else {
-      server.proc = setupServerProcess(projectId)
+      server.proc = await setupServerProcess(projectId)
     }
   }
 }

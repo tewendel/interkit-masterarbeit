@@ -11,6 +11,7 @@
     "cordova-plugin-zip": "^3.1.0",
     "geolib": "^3.3.1",
     "isomorphic-ws": "^4.0.1",
+    "js-beautify": "^1.14.3",
     "jsqr": "^1.4.0",
     "leaflet": "^1.7.1",
     "leaflet.tilelayer.colorfilter": "^1.2.5",

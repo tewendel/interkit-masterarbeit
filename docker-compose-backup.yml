@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  backup-db:
+    image: tiredofit/db-backup
+    volumes:
+      - db-backup:/backup
+    environment:
+      - DB_TYPE=mongo
+      - DB_HOST=mongo
+      - DB_DUMP_FREQ=1340
+      #- DB_DUMP_BEGIN=0000
+      - DB_CLEANUP_TIME=86400
+      - COMPRESSION=ZSTD
+    restart: always
+
+volumes:
+  db-backup:

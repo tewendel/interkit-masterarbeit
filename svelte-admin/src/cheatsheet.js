@@ -73,7 +73,7 @@ if(msg.payload.type == "locationResponse") {
     api.sendText("you're close!")
   }
 }
-if(msg.payload.type == "locatioRequestCanceled") {
+if(msg.payload.type == "locationRequestCanceled") {
   api.sendText("ok")
 }
 
