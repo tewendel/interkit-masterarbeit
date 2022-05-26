@@ -1,5 +1,6 @@
 import * as path from 'path'
 import { existsSync, promises as fs } from 'fs'
+import beautify from 'js-beautify'
 
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 
@@ -235,7 +236,8 @@ api.nodes.create = expressify(
 
 api.nodes.update = expressify(
   async (handle, params, req) => {
-    const data = req.body.toString()
+    const options = {indent_size: 2}
+    const data = beautify(req.body.toString(), options)
     return fs.writeFile(handle, data)
       .then(() => getNode(handle))
   }
