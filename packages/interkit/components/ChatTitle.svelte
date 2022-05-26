@@ -14,6 +14,7 @@
             channel_key = get(channelKeyDynamic)
         }
 
+        console.log("onMount ChatTitle")
         let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
         channelsStore = channelsSubHandle.data;
     })

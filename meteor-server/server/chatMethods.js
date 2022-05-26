@@ -91,7 +91,7 @@ Meteor.methods({
       sender,
       recipients: [],
       channel_key,
-      payload: canceled ? {type: "locatioRequestCanceled"} : {type: "locationRespose", location},
+      payload: canceled ? {type: "locationRequestCanceled"} : {type: "locationResponse", location},
       origin: undefined,
       createdAt: new Date()
     })

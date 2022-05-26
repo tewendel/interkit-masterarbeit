@@ -242,6 +242,7 @@
         const json = await res.json()
         errorify(json)
         board = processBoard(json.result)
+        console.log("loadBoard", board)
       })
       .catch(genericErrorHandler)
   }
@@ -377,13 +378,31 @@
   }
 
   const saveCurrentNode = () => {
-    saveNode(currentBoardId, editNodeId, editorContents)
+
+    syntaxCheck()
+    if(syntaxCheckStatus == 'ok') {
+      saveNode(currentBoardId, editNodeId, editorContents)
+    } else {
+      alert("Cannot save, there are syntax errors in your code.")
+    }
   }
 
   const saveModifiedNodes = () => {
-    board?.nodes
-      .filter(node => node.modified)
-      .forEach(node => saveNode(currentBoardId, node.id, node.contents))
+    let modifiedNodes = board?.nodes.filter(node => node.modified)
+    console.log("modifiedNodes", modifiedNodes)
+    let errorNodes = []
+    for(let node of modifiedNodes) {
+      let result = syntaxCheck(node.contents)
+      if(result.status == "ok") {
+        saveNode(currentBoardId, node.id, node.contents)
+      } else {
+        errorNodes.push(node.id)
+      }
+    }
+    if(errorNodes.length) {
+      console.log(errorNodes)
+      alert("errors in nodes: " + errorNodes.join(", "))
+    }
   }
 
   const saveNode = (boardId, nodeId, body) => {
@@ -397,6 +416,7 @@
           node.contents = json.result
           node.modified = false
           updateNodesModified()
+          if (editNodeId === nodeId) updateEditorContents()
         }
       })
       .catch(genericErrorHandler)
@@ -451,24 +471,39 @@
 
   $: editorContents, () => { syntaxCheckMessage = ''; syntaxCheckStatus = '' }
 
-  const syntaxCheck = () => {
-    let code = editorContents
+  // checks syntax
+  // if no code is passed in, checks the current node's code and displays message
+  // if code is passed in, returns the result
+  const syntaxCheck = (_code) => {
+    console.log("syntaxCheck with", _code)
+    let code = _code ? _code : editorContents;
     // export are only allowed in modules
     code = code.replace(/^\s*export\b/gm, '/*xprt*/')
+
+    let _syntaxCheckStatus;
+    let _syntaxCheckMessage;
+
     try {
       eval(code)
-      syntaxCheckStatus = 'ok'
-      syntaxCheckMessage = 'no <i>syntactical</i> errors<br/><small>errors still might occur when the code runs</small>'
+      _syntaxCheckStatus = 'ok'
+      _syntaxCheckMessage = 'no <i>syntactical</i> errors<br/><small>errors still might occur when the code runs</small>'
     } catch (err) {
-      syntaxCheckStatus = 'bad'
-      syntaxCheckMessage = `<b>${err.message}</b>`
+      _syntaxCheckStatus = 'bad'
+      _syntaxCheckMessage = `<b>${err.message}</b>`
       if (err.lineNumber) {
-        syntaxCheckMessage += `<br/>at line <b>${err.lineNumber}</b>`
-        if (err.columnNumber) syntaxCheckMessage += `, column <b>${err.columnNumber}</b>`
+        _syntaxCheckMessage += `<br/>at line <b>${err.lineNumber}</b>`
+        if (err.columnNumber) _syntaxCheckMessage += `, column <b>${err.columnNumber}</b>`
       }
       if (err.stack) {
-        syntaxCheckMessage += `<pre>${err.stack}</pre>`
+        _syntaxCheckMessage += `<pre>${err.stack}</pre>`
       }
+    }
+
+    if(!_code) {
+      syntaxCheckStatus = _syntaxCheckStatus
+      syntaxCheckMessage = _syntaxCheckMessage
+    } else {
+      return {status: _syntaxCheckStatus, message: _syntaxCheckMessage}
     }
   }
  
@@ -556,7 +591,7 @@
           rename
         </button>
         <button on:click={moveTo}>moveTo</button>
-        <button on:click={syntaxCheck}>quickCheck</button>
+        <button on:click={()=>{syntaxCheck()}}>quickCheck</button>
       </h3>
     {/if}
     <Tabs bind:selected={editorMode} autoWidth={true}>

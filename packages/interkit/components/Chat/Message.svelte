@@ -71,13 +71,16 @@
         {#if message?.payload?.type == "text"}  
           {message?.payload?.text}
         {:else if message?.payload?.type == "image"}
-          <MediaFileImage
-            mediafileRef={{
-              type: 'mediafile',
-              value: message?.payload?.mediafileKey
-            }}
-            doFallback={true}
-            />
+          <div class="image-container">
+            <MediaFileImage
+              mediafileRef={{
+                type: 'mediafile',
+                value: message?.payload?.mediafileKey
+              }}
+              fitDimension="height"
+              doFallback={true}
+              />
+            </div>
         {:else if message?.payload?.type == "choice"}
           {#if message?.payload?.choice}
             <ul
@@ -175,6 +178,10 @@
     border-width: var(--border-width);
     border-color: var(--color-border);
     border-style: solid;
+  }
+  
+  .image-container {
+    height: 200px;
   }
 
   .message:not(.message--image) .message__contents {

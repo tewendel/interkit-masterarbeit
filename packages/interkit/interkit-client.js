@@ -306,7 +306,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       pubArgs.projectId = get(projectId);
     }
   }
-  //console.log("getSub", col, pub, pubArgs)
+  console.log("getSub", col, pub, pubArgs)
 
   if (!server) {
     console.warn("server not initialised, aborting getSub");
@@ -333,7 +333,6 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   // update the store through simpleDDP's onChange listener
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
 
-
   let bufferedWritesInterval = 350
   let bufferedWritesMaxAge = 2000
   let bufferedWritesFlushAt = null
@@ -348,10 +347,11 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
     let dataRestored = restore_ids(d);
     sub.data.set(dataRestored)
     sub.objects.set(util.rowsToObjects(dataRestored, columnMap))
+    //console.log("update-"+col+"-"+pub+":", dataRestored, pubArgs)
   }
 
   sub.reactiveCollection.onChange((newData)=>{
-    //console.log("onChange", col, newData)
+    //console.log("onChange-"+col+"-"+pub+":", newData, pubArgs)
     
     if (bufferedWritesFlushAt === null) {
       bufferedWritesFlushAt = new Date().valueOf() + bufferedWritesMaxAge;

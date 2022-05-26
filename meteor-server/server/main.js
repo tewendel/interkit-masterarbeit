@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import cors from 'cors'
 
 require('dotenv').config( {
@@ -10,7 +9,6 @@ require('dotenv').config( {
 import '../imports/collections.js';
 import './publications.js';
 import './userRolesSetup.js';
-import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
 
 import './projectMethods.js';
 import './sheetMethods.js';
@@ -18,27 +16,7 @@ import './userMethods.js';
 import './chatMethods.js';
 
 import { Projects } from '../imports/collections.js';
-
-function seedUser(username, password, role) {
-  if (Meteor.users.find({ username }).count() == 0) {
-    console.log('seeding user "' + username + '"');
-    Accounts.createUser({
-      username,
-      password,
-    });
-  } else {
-    if (password) {
-      // always override admin password with password from ENV
-      Accounts.setPassword(Accounts.findUserByUsername(username)._id, password, { logout: false })
-    }
-  }
-  if (role) {
-    let user = Accounts.findUserByUsername(username)
-    if (user) {
-      addUsersToRoles(user, role);
-    }
-  }
-}
+import { seedUser } from '../imports/userUtils.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

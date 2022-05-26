@@ -81,10 +81,13 @@
 
   let messagesScrollContainer
 
+  let initialRender = true;
+
   const scrollDown = async () => {
     await tick()
     const top = messagesScrollContainer?.scrollHeight
-    messagesScrollContainer?.scrollTo({ top: top, behavior: 'smooth' })
+    messagesScrollContainer?.scrollTo({ top: top, behavior: initialRender ? 'instant' : 'smooth' })
+    if(initialRender) initialRender = false;
   }
 
   const sendMessage = (messageText) => {

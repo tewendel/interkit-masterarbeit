@@ -24,8 +24,9 @@
   onMount(async () => {
 
     userId = get(InterkitClient.userId);
-    //console.log("ChatPreview onMount found userId", userId)
+    console.log("ChatPreview onMount found userId", userId)
 
+    console.log("onMount ChatPreview")
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
 

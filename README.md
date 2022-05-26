@@ -52,6 +52,13 @@ docker network create frontproxy
 docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d
 ````
 
+#### optional: enable automatic db dumps
+
+````
+docker-compose -f docker-compose-backup.yml up -d
+````
+
+
 #### security considerations
 
 - ⚠️ Make sure that `INTERKIT_BUNDLER_PASSWORD` in `.env` contains a random string
