@@ -15,7 +15,7 @@
   export let code = "";
   export let readOnly = false;
   export let language = "javascript";
-
+  
   onMount(()=>{
     console.log("CodeEditor mount");
     //console.log(language);
@@ -23,7 +23,14 @@
       lineNumbers: true,
       mode: language,
       readOnly: readOnly ? true : false,
-      lineWrapping: false
+      lineWrapping: true
+    });
+    let charWidth = editor.defaultCharWidth();
+    let basePadding = 4;
+    editor.on("renderLine", function(cm, line, elt) {
+      var off = CodeMirror.countColumn(line.text, null, cm.getOption("tabSize")) * charWidth;
+      elt.style.textIndent = "-" + off + "px";
+      elt.style.paddingLeft = (basePadding + off) + "px";
     });
     editor.refresh();
     editor.on("change", ()=>{
