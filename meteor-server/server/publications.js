@@ -93,11 +93,16 @@ Meteor.publish("channels", ({projectId}) => {
   return channels;
 });
 
-Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit}) => {
+Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit, includeBlocked}) => {
   let query = {projectId};
   if (channel_key) {
     query.channel_key = channel_key;
   }
+
+  if (!includeBlocked) {
+    query.blocked = { $ne: true }
+  }
+
   if (userId) {
     query.$or = [
       {sender: userId}, 
@@ -122,12 +127,15 @@ Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit}) => 
   return messages;
 });
 
-Meteor.publish("messages.last", ({projectId, channel_key, userId}) => {
-  console.log("subscribing to messages.last with", projectId, channel_key, userId)
+Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked}) => {
+  console.log("subscribing to messages.last with", projectId, channel_key, userId, includeBlocked)
   let query = {
     projectId,
     channel_key,
     $or: [{ sender: userId }, { recipients: userId }]
+  }
+  if (!includeBlocked) {
+    query.blocked = { $ne: true }
   }
   let options = {
     sort: {createdAt: -1},
@@ -143,12 +151,15 @@ Meteor.publish("messages.last", ({projectId, channel_key, userId}) => {
   return messages;
 });
 
-Meteor.publish("messages.unseen", ({projectId, channel_key, userId}) => {
+Meteor.publish("messages.unseen", ({projectId, channel_key, userId, includeBlocked}) => {
   let query = {
     projectId,
     channel_key,
     seen: {"$nin": [userId]},
     $or: [{ sender: userId }, { recipients: userId }]
+  }
+  if (!includeBlocked) {
+    query.blocked = { $ne: true }
   }
   let options = {
     //sort: {createdAt: -1},
@@ -160,11 +171,14 @@ Meteor.publish("messages.unseen", ({projectId, channel_key, userId}) => {
 });
 
 
-Meteor.publish("messages.unhandled", ({projectId}) => {
+Meteor.publish("messages.unhandled", ({projectId, includeBlocked}) => {
   let query = {
     projectId,
     handledAt: { $exists: false },
     origin: { $not: { $in: ["handler"] } }
+  }
+  if (!includeBlocked) {
+    query.blocked = { $ne: true }
   }
   let messages = Messages.find(query, {sort: {createdAt: -1}});
   // console.log("messages.unhandled count: " + messages.count(), messages.fetch())

@@ -17,6 +17,8 @@
   let sub;
   let messageStore;
   let userId;
+  let userSub;
+  let userStore;
 
   onMount(async () => {
 
@@ -33,6 +35,9 @@
 
     userId = get(InterkitClient.userId)
     console.log("userId", userId)
+
+    userSub = await InterkitClient.getSub('users', 'user')
+    userStore = userSub.data
 
   })
 
@@ -170,10 +175,15 @@
             on:report={ event => sendReport(event.detail.message) }
           />
         {/each}
+        {#if $userStore?.[0]?.blocked}
+          <div class="blocked">
+            Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.
+          </div>
+        {/if}
       </div>
     {/if}
   </div>
-  {#if chatInterface.text}
+  {#if chatInterface.text && !$userStore?.[0]?.blocked}
     <div class="input">
       <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
     </div>
