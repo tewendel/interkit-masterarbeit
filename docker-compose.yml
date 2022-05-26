@@ -43,6 +43,7 @@ services:
     environment:
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: meteor
+      MONGODB_ADVERTISED_HOSTNAME: mongo
       ALLOW_EMPTY_PASSWORD: "yes"
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}

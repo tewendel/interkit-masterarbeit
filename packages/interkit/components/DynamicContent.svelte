@@ -84,7 +84,7 @@
   .container {
     font-size: inherit;
     line-height: 1.43;
-    padding: var(--distance-s);
+    padding: var(--distance-s) var(--distance-m);
   }
 
   .inline {
