@@ -6,6 +6,7 @@ import { readdirSync } from "fs";
 /* get projectId */
 
 const projectId = process.env.INTERKIT_PROJECT_ID
+const [username, password] = String(process.env.INTERKIT_PROJECT_SERVER_SECRET).split(":")
 // console.log("projectId: " + projectId)
 
 /* import handlers */
@@ -22,7 +23,10 @@ for (let file of files) {
 
 /* setup server connection */
 
-let server = await setup()
+let server = await setup({},{
+    username,
+    password
+})
 
 /* setup message handling */
 
