@@ -336,6 +336,16 @@
 
   $: hasHeading = currentPosition && currentPosition?.heading !== false && currentPosition.heading !== null && currentPosition?.speed > 0
 
+  const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");    
+
+  $: {
+    if($bottomMenuKey == "map" && map) {
+      console.log("buttomMenuKey in Map, invalidating size", $bottomMenuKey)
+      map.invalidateSize();
+    }
+  }
+
+
 </script>
 
 <div 
