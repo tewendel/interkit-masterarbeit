@@ -111,15 +111,14 @@ async function startServer(projectId) {
   if (!server) {
     servers.push({
       projectId,
-      proc: await setupServerProcess(projectId)
+      proc: setupServerProcess(projectId).then(proc => proc) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
     })
   } else {
     if (server.proc) {
-      server.proc.emit('restart'); // currently without effect
       console.warn(`projectServer ${projectId} already running`)
     }
     else {
-      server.proc = await setupServerProcess(projectId)
+      server.proc = setupServerProcess(projectId).then(proc => proc) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
     }
   }
 }
