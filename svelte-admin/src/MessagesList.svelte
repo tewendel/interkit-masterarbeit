@@ -34,18 +34,20 @@
     id: true,
     blocked: true,
     channel_key: true,
-    payloadType: true,
+    sender: true,
+    payloadType: false,
     payloadContent: true,
     payloadLabel: true,
     createdAt: true,
     recipients: false,
-    recipientsCount: true,
+    recipientsCount: false,
     seen: false,
     seenCount: true
   }
 
   const trivialSort = (a, b) => a < b ? -1 : 1
-  const boolSort = (a, b) => a && !b ? -1 : 1
+  // FIXME this works only one way
+  const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
 
   let selection = []
   let pagination = {
@@ -74,6 +76,11 @@
     ...(showCol.channel_key ? [{
       key: 'channel_key',
       value: 'channel',
+      sort: trivialSort
+    }] : []),
+    ...(showCol.sender ? [{
+      key: 'sender',
+      value: 'sender',
       sort: trivialSort
     }] : []),
     ...(showCol.payloadType ? [{

@@ -66,7 +66,8 @@
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
 
   const trivialSort = (a, b) => a < b ? -1 : 1
-  const boolSort = (a, b) => a && !b ? -1 : 1
+  // FIXME this works only one way
+  const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
 
   let showCol = {
     userIcon: true,
@@ -212,11 +213,14 @@
   }
 
   const batchBlock = async setBlocked => {
-    const resultBlockMessages = await InterkitClient.call('messages.block', {
-      projectId,
-      userIds: usersSelection,
-      setBlocked
-    })
+    /* a block of user blocks all their messages. they can only be unblocked individually */
+    if (setBlocked) {
+      const resultBlockMessages = await InterkitClient.call('messages.block', {
+        projectId,
+        userIds: usersSelection,
+        setBlocked: true
+      })
+    }
     const resultBlockUser = await InterkitClient.call('users.block', {
       projectId,
       userIds: usersSelection,
