@@ -19,6 +19,8 @@
   import Movement from "carbon-icons-svelte/lib/Movement.svelte";
   import Send from "carbon-icons-svelte/lib/Send.svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+  import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
+  import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
 
   import { InterkitClient, util } from 'interkit';
 
@@ -64,9 +66,11 @@
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
 
   const trivialSort = (a, b) => a < b ? -1 : 1
+  const boolSort = (a, b) => a && !b ? -1 : 1
 
   let showCol = {
     userIcon: true,
+    blocked: true,
     username: true,
     roles: false,
     id: true,
@@ -88,6 +92,11 @@
       key: "username",
       value: "username",
       sort: trivialSort
+    }] : []),
+    ...(showCol.blocked ? [{
+      key: "blocked",
+      value: "blocked",
+      sort: boolSort
     }] : []),
     ...(showCol.roles ? [{
       key: "roles",
@@ -202,6 +211,20 @@
     }
   }
 
+  const batchBlock = async setBlocked => {
+    const resultBlockMessages = await InterkitClient.call('messages.block', {
+      projectId,
+      userIds: usersSelection,
+      setBlocked
+    })
+    const resultBlockUser = await InterkitClient.call('users.block', {
+      projectId,
+      userIds: usersSelection,
+      setBlocked
+    })
+    console.log('batchBlock result', { usersSelection, setBlocked, resultBlockMessages, resultBlockUser })
+  }
+
   const quickMsgSend = async () => {
     quickMsgResult = await InterkitClient.call('message.send', {
       projectId,
@@ -277,6 +300,8 @@
           {/if}
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
+        {:else if cell.key === 'blocked'}
+          <span title="cell.value">{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
         {:else if cell.key === 'status.online'}
           <span title={(cell.value ? "online" : "offline")} class="cell__1line">{ (cell.value ? "online" : "-") }</span>
         {:else}
@@ -288,10 +313,14 @@
 
     {#if usersSelection.length}
       <ButtonSet>
-        <Button kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
-        <Button icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
-        <Button icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
-        <Button icon={TrashCan} on:click={batchDelete}>Delete</Button>
+        <Button size="small" kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
+        <Button size="small" icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
+        <Button size="small" icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
+      </ButtonSet>
+      <ButtonSet>
+        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
+        <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
+        <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
       </ButtonSet>
     {/if}
   </div>

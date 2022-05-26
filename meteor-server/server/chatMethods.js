@@ -3,6 +3,23 @@ import { Messages, Channels, ScheduledEvents } from '../imports/collections.js';
 import { add } from 'date-fns'
 import * as pushnotifications from '../imports/pushnotifications.js'
 
+const isUserBlocked = () => {
+  const userId = Meteor.userId()
+  if (!userId) {
+    console.warn('checkUserBlocked, but got no userId')
+    return undefined
+  }
+  const user = Meteor.users.findOne(userId)
+  if (!user) {
+    console.warn('checkUserBlocked, got user not found with id ' + userId)
+    return undefined
+  }
+  if (user.blocked) {
+    console.warn('checkUserBlocked, user is blocked')
+    return true
+  }
+}
+
 Meteor.methods({
 
   'channel.create': ({projectId, channel_key}) => {
@@ -50,6 +67,7 @@ Meteor.methods({
 
   'message.submitChoice': ({projectId, channel_key, sender, messageId, selectedKey}) => {
     console.log("### selecting ", messageId, selectedKey)
+    if (isUserBlocked() === true) return
     Messages.update({_id: messageId}, {$set: {selectedChoiceKey: selectedKey}})
 
     Messages.insert({
@@ -65,6 +83,7 @@ Meteor.methods({
 
   'message.submitLocation': ({projectId, channel_key, sender, messageId, location, canceled}) => {
     console.log("message.submitLocation", location)
+    if (isUserBlocked() === true) return
     Messages.update({_id: messageId}, {$set: {submitted: true, canceled}})
 
     Messages.insert({
@@ -80,6 +99,7 @@ Meteor.methods({
   
   // this actually sends the message right now
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
+    if (isUserBlocked() === true) return
     const userId = Meteor.userId()
     console.log('message.send', { payload, channel_key, recipients, sender, userId })
     const messageResult = Messages.insert({
@@ -97,6 +117,38 @@ Meteor.methods({
       pushnotifications.send({ projectId, Meteor, recipients, payload })
     }
     
+  },
+
+  'messages.block': async function ({ projectId, userIds, messageIds, setBlocked }) {
+    let result
+    console.log('messages.block', { userIds, messageIds, setBlocked })
+    if (messageIds) {
+      result = await Messages.update(
+        { _id: { $in: messageIds } },
+        { $set: { blocked: setBlocked } },
+        { multi: true }
+      )
+    } else if (userIds) {
+      result = await Messages.update(
+        { sender: { $in: userIds } },
+        { $set: { blocked: setBlocked } },
+        { multi: true }
+      )
+    } else {
+      console.error('provide either userIds or messageIds')
+      result = false
+    }
+    return result
+  },
+
+  'messages.see': async function ({ messageIds, seenByUserId }) {
+    let result = await Messages.update(
+      { _id: { $in: messageIds } },
+      { $push: { seen: seenByUserId } },
+      { multi: true }
+    )
+    console.log('messages.see', { messageIds, seenByUserId, result })
+    return result
   },
 
   'messages.delete': async function (ids) {

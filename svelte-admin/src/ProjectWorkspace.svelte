@@ -39,6 +39,8 @@
     repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
   }
 
+  let messagesListNotification
+
 </script>
 
 {#if $currentProject}
@@ -51,7 +53,7 @@
         <Tab label="Chat" />
         <Tab label="Project" />
         <Tab label="Users" />
-        <Tab label="Messages" />
+        <Tab label={`${messagesListNotification ? '‼️ ' : ''}Messages`} />
         <Tab label={ "Repository " + repoNotice } />
         <div slot="content">
           <TabContent>
@@ -84,6 +86,7 @@
           <TabContent>
             <MessagesManager
               {projectId}
+              bind:notification={messagesListNotification}
               />
           </TabContent>
           <TabContent>

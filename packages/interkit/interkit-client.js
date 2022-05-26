@@ -388,8 +388,17 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 }
 
 // this gets a sub to messages of specified channel
-const getMessageSub = async (channel_key) => {
-  let sub = await InterkitClient.getSub("messages", "messages", {channel_key, userId: get(userId)}, m => m.channel_key == channel_key)
+const getMessageSub = async (channel_key, includeBlocked = false) => {
+  let sub = await InterkitClient.getSub(
+    "messages",
+    "messages",
+    {
+      channel_key,
+      userId: get(userId),
+      includeBlocked
+    },
+    m => (m.channel_key === channel_key)
+  )
   return sub;
 }
 

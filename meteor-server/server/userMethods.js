@@ -247,6 +247,16 @@ Meteor.methods({
     return false
   },
 
+  'users.block': async ({ projectId, userIds, setBlocked }) => {
+    let result
+    result = await Meteor.users.update(
+      { _id: { $in: userIds } },
+      { $set: { blocked: setBlocked } },
+      { multi: true }
+    )
+    return result
+  },
+
   'user.setBoardInterface': async ({interfaceConfig, projectId, userId, boardId}) => {
     let boardState = getBoardState(projectId, userId, boardId);
     if(boardState) {
