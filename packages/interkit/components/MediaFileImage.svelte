@@ -7,6 +7,7 @@
   export let objectFit = "cover"; // contain or cover
   export let mediafileRef; // {type: "mediafile", value: id}
   export let doFallback = false; // show replacement if mediafile not found
+  export let style = null
   
   //onMount(()=>{ console.log("mount", mediafileRef) })
 
@@ -32,7 +33,7 @@
 </script>
 
 {#if mediafile}
-  <img class={`fitDimension-${fitDimension} objectFit-${objectFit}`} alt="mediafile" src={encodeURI(mediafile.link)}/>
+  <img {style} class={`fitDimension-${fitDimension} objectFit-${objectFit}`} alt="mediafile" src={encodeURI(mediafile.link)}/>
 {:else if doFallback}
   <div class="fallback">image not found</div>
 {/if}
@@ -52,7 +53,7 @@
   }
 
   img.fitDimension-height {
-    height: 100%;
+    height: 150px;
   }
 
   img.fitDimension-both {
