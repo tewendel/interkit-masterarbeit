@@ -412,6 +412,7 @@
           node.contents = json.result
           node.modified = false
           updateNodesModified()
+          if (editNodeId === nodeId) updateEditorContents()
         }
       })
       .catch(genericErrorHandler)
