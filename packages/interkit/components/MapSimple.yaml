@@ -28,6 +28,8 @@ fields:
     defaultValue: "elements/hideOnMap"
   - type: "string"
     name: "permissionNotification"
+  - type: "string"
+    name: "enableGeolocationHint"
   - type: string
     name: mapId
     defaultValue: map

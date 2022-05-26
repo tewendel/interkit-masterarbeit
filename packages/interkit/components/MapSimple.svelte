@@ -23,6 +23,7 @@
   
   export let defaultLocation; // where to center the map [lat, lng]
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen.";
+  export let enableGeolocationHint = "Bitte aktivieren Sie ihren Standort."
   export let height; // height of the container
   export let showControls; // "TRUE" if we should show controls
   export let showPopups; // "TRUE" if we should show popup on marker tap
@@ -208,6 +209,8 @@
       {style}
       {apiKey}
       mapFocus={$mapFocus}
+      {permissionNotification}
+      {enableGeolocationHint}
     />
 
     <div class="Map__Button__Bar button-bar-container">

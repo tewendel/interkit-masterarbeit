@@ -75,6 +75,7 @@
 
   // what to tell the user when there is no permission for gps
   export let permissionNotification;
+  export let enableGeolocationHint;
   export let height; // height of the container
   export let showControls; // "TRUE" if we should show controls
   export let mapId; // id of the map
@@ -300,9 +301,11 @@
         if(currentPosition) {
           map.panTo(currentPosition, {animate: false})
           map.setZoom(16)
-        }
-        else 
+        } else {
+          // granted but not enabled
+          alert(enableGeolocationHint)
           console.log("currentPosition", currentPosition)
+        }
       }
     } else {
       if(currentPosition) {
