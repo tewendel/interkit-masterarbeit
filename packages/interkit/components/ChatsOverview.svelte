@@ -29,8 +29,9 @@
     
     // this finds the date of the latest message in the channel
     const getDate = (channel) => {
+      if(!channel) return
       const messages = get(channelLastMessageStores[channel._id])
-      if(messages.length) {
+      if(messages?.length) {
         let messagesSorted = messages.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
         return new Date(messagesSorted[0].createdAt)
       }
@@ -39,11 +40,13 @@
     // sort the channels by latest messages
     channelsSorted = [...get(channelsStore)].sort((a,b)=>getDate(b) - getDate(a))
 
-    // save the order
-    for(let i = 0; i < channelsSorted.length; i++) {
-      channelOrder[channelsSorted[i].channel_key] = i;
+    if(channelsSorted) {
+      // save the order
+      for(let i = 0; i < channelsSorted.length; i++) {
+        channelOrder[channelsSorted[i].channel_key] = i;
+      }
+      channelOrder = channelOrder;
     }
-    channelOrder = channelOrder;
   }
 
   // set up the message subscriptions for all the channels
