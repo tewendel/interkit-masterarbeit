@@ -180,6 +180,7 @@
   }
   
   .message--image .message__contents {
+    height: 200px;
   }
 
   .message:not(.message--image) .message__contents {
