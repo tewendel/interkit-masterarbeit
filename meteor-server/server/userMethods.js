@@ -170,6 +170,13 @@ Meteor.methods({
   },
 
   'user.savePushnotificationRegistrationToken': async function ({projectId, token}) {
+    /* if user was reset manually we have to take away their/our token, to prevent receiving multiple push notifications */
+    if (token !== '(web)') {
+      Meteor.users.update(
+        { [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: token },
+        { $set: { [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: '(userreset)' } }
+      )
+    }
     const result = Meteor.users.update(Meteor.userId(), {
       $set: {
         [`projectUserData.${projectId}.lastHeartbeat`] : new Date(),
