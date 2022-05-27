@@ -5,6 +5,7 @@
     Checkbox,
     Accordion,
     AccordionItem,
+    Pagination,
     DataTable,
     OverflowMenu,
     OverflowMenuItem,
@@ -31,6 +32,10 @@
   let userId = InterkitClient.userId
 
   let usersSelection = []
+  let pagination = {
+    pageSize: 30,
+    page: 1
+  }
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
@@ -78,7 +83,7 @@
     createdAt: true,
     online: true,
     boards: true,
-    userToken: false,
+    userToken: true,
     pushToken: false,
   }
 
@@ -259,9 +264,10 @@
       size="compact"
       expandable
       sortable
-      stickyHeader
       batchSelection
       bind:selectedRowIds={usersSelection}
+      pageSize={pagination.pageSize}
+      page={pagination.page}
       {headers}
       {rows}
       >
@@ -314,6 +320,12 @@
       </span>
 
     </DataTable>
+    <Pagination
+      bind:pageSize={pagination.pageSize}
+      bind:page={pagination.page}
+      totalItems={rows.length}
+      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+      />
 
     {#if usersSelection.length}
       <ButtonSet>
@@ -394,6 +406,13 @@
        TODO find a good size
        */
     max-height: 70vh;
+  }
+
+  .UsersListTableContainer :global(table) {
+    table-layout: fixed; /* make text-overflow work + improve layout, hackily */
+  }
+  .UsersListTableContainer :global(.bx--table-expand__button) {
+    min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
   
 </style>
