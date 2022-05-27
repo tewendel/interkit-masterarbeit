@@ -54,7 +54,12 @@ Meteor.methods({
   'channel.seeAll': ({projectId, channel_key, userId}) => {
     console.log("channel.seeAll", channel_key, userId)
     Messages.update(
-      {projectId, channel_key: channel_key, seen: {"$nin": [userId]}}, 
+      {
+        projectId, 
+        channel_key, 
+        $or: [{sender: userId}, {recipients: userId}], 
+        seen: {"$nin": [userId]}
+      }, 
       {$push: {seen: userId}},
       {multi: true}
     );
