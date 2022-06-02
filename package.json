@@ -14,6 +14,8 @@
     "dev:bundler": "cd app-bundler && npm run dev",
     "dev:docs": "cd sites/docs && npm run dev",
     "dev": "npx concurrently --kill-others-on-fail -c \"bgBlue.bold,bgGreen.bold,bgMagenta.bold,bgYellow.bold\" \"npm:dev:server\" \"npm:dev:admin\" \"npm:dev:bundler\" \"npm:dev:docs\"",
+    "dev:tunnel": "./setup_tunnel.sh",
+    "echo": "echo $INTERKIT_BUNDLER_URL",
     "docker:build:server": "docker build . -f Dockerfile.meteor-server",
     "docker:build:admin": "docker build . -f Dockerfile.svelte-admin",
     "docker:build:bundler": "docker build . -f Dockerfile.app-bundler",
