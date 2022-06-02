@@ -2,19 +2,24 @@ import pkg from 'geolib';
 const { getDistance } = pkg;
 
 const callWithDelay = async (server, method, methodParams, options) => {
-  if(options?.delay) {
-    await server.call('events.schedule', {
-      projectId: methodParams.projectId,
-      method,
-      delay: options.delay, 
-      payload: methodParams 
-    })
-  } else {
-    await server.call(method, methodParams)
+  try {
+    if(options?.delay) {
+      await server.call('events.schedule', {
+        projectId: methodParams.projectId,
+        method,
+        delay: options.delay, 
+        payload: methodParams 
+      })
+    } else {
+      await server.call(method, methodParams)
+    }
+  } catch (error) {
+    console.log("error callWithDelay", method, methodParams, error)
+    return false
   }
 }
 
-const sendText = function(text, options) {
+const sendText = async function(text, options) {
     const {message, server, projectId} = this
     const methodParams = {
       projectId, 
@@ -28,11 +33,11 @@ const sendText = function(text, options) {
         options
       }
     }
-    callWithDelay(server, "message.send", methodParams, options)
+    await callWithDelay(server, "message.send", methodParams, options)
 }
 const send = sendText;
 
-const sendImage = function (mediafileKey, options) {
+const sendImage = async function (mediafileKey, options) {
   const { message, server, projectId } = this
   console.log('sendImage', mediafileKey)
   const methodParams = {
@@ -48,10 +53,10 @@ const sendImage = function (mediafileKey, options) {
       options
     }
   }
-  callWithDelay(server, "message.send", methodParams, options)
+  await callWithDelay(server, "message.send", methodParams, options)
 }
 
-const sendChoice = function(choice, options) {
+const sendChoice = async function(choice, options) {
   const {message, server, projectId} = this
   //console.log(this)
   const methodParams = {
@@ -66,7 +71,7 @@ const sendChoice = function(choice, options) {
       options
     }
   }
-  callWithDelay(server, "message.send", methodParams, options)
+  await callWithDelay(server, "message.send", methodParams, options)
 }
 
 const requestLocation = async function(prompt, options) {
@@ -84,7 +89,7 @@ const requestLocation = async function(prompt, options) {
       cancel: options?.cancel
     }
   }
-  callWithDelay(server, "message.send", methodParams, options)
+  await callWithDelay(server, "message.send", methodParams, options)
 }
 
 
@@ -118,16 +123,19 @@ const echo = async function(msg) {
   const otherIds = others.map(u => u._id)
   console.log("echo to otherIds", otherIds)
 
-  let name = await server.call('user.getUserVar', {userId, projectId, varName: "name"})
-  
-  server.call('message.send', {
-    projectId, 
-      channel_key: message.channel_key, 
-      // sender: message.sender, // leaving sender empty for now, so that the sender doesn't see their message double
-      recipients: otherIds,
-      origin: "handler",
-      payload: {...msg.payload, options: {label: name}}      
-  })
+  try {
+    let name = await server.call('user.getUserVar', {userId, projectId, varName: "name"})
+    server.call('message.send', {
+      projectId, 
+        channel_key: message.channel_key, 
+        // sender: message.sender, // leaving sender empty for now, so that the sender doesn't see their message double
+        recipients: otherIds,
+        origin: "handler",
+        payload: {...msg.payload, options: {label: name}}      
+    })
+  } catch(error) {
+    console.log("api.echo error", error)
+  }
 }
 
 // load all the rows in a sheet
