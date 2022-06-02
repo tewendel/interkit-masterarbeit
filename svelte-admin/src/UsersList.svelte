@@ -141,7 +141,7 @@
     ...(showCol.pushToken ? [{
       key: "pushnotificationRegistrationToken",
       value: "push token",
-      sort: false
+      sort: trivialSort
     }] : [])
   ];
 
