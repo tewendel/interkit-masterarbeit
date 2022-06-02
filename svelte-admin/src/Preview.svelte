@@ -136,7 +136,7 @@
         <div slot="content">
           <TabContent>
             <div>
-              <a target="_blank" href="{previewURL}">
+              <a target="_blank" title={previewURL} href="{previewURL}">
                   {#key previewURL}
                     <QrCode value={previewURL} />
                   {/key}

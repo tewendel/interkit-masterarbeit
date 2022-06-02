@@ -43,6 +43,16 @@ npm run dev
 open http://localhost:5000
 ````
 
+#### run via tunnel (experimental)
+
+If you want to test the app on another device inside your local network and have it access your local server, you can use [localtunnel](https://localtunnel.me/)
+
+```
+npm run dev:tunnel
+```
+
+Use the QR code "web preview" to open the the app on your device.
+
 ### deploy
 
 ````
