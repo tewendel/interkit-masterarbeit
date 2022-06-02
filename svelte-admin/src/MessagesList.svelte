@@ -16,6 +16,7 @@
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
   import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte'
   import ErrorOutline from 'carbon-icons-svelte/lib/ErrorOutline.svelte'
+  import Checkmark from 'carbon-icons-svelte/lib/Checkmark.svelte'
 
   import { InterkitClient } from 'interkit'
 
@@ -158,7 +159,7 @@
       seen: message.seen?.join(' '),
       seenCount: message.seen?.length
     }))
-    .filter(message => (!filters.channelReports || (filters.channelReports && message.channel_key === REPORTS_CHANNEL_KEY)))
+    .filter(message => (!filters.channelReports || (filters.channelReports && message.channel_key === REPORTS_CHANNEL_KEY && (!message.seen || message?.seen?.length === 0))))
     : []
 
   const batchDelete = async () => {
@@ -250,7 +251,7 @@
         <div>Options:</div>
         <Checkbox bind:checked={verbose} labelText="verbose (full message objects)" />
         <div>Filters:</div>
-        <Checkbox bind:checked={filters.channelReports} labelText="only reports (channel_key=REPORTS)" />
+        <Checkbox bind:checked={filters.channelReports} labelText="only unseen reports (channel_key=REPORTS)" />
         <div>Columns:</div>
         {#each Object.keys(showCol) as colKey}
           <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
@@ -285,12 +286,12 @@
             {JSON.stringify(parseReport(row), null, 2)}
           </pre>
           <ButtonSet>
-            <Button size="small" icon={TrashCan} on:click={() => { reportedDeleteMessage(row) }}>Delete Message</Button>
-            <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockMessage(row) }}>Block Message</Button>
+            <Button size="small" icon={TrashCan} on:click={() => { reportedDeleteMessage(row) }}>Delete reported message</Button>
+            <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockMessage(row) }}>Block reported message</Button>
             <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockUser(row) }}>Block User</Button>
           </ButtonSet>
           <ButtonSet>
-            <Button size="small" on:click={() => { reportedSeen(row.id) }}>Set Seen</Button>
+            <Button size="small" icon={Checkmark} on:click={() => { reportedSeen(row.id) }}>Set Seen</Button>
           </ButtonSet>
         {/if}
         {#if verbose}
