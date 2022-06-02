@@ -192,42 +192,50 @@ const send = ({ projectId, Meteor, recipients, payload }) => {
   ).filter(token => !!token)
   if (recipientsEligibleForPush.count() === 0) {
     console.log('no eligible recipients, not sending push notifications')
+  } else if (recipientsRegistrationTokens.length === 0) {
+    console.warn('eligible recipients, but no tokens, not sending push notifications', { recipientsEligibleForPush })
   } else {
     console.log('recipientsEligibleForPush', recipientsEligibleForPush.count())
     console.log('recipientsRegistrationTokens', recipientsRegistrationTokens)
     try {
       messaging = init(projectId)
-      console.log('FCM messaging', messaging)
+      // console.log('FCM messaging OK', messaging)
     } catch (err) {
       console.error('error setting up push notifications, bailing')
       return false
     }
-    messaging.sendMulticast({ // solo would be .send()
-      notification: {
-        // TODO
-        // title: `Notification from ${projectId}`,
-        body: payload.text || fallbackNotificationBody
-      },
-      data: {
-        // foo: 'bar',
-      },
-      // solo would be token: string
-      tokens: recipientsRegistrationTokens
-    })
-      .then((response) => {
-        console.log(`message.send sent push ${response.successCount} successes`)
-        if (response.failureCount > 0) {
-          const failedTokens = []
-          response.responses.forEach((resp, idx) => {
-            if (!resp.success) {
-              failedTokens.push(recipientsRegistrationTokens[idx])
-            }
-          })
-          // TODO do something with failedTokens
-          console.error(`${response.failureCount} tokens failed: `, failedTokens)
-        }
+    try {
+      messaging.sendMulticast({ // solo would be .send()
+        notification: {
+          // TODO
+          // title: `Notification from ${projectId}`,
+          body: payload.text || fallbackNotificationBody
+        },
+        data: {
+          // foo: 'bar',
+        },
+        // solo would be token: string
+        tokens: recipientsRegistrationTokens
       })
-      .catch((error) => { console.log('message.send push error', error) })
+        .then((response) => {
+          console.log(`message.send sent push ${response.successCount} successes`)
+          if (response.failureCount > 0) {
+            const failedTokens = []
+            response.responses.forEach((resp, idx) => {
+              if (!resp.success) {
+                failedTokens.push(recipientsRegistrationTokens[idx])
+              }
+            })
+            // TODO do something with failedTokens
+            console.error(`${response.failureCount} tokens failed: `, failedTokens)
+          }
+        })
+        // this catch might be not working, due to bad implementation?
+        // hence we double-wrap the whole thing in try-catch...
+        .catch((error) => { console.log('message.send push error', error) })
+    } catch (error) {
+      console.error('message.send push error', error)
+    }
   }
 }
 
