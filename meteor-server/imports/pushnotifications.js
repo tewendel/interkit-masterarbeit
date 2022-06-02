@@ -175,7 +175,7 @@ const send = ({ projectId, Meteor, recipients, payload }) => {
   const recipientsEligibleForPush = Meteor.users.find({
     _id: { $in: recipients },
     [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
-      $not: { $in: [undefined, '', '(web)'] }
+      $not: { $in: [undefined, '', '(web)', '(userreset)'] }
     },
     ...(enableHeartbeat
       ? {
