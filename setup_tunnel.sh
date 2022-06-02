@@ -1,11 +1,12 @@
 #/bin/sh
 
-SUB=interkit-1234
+SUB=interkit-$RANDOM
 SUB_BUNDLER=$SUB-bundler
 SUB_SERVER=$SUB-server
 
-lt --port 3000 -s $SUB_SERVER &
-lt --port 4000 -s $SUB_BUNDLER &
+# create tunnels
+lt --port 3000 -s $SUB_SERVER --open &
+lt --port 4000 -s $SUB_BUNDLER --open &
 
 export INTERKIT_SERVER_URL=https://${SUB_SERVER}.loca.lt 
 export INTERKIT_SERVER_WEBSOCKETS_URL=wss://${SUB_SERVER}.loca.lt/websocket 

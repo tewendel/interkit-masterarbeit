@@ -50,8 +50,8 @@ If you want to test the app on another device inside your local network and have
 ```
 npm run dev:tunnel
 ```
-
-Use the QR code "web preview" to open the the app on your device.
+It should open 2 urls in the browser, you need to click the button on both for the warning to disappear.  
+Then use the QR code "web preview" to open the the app on your device.
 
 ### deploy
 
