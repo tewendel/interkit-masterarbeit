@@ -109,23 +109,26 @@ async function setupServerProcess(projectId) {
 async function startServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
   if (!server) {
-    servers.push({
+    const newServer = {
       projectId,
-      proc: setupServerProcess(projectId).then(proc => proc) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
-    })
+      proc: setupServerProcess(projectId).then(p => newServer.proc=p) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
+    }
+    servers.push(newServer)
   } else {
     if (server.proc) {
-      console.warn(`projectServer ${projectId} already running`)
+      server.proc.stdin.write('rs');
+      console.warn(`projectServer ${projectId} restart`)
     }
     else {
-      server.proc = setupServerProcess(projectId).then(proc => proc) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
+      const newProc = setupServerProcess(projectId).then(p => server.proc=p) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
+      server.proc = newProc
     }
   }
 }
 
 function stopServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
-  if (server && server.proc) {
+  if (server && server.proc && server.proc.kill) {
     console.log(`stopping projectServer ${projectId}`)
     const terminated = server.proc.kill('SIGINT');
     // note: the process may still exist https://nodejs.org/api/child_process.html#subprocesskilled
