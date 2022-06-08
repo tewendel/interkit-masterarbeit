@@ -150,14 +150,14 @@
             label="New project"
             placeholder="Enter project title..."
           />
-          <Dropdown
+          <!--Dropdown
             hideLabel
             inline
             titleText="Template"
             placeholder="Select template"
             bind:selectedIndex={newProjectTemplateIndex}
             items={newProjectItems}
-          />
+          /-->
           <TextInput 
             bind:value={gitRepository} 
             label="Public Git Repository"
