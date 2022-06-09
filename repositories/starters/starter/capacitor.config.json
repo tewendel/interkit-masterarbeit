@@ -2,5 +2,6 @@
   "appId": "interkit.app.starter",
   "appName": "interkit-starter",
   "webDir": "public",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "linuxAndroidStudioPath": "android-studio"
 }
