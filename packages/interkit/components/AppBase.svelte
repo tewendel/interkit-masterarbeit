@@ -49,11 +49,18 @@
       .then(async () => {
         console.log('pushNotifications addListeners...')
         await pushNotifications.getDeliveredNotifications()
+        pushNotifications.removeAllDeliveredNotifications()
+        console.log('removeAllDeliveredNotifications after register')
       })
       .catch(e => {
         console.error('pushNotifications', e)
         InterkitClient.pushnotificationRegistrationToken.set('(web)')
       })
+    /* app becomes visible */
+    document.addEventListener('visibilitychange', () => {
+      console.log('removeAllDeliveredNotifications b/c visibilitychange')
+      pushNotifications.removeAllDeliveredNotifications()
+    })
   })()
 
   $: {
