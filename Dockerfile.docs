@@ -7,10 +7,14 @@ COPY /packages /packages
 RUN cd /packages/interkit && npm ci
 #RUN cd /packages/interkit-blockly && npm ci
 
-# copy app files and install dependencies
-COPY sites/docs ./docs
 WORKDIR /app/docs
+
+# copy package.json and install dependencies
+COPY sites/docs/package*json ./
 RUN npm ci
+
+# copy app files
+COPY sites/docs ./
 
 # copy other files that are imported in the docs
 COPY meteor-server /meteor-server
