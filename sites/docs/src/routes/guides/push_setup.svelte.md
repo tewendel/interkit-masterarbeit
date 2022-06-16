@@ -25,7 +25,7 @@ Push and Firebase are enabled by default.
 following [the Capacitor docs for v2](https://capacitorjs.com/docs/v2/guides/push-notifications-firebase#add-initialization-code),
 add
 
-```
+````java
 // ...
 import FirebaseCore
 import FirebaseInstanceID
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
   }
 }
-```
+````
 
 # Provide credentials
 
