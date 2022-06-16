@@ -16,6 +16,8 @@
   import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
   import ChannelEditor from './ChannelEditor.svelte'
 
+  import { idRE } from 'interkit/project-boards-nodes.js'
+
   const dispatch = createEventDispatcher()
   
   const useCodeMirror = true
@@ -23,10 +25,7 @@
 
   import { cheatsheetContents } from './cheatsheet.js'
 
-  // TODO this could be centralized somewhere.
-  // theoretically, usefully between admin AND bundler,
-  // e.g. to be used in server.mjs for validation
-  const boardIdRE = /^[a-z0-9]+$/
+  const boardIdRE = new RegExp(`^${idRE}$`, 'u')
   const nodeIdRE = boardIdRE
 
   export let projectId
@@ -256,7 +255,7 @@
       newBoardIdDefault = 'board' + c
     }
     while (newBoardId === undefined || !boardIdRE.test(newBoardId)) {
-      newBoardId = window.prompt('Please enter an ID for the new board. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newBoardId || newBoardIdDefault)
+      newBoardId = window.prompt('Please enter an ID for the new board. You can use letters, numbers, dashes, spaces, but no underscores.', newBoardId || newBoardIdDefault)
     }
     if (newBoardId === null) return
     api(projectId, '/' + newBoardId, { method: 'post' })
@@ -325,7 +324,7 @@
       return
     }
     if (!nodeIdRE.test(newNodeId)) {
-      window.alert('You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.')
+      window.alert('You can use letters, numbers, dashes, spaces, but no underscores.')
     } else {
       createNode(currentBoardId, newNodeId, newNodeContent)
       showNewNodeModal = false

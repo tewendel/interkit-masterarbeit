@@ -2,7 +2,8 @@ import * as path from 'path'
 import { existsSync, promises as fs } from 'fs'
 import beautify from 'js-beautify'
 
-const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
+// handle non-node/browser environment so we can import this as a module there
+const REPOSITORIES_PATH = typeof process !== 'undefined' ? process.env.REPOSITORIES_PATH : ''
 
 const newEmptyBoard = params => ({
   name: params.boardId,
@@ -15,9 +16,19 @@ export const onMessage = async (msg, api) => {\n  // do something\n}
 `
 const startNodeId = 'start'
 
-const handleREnodeId = /[a-z0-9]+_([a-z0-9]+)\.js$/
-const nodeFileNameRE = /^([a-z0-9]+)_([a-z0-9]+)\.js$/
-const boardFileNameRE = /^([a-z0-9]+).json$/
+/* Should we run into incompatible browsers, the Unicode property escapes
+ * can be expanded. See https://stackoverflow.com/a/37668315/629238
+ * Affected: interkit admin on Safari <11.1, Chrome <64, FF <78
+ * See https://caniuse.com/mdn-javascript_builtins_regexp_property_escapes
+ */
+const idRE = '[\\p{L}\\p{Nd} -]+'
+
+const projectIdRE = /[\w\d]+/
+const idParamRE = new RegExp(idRE, 'u')
+
+const handleREnodeId = new RegExp(`${idRE}_(${idRE})\\.js$`, 'u')
+const nodeFileNameRE = new RegExp(`^(${idRE})_(${idRE})\\.js$`, 'u')
+const boardFileNameRE = new RegExp(`^(${idRE})\\.json$`, 'u')
 const startNodeMetaCommentRE = /(\/\/|\/\*)\s*start!/
 
 const projectBoardPath = (relative=false, projectId, boardIdOrPath, nodeId, suffix) => {
@@ -69,6 +80,16 @@ function expressify (main) {
     }
     const { projectId, boardId, nodeId } = req.params
     const handle = projectBoardPath(false, projectId, boardId, nodeId)
+    if (
+      (projectId && !projectIdRE.test(projectId)) ||
+      (boardId && !idParamRE.test(boardId)) ||
+      (nodeId && !idParamRE.test(nodeId))
+    ) {
+      res.status(400)
+      res.contentType('application/json')
+      res.send({ errors: [ { message: 'invalid param' } ] })
+      return
+    }
     try {
       resObj.result = await main(handle, req.params, req, res)
       res.status(200)
@@ -251,5 +272,6 @@ api.nodes.delete = expressify(
 
 export {
   lib,
-  api
+  api,
+  idRE
 }

@@ -17,7 +17,6 @@ import { get_git_commitAll } from './src/get_git_commitAll.mjs'
 import { get_git_checkout } from './src/get_git_checkout.mjs'
 import { get_yamls } from './src/get_yamls.mjs'
 
-//import { api as board_node_api } from './src/api_boards.mjs'
 import { api as board_node_api } from 'interkit/project-boards-nodes.js'
 
 import { api as project_files_api } from './src/api_project_files.mjs'
@@ -67,18 +66,17 @@ app.get('/components/:projectId', get_yamls)
 
 // app.use(express.urlencoded({ extended: true }))
 
-//TODO add validation/RegEx to all params?
 const rawBodyParser = bodyParser.raw({ type: '*/*' })
 app.get('/boards/:projectId', board_node_api.boards.list)
-app.post('/boards/:projectId/:boardId([a-z0-9]+)', board_node_api.boards.create)
+app.post('/boards/:projectId/:boardId', board_node_api.boards.create)
 app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
 app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
 app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
-app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId([a-z0-9]+)/:newNodeId([a-z0-9]+)', board_node_api.boards.renameNode)
+app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId/:newNodeId', board_node_api.boards.renameNode)
 
 // dont need it, build it into read board
 // app.get('/boards/:projectId/:boardId/nodes', board_node_api.nodes.list)
-app.post('/boards/:projectId/:boardId/nodes/:nodeId([a-z0-9]+)', rawBodyParser, board_node_api.nodes.create)
+app.post('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.create)
 app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
 app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
 app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)
