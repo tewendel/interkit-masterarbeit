@@ -75,6 +75,10 @@ const getDeliveredNotifications = async () => {
   // TODO do something with them? maybe just throw them out, since app is being opened
 }
 
+const removeAllDeliveredNotifications = () => {
+  return PushNotifications.removeAllDeliveredNotifications()
+}
+
 const heartbeat = () => {
   const isTabHidden = document.visibilityState === 'hidden' ||
     document.webkitVisibilityState === 'hidden' ||
@@ -98,6 +102,7 @@ export {
   registerNotifications,
   addListeners,
   getDeliveredNotifications,
+  removeAllDeliveredNotifications,
   enableHeartbeat,
   startHeartbeat
 }
