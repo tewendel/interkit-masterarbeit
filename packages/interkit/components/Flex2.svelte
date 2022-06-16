@@ -38,5 +38,6 @@
 
   [data-size=fill] {
     flex: 1;
+    overflow-y: hidden;
   }
 </style>

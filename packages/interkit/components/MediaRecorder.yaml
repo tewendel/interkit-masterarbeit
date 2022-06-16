@@ -1,0 +1,25 @@
+name: MediaRecorder
+toolboxCategory: Input
+fields:
+  - name: mode
+    type: options
+    options:
+      - video
+      - audio
+      - image
+    defaultValue: video
+  - type: sheetColumn
+    name: imageColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - type: sheetColumn
+    name: audioColumn
+    columnType: mediaFile
+    defaultValue: elements/audio
+  - type: sheetColumn
+    name: videoColumn
+    columnType: mediaFile
+    defaultValue: elements/video  
+  - type: string
+    name: uploadedTrigger
+    defaultValue: mediaElementCreated

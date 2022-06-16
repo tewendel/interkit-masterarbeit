@@ -1,0 +1,21 @@
+name: ContentElement_MediaList
+fields: 
+  - type: sheetColumn
+    name: imageColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - type: sheetColumn
+    name: audioColumn
+    columnType: mediaFile
+    defaultValue: elements/audio
+  - type: sheetColumn
+    name: videoColumn
+    columnType: mediaFile
+    defaultValue: elements/video  
+  - name: titleColumn
+    type: sheetColumn
+    columnType: string
+    defaultValue: elements/title
+hiddenProps: 
+  - element
+toolboxCategory: Elements
