@@ -85,11 +85,19 @@
     }
   }
 
+  async function changeUser(userAuth) {
+    console.log("set_userId request", userAuth);
+    await InterkitClient.loginTokenUser(userAuth);
+    window.location.reload();
+  }
+
+
   function receiveMessage(event) {
-    switch (event.data) {
+    switch (event.data?.command) {
       case "go_back": history.back(); break;
       case "go_forward": history.forward(); break;
       case "clear_localStorage": localStorage.clear(); break;
+      case "set_userAuth": if(event.data?.payload) { changeUser(event.data?.payload) }; break; // admin requests preview for a user
     }
   }
 

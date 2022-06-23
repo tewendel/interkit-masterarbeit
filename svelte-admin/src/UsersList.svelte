@@ -22,6 +22,7 @@
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
+  import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
 
   import { InterkitClient, util } from 'interkit';
 
@@ -246,6 +247,23 @@
       }
     })
   }
+
+  export let updatePreviewUserAuth;
+
+  const previewAttach = () => {
+    if(usersSelection?.length == 1) {
+      const newUserId = usersSelection[0]
+      console.log("previewAttach", newUserId);
+      
+      // find user token for this userId
+      let user = users.find(u=>u._id == newUserId)
+      let userToken = user?.projectUserData?.[projectId]?.userToken
+      if(confirm("Warning: You are attaching a real user to the preview. Anything you do in the preview will affect this user. Proceed?")) {
+        updatePreviewUserAuth({userId: newUserId, userToken});
+      }
+      
+    }
+  }
   
 </script>
 
@@ -339,6 +357,12 @@
         <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
       </ButtonSet>
     {/if}
+    {#if usersSelection.length == 1}
+    <ButtonSet>
+      <Button size="small" icon={MobileAdd} on:click={previewAttach}>Attach to preview</Button>
+    </ButtonSet>
+    {/if}
+    
   </div>
 
 {:else}

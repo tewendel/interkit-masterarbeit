@@ -21,7 +21,7 @@
   import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft.svelte";
   import ArrowRight from "carbon-icons-svelte/lib/ArrowRight.svelte";
 
-  export let projectId, previewURL = "";
+  export let projectId, previewURL = "", previewUserAuth;
   export let currentProject;
 
   const convert = new Convert();
@@ -66,10 +66,19 @@
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }
 
+  // send new previewUserId to preview when it is changed in admin
+  $: {
+    console.log("PreviewUserAuth update", previewUserAuth)
+    if(iframeRef) {
+      iframeRef.contentWindow.postMessage({command: 'set_userAuth', payload: previewUserAuth}, '*')
+    }
+  }
+
+
 </script>
   <div style="float:right">
-    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage('go_back','*')  } iconDescription="Browser back" icon={ArrowLeft} />
-    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage('go_forward','*') } iconDescription="Browser forward" icon={ArrowRight} />
+    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_back'},'*')  } iconDescription="Browser back" icon={ArrowLeft} />
+    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_forward'},'*') } iconDescription="Browser forward" icon={ArrowRight} />
   </div>
   <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
     <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
@@ -94,7 +103,7 @@
 
   <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
   <Button kind="tertiary" icon={ResetIcon} on:click={() => { 
-    iframeRef.contentWindow.postMessage('clear_localStorage','*')
+    iframeRef.contentWindow.postMessage({command: 'clear_localStorage'},'*')
     setTimeout(BundleServer.reloadPreview, 100)
     }}>Reset & reload</Button>
   
