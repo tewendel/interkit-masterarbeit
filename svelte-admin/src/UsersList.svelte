@@ -23,6 +23,8 @@
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
+  import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
+  import UserVarTableModal from './UserVarTableModal.svelte';
 
   import { InterkitClient, util } from 'interkit';
 
@@ -75,6 +77,7 @@
   // FIXME this works only one way
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
 
+  // default values for columns to show/hide
   let showCol = {
     userIcon: true,
     blocked: true,
@@ -86,6 +89,7 @@
     boards: true,
     userToken: true,
     pushToken: false,
+    userVars: false
   }
 
   let headers
@@ -143,6 +147,11 @@
       key: "pushnotificationRegistrationToken",
       value: "push token",
       sort: trivialSort
+    }] : []),
+    ...(showCol.userVars ? [{
+      key: 'userVars',
+      value: 'userVars',
+      sort: false
     }] : [])
   ];
 
@@ -166,6 +175,7 @@
           lastHeartbeat: user?.projectUserData?.[projectId]?.lastHeartbeat,
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
           boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState),
+          userVars: JSON.stringify(user?.projectUserData?.[projectId]?.userVars),
           roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
             if (roleAssignment.user._id === user.id) {
               acc.push(roleAssignment.role._id)
@@ -264,6 +274,14 @@
       
     }
   }
+
+  let varEditorUser = null;
+  const openUserVarEditor = () => {
+    if(usersSelection?.length == 1) {
+      console.log("openUserVarEditor");
+      varEditorUser = users.find(u=>u._id == usersSelection[0])
+    }
+  }
   
 </script>
 
@@ -360,6 +378,7 @@
     {#if usersSelection.length == 1}
     <ButtonSet>
       <Button size="small" icon={MobileAdd} on:click={previewAttach}>Attach to preview</Button>
+      <Button size="small" icon={TableSplit} on:click={openUserVarEditor}>edit userVars</Button>
     </ButtonSet>
     {/if}
     
@@ -403,6 +422,8 @@
     <p>{moveToResult}</p>
   {/if}
 </Modal>
+
+<UserVarTableModal user={varEditorUser} {projectId}/>
 
 <style>
   .truncate {
