@@ -1,0 +1,25 @@
+name: Upload
+title: Upload
+# green
+color: 230
+fields:
+  - type: sheetColumn
+    name: imageColumn
+    columnType: mediaFile
+    defaultValue: elements/image
+  - type: sheetColumn
+    name: audioColumn
+    columnType: mediaFile
+    defaultValue: elements/audio
+  - type: sheetColumn
+    name: videoColumn
+    columnType: mediaFile
+    defaultValue: elements/video  
+  - type: sheetColumn
+    name: textColumn
+    columnType: string
+    defaultValue: elements/text
+  - type: string
+    name: uploadedTrigger
+    defaultValue: mediaElementCreated
+toolboxCategory: "Input"

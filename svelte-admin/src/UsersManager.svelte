@@ -7,6 +7,7 @@
 
   export let projectId
   export let previewUserId
+  export let updatePreviewUserAuth
 
   export let moveToBoardId
   export let moveToNodeId
@@ -47,6 +48,7 @@
   users={usersArray}
   {projectId}
   {previewUserId}
+  {updatePreviewUserAuth}
   {moveToBoardId}
   {moveToNodeId}
   />

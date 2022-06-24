@@ -32,6 +32,7 @@ const executeTrigger = (trigger, payload) => {
       console.log("action triggered", action, payload)
       action.method({
         timestamp: Date.now(),
+        trigger,
         payload
       })
     }

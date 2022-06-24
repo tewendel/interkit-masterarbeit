@@ -26,6 +26,7 @@
   const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
 
   let previewUserId
+  let previewUserAuth
 
   let nodeEditorBoardId
   let nodeEditorNodeId
@@ -82,6 +83,7 @@
             <UsersManager
               {projectId}
               {previewUserId}
+              updatePreviewUserAuth={(data)=>previewUserAuth = data}
               moveToBoardId={nodeEditorBoardId}
               moveToNodeId={nodeEditorNodeId}
               />
@@ -110,7 +112,7 @@
     {/if}
     <div class="right-pane" class:hidden={rightPaneHidden}>
         <button on:click={toggleRightPane}>hide preview</button>
-        <Preview {projectId} {currentProject}/>
+        <Preview {projectId} {currentProject} {previewUserAuth}/>
     </div>
   </div>
 {:else}

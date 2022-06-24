@@ -28,6 +28,9 @@
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
+  import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
+  import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
+  import UserVarTableModal from './UserVarTableModal.svelte';
 
   import SchedulingForm from './InputModals/SchedulingForm.svelte'
 
@@ -89,6 +92,7 @@
   // FIXME this works only one way
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
 
+  // default values for columns to show/hide
   let showCol = {
     userIcon: true,
     blocked: true,
@@ -100,6 +104,7 @@
     boards: true,
     userToken: true,
     pushToken: false,
+    userVars: false
   }
 
   let headers
@@ -157,6 +162,11 @@
       key: "pushnotificationRegistrationToken",
       value: "push token",
       sort: trivialSort
+    }] : []),
+    ...(showCol.userVars ? [{
+      key: 'userVars',
+      value: 'userVars',
+      sort: false
     }] : [])
   ];
 
@@ -180,6 +190,7 @@
           lastHeartbeat: user?.projectUserData?.[projectId]?.lastHeartbeat,
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
           boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState),
+          userVars: JSON.stringify(user?.projectUserData?.[projectId]?.userVars),
           roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
             if (roleAssignment.user._id === user.id) {
               acc.push(roleAssignment.role._id)
@@ -301,6 +312,31 @@
 
   $: if (openQuickMessage) loadBoards()
   $: if (openMoveTo) loadBoards()
+
+  export let updatePreviewUserAuth;
+
+  const previewAttach = () => {
+    if(usersSelection?.length == 1) {
+      const newUserId = usersSelection[0]
+      console.log("previewAttach", newUserId);
+      
+      // find user token for this userId
+      let user = users.find(u=>u._id == newUserId)
+      let userToken = user?.projectUserData?.[projectId]?.userToken
+      if(confirm("Warning: You are attaching a real user to the preview. Anything you do in the preview will affect this user. Proceed?")) {
+        updatePreviewUserAuth({userId: newUserId, userToken});
+      }
+      
+    }
+  }
+
+  let varEditorUser = null;
+  const openUserVarEditor = () => {
+    if(usersSelection?.length == 1) {
+      console.log("openUserVarEditor");
+      varEditorUser = users.find(u=>u._id == usersSelection[0])
+    }
+  }
   
 </script>
 
@@ -394,6 +430,13 @@
         <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
       </ButtonSet>
     {/if}
+    {#if usersSelection.length == 1}
+    <ButtonSet>
+      <Button size="small" icon={MobileAdd} on:click={previewAttach}>Attach to preview</Button>
+      <Button size="small" icon={TableSplit} on:click={openUserVarEditor}>edit userVars</Button>
+    </ButtonSet>
+    {/if}
+    
   </div>
 
 {:else}
@@ -531,6 +574,8 @@
     </div>
   {/if}
 </Modal>
+
+<UserVarTableModal user={varEditorUser} {projectId}/>
 
 <style>
 

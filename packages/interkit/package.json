@@ -19,6 +19,7 @@
     "marked": "^2.0.3",
     "simpleddp": "^2.2.4",
     "simpleddp-plugin-login": "^4.0.2",
+    "svelte-file-dropzone": "^0.0.15",
     "ws": "^8.4.2"
   },
   "peerDependencies": {
