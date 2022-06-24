@@ -10,6 +10,7 @@
   import ProjectEditor from "./ProjectEditor.svelte"
   import UsersManager from './UsersManager.svelte'
   import MessagesManager from './MessagesManager.svelte'
+  import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
   import { InterkitClient } from 'interkit'
 
@@ -40,6 +41,7 @@
   }
 
   let messagesListNotification
+  let scheduledeventsListNotification
 
 </script>
 
@@ -54,6 +56,7 @@
         <Tab label="Project" />
         <Tab label="Users" />
         <Tab label={`${messagesListNotification ? '‼️ ' : ''}Messages`} />
+        <Tab label={'Schedule' + (scheduledeventsListNotification ? ` (${scheduledeventsListNotification})` : '')} />
         <Tab label={ "Repository " + repoNotice } />
         <div slot="content">
           <TabContent>
@@ -87,6 +90,12 @@
             <MessagesManager
               {projectId}
               bind:notification={messagesListNotification}
+              />
+          </TabContent>
+          <TabContent>
+            <ScheduledeventsManager
+              {projectId}
+              bind:notification={scheduledeventsListNotification}
               />
           </TabContent>
           <TabContent>

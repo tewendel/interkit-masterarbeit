@@ -186,6 +186,22 @@ Meteor.methods({
 
   'events.setDone': ({_id}) => {
     ScheduledEvents.update({_id}, {$set: {status: "done"}})
+  },
+
+  'events.setStatus': ({ ids, status }) => {
+    console.log('events.setStatus', { ids, status })
+    const result = ScheduledEvents.update(
+      { _id: { $in: ids } },
+      { $set: { status } },
+      { multi: true }
+    )
+    return result
+  },
+
+  'events.delete': async ids => {
+    console.log('events.delete', ids)
+    const result = await ScheduledEvents.remove({ _id: { $in: ids } })
+    return result
   }
 
 });

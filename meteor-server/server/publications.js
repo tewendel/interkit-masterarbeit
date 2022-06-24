@@ -186,10 +186,12 @@ Meteor.publish("messages.unhandled", ({projectId, includeBlocked}) => {
 });
 
 // provides unexecuted events sorted by execTime
-Meteor.publish("scheduled_events", ({projectId}) => {
+Meteor.publish("scheduled_events", ({projectId, anyStatus}) => {
   let query = {
-    projectId,
-    status: "scheduled"
+    projectId
+  }
+  if (!anyStatus) {
+    query.status = 'scheduled'
   }
   let events = ScheduledEvents.find(query, {sort: {execTime: -1}});
   return events;
