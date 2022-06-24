@@ -38,7 +38,8 @@
     method: true,
     execTime: true,
     status: true,
-    payload: true
+    usersSummary: true,
+    payloadSummary: true
   }
 
   const trivialSort = (a, b) => a < b ? -1 : 1
@@ -75,8 +76,13 @@
       value: 'status',
       sort: trivialSort
     }] : []),
-    ...(showCol.payload ? [{
-      key: 'payload',
+    ...(showCol.usersSummary ? [{
+      key: 'usersSummary',
+      value: 'users',
+      sort: false
+    }] : []),
+    ...(showCol.payloadSummary ? [{
+      key: 'payloadSummary',
       value: 'payload',
       sort: trivialSort
     }] : []),
@@ -140,13 +146,27 @@
     }
   }
 
+  const summarizePayloadUserIds = scheduledevent => {
+    const p = scheduledevent.payload
+    switch (scheduledevent.method) {
+      case 'user.moveTo':
+        return p.userId
+      case 'users.moveTo':
+        return p.userIds.join(' ')
+      case 'message.send':
+        return p.recipients.join(' ')
+    }
+    return 'n/a'
+  }
+
   const STATUS_SCHEDULED = 'scheduled'
 
   let rows
   $: rows = scheduledevents ? scheduledevents
     .map(scheduledevent => ({
       ...scheduledevent,
-      payload: summarizePayloadContent(scheduledevent),
+      payloadSummary: summarizePayloadContent(scheduledevent),
+      usersSummary: summarizePayloadUserIds(scheduledevent)
       // createdAt: new Date(message.createdAt),
     }))
     .filter(scheduledevent => (!filters.statusScheduled || (filters.statusScheduled && scheduledevent.status === STATUS_SCHEDULED)))
