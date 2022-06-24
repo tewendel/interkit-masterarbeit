@@ -28,17 +28,32 @@ const getUserProjectData = (userId, projectId) => {
 const getBoardState = (projectId, userId, boardId) => {
   // get user
   const user = Meteor.users.findOne(userId)
-  if(!user) {
-    console.log("getBoardState - user not found")
-    return;
+  if (!user) {
+    console.warn(`getBoardState user ${userId} not found`)
+    return
   }  
-  // get boardState
-  let boardState = user?.projectUserData[projectId]?.boardState;
-  if(!boardState?.[boardId]) { 
-    console.log("boardState not found for board", boardId, boardState)
-    return;
+  if (!user.projectUserData) {
+    console.warn(`getBoardState user ${userId} has no projectUserData`)
+    // console.log(user)
+    return
   }
-  return boardState;
+  if (!user.projectUserData[projectId]) {
+    console.warn(`getBoardState user ${userId} has no projectUserData for project ${projectId}`)
+    // console.log(user.projectUserData)
+    return
+  }
+  if (!user.projectUserData[projectId].boardState) {
+    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}`)
+    // console.log(user.projectUserData[projectId])
+    return
+  }
+  if (boardId && !user.projectUserData[projectId].boardState[boardId]) {
+    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}, board ${boardId}`)
+    console.log(user.projectUserData[projectId].boardState)
+    return
+  }
+  // N.B. pretty weird that we pass boardId but return boardState (the parent)
+  return user.projectUserData[projectId]?.boardState
 }
 
 Meteor.methods({
