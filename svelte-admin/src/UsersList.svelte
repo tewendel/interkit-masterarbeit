@@ -15,7 +15,13 @@
     ToolbarSearch,
     Button,
     ButtonSet,
-    Modal
+    Modal,
+    Select,
+    SelectSkeleton,
+    SelectItem,
+    SelectItemGroup,
+    TextArea,
+    Tag
   } from "carbon-components-svelte";
   import Movement from "carbon-icons-svelte/lib/Movement.svelte";
   import Send from "carbon-icons-svelte/lib/Send.svelte";
@@ -23,7 +29,11 @@
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
 
+  import SchedulingForm from './InputModals/SchedulingForm.svelte'
+
   import { InterkitClient, util } from 'interkit';
+  import { boardsApi } from './BundleServer.js'
+  import { genericErrorHandler, errorify } from './apiHelpers.js'
 
   export let users; // this should be an array, not a store
   export let projectId;
@@ -41,11 +51,16 @@
   let quickMsgText = 'hello'
   let quickMsgChannel = 'board1'
   let quickMsgResult = ''
+  let quickMsgResultDate
+  let quickMsgSchedulingValue
 
   let openMoveTo = false
   export let moveToBoardId = ''
   export let moveToNodeId = ''
+  let moveToTarget = 0
   let moveToResult = ''
+  let moveToResultDate
+  let moveToSchedulingValue
 
   const createdAtdateTimeFormatLocaleOptions = {
     year: 'numeric',
@@ -204,23 +219,34 @@
   }
 
   const batchMoveTo = async () => {
-    const result = await InterkitClient.usersMoveTo({
+    const moveTo = {
       userIds: usersSelection,
       projectId,
-      boardId: moveToBoardId,
-      nodeId: moveToNodeId
-    })
-    console.log('batchMoveTo result', result)
-    moveToResult  = `sucessfully moved ${result.successful.length} users, ${result.errored.length} errors`
-    if (result.errored.length) {
-      moveToResult += '. error ids: ' + result.errored.join(' ')
+      boardId: boards.nodes[+moveToTarget].boardId,
+      nodeId: boards.nodes[+moveToTarget].nodeId
+    }
+    if (moveToSchedulingValue) {
+      const result = await InterkitClient.call('events.schedule', {
+        projectId,
+        method: 'users.moveTo',
+        delay: moveToSchedulingValue,
+        payload: moveTo
+      })
+      moveToResult = '' + JSON.stringify(result)
+    } else {
+      const result = await InterkitClient.usersMoveTo(moveTo)
+      moveToResult  = `sucessfully moved ${result.successful.length} users, ${result.errored.length} errors`
+      if (result.errored.length) {
+        moveToResult += '. error ids: ' + result.errored.join(' ')
+      }
     }
   }
 
   const batchBlock = async setBlocked => {
+    let resultBlockMessages
     /* a block of user blocks all their messages. they can only be unblocked individually */
     if (setBlocked) {
-      const resultBlockMessages = await InterkitClient.call('messages.block', {
+      resultBlockMessages = await InterkitClient.call('messages.block', {
         projectId,
         userIds: usersSelection,
         setBlocked: true
@@ -235,7 +261,7 @@
   }
 
   const quickMsgSend = async () => {
-    quickMsgResult = await InterkitClient.call('message.send', {
+    const msg = {
       projectId,
       sender: userId,
       channel_key: quickMsgChannel,
@@ -244,8 +270,37 @@
         type: 'text',
         text: quickMsgText
       }
-    })
+    }
+    if (quickMsgSchedulingValue) {
+      quickMsgResult = await InterkitClient.call('events.schedule', {
+        projectId,
+        method: 'message.send',
+        delay: quickMsgSchedulingValue,
+        payload: msg
+      })
+    } else {
+      quickMsgResult = await InterkitClient.call('message.send', msg)
+    }
+    // TODO remove this hack when we have proper result values
+    quickMsgResult = '' + JSON.stringify(quickMsgResult)
+    quickMsgResultDate = new Date()
   }
+
+  let boards = []
+
+  const loadBoards = async () => {
+    await boardsApi(projectId, '/?nodes=1')
+      .then(async res => {
+        const json = await res.json()
+        errorify(json)
+        boards = json.result
+        boards.nodes = boards.nodes.map((node, _idx) => ({ _idx, ...node }))
+      })
+      .catch(genericErrorHandler)
+  }
+
+  $: if (openQuickMessage) loadBoards()
+  $: if (openMoveTo) loadBoards()
   
 </script>
 
@@ -328,10 +383,10 @@
       />
 
     {#if usersSelection.length}
-      <ButtonSet>
+      <ButtonSet style="margin-bottom: 2px">
         <Button size="small" kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
         <Button size="small" icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
-        <Button size="small" icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
+        <Button size="small" icon={Send} on:click={() => { openQuickMessage = true }}>Message</Button>
       </ButtonSet>
       <ButtonSet>
         <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
@@ -347,47 +402,137 @@
 
 <Modal
   bind:open={openQuickMessage}
-  modalHeading="Quick Message"
-  primaryButtonText="Send"
+  modalHeading="Message"
+  primaryButtonText={quickMsgSchedulingValue ? 'Schedule' : 'Send'}
   secondaryButtonText="Cancel"
   on:click:button--secondary={() => { openQuickMessage = false }}
   on:submit={() => { quickMsgSend() }}
+  shouldSubmitOnEnter={false}
   >
-  <div>…to {usersSelection.join(', ')}</div>
-  <label>msg txt <input bind:value={quickMsgText} /></label>
-  <label>channel <input bind:value={quickMsgChannel} /><label>
-  <div>last result: {quickMsgResult}</div>
+  <div class="my">…to <strong>{usersSelection.length}</strong> users:</div>
+  <div class="my">
+    {#if !usersSelection?.length}
+      please select some users
+    {:else}
+      {#each usersSelection.slice(0, 10) as user}
+        <Tag>{user}</Tag>
+      {/each}
+    {/if}
+    {#if usersSelection.length > 10}
+      … (showing only the first 10 selected)
+    {/if}
+  </div>
+  <div class="my">
+    {#if !boards?.boards?.length}
+      <SelectSkeleton />
+    {:else}
+      <Select labelText="target channel" bind:selected={quickMsgChannel}>
+        {#each boards.boards as boardId}
+          <SelectItem
+            value={boardId}
+            text={
+              ((boardId === moveToBoardId) ? '🟠 ' : '') +
+              boardId
+            }
+            />
+        {/each}
+      </Select>
+    {/if}
+  </div>
+  <div class="my">
+    hint:
+    {#if moveToBoardId}
+      🟠 marks the currently selected board in the Chat tab
+    {:else}
+      you can select a board in the Chat tab, it will be highlighted in this dropdown
+    {/if}
+  </div>
+  <div class="my">
+    <TextArea
+      bind:value={quickMsgText}
+      labelText="message text"
+      placeholder="hello"
+      />
+  </div>
+  <div class="my">
+    <SchedulingForm
+      bind:value={quickMsgSchedulingValue}
+      />
+  </div>
+  {#if quickMsgResult}
+    <div class="my">
+      <strong>last result</strong><br/>
+      at {createdAtdateTimeFormat.format(quickMsgResultDate)}<br/>
+      {quickMsgResult}
+    </div>
+  {/if}
 </Modal>
 
 <Modal
   bind:open={openMoveTo}
   modalHeading="moveTo"
-  primaryButtonText={moveToResult?'move again':'move'}
-  secondaryButtonText={moveToResult?'done':'cancel'}
+  primaryButtonText={moveToSchedulingValue ? 'Schedule' : 'move'}
+  secondaryButtonText={moveToResult ? 'done' : 'cancel'}
   on:click:button--secondary={() => { openMoveTo = false }}
   on:submit={() => { batchMoveTo() }}
   >
-  <p>move users <b>{usersSelection.join(', ')}</b> to…</p>
-  <!-- TODO make these selects -->
-  <p>
-    <label>boardId <input bind:value={moveToBoardId} /></label>
-    <label>nodeId <input bind:value={moveToNodeId} /><label>
-  </p>
-  <p>hint: select a node in the chat tab to auto-fill these inputs</p>
+  <div class="my">…move <strong>{usersSelection.length}</strong> users:</div>
+  <div class="my">
+    {#if !usersSelection?.length}
+      please select some users
+    {:else}
+      {#each usersSelection.slice(0, 10) as user}
+        <Tag>{user}</Tag>
+      {/each}
+    {/if}
+    {#if usersSelection.length > 10}
+      … (showing only the first 10 selected)
+    {/if}
+  </div>
+  <div class="my">
+    {#if !boards?.boards?.length}
+      <SelectSkeleton />
+    {:else}
+      <Select labelText="target node" bind:selected={moveToTarget}>
+        {#each boards.boards as boardId}
+          <SelectItemGroup label={boardId}>
+            {#each boards.nodes.filter(node => node.boardId === boardId) as node}
+              <SelectItem
+                value={node._idx}
+                text={
+                  ((node.boardId === moveToBoardId && node.nodeId === moveToNodeId) ? '🟠 ' : '') +
+                  node.boardId + ' _ ' + node.nodeId
+                }
+                />
+            {/each}
+          </SelectItemGroup>
+        {/each}
+      </Select>
+    {/if}
+  </div>
+  <div class="my">
+    hint:
+    {#if moveToBoardId && moveToNodeId}
+      🟠 marks the currently selected node in the Chat tab
+    {:else}
+      you can select a node in the Chat tab, it will be highlighted in this dropdown
+    {/if}
+  </div>
+  <div class="my">
+    <SchedulingForm
+      bind:value={moveToSchedulingValue}
+      />
+  </div>
   {#if moveToResult}
-    <hr/>
-    <p>{moveToResult}</p>
+    <div class="my">
+      <strong>last result</strong><br/>
+      at {createdAtdateTimeFormat.format(moveToResultDate)}<br/>
+      {moveToResult}
+    </div>
   {/if}
 </Modal>
 
 <style>
-  .truncate {
-    max-width: 10em;
-    display: inline-block;
-    text-align:right;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 
   .cell__1line {
     white-space: nowrap;
@@ -413,6 +558,13 @@
   }
   .UsersListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
+  }
+
+  /* lazy spacing hack since Svelte-Carbon doesn't have spacing helper classes yet
+     https://github.com/carbon-design-system/carbon-components-svelte/issues/1066 */
+
+  .my { /* = "margin-y" */
+    margin: 1em 0;
   }
   
 </style>
