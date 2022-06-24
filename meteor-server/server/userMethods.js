@@ -273,6 +273,36 @@ Meteor.methods({
     return false
   },
 
+  'users.moveTo': async ({ projectId, userIds, boardId, nodeId }) => {
+    // TODO this is stupidly sequentialized, not efficient, and not DRY.
+    console.log('users.moveTo', { projectId, userIds, boardId, nodeId })
+    const successful = []
+    const errored = []
+    for (const userId of userIds) {
+      let userBoardState = getBoardState(projectId, userId, boardId);
+      if (!userBoardState) {
+        console.warn(`users.moveTo user ${userId} has no boardState`)
+        continue
+      }
+      if (!userBoardState[boardId]) {
+        console.warn(`users.moveTo user ${userId} has no boardState for board ${boardId}`)
+        continue
+      }
+      userBoardState[boardId].status = "arriving"
+      userBoardState[boardId].nodeId = nodeId
+      const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", userBoardState)
+      if (usersUpdatedCount === 1) {
+        successful.push(userId)
+      } else {
+        errored.push(userId)
+      }
+    }
+    return {
+      successful,
+      errored
+    }
+  },
+
   'users.block': async ({ projectId, userIds, setBlocked }) => {
     let result
     result = await Meteor.users.update(
