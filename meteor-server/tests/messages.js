@@ -19,7 +19,7 @@ describe("meteor-messages-test", function () {
       assert.equal(number, "test-message-1");
     });
 
-    // finde
+    // find
     it("db finds a message", function () {
       assert.equal(Messages.find("test-message-1").count(), 1);
     });

@@ -7,16 +7,16 @@ Meteor.publish('projects', function() {
     name: 1,
     slug: 1,
     isDefaultProject: 1,
-    history : userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+    history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,
-      actionRequested: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
-      messages: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+      actionRequested: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+      messages: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     },
-    uiState: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+    uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
   }
   //console.log("projects sub")
-  if (userIsInRoles(Meteor.userId(), ['admin', 'bundler'])) {
+  if (userIsInRoles(this.userId, ['admin', 'author', 'bundler'])) {
     let projects = Projects.find({}, { fields});
     //console.log(projects.fetch())
     return projects;

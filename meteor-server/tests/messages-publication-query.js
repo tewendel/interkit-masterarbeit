@@ -2,6 +2,7 @@ import assert from "assert";
 import { Messages } from "../imports/collections";
 import "../server/publications";
 
+// check if the messages publication works
 describe("meteor-publication-query", function () {
 
   if (Meteor.isServer) {
