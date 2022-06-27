@@ -1,6 +1,7 @@
 stages:
   - build_images
   - publish
+  - test
   - deploy_demo
 
 variables:
@@ -32,6 +33,7 @@ docker-build-server:
     - docker push interkit/server-base:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_IMAGE_TAG
+    - echo DONE
 
 docker-build-bundler:
   # Official docker image.
@@ -49,6 +51,7 @@ docker-build-bundler:
     - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/bundler:$INTERKIT_BASE_TAG
     - docker push interkit/bundler:$INTERKIT_IMAGE_TAG
+    - echo DONE
 
 docker-build-admin:
   # Official docker image.
@@ -66,6 +69,7 @@ docker-build-admin:
     - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/admin:$INTERKIT_BASE_TAG
     - docker push interkit/admin:$INTERKIT_IMAGE_TAG
+    - echo DONE
 
 docker-build-docs:
   # Official docker image.
@@ -139,3 +143,10 @@ publish-package:
     paths:
       - interkit.tar.gz
 
+test-server:
+  image: geoffreybooth/meteor-base:2.5.6
+  stage: test
+  script:
+    - cd meteor-server
+    - meteor npm install
+    - meteor npm test

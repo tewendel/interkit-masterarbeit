@@ -8,11 +8,11 @@ export function createRoleIdempotent(role) {
 }
 
 export function addUsersToRoles(users, roles, scopes=null) {
-  console.log("addUsersToRoles", users, roles, scopes)
+  //console.log("addUsersToRoles", users, roles, scopes)
   return Roles.addUsersToRoles(users, roles, scopes)
 }
 
 export function userIsInRoles(users, roles, scopes=null) {
-  console.log("userIsInRoles", users, roles, scopes)
+  //console.log("userIsInRoles", users, roles, scopes)
   return Roles.userIsInRole(users, roles, scopes)
 }
