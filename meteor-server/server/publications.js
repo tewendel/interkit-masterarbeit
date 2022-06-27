@@ -3,10 +3,24 @@ import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../
 import {userIsInRoles} from '../imports/userRoles.js';
 
 Meteor.publish('projects', function() {
+  let fields = {
+    name: 1,
+    slug: 1,
+    isDefaultProject: 1,
+    history : userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+    projectServer: {
+      status: 1,
+      actionRequested: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+      messages: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+    },
+    uiState: userIsInRoles(Meteor.userId(), ['admin', 'author', 'bundler']),
+  }
   //console.log("projects sub")
-  let projects = Projects.find({});
-  //console.log(projects.fetch())
-  return projects;
+  if (userIsInRoles(Meteor.userId(), ['admin', 'bundler'])) {
+    let projects = Projects.find({}, { fields});
+    //console.log(projects.fetch())
+    return projects;
+  }
 });
 
 Meteor.publish('project', function(projectId) {
