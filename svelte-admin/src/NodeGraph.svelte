@@ -15,12 +15,11 @@
   export let board
   export let userNodes
   export let _update
+  export let rectWidth
+  export let rectHeight
 
   // this hack forces a redraw, reacting to any node content modifications
   $: nodes._update = _update
-
-  const rectWidth = 100
-  const rectHeight = 70
 
   let mouseX
   let mouseY
@@ -41,6 +40,7 @@
 
   export const updateConnections = () => {
     connections = []
+    let unmetMoveTos
     nodes.forEach(fromNode => {
       // if (!fromNode.contents) return
       const fromX = fromNode.posX + rectWidth / 2
@@ -48,12 +48,21 @@
       const moveTos = [...fromNode.contents.matchAll(parseREmoveTo)].map(_ => _[1])
       moveTos.forEach(toNodeId => {
         const toNode = nodes.find(_ => _.id === toNodeId)
-        if (!toNode) return
-        const toX = toNode.posX + rectWidth / 2
-        const toY = toNode.posY + rectHeight / 2
-        connections.push({ fromX, fromY, toX, toY })
+        if (!toNode) {
+          unmetMoveTos = unmetMoveTos || {}
+          unmetMoveTos[fromNode.id] = unmetMoveTos[fromNode.id] || []
+          unmetMoveTos[fromNode.id].push(toNodeId)
+          console.log('#unmet', fromNode, toNodeId)
+        } else {
+          const toX = toNode.posX + rectWidth / 2
+          const toY = toNode.posY + rectHeight / 2
+          connections.push({ fromX, fromY, toX, toY })
+        }
       })
     })
+    return {
+      unmetMoveTos
+    }
   }
 
   $: nodes, updateConnections()
@@ -209,7 +218,13 @@
       {#if userNode.atNode}
       <g
         class="usernode"
-        style={`transform: translate(${userNode.atNode.posX + userNode.rndSeed[0] * (rectWidth - 10)}px,${userNode.atNode.posY + userNode.rndSeed[1] * (rectHeight - 10)}px)`}
+        style={
+          'transform: translate(' +
+          (userNode.atNode.posX + userNode.rndSeed[0] * (rectWidth - 20) + 10) +
+          'px,' +
+          (userNode.atNode.posY + userNode.rndSeed[1] * (rectHeight - 35) + 30) +
+          'px)'
+        }
         >
         <circle
           cx="0" cy="0"

@@ -217,14 +217,44 @@ api.boards.create = expressify(
 )
 
 // this just overwrites, doesnt merge
-api.boards.update = expressify(
-  async (handle, params, req) => {
-    const data = JSON.parse(req.body.toString())
-    data.nodes.forEach(node => { delete node.contents })
-    return fs.writeFile(handle, JSON.stringify(data))
-      .then(() => data)
+lib.boards.update = (handle, params, req) => {
+  const data = JSON.parse(req.body.toString())
+  data.nodes.forEach(node => { delete node.contents })
+  return fs.writeFile(handle, JSON.stringify(data))
+    .then(() => data)
+}
+
+api.boards.update = expressify(lib.boards.update)
+
+lib.boards.patch = async (handle, params, req) => {
+  const data = req?.body
+    // passed via expressified
+    ? JSON.parse(req.body.toString())
+    // passed via lib
+    : req
+  const board = await lib.boards.read(handle, params)
+  // manual merge
+  for (const key in data) {
+    if (key === 'nodes' || key === 'id') continue
+    board[key] = data[key]
   }
-)
+  if ('nodes' in data) {
+    data.nodes.forEach(srcNode => {
+      const dstNode = board.nodes.find(_ => _.id === srcNode.id)
+      if (!dstNode) {
+        board.nodes.push(dstNode)
+      } else {
+        for (const key in srcNode) {
+          dstNode[key] = srcNode[key]
+        }
+      }
+    })
+  }
+  return fs.writeFile(handle, JSON.stringify(board))
+    .then(() => board)
+}
+
+api.boards.patch = expressify(lib.boards.patch)
 
 // deletes all files prefixed with boardId
 api.boards.delete = expressify(
@@ -269,6 +299,15 @@ api.nodes.create = expressify(
   async (handle, params, req) => {
     const data = req.body.toString()
     return fs.appendFile(handle, data, { flag: 'wx' })
+      .then(() => {
+        if (req.query && 'posX' in req.query && 'posY' in req.query) {
+          const boardHandle = projectBoardPath(params.relative, params.projectId, params.boardId)
+          const fakeReq = {
+            nodes: [ { id: params.nodeId, posX: +req.query.posX, posY: +req.query.posY } ]
+          }
+          lib.boards.patch(boardHandle, params, fakeReq)
+        }
+      })
       .then(() => getNode(handle))
   }
 )
