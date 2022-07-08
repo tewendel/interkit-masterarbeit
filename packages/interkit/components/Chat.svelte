@@ -3,9 +3,10 @@
   import { onMount, onDestroy, tick } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
-  import Message from './Chat/Message.svelte';
-  import ChatInput from './Chat/ChatInput.svelte';
-  import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
+  import Message from './Chat/Message.svelte'
+  import MessageTyping from './Chat/MessageTyping.svelte'
+  import ChatInput from './Chat/ChatInput.svelte'
+  import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
 
   import { Plugins } from '@capacitor/core';
   const { Geolocation } = Plugins;
@@ -19,6 +20,8 @@
   let userId;
   let userSub;
   let userStore;
+
+  let typingQueuePointer
 
   onMount(async () => {
 
@@ -39,6 +42,8 @@
     userSub = await InterkitClient.getSub('users', 'user')
     userStore = userSub.data
 
+    scrollDown()
+    // window.setTimeout(() => { scrollDown() }, 500)
   })
 
   onDestroy(async () => {
@@ -49,10 +54,16 @@
     */
   })
 
+  let storeUpdates = 0
+
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
-      // console.log("message update", $messageStore)
+      console.log("message update", storeUpdates) // $messageStore)
+      if (storeUpdates === 0) {
+        typingQueuePointer = $messageStore.length
+      }
+      storeUpdates++
       scrollDown()
       
       // mark all in channel as seen
@@ -81,13 +92,12 @@
 
   let messagesScrollContainer
 
-  let initialRender = true;
-
   const scrollDown = async () => {
+    const behavior = storeUpdates <= 1 ? 'instant' : 'smooth'
+    console.log('scrollDown', { behavior })
     await tick()
     const top = messagesScrollContainer?.scrollHeight
-    messagesScrollContainer?.scrollTo({ top: top, behavior: initialRender ? 'instant' : 'smooth' })
-    if(initialRender) initialRender = false;
+    messagesScrollContainer?.scrollTo({ top, behavior })
   }
 
   const sendMessage = (messageText) => {
@@ -150,6 +160,75 @@
     // console.log('report call ret', ret)
   }
 
+  let typingShow = false
+  const typingMaxDuration = 5
+  const typingMinDurationTypeText = 1
+  const typingDurationPerTextCharacter = 0.05
+  const typingDefaultDurationType = {
+    choice: 2,
+    image: 3
+  }
+
+  const typingDuration = message => {
+    if (message.payload && ('typingDuration' in message.payload)) {
+      return message.payload.typingDuration
+    }
+    let duration
+    switch (message?.payload?.type) {
+      case 'text':
+        duration = Math.max(
+          typingMinDurationTypeText,
+          (message.payload?.text?.length * typingDurationPerTextCharacter) || 0
+        )
+        break
+      case 'choice':
+      case 'image':
+        duration = typingDefaultDurationType?.[message.payload.type] || 1
+        break
+      default:
+        duration = 1
+    }
+    return Math.min(duration, typingMaxDuration)
+  }
+
+  const typingNext = () => {
+    // console.log('typingNext')
+    if (typingShow) {
+      // console.log('typingNext bailing typingShow')
+      return
+    }
+    if (storeUpdates === 0) {
+      // console.log('typingNext bailing because first storeUpdate')
+      return
+    }
+    if (typingQueuePointer >= $messageStore.length) {
+      // console.log('typingNext bailing QP >= store.length')
+      return
+    }
+    const currentMessage = $messageStore[typingQueuePointer]
+    if (!currentMessage) {
+      // console.warn('typingNext bailing because no currentMessage')
+      return
+    }
+    if (currentMessage?.sender === userId) {
+      // console.log('typingNext skipping because user message')
+      typingQueuePointer++
+      typingNext()
+    }
+    const duration = typingDuration(currentMessage)
+    // console.log('typingNext starting timeout', duration, currentMessage)
+    typingShow = true
+    window.setTimeout(() => {
+      typingShow = false
+      typingQueuePointer++
+      // console.log('typingNext done timeout', { typingQueuePointer })
+      typingNext()
+    }, duration * 1000)
+  }
+
+  $: if ($messageStore) typingNext()
+  $: if (typingShow) scrollDown()
+
 </script>
 
 <div class="root">
@@ -165,16 +244,20 @@
     {#if messageStore}
       <div class="messages">
         {#each $messageStore as message, index}
-          <Message 
-            {message} 
-            {submitChoice} 
-            {submitLocation}
-            isByUser={message?.sender === userId} 
-            lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
-            previousMessage={$messageStore[index-1]}
-            on:report={ event => sendReport(event.detail.message) }
-          />
+          {#if index < typingQueuePointer}
+            <Message 
+              {message} 
+              {submitChoice} 
+              {submitLocation}
+              isByUser={message?.sender === userId} 
+              lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
+              previousMessage={$messageStore[index-1]}
+              on:report={ event => sendReport(event.detail.message) }
+              on:mounted={() => { scrollDown() }}
+              />
+          {/if}
         {/each}
+        <MessageTyping show={typingShow} />
         {#if $userStore?.[0]?.blocked}
           <div class="blocked">
             Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.
@@ -183,11 +266,12 @@
       </div>
     {/if}
   </div>
-  {#if chatInterface.text && !$userStore?.[0]?.blocked}
-    <div class="input">
-      <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
-    </div>
-  {/if}
+  <div
+    class="input"
+    style={`visibility: ${chatInterface.text && !$userStore?.[0]?.blocked ? 'visible' : 'hidden'}`}
+    >
+    <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
+  </div>
 </div>
 
 <style>
