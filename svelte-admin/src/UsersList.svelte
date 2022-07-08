@@ -52,6 +52,7 @@
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
+  let quickMsgIsRawPayload = false
   let quickMsgChannel = 'board1'
   let quickMsgResult = ''
   let quickMsgResultDate
@@ -277,10 +278,12 @@
       sender: userId,
       channel_key: quickMsgChannel,
       recipients: usersSelection,
-      payload: {
-        type: 'text',
-        text: quickMsgText
-      }
+      payload: quickMsgIsRawPayload
+        ? JSON.parse(quickMsgText)
+        : {
+          type: 'text',
+          text: quickMsgText
+        }
     }
     if (quickMsgSchedulingValue) {
       quickMsgResult = await InterkitClient.call('events.schedule', {
@@ -493,9 +496,10 @@
   <div class="my">
     <TextArea
       bind:value={quickMsgText}
-      labelText="message text"
-      placeholder="hello"
+      labelText={!quickMsgIsRawPayload ? 'message text' : 'message payload JSON, must be valid!'}
+      placeholder={!quickMsgIsRawPayload ? "Hello!" : '{ type: "text", text: "Hello!" }'}
       />
+    <Checkbox bind:checked={quickMsgIsRawPayload} labelText="enter raw payload" />
   </div>
   <div class="my">
     <SchedulingForm
