@@ -11,7 +11,22 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
       block.getFieldValue(blocklyAttributeName)?.value
       : block.getFieldValue(blocklyAttributeName)
 
-    if(value == "undefined" || value == "null") value = null;
+    if (value == "undefined" || value == "null") value = null;
+
+
+    // for "static-y string attributes" that start with a $
+    if (value?.substr(0, 1) === '$') {
+      return `${attributeName}={$lang ? ($t[$lang]["${value}"] || "${value.substr(1)}") : "…"}`
+      // return `${attributeName}={tf("${value}", $lang)}`
+    }
+
+    // is this a sheetColumn reference?
+    if (attributeName?.indexOf('Column') > -1 && value?.indexOf('/') > -1) {
+      if (value.indexOf('$lang') > -1) {
+        return `${attributeName}={$lang ? "${value}".replace("$lang", "$" + $lang) : "${value}"}`
+        // return `${attributeName}={$lang ? "${value}".replace("$lang", $lang) : "${value}"}`
+      }
+    }
 
     return value ? `${attributeName}="${value}"\n` : "";
   }

@@ -177,6 +177,9 @@
     let imports = "<script>\n";
     //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     imports += `import initActions from "./actions.js"; \ninitActions(); \n`
+    imports += `import { t, lang } from 'interkit/i18n.js';\n`
+    imports += `$: console.log('AppBase $t', $t);\n`
+    imports += `console.log('AppBase t', t, $t);\n`
     for(let block of allBlocksUnique.sort( (a,b) => a.type.localeCompare(b.type, 'en') )) {
       let origin = "interkit"
       try {

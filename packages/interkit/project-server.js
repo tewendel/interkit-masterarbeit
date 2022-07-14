@@ -138,6 +138,7 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
   for(let user of users) {
     if (!user?.projectUserData) continue; // skip user that don't have project, especially the projectserver login user
     let boardState = user?.projectUserData[projectId]?.boardState;
+    let userLang = user?.projectUserData[projectId]?.lang;
     
     //console.log("boardState", user, boardState)
     if(!boardState) {
@@ -181,6 +182,7 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
             server, 
             projectId, 
             userId: user.id,
+            userLang,
             boardId,
             message: {channel_key: boardId, sender: user.id}
           }
@@ -214,6 +216,8 @@ const setupMessageHandling = async ({
   let handledMessageIds = [] // remember handled messages
   let reactiveMessagesCollection = await subscribeMessages(server, projectId)
 
+  // subscribe to users to watch for boardState changes and run onArrive handlers
+  let reactiveUsersCollection = await subscribeUsers(server, projectId)
   // read boards from file system and get info for each
   
   const boards = await boardNodeUtil.boards.list("./handlers");
@@ -252,6 +256,13 @@ const setupMessageHandling = async ({
       // check which node the user is on
       let currentNodeId = await checkCurrentNode(server, message?.sender, projectId, boardId, boardData)
       console.log("determined current node", currentNodeId)
+
+      const userId = message?.sender
+      // using _rawData, we don't need reactivity here
+      const projectUserData = userId
+        ? reactiveUsersCollection._rawData?.find(_ => _.id === userId)?.projectUserData?.[projectId]
+        : undefined
+      const userLang = projectUserData?.lang
       
       // put interkit objects in api that gets passed to handler
       const api = {
@@ -259,7 +270,8 @@ const setupMessageHandling = async ({
         message, 
         server, 
         projectId, 
-        userId: message?.sender,
+        userId,
+        userLang,
         boardId,
         nodeId: currentNodeId
       }
@@ -291,9 +303,6 @@ const setupMessageHandling = async ({
     
     }
   });
-
-  // subscribe to users to watch for boardState changes and run onArrive handlers
-  let reactiveUsersCollection = await subscribeUsers(server, projectId)
   
   // process on first load
   await processUserArrivals(server, projectId, projectApi, handlers, reactiveUsersCollection.data(), boards, boardData);

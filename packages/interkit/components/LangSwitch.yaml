@@ -1,0 +1,5 @@
+name: LangSwitch
+fields:
+  - name: foo
+    type: string
+toolboxCategory: Basics
