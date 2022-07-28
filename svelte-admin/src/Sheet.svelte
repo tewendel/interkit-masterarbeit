@@ -288,7 +288,13 @@
         {:else}
           <div class="sheet-header" >
             <OverflowMenu size="sm" style="width: 100%;">
-              <div slot="menu" style="font-weight:bold">{header.value}</div>
+              <div slot="menu" style="font-weight:bold">
+                {#if header.value}
+                  {header.value}
+                {:else}
+                  <span style="opacity:0.5">(empty)</span>
+                {/if}
+              </div>
               <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
               <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
               <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />

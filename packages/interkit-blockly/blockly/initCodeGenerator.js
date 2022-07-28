@@ -1,5 +1,7 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
+const verbose = false
+
 export const initCodeGenerator = (Blockly, blockObjects) => {
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
@@ -11,7 +13,24 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
       block.getFieldValue(blocklyAttributeName)?.value
       : block.getFieldValue(blocklyAttributeName)
 
-    if(value == "undefined" || value == "null") value = null;
+    if (value == "undefined" || value == "null") value = null;
+
+    if (verbose) console.log('#CG# attribute', { block, attributeName, value })
+
+    // for "static-y string attributes" that start with a $
+    if (value?.substr(0, 1) === '$') {
+      // nasty nested ternary to avoid over-reliance on new-ish ?. because this is likely not babel-ed
+      return `${attributeName}={$lang ? ($t[$lang] && $t[$lang]["${value}"] ? $t[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
+      // return `${attributeName}={tf("${value}", $lang)}`
+    }
+
+    // is this a sheetColumn reference?
+    if (attributeName?.indexOf('Column') > -1 && value?.indexOf('/') > -1) {
+      if (value.indexOf('$lang') > -1) {
+        return `${attributeName}={$lang ? "${value}".replace("$lang", "$" + $lang) : "${value}"}`
+        // return `${attributeName}={$lang ? "${value}".replace("$lang", $lang) : "${value}"}`
+      }
+    }
 
     return value ? `${attributeName}="${value}"\n` : "";
   }
@@ -22,6 +41,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
 
   const slot = (block, slotName, slotProp) => {
     var value = Blockly.JavaScript.statementToCode(block, slotName)
+    if (verbose) console.log('#CG# slot', { slotName, slotProp, value })
     return value ? 
         (`<svelte:fragment slot="${slotName}" `
         + (slotProp ? `let:${slotProp}={${slotProp}} >` : '>')
@@ -31,6 +51,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
 
   const statements = (block, blocklyAttributeName) => {
     var statements_name = Blockly.JavaScript.statementToCode(block, blocklyAttributeName);    
+    if (verbose) console.log('#CG# statement', statements_name)
     return `${statements_name}`  
   }
 
@@ -79,6 +100,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
         }
       }
       if(blockObject.hiddenProps) {
+        if (verbose) console.log('#CG# hiddenProps', blockObject.hiddenProps)
         code += "   " + blockObject.hiddenProps.map(p=>`{${p}}`).join(" ") + "\n"
       }
       code += `>\n`

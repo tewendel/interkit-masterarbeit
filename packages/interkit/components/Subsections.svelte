@@ -23,7 +23,14 @@
 
   setContext("Subsections", {
       registerSection: ({key, title, path}) => {
-        sections.push({key, title, path})
+        const existingSection = sections.find(_ => _.key === key)
+        console.log('Subsections context', { key, title, path, sections, existingSection })
+        if (existingSection) {
+          existingSection.title = title
+          existingSection.path = path
+        } else {
+          sections.push({key, title, path})
+        }
         sections = sections;
       },
       activeSection
