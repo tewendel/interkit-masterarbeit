@@ -7,10 +7,7 @@ const lang = writable()
 const langIndex = writable()
 const langs = writable([])
 
-/* the two following subscriptions have to work in tandem against race conditions, since their order is murky.
- * (likeley langs will get set first and userProjectData later, I think)
- */
-
+/* has to be called after langs are populated from AppBase */
 const setupFrontend = (setLangs) => {
   console.log('i18n setupFrontend', { setLangs })
   langs.set(setLangs)
@@ -44,27 +41,6 @@ const setupFrontend = (setLangs) => {
   })
 }
 
-/*
-langs.subscribe(newLangs => {
-  console.log('i18n langs subscribe, got', { newLangs })
-  if (!newLangs.length) {
-    console.log('i18n langs subscribe, not/empty Array, bailing')
-    return
-  }
-  if (get(lang) === false) {
-    console.log('i18n langs subscribe, lang not set in user project data, defaulting to first')
-    lang.set(newLangs[0])
-  } else {
-    if (newLangs.indexOf(get(lang)) === -1) {
-      console.log('i18n langs subscribe, lang was set in user project data, but seems invalid, resetting to default first')
-      lang.set(newLangs[0])
-    } else {
-      console.log('i18n langs subscribe, lang was set in user project data, valid')
-    }
-  }
-})
-*/
-
 const t = writable({
   'de': {
     '$test': 'de test'
@@ -74,7 +50,7 @@ const t = writable({
   }
 })
 
-const sheetKey = 'bd74ea31-b3f7-4b97-8d33-43a586336524' // 'translation'
+const sheetKey = 'translation'
 let sheetSub
 let rowsSub
 let projectId
@@ -120,7 +96,6 @@ const build = rows => {
     if (!_id) return
     for (const lang in row.values) {
       console.log('i18n build', { _id, lang, value: row?.values?.[lang] })
-      // if (validLangs.indexOf(lang) === -1) continue
       newT[lang] = newT[lang] || {}
       newT[lang]['$' + _id] = row.values[lang]
     }
