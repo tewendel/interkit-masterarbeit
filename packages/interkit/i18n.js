@@ -26,7 +26,7 @@ const setupFrontend = (setLangs) => {
       } else {
         console.warn('i18n userProjectData sub, data.lang set, langs not here, setting anyway')
         lang.set(data.lang)
-        langIndex.set(get(langs).indexOf(data.lang))
+        langIndex.set(get(langs)?.indexOf?.(data.lang))
       }
     } else {
       if (get(langs)) {
