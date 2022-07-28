@@ -2,6 +2,8 @@ name: AppBase
 title: App Base
 colour: 130
 fields:
+  - type: string
+    name: languages
   - type: slot
     name: viewport
   - type: slot

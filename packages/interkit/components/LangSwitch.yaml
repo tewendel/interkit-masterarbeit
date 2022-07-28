@@ -1,5 +1,10 @@
 name: LangSwitch
 fields:
-  - name: foo
+  - name: label
     type: string
+  - name: reloadAfterSwitch
+    type: options
+    options:
+      - yes
+      - no
 toolboxCategory: Basics

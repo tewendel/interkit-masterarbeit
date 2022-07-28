@@ -131,6 +131,54 @@ const executeQueue = async () => {
   }
 }
 
+/** adds the translate t function to api passed to onArrive + onMessage
+ * (it needs information from both project-api and project-server,
+ * so has to be "strapped on later". e.g. it needs both sendText AND userLang)
+ * also adds the sendTextT shortcut/helper, api.sendTextT(foo, bar) = api.sendText(t(foo, bar))
+ * returns the t function so it can be passed as argument, too
+ */
+const i18nifyApi = api => {
+  const t = texts => {
+    if (typeof texts === 'string' && texts.indexOf('|') > -1) {
+      /* pipe-separated string-list given */
+      texts = texts.split('|')
+    }
+    let text = '(sendTextT error 0)'
+    if (typeof texts === 'object' && texts.length) {
+      /* array-ish given */
+      if (typeof api.userLangIndex !== 'number') {
+        text = '(sendTextT error 10)'
+        console.error('api.sendTextT error, userLangIndex is not number', api.userLangIndex)
+      } else {
+        text = texts[api.userLangIndex]
+        if (text === undefined) {
+          text = '(sendTextT error 20)'
+          console.error('api.sendTextT error, userLangIndex\'d text undefined', api.userLangIndex, texts)
+        }
+      }
+    } else if (typeof texts === 'object') {
+      /* object-ish given */
+      if (!api.userLang) {
+        text = '(sendTextT error 30)'
+        console.error('api.sendTextT error, userLang invalid?', api.userLang)
+      } else {
+        text = texts[api.userLang]
+        if (text === undefined) {
+          text = '(sendTextT error 40)'
+          console.error('api.sendTextT error, userLang\'d text undefined', api.userLang, texts)
+        }
+      }
+    } else {
+      console.error('api.sendTextT error, got neither object nor array', typeof texts, texts)
+      text = texts?.toString() || '(sendTextT error 90)'
+    }
+    return text
+  } 
+  api.t = t
+  api.sendTextT = (texts, options) => api.sendText(t(texts), options)
+  return t
+}
+
 // goes over users and boards and processes any pending arrivals
 const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, users, boards, boardData}) => {  
   //console.log("processUserArrivals", users);
@@ -139,6 +187,7 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
     if (!user?.projectUserData) continue; // skip user that don't have project, especially the projectserver login user
     let boardState = user?.projectUserData[projectId]?.boardState;
     let userLang = user?.projectUserData[projectId]?.lang;
+    let userLangIndex = user?.projectUserData[projectId]?.langIndex;
     
     //console.log("boardState", user, boardState)
     if(!boardState) {
@@ -183,14 +232,17 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
             projectId, 
             userId: user.id,
             userLang,
+            userLangIndex,
             boardId,
             message: {channel_key: boardId, sender: user.id}
           }
 
+          const t = i18nifyApi(api)
+
           let handlerName = boardId + "_" + nodeId;
           
           if (handlers[handlerName]?.onArrive) {
-            await handlers[boardId + "_" + nodeId]?.onArrive(api)
+            await handlers[boardId + "_" + nodeId]?.onArrive(api, t)
           } else {
             console.warn(`handler ${handlerName} has no onArrive method`)            
           }
@@ -258,11 +310,12 @@ const setupMessageHandling = async ({
       console.log("determined current node", currentNodeId)
 
       const userId = message?.sender
-      // using _rawData, we don't need reactivity here
+      // using _rawData, we don't need reactivity here, hopefully faster?
       const projectUserData = userId
         ? reactiveUsersCollection._rawData?.find(_ => _.id === userId)?.projectUserData?.[projectId]
         : undefined
       const userLang = projectUserData?.lang
+      const userLangIndex = projectUserData?.langIndex
       
       // put interkit objects in api that gets passed to handler
       const api = {
@@ -272,17 +325,19 @@ const setupMessageHandling = async ({
         projectId, 
         userId,
         userLang,
+        userLangIndex,
         boardId,
         nodeId: currentNodeId
       }
 
+      const t = i18nifyApi(api)
       if(currentNodeId) {
 
         let handlerName = boardId + "_" + currentNodeId
         if (handlers[handlerName]?.onMessage) {
           console.log(`handling message ${message.id} with ${handlerName}`)
           // allow parallel execution... should handler be required to be synchronous and return something?
-          handlers[handlerName].onMessage(message, api)
+          handlers[handlerName].onMessage(message, api, t)
           handledBy.push(handlerName)
           //if (handlers[handlerName].onMessage(message)) {
           //    successfullyHandledBy.push(handlerName)
