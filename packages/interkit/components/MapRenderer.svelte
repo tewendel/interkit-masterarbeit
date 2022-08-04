@@ -1,5 +1,30 @@
 <script context="module">
 
+  /**
+   * Notes on headings, by geolocation (movement/walking/driving through space),
+   * and by compass ("magnetic", independent of movement):
+   *
+   * The Geolocation Plugin should take care of asking for permissions, even if
+   * this looks weird in the implementation.
+   *
+   * For compass, we use the standard `deviceorientation` event/API.
+   * There is also the Capacitor Motion plugin, which is only a thin wrapper,
+   * around the older, more cumbersome `devicemotion` event/API.
+   * There *could* be permission, or other problems, but so far this seems to work.
+   * An alternative could be https://github.com/apache/cordova-plugin-device-orientation
+   * (or its future Capacitor adaptation:
+   * https://github.com/ionic-team/capacitor-plugins/issues/718).
+   * Note also that this can be hard to test: `deviceorientation` requires a
+   * "secure context", so https in browser, which can be hard to provide in
+   * live/dev/watch/HMR modes. A compiled iOS/Android app's virtual localhost origin
+   * seems to work fine for now. So to test, deploy the app to device or try to proxy
+   * the live server through https.
+   * 
+   * Check the notes in the code for how we (hopefully) smartly mangle geo+compass,
+   * esp. the `combinedHeading` variable.
+   * Use the `debugGeo` constant; see annotations there on how to read the info.
+   */
+
   import { InterkitClient, util } from '../'
   
   // assembles html to pass to leaflet for a custom marker div - also used in ProgressChecklist
@@ -113,12 +138,44 @@
     }
   }
 
-  const debugGeo = false // display an overlay with current values
+  /**
+   * Flag to display an overlay with current values
+   * Please check the template for info how to read them
+   */
+  const debugGeo = false
+
+  /**
+   * Speed of the device in m/s, as reported by Capacitor's Geolocation API
+   */
   let currentSpeed
+
+  /**
+   * Speed of the device in m/s, logarithmically smoothed
+   */
   let smoothSpeed = 0.0
+
+  /**
+   * Clamped to sensible values (noise cut-off, max speed) and normalized [0.0..1.0],
+   * see other comment for exact calculation and magic values.
+   * Is then used to lerp between compass and geo (movement) direction:
+   * When 0.0 (user not moving, or moving very slowly), compass has precedence
+   * When 1.0 (user walking fast), geo direction has precedence
+   */
   let normalizedSpeed = false
+
+  /**
+   * Direction as reported by the compass, in degrees
+   */
   let compassHeading = false
+
+  /**
+   * Direction (of movement in space) in degrees, as reported by Capacitor's Geolocation API
+   */
   let geoHeading = false
+
+  /**
+   * Holds the lerped direction in degrees
+   */
   let combinedHeading
 
   const deviceorientationListener = evt => {
@@ -129,6 +186,13 @@
     compassHeading = false
   }
 
+  /**
+   * lerp between two angles. f1 + f2 =should= 1.0
+   * @param {number} a1 first angle
+   * @param {number} a2 second angle
+   * @param {number} f1 "influence" of first angle
+   * @param {number} f2 "influence" of first angle
+   */
   const vlerpAngles = (a1, a2, f1, f2) => {
     a1 = a1 * Math.PI / 180
     a2 = a2 * Math.PI / 180
@@ -411,14 +475,18 @@
   >
   {#if debugGeo}
     <div style="position: fixed; z-index: 10000; top: 0; left: 0; color: red">
-      comb/geo/comp<br/>
-      { typeof combinedHeading === 'number' ? Math.round(combinedHeading) : combinedHeading }
+      <!-- comb = lerped sum of geo+comp, by normSpd factor -->
+      <b>comb</b>/geo/comp<br/>
+      <b>{ typeof combinedHeading === 'number' ? Math.round(combinedHeading) : combinedHeading }</b>
       { typeof geoHeading === 'number' ? Math.round(geoHeading) : geoHeading }
+      <!-- hint: if compassHeading is false, deviceorientation fails. insecure context? no https? -->
       { typeof compassHeading === 'number' ? Math.round(compassHeading) : compassHeading }<br/>
-      currSpd/smthSpd/normSpd<br/>
+      currSpd/smthSpd/<b>normSpd</b><br/>
+      <!-- speeds in m/s. smth is log-smoothed over time; norm is noise-clamped and normalized -->
+      <!-- normSpd is lerp factor. 0 => use comp, 1 => use geo, sum goes to comb -->
       { Math.round(currentSpeed * 100) / 100 }
       { Math.round(smoothSpeed * 100) / 100 }
-      { Math.round(normalizedSpeed * 100) / 100 }
+      <b>{ Math.round(normalizedSpeed * 100) / 100 }</b>
     </div> 
   {/if}
 
