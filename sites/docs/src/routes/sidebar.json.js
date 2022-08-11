@@ -34,6 +34,10 @@ export async function get({ params }) {
       title: "Components",
       items: [
         {
+          title: "BottomMenu",
+          path: "/components/BottomMenu"
+        },                                
+        {
           title: "Button",
           path: "/components/Button"
         },
