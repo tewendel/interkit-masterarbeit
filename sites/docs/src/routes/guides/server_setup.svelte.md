@@ -7,6 +7,13 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 ## create server (if you don't have one)
 
 - book a server instance, e.g. Hetzner CPX11
+- connect a domain, for example `my-interkit-server.de` 
+  - using an A record pointing to your server instance ip address
+  - also set up a wildcard A record from `*.my-interkit-server.de` pointing to your server instance ip address
+
+## update and install prerequisites
+
+- ssh into the server `ssh root@my-interkit-server.de`
 - update `apt-get update && apt-get upgrade`
 - set timezone `timedatectl set-timezone Europe/Berlin`
 - install docker, see https://docs.docker.com/get-docker/
@@ -14,11 +21,8 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 - install docker-compose
   - either see https://docs.docker.com/compose/install/ and use command `docker compose` later
   - or try `apt-get install docker-compose` and use command `docker-compose` later
-- connect a domain, for example `my-interkit-server.de` 
-  - using an A record pointing to your server instance ip address
-  - also set up a wildcard A record from `*.my-interkit-server.de` pointing to your server instance ip address
 
-## get the right files
+## download .env and docker compose files
 
 - create an empty directory on your server, for example `mkdir my-interkit-server && cd my-interkit-server`
 - download these three files from the interkit gitlab repository:
