@@ -47,9 +47,21 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 
 see also [main readme, deploy section](https://gitlab.interkit.app/interkit/interkit-experiments#deploy) 
 
+
+
 ## setup project repository on the new interkit server
 
-Do you already have an interkit project that is on a public git repository?
+### setup an origin for your project in a git repository 
+
+- go to the repository tab
+- go to the cloudcmd tab
+- enter your admin password
+- in the cloudcmd shell, cd into your project directory (use the hint dockerized: displayed above)
+- add an origin to your project respository, for example (using gitlab and access token for private repos)
+`git remote add origin https://{access_toke_name}:{access_token}@gitlab.interkit.app/sebquack/vibezig.git`
+- now you should be a able to push to this origin
+
+### connecting an existing interkit project that is already on a public git repository
 
 - make sure it is publicly clonable
   - if it is in a private gitlab, create an access token with read/write developer access, remember `NAME` and `TOKEN` for later
