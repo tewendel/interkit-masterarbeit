@@ -51,24 +51,28 @@ see also [main readme, deploy section](https://gitlab.interkit.app/interkit/inte
 
 ## setup project repository on the new interkit server
 
-### setup an origin for your project in a git repository 
+It is possible to optionally connect your interkit project to an external repository
 
+- if the repository you would like to use is a private repo in gitlab, create an access token with read/write developer access, remember `NAME` and `TOKEN` for later
+
+### create a new interkit project and link it to an external repository
+
+- log into admin on your interkit server
+- create a new project
 - go to the repository tab
 - go to the cloudcmd tab
 - enter your admin password
 - in the cloudcmd shell, cd into your project directory (use the hint dockerized: displayed above)
 - add an origin to your project respository, for example (using gitlab and access token for private repos)
-`git remote add origin https://{access_toke_name}:{access_token}@gitlab.interkit.app/sebquack/vibezig.git`
+`git remote add origin https://{NAME}:{TOKEN}@gitlab.interkit.app/my-user/my-project.git`
 - now you should be a able to push to this origin
 
-### connecting an existing interkit project that is already on a public git repository
+### connect an existing interkit project from an external repository
 
-- make sure it is publicly clonable
-  - if it is in a private gitlab, create an access token with read/write developer access, remember `NAME` and `TOKEN` for later
 - log into admin on your interkit server
 - create new project
   - enter a name for the project
-  - enter the git repository url
+  - enter the git repository url, for example `https://{NAME}:{TOKEN}@gitlab.interkit.app/my-user/my-project.git`
   - press "create project"
   - wait a bit
 - enter the new project and check that the component composition is there
