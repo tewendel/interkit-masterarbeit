@@ -23,6 +23,10 @@ export async function get({ params }) {
         {
           title: 'Setup push notifications',
           path: "/guides/push_setup"
+        },
+        {
+          title: 'Internationalization (i18n) and localization (l10n)',
+          path: '/guides/i18n'
         }
       ]
     },

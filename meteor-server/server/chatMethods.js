@@ -164,18 +164,23 @@ Meteor.methods({
   
   // schedules an event for later
   // execution is managed in project-server.js
-  // delay is {minutes: 3, seconds: 30} from now
+  // delay is {minutes: 3, seconds: 30} from now, can be an (absolute) Date, too
   // payload depends on type "message" or "moveTo" - see those methods
-  'events.schedule': ({projectId, method, delay, payload}) => {
-    let execTime;
-    if(typeof delay == "object") execTime = add(new Date(), delay)
-    if(typeof delay == "number") execTime = add(new Date(), {seconds: delay})
-    if(!execTime) {
-      console.log("invalid delay, not scheduling event")
-      return;
+  'events.schedule': ({ projectId, method, delay, payload }) => {
+    let execTime
+    if (delay instanceof Date) {
+      execTime = delay
+    } else if (typeof delay === "object") {
+      execTime = add(execTime, delay)
+    } else if (typeof delay === "number") {
+      execTime = add(execTime, { seconds: delay })
     }
-    console.log("events.schedule", delay, execTime)
-    ScheduledEvents.insert({
+    if (!execTime) {
+      console.log("invalid delay, not scheduling event")
+      return
+    }
+    console.log("events.schedule", { delay, execTime, payloadType: payload?.type })
+    return ScheduledEvents.insert({
       projectId,
       method,
       execTime,
@@ -186,6 +191,22 @@ Meteor.methods({
 
   'events.setDone': ({_id}) => {
     ScheduledEvents.update({_id}, {$set: {status: "done"}})
+  },
+
+  'events.setStatus': ({ ids, status }) => {
+    console.log('events.setStatus', { ids, status })
+    const result = ScheduledEvents.update(
+      { _id: { $in: ids } },
+      { $set: { status } },
+      { multi: true }
+    )
+    return result
+  },
+
+  'events.delete': async ids => {
+    console.log('events.delete', ids)
+    const result = await ScheduledEvents.remove({ _id: { $in: ids } })
+    return result
   }
 
 });

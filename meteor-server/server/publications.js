@@ -3,10 +3,24 @@ import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../
 import {userIsInRoles} from '../imports/userRoles.js';
 
 Meteor.publish('projects', function() {
+  let fields = {
+    name: 1,
+    slug: 1,
+    isDefaultProject: 1,
+    history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+    projectServer: {
+      status: 1,
+      actionRequested: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+      messages: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+    },
+    uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+  }
   //console.log("projects sub")
-  let projects = Projects.find({});
-  //console.log(projects.fetch())
-  return projects;
+  if (userIsInRoles(this.userId, ['admin', 'author', 'bundler'])) {
+    let projects = Projects.find({}, { fields});
+    //console.log(projects.fetch())
+    return projects;
+  }
 });
 
 Meteor.publish('project', function(projectId) {
@@ -186,10 +200,12 @@ Meteor.publish("messages.unhandled", ({projectId, includeBlocked}) => {
 });
 
 // provides unexecuted events sorted by execTime
-Meteor.publish("scheduled_events", ({projectId}) => {
+Meteor.publish("scheduled_events", ({projectId, anyStatus}) => {
   let query = {
-    projectId,
-    status: "scheduled"
+    projectId
+  }
+  if (!anyStatus) {
+    query.status = 'scheduled'
   }
   let events = ScheduledEvents.find(query, {sort: {execTime: -1}});
   return events;

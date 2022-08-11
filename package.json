@@ -20,7 +20,8 @@
     "docker:build:admin": "docker build . -f Dockerfile.svelte-admin",
     "docker:build:bundler": "docker build . -f Dockerfile.app-bundler",
     "docker:build:docs": "docker build . -f Dockerfile.docs",
-    "docker:build:all": "npm run docker:build:server && npm run docker:build:admin && npm run docker:build:bundler && npm run docker:build:docs"
+    "docker:build:all": "npm run docker:build:server && npm run docker:build:admin && npm run docker:build:bundler && npm run docker:build:docs",
+    "test:server": "cd meteor-server && npm run test"
   },
   "engines": {
     "node": "16",

@@ -2,11 +2,15 @@
 
   import { InterkitClient } from '../'
   import { executeTrigger } from '../actions.js'
+  import { setupFrontend } from '../i18n.js'
   import { onMount, setContext } from 'svelte'
   import { writable } from 'svelte/store';
 
   import Styling from './Styling.svelte'
   import Overlay from './Overlay.svelte'
+
+  export let languages
+  setupFrontend(languages ? languages.split(',') : false)
 
   let initComplete = false;
 

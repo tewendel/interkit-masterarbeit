@@ -5,6 +5,7 @@
   // import Delete from "carbon-icons-svelte/lib/Delete.svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import InputModal from './InputModals/InputModal.svelte';
+  import SheetRenameModal from './InputModals/SheetRenameModal.svelte';
   import SheetCell from './SheetCell.svelte';
   import { columnTypes } from './baseConfig.js';
   import { onDestroy } from 'svelte';
@@ -21,6 +22,43 @@
   let updateCell; // the cell being edited in modal
   let inputModalValue; // value edited in input modal
   let modalParams; // object of optional params passed to input modal
+
+  const sheetRenameModal = {
+    open: false,
+    value: {},
+    start: () => {
+      // using `this` in LHS would break reactivity
+      sheetRenameModal.value.id = $currentSheet.id
+      sheetRenameModal.value.key = $currentSheet.key
+      sheetRenameModal.value.newKey = $currentSheet.key
+      sheetRenameModal.value.newName = $currentSheet.name
+      sheetRenameModal.open = true
+    },
+    submit: function () {
+      if (this.value.newKey === '') {
+        window.alert('new key must not be empty')
+        return
+      }
+      const isKeyChange = this.value.newKey !== this.value.key
+      InterkitClient.call('sheet.rename', {
+        projectId,
+        id: $currentSheet.id,
+        key: this.value.newKey,
+        name: this.value.newName
+      })
+        .then(changeCount => {
+          if (changeCount !== 1) {
+            throw new Error('sheet.rename did not return exactly 1 change, instead ' + changeCount)
+          }
+          if (isKeyChange) sheetKey = this.value.newKey
+          sheetRenameModal.open = false
+        })
+        .catch(err => {
+          console.error(err)
+          window.alert('sheet rename error')
+        })
+    }
+  }
 
   let rowsSubHandle;
   let rows;
@@ -91,13 +129,6 @@
       unsub();
     }
   })
-
-
-  const rename = () => {
-    let newName = prompt("Rename sheet", $currentSheet.name)
-    if(newName)
-      InterkitClient.call('sheet.rename', {key: sheetKey, projectId, name: newName})
-  }
 
   const remove = async () => {
     if(confirm("permanently remove sheet, including all rows and all data within?")) {
@@ -259,9 +290,9 @@
 {#if $currentSheet}
   <Button kind="tertiary" size="small" on:click={close}>{"<"} back to sheet overview</Button><br><br>
   <h4>{$currentSheet.name} 
-    <small>{$currentSheet.key}</small> 
+    <small>key={$currentSheet.key}</small>
   </h4>
-  <Button size="small" on:click={rename}>Rename</Button> 
+  <Button size="small" on:click={() => { sheetRenameModal.start() }}>Rename</Button>
   <Button size="small" on:click={remove} icon={TrashCan}>Remove Sheet</Button>
 
   <br><br>
@@ -288,7 +319,13 @@
         {:else}
           <div class="sheet-header" >
             <OverflowMenu size="sm" style="width: 100%;">
-              <div slot="menu" style="font-weight:bold">{header.value}</div>
+              <div slot="menu" style="font-weight:bold">
+                {#if header.value}
+                  {header.value}
+                {:else}
+                  <span style="opacity:0.5">(empty)</span>
+                {/if}
+              </div>
               <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
               <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
               <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
@@ -332,6 +369,13 @@
   {projectId}
   params={modalParams}
 />
+
+<SheetRenameModal
+  open={sheetRenameModal.open}
+  bind:value={sheetRenameModal.value}
+  submit={() => sheetRenameModal.submit()}
+  close={() => { sheetRenameModal.open = false }}
+  />
 
 <style>
   .sheet-header:hover {cursor: pointer}

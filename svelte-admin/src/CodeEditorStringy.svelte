@@ -80,7 +80,11 @@
     margin: 0;
     border: 0;
     background: white;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    /* need this border as a workaround for Firefox bug
+     * (contenteditable span loses focus when keyboard-navigated to end of text)
+     * https://bugzilla.mozilla.org/show_bug.cgi?id=1248186
+     */
+    border: 1px solid black;
   }
 
   .editor :global(span:empty::after) {

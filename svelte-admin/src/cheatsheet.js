@@ -77,6 +77,31 @@ if(msg.payload.type == "locationRequestCanceled") {
   api.sendText("ok")
 }
 
+/* translation, multi-language (i18n, l10n) */
+
+// access current language
+api.sendText('your language: ' + api.userLang)
+api.sendText('your language, index: ' + api.userLangIndex)
+
+// use current language
+if (api.userLang === 'en') ...
+if (api.userLangIndex === 1) ...
+let text1 = ['Deutsch', 'Englisch'][api.userLangIndex]
+let text2 = {de: 'Deutsch', en: 'Englisch'}[api.userLang]
+
+// use text localized to current user language
+export const onMessage = async (msg, api, t) => {
+  api.sendChoice({ a: t('Ja|Yes'), b: t('Nein|No') })
+}
+
+// the t helper function takes pipe-separated strings, arrays or objets:
+api.sendText(t('Ja|Yes'))
+api.sendText(t(['Ja', 'Yes']))
+api.sendText(t({ de: 'Ja', en: 'Yes' })) // order-independant
+
+// use sendTextT shortcut, equivalently
+api.sendTextT('Tschüß|Bye')
+
 `
 
 

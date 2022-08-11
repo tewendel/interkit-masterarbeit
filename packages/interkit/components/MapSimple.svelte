@@ -39,6 +39,24 @@
   
   export let clickTrigger;
 
+  // for new iOS only at this moment
+  const deviceorientationRequestPermission = () => {
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      console.log('DME reqPerm')
+      DeviceMotionEvent.requestPermission()
+        .then(permState => {
+          console.log('DME reqPerm then', permState)
+          if (permState === 'granted') {
+            console.log('DMQ reqPerm granted')
+            // the event listener will pick up deviceorientation events now
+          }
+        })
+        .catch(e => {
+          console.error('permReq error', e)
+        })
+    }
+  }
+
   const columnMap = {
     customIconColumn,
     markerLabelColumn,
@@ -148,6 +166,7 @@
 
   onMount(async ()=>{
     await initDataSubs();      
+    deviceorientationRequestPermission()
   })
 
   onDestroy(()=>{
@@ -165,6 +184,7 @@
   $: buttonPayloadStore.set(selectedElement ? selectedElement : nearestElement?.row)
 
   const containerClick = () => {
+    deviceorientationRequestPermission()
     if(clickTrigger) {
       executeTrigger(clickTrigger)
     }

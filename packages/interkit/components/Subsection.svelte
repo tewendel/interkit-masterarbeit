@@ -1,5 +1,6 @@
 <script>
 
+  import { lang } from '../i18n.js'
   import { getContext } from 'svelte';
   const { registerSection, activeSection } = getContext("Subsections");
 
@@ -7,6 +8,12 @@
   export let path;
 
   const key = {};
+
+  $: {
+    console.log('Subsection $', key, title, path)
+    registerSection({key, title, path})
+  }
+
   registerSection({key, title, path});
 
 </script>

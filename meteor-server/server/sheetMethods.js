@@ -250,11 +250,8 @@ Meteor.methods({
     }
   },
 
-  'sheet.rename': ({key, projectId, name}) => {
-    let sheet = Sheets.findOne({key, projectId});
-    if(sheet) {
-      Sheets.update({_id: sheet._id}, {$set: {name: name}});
-    }
+  'sheet.rename': ({ projectId, id, key, name }) => {
+    return Sheets.update({ _id: id }, { $set: { key, name } })
   },
   
 });

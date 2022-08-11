@@ -5,15 +5,26 @@
 
   import { InterkitClient } from 'interkit'
 
-  import { Tabs, Tab, TabContent, Accordion, AccordionItem } from "carbon-components-svelte";
+  import {
+    Button,
+    ButtonSet,
+    Tabs,
+    Tab,
+    TabContent,
+    Accordion,
+    AccordionItem
+  } from "carbon-components-svelte"
+
+  import Add from 'carbon-icons-svelte/lib/Add.svelte'
 
   import { boardsApi as api } from './BundleServer.js'
+  import { genericErrorHandler, errorify } from './apiHelpers.js'
 
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
   import CodeEditorStringy from './CodeEditorStringy.svelte'
   import CodeEditorExporty from './CodeEditorExporty.svelte'
-  import NodeEditorNewNodeModal from './NodeEditorNewNodeModal.svelte'
+  import NewNodeModal from './InputModals/NewNodeModal.svelte'
   import ChannelEditor from './ChannelEditor.svelte'
 
   import { idRE } from 'interkit/project-boards-nodes.js'
@@ -22,6 +33,11 @@
   
   const useCodeMirror = true
   let editorMode = 2
+
+  let unmetMoveTos
+
+  const rectWidth = 100
+  const rectHeight = 70
 
   import { cheatsheetContents } from './cheatsheet.js'
 
@@ -83,32 +99,11 @@
 
   $: usersArray, projectId, currentBoardId, board, previewUserId, updateUserNodes()
 
-  const genericErrorHandler = error => {
-    let msg = ''
-    if (!error) {
-      msg = 'unknown error'
-    } else {
-      if (error.error) msg += error.error + '\n'
-      if (error.errorMessage) msg += error.errorMessage + '\n'
-      if (error.message) msg += error.message + '\n'
-    }
-    window.alert(msg)
-    console.error(error)
-  }
-
-  const errorify = response => {
-    if (!response.errors) return
-    if (Array.isArray(response.errors)) {
-      if (response.errors.length === 0) return
-      throw response.errors[0]
-    } else {
-      throw response.errors
-    }
-  }
-
   let editMode = false
 
   let editNodeId = null
+
+  let copyEditNodeId
 
   const setCurrentBoardData = (boardData) => {
     currentBoardData = boardData
@@ -130,6 +125,7 @@
   $: currentBoardId, editNodeId, (() => { dispatch('nodeselected', { boardId: currentBoardId, nodeId: editNodeId }) })()
 
   let editorContents
+  let copyEditorContents
   $: currentBoardId, editNodeId, board, updateEditorContents()
 
   const updateEditorContents = () => {
@@ -146,8 +142,8 @@
         node.modified = true
         updateNodesModified()
       }
-      node.contents = editorContents
-      nodeGraph.updateConnections()
+      node.contents = editorContents;
+      ({ unmetMoveTos } = nodeGraph.updateConnections())
     }
     updateNodeMetadata()
   })()
@@ -236,7 +232,7 @@
   }
 
   const loadBoard = boardId => {
-    api(projectId, '/' + boardId)
+    return api(projectId, '/' + boardId)
       .then(async res => {
         const json = await res.json()
         errorify(json)
@@ -331,31 +327,52 @@
     }
   }
 
-  const createNodeInCurrentBoard = () => {
+  let copyCurrentNodeHinted = false
+  const copyCurrentNode = () => {
+    copyEditNodeId = currentBoardId + ' _ ' + editNodeId
+    copyEditorContents = editorContents
+    if (!copyCurrentNodeHinted) {
+      window.alert('you can now click \"new/paste node\" and select the node you just copied')
+      copyCurrentNodeHinted = true
+    }
+  }
+
+  const createNodeInCurrentBoard = (newNodeIdBase = 'node') => {
+    if (nodesModifiedCount) {
+      if (window.confirm('you have to save nodes first')) {
+        saveModifiedNodes()
+      } else {
+        return
+      }
+    }
     let c = 0
-    let newNodeIdDefault
-    while (!newNodeIdDefault || (board.nodes.findIndex(node => node.id === newNodeIdDefault) > -1 && c < 1000)) {
+    newNodeId = newNodeIdBase
+    while ((board.nodes.findIndex(node => node.id === newNodeId) > -1) && (c < 1000)) {
       c++
-      newNodeIdDefault = 'node' + c
+      newNodeId = newNodeIdBase + c
     }
     showNewNodeModal = true
-    newNodeId = newNodeIdDefault
-    // while (newNodeId === undefined || !nodeIdRE.test(newNodeId)) {
-    //   newNodeId = window.prompt('Please enter an ID for the new node. You can use letters a-z and numbers 0-9, no dashes, underscores, spaces or other characters.', newNodeId || newNodeIdDefault)
-    // }
-    // if (newNodeId === null) return
-    // createNode(currentBoardId, newNodeId)
   }
 
   const createNode = async (boardId, name, body) => { 
     console.log('createNode', body)
-    api(projectId, `/${boardId}/nodes/${name}`, { method: 'post', body })
+    const nextToNode = board?.nodes?.find(_ => _.id === editNodeId)
+    const qs = `?posX=${nextToNode?.posX + rectWidth + 20 || 0}&posY=${nextToNode?.posY + rectHeight + 20 || 0}`
+    const posX = nextToNode?.posX 
+    const posY = nextToNode?.posY
+    api(projectId, `/${boardId}/nodes/${name}/${qs}`, { method: 'post', body })
       .then(async res => {
         const json = await res.json()
         errorify(json)
       })
       .catch(genericErrorHandler)
-      .finally(() => { loadBoard(boardId) })
+      .finally(async () => {
+        await loadBoard(boardId)
+        // select the new node if it was created successfully
+        if (board?.nodes?.find(_ => _.id === name)) {
+          editNodeId = name
+        }
+      })
   }
 
   const deleteCurrentNode = () => {
@@ -534,10 +551,16 @@
       </button><br>
       <ChannelEditor channel_key={currentBoardId} {projectId}/>
       <button
-        on:click={createNodeInCurrentBoard}
+        on:click={() => { createNodeInCurrentBoard() }}
         disabled={!board}
         >
-        add node
+        new/paste node
+      </button>
+      <button
+        on:click={() => { copyCurrentNode() }}
+        disabled={!editNodeId}
+        >
+        copy node
       </button>
       <button
         on:click={saveModifiedNodes}
@@ -559,6 +582,8 @@
         {previewUserId}
         on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
         bind:editNodeId
+        {rectWidth}
+        {rectHeight}
         bind:this={nodeGraph}
         />
     {:else}
@@ -627,6 +652,25 @@
           {@html syntaxCheckMessage}
         </div>
       {/if}
+      {#if unmetMoveTos && editNodeId && unmetMoveTos[editNodeId]}
+        <p>create nodes for dangling <code>moveTo</code>s:</p>
+        {#if nodesModifiedCount}
+          <p><strong>You have to save all nodes first</strong></p>
+        {/if}
+        <ButtonSet stacked>
+        {#each unmetMoveTos[editNodeId] as unmetMoveTo}
+          <Button
+            kind="tertiary"
+            icon={Add}
+            size="small"
+            disabled={nodesModifiedCount}
+            on:click={() => { createNodeInCurrentBoard(unmetMoveTo) }}
+            >
+            {unmetMoveTo}
+          </Button>
+        {/each}
+        </ButtonSet>
+      {/if}
     <!--Accordion>
       <AccordionItem title="Cheatsheet"-->
         {#if useCodeMirror}
@@ -646,11 +690,24 @@
 </div>
 
 {#if showNewNodeModal}
-  <NodeEditorNewNodeModal
+  <NewNodeModal
     bind:templateText={newNodeContent}
     bind:nodeId={newNodeId}
+    {editNodeId}
     close={() => { showNewNodeModal = false }}
     submit={submitNewNodeModal}
+    dynamicTemplates={
+      [
+        copyEditNodeId && copyEditorContents
+          ? {
+            label: `clone of node: ${copyEditNodeId}`,
+            value: copyEditorContents
+          } : {
+            label: '(clone of a copied node)',
+            value: '// please select a node, click "copy node", and its content will appear here'
+          }
+      ]
+    }
     />
 {/if}
 

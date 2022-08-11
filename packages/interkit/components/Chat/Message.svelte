@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
 
   import MessageDate from "./MessageDate.svelte";
   import Button from "../Button.svelte";
@@ -49,6 +49,10 @@
       choiceSubmitted = true; 
     }
   }
+
+  onMount(() => {
+    dispatch('mounted')
+  })
 
 </script>
 

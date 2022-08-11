@@ -28,17 +28,32 @@ const getUserProjectData = (userId, projectId) => {
 const getBoardState = (projectId, userId, boardId) => {
   // get user
   const user = Meteor.users.findOne(userId)
-  if(!user) {
-    console.log("getBoardState - user not found")
-    return;
+  if (!user) {
+    console.warn(`getBoardState user ${userId} not found`)
+    return
   }  
-  // get boardState
-  let boardState = user?.projectUserData[projectId]?.boardState;
-  if(!boardState?.[boardId]) { 
-    console.log("boardState not found for board", boardId, boardState)
-    return;
+  if (!user.projectUserData) {
+    console.warn(`getBoardState user ${userId} has no projectUserData`)
+    // console.log(user)
+    return
   }
-  return boardState;
+  if (!user.projectUserData[projectId]) {
+    console.warn(`getBoardState user ${userId} has no projectUserData for project ${projectId}`)
+    // console.log(user.projectUserData)
+    return
+  }
+  if (!user.projectUserData[projectId].boardState) {
+    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}`)
+    // console.log(user.projectUserData[projectId])
+    return
+  }
+  if (boardId && !user.projectUserData[projectId].boardState[boardId]) {
+    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}, board ${boardId}`)
+    console.log(user.projectUserData[projectId].boardState)
+    return
+  }
+  // N.B. pretty weird that we pass boardId but return boardState (the parent)
+  return user.projectUserData[projectId]?.boardState
 }
 
 Meteor.methods({
@@ -256,6 +271,36 @@ Meteor.methods({
       return usersUpdatedCount
     }
     return false
+  },
+
+  'users.moveTo': async ({ projectId, userIds, boardId, nodeId }) => {
+    // TODO this is stupidly sequentialized, not efficient, and not DRY.
+    console.log('users.moveTo', { projectId, userIds, boardId, nodeId })
+    const successful = []
+    const errored = []
+    for (const userId of userIds) {
+      let userBoardState = getBoardState(projectId, userId, boardId);
+      if (!userBoardState) {
+        console.warn(`users.moveTo user ${userId} has no boardState`)
+        continue
+      }
+      if (!userBoardState[boardId]) {
+        console.warn(`users.moveTo user ${userId} has no boardState for board ${boardId}`)
+        continue
+      }
+      userBoardState[boardId].status = "arriving"
+      userBoardState[boardId].nodeId = nodeId
+      const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", userBoardState)
+      if (usersUpdatedCount === 1) {
+        successful.push(userId)
+      } else {
+        errored.push(userId)
+      }
+    }
+    return {
+      successful,
+      errored
+    }
   },
 
   'users.block': async ({ projectId, userIds, setBlocked }) => {

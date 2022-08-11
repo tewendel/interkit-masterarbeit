@@ -825,24 +825,11 @@ const loadElementPropertiesFromUser = async () => {
 }
 
 const usersMoveTo = async ({ userIds, projectId, boardId, nodeId }) => {
-  // TODO this is stupidly sequentialized. better implement users.moveTo
-  const successful = []
-  const errored = []
-  for (const userId of userIds) {
-    const usersMovedCount = await InterkitClient.call(
-      'user.moveTo',
-      { projectId, userId, boardId, nodeId }
-    )
-    if (usersMovedCount === 1) {
-      successful.push(userId)
-    } else {
-      errored.push(userId)
-    }
-  }
-  return {
-    successful,
-    errored
-  }
+  const result = await InterkitClient.call(
+    'users.moveTo',
+    { userIds, projectId, boardId, nodeId }
+  )
+  return result
 }
 
 const saveElementPropertiesToUser = async () => {

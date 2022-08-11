@@ -71,6 +71,7 @@ app.get('/boards/:projectId', board_node_api.boards.list)
 app.post('/boards/:projectId/:boardId', board_node_api.boards.create)
 app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
 app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
+app.patch('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.patch)
 app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
 app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId/:newNodeId', board_node_api.boards.renameNode)
 
