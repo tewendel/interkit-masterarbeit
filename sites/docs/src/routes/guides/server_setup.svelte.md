@@ -37,13 +37,13 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
   - `api.my-interkit-server.de`
   - `admin.my-interkit-server.de`
   - `app.my-interkit-server.de`
-- set the INTERKIT_IMAGE_TAG variable to the latest version from https://hub.docker.com/r/interkit/server/tags
-  - for example INTERKIT_IMAGE_TAG=v03-dd2f5ac3
+- set the `INTERKIT_IMAGE_TAG` variable to the latest version from https://hub.docker.com/r/interkit/server/tags
+  - for example `INTERKIT_IMAGE_TAG=v03-dd2f5ac3`
 
 ## start the server
 
-`docker network create frontproxy`
-`docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
+- `docker network create frontproxy`
+- `docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
 
 see also [main readme, deploy section](https://gitlab.interkit.app/interkit/interkit-experiments#deploy) 
 
