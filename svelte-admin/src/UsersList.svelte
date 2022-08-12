@@ -273,6 +273,15 @@
   }
 
   const quickMsgSend = async () => {
+    if (quickMsgIsRawPayload) {
+      try {
+        JSON.parse(quickMsgText)
+      } catch (err) {
+        console.warn('quick message send raw JSON parse test error', err)
+        window.alert("Raw payload JSON invalid? Not sending.\n\n" + err)
+        return
+      }
+    }
     const msg = {
       projectId,
       sender: userId,
@@ -497,7 +506,7 @@
     <TextArea
       bind:value={quickMsgText}
       labelText={!quickMsgIsRawPayload ? 'message text' : 'message payload JSON, must be valid!'}
-      placeholder={!quickMsgIsRawPayload ? "Hello!" : '{ type: "text", text: "Hello!" }'}
+      placeholder={!quickMsgIsRawPayload ? "Hello!" : '{ "type": "text", "text": "Hello!" }'}
       />
     <Checkbox bind:checked={quickMsgIsRawPayload} labelText="enter raw payload" />
   </div>
