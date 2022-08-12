@@ -9,27 +9,39 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
     
     // if fieldValue is an object with value attribute, use that (eg special field sheetColumn)
     // otherwise use fieldValue directly (eg vanilla string field)
-    var value = block.getFieldValue(blocklyAttributeName)?.value ?
-      block.getFieldValue(blocklyAttributeName)?.value
-      : block.getFieldValue(blocklyAttributeName)
 
-    if (value == "undefined" || value == "null") value = null;
+    var value = block.getFieldValue(blocklyAttributeName)
+
+    if(typeof value == "object") {
+      //console.log("fieldValue is object with nested oject", blocklyAttributeName, block.getFieldValue(blocklyAttributeName))
+      value = value?.value;
+      //console.log("changed value to", value)
+    }
 
     if (verbose) console.log('#CG# attribute', { block, attributeName, value })
 
-    // for "static-y string attributes" that start with a $
-    if (value?.substr(0, 1) === '$') {
-      // nasty nested ternary to avoid over-reliance on new-ish ?. because this is likely not babel-ed
-      return `${attributeName}={$lang ? ($t[$lang] && $t[$lang]["${value}"] ? $t[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
-      // return `${attributeName}={tf("${value}", $lang)}`
+    if (value == "undefined" || value == "null") {
+      return "";
     }
 
-    // is this a sheetColumn reference?
-    if (attributeName?.indexOf('Column') > -1 && value?.indexOf('/') > -1) {
-      if (value.indexOf('$lang') > -1) {
-        return `${attributeName}={$lang ? "${value}".replace("$lang", "$" + $lang) : "${value}"}`
-        // return `${attributeName}={$lang ? "${value}".replace("$lang", $lang) : "${value}"}`
+    // only do I18n if the value is a plain string
+    if(typeof value == "string") {
+      // for "static-y string attributes" that start with a $
+      if (value?.substr(0, 1) === '$') {
+        // nasty nested ternary to avoid over-reliance on new-ish ?. because this is likely not babel-ed
+        return `${attributeName}={$lang ? ($t[$lang] && $t[$lang]["${value}"] ? $t[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
+        // return `${attributeName}={tf("${value}", $lang)}`
       }
+      // is this a sheetColumn reference?
+      if (attributeName?.indexOf('Column') > -1 && value?.indexOf('/') > -1) {
+        if (value.indexOf('$lang') > -1) {
+          return `${attributeName}={$lang ? "${value}".replace("$lang", "$" + $lang) : "${value}"}`
+          // return `${attributeName}={$lang ? "${value}".replace("$lang", $lang) : "${value}"}`
+        }
+      }
+    } else {
+      console.log("attribute generator - warning, value not a string", { block, attributeName, value })
+      return "";
     }
 
     return value ? `${attributeName}="${value}"\n` : "";
