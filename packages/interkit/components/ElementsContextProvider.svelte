@@ -75,14 +75,18 @@
       data = filteredData;   
     }
 
+    //qconsole.log("filtered data", data)
     return data;
   }
 
   const refilter = () => {
+    //console.log("ElementsContextProvider refilter", unfilteredData)
     providedData.set(filterData(unfilteredData));    
   }
 
   const initSubs = async () => {
+
+    //console.log("initSubs", sheetKey)
 
     if(!sheetKey) {
       alert("ElementsContextProvider - no sheetKey set")
@@ -93,6 +97,7 @@
 
     // refilter data when data changes
     unsubscribe = rows.subscribe((data) => {
+      //console.log("ElementsContextProvider got data", sheetKey, data)
       unfilteredData = data;
       refilter();
     })
@@ -101,7 +106,7 @@
   // refilter data if elementProperties change
   $: {
     if($elementProperties) {
-      console.log("ElementsContextProvider detected change in elementProperties, refiltering")
+      //console.log("ElementsContextProvider detected change in elementProperties, refiltering")
       refilter();
     }
   }

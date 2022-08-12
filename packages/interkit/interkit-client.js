@@ -407,8 +407,6 @@ const getMessageSub = async (channel_key, includeBlocked = false) => {
 // subKey is a special key you can use to prevent conflicts with other subs that have different column maps
 const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
 
-  //console.log("getRowSubStore", columnMap)
-
   // check if we got a sheetKey or sheetColumn
   let sheetKey;
   if(sheetKeyOrSheetColumn.includes("/")) {
@@ -416,20 +414,21 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   } else {
     sheetKey = sheetKeyOrSheetColumn
   }
-  //console.log("sheetKey", sheetKey)
-
-  // if we use a columnMap make this the subKey to avoid conflicts
-  if(columnMap && !subKey) subKey = JSON.stringify(columnMap)
+  
+  // if we use a columnMap make this together with the sheetKey as the subKey to avoid conflicts
+  if(columnMap && !subKey) subKey = JSON.stringify({sheetKey, ...columnMap})
 
   // default subKey is the sheetKey
   if(!subKey) subKey = sheetKey;
+
+  console.log("getRowSubstore", {sheetKey, columnMap, subKey, rowSubs})
 
   if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        console.log("creating row subscription on sheet", sheetKey)
+        console.log("getRowSubstore: creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
