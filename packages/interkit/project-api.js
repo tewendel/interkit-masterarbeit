@@ -98,7 +98,7 @@ const moveTo = async function(nodeId, options) {
   const methodParams = {
     projectId,
     userId,
-    boardId,
+    boardId: options.channelKey ? options.channelKey : boardId, // you can optionally perform a moveTo on a different board
     nodeId
   }
   await callWithDelay(server, "user.moveTo", methodParams, options)
@@ -113,6 +113,16 @@ const getUserVar = async function(varName) {
 const setUserVar = async function(varName, value) {
   const {message, server, projectId, nodeId, userId} = this
   await server.call('user.setUserVar', {userId, projectId, varName, value})
+}
+
+const setElementProperty = async function(elementKey, propertyName, value) {
+  const {server, projectId, userId} = this
+  await server.call('user.setElementProperty', {userId, projectId, elementKey, propertyName, value})
+}
+
+const setChannelProperty = async function(channelKey, propertyName, value) {
+  const {server, projectId, userId} = this
+  await server.call('user.setChannelProperty', {userId, projectId, channelKey, propertyName, value})
 }
 
 const echo = async function(msg) {
@@ -180,6 +190,8 @@ export default {
   echo,
   setUserVar,
   getUserVar,
+  setElementProperty,
+  setChannelProperty,
   getRows,
   addRow,
   updateRow,

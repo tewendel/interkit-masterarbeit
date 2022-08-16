@@ -2,6 +2,10 @@ name: ElementsContextProvider
 fields: 
   - name: sheetKey
     type: sheetId
+  - name: referenceElementStore
+    type: string
+  - name: referenceElementColumn
+    type: sheetColumn
   - name: sortColumn
     type: sheetColumn
   - name: hideColumn

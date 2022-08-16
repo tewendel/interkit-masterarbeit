@@ -7,6 +7,9 @@
 
   export let sheetKey // the sheet to get the elements from
 
+  export let referenceElementStore // a store that contains an element that we use to filter this list
+  export let referenceElementColumn // the column on that element that contains the references
+    
   export let sortColumn // the column by which to sort the elements
   export let hideColumn // a column that filters elements 
   
@@ -17,8 +20,8 @@
   export let discoverProperty // a property that overrides the discoverableColumn
   
   import { onMount, onDestroy, setContext } from "svelte"
-  import { writable } from "svelte/store"
-  import { InterkitClient } from "../"
+  import { get, writable } from "svelte/store"
+  import { InterkitClient, util } from "../"
 
   let unsubscribe;
   let unfilteredData;
@@ -30,6 +33,17 @@
   const filterData = (data) => {
     //console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
     if(!data) return [];
+
+    // if reference Element is defined, make sure to filter out all other elements
+    if(referenceElementStore && referenceElementColumn) {
+      const referenceElement = InterkitClient.getGlobalStore(referenceElementStore);
+      if(referenceElement) {
+        let references = get(referenceElement)?.values?.[util.colKey(referenceElementColumn)]?.rowKeys
+        if(references) {
+          data = data.filter(a => references.includes(a.key))
+        }
+      }
+    }
 
     // exclude elements that have true in hideColumn
     if(hideColumn) {
@@ -65,6 +79,7 @@
 
     // check for discoverables and exclude if not yet discoverd
     if(discoverableColumn && discoverProperty) {
+      console.log("ElementsContextProvider filtering for discovered elements", data, $elementProperties)
       let filteredData = [];
       for(let element of data) {
         if(!element.discoverableColumn 

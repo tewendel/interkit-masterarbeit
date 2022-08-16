@@ -13,6 +13,8 @@
   let channelLastMessageStores;
   let userId;
 
+  let userProjectData = InterkitClient.userProjectDataStore
+
   onMount(async () => {
     userId = get(InterkitClient.userId);
     // find out what chat channels exist
@@ -80,12 +82,14 @@
 <div class="sort-container">
 {#if $channelsStore}
   {#each $channelsStore as channel}
+      {#if $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
         <ChatPreview
           channel_key={channel.channel_key}
           {selectTrigger}
         />
       </div>
+      {/if}
   {/each}
 {/if}
 </div>

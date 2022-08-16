@@ -251,6 +251,34 @@ Meteor.methods({
     await updateUserProjectData(userId, projectId, "userVars", userVars)
   },
 
+  'user.setElementProperty': async ({userId, projectId, elementKey, propertyName, value}) => {
+    console.log("user.setElementProperty", propertyName, value)
+    let userProjectData = getUserProjectData(userId, projectId);
+    let elementProperties = userProjectData.elementProperties
+    if(!elementProperties) {
+      elementProperties = {};
+    }
+    if(!elementProperties[elementKey]) {
+      elementProperties[elementKey] = {};
+    }
+    elementProperties[elementKey][propertyName] = value;
+    await updateUserProjectData(userId, projectId, "elementProperties", elementProperties)
+  },
+
+  'user.setChannelProperty': async ({userId, projectId, channelKey, propertyName, value}) => {
+    console.log("user.setChannelProperty", propertyName, value)
+    let userProjectData = getUserProjectData(userId, projectId);
+    let channelProperties = userProjectData.channelProperties
+    if(!channelProperties) {
+      channelProperties = {};
+    }
+    if(!channelProperties[channelKey]) {
+      channelProperties[channelKey] = {};
+    }
+    channelProperties[channelKey][propertyName] = value;
+    await updateUserProjectData(userId, projectId, "channelProperties", channelProperties)
+  },
+
   'users.getForNode': ({projectId, boardId, nodeId}) => {
     let nodeIdKey = `projectUserData.${projectId}.boardState.${boardId}.nodeId`
     let statusKey = `projectUserData.${projectId}.boardState.${boardId}.status`

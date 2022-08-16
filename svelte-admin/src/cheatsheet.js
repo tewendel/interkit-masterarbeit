@@ -11,6 +11,9 @@ export const onMessage = async (msg, api) => {
 // move player to a different node on the same board
 api.moveTo("node1")
 
+// advanced: move player on a different board
+api.moveTo("node1", {channelKey: "board2"})
+
 // send a text message to player
 api.sendText("hello")
 
@@ -49,6 +52,12 @@ await api.getUserVar("name")
 
 // set a variable for this user
 await api.setUserVar("name", "alice")
+
+// set an save a property about an element for this user, for example "discovered"
+await api.setElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered", true)
+
+// set a user specific property on a channel (eg to hide a channel for specific user)
+await api.setChannelProperty("board1", "unlisted", true)
 
 // load rows from a sheet
 await api.getRows("elements")

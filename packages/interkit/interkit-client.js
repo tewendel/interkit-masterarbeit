@@ -106,6 +106,7 @@ const connect = async (url) => {
   if(result) {
     // login again
     userId.set(get(userAuth)?.id);
+    await loadElementPropertiesFromUser();
   }
 }
 
@@ -306,7 +307,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       pubArgs.projectId = get(projectId);
     }
   }
-  console.log("getSub", col, pub, pubArgs)
+  //console.log("getSub", col, pub, pubArgs)
 
   if (!server) {
     console.warn("server not initialised, aborting getSub");
@@ -421,14 +422,14 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   // default subKey is the sheetKey
   if(!subKey) subKey = sheetKey;
 
-  console.log("getRowSubstore", {sheetKey, columnMap, subKey, rowSubs})
+  //console.log("getRowSubstore", {sheetKey, columnMap, subKey, rowSubs})
 
   if(!rowSubs[subKey]) {
     // no subscription for this sheet yet, create one
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        console.log("getRowSubstore: creating row subscription on sheet", sheetKey)
+        //console.log("getRowSubstore: creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
@@ -636,6 +637,7 @@ const createProjectTokenUserAndLogin = async ({ userToken, projectData } = {}) =
     projectData
   })
   const userId = await InterkitClient.loginTokenUser({ userToken: token })
+  await loadElementPropertiesFromUser();
   return userId ? token : false
 }
 
@@ -708,6 +710,7 @@ const login = async ({ username, password }) => {
   userId.set(userAuthData.id);
   localStorage.setItem('userId', userAuthData.id);
   localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+  await loadElementPropertiesFromUser();
   return userAuthData
 }
 
@@ -777,7 +780,7 @@ const setGlobalStore = (storeKey, value) => {
 // Properties are additional user-specific attributes to elements
 // they all exist in the same global store "elementProperties"
 // setElementProperty sets a property on an item and persist it
-const setElementProperty = (
+const setElementProperty = async (
   //store,  // a global store from getGlobalStore()
   key, // an id, typically a row key from database
   property, // name of the property
@@ -791,6 +794,8 @@ const setElementProperty = (
   console.log("setElementProperty", key, property, value, storeData)
   elementProperties.set(storeData);
   localStorage.setItem("elementProperties", JSON.stringify(storeData));
+  
+  await saveElementPropertiesToUser();
 }
 
 const getElementProperty = (
@@ -804,6 +809,7 @@ const getElementProperty = (
 }
 
 const loadElementPropertiesFromUser = async () => {
+  console.log("loadElementPropertiesFromUser")
   const userProjectData = get(userProjectDataStore)
   if (!userProjectData) {
     // wait for data
