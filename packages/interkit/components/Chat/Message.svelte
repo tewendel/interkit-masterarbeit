@@ -60,7 +60,9 @@
 <span class="message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
-{#if ['text', 'choice', 'image', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
+{#if message?.payload?.type === 'empty'}
+  {@html '<!-- empty message -->'}
+{:else if ['text', 'choice', 'image', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"

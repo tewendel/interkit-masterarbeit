@@ -37,6 +37,22 @@ const sendText = async function(text, options) {
 }
 const send = sendText;
 
+const sendDots = async function (duration, options) {
+  const { message, server, projectId } = this
+  const methodParams = {
+    projectId, 
+    channel_key: message.channel_key, 
+    //sender, 
+    recipients: [message.sender],
+    origin: 'handler',
+    payload: {
+      type: 'empty',
+      typingDuration: duration
+    }
+  }
+  await callWithDelay(server, "message.send", methodParams, options)
+}
+
 const sendImage = async function (mediafileKey, options) {
   const { message, server, projectId } = this
   console.log('sendImage', mediafileKey)
@@ -186,6 +202,7 @@ export default {
   sendText,
   sendImage,
   sendChoice,
+  sendDots,
   moveTo,
   echo,
   setUserVar,
