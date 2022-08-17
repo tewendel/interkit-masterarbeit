@@ -53,8 +53,8 @@ const sendDots = async function (duration, options) {
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
-const sendImage = async function (mediafileKey, options) {
-  const { message, server, projectId } = this
+const sendMediaFile = async function (callContext, type, mediafileKey, options) {
+  const { message, server, projectId } = callContext
   console.log('sendImage', mediafileKey)
   const methodParams = {
     projectId,
@@ -63,7 +63,7 @@ const sendImage = async function (mediafileKey, options) {
     recipients: [message.sender],
     origin: "handler",
     payload: {
-      type: 'image',
+      type: type,
       // text,
       mediafileKey,
       options
@@ -71,6 +71,19 @@ const sendImage = async function (mediafileKey, options) {
   }
   await callWithDelay(server, "message.send", methodParams, options)
 }
+
+const sendImage = async function (mediafileKey, options) {
+  await sendMediaFile(this, "image", mediafileKey, options)
+}
+
+const sendAudio = async function (mediafileKey, options) {
+  await sendMediaFile(this, "audio", mediafileKey, options)
+}
+
+const sendVideo = async function (mediafileKey, options) {
+  await sendMediaFile(this, "video", mediafileKey, options)
+}
+
 
 const sendChoice = async function(choice, options) {
   const {message, server, projectId} = this
@@ -201,6 +214,8 @@ export default {
   send,
   sendText,
   sendImage,
+  sendAudio,
+  sendVideo,
   sendChoice,
   sendDots,
   moveTo,

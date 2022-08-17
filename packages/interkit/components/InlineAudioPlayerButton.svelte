@@ -5,11 +5,12 @@
 
   import Icon from './Icon.svelte'
 
-  export let audioColumn
+  export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
+  export let audioKeyDirect // or just specify the key directly as a prop
 
   const c = getContext('buttonBar')
   const buttonPayload = c?.buttonPayload 
-  $: audioKey = util.rowVal($buttonPayload, audioColumn)?.value
+  $: audioKey = audioKeyDirect || util.rowVal($buttonPayload, audioColumn)?.value
 
   let audioElement
   let mediafile

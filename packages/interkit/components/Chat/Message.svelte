@@ -5,6 +5,8 @@
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
   import MediaFileImage from "../MediaFileImage.svelte";
+  import InlineAudioPlayerButton from '../InlineAudioPlayerButton.svelte';
+  import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -62,7 +64,7 @@
 
 {#if message?.payload?.type === 'empty'}
   {@html '<!-- empty message -->'}
-{:else if ['text', 'choice', 'image', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
+{:else if ['text', 'choice', 'image', 'audio', 'video', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
@@ -70,7 +72,10 @@
   >
     <div
       class="message__bubble"
-      on:click={() => { if (message?.payload?.type !== 'choice' && message?.payload?.type !== 'requestLocation') showOptions = true }}
+      on:click={() => { 
+        if (['text', 'image'].includes(message?.payload?.type))
+          showOptions = true 
+      }}
       >
       <div class="message__contents">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
@@ -85,6 +90,14 @@
             fitDimension="height"
             style="height: 200px;"
             doFallback={true}
+            />
+        {:else if message?.payload?.type == "audio"}
+            <InlineAudioPlayerButton
+              audioKeyDirect={message?.payload?.mediafileKey}
+            />
+        {:else if message?.payload?.type == "video"}
+            <InlineVideoPlayer
+              mediafileKey={message?.payload?.mediafileKey}
             />
         {:else if message?.payload?.type == "choice"}
           {#if message?.payload?.choice}
