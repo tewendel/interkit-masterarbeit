@@ -202,6 +202,10 @@
     height: 200px;
   }
 
+  .message--audio .message__contents {
+    height: 28px;
+  }
+
   .message:not(.message--image) .message__contents {
     padding: var(--distance-s);
   }
