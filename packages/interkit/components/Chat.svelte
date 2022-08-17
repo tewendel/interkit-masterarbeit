@@ -9,6 +9,7 @@
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
 
   import { Plugins } from '@capacitor/core';
+import { decimalToSexagesimal } from "geolib";
   const { Geolocation } = Plugins;
 
   export let channel_key = "DEFAULT"
@@ -105,6 +106,15 @@
       sender: userId,
       channel_key, 
       payload: {type: "text", text: messageText},
+      origin: "user"
+    })
+  }
+
+  const sendImage = (imageKey) => {
+    InterkitClient.call("message.send", {
+      sender: userId,
+      channel_key, 
+      payload: {type: "image", mediafileKey: imageKey},
       origin: "user"
     })
   }
@@ -268,9 +278,13 @@
   </div>
   <div
     class="input"
-    style={`visibility: ${chatInterface.text && !$userStore?.[0]?.blocked ? 'visible' : 'hidden'}`}
+    style={`visibility: ${(chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked ? 'visible' : 'hidden'}`}
     >
-    <ChatInput on:submit={ event => sendMessage(event.detail.messageText)} />
+    <ChatInput 
+      {chatInterface} 
+      on:submit={ event => sendMessage(event.detail.messageText)} 
+      on:imageSubmit={ event => sendImage(event.detail.imageKey) }
+    />
   </div>
 </div>
 

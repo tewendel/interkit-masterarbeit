@@ -72,7 +72,11 @@ await api.updateRow("elements", "rowKey", {title: "bye"})
 
 // hide the interface for sending messages (persists for each board)
 api.setInterface({text: false})
-api.setInterface({text: true}) // turn is back on 
+api.setInterface({text: true}) // turn it back on 
+
+// allow user to take pictures and send them into chat
+api.setInterface({text: true, photo: true}) // text and photo entry
+api.setInterface({text: false, photo: true}) // just photo entry
 
 // present the user with a button to send their location
 api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
