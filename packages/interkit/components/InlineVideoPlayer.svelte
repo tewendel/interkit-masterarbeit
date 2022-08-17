@@ -8,3 +8,12 @@
   <!-- svelte-ignore a11y-media-has-caption -->
   <video controls src={url} />
 </MediaFileResolver>
+
+
+<style>
+  video {
+      width: 100%;
+      max-height: 100%;
+  }
+
+</style>

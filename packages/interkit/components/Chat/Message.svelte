@@ -198,7 +198,7 @@
     border-style: solid;
   }
   
-  .message--image .message__contents {
+  .message--image .message__contents, .message--video .message__contents {
     height: 200px;
   }
 
