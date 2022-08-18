@@ -43,7 +43,7 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 ## start the server
 
 - `docker network create frontproxy`
-- `docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
+- `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
 
 see also [main readme, deploy section](https://gitlab.interkit.app/interkit/interkit-experiments#deploy) 
 
@@ -81,6 +81,8 @@ It is possible to optionally connect your interkit project to an external reposi
 ## update the interkit server
 
 - change `INTERKIT_IMAGE_TAG` in `.env` to desired interkit version (see https://gitlab.interkit.app/interkit/interkit-experiments/-/pipelines)
+- `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml pull`
+- `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
 
 ### troubleshooting
 - check if `.env` needs different variables compared to last deployed version
