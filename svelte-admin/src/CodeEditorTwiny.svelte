@@ -27,9 +27,11 @@
   // multiline, \s\S matches newlines (. doesn't)
   const nodeCodeRE = new RegExp(preambleCode + '([\\s\\S]*?)' + postambleCode, 'm')
 
+  const twinyOptionsRE = /\[\[.*?\]\]/g
+  // lookbehind unsupported on webkit
   // match all twine-like passage links, non-greedy global with lookahead and -behind
   // ` abc [[def]] gh ij [[ k l ]] mno ` => [ 'def', ' k l ']
-  const twinyOptionsRE = /(?<=\[\[)(.*?)(?=\]\])/g
+  // const twinyOptionsRE = /(?<=\[\[)(.*?)(?=\]\])/g
 
   const slugNegIdRE = new RegExp(negIdRE, 'ug')
   const nodeIdSlugify = str => str.replace(slugNegIdRE, '-')
@@ -40,7 +42,9 @@
     const moveTos = []
     str.split('\n\n').forEach(twinyParagraph => {
       if (twinyParagraph.indexOf('[[') > -1) {
-        const options = twinyParagraph.match(twinyOptionsRE)
+        let options = twinyParagraph.match(twinyOptionsRE)
+          // unwrap matches from square brackets `[[ foo ]]`
+          ?.map(_ => _.substr(2, _.length - 4))
         if (options) {
           const choices = {}
           let hasT = false
