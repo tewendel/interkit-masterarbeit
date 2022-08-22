@@ -117,4 +117,24 @@ api.sendText(t({ de: 'Ja', en: 'Yes' })) // order-independant
 // use sendTextT & sendChoiceT shortcuts, equivalently
 api.sendTextT('Tschüß|Bye')
 api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
+
+/** Twine-ish syntax
+ *  (this is a comment because JS highlighting doesnt' make sense)
+ *  See also the twine-ish new node templates.
+
+Hi! This is a message.
+
+An empty newline separates paragraphs = message.
+
+A Twine link, like [[nodeName]],
+will become a choice with moveTo to nodeName.
+We also support Twine aliases/renames:
+[[Go Home|home]] [[Go Home->home]] [[home<-Go Home]]
+...with i18n:
+[[Nach Hause|To home|homeNode]]
+[[homeNode<-Nach Hause|To home]] etc.
+All other text in paragraphs with links,
+like this sentence, will be ignored.
+
+*/
 `

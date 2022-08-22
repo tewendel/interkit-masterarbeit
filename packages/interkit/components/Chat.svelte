@@ -11,7 +11,7 @@
   import { Plugins } from '@capacitor/core';
   import { decimalToSexagesimal } from "geolib";
 
-  const verbose = true
+  const verbose = false
 
   const { Geolocation } = Plugins;
 

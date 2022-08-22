@@ -36,29 +36,68 @@
   const slugNegIdRE = new RegExp(negIdRE, 'ug')
   const nodeIdSlugify = str => str.replace(slugNegIdRE, '-')
 
+  /** parse and convert our twine-ish syntax to interkit node syntax
+   * (i.e. an onArrive and onMessage handler)
+   * Empty lines separate paragraphs;
+   * paragraphs make messages/sendTexts, unless they contain [[links]]
+   * then they become sendChoices.
+   * We support aliases ("link renaming" in Twin parlance. Their docs
+   * are super confusing https://twinery.org/cookbook/starting/twine2/creatinglinks.html)
+   * and our i18n on top. These are equivalent:
+   * [[Label|Beschriftung->destNodeId]]
+   * [[destNodeId<-Label|Beschriftung]]
+   * [[Label|Beschriftung|destNodeId]]
+   */
   const twiny2js = str => {
     str = str.replace(/\`/g, '')
     const onArrive = []
     const moveTos = []
+    // twiny paragraphs are separated by empty lines, markdown style
     str.split('\n\n').forEach(twinyParagraph => {
+      // if a paragraph contains a [[link]], it will sendChoice,
+      // other text will be ignored
       if (twinyParagraph.indexOf('[[') > -1) {
         let options = twinyParagraph.match(twinyOptionsRE)
           // unwrap matches from square brackets `[[ foo ]]`
           ?.map(_ => _.substr(2, _.length - 4))
         if (options) {
           const choices = {}
+          // flag to later pick between sendTextT/sendText
           let hasT = false
           options.forEach(option => {
-            choices['choice' + moveTos.length] = option
             option = option.trim()
-            const pipePos = option.indexOf('|')
-            if (pipePos > -1) {
-              hasT = true
-              option = option.substr(0, pipePos)
+            let destination
+            const lastPipePos = option.lastIndexOf('|')
+            const rightArrowPos = option.indexOf('->')
+            const leftArrowPos = option.indexOf('<-')
+            // chop off the "aliases" and use them as option Labels
+            // (Labels can be pipe-sep)
+            // chopped of part will be dest(…inationNodeId)
+            if (rightArrowPos > -1) {
+              // [[Label->destNodeId]]
+              // [[Label|Beschriftung->destNodeId]]
+              destination = option.substr(rightArrowPos + 2)
+              option = option.substr(0, rightArrowPos)
+            } else if (leftArrowPos > -1) {
+              // [[destNodeId<-Label]]
+              // [[destNodeId<-Label|Beschriftung]]
+              destination = option.substr(0, leftArrowPos)
+              option = option.substr(leftArrowPos + 2)
+            } else if (lastPipePos > -1) {
+              // [[Label|destNodeId]]
+              // [[Label|Beschriftung|destNodeId]]
+              destination = option.substr(lastPipePos + 1)
+              option = option.substr(0, lastPipePos)
+            } else {
+              destination = option
             }
-            moveTos.push(nodeIdSlugify(option))
+            // check remaining option string for pipe-separation
+            if (option.indexOf('|') > -1) hasT = true
+            choices['choice' + moveTos.length] = option
+            moveTos.push(nodeIdSlugify(destination))
           })
           const choicesCode = JSON.stringify(choices, null, '    ')
+            // properly, though hackily indent final closing curly
             .replace(/^}/m, '  }')
           const func = hasT ? 'sendChoiceT' : 'sendChoice'
           onArrive.push(`  api.${func}(${choicesCode})\n`)
@@ -85,7 +124,6 @@
   }
   
   const build = code => {
-    console.trace('CodeEditorTwiny build')
     if (!code || (typeof code !== 'string')) return
     const m = code.match(nodeCodeRE)
     if (verbose) console.log('CodeEditorTwiny build, match', m)
