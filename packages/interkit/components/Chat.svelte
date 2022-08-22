@@ -9,7 +9,10 @@
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
 
   import { Plugins } from '@capacitor/core';
-import { decimalToSexagesimal } from "geolib";
+  import { decimalToSexagesimal } from "geolib";
+
+  const verbose = true
+
   const { Geolocation } = Plugins;
 
   export let channel_key = "DEFAULT"
@@ -205,36 +208,36 @@ import { decimalToSexagesimal } from "geolib";
   }
 
   const typingNext = () => {
-    // console.log('typingNext')
+    if (verbose) console.log('typingNext')
     if (typingShow) {
-      // console.log('typingNext bailing typingShow')
+      if (verbose) console.log('typingNext bailing typingShow')
       return
     }
     if (storeUpdates === 0) {
-      // console.log('typingNext bailing because first storeUpdate')
+      if (verbose) console.log('typingNext bailing because first storeUpdate')
       return
     }
     if (typingQueuePointer >= $messageStore.length) {
-      // console.log('typingNext bailing QP >= store.length')
+      if (verbose) console.log('typingNext bailing QP >= store.length')
       return
     }
     const currentMessage = $messageStore[typingQueuePointer]
     if (!currentMessage) {
-      // console.warn('typingNext bailing because no currentMessage')
+      if (verbose) console.warn('typingNext bailing because no currentMessage')
       return
     }
     if (currentMessage?.sender === userId) {
-      // console.log('typingNext skipping because user message')
+      if (verbose) console.log('typingNext skipping because user message')
       typingQueuePointer++
       typingNext()
     }
     const duration = typingDuration(currentMessage)
-    // console.log('typingNext starting timeout', duration, currentMessage)
+    if (verbose) console.log('typingNext starting timeout', duration, currentMessage)
     typingShow = true
     window.setTimeout(() => {
       typingShow = false
       typingQueuePointer++
-      // console.log('typingNext done timeout', { typingQueuePointer })
+      if (verbose) console.log('typingNext done timeout', { typingQueuePointer })
       typingNext()
     }, duration * 1000)
   }
