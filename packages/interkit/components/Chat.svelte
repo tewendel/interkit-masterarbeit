@@ -230,6 +230,7 @@
       if (verbose) console.log('typingNext skipping because user message')
       typingQueuePointer++
       typingNext()
+      return
     }
     const duration = typingDuration(currentMessage)
     if (verbose) console.log('typingNext starting timeout', duration, currentMessage)
