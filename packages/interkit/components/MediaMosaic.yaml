@@ -1,0 +1,15 @@
+name: MediaMosaic
+toolboxCategory: "Lists"
+color: 230
+fields:
+  - name: selectTrigger
+    type: string
+  - name: imageColumn
+    type: sheetColumn
+  - name: audioColumn
+    type: sheetColumn
+  - name: slider
+    type: checkbox
+  - type: "slot"
+    name: "emptyElement"
+  

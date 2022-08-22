@@ -11,12 +11,17 @@ export const onMessage = async (msg, api) => {
 // move player to a different node on the same board
 api.moveTo("node1")
 
+// advanced: move player on a different board
+api.moveTo("node1", {channelKey: "board2"})
+
 // send a text message to player
 api.sendText("hello")
 
-// send an image message to player
-// (to get its key, go to Media tab, open ⋮ menu, copy key)
+// send an image, audio or video message to player
+// (to get the media file key, go to Media tab, open ⋮ menu, copy key)
 api.sendImage("f00ba420-0123-4567-89abcdef012356789")
+api.sendAudio("e4770840-3c2e-4eeb-b59b-a0e15e14190b")
+api.sendVideo("b94eb8f3-72ef-476d-ad61-64adc18204e7")
 
 // add a label
 api.sendText("hello", {label: "bot"})
@@ -50,6 +55,12 @@ await api.getUserVar("name")
 // set a variable for this user
 await api.setUserVar("name", "alice")
 
+// set an save a property about an element for this user, for example "discovered"
+await api.setElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered", true)
+
+// set a user specific property on a channel (eg to hide a channel for specific user)
+await api.setChannelProperty("board1", "unlisted", true)
+
 // load rows from a sheet
 await api.getRows("elements")
 
@@ -61,7 +72,11 @@ await api.updateRow("elements", "rowKey", {title: "bye"})
 
 // hide the interface for sending messages (persists for each board)
 api.setInterface({text: false})
-api.setInterface({text: true}) // turn is back on 
+api.setInterface({text: true}) // turn it back on 
+
+// allow user to take pictures and send them into chat
+api.setInterface({text: true, photo: true}) // text and photo entry
+api.setInterface({text: false, photo: true}) // just photo entry
 
 // present the user with a button to send their location
 api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank

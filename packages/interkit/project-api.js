@@ -53,8 +53,8 @@ const sendDots = async function (duration, options) {
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
-const sendImage = async function (mediafileKey, options) {
-  const { message, server, projectId } = this
+const sendMediaFile = async function (callContext, type, mediafileKey, options) {
+  const { message, server, projectId } = callContext
   console.log('sendImage', mediafileKey)
   const methodParams = {
     projectId,
@@ -63,7 +63,7 @@ const sendImage = async function (mediafileKey, options) {
     recipients: [message.sender],
     origin: "handler",
     payload: {
-      type: 'image',
+      type: type,
       // text,
       mediafileKey,
       options
@@ -71,6 +71,19 @@ const sendImage = async function (mediafileKey, options) {
   }
   await callWithDelay(server, "message.send", methodParams, options)
 }
+
+const sendImage = async function (mediafileKey, options) {
+  await sendMediaFile(this, "image", mediafileKey, options)
+}
+
+const sendAudio = async function (mediafileKey, options) {
+  await sendMediaFile(this, "audio", mediafileKey, options)
+}
+
+const sendVideo = async function (mediafileKey, options) {
+  await sendMediaFile(this, "video", mediafileKey, options)
+}
+
 
 const sendChoice = async function(choice, options) {
   const {message, server, projectId} = this
@@ -114,7 +127,7 @@ const moveTo = async function(nodeId, options) {
   const methodParams = {
     projectId,
     userId,
-    boardId,
+    boardId: options.channelKey ? options.channelKey : boardId, // you can optionally perform a moveTo on a different board
     nodeId
   }
   await callWithDelay(server, "user.moveTo", methodParams, options)
@@ -129,6 +142,16 @@ const getUserVar = async function(varName) {
 const setUserVar = async function(varName, value) {
   const {message, server, projectId, nodeId, userId} = this
   await server.call('user.setUserVar', {userId, projectId, varName, value})
+}
+
+const setElementProperty = async function(elementKey, propertyName, value) {
+  const {server, projectId, userId} = this
+  await server.call('user.setElementProperty', {userId, projectId, elementKey, propertyName, value})
+}
+
+const setChannelProperty = async function(channelKey, propertyName, value) {
+  const {server, projectId, userId} = this
+  await server.call('user.setChannelProperty', {userId, projectId, channelKey, propertyName, value})
 }
 
 const echo = async function(msg) {
@@ -191,12 +214,16 @@ export default {
   send,
   sendText,
   sendImage,
+  sendAudio,
+  sendVideo,
   sendChoice,
   sendDots,
   moveTo,
   echo,
   setUserVar,
   getUserVar,
+  setElementProperty,
+  setChannelProperty,
   getRows,
   addRow,
   updateRow,

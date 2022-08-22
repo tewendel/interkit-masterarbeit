@@ -16,6 +16,8 @@
   export let mode = "video" // video | audio | image
   export let uploadedTrigger
 
+  export let onUploadSuccess // optional callback
+
   const colKeyMapping = {
     'audio': audioColumn,
     'video': videoColumn,
@@ -184,6 +186,7 @@
     })
     .then((result) => {
       console.log('Success:', result);
+      if(onUploadSuccess) onUploadSuccess(result);
       const col = colKeyMapping[mode]
       return addElement({mediaKey: result.key, mimeType }, col)
     })
@@ -252,7 +255,7 @@
         {/if}
       {:else if !imageBlob}
           <Button on:click={takePicture}>
-            take picture
+            Take picture
           </Button>
       {/if}
       {#if recording}
