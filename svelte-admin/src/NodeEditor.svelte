@@ -139,6 +139,10 @@
     const node = board?.nodes?.find(node => node.id === editNodeId)
     if (node) {
       if (node.contents !== editorContents) {
+        // only save the fresh, unmodified after-save/load contents
+        if (!node.modified) {
+          node._originalContents = node.contents
+        }
         // console.log('set modified', node)
         node.modified = true
         updateNodesModified()
@@ -396,13 +400,24 @@
   }
 
   const saveCurrentNode = () => {
-
     syntaxCheck()
     if(syntaxCheckStatus == 'ok') {
       saveNode(currentBoardId, editNodeId, editorContents)
     } else {
       alert("Cannot save, there are syntax errors in your code.")
     }
+  }
+
+  const restoreCurrentNode = () => {
+    const node = board?.nodes?.find(_ => _.id === editNodeId)
+    if (!node) {
+      window.alert(`node ${editNodeId} not found, cannot restore`)
+      return
+    }
+    editorContents = node._originalContents
+    delete node._originalContents
+    node.modified = false
+    updateNodesModified()
   }
 
   const saveModifiedNodes = () => {
@@ -432,6 +447,7 @@
         if (node) {
           console.log('set modified false', node)
           node.contents = json.result
+          node._originalContents = ''
           node.modified = false
           updateNodesModified()
           if (editNodeId === nodeId) updateEditorContents()
@@ -603,6 +619,12 @@
           disabled={!board || !editNodeId || !editNodeModified }
           >
           save
+        </button>
+        <button
+          on:click={restoreCurrentNode}
+          disabled={!board || !editNodeId || !editNodeModified }
+          >
+          restore
         </button>
         <button
           on:click={deleteCurrentNode}
