@@ -99,10 +99,7 @@ api.sendText(t('Ja|Yes'))
 api.sendText(t(['Ja', 'Yes']))
 api.sendText(t({ de: 'Ja', en: 'Yes' })) // order-independant
 
-// use sendTextT shortcut, equivalently
+// use sendTextT & sendChoiceT shortcuts, equivalently
 api.sendTextT('Tschüß|Bye')
-
+api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
 `
-
-
-

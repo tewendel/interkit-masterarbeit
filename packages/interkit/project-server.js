@@ -176,6 +176,13 @@ const i18nifyApi = api => {
   } 
   api.t = t
   api.sendTextT = (texts, options) => api.sendText(t(texts), options)
+  api.sendChoiceT = (choices, options) => {
+    const choicesT = {}
+    for (const key in choices) {
+      choicesT[key] = t(choices[key])
+    }
+    return api.sendChoice(choicesT, options)
+  }
   return t
 }
 
