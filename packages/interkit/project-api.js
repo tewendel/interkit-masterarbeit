@@ -127,7 +127,7 @@ const moveTo = async function(nodeId, options) {
   const methodParams = {
     projectId,
     userId,
-    boardId: options.channelKey ? options.channelKey : boardId, // you can optionally perform a moveTo on a different board
+    boardId: options?.channelKey || boardId, // you can optionally perform a moveTo on a different board
     nodeId
   }
   await callWithDelay(server, "user.moveTo", methodParams, options)
