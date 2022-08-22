@@ -1,7 +1,7 @@
   const templates = [
     {
       label: 'basic',
-      value: `
+      value: `\
 export const onArrive = async (api) => {
   // do something when the user arrives
   api.sendText("hello!")
@@ -11,11 +11,11 @@ export const onMessage = async (msg, api) => {
   // do something when the user sends a message
   api.sendText("thank you for your message")
 }
-      `
+`
     },
     {
       label: 'respond to text input',
-      value: `
+      value: `\
 export const onArrive = async (api) => {
   // do something when the user arrives
   api.sendText("hello, what's your name?")
@@ -29,7 +29,7 @@ export const onMessage = async (msg, api) => {
     },
     {
       label: 'branch depending on text input',
-      value: `
+      value: `\
 export const onArrive = async (api) => {
   api.sendText("where do you want to go?")
 }
@@ -55,7 +55,7 @@ export const onMessage = async (msg, api) => {
     },
     {
       label: 'respond to button',
-      value: `
+      value: `\
 export const onArrive = async (api) => {
   // do something when the user arrives
   api.sendText("hello!")
@@ -73,7 +73,7 @@ export const onMessage = async (msg, api) => {
 },
 {
       label: 'branch depending on button input',
-      value: `
+      value: `\
 export const onArrive = async (api) => {
   api.sendText("where do you want to go?")
   api.sendChoice({a: "berlin", b: "home"})
