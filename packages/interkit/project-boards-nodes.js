@@ -22,6 +22,8 @@ const startNodeId = 'start'
  * See https://caniuse.com/mdn-javascript_builtins_regexp_property_escapes
  */
 const idRE = '[\\p{L}\\p{Nd} -]+'
+// for slugification
+const negIdRE = '[^\\p{L}\\p{Nd} -]'
 
 const projectIdRE = /[\w\d]+/
 const idParamRE = new RegExp(idRE, 'u')
@@ -330,5 +332,6 @@ api.nodes.delete = expressify(
 export {
   lib,
   api,
-  idRE
+  idRE,
+  negIdRE
 }

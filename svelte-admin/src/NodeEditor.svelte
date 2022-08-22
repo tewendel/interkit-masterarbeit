@@ -24,6 +24,7 @@
   import CodeEditor from './CodeEditor.svelte'
   import CodeEditorStringy from './CodeEditorStringy.svelte'
   import CodeEditorExporty from './CodeEditorExporty.svelte'
+  import CodeEditorTwiny from './CodeEditorTwiny.svelte'
   import NewNodeModal from './InputModals/NewNodeModal.svelte'
   import ChannelEditor from './ChannelEditor.svelte'
 
@@ -138,7 +139,7 @@
     const node = board?.nodes?.find(node => node.id === editNodeId)
     if (node) {
       if (node.contents !== editorContents) {
-        console.log('set modified', node)
+        // console.log('set modified', node)
         node.modified = true
         updateNodesModified()
       }
@@ -154,6 +155,7 @@
     // I failed to do this idiomatically reactive
     nodesModifiedCount = board?.nodes?.filter(node => node.modified).length
     editNodeModified = board?.nodes?.find(node => node.id === editNodeId)?.modified
+    console.log('NodeEditor updateNodesModified', { nodesModifiedCount, editNodeModified })
     _update++
   }
   $: editNodeId, updateNodesModified()
@@ -622,6 +624,7 @@
       <Tab label="Strings" />
       <Tab label="Handlers" />
       <Tab label="Full" />
+      <Tab label="Twine-ish" />
     </Tabs>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
@@ -646,6 +649,12 @@
               disabled={editorContents === null}
               />
           {/if}
+        {:else if editorMode === 3}
+          <CodeEditorTwiny
+            code={editorContents}
+            on:codechange={evt => { editorContents = evt.detail }}
+            class="editor"
+            />
         {/if}
       {#if syntaxCheckMessage}
         <div class={`syntaxcheck syntaxcheck__status-${syntaxCheckStatus}`}>

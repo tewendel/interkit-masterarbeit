@@ -173,6 +173,9 @@
     if (message.payload && ('typingDuration' in message.payload)) {
       return message.payload.typingDuration
     }
+    if (message.payload?.options && ('typingDuration' in message.payload.options)) {
+      return message.payload.options.typingDuration
+    }
     let duration
     switch (message?.payload?.type) {
       case 'text':

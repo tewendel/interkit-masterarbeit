@@ -45,6 +45,10 @@
       // if (!fromNode.contents) return
       const fromX = fromNode.posX + rectWidth / 2
       const fromY = fromNode.posY + rectHeight / 2
+      if (!fromNode.contents || (typeof fromNode.contents !== 'string')) {
+        console.log('NodeGraph updateConnections fromNode has no contents, bailing', fromNode)
+        return
+      }
       const moveTos = [...fromNode.contents.matchAll(parseREmoveTo)].map(_ => _[1])
       moveTos.forEach(toNodeId => {
         const toNode = nodes.find(_ => _.id === toNodeId)
@@ -52,7 +56,7 @@
           unmetMoveTos = unmetMoveTos || {}
           unmetMoveTos[fromNode.id] = unmetMoveTos[fromNode.id] || []
           unmetMoveTos[fromNode.id].push(toNodeId)
-          console.log('#unmet', fromNode, toNodeId)
+          // console.log('#unmet', fromNode, toNodeId)
         } else {
           const toX = toNode.posX + rectWidth / 2
           const toY = toNode.posY + rectHeight / 2

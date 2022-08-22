@@ -98,6 +98,30 @@ export const onMessage = async (msg, api) => {
 }
 `
     },
+  {
+    label: 'twine-ish',
+    value: `\
+export const twinterkitSource = \`
+Hello!
+
+Where do you want to go today?
+
+[[ Berlin ]] [[ Redmond ]]
+\`
+
+// onArrive and onMessage will be created automatically
+`
+  },
+  {
+    label: 'twine-ish, minimal',
+    value: `\
+export const twinterkitSource = \`
+
+\`
+
+`
+  }
+
  ]
 
 export {
