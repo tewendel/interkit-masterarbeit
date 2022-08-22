@@ -78,7 +78,7 @@
       onArrive.join('') +
       `}\n\n` +
       `export const onMessage = async (msg, api) => {\n` +
-      `  switch (msg.payload.text) {\n` +
+      `  switch (msg.payload.key) {\n` +
       moveTos.map((slug, index) => `    case 'choice${index}':\n      api.moveTo('${slug}')\n      break\n`).join('') +
       `  }\n` +
       `}`
