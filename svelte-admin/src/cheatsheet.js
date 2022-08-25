@@ -126,6 +126,8 @@ Hi! This is a message.
 
 An empty newline separates paragraphs = message.
 
+\`console.log('A backticked paragraph lets you passthru JS code');\`
+
 A Twine link, like [[nodeName]],
 will become a choice with moveTo to nodeName.
 We also support Twine aliases/renames:

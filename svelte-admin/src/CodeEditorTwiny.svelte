@@ -13,7 +13,9 @@
   let valid = false
 
   const preambleCode = 'export const twinterkitSource = \`\n'
-  const postambleCode = '\n\`\n'
+  // need a strong marker here to allow stray backticks
+  // dont use a star/multiline comment b/c the star would have to be escaped
+  const postambleCode = '\n\` // end twinterkitSource\n'
   let twinyCode = ''
   let jsCode = ''
 
@@ -49,15 +51,15 @@
    * [[Label|Beschriftung|destNodeId]]
    */
   const twiny2js = str => {
-    str = str.replace(/\`/g, '')
     const onArrive = []
+    const onMessage = []
     const moveTos = []
     // twiny paragraphs are separated by empty lines, markdown style
-    str.split('\n\n').forEach(twinyParagraph => {
-      // if a paragraph contains a [[link]], it will sendChoice,
-      // other text will be ignored
+    str.split('\n\n').forEach((twinyParagraph, paragraphIndex, twinyParagraphs) => {
       if (twinyParagraph.indexOf('[[') > -1) {
-        let options = twinyParagraph.match(twinyOptionsRE)
+        /* paragraphs with [[link]] will sendChoice,
+         * other text will be ignored */
+        let options = twinyParagraph.replace(/\`/g, '').match(twinyOptionsRE)
           // unwrap matches from square brackets `[[ foo ]]`
           ?.map(_ => _.substr(2, _.length - 4))
         if (options) {
@@ -101,14 +103,23 @@
             .replace(/^}/m, '  }')
           const func = hasT ? 'sendChoiceT' : 'sendChoice'
           onArrive.push(`  api.${func}(${choicesCode})\n`)
-          return
         }
+      } else if (twinyParagraph.substr(0, 1) === '`' && twinyParagraph.substr(-1) === '`') {
+        /* paragraphs like `code` */
+        const code = twinyParagraph.replace(/\`/g, '')
+        // last paragraph goes to onMessage
+        if (paragraphIndex === twinyParagraphs.length - 1) {
+          onMessage.push(`  ${code}\n`)
+        } else {
+          onArrive.push(`  ${code}\n`)
+        }
+      } else {
+        /* all other paragraphs */
+        const func = twinyParagraph.indexOf('|') > -1
+          ? 'sendTextT'
+          : 'sendText'
+        onArrive.push(`  api.${func}(\`${twinyParagraph.replace(/\`/g, '')}\`)\n`)
       }
-      const func = twinyParagraph.indexOf('|') > -1
-        ? 'sendTextT'
-        : 'sendText'
-      onArrive.push(`  api.${func}(\`${twinyParagraph}\`)\n`)
-      return 
     })
     // the code has to be pre-prettified, otherwise the NodeEditor modified comparison can trip 
     // because node.contents !== editorContents
@@ -117,19 +128,27 @@
       onArrive.join('') +
       `}\n\n` +
       `export const onMessage = async (msg, api) => {\n` +
+      onMessage.join('') +
       `  switch (msg.payload.key) {\n` +
-      moveTos.map((slug, index) => `    case 'choice${index}':\n      api.moveTo('${slug}')\n      break\n`).join('') +
+      moveTos.map((slug, index) =>
+        `    case 'choice${index}':\n` +
+        `      api.moveTo('${slug}')\n` +
+        `      break\n`
+      ).join('') +
       `  }\n` +
       `}`
+    return ret
   }
   
   const build = code => {
     if (!code || (typeof code !== 'string')) return
     const m = code.match(nodeCodeRE)
-    if (verbose) console.log('CodeEditorTwiny build, match', m)
     if (!m) {
+      if (verbose) console.log('CodeEditorTwiny build, did not match', { code, nodeCodeRE })
       valid = false
       return
+    } else {
+      if (verbose) console.log('CodeEditorTwiny build, match', m)
     }
     twinyCode = m[1]
     jsCode = twiny2js(twinyCode)
