@@ -104,9 +104,10 @@
           const func = hasT ? 'sendChoiceT' : 'sendChoice'
           onArrive.push(`  api.${func}(${choicesCode})\n`)
         }
-      } else if (twinyParagraph.substr(0, 1) === '`' && twinyParagraph.substr(-1) === '`') {
-        /* paragraphs like `code` */
-        const code = twinyParagraph.replace(/\`/g, '')
+      } else if (twinyParagraph.substr(0, 8) === '[script]') {
+        /* paragraphs like [script]code */
+        // strip off starting [script] tag
+        const code = twinyParagraph.substr(8)
         // last paragraph goes to onMessage
         if (paragraphIndex === twinyParagraphs.length - 1) {
           onMessage.push(`  ${code}\n`)
