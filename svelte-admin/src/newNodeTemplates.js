@@ -107,7 +107,7 @@ Hello!
 Where do you want to go today?
 
 [[ Berlin ]] [[ Redmond ]]
-\`
+\` // end twinterkitSource
 
 // onArrive and onMessage will be created automatically
 `
@@ -117,7 +117,7 @@ Where do you want to go today?
     value: `\
 export const twinterkitSource = \`
 
-\`
+\` // end twinterkitSource
 
 `
   }
