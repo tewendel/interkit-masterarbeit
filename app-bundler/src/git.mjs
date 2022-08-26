@@ -1,6 +1,9 @@
 import git from 'isomorphic-git'
 import fs from 'fs'
 import http from 'isomorphic-git/http/node//index.cjs'
+import * as Diff from "diff"
+import { TREE, WORKDIR, STAGE } from "isomorphic-git";
+
 
 async function gitAddAll(projectPath) {
   const repo = {
@@ -130,6 +133,37 @@ async function gitUnstagedChanges(projectPath) {
   return filenames
 }
 
+async function gitDiff(projectPath) {
+  const A = TREE({ ref: 'HEAD' });
+  const B = WORKDIR();
+
+  // Get a list of the files that changed
+  let changes = new Set();
+  await git.walk({
+    fs,
+    dir: projectPath,
+    trees: [A, B],
+    map: async function (filename, [A, B]) {
+      //if ((await A.type()) === "tree") return;
+      if (!A) return
+      if (!B) return
+
+      let Aoid = new TextDecoder("utf-8").decode(await A?.content()) || ''
+      let Boid = new TextDecoder("utf-8").decode(await B?.content()) || '';
+
+      // Skip pairs where the oids are the same
+      if (Aoid === Boid) return;
+
+      changes.add({
+        fullpath: filename,
+        diff: Diff.diffChars(Aoid, Boid)
+      });
+    },
+  });
+
+  return Array.from(changes);
+}
+
 async function gitCloneProject(projectPath, url) {
   await git.clone({
     fs,
@@ -137,6 +171,39 @@ async function gitCloneProject(projectPath, url) {
     http,
     url,
   })
+}
+
+async function gitPull(projectPath, remote) {
+  await gitSetupUser(projectPath);
+  return await git.pull({
+    fs,
+    http,
+    dir: projectPath,
+    remote,
+    ref: "master",
+    singleBranch: true,
+  });
+}
+
+async function gitPush(projectPath, remote) {
+  return await git.push({
+    fs,
+    http,
+    dir: projectPath,
+    remote,
+    ref: "master",
+    singleBranch: true,
+  });
+}
+
+async function gitSetupUser(projectPath, username = "interkit") {
+  return await git.setConfig({
+    fs,
+    http,
+    dir: projectPath,
+    path: "user.name",
+    value: username,
+  });
 }
 
 export {
@@ -149,5 +216,8 @@ export {
   gitUnstagedChanges,
   gitLog,
   gitCloneProject,
-  gitListRemotes
-}
+  gitListRemotes,
+  gitPull,
+  gitPush,
+  gitDiff,
+};

@@ -7,11 +7,7 @@ import debounce from 'debounce'
 
 import { getProjectPath } from './filesystem.mjs'
 import interkit_server from './interkit_server.mjs'
-import {
-  gitUnstagedChanges,
-  gitLog,
-  gitListRemotes,
-} from './git.mjs'
+import { gitUnstagedChanges, gitLog, gitListRemotes, gitDiff } from "./git.mjs";
 
 const watchedProjectIds = []
 
@@ -21,6 +17,7 @@ const updateGit = async function(projectId) {
     unstagedChanges: await gitUnstagedChanges(projectPath),
     log: await gitLog(projectPath),
     remotes: await gitListRemotes(projectPath),
+    diff: await gitDiff(projectPath) // TODO this is slow, do only on request or async
   }
   interkit_server.call('project.updateUiState', {
     projectId: projectId, 
