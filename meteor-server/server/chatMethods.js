@@ -167,7 +167,7 @@ Meteor.methods({
   // delay is {minutes: 3, seconds: 30} from now, can be an (absolute) Date, too
   // payload depends on type "message" or "moveTo" - see those methods
   'events.schedule': ({ projectId, method, delay, payload }) => {
-    let execTime
+    let execTime = new Date()
     if (delay instanceof Date) {
       execTime = delay
     } else if (typeof delay === "object") {

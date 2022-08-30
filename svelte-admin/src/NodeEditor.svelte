@@ -319,6 +319,7 @@
   let showNewNodeModal = false
   let newNodeId
   let newNodeContent
+  let newNodeSelectedTemplate
 
   const submitNewNodeModal = () => {
     if (!newNodeContent) {
@@ -724,6 +725,7 @@
   <NewNodeModal
     bind:templateText={newNodeContent}
     bind:nodeId={newNodeId}
+    bind:selected={newNodeSelectedTemplate}
     {editNodeId}
     close={() => { showNewNodeModal = false }}
     submit={submitNewNodeModal}

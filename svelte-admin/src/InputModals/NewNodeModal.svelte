@@ -21,14 +21,14 @@
   export let dynamicTemplates
 
   let templates = []
-  let selected
+  export let selected
 
   $: templates = dynamicTemplates.concat(staticTemplates) // [ ...dynamicTemplates, ...staticTemplates ]
 
   $: templateText = selected
 
   onMount(() => {
-    selected = templates[0].value
+    selected = selected || templates[0].value
   })
 
 </script>

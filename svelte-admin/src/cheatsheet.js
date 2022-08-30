@@ -126,6 +126,10 @@ Hi! This is a message.
 
 An empty newline separates paragraphs = message.
 
+[script]console.log('This tag lets you passthru JS code');\`
+  console.log('It\\\'s good to indent the next line.');
+  // and backticks are currently not supported here!
+
 A Twine link, like [[nodeName]],
 will become a choice with moveTo to nodeName.
 We also support Twine aliases/renames:
