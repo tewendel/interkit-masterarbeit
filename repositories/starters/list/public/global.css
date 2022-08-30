@@ -1,8 +1,0 @@
-#Theming {
-  /* Overwrite styles by prefixing #Theming to raise specifity */
-}
-
-#Theming .HeadlinePage {
-    background-color: black;
-    color: white;
-}
