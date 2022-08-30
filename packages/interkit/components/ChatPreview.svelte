@@ -9,6 +9,7 @@
 
   import MessagePreview from './Chat/MessagePreview.svelte';
 
+  import AspectRatio from "./AspectRatio.svelte";
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
 
   export let channel_key = "DEFAULT"
@@ -80,7 +81,9 @@
     {/if}
   </div>
   <div class="ChatPreview__image image">
-    <ChatChannelImage channel_key={real_channel_key}/>
+    <AspectRatio aspectRatioType="square">
+      <ChatChannelImage channel_key={real_channel_key}/>
+    </AspectRatio>
   </div>
   <div class="ChatPreview__message message">
     {#if currentChannel?.label}
