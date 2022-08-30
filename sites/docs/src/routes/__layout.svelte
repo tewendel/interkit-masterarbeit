@@ -47,7 +47,7 @@
     display: grid;
     grid-template-columns: 15rem 1fr;
     grid-template-rows: auto 1fr;
-    grid-column-gap: 1rem;
+    grid-column-gap: 2rem;
     height: 100vh;
   }
 

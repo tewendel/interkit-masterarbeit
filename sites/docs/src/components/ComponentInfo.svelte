@@ -14,10 +14,13 @@
 {#if !noheader}
 <h2>Source</h2>
 {/if}
-<Highlight language={typescript} {code} />
+
+<code>
+  <Highlight language={typescript} {code} />
+</code>
 
 <style>
-  pre {
-    background-color: #f5f5f5;
+  code {  
+    background-color: #f5f5f5;    
   }
 </style>
