@@ -33,6 +33,7 @@
   }
 
   .infoText:not(:empty) {
+    text-align: center;
     font: var(--font-caption);
     padding: 0 var(--distance-s) var(--distance-s) var(--distance-s);
   }
