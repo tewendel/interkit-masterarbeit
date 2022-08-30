@@ -17,7 +17,6 @@ const updateGit = async function(projectId) {
     unstagedChanges: await gitUnstagedChanges(projectPath),
     log: await gitLog(projectPath),
     remotes: await gitListRemotes(projectPath),
-    diff: await gitDiff(projectPath) // TODO this is slow, do only on request or async
   }
   interkit_server.call('project.updateUiState', {
     projectId: projectId, 

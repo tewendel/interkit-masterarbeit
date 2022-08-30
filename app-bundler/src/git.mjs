@@ -186,14 +186,18 @@ async function gitPull(projectPath, remote) {
 }
 
 async function gitPush(projectPath, remote) {
-  return await git.push({
-    fs,
-    http,
-    dir: projectPath,
-    remote,
-    ref: "master",
-    singleBranch: true,
-  });
+  try {
+    return await git.push({
+      fs,
+      http,
+      dir: projectPath,
+      remote,
+      ref: "master",
+      singleBranch: true,
+    });
+  } catch(error) {
+    return false  
+  }
 }
 
 async function gitSetupUser(projectPath, username = "interkit") {
