@@ -30,3 +30,19 @@ export default () => registerActions([
 In this example, pressing the button triggers the action that sets uiKey "menuOpen" to true which causes the conditional to react and show the overlay
 
 ![example blockly](/images/actions_example.png)
+
+## Trigger an action from javascript
+
+```js
+// actions.js
+  import { registerActions, executeTrigger, InterkitClient } from 'interkit'
+
+  export default () => registerActions([
+    {
+      triggers: ["openMenu"],
+      method: function (arg) {
+        executeTrigger("openAnotherMenu")
+      }
+    }
+  ])
+```
