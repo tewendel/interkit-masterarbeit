@@ -104,6 +104,10 @@ export async function get({ params }) {
 					path: '/contribute/docs'
 				},
 				{
+					title: 'Components',
+					path: '/contribute/components'
+				},
+				{
 					title: 'Component CSS',
 					path: '/contribute/component_css'
 				}
