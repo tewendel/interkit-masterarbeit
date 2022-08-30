@@ -1,0 +1,25 @@
+name: UserProfile
+title: UserProfile
+# green
+color: 230
+fields:
+  - name: imageVar
+    type: string
+    defaultValue: profilePicture
+  - name: topLeftLabel
+    type: string
+  - name: topLeftVar
+    type: string
+  - name: topRightLabel
+    type: string
+  - name: topRightVar
+    type: string
+  - name: bottomLeftLabel
+    type: string
+  - name: bottomLeftVar
+    type: string
+  - name: bottomRightLabel
+    type: string
+  - name: bottomRightVar
+    type: string
+toolboxCategory: "User"
