@@ -81,6 +81,22 @@ const gitCommitAll = async (projectId, message) => {
   return resJSON
 }
 
+const gitPush = async (projectId, remote) => {
+  const res = await fetch(
+    bundleServerURL + "/git/push/" + projectId + "/?remote=" + remote
+  );
+  const resJSON = await res.json();
+  return resJSON;
+};
+
+const gitPull = async (projectId, remote) => {
+  const res = await fetch(
+    bundleServerURL + "/git/pull/" + projectId + "/?remote=" + remote
+  );
+  const resJSON = await res.json();
+  return resJSON;
+};
+
 const loadBlockData = async (projectId) => {
   const res = await fetch(bundleServerURL + "/components/" + projectId)
   const resJSON = await res.json()
@@ -121,6 +137,8 @@ export const BundleServer = {
   gitStatus,
   gitCommitAll,
   gitCheckoutHead,
+  gitPush,
+  gitPull,
   loadBlockData,
   loadSrcFile,
   saveSrcFile

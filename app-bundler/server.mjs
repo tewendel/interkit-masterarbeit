@@ -15,6 +15,8 @@ import interkit_server from './src/interkit_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_git_commitAll } from './src/get_git_commitAll.mjs'
 import { get_git_checkout } from './src/get_git_checkout.mjs'
+import { get_git_push } from "./src/get_git_push.mjs";
+import { get_git_pull } from "./src/get_git_pull.mjs";
 import { get_yamls } from './src/get_yamls.mjs'
 
 import { api as board_node_api } from 'interkit/project-boards-nodes.js'
@@ -59,6 +61,8 @@ app.get('/compile/:projectId', get_compile)
 app.get('/git/status/:projectId', get_git_status)
 app.get('/git/commitAll/:projectId', get_git_commitAll) // a method that triggers a change
 app.get('/git/checkout/:projectId', get_git_checkout) // a method that triggers a change
+app.get('/git/push/:projectId', get_git_push)
+app.get('/git/pull/:projectId', get_git_pull)
 
 
 // get component configuration yamls

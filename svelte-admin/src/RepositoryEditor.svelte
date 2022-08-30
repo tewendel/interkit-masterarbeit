@@ -42,9 +42,18 @@
     window.location.reload() // TODO just reload the files
   }
 
+  const push = async (remote) => {
+    BundleServer.gitPush(projectId, remote)
+  }
+
+  const pull = async (remote) => {
+    BundleServer.gitPull(projectId, remote)
+  }
+
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
   $: log = $currentProject?.uiState?.git?.log || []
   $: remotes = $currentProject?.uiState?.git?.remotes || []
+  $: diff = $currentProject?.uiState?.git?.diff || []
 
 </script>
 {#if open}
@@ -57,7 +66,12 @@
       <UnorderedList>
         {#each remotes as remote}
           <ListItem>
-            <strong>{remote.remote}</strong> {remote.url}
+            <strong>{remote.remote}</strong> 
+            <br>
+            {remote.url}
+            <br>
+            <Button on:click={()=>push(remote.remote)} size="small" kind="tertiary">push</Button>
+            <Button on:click={()=>pull(remote.remote)} size="small" kind="tertiary">pull</Button>
           </ListItem>
         {/each}
       </UnorderedList>
@@ -74,9 +88,19 @@
           <UnorderedList>
           
           {#each unstagedFiles as file}
-              <ListItem>
-              {file}
-              </ListItem>
+            <ListItem>
+              <details>
+                <summary>
+                  {file}
+                </summary>
+                {#if diff.findIndex(d => d.fullpath == file) > -1}
+                  <p>
+                    {JSON.stringify(diff.find(d => d.fullpath == file))}
+                    <!-- https://www.npmjs.com/package/diff -->
+                  </p>
+                {/if}
+              </details>
+            </ListItem>
           {/each}
           </UnorderedList>
         </AccordionItem>
