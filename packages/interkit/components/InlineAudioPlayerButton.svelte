@@ -7,6 +7,7 @@
 
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
   export let audioKeyDirect // or just specify the key directly as a prop
+  export let hideBackButton = false;
 
   const c = getContext('buttonBar')
   const buttonPayload = c?.buttonPayload 
@@ -81,9 +82,11 @@
             >
             <source src={encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
-          <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
-            <Icon type="skip-backward" />
-          </div>
+          {#if !hideBackButton}
+            <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
+              <Icon type="skip-backward" />
+            </div>
+          {/if}
           <div class="button" on:click={mainToggleClick} disabled={loading}>
             <Icon type={ paused ? 'play' : 'pause' } />
           </div>
@@ -129,7 +132,7 @@
   }
 
   .button {
-    padding: 0 var(--distance-s);
+    padding: var(--distance-s);
     cursor: pointer;
     display: inline-flex;
   }
