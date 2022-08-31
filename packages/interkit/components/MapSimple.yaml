@@ -22,6 +22,8 @@ fields:
   - type: string
     name: checkedProperty
     defaultValue: "checked"
+  - type: "string"
+    name: "secondaryPositionProperty"
   - type: "sheetColumn"
     name: "hideOnMapColumn"
     columnType: "string"

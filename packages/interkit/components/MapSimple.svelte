@@ -15,6 +15,7 @@
   export let markerIconAsset; // default asset to use
   export let markerCheckedIconAsset; // checked asset
   export let markerPositionsColumn; // where the markers are
+  export let secondaryPositionProperty; // an optional elementProperty that gives an element a user specific position
   export let customIconColumn; // a custom mediafile as icon for each element
   export let markerLabelColumn; // a short custom string for the marker (eg "01")
   export let markerTitleColumn; // a short custom string to appear above the marker, outside the bubble (eg "Foo Station")
@@ -139,8 +140,13 @@
 
     // prepare data for marker production
     markerData = selectedData.map(r=> {return {
-      location: (r.markerPositionsColumn?.lat && r.markerPositionsColumn?.lng) ?
-                r.markerPositionsColumn : undefined,
+      location: (secondaryPositionProperty && $elementProperties?.[r.key]?.[secondaryPositionProperty]) ?
+                  $elementProperties?.[r.key]?.[secondaryPositionProperty] 
+                :
+                (
+                  (r.markerPositionsColumn?.lat && r.markerPositionsColumn?.lng) ?
+                  r.markerPositionsColumn : undefined
+                ),
       checked: $elementProperties?.[r.key]?.[checkedProperty] ? true : false, 
       selected: selectedElement?.key == r.key ? true : false,
       element: r
