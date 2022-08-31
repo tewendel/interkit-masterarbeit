@@ -6,8 +6,10 @@ fields:
     type: string
   - name: imageColumn
     type: sheetColumn
-  - name: audioColumn
+  - name: secondaryImageColumn
     type: sheetColumn
+  - name: secondaryProperty
+    type: string
   - name: slider
     type: checkbox
   - type: "slot"

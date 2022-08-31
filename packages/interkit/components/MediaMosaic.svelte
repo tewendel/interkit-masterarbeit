@@ -12,7 +12,10 @@
   export let selectTrigger
 
   export let imageColumn;
-  export let audioColumn;
+  export let secondaryImageColumn;
+  export let secondaryProperty;
+
+  let elementProperties = InterkitClient.getGlobalStore("elementProperties");
 
   export let slider = false // add border
   if (typeof slider == "string") slider = slider === "TRUE" // blockly conversion
@@ -47,7 +50,11 @@
       {#each $elements as element}
         <div class="grid-item" on:click={()=>{onClick(element)}}>
           <AspectRatio aspectRatio={0.74}>
-            <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ util.rowVal(element.row, imageColumn) } />  
+            {#if secondaryProperty && $elementProperties?.[element?.key]?.[secondaryProperty]}  
+              <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ util.rowVal(element.row, secondaryImageColumn) } /> 
+            {:else}
+              <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ util.rowVal(element.row, imageColumn) } /> 
+            {/if}
           </AspectRatio>
         </div>
       {/each}
