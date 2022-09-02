@@ -63,6 +63,8 @@ const restore_ids = (data) => {
   return data;
 }
 
+let firstConnect = true;
+
 // connects to the meteor server
 const connect = async (url) => {
   if(!url)
@@ -80,8 +82,20 @@ const connect = async (url) => {
   };
   server = new simpleDDP(opts, [simpleDDPLogin]);
 
-  server.on('connected', () => {
+  server.on('connected', async () => {
+    console.log("server connected")
     connected.set(true);
+
+    if(firstConnect) {
+      firstConnect = false;
+    } else {
+      // we do this here on every reconnect
+      let result = await server.call("resumeUserSession", get(userAuth))
+      if(result) {
+        userId.set(get(userAuth)?.id);
+        await loadElementPropertiesFromUser();
+      }
+    }
   });
 
   server.on('disconnected', () => {
@@ -90,8 +104,6 @@ const connect = async (url) => {
 
   // this needs to be done once in the client app
   await server.connect();
-  console.log("connected")
-
   let result = await server.call("resumeUserSession", get(userAuth))
   //console.log("resumeUserSession result", result)
 
@@ -474,18 +486,23 @@ const getMediaFileSubStore = async () => {
 }
 
 const subscribeUserProjectDataStore = async () => {
-  if (!server || !get(userId) || !get(projectId)) return
+  console.log("try subscribeUserProjectData", get(userId), get(projectId), userProjectDataSub)
+  if (!server || !get(userId) || !get(projectId)) {
+    console.log("subscribeUserProjectDataStore aborting")
+    return  
+  }
   if (!userProjectDataSub) {
     // no subscription to userProjectData yet, set it up
     userProjectDataSub = new Promise(async (resolve, reject) => {
-      //console.log("creating subscription for userProjectData")
+      console.log("creating subscription for userProjectData")
       let msub = await getSub("users", "user.projectUserData", {})
       resolve(msub);
     })
     let sub = await userProjectDataSub;
-    //console.log("subscribeUserProjectDataStore", sub, sub.data)
+    console.log("subscribeUserProjectDataStore", sub, sub.data)
     // subscribe to user project data
     sub.data.subscribe(d => {
+      console.log("userProjectDataSub new data", d)
       userProjectDataStore.set(d?.[0]?.projectUserData?.[get(projectId)] || null)
     })
   }
@@ -876,7 +893,10 @@ const callGlobalMethod = (key, options) => {
 }
 
 projectId.subscribe(subscribeUserProjectDataStore)
-userId.subscribe(subscribeUserProjectDataStore)
+userId.subscribe((data)=>{
+  console.log("userId update", data)  
+  subscribeUserProjectDataStore()
+})
 
 // restore elementProperties from user --> not necessary because they are also in the localstorage 
 //

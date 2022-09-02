@@ -84,7 +84,7 @@ Meteor.publish("projectUsers", ({projectId}) => {
 
 Meteor.publish("user.projectUserData", ({ projectId }) => {
   const cursor = Meteor.users.find(Meteor.userId(), { fields: { [`projectUserData.${projectId}`]: true } });
-  console.log("user.projectUserData", projectId, cursor.count())
+  console.log("user.projectUserData", Meteor.userId(), projectId, cursor.count())
   return cursor
 });
 
