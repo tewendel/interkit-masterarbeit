@@ -1,3 +1,5 @@
+Note: You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
+
 # Obtain APNs for iOS setup
 
 1. Go to your Apple Developer Account
@@ -24,6 +26,8 @@ Push and Firebase are enabled by default.
 `fooproject/ios/App/App/AppDelegate.swift`,
 following [the Capacitor docs for v2](https://capacitorjs.com/docs/v2/guides/push-notifications-firebase#add-initialization-code),
 add
+
+important: do not follow the sdk guide that is on the firebase cosole!
 
 ````java
 // ...
@@ -55,10 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 # Provide credentials
 
-These are private keys to be kept secret, get them from Firebase Console (it's ~2k of cert looking JSON). Provide them to the app:
+These are private keys to be kept secret, get them from Firebase Console (Project settings › Service accounts › Firebase Admin SDK › Generate new private key -> it's ~2k of cert looking JSON). Provide them to the app:
 
- 1. via Database Sheet: in a sheet named `config`, with columns "key" and "value",
-    create a row with a special key `configFCMKey`, paste the JSON in value.
+ 1. via Database Sheet: in a sheet named `config`, with columns "key" and "value" (you just need to name the columns, the key can stay a uuid),
+    create a row with a special key `firebaseAdminCredentials`, paste the JSON in value.
  2. if this sheet does not exist, we check if a JSON file is present
      1. in a path provided by `.env` var `FCM_CREDENTIALS_PATH`,
         file name `PROJECTID_firebase-admin.json`,

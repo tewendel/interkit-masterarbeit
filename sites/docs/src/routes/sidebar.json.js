@@ -27,7 +27,11 @@ export async function get({ params }) {
 				{
 					title: 'Internationalization (i18n) and localization (l10n)',
 					path: '/guides/i18n'
-				}
+				},
+				{
+					title: 'Build for native app and deploy to app stores',
+					path: '/guides/native'
+				},
 			]
 		},
 		{
