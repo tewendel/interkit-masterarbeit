@@ -67,7 +67,20 @@
   }
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
-  const mapFocus = InterkitClient.getGlobalStore("mapFocus") 
+  const mapFocus = InterkitClient.getGlobalStore("mapFocus")
+  
+  // check if secondaryPositionProperty should be used for mapFocus
+  let mapFocusProcessed
+  const processMapFocus = (value) => {
+    let processed = value;
+    if(value && value?.key && secondaryPositionProperty 
+      && $elementProperties[value?.key]?.[secondaryPositionProperty]) {
+        processed = $elementProperties[value?.key]?.[secondaryPositionProperty]
+      }
+    return processed;
+  }
+  $: mapFocusProcessed = processMapFocus($mapFocus)
+
   const userPositionStore = InterkitClient.getGlobalStore("userPosition");
   
   let markerObjects;
@@ -234,7 +247,7 @@
       {disableControls}
       {style}
       {apiKey}
-      mapFocus={$mapFocus}
+      mapFocus={mapFocusProcessed}
       {permissionNotification}
       {enableGeolocationHint}
     />
