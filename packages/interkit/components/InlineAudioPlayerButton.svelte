@@ -116,6 +116,7 @@
     display: inline-flex;
     overflow: hidden;
     align-items: center;
+    height: 34px;
   }
 
   .container:not(.open) {
