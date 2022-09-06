@@ -106,8 +106,8 @@ https://developer.android.com/studio/publish/app-signing#sign_release
 You might have to change the targetSdkVersion located in android/variables.gradle (currently 31 is minimum for google play submissions).
 
 In Android Studio, you will also need to add android:exported="false" to the Application node in App/AndroidManifest.xml and to capacitor-android/manifests/AndroidManifest.xml to the service node with the intent-filter:
-```
+````java
 <service android:name="com.getcapacitor.CapacitorFirebaseMessagingService" android:stopWithTask="false" android:exported="false">
             <intent-filter>
-```
+````
 https://github.com/ionic-team/capacitor/pull/5350/files
