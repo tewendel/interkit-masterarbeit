@@ -87,3 +87,27 @@ you'll need screenshots - these are easiest to make with iphone and ipad simulat
 - 6.5 inch -> use iphone 11 simulator (you might need to double the resolution of the screenshots here manually)
 - 12.9 ich -> use ipad pro simulator
 
+Important: make sure you set a clear description of what you want to use the location data for in plist.info NSLocationWhenInUseUsageDescription - see https://developer.apple.com/design/human-interface-guidelines/patterns/accessing-private-data 
+
+#### iOS
+
+- In Xcode, select Any iOS Device as the deployment target.
+- Choose Product from the top menu and click on Archive.
+- The Xcode Organizer will launch, displaying any archives you’ve created in the past.
+- Make sure the current build is selected and click on Distribute App and follow the prompts with the default options
+- after you upload and select the build in App Store Connect - you will get 2 scary looking questions about encryption. If you are just using https, we've been selecting Yes to both questions.
+
+#### Android
+
+Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
+Follow this guide for more information: 
+https://developer.android.com/studio/publish/app-signing#sign_release
+
+You might have to change the targetSdkVersion located in android/variables.gradle (currently 31 is minimum for google play submissions).
+
+In Android Studio, you will also need to add android:exported="false" to the Application node in App/AndroidManifest.xml and to capacitor-android/manifests/AndroidManifest.xml to the service node with the intent-filter:
+```
+<service android:name="com.getcapacitor.CapacitorFirebaseMessagingService" android:stopWithTask="false" android:exported="false">
+            <intent-filter>
+```
+https://github.com/ionic-team/capacitor/pull/5350/files
