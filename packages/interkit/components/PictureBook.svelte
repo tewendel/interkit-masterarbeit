@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, getContext, onDestroy } from 'svelte'
   import { InterkitClient, util } from '../'
   import MediaFileImage from './MediaFileImage.svelte';
   import MarkdownContent from './MarkdownContent.svelte';
@@ -18,6 +18,10 @@
   export let titleColumn;
   export let contentColumn;
   export let orderColumn;
+
+  let elementsContext = getContext("elementsProvider");
+  if(!elementsContext) alert("ImageSlildeshow needs elementsContextProvider as parent");
+  let elementsStore = elementsContext?.elements;
   
   let slides;
   let slideUnsubscribe;
@@ -32,14 +36,10 @@
         content: contentColumn,
         order: orderColumn
       }
-
-      const slideStore = await InterkitClient.getRowSubStore(titleColumn, columnMap);
-      
-      // filter tips for targetElement and sort by order column
-      slideUnsubscribe = slideStore.subscribe((data) => {
-        slides = data.sort((a, b) => a.order - b.order)  
-        console.log(slides);
-      });
+      slideUnsubscribe = elementsStore.subscribe(data => {
+        console.log("data", data);
+        slides = data.map(e=> util.rowToObject(e.row, columnMap))
+      })
   }
 
   let slideIndex = 0;

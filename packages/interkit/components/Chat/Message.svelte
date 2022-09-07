@@ -213,7 +213,7 @@
   }
 
   .message--audio .message__contents {
-    height: 28px;
+    height: 34px;
   }
 
   .message:not(.message--image) .message__contents {

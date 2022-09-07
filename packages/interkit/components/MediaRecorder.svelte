@@ -63,6 +63,11 @@
   let imageBlob = null
   let blob = null;
 
+  let videoWidth;
+  let videoHeight;
+  let canvasWidth;
+  let canvasHeight;
+
   let loading = false;
   let recording = false
 
@@ -73,7 +78,12 @@
   let audioLevel = 0
 
   const takePicture = async () => {
-    canvas.getContext('2d').drawImage(videoSource, 0, 0, canvas.width, canvas.height);
+    console.log(videoWidth, videoHeight, videoSource.videoWidth, videoSource.videoHeight, canvasWidth, canvasHeight, canvas.width, canvas.height)
+    if(videoSource.videoWidth > videoSource.videoHeight) {
+      canvas.getContext('2d').drawImage(videoSource, (videoSource.videoWidth - 480) / 2, 0, videoSource.videoHeight, videoSource.videoHeight, 0, 0, 480, 480);
+    } else {
+      canvas.getContext('2d').drawImage(videoSource, 0, (videoSource.videoHeight - 480) / 2, videoSource.videoWidth, videoSource.videoWidth, 0, 0, 480, 480);
+    }
     canvas.toBlob((b)=>{imageBlob=b},mimeType);
   }
 
@@ -223,7 +233,7 @@
           Please allow access to camera and microphone
         {/if}
 
-        <video class="camera" bind:this={videoSource} paused={videoURL} class:hidden={!!videoURL || loading || !!imageBlob} muted />
+        <video playsinline class="camera" bind:clientWidth={videoWidth} bind:clientHeight={videoHeight} bind:this={videoSource} paused={videoURL} class:hidden={!!videoURL || loading || !!imageBlob} muted />
 
         {#if !videoURL && streamOptions.audio && !loading}
           <div class="audioMeter" style="--levelPerc: {Math.round(audioLevel*100)}%">
@@ -231,7 +241,7 @@
         {/if}
 
         {#if mode == "image"}
-          <canvas bind:this={canvas} width="640" height="480" class:hidden={!imageBlob}></canvas>
+          <canvas bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} bind:this={canvas} width="480" height="480" class:hidden={!imageBlob}></canvas>
         {/if}
 
         {#if videoURL}
@@ -307,6 +317,10 @@
     width: 100%;
     height: 100%;
     flex: 1;
+  }
+
+  video, canvas {
+    border-radius: var(--border-radius);
   }
 
   .audioMeter {

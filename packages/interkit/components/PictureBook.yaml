@@ -21,7 +21,4 @@ fields:
     name: videoColumn 
     columnType: mediaFile
     defaultValue: tutorial/video
-  - type: sheetColumn
-    name: orderColumn
-    columnType: number
 toolboxCategory: "Sliders"

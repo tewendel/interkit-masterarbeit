@@ -48,6 +48,7 @@ open http://localhost:5000
 If you want to test the app on another device inside your local network and have it access your local server, you can use [localtunnel](https://localtunnel.me/)
 
 ```
+npm install -g localtunnel
 npm run dev:tunnel
 ```
 It should open 2 urls in the browser, you need to click the button on both for the warning to disappear.  
