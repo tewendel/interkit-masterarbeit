@@ -34,6 +34,7 @@
     "envsub": "^4.0.7",
     "install": "^0.13.0",
     "interkit-dev": "*",
+    "js-beautify": "^1.14.6",
     "leaflet": "^1.7.1",
     "marked": "^2.0.3",
     "npm": "^7.10.0",
