@@ -1,6 +1,8 @@
 <script>
 
-  import { onMount } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher()
 
   export let code = ''
 
@@ -50,6 +52,7 @@
 
   const output = () => {
     code = div.textContent
+    dispatch('codechange', code)
   }
 
 </script>
