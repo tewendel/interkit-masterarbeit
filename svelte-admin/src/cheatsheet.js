@@ -1,5 +1,4 @@
-export const cheatsheetContents = 
-`
+export const cheatsheetContents = `
 export const onArrive = async (api) => {
   // do something
 } 
@@ -41,6 +40,9 @@ api.sendChoice({
 if(msg.payload.key == "a") {
   // do something
 }
+
+// send a system message
+api.sendSystem("Someone entered the channel")
 
 // delays (this works for sentText, sendChoice, sendImage and moveTo)
 api.sendText("hello", {delay: 10}) // send the message 10 seconds later
@@ -141,4 +143,4 @@ All other text in paragraphs with links,
 like this sentence, will be ignored.
 
 */
-`
+`;

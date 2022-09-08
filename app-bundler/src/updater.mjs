@@ -7,11 +7,7 @@ import debounce from 'debounce'
 
 import { getProjectPath } from './filesystem.mjs'
 import interkit_server from './interkit_server.mjs'
-import {
-  gitUnstagedChanges,
-  gitLog,
-  gitListRemotes,
-} from './git.mjs'
+import { gitUnstagedChanges, gitLog, gitListRemotes, gitDiff } from "./git.mjs";
 
 const watchedProjectIds = []
 

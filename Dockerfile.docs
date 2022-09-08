@@ -19,6 +19,7 @@ COPY sites/docs ./
 # copy other files that are imported in the docs
 COPY meteor-server /meteor-server
 COPY app-bundler /app-bundler
+COPY repositories/starters /repositories/starters
 
 # build
 RUN npm run build

@@ -9,5 +9,7 @@ fields:
     type: sheetColumn
     columnType: string
     defaultValue: elements/position
+  - name: secondaryPositionProperty
+    type: string
 
 

@@ -1,0 +1,24 @@
+name: PictureBook
+color: 230
+fields:
+  - type: sheetColumn
+    name: imageColumn 
+    columnType: mediaFile
+    defaultValue: tutorial/image
+  - type: sheetColumn
+    name: titleColumn
+    columnType: string
+    defaultValue: tutorial/title
+  - type: sheetColumn
+    name: contentColumn
+    columnType: richText
+    defaultValue: tutorial/content
+  - type: sheetColumn
+    name: audioColumn 
+    columnType: mediaFile
+    defaultValue: tutorial/audio
+  - type: sheetColumn
+    name: videoColumn 
+    columnType: mediaFile
+    defaultValue: tutorial/video
+toolboxCategory: "Sliders"

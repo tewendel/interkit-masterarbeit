@@ -137,6 +137,8 @@
     switch (message.payload.type) {
       case 'text':
         return message.payload.text
+      case 'system':
+        return `[system] ${message.payload.text}`
       case 'choice':
         return JSON.stringify(message.payload.choice)
       case 'image':

@@ -64,6 +64,10 @@
 
 {#if message?.payload?.type === 'empty'}
   {@html '<!-- empty message -->'}
+{:else if message?.payload?.type == "system" }
+<div class="system">
+  {message?.payload?.text}
+</div>
 {:else if ['text', 'choice', 'image', 'audio', 'video', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
   <div 
     class="message message--{message.payload.type}"
@@ -184,6 +188,12 @@
     margin-bottom: var(--distance-xs);
   }
 
+  .system {
+    text-align: center;
+    font: var(--font-caption-bold);
+    padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
+  }
+
   .message__bubble {
     position: relative;
     font: var(--font-body-1);
@@ -203,7 +213,7 @@
   }
 
   .message--audio .message__contents {
-    height: 28px;
+    height: 34px;
   }
 
   .message:not(.message--image) .message__contents {
