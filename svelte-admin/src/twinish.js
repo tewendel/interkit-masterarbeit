@@ -8,7 +8,6 @@ const preambleCode = 'export const twinterkitSource = \`\n'
 // need a strong marker here to allow stray backticks
 // dont use a star/multiline comment b/c the star would have to be escaped
 const postambleCode = '\n\` // end twinterkitSource\n'
-const minimalSnippet = preambleCode + 'foo' + postambleCode
 
 const warningGeneratedCode = '/* Warning! This code has been generated in Twine-ish-mode.\n' +
   ' * Changes below might be overwritten when it is edited the next time,\n' + 
@@ -170,8 +169,13 @@ const isTwinish = code => {
     : 'broken'
 }
 
+const createSnippet = twinyCode => wrapTwiny(twinyCode, twiny2js(twinyCode))
+
+const minimalSnippet = createSnippet('')
+
 export {
   minimalSnippet,
+  createSnippet,
   wrapTwiny,
   twiny2js,
   extractTwiny,

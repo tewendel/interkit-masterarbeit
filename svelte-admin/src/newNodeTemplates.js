@@ -1,3 +1,5 @@
+import { createSnippet } from './twinish.js'
+
   const templates = [
     {
       label: 'basic',
@@ -100,26 +102,11 @@ export const onMessage = async (msg, api) => {
     },
   {
     label: 'twine-ish',
-    value: `\
-export const twinterkitSource = \`
-Hello!
-
-Where do you want to go today?
-
-[[ Berlin ]] [[ Redmond ]]
-\` // end twinterkitSource
-
-// onArrive and onMessage will be created automatically
-`
+    value: createSnippet('Hello!\n\nWhere do you want to go today=\n\n[[ Berlin ]] [[ Redmond ]]')
   },
   {
     label: 'twine-ish, minimal',
-    value: `\
-export const twinterkitSource = \`
-
-\` // end twinterkitSource
-
-`
+    value: createSnippet('')
   }
 
  ]
