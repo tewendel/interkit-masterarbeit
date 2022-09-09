@@ -201,6 +201,9 @@
       case 'image':
         duration = typingDefaultDurationType?.[message.payload.type] || 1
         break
+      case 'system':
+        duration = 0
+        break
       default:
         duration = 1
     }

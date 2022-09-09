@@ -1,6 +1,6 @@
 import beautify from 'js-beautify'
 
-import { negIdRE } from 'interkit/project-boards-nodes.js'
+import { idRE, negIdRE } from 'interkit/project-boards-nodes.js'
 
 const verbose = true
 
@@ -17,6 +17,10 @@ const warningGeneratedCode = '/* Warning! This code has been generated in Twine-
 // multiline, \s\S matches newlines (. doesn't)
 const nodeCodeRE = new RegExp(preambleCode + '([\\s\\S]*?)' + postambleCode, 'm')
 
+const immediateMoveToRE = new RegExp('^\\[->(' + idRE + ')\\]', 'u')
+
+const twinyPayloadOptionsRE = /\[(\{[\s\S]*?\})\]/m
+
 const twinyOptionsRE = /\[\[.*?\]\]/g
 // lookbehind unsupported on webkit
 // match all twine-like passage links, non-greedy global with lookahead and -behind
@@ -26,10 +30,26 @@ const twinyOptionsRE = /\[\[.*?\]\]/g
 const slugNegIdRE = new RegExp(negIdRE, 'ug')
 const nodeIdSlugify = str => str.replace(slugNegIdRE, '-')
 
+const indentInline = multiline => multiline
+  .replace(/^/mg, '  ') // indent all lines
+  .replace(/^  /, '')   // unintend the first line
+
 const wrapTwiny = (text, jsCode) =>
   preambleCode + text + postambleCode + '\n' +
     warningGeneratedCode +
     jsCode
+
+const getTwinyPayloadOptions = str => {
+  const m = str.match(twinyPayloadOptionsRE)
+  if (!m) return
+  try {
+    return JSON.parse(m[1])
+  } catch (e) {
+    return
+  }
+}
+
+const stripTwinyPayloadOptions = str => str.replace(twinyPayloadOptionsRE, '')
 
 /** parse and convert our twine-ish syntax to interkit node syntax
  * (i.e. an onArrive and onMessage handler)
@@ -107,12 +127,32 @@ const twiny2js = str => {
       } else {
         onArrive.push(`  ${code}\n`)
       }
+    } else if (immediateMoveToRE.test(twinyParagraph)) {
+      const m = twinyParagraph.match(immediateMoveToRE)
+      const targetNode = m[1]
+      const payloadOptions = getTwinyPayloadOptions(twinyParagraph)
+      twinyParagraph = stripTwinyPayloadOptions(twinyParagraph)
+      const payloadOptionsCode = payloadOptions
+        ? ', ' + indentInline(JSON.stringify(payloadOptions, null, 2))
+        : ''
+      const code = `await api.moveTo('${targetNode}'${payloadOptionsCode})`
+      // last paragraph goes to onMessage
+      if (paragraphIndex === twinyParagraphs.length - 1) {
+        onMessage.push(`  ${code}\n`)
+      } else {
+        onArrive.push(`  ${code}\n`)
+      }
     } else {
       /* all other paragraphs */
+      const payloadOptions = getTwinyPayloadOptions(twinyParagraph)
+      twinyParagraph = stripTwinyPayloadOptions(twinyParagraph)
+      const payloadOptionsCode = payloadOptions
+        ? ', ' + indentInline(JSON.stringify(payloadOptions, null, 2))
+        : ''
       const func = twinyParagraph.indexOf('|') > -1
         ? 'sendTextT'
         : 'sendText'
-      onArrive.push(`  api.${func}(\`${twinyParagraph.replace(/\`/g, '')}\`)\n`)
+      onArrive.push(`  api.${func}(\`${twinyParagraph.replace(/\`/g, '')}\`${payloadOptionsCode})\n`)
     }
   })
   // the code has to be pre-prettified, otherwise the NodeEditor modified comparison can trip 
