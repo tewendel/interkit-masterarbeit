@@ -222,6 +222,8 @@
 
   .video-close-button {
     position: fixed;
+    z-index: 1000;
+    pointer-events: all;
     top: var(--distance-m);
     right: var(--distance-m);
   }
