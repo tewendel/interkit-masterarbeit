@@ -5,6 +5,8 @@
 
   import { InterkitClient } from 'interkit'
 
+  import { isTwinish, minimalSnippet } from './twinish.js'
+
   import {
     Button,
     ButtonSet,
@@ -125,17 +127,36 @@
 
   $: currentBoardId, editNodeId, (() => { dispatch('nodeselected', { boardId: currentBoardId, nodeId: editNodeId }) })()
 
+  const twinyHintIcons = {
+    'sync': '\u2705', // white heavy check mark
+    // 'broken': '\u274c', // cross mark
+    'broken': '\u26d4', // cross mark
+    'unknown': '\u2753', // red question mark
+    'none': ''
+  }
+  let twinyHint = ''
+
   let editorContents
   let copyEditorContents
   $: currentBoardId, editNodeId, board, updateEditorContents()
 
   const updateEditorContents = () => {
     editorContents = board?.nodes?.find(node => node.id === editNodeId)?.contents
+    // console.log('updateEditorContents', { editNodeId, editorContents })
+    /*
+    twinyHint = typeof editorContents === 'string'
+      ? (editorContents.indexOf('twinterkitSource') > -1 ? 'yes' : 'no')
+      : '...'
+    */
+    twinyHint = isTwinish(editorContents)
+    // twinyHintIcon = twinyHintIcons[twinyHint] || ''
+    if (twinyHint === 'sync') editorMode = 3
   }
 
   let nodeGraph
 
   $: editorContents, (() => {
+    twinyHint = isTwinish(editorContents)
     const node = board?.nodes?.find(node => node.id === editNodeId)
     if (node) {
       if (node.contents !== editorContents) {
@@ -647,12 +668,25 @@
       <Tab label="Strings" />
       <Tab label="Handlers" />
       <Tab label="Full" />
-      <Tab label="Twine-ish" />
+      <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
     </Tabs>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
+        {#if editorMode !== 3 && twinyHint === 'sync'}
+          <p>
+            <strong>Warning:</strong> This node contains twine-ish code.
+            If you don't edit it via the Twine-ish tab,
+            you can break it.
+          </p>
+          <p>
+            <button on:click={() => { editorMode = 3 }}>switch to Twine-ish tab</button>
+          </p>
+        {/if}
         {#if editorMode === 0}
-          <CodeEditorStringy bind:code={editorContents} class="editor" />
+          <CodeEditorStringy
+            class="editor"
+            bind:code={editorContents}
+            />
         {:else if editorMode === 1}
           <CodeEditorExporty
             code={editorContents}
@@ -673,11 +707,22 @@
               />
           {/if}
         {:else if editorMode === 3}
-          <CodeEditorTwiny
-            code={editorContents}
-            on:codechange={evt => { editorContents = evt.detail }}
-            class="editor"
-            />
+          {#if twinyHint === 'sync'}
+            <CodeEditorTwiny
+              code={editorContents}
+              on:codechange={evt => { editorContents = evt.detail }}
+              class="editor"
+              />
+          {:else}
+            {#if twinyHint === 'broken'}
+              <p>This node contains twine-ish code, but it is broken.
+                Maybe somebody edited it manually.</p>
+            {:else if twinyHint === 'none'}
+              <p>This node does not contain twine-ish code.</p>
+            {/if}
+            <button on:click={() => { editorContents = minimalSnippet }}>twinify</button>
+            <p>Warning: this will overwrite this node's contents</p>
+          {/if}
         {/if}
       {#if syntaxCheckMessage}
         <div class={`syntaxcheck syntaxcheck__status-${syntaxCheckStatus}`}>

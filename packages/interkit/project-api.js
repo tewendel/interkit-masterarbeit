@@ -53,6 +53,24 @@ const sendDots = async function (duration, options) {
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
+const sendSystem = async function (text, options) {
+  const { message, server, projectId } = this;
+  const methodParams = {
+    projectId,
+    channel_key: message.channel_key,
+    //sender,
+    recipients: [message.sender],
+    origin: "handler",
+    payload: {
+      type: "system",
+      text,
+      options,
+    },
+  };
+  await callWithDelay(server, "message.send", methodParams, options);
+};
+
+
 const sendMediaFile = async function (callContext, type, mediafileKey, options) {
   const { message, server, projectId } = callContext
   console.log('sendImage', mediafileKey)
@@ -213,6 +231,7 @@ const distance = (pos1, pos2) => {
 export default {
   send,
   sendText,
+  sendSystem,
   sendImage,
   sendAudio,
   sendVideo,

@@ -192,14 +192,19 @@
           class:node__modified={node.modified}
           style={nodeMetaStyle(node)}
           />
-        <text
-          class="script-node"
-          x={node.posX+10}
-          y={node.posY+20}
+          <foreignObject 
+            x={node.posX + 5}
+            y={node.posY + 5}
+            width={rectWidth - 10}
+            height={rectHeight - 10}
+            class="script-node" 
           >
-          {node.id}
-          {#if node.modified}*{/if}
-        </text>
+          <div xmlns="http://www.w3.org/1999/xhtml"><!--
+          -->{node.id}{#if node.modified}*{/if}
+          </div>
+          </foreignObject>
+          
+        
         <text
           class="script-node-attribute"
           x={node.posX+10}

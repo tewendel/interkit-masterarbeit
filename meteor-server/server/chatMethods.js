@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages, Channels, ScheduledEvents } from '../imports/collections.js';
-import { add } from 'date-fns'
+import { add, setHours, setMinutes, compareAsc } from 'date-fns'
 import * as pushnotifications from '../imports/pushnotifications.js'
 
 const isUserBlocked = () => {
@@ -167,11 +167,48 @@ Meteor.methods({
   // delay is {minutes: 3, seconds: 30} from now, can be an (absolute) Date, too
   // payload depends on type "message" or "moveTo" - see those methods
   'events.schedule': ({ projectId, method, delay, payload }) => {
+    /* check if affected user is in turbo mode */
+    let affectedUserId
+    let turboInfoChannelKey
+    switch (method) {
+      case 'message.send':
+        affectedUserId = payload?.recipients?.length === 1
+          ? payload.recipients[0]
+          : false
+        turboInfoChannelKey = payload?.channel_key
+        break
+      case 'user.moveTo':
+        affectedUserId = payload?.userId
+        turboInfoChannelKey = payload?.boardId
+        break
+    }
+    const turboMode = affectedUserId
+      ? Meteor.users.findOne(affectedUserId)
+        ?.projectUserData?.[projectId]
+        ?.userVars?.debugTurboMode
+      : false
     let execTime = new Date()
     if (delay instanceof Date) {
       execTime = delay
     } else if (typeof delay === "object") {
-      execTime = add(execTime, delay)
+      if (delay.nextHour) {
+        let d = new Date(execTime)
+        d = setHours(d, delay.nextHour)
+        d = setMinutes(d, 0)
+        if (delay.randomHours) {
+          d = add(d, {
+            // add doesn't like floats
+            seconds: Math.round(Math.random() * delay.randomHours * 3600)
+          })
+        }
+        // if setHours lands us "before now", we roll over to tomorrow
+        if (compareAsc(execTime, d) === 1) {
+          d = add(d, { days: 1 })
+        }
+        execTime = d
+      } else {
+        execTime = add(execTime, delay)
+      }
     } else if (typeof delay === "number") {
       execTime = add(execTime, { seconds: delay })
     }
@@ -179,7 +216,21 @@ Meteor.methods({
       console.log("invalid delay, not scheduling event")
       return
     }
-    console.log("events.schedule", { delay, execTime, payloadType: payload?.type })
+    if (turboMode) {
+      const turboInfo = `turbo mode - ${method} would happen ${execTime} actually`
+      // send a system message, forgoing push
+      Messages.insert({
+        projectId,
+        channel_key: turboInfoChannelKey,
+        recipients: [affectedUserId],
+        origin: 'handler',
+        payload: { type: 'system', text: turboInfo },
+        createdAt: new Date()
+      })
+      // reschedule
+      execTime = add(new Date(), { seconds: 5 })
+    }
+    console.log("events.schedule", { method, delay, execTime, payloadType: payload?.type })
     return ScheduledEvents.insert({
       projectId,
       method,

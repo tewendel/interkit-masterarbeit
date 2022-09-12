@@ -252,7 +252,7 @@ lib.boards.patch = async (handle, params, req) => {
       }
     })
   }
-  return fs.writeFile(handle, JSON.stringify(board))
+  return fs.writeFile(handle, JSON.stringify(board, null, 2))
     .then(() => board)
 }
 

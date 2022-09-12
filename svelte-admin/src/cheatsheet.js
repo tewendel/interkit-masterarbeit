@@ -1,5 +1,4 @@
-export const cheatsheetContents = 
-`
+export const cheatsheetContents = `
 export const onArrive = async (api) => {
   // do something
 } 
@@ -42,9 +41,14 @@ if(msg.payload.key == "a") {
   // do something
 }
 
-// delays (this works for sentText, sendChoice, sendImage and moveTo)
+// send a system message
+api.sendSystem("Someone entered the channel")
+
+// delays (this works for sendText, sendChoice, sendImage and moveTo)
 api.sendText("hello", {delay: 10}) // send the message 10 seconds later
 api.sendText("hello", {delay: {hours: 1, minutes: 30}}) // 1 hour, 30 minutes later
+api.sendText("hello", {delay: {nextHour: 13}}) // the "next 13 o'clock", either later today, or tomorrow
+api.sendText("hello", {delay: {nextHour: 13, randomHours: 1}}) // add between 0 and 60 minutes, randomly
 
 // forward a message to other users currently in this node, uses user variable "name" as label
 api.echo(msg)
@@ -140,5 +144,12 @@ We also support Twine aliases/renames:
 All other text in paragraphs with links,
 like this sentence, will be ignored.
 
+Twine paragraphs can be explicit, immediate moveTos:
+[->To home]
+
+Twine paragraphs (message+moveTos) can take options:
+Hello world[{"delay":10}]
+[->To home][{"delay":{"hours":1}]
+
 */
-`
+`;

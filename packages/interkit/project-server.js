@@ -249,7 +249,11 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
           let handlerName = boardId + "_" + nodeId;
           
           if (handlers[handlerName]?.onArrive) {
-            await handlers[boardId + "_" + nodeId]?.onArrive(api, t)
+            try {
+              await handlers[boardId + "_" + nodeId]?.onArrive(api, t)
+            } catch(error) {
+              console.warn(`${handlerName} onArrive produced a runtime error:`, error);
+            }
           } else {
             console.warn(`handler ${handlerName} has no onArrive method`)            
           }
@@ -344,7 +348,14 @@ const setupMessageHandling = async ({
         if (handlers[handlerName]?.onMessage) {
           console.log(`handling message ${message.id} with ${handlerName}`)
           // allow parallel execution... should handler be required to be synchronous and return something?
-          handlers[handlerName].onMessage(message, api, t)
+          try {
+            handlers[handlerName].onMessage(message, api, t);
+          } catch (error) {
+            console.warn(
+              `${handlerName} onMessage produced a runtime error:`,
+              error
+            );
+          }
           handledBy.push(handlerName)
           //if (handlers[handlerName].onMessage(message)) {
           //    successfullyHandledBy.push(handlerName)
