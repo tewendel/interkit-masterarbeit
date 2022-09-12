@@ -47,6 +47,20 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 
 see also [main readme, deploy section](https://gitlab.interkit.app/interkit/interkit-experiments#deploy) 
 
+## update new images
+
+After changing your .env with a new image tag, do
+
+- `docker compose pull`
+- `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
+
+## freeing up disk space on your server
+
+After pulling many images, you might need to free up disk space on the server to remove old images
+
+- `docker system df` to check how much disk space is available
+- `docker image prune -a` - delete unused images
+- `docker system prune` - delete unused containers
 
 
 ## setup project repository on the new interkit server

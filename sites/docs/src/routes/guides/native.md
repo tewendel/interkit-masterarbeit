@@ -99,6 +99,11 @@ Important: make sure you set a clear description of what you want to use the loc
 
 #### Android
 
+Make sure you are using our fork of the cordova zip plugin - it prevents a "zip traversal vulnerability" that google detects during submission. Your package.json should contain
+````
+"cordova-plugin-zip": "github:bikubi/cordova-plugin-zip#a3855dfcd3baa9ff619a12dd08d3bbce57475a3e",
+````
+
 Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
 Follow this guide for more information: 
 https://developer.android.com/studio/publish/app-signing#sign_release
@@ -111,3 +116,5 @@ In Android Studio, you will also need to add android:exported="false" to the app
             <intent-filter>
 ````
 https://github.com/ionic-team/capacitor/pull/5350/files
+
+When you need to update your app, change the versionCode and versionName in build.gradle (module android.app).
