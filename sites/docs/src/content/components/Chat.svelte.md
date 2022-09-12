@@ -16,7 +16,7 @@ The channel key can be set in two ways:
 If the globalStore is set, it takes priority.
 
 ```docs
-../../packages/interkit/components/Chat.svelte
+../../../../../packages/interkit/components/Chat.svelte
 ```
 
 <ComponentInfo code={src} />

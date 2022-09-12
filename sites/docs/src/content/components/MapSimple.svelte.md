@@ -12,7 +12,7 @@ important: needs ElementsContextProvider as a parent in the component tree
 
 
 ```docs
-../../packages/interkit/components/MapSimple.svelte
+../../../../../packages/interkit/components/MapSimple.svelte
 ```
 
 <ComponentInfo code={src} />

@@ -100,7 +100,7 @@ Important: make sure you set a clear description of what you want to use the loc
 #### Android
 
 Make sure you are using our fork of the cordova zip plugin - it prevents a "zip traversal vulnerability" that google detects during submission. Your package.json should contain
-````
+````json
 "cordova-plugin-zip": "github:bikubi/cordova-plugin-zip#a3855dfcd3baa9ff619a12dd08d3bbce57475a3e",
 ````
 
