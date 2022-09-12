@@ -133,9 +133,9 @@
 
   {#if showVideoOverlay}
     <Overlay customStyle="background-color: black;">
-      <div class="video-close-button">
+      <div class="video-close-button" on:click={()=>{showVideoOverlay=false}}>
         <Button>
-          <Icon type="close" on:click={()=>{showVideoOverlay=false}} />
+          <Icon type="close"/>
         </Button>
       </div>
       <InlineVideoPlayer autoplay mediafileKey={slides[slideIndex]?.video?.value}/>
