@@ -1,4 +1,6 @@
 name: UserDebugger
 title: UserDebugger
-fields: []
+fields:
+  - name: teleportTargetNodes
+    type: string
 toolboxCategory: "Debug"
