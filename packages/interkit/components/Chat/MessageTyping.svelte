@@ -1,34 +1,60 @@
 <script>
+  import Bubble from "./Bubble.svelte"
 
   export let show
 
 </script>
 
 <div
-  class="dots"
+  class="container"
   style={`visibility: ${show ? 'visible' : 'hidden'}; opacity: ${show ? '1' : '0'}`}
-  ></div>
+  >
+  <Bubble
+  type="other"
+  showSide={true}
+  showHandle={true}
+  transparent
+  >
+    <div class="inner">
+      <div class="dots"/>
+    </div>
+  </Bubble>
+</div>
 
 <style>
 
 @keyframes typingdot {
-  0% { background: black; }
-  20% { background: white; }
-  40% { background: black; }
+  0% { background: var(--color-text); }
+  40% { background: var(  --color-background-highlight); }
+  80% { background: var(--color-text); }
+}
+
+.container {
+  transition: opacity 500ms;
+  display: inline-flex;
+}
+
+.inner {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--distance-s);
+}
+
+.inner::after {
+  content: "\200D" /* trick to make the element's min-height equal to line height */
 }
 
 .dots {
   /* easy configururation of appearance */
-  --duration: 1.25s;
-  --size: 75%;
+  --duration: 1s;
+  --size: 55%;
   /* left */
-  margin: 1em 1em 1em 2em;
+  margin: 0 2em;
   /* center
   margin: 1em auto;
   */
   position: relative;
   font-size: var(--size);
-  transition: opacity 500ms;
 }
 
 .dots::after,
@@ -48,17 +74,17 @@
 }
 
 .dots::after {
-  left: -2em;
+  left: -1.3em;
   animation-delay: 0;
 }
 
 .dots {
-  animation-delay: calc(var(--duration) * 0.15);
+  animation-delay: calc(var(--duration) * 0.25);
 }
 
 .dots::before {
-  left: 2em;
-  animation-delay: calc(var(--duration) * 0.3);
+  left: 1.3em;
+  animation-delay: calc(var(--duration) * 0.5);
 }
 
 </style>
