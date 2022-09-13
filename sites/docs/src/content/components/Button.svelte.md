@@ -10,7 +10,7 @@
 [Figma](https://www.figma.com/file/7y5c91AmKjRnfsnglX7yAD/Interkit-App-Interface?node-id=3240%3A21589)
 
 ```docs
-../../packages/interkit/components/Button.svelte
+../../../../../packages/interkit/components/Button.svelte
 ```
 
 <ComponentInfo code={src} />

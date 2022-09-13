@@ -13,7 +13,7 @@ Parent component to manage a nested, hierarchical settings menu. Use together wi
 
 
 ```docs
-../../packages/interkit/components/SubsectionsNav.svelte
+../../../../../packages/interkit/components/SubsectionsNav.svelte
 ```
 
 <ComponentInfo code={src} />

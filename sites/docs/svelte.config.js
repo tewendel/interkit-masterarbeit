@@ -8,11 +8,6 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		vite: {
-			optimizeDeps: {
-				include: ["highlight.js", "highlight.js/lib/core"],
-			},
-		},
 	},
 
 	preprocess: [mdsvex(mdsvexConfig)]

@@ -23,7 +23,7 @@ Child should be a `ContentElement`.
 ![ElementList](/images/ElementList.png)
 
 ```docs
-../../packages/interkit/components/ElementList.svelte
+../../../../../packages/interkit/components/ElementList.svelte
 ```
 
 <ComponentInfo code={src} />

@@ -15,7 +15,7 @@ Special: in ChatPreview and DynamicContent you can use the syntax $ElementProvid
 
 
 ```docs
-../../packages/interkit/components/ElementProvider.svelte
+../../../../../packages/interkit/components/ElementProvider.svelte
 ```
 
 <ComponentInfo code={src} />

@@ -21,7 +21,7 @@ Help would be top level subsection, map the subsection on the second level you w
 
 
 ```docs
-../../packages/interkit/components/Subsection.svelte
+../../../../../packages/interkit/components/Subsection.svelte
 ```
 
 <ComponentInfo code={src} />

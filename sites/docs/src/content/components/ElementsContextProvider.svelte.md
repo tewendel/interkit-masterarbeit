@@ -10,7 +10,7 @@
 Use this to load, sort and filter a collection of elements and provide them to child components through the context.
 
 ```docs
-../../packages/interkit/components/ElementsContextProvider.svelte
+../../../../../packages/interkit/components/ElementsContextProvider.svelte
 ```
 
 <ComponentInfo code={src} />

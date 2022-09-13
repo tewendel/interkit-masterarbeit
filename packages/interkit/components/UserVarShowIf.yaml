@@ -1,0 +1,10 @@
+name: UserVarShowIf
+colour: 50
+fields:
+  - type: string
+    name: variable  
+  - type: slot
+    name: iftrue
+  - type: slot
+    name: else
+toolboxCategory: "Conditionals"

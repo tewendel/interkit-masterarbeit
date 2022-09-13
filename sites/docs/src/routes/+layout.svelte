@@ -1,29 +1,11 @@
-<script context="module">
-  export async function load({ params, fetch, session, stuff }) {
-    const url = `/sidebar.json`;
-    const response = await fetch(url);
-
-    return {
-      status: response.status,
-      props: {
-        data: response.ok && (await response.json())
-      }
-    };
-  }
-</script>
-
 <script>
   import Sidebar from "../components/Sidebar.svelte";
+  import {items} from "../content/sidebar.json.js"
 
   import 'prismjs/themes/prism.css'
 
-  export let data;
+  //export const prerender = true;
 
-  //console.log("data", data);
-
-  //const items = {guides:[], theory:[]} // props.items
-
-  
 </script>
 
 <div class="container">
@@ -35,7 +17,7 @@
     </h1>
   </header>
   <nav class="sidebar">
-    <Sidebar items={data.items} />
+    <Sidebar {items} />
   </nav>
   <main class="main">
     <slot></slot>
