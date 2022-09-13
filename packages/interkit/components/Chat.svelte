@@ -251,7 +251,7 @@
 
 </script>
 
-<div class="root">
+<div class="Chat root">
   <div class="channel-info-overlay">
     <!--span>channel {channel_key}</span-->
     <ChatChannelImage channel_key={channel_key}/>

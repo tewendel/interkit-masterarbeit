@@ -206,6 +206,8 @@
     border-width: var(--border-width);
     border-color: var(--color-border);
     border-style: solid;
+    min-height: 1em;
+    min-width: 1em;
   }
   
   .message--image .message__contents, .message--video .message__contents {
