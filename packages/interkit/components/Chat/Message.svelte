@@ -53,6 +53,20 @@
     }
   }
 
+  const linkClickHandler = message => {
+    const url = message?.payload?.url
+    const isGmaps = message?.payload?.options?.gmaps === true
+    return evt => {
+      // ios strategy copied from ExternalMapAppButton
+      if (Capacitor && Capacitor.getPlatform() === 'ios' && isGmaps) {
+        evt.preventDefault()
+        window.open(url)
+        return
+      }
+      // on android & web, pass thru to target=_blank
+    }
+  }
+
   onMount(() => {
     dispatch('mounted')
   })
@@ -69,7 +83,7 @@
 <div class="system">
   {message?.payload?.text}
 </div>
-{:else if ['text', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}   
+{:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
@@ -86,8 +100,19 @@
       >
       <div class="message__contents">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
+        <i>{message.payload.type}</i>
         {#if message?.payload?.type == "text"}  
           {message?.payload?.text}
+        {:else if message?.payload?.type === 'link'}
+          {#if message?.payload?.url}
+            <a
+              href={message?.payload?.url}
+              target="_blank"
+              on:click={linkClickHandler(message)}
+              >{message?.payload?.text}</a>
+          {:else}
+            {message?.payload?.text}
+          {/if}
         {:else if message?.payload?.type == "image"}
           <MediaFileImage
             mediafileRef={{
@@ -213,6 +238,14 @@
   .message--requestLocation, .message__user {
     text-align: right;
     align-self: flex-end;
+  }
+
+  .message--link .message__contents {
+    link-decoration: underline;
+  }
+
+  .message--link .message__contents a {
+    color: inherit;
   }
 
   .message.message__lastFromSender  {
