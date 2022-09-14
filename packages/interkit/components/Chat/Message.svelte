@@ -100,7 +100,6 @@
       >
       <div class="message__contents">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
-        <i>{message.payload.type}</i>
         {#if message?.payload?.type == "text"}  
           {message?.payload?.text}
         {:else if message?.payload?.type === 'link'}
