@@ -1,6 +1,7 @@
 <script>
 
   import { onMount } from 'svelte'
+  import { writable, get } from 'svelte/store'
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
 
@@ -10,6 +11,8 @@
   // N.B. this also finds invalid code
   const parseREmoveTo = new RegExp(`moveTo\\s*\\(\\s*["'](${idRE})["']`, 'gu')
 
+  export let projectId
+  export let boardId
   export let nodes = []
   export let editNodeId
   export let board
@@ -24,8 +27,6 @@
   let svgEl
   let mouseX
   let mouseY
-  let offsetX
-  let offsetY
   let dragging = false
   let dragStart
   let canvasDragging = false
@@ -72,16 +73,53 @@
 
   $: nodes, updateConnections()
 
-  const zoom = dir => {
-    board.zoom = Math.max(board.zoom + zoomStep * dir, minZoom)
-    dispatch('boardchanged')
+  const localStore = name => {
+    let initialValue
+    const key = `interkit-admin-node-boardview-${projectId}-${boardId}-${name}`
+    try {
+      initialValue = JSON.parse(localStorage.getItem(key))
+    } catch (e) {
+      initialValue = undefined
+    }
+    console.log('localStore initial', key, initialValue)
+    const store = writable(initialValue)
+    store.subscribe(newValue => {
+      localStorage.setItem(key, JSON.stringify(newValue))
+    })
+    return store
+  }
+
+  let offsetX
+  let offsetY
+  let zoom
+
+  const getBoardView = () => {
+    offsetX = localStore('offsetX')
+    if (typeof get(offsetX) !== 'number') offsetX.set(0.0)
+    offsetY = localStore('offsetY')
+    if (typeof get(offsetY) !== 'number') offsetY.set(0.0)
+    zoom = localStore('zoom')
+    if (typeof get(zoom) !== 'number') zoom.set(1.0)
+    console.log('getBoardView', {
+      projectId,
+      boardId,
+      offsetX: get(offsetX),
+      offsetY: get(offsetY),
+      zoom: get(zoom)
+    })
+  }
+
+  getBoardView()
+  $: projectId, boardId, getBoardView()
+
+  const doZoom = dir => {
+    zoom.set(Math.max(get(zoom) + zoomStep * dir, minZoom))
   }
 
   const resetCanvas = () => {
-    board.zoom = 1.0
-    board.offsetX = 0
-    board.offsetY = 0
-    dispatch('boardchanged')
+    zoom.set(1.0)
+    offsetX.set(0.0)
+    offsetY.set(0.0)
   }
 
   const nodeMetaStyle = node => `fill: ${node?.contents?.match(/\/\/ *color *: *(#?\w+)/)?.[1]};`
@@ -94,7 +132,6 @@
       dragging = false
     }
     if (canvasDragging) {
-      dispatch('boardchanged')
       canvasDragging = false;
     }
   }
@@ -102,18 +139,19 @@
   const mousemove = e => {
     // update dragging node
     const r = svgEl.getClientRects()
+    if (!(r && r.length)) return
     mouseX = e.clientX - r[0].x
     mouseY = e.clientY - r[0].y
     if (dragging !== false) {
       // FIXME dragging is off when zoom != 1.0
-      nodes[dragging].posX = mouseX - offsetX
-      nodes[dragging].posY = mouseY - offsetY
+      nodes[dragging].posX = mouseX - get(offsetX)
+      nodes[dragging].posY = mouseY - get(offsetY)
     } else {
       if (canvasDragging) {
         mouseX = e.clientX
         mouseY = e.clientY
-        board.offsetX = mouseX - canvasDragStartX
-        board.offsetY = mouseY - canvasDragStartY
+        offsetX.set(mouseX - canvasDragStartX)
+        offsetY.set(mouseY - canvasDragStartY)
       }
     }
   }
@@ -126,9 +164,9 @@
 </script>
 
 <div class="scale-controls">
-  <button on:click={() => { zoom(-1) }}>-</button>
+  <button on:click={() => { doZoom(-1) }}>-</button>
   <button on:click={() => { resetCanvas() }}>0</button>
-  <button on:click={() => { zoom(1) }}>+</button>
+  <button on:click={() => { doZoom(1) }}>+</button>
 </div>
 
 <svg
@@ -138,8 +176,8 @@
     mouseX = e.clientX
     mouseY = e.clientY
     canvasDragging = true
-    canvasDragStartX = mouseX - board.offsetX
-    canvasDragStartY = mouseY - board.offsetY
+    canvasDragStartX = mouseX - get(offsetX)
+    canvasDragStartY = mouseY - get(offsetY)
     e.preventDefault() // to prevent text selection
   }}
   >
@@ -159,7 +197,7 @@
     </marker>
   </defs>
 
-  <g transform="translate({board.offsetX},{board.offsetY}) scale({board.zoom},{board.zoom})">
+  <g transform="translate({$offsetX},{$offsetY}) scale({$zoom},{$zoom})">
 
     {#each connections as c}
       <polyline
@@ -178,8 +216,8 @@
           console.log("mousedown", node.id)
           dragging = index
           dragStart = Date.now()
-          offsetX = mouseX - node.posX
-          offsetY = mouseY - node.posY
+          offsetX.set(mouseX - node.posX)
+          offsetY.set(mouseY - node.posY)
         }}
         on:click={() => {
           if (Date.now() - dragStart < 250) {
@@ -268,6 +306,7 @@
 
 svg {
   position: relative;
+  user-select: none;
 }
 
 svg:hover {

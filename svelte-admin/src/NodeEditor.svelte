@@ -245,9 +245,6 @@
   const processBoard = board => {
     if (!Array.isArray(board.nodes))
       board.nodes = []
-    if (!board.offsetX) board.offsetX = 0
-    if (!board.offsetY) board.offsetY = 0
-    if (!board.zoom) board.zoom = 1.0
     board.nodes.forEach(node => {
       if (isNaN(node.posX)) node.posX = 10
       if (isNaN(node.posY)) node.posY = 10
