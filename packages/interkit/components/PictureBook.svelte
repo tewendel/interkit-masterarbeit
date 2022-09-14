@@ -67,9 +67,30 @@
   const handleScroll = () => {
     let newIndex = Math.floor(carousel.scrollLeft / carouselWidth);
     if(newIndex != slideIndex) slideIndex = newIndex; 
+    setTimeout(()=>{
+      //console.log("scroll " + carousel.scrollLeft / carouselWidth)
+      let newIndex = Math.floor(carousel.scrollLeft / carouselWidth);
+      if(newIndex != slideIndex) slideIndex = newIndex; 
+    }, 200);
   }
 
   let showVideoOverlay = false;
+  let audioPlaybackControl = "stopped";
+
+  $: {
+    slideIndex; 
+    audioPlaybackControl = "stopped";
+  }
+
+  const handleImageClick = () => {
+    console.log("handleImageClick")
+    if(slides[slideIndex].video?.value) {
+      showVideoOverlay = true
+    }
+    if(slides[slideIndex].audio) {
+      if(audioPlaybackControl != "playing") audioPlaybackControl = "playing";
+    }
+  }
   
 </script>
   
@@ -77,7 +98,7 @@
   
   <div class="image-slider-container" bind:clientWidth={carouselWidth} bind:this={carousel} on:scroll={handleScroll}>
     {#each slides as slide}
-    <div class="image-slide">
+    <div class="image-slide" on:click={handleImageClick}>
       {#if slide?.image}
         <AspectRatio aspectRatioType="element">
           <MediaFileImage fitDimension="both" mediafileRef={slide?.image}/>
@@ -106,11 +127,12 @@
           <InlineAudioPlayerButton
             audioKeyDirect={slides[slideIndex].audio?.value}
             hideBackButton
+            bind:playbackControl={audioPlaybackControl}
           />
         {/if}
       {/key}
       
-      {#if slides[slideIndex].video}
+      {#if slides[slideIndex]?.video?.value}
         <Button size="medium" type="primary" onClick={()=>{showVideoOverlay = true}}>
           <Icon type="Full-Play" inverse></Icon>
             Play Video
