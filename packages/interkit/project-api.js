@@ -23,7 +23,7 @@ const sendText = async function(text, options) {
     const {message, server, projectId} = this
     const methodParams = {
       projectId, 
-      channel_key: message.channel_key, 
+      channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
       //sender, 
       recipients: [message.sender],
       origin: "handler",
@@ -162,9 +162,16 @@ const setUserVar = async function(varName, value) {
   await server.call('user.setUserVar', {userId, projectId, varName, value})
 }
 
-const setElementProperty = async function(elementKey, propertyName, value) {
+const setElementProperty = async function(elementKey, propertyName, value, options) {
   const {server, projectId, userId} = this
-  await server.call('user.setElementProperty', {userId, projectId, elementKey, propertyName, value})
+  const methodParams = {
+    userId,
+    projectId, 
+    elementKey,
+    propertyName,
+    value
+  }
+  await callWithDelay(server, 'user.setElementProperty', methodParams, options)
 }
 
 const getElementProperty = async function(elementKey, propertyName) {
