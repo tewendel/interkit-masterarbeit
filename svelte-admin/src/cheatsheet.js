@@ -22,6 +22,10 @@ api.sendImage("f00ba420-0123-4567-89abcdef012356789")
 api.sendAudio("e4770840-3c2e-4eeb-b59b-a0e15e14190b")
 api.sendVideo("b94eb8f3-72ef-476d-ad61-64adc18204e7")
 
+// send a clickable link
+api.sendLink("https://docs.interkit.app/")
+api.sendLink("Docs", { url: "https://docs.interkit.app/" })
+
 // add a label
 api.sendText("hello", {label: "bot"})
 
