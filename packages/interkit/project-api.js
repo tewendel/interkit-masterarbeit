@@ -37,6 +37,24 @@ const sendText = async function(text, options) {
 }
 const send = sendText;
 
+const sendLink = async function (text, options) {
+  const { message, server, projectId } = this
+  const methodParams = {
+    projectId,
+    channel_key: message.channel_key,
+    //sender,
+    recipients: [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'link',
+      text,
+      url: options?.url || text,
+      options
+    }
+  }
+  await callWithDelay(server, "message.send", methodParams, options)
+}
+
 const sendDots = async function (duration, options) {
   const { message, server, projectId } = this
   const methodParams = {
@@ -244,6 +262,7 @@ const distance = (pos1, pos2) => {
 export default {
   send,
   sendText,
+  sendLink,
   sendSystem,
   sendImage,
   sendAudio,
