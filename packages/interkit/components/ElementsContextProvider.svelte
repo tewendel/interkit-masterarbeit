@@ -50,11 +50,7 @@
       data = data.filter(a => a.hideColumn != "true")    
     }
 
-    // sort elemets by sortcolumn
-    if(sortColumn) {
-      data.sort((a, b) => a.sortColumn - b.sortColumn)
-    }
-
+    
     // exclude elements with any of these properties set to true
     if(excludePropertiesAny) {
       for(let property of excludePropertiesAny.split(", ")) {
@@ -88,6 +84,11 @@
         }
       }
       data = filteredData;   
+    }
+
+    // sort elemets by sortcolumn
+    if(sortColumn) {
+      data.sort((a, b) => a.sortColumn - b.sortColumn)
     }
 
     //qconsole.log("filtered data", data)
