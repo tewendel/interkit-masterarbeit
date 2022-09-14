@@ -167,6 +167,12 @@ const setElementProperty = async function(elementKey, propertyName, value) {
   await server.call('user.setElementProperty', {userId, projectId, elementKey, propertyName, value})
 }
 
+const getElementProperty = async function(elementKey, propertyName) {
+  const {server, projectId, userId} = this
+  let value = await server.call('user.getElementProperty', {userId, projectId, elementKey, propertyName})
+  return value;
+}
+
 const setChannelProperty = async function(channelKey, propertyName, value) {
   const {server, projectId, userId} = this
   await server.call('user.setChannelProperty', {userId, projectId, channelKey, propertyName, value})
@@ -242,6 +248,7 @@ export default {
   setUserVar,
   getUserVar,
   setElementProperty,
+  getElementProperty,
   setChannelProperty,
   getRows,
   addRow,

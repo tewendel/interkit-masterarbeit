@@ -265,6 +265,13 @@ Meteor.methods({
     await updateUserProjectData(userId, projectId, "elementProperties", elementProperties)
   },
 
+  'user.getElementProperty': async ({userId, projectId, elementKey, propertyName}) => {
+    console.log("user.getElementProperty", propertyName)
+    let userProjectData = getUserProjectData(userId, projectId);
+    let elementProperties = userProjectData.elementProperties
+    return elementProperties?.[elementKey]?.[propertyName];
+  },
+
   'user.setChannelProperty': async ({userId, projectId, channelKey, propertyName, value}) => {
     console.log("user.setChannelProperty", propertyName, value)
     let userProjectData = getUserProjectData(userId, projectId);
