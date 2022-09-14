@@ -232,7 +232,7 @@
     if (currentMessage?.sender === userId) {
       if (verbose) console.log('typingNext skipping because user message')
       typingQueuePointer++
-      typingNext()
+      setTimeout(typingNext, Math.floor(Math.random() * 500) +  750) // first reply
       return
     }
     const duration = typingDuration(currentMessage)
@@ -242,7 +242,7 @@
       typingShow = false
       typingQueuePointer++
       if (verbose) console.log('typingNext done timeout', { typingQueuePointer })
-      typingNext()
+      setTimeout(typingNext, Math.floor(Math.random() * 500) +  750) // following supplies
     }, duration * 1000)
   }
 
@@ -251,7 +251,7 @@
 
 </script>
 
-<div class="root">
+<div class="Chat root">
   <div class="channel-info-overlay">
     <!--span>channel {channel_key}</span-->
     <ChatChannelImage channel_key={channel_key}/>

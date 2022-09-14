@@ -2,6 +2,7 @@
   import { onMount, createEventDispatcher } from 'svelte';
 
   import MessageDate from "./MessageDate.svelte";
+  import Bubble from "./Bubble.svelte"
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
   import MediaFileImage from "../MediaFileImage.svelte";
@@ -59,7 +60,7 @@
 </script>
 
 {#if message?.payload?.options?.label}
-<span class="message-label">{message?.payload?.options?.label}</span> 
+  <span class="message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
 {#if message?.payload?.type === 'empty'}
@@ -68,14 +69,16 @@
 <div class="system">
   {message?.payload?.text}
 </div>
-{:else if ['text', 'choice', 'image', 'audio', 'video', 'requestLocation'].indexOf(message?.payload?.type) > -1}   
+{:else if ['text', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}   
   <div 
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
     class:message__lastFromSender={lastFromSender}
   >
-    <div
-      class="message__bubble"
+    <Bubble
+      type = { isByUser ? "me" : "other" }
+      showHandle = { lastFromSender && !["choice", "requestLocation"].includes(message?.payload?.type) }
+      showSide = { !["choice", "requestLocation", "audio", "video", "image"].includes(message?.payload?.type) }
       on:click={() => { 
         if (['text', 'image'].includes(message?.payload?.type))
           showOptions = true 
@@ -142,8 +145,8 @@
               </Button>
             </li>
             {#if message.payload.cancel}
-             <li 
-              class="choice-option" 
+              <li 
+                class="choice-option" 
               >
                 <Button
                   on:click={()=>{if(!message?.submitted) submitLocationLocal(message, true)}}
@@ -158,7 +161,7 @@
           </ul>
         {/if}
       </div>
-    </div>
+    </Bubble>
     <MessageDate {message} {previousMessage} {lastFromSender} />
     {#if showOptions}
       <div
@@ -193,20 +196,6 @@
     font: var(--font-caption-bold);
     padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
   }
-
-  .message__bubble {
-    position: relative;
-    font: var(--font-body-1);
-  }
-
-  .message__contents {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    background-color: var(--color-background);
-    border-width: var(--border-width);
-    border-color: var(--color-border);
-    border-style: solid;
-  }
   
   .message--image .message__contents, .message--video .message__contents {
     height: 200px;
@@ -216,7 +205,7 @@
     height: 34px;
   }
 
-  .message:not(.message--image) .message__contents {
+  .message:not(.message--image):not(.message--video) .message__contents {
     padding: var(--distance-s);
   }
 
@@ -226,41 +215,8 @@
     align-self: flex-end;
   }
 
-  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__contents {
-    border-bottom-left-radius: 0;
-  }
-
-  .message__user .message__contents {
-    border-bottom-right-radius: 0;
-  }
-
-  .message.message__lastFromSender .message__bubble {
+  .message.message__lastFromSender  {
     margin-bottom: var(--distance-m);
-  }
-
-  /* css triangle base */
-  .message.message__lastFromSender .message__bubble::after {
-    position: absolute;
-    bottom: -10px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-  }
-
-  /* ◥ */
-  .message.message__user .message__bubble::after {
-    content: "";
-    right: 0;
-    border-width: 0 10px 10px 0;
-    border-color: transparent var(--color-border) transparent transparent;
-  }
-
-  /* ◤ */
-  .message:not(.message__user):not(.message--choice, .message--requestLocation) .message__bubble::after {
-    content: "";
-    left: 0;
-    border-width: 10px 10px 0 0px;
-    border-color: var(--color-border) transparent transparent transparent;
   }
 
   .message--choice, .message--requestLocation {
