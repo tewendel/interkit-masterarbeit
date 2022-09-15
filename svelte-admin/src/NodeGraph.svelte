@@ -21,6 +21,7 @@
   // this hack forces a redraw, reacting to any node content modifications
   $: nodes._update = _update
 
+  let svgEl
   let mouseX
   let mouseY
   let offsetX
@@ -86,6 +87,41 @@
   const nodeMetaStyle = node => `fill: ${node?.contents?.match(/\/\/ *color *: *(#?\w+)/)?.[1]};`
   const nodeMetaExcerpt = node => node?.contents?.match(/\/\/ *info *: *(.*)/)?.[1] || ''
   const nodeMetaExcerptFontsize = node => Math.max(10, 32 - 2 * (nodeMetaExcerpt(node)?.length || 0)) + 'px'
+  
+  const mouseup = () => {
+    if (dragging !== false) {
+      dispatch('boardchanged', { targetNode: nodes[dragging] })
+      dragging = false
+    }
+    if (canvasDragging) {
+      dispatch('boardchanged')
+      canvasDragging = false;
+    }
+  }
+
+  const mousemove = e => {
+    // update dragging node
+    const r = svgEl.getClientRects()
+    mouseX = e.clientX - r[0].x
+    mouseY = e.clientY - r[0].y
+    if (dragging !== false) {
+      // FIXME dragging is off when zoom != 1.0
+      nodes[dragging].posX = mouseX - offsetX
+      nodes[dragging].posY = mouseY - offsetY
+    } else {
+      if (canvasDragging) {
+        mouseX = e.clientX
+        mouseY = e.clientY
+        board.offsetX = mouseX - canvasDragStartX
+        board.offsetY = mouseY - canvasDragStartY
+      }
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('mouseup', () => mouseup(), { passive: true })
+    document.addEventListener('mousemove', evt => mousemove(evt), { passive: true })
+  })
 
 </script>
 
@@ -96,36 +132,15 @@
 </div>
 
 <svg
+  bind:this={svgEl}
   class="nodegraph"
-  on:mousedown={() => {
+  on:mousedown={(e) => {
+    mouseX = e.clientX
+    mouseY = e.clientY
     canvasDragging = true
     canvasDragStartX = mouseX - board.offsetX
     canvasDragStartY = mouseY - board.offsetY
-  }}
-  on:mousemove={(e) => {
-    mouseX = e.clientX
-    mouseY = e.clientY
-    // update dragging node
-    if (dragging !== false) {
-      // FIXME dragging is off when zoom != 1.0
-      nodes[dragging].posX = mouseX - offsetX
-      nodes[dragging].posY = mouseY - offsetY
-    } else {
-      if (canvasDragging) {
-        board.offsetX = mouseX - canvasDragStartX
-        board.offsetY = mouseY - canvasDragStartY
-      }
-    }
-  }}
-  on:mouseup={() => {
-    if (dragging !== false) {
-      dispatch('boardchanged', { targetNode: nodes[dragging] })
-      dragging = false
-    }
-    if (canvasDragging) {
-      dispatch('boardchanged')
-      canvasDragging = false;
-    }
+    e.preventDefault() // to prevent text selection
   }}
   >
 

@@ -8,7 +8,7 @@
 
 <MediaFileResolver mediafileRef={{value: mediafileKey}} let:url>
   <!-- svelte-ignore a11y-media-has-caption -->
-  <video {autoplay} controls src={url} />
+  <video playsinline {autoplay} controls src={url} />
 </MediaFileResolver>
 
 

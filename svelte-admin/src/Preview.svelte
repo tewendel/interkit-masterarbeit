@@ -54,14 +54,14 @@
     query.set("loadTheme", themed)
     //query.set("projectId", projectId)
     //console.log("currentProject", $currentProject)
-    console.log("localConfig", localConfig)
+    //console.log("localConfig", localConfig)
     if(localConfig) {
       query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
     } else {
       query.delete("localConfigURL")
     }
     query.set("dev", true)
-    console.log("query", query.toString())
+    //console.log("query", query.toString())
     previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }

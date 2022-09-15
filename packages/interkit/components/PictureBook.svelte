@@ -62,22 +62,54 @@
   })
 
   let carousel;
-  let carouselWidth;
-
+  
   const handleScroll = () => {
-    let newIndex = Math.floor(carousel.scrollLeft / carouselWidth);
+    if(!carousel) return;
+    //console.log("carousel.clientWidth", carousel.clientWidth)
+    let newIndex = Math.round(carousel.scrollLeft / carousel.clientWidth);
     if(newIndex != slideIndex) slideIndex = newIndex; 
+    setTimeout(()=>{
+      console.log("scroll " + carousel.scrollLeft / carousel.clientWidth)
+      let newIndex = Math.round(carousel.scrollLeft / carousel.clientWidth);
+      if(newIndex != slideIndex) slideIndex = newIndex; 
+    }, 400);
   }
 
   let showVideoOverlay = false;
+  let audioPlaybackControl = "stopped";
+
+  $: {
+    slideIndex; 
+    audioPlaybackControl = "stopped";
+  }
+
+  const handleImageClick = () => {
+    console.log("handleImageClick")
+    if(slides[slideIndex].video?.value) {
+      showVideoOverlay = true
+    }
+    if(slides[slideIndex].audio) {
+      if(audioPlaybackControl != "playing") audioPlaybackControl = "playing";
+    }
+  }
+
+  let innerWidth;
+  $: {
+    innerWidth;
+    handleScroll();
+  }
   
 </script>
+
+<svelte:window 
+	bind:innerWidth
+/>
   
 {#if slides?.length}
   
-  <div class="image-slider-container" bind:clientWidth={carouselWidth} bind:this={carousel} on:scroll={handleScroll}>
+  <div class="image-slider-container" bind:this={carousel} on:scroll={handleScroll}>
     {#each slides as slide}
-    <div class="image-slide">
+    <div class="image-slide" on:click={handleImageClick}>
       {#if slide?.image}
         <AspectRatio aspectRatioType="element">
           <MediaFileImage fitDimension="both" mediafileRef={slide?.image}/>
@@ -106,11 +138,12 @@
           <InlineAudioPlayerButton
             audioKeyDirect={slides[slideIndex].audio?.value}
             hideBackButton
+            bind:playbackControl={audioPlaybackControl}
           />
         {/if}
       {/key}
       
-      {#if slides[slideIndex].video}
+      {#if slides[slideIndex]?.video?.value}
         <Button size="medium" type="primary" onClick={()=>{showVideoOverlay = true}}>
           <Icon type="Full-Play" inverse></Icon>
             Play Video

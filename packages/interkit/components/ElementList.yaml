@@ -4,6 +4,8 @@ color: 230
 fields:
   - name: selectTrigger
     type: string
+  - name: hideArrow
+    type: checkbox
   - type: slot
     name: contentElement
     slotProps:
