@@ -7,7 +7,8 @@
 
   // name of the trigger to activate on select
   export let selectTrigger
-
+  export let hideArrow = false; hideArrow = hideArrow == "TRUE" ? true : false;
+  
   /*
     @example
     <Button>
@@ -38,7 +39,7 @@
       {#each $elements as element}
         <li class="item" on:click={()=>{onClick(element)}}>
           <slot name="contentElement" element={{...element.row, size: "l"}}></slot>
-          {#if selectTrigger}
+          {#if selectTrigger && !hideArrow}
             <span class="right-arrow"><Button type="link"><Icon type="arrow-right"/></Button></span>
           {/if}
         </li>
