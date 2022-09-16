@@ -71,7 +71,13 @@
       scrollDown()
       
       // mark all in channel as seen
-      InterkitClient.call("channel.seeAll", {userId, channel_key});
+      // setTimeout required for autoplay of unseen messages
+      setTimeout(()=>{
+          InterkitClient.call("channel.seeAll", {userId, channel_key});
+        },
+        2000
+      )
+      
     }
   }
 

@@ -8,6 +8,7 @@
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
   export let audioKeyDirect // or just specify the key directly as a prop
   export let hideBackButton = false;
+  export let autoplay = false
 
   export let playbackControl = "stopped"; // use to start/stop playback through prop
   
@@ -99,6 +100,7 @@
       >
         {#if mediafile}
           <audio controls="controls"
+            {autoplay}
             bind:this={audioElement}
             bind:currentTime
             bind:paused
@@ -113,6 +115,7 @@
             </div>
           {/if}
           <div class="button" on:click={mainToggleClick} disabled={loading}>
+            {#if autoplay}<abbr title="autoplay"><small>A</small></abbr>{/if}
             <Icon type={ paused ? 'play' : 'pause' } />
           </div>
           <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>

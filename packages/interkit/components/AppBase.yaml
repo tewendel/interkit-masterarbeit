@@ -4,6 +4,8 @@ colour: 130
 fields:
   - type: string
     name: languages
+  - type: string
+    name: projectIdOverride
   - type: slot
     name: viewport
   - type: slot

@@ -22,17 +22,17 @@ const callWithDelay = async (server, method, methodParams, options) => {
 const sendText = async function(text, options) {
     const {message, server, projectId} = this
     const methodParams = {
-      projectId, 
+      projectId,
       channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
-      //sender, 
-      recipients: [message.sender],
+      //sender,
+      recipients: options?.recipients || [message.sender],
       origin: "handler",
       payload: {
-        type: 'text',
+        type: "text",
         text,
-        options
-      }
-    }
+        options,
+      },
+    };
     await callWithDelay(server, "message.send", methodParams, options)
 }
 const send = sendText;
@@ -77,7 +77,7 @@ const sendSystem = async function (text, options) {
     projectId,
     channel_key: message.channel_key,
     //sender,
-    recipients: [message.sender],
+    recipients: options?.recipients || [message.sender],
     origin: "handler",
     payload: {
       type: "system",
@@ -94,17 +94,17 @@ const sendMediaFile = async function (callContext, type, mediafileKey, options) 
   console.log('sendImage', mediafileKey)
   const methodParams = {
     projectId,
-    channel_key: message.channel_key,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender,
-    recipients: [message.sender],
+    recipients: options?.recipients || [message.sender],
     origin: "handler",
     payload: {
       type: type,
       // text,
       mediafileKey,
-      options
-    }
-  }
+      options,
+    },
+  };
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
