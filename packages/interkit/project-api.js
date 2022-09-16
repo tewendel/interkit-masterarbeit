@@ -255,7 +255,7 @@ const setInterface = async function(interfaceConfig) {
 }
 
 const distance = (pos1, pos2) => { 
-  return (pos1.lat && pos2.lat) ? 
+  return (pos1?.lat && pos2?.lat) ? 
     getDistance({latitude: pos1.lat, longitude: pos1.lng}, {latitude: pos2.lat, longitude: pos2.lng}, 1)
     : null 
 }
