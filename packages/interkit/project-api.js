@@ -94,7 +94,7 @@ const sendMediaFile = async function (callContext, type, mediafileKey, options) 
   console.log('sendImage', mediafileKey)
   const methodParams = {
     projectId,
-    channel_key: message.channel_key,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender,
     recipients: [message.sender],
     origin: "handler",
