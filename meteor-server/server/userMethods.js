@@ -17,6 +17,60 @@ const updateUserProjectData = async (userId, projectId, key, value) => {
   return usersModifiedCount
 }
 
+const updateUserBoardArrivalState = async (userId, projectId, boardId, value) => {
+  // write projectData updates to user
+  const usersModifiedCount = Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.boardState.${boardId}.nodeId`] : value.nodeId,
+      [`projectUserData.${projectId}.boardState.${boardId}.status`] : value.status 
+    }
+  })
+  return usersModifiedCount
+}
+
+const updateUserBoardInterface = async (userId, projectId, boardId, value) => {
+  // write projectData updates to user
+  const usersModifiedCount = Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.boardState.${boardId}.interfaceConfig`] : value      
+    }
+  })
+  return usersModifiedCount
+}
+
+const updateUserElementProperty = async (userId, projectId, elementKey, propertyName, value) => {
+  // write projectData updates to user
+  const usersModifiedCount = Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.elementProperties.${elementKey}.${propertyName}`] : value      
+    }
+  })
+  return usersModifiedCount
+}
+
+const updateUserChannelProperty = async (userId, projectId, channelKey, propertyName, value) => {
+  // write projectData updates to user
+  const usersModifiedCount = Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.channelProperties.${channelKey}.${propertyName}`] : value      
+    }
+  })
+  return usersModifiedCount
+}
+
+
+const updateUserVar = async (userId, projectId, varName, value) => {
+  // write projectData updates to user
+  const usersModifiedCount = Meteor.users.update(userId, {
+    $set: {
+      [`projectUserData.${projectId}.userVars.${varName}`] : value      
+    }
+  })
+  return usersModifiedCount
+}
+
+
+
 const getUserProjectData = (userId, projectId) => {
   const user = Meteor.users.findOne(userId);
   //console.log("getProjectUserData", user)
@@ -235,6 +289,10 @@ Meteor.methods({
     return true;
   },
 
+  'user.updateUserBoardArrivalState': async ({userId, projectId, boardId, nodeId, status}) => {
+    await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status})
+  },
+
   'user.getUserVar': ({userId, projectId, varName}) => {
     let userProjectData = getUserProjectData(userId, projectId);
     return userProjectData?.userVars?.[varName]
@@ -242,27 +300,12 @@ Meteor.methods({
 
   'user.setUserVar': async ({userId, projectId, varName, value}) => {
     console.log("user.setUserVar", varName, value)
-    let userProjectData = getUserProjectData(userId, projectId);
-    let userVars = userProjectData.userVars
-    if(!userVars) {
-      userVars = {};
-    }
-    userVars[varName] = value
-    await updateUserProjectData(userId, projectId, "userVars", userVars)
+    await updateUserVar(userId, projectId, varName, value)
   },
 
   'user.setElementProperty': async ({userId, projectId, elementKey, propertyName, value}) => {
     console.log("user.setElementProperty", propertyName, value)
-    let userProjectData = getUserProjectData(userId, projectId);
-    let elementProperties = userProjectData.elementProperties
-    if(!elementProperties) {
-      elementProperties = {};
-    }
-    if(!elementProperties[elementKey]) {
-      elementProperties[elementKey] = {};
-    }
-    elementProperties[elementKey][propertyName] = value;
-    await updateUserProjectData(userId, projectId, "elementProperties", elementProperties)
+    await updateUserElementProperty(userId, projectId, elementKey, propertyName, value);
   },
 
   'user.getElementProperty': async ({userId, projectId, elementKey, propertyName}) => {
@@ -274,16 +317,7 @@ Meteor.methods({
 
   'user.setChannelProperty': async ({userId, projectId, channelKey, propertyName, value}) => {
     console.log("user.setChannelProperty", propertyName, value)
-    let userProjectData = getUserProjectData(userId, projectId);
-    let channelProperties = userProjectData.channelProperties
-    if(!channelProperties) {
-      channelProperties = {};
-    }
-    if(!channelProperties[channelKey]) {
-      channelProperties[channelKey] = {};
-    }
-    channelProperties[channelKey][propertyName] = value;
-    await updateUserProjectData(userId, projectId, "channelProperties", channelProperties)
+    await updateUserChannelProperty(userId, projectId, channelKey, propertyName, value)
   },
 
   'users.getForNode': ({projectId, boardId, nodeId}) => {
@@ -299,11 +333,8 @@ Meteor.methods({
     console.log("user.moveTo", projectId, userId, boardId, nodeId)
     let boardState = getBoardState(projectId, userId, boardId);
     if(boardState) {
-      boardState[boardId].status = "arriving"
-      boardState[boardId].nodeId = nodeId
-      console.log("boardState", boardState);
-      const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", boardState)
-      return usersUpdatedCount
+      const usersUpdatedCount = await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status: "arriving"})
+      return usersUpdatedCount;
     }
     return false
   },
@@ -323,9 +354,8 @@ Meteor.methods({
         console.warn(`users.moveTo user ${userId} has no boardState for board ${boardId}`)
         continue
       }
-      userBoardState[boardId].status = "arriving"
-      userBoardState[boardId].nodeId = nodeId
-      const usersUpdatedCount = await updateUserProjectData(userId, projectId, "boardState", userBoardState)
+      const usersUpdatedCount = await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status: "arriving"})
+      
       if (usersUpdatedCount === 1) {
         successful.push(userId)
       } else {
@@ -352,7 +382,7 @@ Meteor.methods({
     let boardState = getBoardState(projectId, userId, boardId);
     if(boardState) {
       boardState[boardId].interfaceConfig = interfaceConfig;
-      await updateUserProjectData(userId, projectId, "boardState", boardState)
+      await updateUserBoardInterface(userId, projectId, boardId, interfaceConfig)
     }
   },
 

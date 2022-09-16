@@ -83,11 +83,18 @@ const initialiseBoardState = async (server, projectId, userId, boardData) => {
 }
 
 // updatess the arrival status of a user in a node on a board
-const setArrivalStatus = async (server, projectId, userId, boardState, boardId, nodeId, status) => {
-  let newBoardState = {...boardState}
+const setArrivalStatus = async (server, projectId, userId, boardId, nodeId, status) => {
+  /*let newBoardState = {...boardState}
   newBoardState[boardId].nodeId = nodeId
   newBoardState[boardId].status = status
-  const result = await updateBoardState(server, projectId, userId, newBoardState);
+  const result = await updateBoardState(server, projectId, userId, newBoardState);*/
+  return await server.call("user.updateUserBoardArrivalState", {
+    userId,
+    projectId,
+    boardId, 
+    nodeId, 
+    status
+  })
   //console.log("setArrivalStatus", result)
   return result
 }
@@ -212,12 +219,12 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
 
           // make sure we have the updated information on this to prevent multiple onArrive calls
           const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
-          console.log("loaded updatedProjectData", updatedProjectData)
+          //console.log("loaded updatedProjectData", updatedProjectData)
           const updatedBoardState = updatedProjectData?.boardState;
           if(updatedBoardState[boardId].status != "arriving") return
  
           // updating arrival in boardState so that this never runs twice
-          const result = await setArrivalStatus(server, projectId, user.id, updatedBoardState, boardId, updatedBoardState[boardId].nodeId, "arrived")
+          const result = await setArrivalStatus(server, projectId, user.id, boardId, updatedBoardState[boardId].nodeId, "arrived")
           console.log("status updated, now running onArrive", result)
 
           let nodeId = boardState[boardId].nodeId;
@@ -230,7 +237,7 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
           if(!nodeIds.includes(nodeId)) {
             console.log("warning: moving user into non-existant node, moving to starting node", boardData[boardId].startId)
             nodeId = boardData[boardId].startId;
-            await setArrivalStatus(server, projectId, user.id, boardState, boardId, nodeId, "arrived")
+            await setArrivalStatus(server, projectId, user.id, boardId, nodeId, "arrived")
           }
           
           const api = {
