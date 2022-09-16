@@ -1,6 +1,7 @@
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
   import { executeTrigger } from '../../actions';
+  import { InterkitClient } from "../../"
 
   import MessageDate from "./MessageDate.svelte";
   import Bubble from "./Bubble.svelte"
@@ -72,6 +73,8 @@
     dispatch('mounted')
   })
 
+  $: userId = InterkitClient.userId
+
 </script>
 
 {#if message?.payload?.options?.label}
@@ -130,6 +133,7 @@
         {:else if message?.payload?.type == "audio"}
             <InlineAudioPlayerButton
               audioKeyDirect={message?.payload?.mediafileKey}
+              autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}
             />
         {:else if message?.payload?.type == "video"}
             <InlineVideoPlayer

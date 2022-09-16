@@ -87,7 +87,7 @@
           <iframe 
             title="embedded app preview" 
             src={previewURL} 
-            allow="camera;microphone;geolocation"
+            allow="camera;microphone;geolocation;autoplay;accelerometer"
             bind:this={iframeRef}
             data-build-hash={$buildHash}>
           </iframe><br>
