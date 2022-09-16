@@ -151,7 +151,8 @@ const requestLocation = async function(prompt, options) {
     payload: {
       type: 'requestLocation',
       prompt: prompt,
-      cancel: options?.cancel
+      cancel: options?.cancel,
+      options
     }
   }
   await callWithDelay(server, "message.send", methodParams, options)
