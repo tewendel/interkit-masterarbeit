@@ -119,6 +119,17 @@
     {/each}
   </div>
 
+  <div class="pagination-container">
+    {#if slides.length > 1}
+      <ul class="pagination">
+        {#each slides as slide, index}
+          <li class="pagination-item" class:pagination-item--active={index === slideIndex}></li>
+        {/each}
+      </ul>
+    {/if}
+  </div>
+  
+
   {#key slideIndex}
     {#if slides[slideIndex]?.title || slides[slideIndex]?.content}
       <div class="slide-content">
@@ -152,15 +163,7 @@
 
     </div>
 
-    <div class="right">
-      {#if slides.length > 1}
-        <ul class="pagination">
-          {#each slides as slide, index}
-            <li class="pagination-item" class:pagination-item--active={index === slideIndex}></li>
-          {/each}
-        </ul>
-      {/if}
-    </div>
+    
 
   </div>
 
@@ -180,6 +183,7 @@
 <style>
 
   .image-slider-container {
+
     scroll-snap-type: x mandatory;	
 		display: flex;
 		-webkit-overflow-scrolling: touch;
@@ -194,6 +198,7 @@
 
   .slide-content {
     padding: var(--distance-m);
+    padding-top: var(--distance-s);
     padding-bottom: 0px;
   }
 
@@ -225,10 +230,11 @@
     align-items: center;
   }
 
-  .extras .right {
+  .pagination-container {
+    padding-top: var(--distance-s);
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
   }
 

@@ -101,6 +101,9 @@ if(msg.payload.type == "locationRequestCanceled") {
   api.sendText("ok")
 }
 
+// trigger an action on the client by clicking an image
+api.sendImage("f00ba420-0123-4567-89abcdef012356789", {action: {trigger: "triggerName", payload: payloadObject}})
+
 /* translation, multi-language (i18n, l10n) */
 
 // access current language

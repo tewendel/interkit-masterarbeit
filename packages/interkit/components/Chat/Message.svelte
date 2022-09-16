@@ -1,5 +1,6 @@
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
+  import { executeTrigger } from '../../actions';
 
   import MessageDate from "./MessageDate.svelte";
   import Bubble from "./Bubble.svelte"
@@ -94,8 +95,12 @@
       showHandle = { lastFromSender && !["choice", "requestLocation"].includes(message?.payload?.type) }
       showSide = { !["choice", "requestLocation", "audio", "video", "image"].includes(message?.payload?.type) }
       on:click={() => { 
-        if (['text', 'image'].includes(message?.payload?.type))
+        if (['text', 'image'].includes(message?.payload?.type) && !message?.payload?.options?.action) {
           showOptions = true 
+        }
+        if (message?.payload?.type == "image" && message?.payload?.options?.action) {
+          executeTrigger(message?.payload?.options?.action?.trigger, message?.payload?.options?.action?.payload)
+        }
       }}
       >
       <div class="message__contents">

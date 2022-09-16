@@ -2,8 +2,13 @@
   import Bubble from "./Bubble.svelte"
 
   export let show
+  export let message
 
 </script>
+
+{#if message?.payload?.options?.label && show}
+  <span class="message-label">{message?.payload?.options?.label}</span> 
+{/if}
 
 <div
   class="container"
@@ -85,6 +90,11 @@
 .dots::before {
   left: 1.3em;
   animation-delay: calc(var(--duration) * 0.5);
+}
+
+.message-label {
+    font: var(--font-caption-bold);
+    margin-bottom: var(--distance-xs);
 }
 
 </style>
