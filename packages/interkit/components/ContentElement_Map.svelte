@@ -3,10 +3,12 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store'
   
-  import { util } from '../'
+  import { InterkitClient, util } from '../'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import ButtonBar from './ButtonBar.svelte'
+
+  import Icon from './Icon.svelte'
   
   export let element; // must be used with a prop (ElementList oder ElementProvider)
   console.log("contentElement_List with prop", element);
@@ -17,6 +19,9 @@
   export let titleColumn
   export let subtitleColumn
   export let imageColumn
+
+  export let checkedProperty = "checked"
+  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   
   $: title = util.rowVal(element, titleColumn)
   $: subtitle = util.rowVal(element, subtitleColumn)
@@ -70,6 +75,13 @@
       
     </div>
 
+    {#if $elementProperties[element?.key]?.[checkedProperty]}
+      <div class="check-icon">
+          <Icon type="check" height="24px"/>
+      </div>
+    {/if}
+
+
     <ButtonBar>    
       <slot name="buttons"></slot>
     </ButtonBar>
@@ -84,6 +96,11 @@
   .content {
     padding: var(--distance-m) var(--distance-m) var(--distance-s) var(--distance-m);
 
+  }
+  .check-icon {
+    position: absolute;
+    top: var(--distance-m);
+    right: var(--distance-m);
   }
   .picture {
     margin: var(--distance-s) var(--distance-m) var(--distance-s) var(--distance-s);

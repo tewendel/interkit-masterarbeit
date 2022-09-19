@@ -10,6 +10,7 @@
   import Overlay from './Overlay.svelte'
 
   export let languages
+  export let projectIdOverride
   setupFrontend(languages ? languages.split(',') : false)
 
   let initComplete = false;
@@ -22,7 +23,7 @@
   setContext('isDesktop', isDesktop)
   
   onMount(async ()=>{
-    initComplete = await InterkitClient.initApp()  
+    initComplete = await InterkitClient.initApp({projectId: projectIdOverride})  
     executeTrigger("start")
     // we're doing this here, maybe again, to be sure,
     // because the async interdependencies

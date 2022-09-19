@@ -1,0 +1,6 @@
+name: UserVarSwitch
+title: UserVarSwitch
+fields:
+  - name: userVarName
+    type: string
+toolboxCategory: "User"

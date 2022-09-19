@@ -21,6 +21,7 @@
   "nodemonConfig": {
     "restartable": "rs",
     "ignore": [
+      "handlers/*.json",
       ".git",
       "node_modules/**/node_modules"
     ],

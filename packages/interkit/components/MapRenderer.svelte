@@ -70,6 +70,7 @@
       <div class="marker-content
         ${!label ? 'marker-content__no-label' : ''}
         ${markerSelected ? 'selected' : ''}
+        ${options.checked ? 'checked' : ''}
         ">${labelSpan} <img src="${iconSrc}"/></div>
     </div>
     `;
@@ -595,6 +596,12 @@
     height: 32px;
   }
 
+  :global(div.marker-content.checked img) {
+    width: 24px;
+    height: 24px;
+  }
+
+
   :global(div.marker-title) {
     position: absolute;
     top: -1.8em;
@@ -615,6 +622,7 @@
   :global(.marker-content.selected img) {
     filter: grayscale(1);
   }
+
 
   :global(.leaflet-control) { /* hide default leaflet controls */
     display: none;

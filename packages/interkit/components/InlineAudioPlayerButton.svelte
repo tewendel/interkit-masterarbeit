@@ -8,7 +8,10 @@
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
   export let audioKeyDirect // or just specify the key directly as a prop
   export let hideBackButton = false;
+  export let autoplay = false
 
+  export let playbackControl = "stopped"; // use to start/stop playback through prop
+  
   const c = getContext('buttonBar')
   const buttonPayload = c?.buttonPayload 
   $: audioKey = audioKeyDirect || util.rowVal($buttonPayload, audioColumn)?.value
@@ -32,6 +35,38 @@
     loading = false
   }
 
+  const mainToggleClick = function () {
+    console.log("mainToggleClick", playbackControl)
+    switch(playbackControl) {
+      case "stopped":
+        playbackControl = "playing"
+        break;
+      case "paused":
+        playbackControl = "playing"
+        break;
+      case "playing": 
+        playbackControl = "paused"
+        break;
+    }
+  }
+
+  const updatePlayerState = () => {
+    if(!audioElement) return;
+    if(playbackControl == "paused") {
+      open = true
+      audioElement.pause();
+    } 
+    if(playbackControl == "playing") {
+      open = true;
+      audioElement.play();
+    }
+    if(playbackControl == "stopped") {
+      open = false
+      audioElement.pause();
+      currentTime = 0
+    }
+  }
+
   const containerClick = function (e) {
     if (open) return
     e.stopPropagation()
@@ -39,23 +74,14 @@
     mainToggleClick()
   }
 
-  const mainToggleClick = function () {
-    open = true
-    if (paused) {
-      audioElement.play()
-    } else {
-      audioElement.pause()
-    }
-  }
+  $: if(playbackControl) updatePlayerState()
 
   const skipBackClick = function () {
     currentTime = Math.max(0, currentTime - 30)
   }
 
   const closeClick = function () {
-    open = false
-    audioElement.pause()
-    currentTime = 0
+    playbackControl = "stopped"
   }
 
   $: {
@@ -74,9 +100,10 @@
       >
         {#if mediafile}
           <audio controls="controls"
+            {autoplay}
             bind:this={audioElement}
-            bind:paused
             bind:currentTime
+            bind:paused
             bind:duration
             on:playing={() => { playing = true; loading = false }}
             >
@@ -88,6 +115,7 @@
             </div>
           {/if}
           <div class="button" on:click={mainToggleClick} disabled={loading}>
+            {#if autoplay}<abbr title="autoplay"><small>A</small></abbr>{/if}
             <Icon type={ paused ? 'play' : 'pause' } />
           </div>
           <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>

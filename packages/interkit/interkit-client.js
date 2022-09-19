@@ -182,7 +182,7 @@ const fetchWithTimeout = async (resource, options={timeout: 8000}) => {
 
 let connectionAlert = false;
 
-const getProjectId = async() => {
+const getProjectId = async () => {
 
   let _projectId;
   let params = (new URL(document.location)).searchParams;
@@ -609,10 +609,14 @@ const restoreUiSnapshot = id => {
   }
 }
 
-const initApp = async () => {
+const initApp = async options => {
 
   await loadConfig();
-  await getProjectId();
+  if (options.projectId) {
+    projectId.set(options.projectId);
+  } else {
+    await getProjectId();
+  }
 
   let updating = false;
   if (Capacitor.isNative) {
@@ -925,6 +929,7 @@ const InterkitClient = {
   saveUserPushnotificationRegistrationToken,
   userEnableHeartbeat,
   userHeartbeat,
+  loginAnon: createProjectTokenUserAndLogin,
   login,
   logout,
   call,

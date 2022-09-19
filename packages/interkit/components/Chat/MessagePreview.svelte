@@ -15,7 +15,7 @@
 
     {(preview && !message.origin) ? "You:" : ""}
 
-    {message?.payload?.options?.label ? message.payload.options.label : ""} 
+    <!--{message?.payload?.options?.label ? message.payload.options.label + ": " : ""}--> 
 
       {#if message?.payload?.type == "text"}  
         {message?.payload?.text}

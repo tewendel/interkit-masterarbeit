@@ -34,8 +34,9 @@
       if(!channel) return
       const messages = get(channelLastMessageStores[channel._id])
       if(messages?.length) {
-        let messagesSorted = messages.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
-        return new Date(messagesSorted[0].createdAt)
+        let messagesSorted = messages.filter(m => ["text", "audio", "video", "system"].includes(m.payload?.type)).sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt))
+        //console.log(channel.channel_key, messagesSorted?.[0]?.createdAt)
+        return new Date(messagesSorted?.[0]?.createdAt)
       }
     }
     

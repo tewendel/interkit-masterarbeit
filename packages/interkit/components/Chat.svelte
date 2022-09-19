@@ -71,7 +71,13 @@
       scrollDown()
       
       // mark all in channel as seen
-      InterkitClient.call("channel.seeAll", {userId, channel_key});
+      // setTimeout required for autoplay of unseen messages
+      setTimeout(()=>{
+          InterkitClient.call("channel.seeAll", {userId, channel_key});
+        },
+        2000
+      )
+      
     }
   }
 
@@ -174,6 +180,7 @@
   }
 
   let typingShow = false
+  let typingMessage;
   const typingMaxDuration = 5
   const typingMinDurationTypeText = 1
   const typingDurationPerTextCharacter = 0.05
@@ -238,6 +245,7 @@
     const duration = typingDuration(currentMessage)
     if (verbose) console.log('typingNext starting timeout', duration, currentMessage)
     typingShow = true
+    typingMessage = currentMessage;
     window.setTimeout(() => {
       typingShow = false
       typingQueuePointer++
@@ -277,7 +285,7 @@
               />
           {/if}
         {/each}
-        <MessageTyping show={typingShow} />
+        <MessageTyping show={typingShow} message={typingMessage} />
         {#if $userStore?.[0]?.blocked}
           <div class="blocked">
             Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.

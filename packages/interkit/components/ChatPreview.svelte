@@ -50,8 +50,9 @@
   $: {
     if ($messageStore) {
       //console.log("messageStore update", $messageStore)
-      $messageStore = $messageStore.sort((a, b) => b.createdAt - a.createdAt)
-      latestMessage = $messageStore[0];
+      const sortedMessages = $messageStore.filter(m => m.payload.type == "text").sort((a, b) => b.createdAt - a.createdAt)
+      //console.log("chatPreview sorted", sortedMessages)
+      latestMessage = sortedMessages?.[0];
     }
   }
 
