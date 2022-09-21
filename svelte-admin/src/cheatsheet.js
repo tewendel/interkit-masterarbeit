@@ -126,9 +126,10 @@ api.sendText(t('Ja|Yes'))
 api.sendText(t(['Ja', 'Yes']))
 api.sendText(t({ de: 'Ja', en: 'Yes' })) // order-independant
 
-// use sendTextT & sendChoiceT shortcuts, equivalently
+// use sendTextT, sendChoiceT, sendSystemT shortcuts, equivalently
 api.sendTextT('Tschüß|Bye')
 api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
+api.sendSystemT('Chat verlassen|Left the chat')
 
 /** Twine-ish syntax
  *  (this is a comment because JS highlighting doesnt' make sense)
