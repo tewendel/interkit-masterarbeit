@@ -89,6 +89,9 @@
     return store
   }
 
+  let nodeOffsetX
+  let nodeOffsetY
+
   let offsetX
   let offsetY
   let zoom
@@ -144,8 +147,8 @@
     mouseY = e.clientY - r[0].y
     if (dragging !== false) {
       // FIXME dragging is off when zoom != 1.0
-      nodes[dragging].posX = mouseX - get(offsetX)
-      nodes[dragging].posY = mouseY - get(offsetY)
+      nodes[dragging].posX = mouseX - nodeOffsetX
+      nodes[dragging].posY = mouseY - nodeOffsetY
     } else {
       if (canvasDragging) {
         mouseX = e.clientX
@@ -216,8 +219,8 @@
           console.log("mousedown", node.id)
           dragging = index
           dragStart = Date.now()
-          offsetX.set(mouseX - node.posX)
-          offsetY.set(mouseY - node.posY)
+          nodeOffsetX = mouseX - node.posX
+          nodeOffsetY = mouseY - node.posY
         }}
         on:click={() => {
           if (Date.now() - dragStart < 250) {
