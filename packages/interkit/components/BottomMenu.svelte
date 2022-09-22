@@ -19,9 +19,16 @@
   let audioPlayerHeightPx = 0
 
   setContext(TABS, {
-      registerTab: tab => {
+      registerTab: (tab, key) => {
         tabs.push(tab);
+        
+        // set current to the first tab that is registered
         selectedTab.update(current => current || tab);
+
+        // set the UiKey to the first key that is registered
+        if(!InterkitClient.getUiKey("bottomMenuKey")) {
+          InterkitClient.setUiKey("bottomMenuKey", key);    
+        }
         
         onDestroy(() => {
           const i = tabs.indexOf(tab);

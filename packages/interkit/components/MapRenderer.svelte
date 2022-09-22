@@ -281,47 +281,17 @@
     // this probably needs to be much more efficient
   }
 
-  onMount(async ()=>{
+  let lastErrorCode;
 
-    /* basic map setup */
+  // active user position tracking
+  const activateGeoWatch = () => {
 
-    map = L.map(mapId, {
-      zoomControl: false,
-      maxZoom: 20,
-      attributionControl: false,
-    }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
-     singleElement ? 17 : 13);  
-
-    if(singleElement) {
-      console.log("qrContext", qrContext)
-      map.panBy(qrContext?.mapOffset, {animate: false});
+    if(geoWatch) {
+      console.log("position is already being tracked, aborting", geoWatch)
+      return;
     }
 
-    if(disableControls == "TRUE") {
-      map.dragging.disable();
-      map.scrollWheelZoom.disable();
-    }
-
-    if (apiKey) {
-      // default interkit map style
-      console.log("using tileLayer", tileLayer)
-      L.tileLayer(tileLayer + "?api_key=" + apiKey, {
-        maxZoom: 20
-      }).addTo(map);
-    } else {
-      L.maplibreGL({
-        // attribution: 'TODO',
-        style: style,
-      }).addTo(map);
-    }
-
-    map.on("click", mapClick);
-    
-    /* watch user position */
-
-    let lastErrorCode;
-    // try onMount...
-    window.addEventListener('deviceorientation', deviceorientationListener)
+    console.log("activating geoWatch")
 
     geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
@@ -375,7 +345,50 @@
       }
 
     })
+  }
 
+  onMount(async ()=>{
+
+    /* basic map setup */
+
+    map = L.map(mapId, {
+      zoomControl: false,
+      maxZoom: 20,
+      attributionControl: false,
+    }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
+     singleElement ? 17 : 13);  
+
+    if(singleElement) {
+      console.log("qrContext", qrContext)
+      map.panBy(qrContext?.mapOffset, {animate: false});
+    }
+
+    if(disableControls == "TRUE") {
+      map.dragging.disable();
+      map.scrollWheelZoom.disable();
+    }
+
+    if (apiKey) {
+      // default interkit map style
+      console.log("using tileLayer", tileLayer)
+      L.tileLayer(tileLayer + "?api_key=" + apiKey, {
+        maxZoom: 20
+      }).addTo(map);
+    } else {
+      L.maplibreGL({
+        // attribution: 'TODO',
+        style: style,
+      }).addTo(map);
+    }
+
+    map.on("click", mapClick);
+
+    if(!$bottomMenuKey) {
+      console.log("no bottom menu found, actviating geoWatch")
+      activateGeoWatch();
+      window.addEventListener('deviceorientation', deviceorientationListener)
+    }
+    
     /* autoposition map if user doesnt interact */
     map.on('zoomstart', function() {
       manualPosition = true;  
@@ -406,7 +419,7 @@
   onDestroy(() => {
     console.log('MapRenderer destroy')
     Geolocation.clearWatch(geoWatch)
-    window.removeEventListener(deviceorientationListener)
+    window.removeEventListener('deviceorientation', deviceorientationListener)
   })
 
   const panToUserPosition = async () => {
@@ -459,10 +472,22 @@
 
   const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");    
 
+  /* observe bottom menu state to enable and disable map watchers */
   $: {
     if($bottomMenuKey == "map" && map) {
-      console.log("buttomMenuKey in Map, invalidating size", $bottomMenuKey)
+      console.log("bottomMenuKey updated - show map")
       map.invalidateSize();
+      activateGeoWatch();
+      window.addEventListener('deviceorientation', deviceorientationListener)
+    }
+    if($bottomMenuKey && $bottomMenuKey != "map" && map) {
+      console.log("bottomMenuKey updated - away from map")
+      if(geoWatch) {
+        console.log("disabling geoWatch", geoWatch)
+        Geolocation.clearWatch(geoWatch)
+        geoWatch = null;
+        window.removeEventListener('deviceorientation', deviceorientationListener)
+      }
     }
   }
 

@@ -878,7 +878,7 @@ const getUiHistoryStore = () => {
 const setUiKey = (uiKey, value) => {
   const store = getUiKeyStore(uiKey)
   //console.log(`change ${uiKey} from ${get(uiKey)} to ${value}`)
-  console.log(`change ${uiKey} to ${value}`)
+  console.log(`setUiKey: change ${uiKey} to ${value}`)
   store.set(value)
 }
 
