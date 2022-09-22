@@ -82,7 +82,9 @@
   $: $currentProjectServerStatus = $currentProject?.projectServer?.status
 
   // add "id" for carbon table
-  $: projectRows = projects ? $projects.map( p => ({...p, id: p.id})) : []
+  $: projectRows = projects ? $projects
+    .map( p => ({...p, id: p.id, createdAt: getCreatedDate(p)})) : []
+    .sort( (p1,p2) => p1-p2)
 
   // get commit hash from current image tag
   const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
@@ -106,6 +108,10 @@
     const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
   }
 
+  const getCreatedDate = project => {
+    return (project?.history || []).find(h => h.event == "create_project")?.date
+  }
+
 </script>
 
 <Grid style="padding:0;">
@@ -118,7 +124,11 @@
 
       
       <DataTable
-        headers={[{ key: 'name', value: 'Projects' }, { key: 'action', value: 'Action', empty: true }]}
+        headers={[
+          { key: 'name', value: 'Projects' }, 
+          { key: 'createdAt', value: 'Created At' }, 
+          { key: 'action', value: 'Action', empty: true }
+        ]}
         rows={projectRows}
         size="tall"
       >
@@ -129,10 +139,18 @@
               <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy /></span>
               <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <TrashCan /></span>
             </div>
-          {:else}
-            
+          {/if}
+          {#if cell.key === 'createdAt'}
+            <span class="clickable soft">
+              {#if row.createdAt}
+                {row.createdAt.toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })}
+              {:else}
+                -
+              {/if}
+            </span>
+          {/if}
+          {#if cell.key === 'name'}
             <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
-
           {/if}
         </span>
       </DataTable>
@@ -218,5 +236,8 @@
   }
   .clickable:hover {
     cursor: pointer;
+  }
+  .soft {
+    color: grey;
   }
 </style>
