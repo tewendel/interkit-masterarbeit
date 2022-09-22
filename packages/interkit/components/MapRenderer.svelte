@@ -293,7 +293,7 @@
 
     console.log("activating geoWatch")
 
-    geoWatch = Geolocation.watchPosition({enableHighAccuracy: false}, (position, err) => {
+    geoWatch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       if(position) {
         currentPosition = {
           lat: position.coords.latitude, 
