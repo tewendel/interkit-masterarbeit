@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, onDestroy, tick } from "svelte"
+  import { onMount, onDestroy, tick, beforeUpdate, afterUpdate } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Message from './Chat/Message.svelte'
@@ -46,7 +46,7 @@
     userSub = await InterkitClient.getSub('users', 'user')
     userStore = userSub.data
 
-    scrollDown()
+    // scrollDown()
     // window.setTimeout(() => { scrollDown() }, 500)
   })
 
@@ -68,7 +68,7 @@
         typingQueuePointer = $messageStore.length
       }
       storeUpdates++
-      scrollDown()
+      //scrollDown()
       
       // mark all in channel as seen
       // setTimeout required for autoplay of unseen messages
@@ -101,13 +101,38 @@
   }
 
   let messagesScrollContainer
+  const autoscrollOffsetPx = 40
 
+  const getScrollOffset = () => {
+    if(!messagesScrollContainer) return 0;
+    const {scrollHeight, scrollTop, clientHeight} = messagesScrollContainer
+    const offset = scrollHeight - scrollTop - clientHeight
+    return offset;
+  }
+
+  let doAutoScroll = false;
+
+  beforeUpdate(() => {
+    const offset = getScrollOffset();
+    console.log("beforeUpdate", offset)
+    doAutoScroll = offset < autoscrollOffsetPx;
+  });
+
+  afterUpdate(() => {
+    console.log("afterUpdate", getScrollOffset())
+    scrollDown();
+  });
+ 
   const scrollDown = async () => {
-    const behavior = storeUpdates <= 1 ? 'instant' : 'smooth'
-    console.log('scrollDown', { behavior })
-    await tick()
-    const top = messagesScrollContainer?.scrollHeight
-    messagesScrollContainer?.scrollTo({ top, behavior })
+
+    if(doAutoScroll) {
+      const behavior = storeUpdates <= 1 ? 'instant' : 'smooth'
+      //console.log('scrollDown', { behavior })
+      await tick()
+      
+      const top = messagesScrollContainer?.scrollHeight
+      messagesScrollContainer?.scrollTo({ top, behavior })
+    }
   }
 
   const sendMessage = (messageText) => {
@@ -255,7 +280,7 @@
   }
 
   $: if ($messageStore) typingNext()
-  $: if (typingShow) scrollDown()
+  //$: if (typingShow) scrollDown()
 
 </script>
 
@@ -281,7 +306,7 @@
               lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
               previousMessage={$messageStore[index-1]}
               on:report={ event => sendReport(event.detail.message) }
-              on:mounted={() => { scrollDown() }}
+              on:mounted={() => { /*scrollDown()*/ }}
               />
           {/if}
         {/each}
