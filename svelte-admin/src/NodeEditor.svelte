@@ -533,6 +533,10 @@
     // export are only allowed in modules
     code = code.replace(/^\s*export\b/gm, '/*xprt*/')
 
+    // comment out parts that should not be checked
+    code = code.replace('//no-check-start', '/*')
+    code = code.replace('//no-check-end', '*/')
+  
     let _syntaxCheckStatus;
     let _syntaxCheckMessage;
 
