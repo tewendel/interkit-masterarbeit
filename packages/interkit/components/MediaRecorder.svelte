@@ -14,6 +14,7 @@
   export let audioColumn
   export let videoColumn
   export let mode = "video" // video | audio | image
+  export let cameraFacingMode // "user" for selfie or "environment" for back camera
   export let uploadedTrigger
 
   export let onUploadSuccess // optional callback
@@ -40,7 +41,7 @@
       audio: true
     },
     'video': {
-      video: true,
+      video: {facingMode: cameraFacingMode || "user"},
       audio: true
     },
     'image': {

@@ -75,6 +75,7 @@
         <MediaRecorder
           mode="image"
           onUploadSuccess={onCameraSuccess}
+          cameraFacingMode={chatInterface?.cameraFacingMode}
         />
       </div>
     </svelte:fragment>
