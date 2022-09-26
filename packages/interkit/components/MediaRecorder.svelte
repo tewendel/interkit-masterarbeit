@@ -45,10 +45,10 @@
       audio: true
     },
     'image': {
-      video: true
+      video: {facingMode: cameraFacingMode || "user"}
     },
   }
-
+  
   const projectId = InterkitClient.projectId;
   console.log("projectId", $projectId);
 
@@ -149,6 +149,10 @@
       stream = await navigator.mediaDevices.getUserMedia(
         streamOptions
       );
+      if(!stream) {
+        alert("Error starting camera")
+        return;
+      }
       console.log("stream", stream);
       videoSource.srcObject = stream;
       videoSource.play();
