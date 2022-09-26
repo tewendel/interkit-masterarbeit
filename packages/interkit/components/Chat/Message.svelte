@@ -49,9 +49,12 @@
       console.log("prevented double submission")
       return;
     }
+    choiceSubmitted = true; 
     if(await submitLocation(message, canceled)) {
-      console.log("seeting choiceSubmitted to true")
-      choiceSubmitted = true; 
+      console.log("keeping choiceSubmitted true after sucessful submission")
+    } else {
+      console.log("resetting choiceSubmitted true after error on submission")
+      choiceSubmitted = false;
     }
   }
 

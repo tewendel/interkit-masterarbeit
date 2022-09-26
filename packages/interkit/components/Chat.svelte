@@ -179,7 +179,7 @@
       }
       console.log("sending location", location)
     }    
-    InterkitClient.call("message.submitLocation", {
+    await InterkitClient.call("message.submitLocation", {
       sender: userId,
       channel_key, 
       messageId: message.id,
