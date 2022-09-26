@@ -4,4 +4,7 @@ fields:
     type: sheetColumn
     columnType: mediaFile
     defaultValue: "elements/audio"
+  - name: hideSkipControls
+    type: checkbox
+    defaultValue: "TRUE"
 toolboxCategory: MediaPlayer

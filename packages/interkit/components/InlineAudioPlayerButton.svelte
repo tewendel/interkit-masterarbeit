@@ -7,7 +7,8 @@
 
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
   export let audioKeyDirect // or just specify the key directly as a prop
-  export let hideBackButton = false;
+  export let hideSkipControls = true; hideSkipControls = util.blocklyBool(hideSkipControls);
+  
   export let autoplay = false
 
   export let playbackControl = "stopped"; // use to start/stop playback through prop
@@ -76,8 +77,13 @@
 
   $: if(playbackControl) updatePlayerState()
 
-  const skipBackClick = function () {
+  // this is not reliable on firefox - svelte bug, should work on chrome/webkit https://github.com/sveltejs/svelte/issues/3524
+  const skipBackClick = async function () {
     currentTime = Math.max(0, currentTime - 30)
+  }
+
+  const skipForwardClick = async function () {
+    currentTime = Math.min(duration, currentTime + 15)
   }
 
   const closeClick = function () {
@@ -109,9 +115,9 @@
             >
             <source src={encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
-          {#if !hideBackButton}
+          {#if !hideSkipControls}
             <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
-              <Icon type="skip-backward" />
+              <Icon type="Thin-Replay-30" />
             </div>
           {/if}
           <div class="button" on:click={mainToggleClick} disabled={loading}>
@@ -121,6 +127,11 @@
           <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
             {util.formatDuration((open ? currentTime : duration) * 1000)}
           </div>
+          {#if !hideSkipControls}
+            <div class="button skip" on:click={skipForwardClick} disabled="!(currentTime > 0)">
+              <Icon type="Thin-Forward-15" />
+            </div>
+          {/if}
           <div class="button close" on:click={closeClick}>
             <Icon type="close" />
           </div>
@@ -153,7 +164,7 @@
 
   .container:not(.open) .skip,
   .container:not(.open) .close {
-    visibility: hidden;
+    display: none;
   }
 
   audio {
@@ -176,6 +187,7 @@
     min-width: 3.5em;
     min-width: 5ch; /* at least 5 zeros (rounding up the colon) */
     font-variant-numeric: tabular-nums; /* reduce jitter */
+    padding: var(--distance-s);
   }
 
 </style>
