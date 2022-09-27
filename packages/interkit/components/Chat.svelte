@@ -16,6 +16,7 @@
   const { Geolocation } = Plugins;
 
   export let channel_key = "DEFAULT"
+  export let messagesReportableDefault = 'TRUE'
 
   const reportsChannelKey = 'REPORTS'
 
@@ -280,6 +281,10 @@
               isByUser={message?.sender === userId} 
               lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
               previousMessage={$messageStore[index-1]}
+              isReportable={message?.payload?.options?.reportable !== undefined
+                ? message?.payload?.options?.reportable
+                : (messagesReportableDefault === 'TRUE')
+              }
               on:report={ event => sendReport(event.detail.message) }
               on:mounted={() => { scrollDown() }}
               />
