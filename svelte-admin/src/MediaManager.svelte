@@ -53,6 +53,7 @@
     <TabContent>
       <MediaFileList
         mediafiles={mediafiles[1]}
+        showChatCols={true}
         {projectId}
         />
     </TabContent>

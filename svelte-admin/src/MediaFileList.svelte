@@ -14,18 +14,25 @@
   import MediaFilePreview from './MediaFilePreview.svelte'
   import { InterkitClient, util } from 'interkit'
 
-  export let mediafiles; // this should be an array, not a store
-  export let radio = false;
-  export let value;
-  export let projectId;
+  export let mediafiles // this should be an array, not a store
+  export let radio = false
+  export let value
+  export let projectId
+  export let showChatCols = false
 
-  const headers = [
+  let headers
+
+  $: headers = [
     { key: "name", value: "name" },
     { key: "type", value: "type" },
     { key: "duration", value: "duration" },
     { key: "preview", value: "preview", sort: false },
     { key: "link", value: "link", sort: false },
-    { key: "chat", value: "chat", sort: false },
+    ...(showChatCols ? [
+      { key: "userId", value: "userId" },
+      { key: "boardId", value: "boardId" },
+      { key: "nodeId", value: "nodeId" },
+    ] : []),
     { key: "createdAt", value: "createdAt" },
     { key: "overflow", sort: false, empty: true },
   ];
@@ -40,33 +47,33 @@
           createdAt: mediafile.meta.createdAt,
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
-          chat: JSON.stringify(mediafile.meta)
+          userId: mediafile.meta.userId,
+          boardId: mediafile.meta.boardId,
+          nodeId: mediafile.meta.nodeId
         }
     })
     : []
-    if(radio && mediafiles) {
-      rows = rows.concat({name: "empty", value: null})
+    if (radio && mediafiles) {
+      rows = rows.concat({ name: "empty", value: null })
     }
   }
 
-  let searchQuery;
+  let searchQuery
+
   const searchFunction = (m, query) => {
-    //console.log(m)
-    if(!query || query == "") return true;
-    else {
-      if(m?.name.toLowerCase().includes(query.toLowerCase())
-        || m?.type?.toLowerCase()?.includes(query.toLowerCase())) {
-        return true
-      } else {
-        return false;
-      }
-    }
+    // console.log(m)
+    if (!query || query == "") return true
+    return m?.name.toLowerCase().includes(query.toLowerCase()) ||
+      m?.type?.toLowerCase()?.includes(query.toLowerCase()) ||
+      m?.userId?.includes(query) ||
+      m?.boardId?.includes(query) ||
+      m?.nodeId?.includes(query)
   }
 
   let rowsFiltered = [];
   $: {
     rowsFiltered = rows
-      .filter((m)=>{return searchFunction(m, searchQuery)})
+      .filter(m => searchFunction(m, searchQuery))
     //console.log(rows, rowsFiltered)
   }
 
@@ -134,14 +141,14 @@
             {/if}
         {:else if cell.key === 'name'}
           <span title={cell.value} class="cell__1line">{cell.value}</span>
-        {:else if cell.key === 'chat'}
-          <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'type' && cell.value}
           {row.type}
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
         {:else if cell.key === 'link' && cell.value}
           <a href={row.link} title={row.link} target="_blank">url</a>
+        {:else if cell.key === 'userId' || cell.key === 'boardId' || cell.key === 'nodeId'}
+          <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'createdAt'}
           {#if cell.value}
             <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
