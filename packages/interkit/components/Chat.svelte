@@ -305,6 +305,9 @@
     >
     <ChatInput 
       {chatInterface} 
+      userId={userId}
+      boardId={channel_key}
+      nodeId={channel_key ? $userProjectData?.boardState?.[channel_key]?.nodeId : undefined}
       on:submit={ event => sendMessage(event.detail.messageText)} 
       on:imageSubmit={ event => sendImage(event.detail.imageKey) }
     />

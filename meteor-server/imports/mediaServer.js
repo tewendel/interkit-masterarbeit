@@ -165,6 +165,9 @@ export const setupMediaServer = (app) => {
 
               const meta = {
                 projectId: req.body.projectId,
+                userId: req.body.userId,
+                boardId: req.body.boardId,
+                nodeId: req.body.nodeId,
                 key: uuidv4(),
                 duration
               }

@@ -10,7 +10,10 @@
 
   let messageText = ""
 
-  export let chatInterface;
+  export let chatInterface
+  export let userId
+  export let boardId
+  export let nodeId
 
   const dispatch = createEventDispatcher();
 
@@ -74,6 +77,7 @@
       <div style="padding-top: var(--distance-s)">
         <MediaRecorder
           mode="image"
+          meta={{ userGenerated: "yes", userId, boardId, nodeId }}
           onUploadSuccess={onCameraSuccess}
         />
       </div>
