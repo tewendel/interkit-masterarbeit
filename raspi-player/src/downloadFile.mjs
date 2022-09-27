@@ -1,5 +1,6 @@
 import Fs from 'fs'  
 import Http from 'http'
+import Https from "https";
 
 /**
  * Download a file from the given `url` into the `targetFile`.
@@ -11,28 +12,27 @@ import Http from 'http'
  */
 export async function downloadFile (url, targetFile) {  
   return await new Promise((resolve, reject) => {
-    Http.get(url, response => {
-      const code = response.statusCode ?? 0
+    const client = url.indexOf("https") === 0 ? Https : Http
+    client.get(url, (response) => {
+      const code = response.statusCode ?? 0;
 
       if (code >= 400) {
-        return reject(new Error(response.statusMessage))
+        return reject(new Error(response.statusMessage));
       }
 
       // handle redirects
       if (code > 300 && code < 400 && !!response.headers.location) {
-        return downloadFile(response.headers.location, targetFile)
+        return downloadFile(response.headers.location, targetFile);
       }
 
       // save the file to disk
-      const fileWriter = Fs
-        .createWriteStream(targetFile)
-        .on('finish', () => {
-          resolve({})
-        })
+      const fileWriter = Fs.createWriteStream(targetFile).on("finish", () => {
+        resolve({});
+      });
 
-      response.pipe(fileWriter)
-    }).on('error', error => {
-      reject(error)
-    })
+      response.pipe(fileWriter);
+    }).on("error", (error) => {
+      reject(error);
+    });
   })
 }
