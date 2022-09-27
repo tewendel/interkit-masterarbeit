@@ -308,7 +308,7 @@
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
         {:else if cell.key === 'blocked'}
-          <span title="cell.value">{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
+          <span title={cell.value}>{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}

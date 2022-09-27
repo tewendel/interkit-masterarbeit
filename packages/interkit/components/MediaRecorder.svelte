@@ -10,6 +10,8 @@
 
   import { addElement } from './Upload.svelte'
 
+  export let meta
+
   export let imageColumn
   export let audioColumn
   export let videoColumn
@@ -184,23 +186,26 @@
     }
   };
 
-  function uploadFile(file) {
+  function uploadFile (file) {
     const uploadEndpoint = InterkitClient.getUploadEndpoint()
     const formData = new FormData();
     console.log("upload ", file.path, file.name, file.size, file.type)
     formData.append('mediafile', file);
     formData.append('projectId', $projectId);
-    console.log(file, $projectId)
+    for (const metaKey in meta) {
+      formData.append(metaKey, meta[metaKey])
+    }
+    console.log('uploadFile pre fetch', file, formData, $projectId)
     fetch(uploadEndpoint, {
         method: 'POST',
         body: formData
     })
     .then((response) => {
-      console.log(response)
+      console.log('uploadFile after fetch, response:', response)
       return response.json()
     })
     .then((result) => {
-      console.log('Success:', result);
+      console.log('uploadFile fetch response.json() success:', result);
       if(onUploadSuccess) onUploadSuccess(result);
       const col = colKeyMapping[mode]
       return addElement({mediaKey: result.key, mimeType }, col)
@@ -209,7 +214,7 @@
       executeTrigger(uploadedTrigger, result)
     })
     .catch((error) => {
-      console.error('Error:', error);
+      console.error('uploadFile Error:', error);
     });
   }
 

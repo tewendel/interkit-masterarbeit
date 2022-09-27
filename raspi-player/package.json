@@ -1,0 +1,19 @@
+{
+  "name": "interkit-raspi",
+  "version": "0.0.1",
+  "description": "interkit mediaplayer for raspberry pi",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "play-sound": "^1.1.5"
+  },
+  "workspaces": [
+    "../packages/*"
+  ],
+  "engines": {
+    "node": "=16",
+    "npm": ">=7"
+  }
+}

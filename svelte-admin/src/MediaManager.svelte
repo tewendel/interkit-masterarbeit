@@ -1,5 +1,7 @@
 <script>
 
+  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+
   import { onDestroy } from 'svelte';
   import { InterkitClient } from 'interkit'
   import MediaFileList from './MediaFileList.svelte'
@@ -8,7 +10,7 @@
 
   let mediafilesStore;
   let unsubscribe;
-  let mediafilesArray;
+  let allMediafilesArray
   
   let subHandle;  
   $: resetSub(projectId)
@@ -19,20 +21,41 @@
     mediafilesStore = subHandle.data
     unsubscribe = mediafilesStore.subscribe((data)=>{
       //console.log("new mediafiles", data)
-      mediafilesArray = data;
+      allMediafilesArray = data;
     })    
   }
 
   onDestroy(unsubscribe);
   
+  let selectedTab
+
+  let mediafiles = [[], []]
+  let count = [0, 0]
+
+  $: {
+    mediafiles[0] = allMediafilesArray?.filter?.(f => !f.meta?.userGenerated) || []
+    mediafiles[1] = allMediafilesArray?.filter?.(f => f.meta?.userGenerated) || []
+  }
 
 </script>
 
-<h3> upload a media file </h3>
-
-<MediaUpload {projectId} />
-
-<h3> media in this project ({(mediafilesArray||[]).length})</h3>
-
-<MediaFileList mediafiles={mediafilesArray} {projectId}/>
-
+<Tabs bind:selected={selectedTab}>
+  <Tab label={`Project (${mediafiles[0].length})`} />
+  <Tab label={`User generated (${mediafiles[1].length})`} />
+  <div slot="content">
+    <TabContent>
+      <MediaUpload {projectId} />
+      <MediaFileList
+        mediafiles={mediafiles[0]}
+        {projectId}
+        />
+    </TabContent>
+    <TabContent>
+      <MediaFileList
+        mediafiles={mediafiles[1]}
+        showChatCols={true}
+        {projectId}
+        />
+    </TabContent>
+  </div>
+</Tabs>
