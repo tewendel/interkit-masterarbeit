@@ -31,7 +31,7 @@
   //console.log("ElementsContextProvider")
 
   const filterData = (data) => {
-    //console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
+    console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
     if(!data) return [];
 
     // if reference Element is defined, make sure to filter out all other elements
@@ -88,7 +88,7 @@
 
     // sort elemets by sortcolumn
     if(sortColumn) {
-      data.sort((a, b) => a.sortColumn - b.sortColumn)
+      data.sort((a, b) => { return (a.sortColumn || 0) - (b.sortColumn || 0) })
     }
 
     //qconsole.log("filtered data", data)
