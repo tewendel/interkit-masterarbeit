@@ -64,7 +64,14 @@
 
 </script>
 
-<Dropzone on:drop={handleFilesSelect} multiple={true} />
+<Dropzone
+  on:drop={handleFilesSelect}
+  multiple={true}
+  containerStyles="color: #444; border-color: #888; margin: 1em 0;"
+  >
+  <p><strong>UPLOAD</strong></p>
+  <p>Drag &amp; drop file here, or click to select files</p>
+</Dropzone>
 
 <ol>
   {#each filesStatus as item}
@@ -75,5 +82,4 @@
       { item.status }
     </li>
   {/each}
-
 </ol>

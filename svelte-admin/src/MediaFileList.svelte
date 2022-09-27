@@ -1,14 +1,24 @@
 <script>
 
   import { onDestroy } from 'svelte'
-  import { DataTable, OverflowMenu, OverflowMenuItem, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
-  import MediaFilePreview from './MediaFilePreview.svelte';
-  import { InterkitClient, util } from 'interkit';
+  import {
+    DataTable,
+    Pagination,
+    OverflowMenu,
+    OverflowMenuItem,
+    Toolbar,
+    ToolbarContent,
+    ToolbarSearch
+  } from "carbon-components-svelte"
+
+  import MediaFilePreview from './MediaFilePreview.svelte'
+  import { InterkitClient, util } from 'interkit'
 
   export let mediafiles; // this should be an array, not a store
   export let radio = false;
   export let value;
   export let projectId;
+  export let filter
 
   const headers = [
     { key: "name", value: "name" },
@@ -16,6 +26,7 @@
     { key: "duration", value: "duration" },
     { key: "preview", value: "preview", sort: false },
     { key: "link", value: "link", sort: false },
+    { key: "chat", value: "chat", sort: false },
     { key: "overflow", sort: false, empty: true },
   ];
 
@@ -27,7 +38,8 @@
           ...mediafile,
           id: mediafile.meta.key,
           duration: util.formatDuration(mediafile.meta.duration),          
-          link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot
+          link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
+          chat: JSON.stringify(mediafile.meta)
         }
     })
     : []
@@ -52,7 +64,9 @@
 
   let rowsFiltered = [];
   $: {
-    rowsFiltered = rows.filter((m)=>{return searchFunction(m, searchQuery)})
+    rowsFiltered = rows
+      // .filter(filter)
+      .filter((m)=>{return searchFunction(m, searchQuery)})
     //console.log(rows, rowsFiltered)
   }
 
@@ -71,13 +85,26 @@
       InterkitClient.call('mediafile.delete', {key: row.meta.key, projectId})   
     }
   }
+
+  let pagination = {
+    pageSize: 30,
+    page: 1
+  }
   
 </script>
 
 {#if rows}
 
   <div class="MediaFileListTableContainer">
-    <DataTable sortable {radio} bind:selectedRowIds {headers} rows={rowsFiltered}>
+    <DataTable
+      sortable
+      {radio}
+      bind:selectedRowIds
+      pageSize={pagination.pageSize}
+      page={pagination.page}
+      {headers}
+      rows={rowsFiltered}
+      >
 
       <Toolbar>
         <ToolbarContent>
@@ -103,6 +130,12 @@
       </span>
 
     </DataTable>
+    <Pagination
+      bind:pageSize={pagination.pageSize}
+      bind:page={pagination.page}
+      totalItems={rows.length}
+      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+      />
   </div>
 
 {:else}
