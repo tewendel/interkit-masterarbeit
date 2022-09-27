@@ -2,10 +2,8 @@
 
   import { onMount, getContext } from "svelte"
   import { get } from "svelte/store"
-  import { InterkitClient } from "../"
+  import { InterkitClient, util } from "../"
   import { executeTrigger } from '../actions'
-
-  import util from '../util.js';
 
   import MessagePreview from './Chat/MessagePreview.svelte';
 
@@ -21,6 +19,13 @@
   let messageStore;
   let userId;
   let numUnseen;
+
+  let userProjectData = InterkitClient.userProjectDataStore
+
+  // stores to keep track of unseenMessages to combine into a badge
+  const unseenMessagesInfo = InterkitClient.getGlobalStore("unseenMessagesInfo")
+  if(!get(unseenMessagesInfo)) unseenMessagesInfo.set({})
+  const unseenMessagesBadge = InterkitClient.getGlobalStore("unseenMessagesBadge")
 
   onMount(async () => {
 
@@ -40,6 +45,19 @@
     subUnseen.data.subscribe(unseenMessages=>{
       //console.log("unseen", unseenMessages)
       numUnseen = unseenMessages.length;
+
+      // update info for this channel and calculate badge for all listed channels
+      unseenMessagesInfo.set({...get(unseenMessagesInfo), [real_channel_key]: numUnseen}) 
+      let numUnseenAllChannels = 0;
+      const info = get(unseenMessagesInfo)
+      for(let channelKey in info) {
+        if($userProjectData?.channelProperties?.[channelKey]?.unlisted != true) {
+          numUnseenAllChannels += info[channelKey]
+        }
+      }
+      unseenMessagesBadge.set(numUnseenAllChannels)
+      console.log(real_channel_key, $unseenMessagesInfo, $unseenMessagesBadge)
+      
     })
    
   })
@@ -50,7 +68,7 @@
   $: {
     if ($messageStore) {
       //console.log("messageStore update", $messageStore)
-      const sortedMessages = $messageStore.filter(m => m.payload.type == "text").sort((a, b) => b.createdAt - a.createdAt)
+      const sortedMessages = $messageStore.filter(m => ["text", "video", "audio", "image"].includes(m.payload.type)).sort((a, b) => b.createdAt - a.createdAt)
       //console.log("chatPreview sorted", sortedMessages)
       latestMessage = sortedMessages?.[0];
     }

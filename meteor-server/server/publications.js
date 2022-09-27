@@ -146,7 +146,7 @@ Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked
   let query = {
     projectId,
     channel_key,
-    "payload.type": "text",
+    "payload.type": { $in: ["text", "image", "video", "audio"] },
     $or: [{ sender: userId }, { recipients: userId }]
   }
   if (!includeBlocked) {

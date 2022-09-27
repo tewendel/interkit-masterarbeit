@@ -7,6 +7,8 @@ fields:
     defaultValue: default
   - type: string
     name: key
+  - type: string
+    name: badgeStore
   - type: slot
     name: defaultIcon
   - type: slot
