@@ -8,7 +8,9 @@
   import ButtonBar from './ButtonBar.svelte'
   
   export let element; // alaways use prop
-  
+  export let objectFit;
+  export let big = false; big = big == "TRUE" ? true : false;
+
   // set context for buttons in buttons slot
   const buttonPayloadStore = writable(element)
   setContext("buttonBar", {
@@ -28,9 +30,14 @@
   <section>
 
     <figure>
-      <AspectRatio>
-        <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
-      </AspectRatio>
+      {#if big}
+        <MediaFileImage useLink objectFit={objectFit} fitDimension="both" mediafileRef={imageRef} />    
+      {:else}
+        <AspectRatio>
+          <MediaFileImage useLink objectFit={objectFit} fitDimension="both" mediafileRef={imageRef} />    
+        </AspectRatio>
+      {/if}
+      
     </figure>
       
     <ButtonBar right>    

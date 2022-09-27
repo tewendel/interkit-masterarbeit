@@ -9,11 +9,11 @@
 
   setContext('iconHeight', '20px');
 
-  registerTab(tab);
-
   export let label
   export let key
 
+  registerTab(tab, key);
+  
   const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");
   $: {
     if(bottomMenuKey) {

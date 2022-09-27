@@ -87,6 +87,9 @@ api.setInterface({text: true}) // turn it back on
 api.setInterface({text: true, photo: true}) // text and photo entry
 api.setInterface({text: false, photo: true}) // just photo entry
 
+// set preferred camera (front or back)
+api.setInterface({photo: true, cameraFacingMode: "environment"}) // or "user" for selfie mode
+
 // present the user with a button to send their location
 api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
 

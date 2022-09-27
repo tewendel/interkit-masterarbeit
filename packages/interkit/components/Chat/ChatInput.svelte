@@ -79,6 +79,7 @@
           mode="image"
           meta={{ userGenerated: "yes", userId, boardId, nodeId }}
           onUploadSuccess={onCameraSuccess}
+          cameraFacingMode={chatInterface?.cameraFacingMode}
         />
       </div>
     </svelte:fragment>

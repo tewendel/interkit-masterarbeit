@@ -148,7 +148,7 @@
         {#if slides[slideIndex].audio}
           <InlineAudioPlayerButton
             audioKeyDirect={slides[slideIndex].audio?.value}
-            hideBackButton
+            hideSkipControls={false}
             bind:playbackControl={audioPlaybackControl}
           />
         {/if}
@@ -219,8 +219,8 @@
     
   }
 
-  .extras .left, .extras .right {
-    width: 50%;  
+  .extras .left {
+    width: 100%;  
   }
 
   .extras .left {

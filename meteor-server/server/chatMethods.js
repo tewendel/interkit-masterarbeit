@@ -177,6 +177,9 @@ Meteor.methods({
           : false
         turboInfoChannelKey = payload?.channel_key
         break
+      case 'user.setElementProperty':
+        affectedUserId = payload?.userId
+        break
       case 'user.moveTo':
         affectedUserId = payload?.userId
         turboInfoChannelKey = payload?.boardId

@@ -4,6 +4,12 @@ fields:
     type: sheetColumn
     columnType: mediaFile
     defaultValue: elements/image
+  - name: objectFit
+    type: string
+    defaultValue: cover
+  - name: big
+    type: checkbox
+    defaultValue: FALSE
   - name: buttons
     type: slot
 hiddenProps: 

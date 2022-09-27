@@ -159,8 +159,12 @@ export default {
       return propValue
     }
 
-  }
+  },
 
-  
+  blocklyBool: (value) => {
+    if(value == "FALSE") return false;
+    if(value == "TRUE") return true;
+    return value;
+  }
 
 }

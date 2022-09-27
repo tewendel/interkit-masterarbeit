@@ -77,6 +77,7 @@
       && $elementProperties[value?.key]?.[secondaryPositionProperty]) {
         processed = $elementProperties[value?.key]?.[secondaryPositionProperty]
       }
+    selectedElement = value  
     return processed;
   }
   $: mapFocusProcessed = processMapFocus($mapFocus)
