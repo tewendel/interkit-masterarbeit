@@ -20,6 +20,7 @@
   export let isByUser = false
   export let lastFromSender = false
   export let previousMessage = null
+  export let isReportable = true
 
   let showOptions = false
 
@@ -200,13 +201,15 @@
     </Bubble>
     <MessageDate {message} {previousMessage} {lastFromSender} />
     {#if showOptions}
-      <div
-        class="message__options"
-        on:click={() => { startMessageOptionDialog() }}
-        >
-        <Icon type="Full-Warning" height="1.2em" />
-        Inhalte melden
-      </div>
+      {#if isReportable}
+        <div
+          class="message__options"
+          on:click={() => { startMessageOptionDialog() }}
+          >
+          <Icon type="Full-Warning" height="1.2em" />
+          Inhalte melden
+        </div>
+      {/if}
     {/if}
   </div>
 {/if}

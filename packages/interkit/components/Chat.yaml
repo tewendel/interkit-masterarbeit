@@ -4,4 +4,7 @@ colour: 100
 fields:
   - type: string
     name: channel_key
+  - type: checkbox
+    name: messagesReportableDefault
+    defaultValue: "TRUE"
 toolboxCategory: Chat
