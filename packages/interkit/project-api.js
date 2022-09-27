@@ -91,7 +91,7 @@ const sendSystem = async function (text, options) {
 
 const sendMediaFile = async function (callContext, type, mediafileKey, options) {
   const { message, server, projectId } = callContext
-  console.log('sendImage', mediafileKey)
+  console.log('sendMediaFile', mediafileKey)
   const methodParams = {
     projectId,
     channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel

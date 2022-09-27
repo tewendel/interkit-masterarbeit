@@ -29,20 +29,8 @@
   
   let selectedTab
 
-  // let filter
   let mediafiles = [[], []]
   let count = [0, 0]
-
-  /*
-  $: filter = row => {
-    switch (selectedTab) {
-      case 0: // Project
-        return !row.userGenerated
-      case 1: // User
-        return row.userGenerated
-    }
-  }
-  */
 
   $: {
     mediafiles[0] = allMediafilesArray?.filter?.(f => !f.meta?.userGenerated) || []
@@ -54,14 +42,19 @@
 <Tabs bind:selected={selectedTab}>
   <Tab label={`Project (${mediafiles[0].length})`} />
   <Tab label={`User generated (${mediafiles[1].length})`} />
+  <div slot="content">
+    <TabContent>
+      <MediaUpload {projectId} />
+      <MediaFileList
+        mediafiles={mediafiles[0]}
+        {projectId}
+        />
+    </TabContent>
+    <TabContent>
+      <MediaFileList
+        mediafiles={mediafiles[1]}
+        {projectId}
+        />
+    </TabContent>
+  </div>
 </Tabs>
-
-{#if selectedTab === 0}
-  <MediaUpload {projectId} />
-{/if}
-
-<MediaFileList
-  mediafiles={mediafiles[selectedTab]}
-  {projectId}
-  />
-

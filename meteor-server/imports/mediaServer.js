@@ -164,7 +164,9 @@ export const setupMediaServer = (app) => {
               }
 
               const meta = {
+                createdAt: new Date(),
                 projectId: req.body.projectId,
+                userGenerated: req.body.userGenerated === true || req.body.userGenerated === "true" || req.body.userGenerated === "yes",
                 userId: req.body.userId,
                 boardId: req.body.boardId,
                 nodeId: req.body.nodeId,

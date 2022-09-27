@@ -18,7 +18,6 @@
   export let radio = false;
   export let value;
   export let projectId;
-  export let filter
 
   const headers = [
     { key: "name", value: "name" },
@@ -27,6 +26,7 @@
     { key: "preview", value: "preview", sort: false },
     { key: "link", value: "link", sort: false },
     { key: "chat", value: "chat", sort: false },
+    { key: "createdAt", value: "createdAt" },
     { key: "overflow", sort: false, empty: true },
   ];
 
@@ -37,6 +37,7 @@
         return {
           ...mediafile,
           id: mediafile.meta.key,
+          createdAt: mediafile.meta.createdAt,
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
           chat: JSON.stringify(mediafile.meta)
@@ -65,7 +66,6 @@
   let rowsFiltered = [];
   $: {
     rowsFiltered = rows
-      // .filter(filter)
       .filter((m)=>{return searchFunction(m, searchQuery)})
     //console.log(rows, rowsFiltered)
   }
@@ -86,8 +86,20 @@
     }
   }
 
+  const createdAtdateTimeFormatLocaleOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    weekday: undefined,
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+    second: '2-digit'
+  }
+  const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
+
   let pagination = {
-    pageSize: 30,
+    pageSize: 10,
     page: 1
   }
   
@@ -120,12 +132,22 @@
                 <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
               </OverflowMenu>
             {/if}
+        {:else if cell.key === 'name'}
+          <span title={cell.value} class="cell__1line">{cell.value}</span>
+        {:else if cell.key === 'chat'}
+          <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'type' && cell.value}
           {row.type}
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
         {:else if cell.key === 'link' && cell.value}
-          <a href={row.link} title={row.link} target="_blank" class="truncate">url</a>
+          <a href={row.link} title={row.link} target="_blank">url</a>
+        {:else if cell.key === 'createdAt'}
+          {#if cell.value}
+            <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
+          {:else}
+            <i>undefined</i>
+          {/if}
         {:else}{cell.value || ""}{/if}
       </span>
 
@@ -143,11 +165,23 @@
 {/if}
 
 <style>
-  .truncate {
-    max-width: 10em;
-    display: inline-block;
-    text-align:right;
+
+  .cell__1line {
+    white-space: nowrap;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .MediaFileListTableContainer :global(table) {
+    table-layout: fixed; /* make text-overflow work + improve layout, hackily */
+  }
+
+  .MediaFileListTableContainer :global(.bx--table-expand__button) {
+    min-width: 2em; /* table-layout fixed makes button disappear :( */
+  }
+
+  .MediaFileListTableContainer :global(td > span) {
+    max-width: 100%;
   }
 </style>
