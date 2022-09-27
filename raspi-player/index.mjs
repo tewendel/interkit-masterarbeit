@@ -1,14 +1,15 @@
 import { setup as serverSetup } from "interkit/interkit-connect.js";
 import { downloadFile } from "./src/downloadFile.mjs";
-import playSound from "play-sound";
 import { mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { basename } from "node:path";
 import { resolve } from "path";
+import { spawn } from 'child_process'
+
+//const playerCommand = "afplay"
+const playerCommand = "cvlc";
 
 const projectFolder = resolve("./tmp");
-
-const player = playSound();
 
 const [endpoint, projectId, username, password] = process.argv.slice(2);
 
@@ -19,19 +20,15 @@ npm start <endpoint> <projectId> <username> <password>
 
 example: 
 $ npm start ws://localhost:3000/websocket TB38WTNBewMYe6YYe raspi1 raspi1
-
-Recommendation: 
-Use pm2 process manager to recover from crashes. Example:
-$ pm2 start --restart-delay=60000 "npm start <endpoint> <projectId> <username> <password>"
 `);
   process.exit(1);
 }
 
 console.log(`starting raspi player
-- endpoint: ${endpoint}
+- endpoint:  ${endpoint}
 - projectId: ${projectId}
-- username: ${username}
-- password: ${password}
+- username:  ${username}
+- password:  ${password}
 `);
 
 let server = null;
@@ -102,10 +99,15 @@ const setup = async () => {
 
           console.log("playing", basename(targetFile));
 
-          player.play(targetFile, function (err) {
-            //if (err) throw err;
-            console.warn(err);
-          });
+          try {
+          var process = spawn(playerCommand, [targetFile]);
+          } catch(error) {
+            console.warn(error)
+          }
+          if (!process) {
+            next(new Error("Unable to spawn process with " + playerCommand));
+          }
+
         } catch (err) {
           console.error(err.message);
         }
