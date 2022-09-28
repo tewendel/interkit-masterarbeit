@@ -110,7 +110,7 @@
         }
       }}
       >
-      <div class="message__contents">
+      <div class="message__contents {message?.payload?.options?.customClass}">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
         {#if message?.payload?.type == "text"}  
           {message?.payload?.text}
