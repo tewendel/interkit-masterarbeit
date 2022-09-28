@@ -11,7 +11,7 @@
 {/if}
 
 <div
-  class="container"
+  class="MessageTyping container"
   style={`visibility: ${show ? 'visible' : 'hidden'}; opacity: ${show ? '1' : '0'}`}
   >
   <Bubble

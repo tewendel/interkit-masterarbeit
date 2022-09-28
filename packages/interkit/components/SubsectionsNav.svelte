@@ -10,7 +10,7 @@
 
   import { executeTrigger } from '../actions.js'
 
-  export let label;
+  export let label = "";
   export let closeTrigger;
 
   const baseBack = () => {
