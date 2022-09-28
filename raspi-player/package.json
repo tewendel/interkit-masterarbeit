@@ -6,9 +6,6 @@
   "scripts": {
     "start": "node index.mjs"
   },
-  "dependencies": {
-    "play-sound": "^1.1.5"
-  },
   "workspaces": [
     "../packages/*"
   ],
