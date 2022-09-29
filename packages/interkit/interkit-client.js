@@ -7,6 +7,8 @@ import { writable, get } from 'svelte/store';
 import InterkitLiveReload from "./interkit-live-reload.js"
 
 import { Capacitor } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
 import util from './util.js';
 
@@ -22,14 +24,8 @@ let connected = writable(false);
 
 let server;
 
-// get auth token from local storage if available
 let userAuth;
-try {
-  let userAuthObj = JSON.parse(localStorage.getItem('userAuth'))
-  userAuth = writable(userAuthObj);
-} catch(e) {
-  console.log(e)
-}
+
 //console.log(get(userAuth))
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
@@ -610,6 +606,22 @@ const restoreUiSnapshot = id => {
 }
 
 const initApp = async options => {
+  console.log('initApp')
+  try {
+    let userAuthObj = await Storage.get({ key: 'userAuth' })
+    if (userAuthObj && userAuthObj.value) {
+      userAuthObj = userAuthObj.value
+    } else {
+      console.log('moving legacy localStorage userAuth to persistent Capacitor Storage')
+      userAuthObj = localStorage.getItem('userAuth')
+      await Storage.set({ key: 'userAuth', value: userAuthObj })
+      localStorage.removeItem('userAuth')
+    }
+    userAuthObj = JSON.parse(userAuthObj)
+    userAuth = writable(userAuthObj)
+  } catch(e) {
+    console.error(e)
+  }
 
   await loadConfig();
   if (options.projectId) {
@@ -720,6 +732,7 @@ const userHeartbeat = async (isAwake) => {
 }
 
 const login = async ({ username, password }) => {
+  console.log('InterkitClient.login')
   //console.log(server)
   let userAuthData = await server.login({
     password,
@@ -730,7 +743,7 @@ const login = async ({ username, password }) => {
   console.log(userAuthData)
   userId.set(userAuthData.id);
   localStorage.setItem('userId', userAuthData.id);
-  localStorage.setItem('userAuth', JSON.stringify(userAuthData))
+  await Storage.set({ key: 'userAuth', value: JSON.stringify(userAuthData) })
   await loadElementPropertiesFromUser();
   return userAuthData
 }
@@ -739,7 +752,7 @@ const logout = async () => {
     await server.logout();
     userId.set(null);
     localStorage.setItem('userId', null);
-    localStorage.setItem('userAuth', null);
+    await Storage.set({ key: 'userAuth', value: JSON.stringify(null) })
   }
 
 // call a meteor method, add projectId to params if needed (allow method calls without params)

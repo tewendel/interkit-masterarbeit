@@ -74,8 +74,8 @@
   const processMapFocus = (value) => {
     let processed = value;
     if(value && value?.key && secondaryPositionProperty 
-      && $elementProperties[value?.key]?.[secondaryPositionProperty]) {
-        processed = $elementProperties[value?.key]?.[secondaryPositionProperty]
+      && $elementProperties?.[value?.key]?.[secondaryPositionProperty]) {
+        processed = $elementProperties?.[value?.key]?.[secondaryPositionProperty]
       }
     selectedElement = value  
     return processed;

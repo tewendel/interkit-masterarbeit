@@ -75,7 +75,7 @@
       
     </div>
 
-    {#if $elementProperties[element?.key]?.[checkedProperty]}
+    {#if $elementProperties?.[element?.key]?.[checkedProperty]}
       <div class="check-icon">
           <Icon type="check" height="24px"/>
       </div>
