@@ -27,6 +27,10 @@ export const items = [
 				title: 'Build for native app and deploy to app stores',
 				path: '/guides/native'
 			},
+			{
+				title: 'Setup Raspberry Player',
+				path: '/guides/raspi_setup'
+			}
 		]
 	},
 	{

@@ -12,6 +12,9 @@
   export let label
   export let key
 
+  export let badgeStore // the name of a globalStore that supplies information for an optional badge
+  const badge = badgeStore ? InterkitClient.getGlobalStore(badgeStore) : null;
+
   registerTab(tab, key);
   
   const bottomMenuKey = InterkitClient.getUiKeyStore("bottomMenuKey");
@@ -49,7 +52,7 @@
     </span>
   {/if}
   <span class="BottomMenuButton__Text text">
-    {label}
+    {label} {$badge ? "(" + $badge + ")" : ""}
   </span>  
 </button>
 

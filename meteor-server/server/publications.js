@@ -146,7 +146,7 @@ Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked
   let query = {
     projectId,
     channel_key,
-    "payload.type": "text",
+    "payload.type": { $in: ["text", "image", "video", "audio"] },
     $or: [{ sender: userId }, { recipients: userId }]
   }
   if (!includeBlocked) {
@@ -165,6 +165,41 @@ Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked
 
   return messages;
 });
+
+// used by raspi script
+Meteor.publish(
+  "messages.latest.forMe",
+  ({ projectId = null } = {}) => {
+
+    const userId = Meteor.userId();
+
+    if (!userId) {
+      console.warn(`missing user for publication messages.latest.forMe`);
+      return null;
+    }
+
+    if (!projectId) {
+      console.warn(`missing projectId for publication messages.latest.forMe`);
+      return null;
+    }
+
+    let query = {
+      projectId,
+      recipients: userId
+    };
+
+    let options = {
+      sort: { createdAt: -1 },
+      limit: 1,
+    };
+
+    let messages = Messages.find(query, options);
+
+    //console.log(messages.fetch())
+
+    return messages;
+  }
+);
 
 Meteor.publish("messages.unseen", ({projectId, channel_key, userId, includeBlocked}) => {
   let query = {

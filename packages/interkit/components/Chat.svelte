@@ -13,6 +13,8 @@
 
   const verbose = false
 
+  const projectDataStore = InterkitClient.userProjectDataStore
+
   const { Geolocation } = Plugins;
 
   export let channel_key = "DEFAULT"
@@ -207,13 +209,9 @@
 
   let typingShow = false
   let typingMessage;
-  const typingMaxDuration = 5
+  $: typingMaxDuration = $projectDataStore?.userVars?.debugTurboMode ? 2 : 15
   const typingMinDurationTypeText = 1
-  const typingDurationPerTextCharacter = 0.05
-  const typingDefaultDurationType = {
-    choice: 2,
-    image: 3
-  }
+  const typingDurationPerTextCharacter = 0.075
 
   const typingDuration = message => {
     if (message.payload && ('typingDuration' in message.payload)) {
@@ -231,8 +229,10 @@
         )
         break
       case 'choice':
+        duration = 0
+        break
       case 'image':
-        duration = typingDefaultDurationType?.[message.payload.type] || 1
+        duration = 3
         break
       case 'system':
         duration = 0

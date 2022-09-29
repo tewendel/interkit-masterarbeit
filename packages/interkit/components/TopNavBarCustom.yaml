@@ -3,6 +3,8 @@ fields:
   - type: slot
     name: left
   - type: slot
+    name: center
+  - type: slot
     name: right
   - type: slot
     name: content

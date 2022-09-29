@@ -8,7 +8,7 @@
 
 </script>
 
-{#if message?.payload?.type == "text" || message?.payload?.type == "choice"}   
+{#if ["text", "image", "video", "audio", "choice"].includes(message?.payload?.type) }   
   <div 
     class="MessagePreview message message--{message.payload.type}"
   >
@@ -20,6 +20,10 @@
       {#if message?.payload?.type == "text"}  
         {message?.payload?.text}
       {/if}
+
+      {#if message?.payload?.type == "image"}[Image]{/if}
+      {#if message?.payload?.type == "video"}[Video]{/if}
+      {#if message?.payload?.type == "audio"}[Audio]{/if}
 
       {#if message?.payload?.type == "choice"}
         {#if message?.payload?.choice}

@@ -107,6 +107,9 @@ if(msg.payload.type == "locationRequestCanceled") {
 // trigger an action on the client by clicking an image
 api.sendImage("f00ba420-0123-4567-89abcdef012356789", {action: {trigger: "triggerName", payload: payloadObject}})
 
+// custom css class on message
+api.sendImage("f00ba420-0123-4567-89abcdef012356789", {customClass: "special"})
+
 /* translation, multi-language (i18n, l10n) */
 
 // access current language
