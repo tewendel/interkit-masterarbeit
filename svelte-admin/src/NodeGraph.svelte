@@ -131,7 +131,7 @@
   
   const mouseup = () => {
     if (dragging !== false) {
-      dispatch('boardchanged', { targetNode: nodes[dragging] })
+      dispatch('nodemoved', { targetNode: nodes[dragging] })
       dragging = false
     }
     if (canvasDragging) {

@@ -38,7 +38,11 @@ const socket = new io.Server(server, {
 
 app.use(cloudcmd_prefix, setup_cloudcmd(socket));
 
-app.use(cors())
+const corsOptions = {
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+}
+
+app.use(cors(corsOptions))
 
 app.use(express.static('public', {index: false}))
 
