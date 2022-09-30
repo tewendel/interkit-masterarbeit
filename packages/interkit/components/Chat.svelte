@@ -27,6 +27,7 @@
   let userId;
   let userSub;
   let userStore;
+  let projectId;
 
   let typingQueuePointer
 
@@ -44,7 +45,9 @@
     messageStore = sub.data
 
     userId = get(InterkitClient.userId)
-    console.log("userId", userId)
+    console.log("Chat userId", userId)
+    projectId = get(InterkitClient.projectId)
+    console.log("Chat projectId", projectId)
 
     userSub = await InterkitClient.getSub('users', 'user')
     userStore = userSub.data
@@ -273,6 +276,11 @@
     typingShow = true
     typingMessage = currentMessage;
     window.setTimeout(() => {
+      const interfaceConfig = typingMessage?.payload?.options?.setInterface
+      if (interfaceConfig) {
+        console.log('Chat message has setInterface, calling…', typingMessage, interfaceConfig)
+        InterkitClient.call('user.setBoardInterface', { userId, projectId, boardId: channel_key, interfaceConfig })
+      }
       typingShow = false
       typingQueuePointer++
       if (verbose) console.log('typingNext done timeout', { typingQueuePointer })

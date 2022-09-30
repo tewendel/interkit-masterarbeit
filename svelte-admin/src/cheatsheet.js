@@ -90,6 +90,9 @@ api.setInterface({text: false, photo: true}) // just photo entry
 // set preferred camera (front or back)
 api.setInterface({photo: true, cameraFacingMode: "environment"}) // or "user" for selfie mode
 
+// interface can be also set per message
+api.sendText('Give me a photo', { setInterface: { photo: true, text: false } })
+
 // present the user with a button to send their location
 api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
 
@@ -138,7 +141,7 @@ api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
 api.sendSystemT('Chat verlassen|Left the chat')
 
 /** Twine-ish syntax
- *  (this is a comment because JS highlighting doesnt' make sense)
+ *  (this is a comment because JS highlighting doesn't make sense)
  *  See also the twine-ish new node templates.
 
 Hi! This is a message.
@@ -165,6 +168,7 @@ Twine paragraphs can be explicit, immediate moveTos:
 Twine paragraphs (message+moveTos) can take options:
 Hello world[{"delay":10}]
 [->To home][{"delay":{"hours":1}]
+Give me a photo[{"setInterface":{"photo":true}}]
 
 */
 `;
