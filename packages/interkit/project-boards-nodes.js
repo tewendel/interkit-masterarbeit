@@ -158,7 +158,7 @@ lib.boards.read = async (handle, params) => {
     .then(file => JSON.parse(file.toString()))
   const handlePrefix = projectBoardPath(params.relative, params.projectId)
   board.nodes = board.nodes || []
-  board.nodes.forEach(node => { node.contents = null })
+  board.nodes.forEach(node => { if (node) node.contents = null })
   const allFiles = await fs.readdir(handlePrefix)
   let startIdByFilename
   let startIdByMetaComment
@@ -192,7 +192,7 @@ lib.boards.read = async (handle, params) => {
       }
     })
   )
-  board.nodes = board.nodes.filter(node => node.contents !== null)
+  board.nodes = board.nodes.filter(node => node && (node.contents !== null))
   let startId = startIdByMetaComment || (startIdByFilename || board.nodes[0]?.id)
   board.startId = startId
   return board
@@ -221,7 +221,7 @@ api.boards.create = expressify(
 // this just overwrites, doesnt merge
 lib.boards.update = (handle, params, req) => {
   const data = JSON.parse(req.body.toString())
-  data.nodes.forEach(node => { delete node.contents })
+  data.nodes.forEach(node => { if (node) delete node.contents })
   return fs.writeFile(handle, JSON.stringify(data, null, 2))
     .then(() => data)
 }
