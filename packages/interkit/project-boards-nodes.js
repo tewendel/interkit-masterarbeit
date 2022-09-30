@@ -222,7 +222,7 @@ api.boards.create = expressify(
 lib.boards.update = (handle, params, req) => {
   const data = JSON.parse(req.body.toString())
   data.nodes.forEach(node => { delete node.contents })
-  return fs.writeFile(handle, JSON.stringify(data))
+  return fs.writeFile(handle, JSON.stringify(data, null, 2))
     .then(() => data)
 }
 

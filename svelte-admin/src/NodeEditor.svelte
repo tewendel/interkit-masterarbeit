@@ -309,11 +309,11 @@
       .catch(genericErrorHandler)
   }
 
-  const saveCurrentBoard = () => {
-    saveBoard(currentBoardId, board)
+  const saveCurrentBoard = ({ doPatch }) => {
+    saveBoard(currentBoardId, board, { doPatch })
   }
 
-  const saveBoard = (boardId, data) => { 
+  const saveBoard = (boardId, data, { doPatch }) => { 
     // create a clone of the board, but purge contents
     // note: could break if the structure gets deeper than 1 level
     let body = {
@@ -325,7 +325,7 @@
       })
     }
     body = JSON.stringify(body)
-    api(projectId, '/' + boardId, { method: 'put', body })
+    api(projectId, '/' + boardId, { method: doPatch ? 'PATCH' : 'put', body })
       .then(async res => {
         const json = await res.json()
         errorify(json)
@@ -621,7 +621,7 @@
         {_update}
         {userNodes}
         {previewUserId}
-        on:boardchanged={() => { saveCurrentBoard(); updateUserNodes() }}
+        on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
         bind:editNodeId
         {rectWidth}
         {rectHeight}
