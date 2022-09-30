@@ -155,7 +155,16 @@ api.boards.list = expressify(lib.boards.list)
 */
 lib.boards.read = async (handle, params) => {
   const board = await fs.readFile(handle)
-    .then(file => JSON.parse(file.toString()))
+    .then(async file => {
+      const fileStr = await file.toString()
+      try {
+        return JSON.parse(fileStr)
+      } catch (err) {
+        console.warn('boards.read JSON parse error in file', handle, err)
+        // console.log(fileStr)
+        throw err
+      }
+    })
   const handlePrefix = projectBoardPath(params.relative, params.projectId)
   board.nodes = board.nodes || []
   board.nodes.forEach(node => { if (node) node.contents = null })
@@ -166,6 +175,10 @@ lib.boards.read = async (handle, params) => {
     .filter(file => file.substr(0, params.boardId.length + 1) === params.boardId + '_')
     .map(async file => {
       const id = file.match(nodeFileNameRE)?.[2]
+      if (!id) {
+        console.warn('boards.read, invalid handler file name, skipping', file)
+        return false
+      }
       const contents = await getNode(projectBoardPath(params.relative, params.projectId, [file]))
       const node = board.nodes.find(_ => _?.id === id)
       // console.log(id, contents, node)
@@ -191,6 +204,7 @@ lib.boards.read = async (handle, params) => {
         })
       }
     })
+    .filter(file => !!file)
   )
   board.nodes = board.nodes.filter(node => node && (node.contents !== null))
   let startId = startIdByMetaComment || (startIdByFilename || board.nodes[0]?.id)
@@ -244,7 +258,7 @@ lib.boards.patch = async (handle, params, req) => {
     data.nodes.forEach(srcNode => {
       const dstNode = board.nodes.find(_ => _.id === srcNode.id)
       if (!dstNode) {
-        board.nodes.push(dstNode)
+        board.nodes.push(srcNode)
       } else {
         for (const key in srcNode) {
           dstNode[key] = srcNode[key]
