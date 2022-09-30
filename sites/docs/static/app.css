@@ -41,3 +41,8 @@ th, td {
   border: 1px solid #ccc;
   padding: .2em;
 }
+
+em {
+  font-weight: 500;
+  font-style:normal;
+}

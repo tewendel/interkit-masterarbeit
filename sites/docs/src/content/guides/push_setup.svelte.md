@@ -1,21 +1,26 @@
 Note: You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
 
-# Obtain APNs for iOS setup
-
-1. Go to your Apple Developer Account
-2. Generate an APNs key (Apple Push Notification service) there
-3. Plug it into Firebase Console
-
-# Google Services setup
+# Google Firebase Services setup
 
 These are non-secret keys to link our app to the Firebase Cloud Messaging app instance.
 
-1. Create a project with apps (iOS + Android) in Firebase Console
-2. Upon creation, you are prompted to download the credential file
-    * Android: `google-services.json` – place it in `fooproject/android/app/`  
-      (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
-    * iOS: `GoogleService-Info.plist` – place it in `fooproject/ios/App/App/`  
-      (might have to add it via XCode)
+1. Create a [Firebase](https://console.firebase.google.com/) account
+2. Create a project with apps (iOS + Android) in Firebase Console
+    * *iOS*   
+        There is a 5 step process,
+        1. "Register App": use your app bundle id, for example "interkit.app.starter"
+        2. "Download config file": download the file and put it in `ios/App/App/GoogleService-Info.plist` (might have to add it via XCode), but do not change any code yet.
+        3. "Add Firebase SDK": Choose version *7.11.0*. You only need to add "FirebaseMessaging"
+        4. "Add initialisation code": Skip this step! Do **iOS setup** below instead
+    * *android*
+        1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `fooproject/android/app/`  
+          (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
+
+# Obtain APNs for iOS setup
+
+1. Go to your Apple Developer Account
+2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account.
+3. Plug it into Firebase Console
 
 # Android setup
 
@@ -29,7 +34,7 @@ add
 
 important: do not follow the sdk guide that is on the firebase cosole!
 
-````java
+````swift
 // ...
 import FirebaseCore
 import FirebaseInstanceID
@@ -56,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 ````
+
+Add "Push Notifications" capability 
+![](/images/push_setup_ios_capability.jpg)
+
 
 # Provide credentials
 
