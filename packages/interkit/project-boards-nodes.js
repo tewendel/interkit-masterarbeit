@@ -167,7 +167,7 @@ lib.boards.read = async (handle, params) => {
     .map(async file => {
       const id = file.match(nodeFileNameRE)?.[2]
       const contents = await getNode(projectBoardPath(params.relative, params.projectId, [file]))
-      const node = board.nodes.find(_ => _.id === id)
+      const node = board.nodes.find(_ => _?.id === id)
       // console.log(id, contents, node)
       // TODO deleteme?
       if (!startIdByMetaComment && startNodeMetaCommentRE.test(contents)) {
