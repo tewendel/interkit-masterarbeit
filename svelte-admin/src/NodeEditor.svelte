@@ -187,7 +187,7 @@
 
   const updateNodeMetadata = () => {
     board?.nodes?.forEach(node => {
-      node._color = Math.random()
+      // node._color = Math.random()
     })
     _update++
   }
