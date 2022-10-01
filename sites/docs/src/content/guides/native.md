@@ -116,17 +116,19 @@ Make sure you are using our fork of the cordova zip plugin - it prevents a "zip 
 "cordova-plugin-zip": "github:bikubi/cordova-plugin-zip#a3855dfcd3baa9ff619a12dd08d3bbce57475a3e",
 ````
 
-Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
-Follow this guide for more information: 
-https://developer.android.com/studio/publish/app-signing#sign_release
-
-You might have to change the targetSdkVersion located in android/variables.gradle (currently 31 is minimum for google play submissions).
-
-In Android Studio, you will also need to add android:exported="false" to the application>activity node in App/AndroidManifest.xml and to capacitor-android/manifests/AndroidManifest.xml to the service node with the intent-filter:
+In Android Studio, you will also need to add *android:exported="true"* to the application>activity node in `App/AndroidManifest.xml` and *android:exported="false"* to `capacitor-android/manifests/AndroidManifest.xml` to the service node with the intent-filter:
 ````java
 <service android:name="com.getcapacitor.CapacitorFirebaseMessagingService" android:stopWithTask="false" android:exported="false">
             <intent-filter>
 ````
 https://github.com/ionic-team/capacitor/pull/5350/files
+
+You might have to change the targetSdkVersion located in `android/variables.gradle` (currently 31 is minimum for google play submissions).
+
+Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
+Follow this guide for more information: 
+https://developer.android.com/studio/publish/app-signing#sign_release
+
+After the build, locate you app bundle, create a release in Google Play Console and upload it there.
 
 When you need to update your app, change the versionCode and versionName in build.gradle (module android.app).
