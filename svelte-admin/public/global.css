@@ -7,3 +7,7 @@
   position: sticky;
   top: 0;
 }
+
+.bx--grid {
+  max-width: initial !important; /* remove carbon max width constraint */
+}

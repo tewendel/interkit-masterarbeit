@@ -246,14 +246,13 @@
       <Tab label="blockly" />
       <Tab label="App.svelte" />
       <Tab label="actions.js" />
-        <div slot="content">
+        <div slot="content" class="content">
           <TabContent>
-              <div id="blocklyDiv" style="height: 500px; width: 100%;" use:watchResize={resizeBlockly}></div>
+              <div id="blocklyDiv"use:watchResize={resizeBlockly}></div>
               <br />
               <Button on:click={()=>saveAndCompile(true)}>save</Button>
-              <br />
-              <br />
-              <Button on:click={createDatabase} size="small" kind="tertiary">check database</Button>
+              &nbsp;&nbsp;
+              <Button on:click={createDatabase} kind="tertiary">check database</Button>
           </TabContent>
           <TabContent>
             <div class="scroll">
@@ -277,8 +276,15 @@
 
 <style>
 
+  .content, #blocklyDiv {
+  height: calc(100vh - 260px);
+  }
+
+  #blocklyDiv {
+    width: 100%;
+  }
+
   .scroll {
-    height: 500px;
     overflow-y: auto;
   }
 

@@ -136,6 +136,7 @@
   .right-pane {
     flex: 0.5;
     min-width: 320px;
+    max-width: 550px;
   }
 
   .toggle-right {
