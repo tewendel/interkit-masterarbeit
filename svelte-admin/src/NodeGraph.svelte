@@ -118,7 +118,20 @@
   $: projectId, boardId, getBoardView()
 
   const doZoom = dir => {
-    zoom.set(Math.max(get(zoom) + zoomStep * dir, minZoom))
+    const oldZoom = get(zoom)
+    const newZoom = Math.max(oldZoom + zoomStep * dir, minZoom)
+    // We need this factor to correct the board offset,
+    // since it is measured in viewport pixels
+    const zoomF = newZoom / oldZoom
+    // We need to correct so that we don't zoom into the upper left corner,
+    // but the viewport's center. Since offset is in viewport pixels,
+    // we can just take the svg canvas's dimensions to calculate the
+    // "zoomed out/in" portion.
+    const centerX = svgEl.clientWidth * (1 - zoomF) * 0.5
+    const centerY = svgEl.clientHeight * (1 - zoomF) * 0.5
+    offsetX.set(get(offsetX) * zoomF + centerX)
+    offsetY.set(get(offsetY) * zoomF + centerY)
+    zoom.set(newZoom)
   }
 
   const resetCanvas = () => {
