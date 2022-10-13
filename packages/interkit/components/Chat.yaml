@@ -7,4 +7,10 @@ fields:
   - type: checkbox
     name: messagesReportableDefault
     defaultValue: "TRUE"
+  - type: string
+    name: typingDurationTypeChoiceDefault
+    defaultValue: "0.0"
+  - type: string
+    name: typingHideTypes
+    defaultValue: ""
 toolboxCategory: Chat
