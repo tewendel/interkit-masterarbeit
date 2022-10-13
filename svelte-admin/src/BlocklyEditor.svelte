@@ -248,11 +248,13 @@
       <Tab label="actions.js" />
         <div slot="content" class="content">
           <TabContent>
+            <div class="blocklyTabContent">
               <div id="blocklyDiv"use:watchResize={resizeBlockly}></div>
               <br />
               <Button on:click={()=>saveAndCompile(true)}>save</Button>
               &nbsp;&nbsp;
               <Button on:click={createDatabase} kind="tertiary">check database</Button>
+            </div>
           </TabContent>
           <TabContent>
             <div class="scroll">
@@ -276,12 +278,13 @@
 
 <style>
 
-  .content, #blocklyDiv {
-  height: calc(100vh - 260px);
+  .content, .blocklyTabContent {
+    height: calc(100vh - 260px);
   }
 
   #blocklyDiv {
     width: 100%;
+    height: calc(100vh - 340px);
   }
 
   .scroll {
