@@ -59,7 +59,7 @@
         <Tab label={`${messagesListNotification ? '‼️ ' : ''}Messages`} />
         <Tab label={'Schedule' + (scheduledeventsListNotification ? ` (${scheduledeventsListNotification})` : '')} />
         <Tab label={ "Repository " + repoNotice } />
-        <div slot="content">
+        <div slot="content" class="content">
           <TabContent>
             <Sheets {projectId}/>
           </TabContent>
@@ -127,6 +127,7 @@
   }
   .panes {
     display: flex;
+    height: 100%;
   }
   .left-pane {
     flex: 1;
@@ -147,5 +148,9 @@
 
   div.hidden {
     display: none;
+  }
+
+  .content {
+    height: 100%;
   }
 </style>

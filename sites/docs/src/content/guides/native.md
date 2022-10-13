@@ -125,6 +125,17 @@ https://github.com/ionic-team/capacitor/pull/5350/files
 
 You might have to change the targetSdkVersion located in `android/variables.gradle` (currently 31 is minimum for google play submissions).
 
+If you have deleted and recreated the `android` folder `npx cap add android`, you need to add 2 lines to the MainActivity of your app in order for live reload to work. The MainActivity file is located at `android/app/src/main/java/interkit/app/starter/MainActivity.java` (or hoewver you changed the app name and path)
+- add `import com.getcapacitor.plugin.http.Http;` as a new line below the other `import` statements
+- add `add(Http.class);` like in this example:
+  ```java
+    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
+      // Additional plugins you've installed go here
+      // Ex: add(TotallyAwesomePlugin.class);
+      add(Http.class);
+    }});
+  ```
+
 Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
 Follow this guide for more information: 
 https://developer.android.com/studio/publish/app-signing#sign_release

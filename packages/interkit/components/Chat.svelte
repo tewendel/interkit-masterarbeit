@@ -95,6 +95,8 @@
     }
   }
 
+  $: showInputField = (chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked
+
   // initialize chat interface and watch user data for changes
   const defaultChatInterface = {
     text: true
@@ -343,7 +345,7 @@
   </div>
   <div
     class="input"
-    style={`visibility: ${(chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked ? 'visible' : 'hidden'}`}
+    class:hidden={!showInputField}
     >
     <ChatInput 
       {chatInterface} 
@@ -391,6 +393,10 @@
     flex-grow: 0;
     flex-shrink: 1;
     border-top: 1px solid var(--color-border);
+  }
+
+  .input.hidden {
+    visibility: hidden;
   }
 
 </style>

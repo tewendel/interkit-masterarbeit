@@ -255,11 +255,12 @@
   }
 
   .message--link .message__contents {
-    link-decoration: underline;
+    text-decoration: underline;
   }
 
   .message--link .message__contents a {
     color: inherit;
+    word-break: break-all;
   }
 
   .message.message__lastFromSender  {
