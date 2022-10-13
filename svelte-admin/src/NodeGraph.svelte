@@ -89,8 +89,10 @@
     return store
   }
 
-  let nodeOffsetX
-  let nodeOffsetY
+  let nodeDragStartX
+  let nodeDragStartY
+  let nodeDragOrigX
+  let nodeDragOrigY
 
   let offsetX
   let offsetY
@@ -116,7 +118,20 @@
   $: projectId, boardId, getBoardView()
 
   const doZoom = dir => {
-    zoom.set(Math.max(get(zoom) + zoomStep * dir, minZoom))
+    const oldZoom = get(zoom)
+    const newZoom = Math.max(oldZoom + zoomStep * dir, minZoom)
+    // We need this factor to correct the board offset,
+    // since it is measured in viewport pixels
+    const zoomF = newZoom / oldZoom
+    // We need to correct so that we don't zoom into the upper left corner,
+    // but the viewport's center. Since offset is in viewport pixels,
+    // we can just take the svg canvas's dimensions to calculate the
+    // "zoomed out/in" portion.
+    const centerX = svgEl.clientWidth * (1 - zoomF) * 0.5
+    const centerY = svgEl.clientHeight * (1 - zoomF) * 0.5
+    offsetX.set(get(offsetX) * zoomF + centerX)
+    offsetY.set(get(offsetY) * zoomF + centerY)
+    zoom.set(newZoom)
   }
 
   const resetCanvas = () => {
@@ -146,9 +161,17 @@
     mouseX = e.clientX - r[0].x
     mouseY = e.clientY - r[0].y
     if (dragging !== false) {
-      // FIXME dragging is off when zoom != 1.0
-      nodes[dragging].posX = mouseX - nodeOffsetX
-      nodes[dragging].posY = mouseY - nodeOffsetY
+      /* nodeDragOrigX = original coord of node in "board pixels" (not viewport pixels)
+       *   (board pixels start at board origin and obey zoom)
+       * nodeDragStartX = coord where the drag started, in board pixels
+       * mouseX = current drag coord, in viewport pixels
+       * get(offsetX) = current board offset, in viewport pixels
+       * … / get(zoom) = apply zoom, from viewport to board pixels
+       */
+      const nodeDragCurrentX = (mouseX - get(offsetX)) / get(zoom)
+      const nodeDragCurrentY = (mouseY - get(offsetY)) / get(zoom)
+      nodes[dragging].posX = nodeDragOrigX + nodeDragCurrentX - nodeDragStartX
+      nodes[dragging].posY = nodeDragOrigY + nodeDragCurrentY - nodeDragStartY
     } else {
       if (canvasDragging) {
         mouseX = e.clientX
@@ -219,8 +242,10 @@
           console.log("mousedown", node.id)
           dragging = index
           dragStart = Date.now()
-          nodeOffsetX = mouseX - node.posX
-          nodeOffsetY = mouseY - node.posY
+          nodeDragStartX = (mouseX - get(offsetX)) / get(zoom)
+          nodeDragStartY = (mouseY - get(offsetY)) / get(zoom)
+          nodeDragOrigX = node.posX
+          nodeDragOrigY = node.posY
         }}
         on:click={() => {
           if (Date.now() - dragStart < 250) {
