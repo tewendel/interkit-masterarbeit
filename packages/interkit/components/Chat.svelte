@@ -20,6 +20,14 @@
   export let channel_key = "DEFAULT"
   export let messagesReportableDefault = 'TRUE'
 
+  // limited by typingMaxDuration!
+  export let typingDurationTypeChoiceDefault = '0'
+  typingDurationTypeChoiceDefault = (+typingDurationTypeChoiceDefault) || 0
+
+  // comma-separated string of message types, for which to hide typing dots. e.g. text,choice
+  export let typingHideTypes = ''
+  typingHideTypes = typingHideTypes.split(',').map(_ => _.trim())
+
   const reportsChannelKey = 'REPORTS'
 
   let sub;
@@ -214,11 +222,12 @@
 
   let typingShow = false
   let typingMessage;
+  let typingMaxDuration
   $: typingMaxDuration = $projectDataStore?.userVars?.debugTurboMode ? 2 : 15
-  const typingMinDurationTypeText = 1
+  const typingDurationTypeTextMin = 1
   const typingDurationPerTextCharacter = 0.075
 
-  const typingDuration = message => {
+  const getTypingDuration = message => {
     if (message.payload && ('typingDuration' in message.payload)) {
       return message.payload.typingDuration
     }
@@ -229,12 +238,12 @@
     switch (message?.payload?.type) {
       case 'text':
         duration = Math.max(
-          typingMinDurationTypeText,
+          typingDurationTypeTextMin,
           (message.payload?.text?.length * typingDurationPerTextCharacter) || 0
         )
         break
       case 'choice':
-        duration = 0
+        duration = typingDurationTypeChoiceDefault
         break
       case 'image':
         duration = 3
@@ -273,9 +282,9 @@
       setTimeout(typingNext, Math.floor(Math.random() * 500) +  750) // first reply
       return
     }
-    const duration = typingDuration(currentMessage)
-    if (verbose) console.log('typingNext starting timeout', duration, currentMessage)
-    typingShow = true
+    const duration = getTypingDuration(currentMessage)
+    typingShow = !typingHideTypes.includes(currentMessage?.payload?.type)
+    if (verbose) console.log('typingNext starting timeout', duration, currentMessage, typingShow)
     typingMessage = currentMessage;
     window.setTimeout(() => {
       const interfaceConfig = typingMessage?.payload?.options?.setInterface
