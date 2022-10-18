@@ -3,7 +3,7 @@
   import { onMount } from 'svelte'
   import { InterkitClient } from '../'
   
-  export let fitDimension = "width"; // width or height is 100%
+  export let fitDimension = "width"; // "width", "height" or "both" is 100%
   export let objectFit = "cover"; // contain or cover
   export let mediafileRef; // {type: "mediafile", value: id}
   export let doFallback = false; // show replacement if mediafile not found
