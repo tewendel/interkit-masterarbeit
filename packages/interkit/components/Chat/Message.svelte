@@ -256,7 +256,7 @@
 
   .message--choice, .message__user,
   .message--requestLocation, .message__user {
-    text-align: right;
+    text-align: left;
     align-self: flex-end;
   }
 
@@ -281,7 +281,7 @@
     font: var(--font-caption);
     padding: var(--distance-s);
     cursor: pointer;
-    text-align: right;
+    text-align: center;
   }
 
   .message__options :global(.icon) {
