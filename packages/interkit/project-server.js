@@ -1,8 +1,12 @@
 import { lib as boardNodeUtil } from './project-boards-nodes.js'
 
+const scheduledEventsProcessIntervalDelay = 2000
+const hookCronIntervalDelay = 10000
+
 let boardData;
 
 const subscribeMessages = async (server, projectId) => {
+  // FIXME this subscription is irrelevant, isn't it?
   let messagesSub = server.subscribe("messages.unhandled", { projectId });
   await messagesSub.ready();
 
@@ -11,6 +15,7 @@ const subscribeMessages = async (server, projectId) => {
 }
 
 const subscribeUnselected = async (server, projectId) => {
+  // FIXME this subscription is irrelevant, isn't it?
   let messagesSub = server.subscribe("choices.unselected", { projectId });
   await messagesSub.ready();
 
@@ -28,6 +33,7 @@ const subscribeUsers = async (server, projectId) => {
 
 let scheduledEvents;
 const subscribeScheduledEvents = async (server, projectId) => {
+  if (scheduledEvents) return
   const events = server.subscribe("scheduled_events", { projectId });
   await events.ready();
   scheduledEvents = server.collection('scheduled_events').reactive();
@@ -397,11 +403,39 @@ const setupMessageHandling = async ({
   // subscribe to scheduled events and process regularly
   await subscribeScheduledEvents(server, projectId);
   await processEvents(server);
-  setInterval(()=>{processEvents(server)}, 2000);
+  setInterval(()=>{processEvents(server)}, scheduledEventsProcessIntervalDelay);
 }
 
-
+const setupHookHandling = async ({ hooks, projectApi, server, projectId }) => {
+  const reactiveMessagesCollection = await subscribeMessages(server, projectId)
+  const reactiveUsersCollection = await subscribeUsers(server, projectId)
+  await subscribeScheduledEvents(server, projectId)
+  const api = {
+    ...projectApi,
+    users: reactiveUsersCollection,
+    messages: reactiveMessagesCollection,
+    events: scheduledEvents,
+    server,
+    projectId
+  }
+  if (typeof hooks?.cron?.init=== 'function') {
+    hooks.cron.init(api)
+  } else {
+    console.log(`setupHookHandling no init found or cron does not export init()`)
+  }
+  if (typeof hooks?.cron?.run === 'function') {
+    const run = () => {
+      console.log('cron run')
+      hooks.cron.run(api)
+    }
+    run()
+    setInterval(run, hookCronIntervalDelay)
+  } else {
+    console.log(`setupHookHandling no cron found or cron does not export run()`)
+  }
+}
 
 export {
   setupMessageHandling,
+  setupHookHandling
 }

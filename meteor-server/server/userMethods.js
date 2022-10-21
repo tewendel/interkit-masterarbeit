@@ -19,10 +19,17 @@ const updateUserProjectData = async (userId, projectId, key, value) => {
 
 const updateUserBoardArrivalState = async (userId, projectId, boardId, value) => {
   // write projectData updates to user
+  const $setLastArrived = {}
+  if (value.status === 'arrived') {
+    const now = new Date()
+    $setLastArrived[`projectUserData.${projectId}.boardState.${boardId}.lastArrived`] = now 
+    $setLastArrived[`projectUserData.${projectId}.boardLastArrived`] = now 
+  }
   const usersModifiedCount = Meteor.users.update(userId, {
     $set: {
       [`projectUserData.${projectId}.boardState.${boardId}.nodeId`] : value.nodeId,
-      [`projectUserData.${projectId}.boardState.${boardId}.status`] : value.status 
+      [`projectUserData.${projectId}.boardState.${boardId}.status`] : value.status,
+      ...$setLastArrived
     }
   })
   return usersModifiedCount

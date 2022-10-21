@@ -106,22 +106,24 @@ Meteor.methods({
   'message.send': ({projectId, channel_key, sender, recipients = [], payload, origin}) => {
     if (isUserBlocked() === true) return
     const userId = Meteor.userId()
-    console.log('message.send', { payload, channel_key, recipients, sender, userId })
-    const messageResult = Messages.insert({
-      projectId,
-      sender,
-      recipients,
-      channel_key,
-      payload,
-      origin,
-      createdAt: new Date()
-    })
-
-    if (messageResult) {
+    const pushOnly = payload?.type === 'push'
+    console.log('message.send', { payload, channel_key, recipients, sender, userId, pushOnly })
+    let messageResult
+    if (!pushOnly) {
+      messageResult = Messages.insert({
+        projectId,
+        sender,
+        recipients,
+        channel_key,
+        payload,
+        origin,
+        createdAt: new Date()
+      })
+    }
+    if (pushOnly || messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
       pushnotifications.send({ projectId, Meteor, recipients, payload })
     }
-    
   },
 
   'messages.block': async function ({ projectId, userIds, messageIds, setBlocked }) {
