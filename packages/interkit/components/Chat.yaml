@@ -11,6 +11,9 @@ fields:
     name: typingDurationTypeChoiceDefault
     defaultValue: "0.0"
   - type: string
+    name: typingDurationTypeTextPerCharacter
+    defaultValue: "0.075"
+  - type: string
     name: typingHideTypes
     defaultValue: ""
 toolboxCategory: Chat

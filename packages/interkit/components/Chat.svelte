@@ -24,6 +24,10 @@
   export let typingDurationTypeChoiceDefault = '0'
   typingDurationTypeChoiceDefault = (+typingDurationTypeChoiceDefault) || 0
 
+  // limited by typingDurationTypeTextMin!
+  export let typingDurationTypeTextPerCharacter = '0.075'
+  typingDurationTypeTextPerCharacter = (+typingDurationTypeTextPerCharacter) || 0.075
+
   // comma-separated string of message types, for which to hide typing dots. e.g. text,choice
   export let typingHideTypes = ''
   typingHideTypes = typingHideTypes.split(',').map(_ => _.trim())
@@ -225,7 +229,6 @@
   let typingMaxDuration
   $: typingMaxDuration = $projectDataStore?.userVars?.debugTurboMode ? 2 : 15
   const typingDurationTypeTextMin = 1
-  const typingDurationPerTextCharacter = 0.075
 
   const getTypingDuration = message => {
     if (message.payload && ('typingDuration' in message.payload)) {
@@ -239,7 +242,7 @@
       case 'text':
         duration = Math.max(
           typingDurationTypeTextMin,
-          (message.payload?.text?.length * typingDurationPerTextCharacter) || 0
+          (message.payload?.text?.length * typingDurationTypeTextPerCharacter) || 0
         )
         break
       case 'choice':
