@@ -7,9 +7,9 @@
   import Bubble from "./Bubble.svelte"
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
-  import MediaFileImage from "../MediaFileImage.svelte";
   import InlineAudioPlayerButton from '../InlineAudioPlayerButton.svelte';
   import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
+  import ChatImage from "./ChatImage.svelte"
 
   const dispatch = createEventDispatcher();
 
@@ -59,8 +59,8 @@
     }
   }
 
-  const linkClickHandler = message => {
-    const url = message?.payload?.url
+  const capacitorLinkClickHandler = message => {
+    const url = message?.payload?.url || message?.payload?.options?.url
     const isGmaps = message?.payload?.options?.gmaps === true
     return evt => {
       // ios strategy copied from ExternalMapAppButton
@@ -96,6 +96,7 @@
     class="message message--{message.payload.type}"
     class:message__user="{isByUser}"
     class:message__lastFromSender={lastFromSender}
+    class:contain={message?.payload?.options?.objectFit === "contain"}
   >
     <Bubble
       type = { isByUser ? "me" : "other" }
@@ -119,21 +120,24 @@
             <a
               href={message?.payload?.url}
               target="_blank"
-              on:click={linkClickHandler(message)}
+              on:click={capacitorLinkClickHandler(message)}
               >{message?.payload?.text}</a>
           {:else}
             {message?.payload?.text}
           {/if}
         {:else if message?.payload?.type == "image"}
-          <MediaFileImage
-            mediafileRef={{
-              type: 'mediafile',
-              value: message?.payload?.mediafileKey
-            }}
-            fitDimension="height"
-            style="height: 200px;"
-            doFallback={true}
-            />
+          {#if message?.payload?.options?.url}
+            <!-- add a link around image -->
+            <a
+              href={message?.payload?.options?.url}
+              target="_blank"
+              on:click={capacitorLinkClickHandler(message)}
+            >
+              <ChatImage {message} />
+            </a>
+          {:else}
+            <ChatImage {message} />
+          {/if}
         {:else if message?.payload?.type == "audio"}
             <InlineAudioPlayerButton
               audioKeyDirect={message?.payload?.mediafileKey}
@@ -223,6 +227,7 @@
     font: var(--font-body-1);
     position: relative;
     margin-bottom: var(--distance-s);
+    --chat-image-height: 200px;
   }
 
   .message-label {
@@ -236,8 +241,9 @@
     padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
   }
   
-  .message--image .message__contents, .message--video .message__contents {
-    height: 200px;
+  .message--image:not(.contain) .message__contents, 
+  .message--video .message__contents {
+    height: var(--chat-image-height); /* this is especially important for ios safari */
   }
 
   .message--audio .message__contents {
@@ -250,7 +256,7 @@
 
   .message--choice, .message__user,
   .message--requestLocation, .message__user {
-    text-align: right;
+    text-align: left;
     align-self: flex-end;
   }
 
@@ -275,7 +281,7 @@
     font: var(--font-caption);
     padding: var(--distance-s);
     cursor: pointer;
-    text-align: right;
+    text-align: center;
   }
 
   .message__options :global(.icon) {

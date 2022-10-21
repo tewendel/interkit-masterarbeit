@@ -36,6 +36,8 @@ const updateFiles = async function(projectId, watchedFiles) {
 const watchignore = [
   '**/node_modules/**',
   '**/.git/**',
+  '**/ios/**',
+  '**/android/**'
 ]
 
 const runUpdater = async function(projectId) {

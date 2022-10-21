@@ -6,6 +6,10 @@ npm install
 gem install cocoapods
 ```
 
+Generate the bundle
+```bash
+npm run build
+```
 
 Update the native projects with the current bundle from /public
 ```bash
