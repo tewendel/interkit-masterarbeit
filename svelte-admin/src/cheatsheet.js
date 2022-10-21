@@ -125,6 +125,9 @@ api.sendImage("f00ba420-0123-4567-89abcdef012356789", {customClass: "special"})
 api.sendText('your language: ' + api.userLang)
 api.sendText('your language, index: ' + api.userLangIndex)
 
+// set language
+api.setLang('de', 1) // the second argument has to match the index (0-based) in the AppBase blockly field 
+
 // use current language
 if (api.userLang === 'en') ...
 if (api.userLangIndex === 1) ...
