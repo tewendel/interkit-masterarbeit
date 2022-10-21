@@ -181,6 +181,19 @@ const setUserVar = async function(varName, value) {
   await server.call('user.setUserVar', {userId, projectId, varName, value})
 }
 
+const setLang = async function (lang, langIndex) {
+  // TODO as implemented now, user must know both lang and its index
+  // in the langs array, which is provided by a blockly field,
+  // and thus hard to know here, in a node handler.
+  // this is not ideal. either
+  // - langs have to be published to the server from blocky somehow, or
+  // - langs could be provided/defined somewhere else
+  // - we stop relying on langIndex
+  const { server, projectId, nodeId, userId } = this
+  await server.call('user.updateUserProjectData', { userId, projectId, key: 'lang', value: lang })
+  await server.call('user.updateUserProjectData', { userId, projectId, key: 'langIndex', value: langIndex })
+}
+
 const setElementProperty = async function(elementKey, propertyName, value, options) {
   const {server, projectId, userId} = this
   const methodParams = {
@@ -274,6 +287,7 @@ export default {
   echo,
   setUserVar,
   getUserVar,
+  setLang,
   setElementProperty,
   getElementProperty,
   setChannelProperty,
