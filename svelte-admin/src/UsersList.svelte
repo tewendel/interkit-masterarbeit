@@ -53,7 +53,7 @@
   let openQuickMessage = false
   let quickMsgText = 'hello'
   let quickMsgIsRawPayload = false
-  let quickMsgChannel = 'board1'
+  let quickMsgChannel
   let quickMsgResult = ''
   let quickMsgResultDate
   let quickMsgSchedulingValue
@@ -318,6 +318,7 @@
         errorify(json)
         boards = json.result
         boards.nodes = boards.nodes.map((node, _idx) => ({ _idx, ...node }))
+        if (!quickMsgChannel) quickMsgChannel = boards?.boards?.[0] || '_none'
       })
       .catch(genericErrorHandler)
   }
@@ -482,6 +483,7 @@
       <SelectSkeleton />
     {:else}
       <Select labelText="target channel" bind:selected={quickMsgChannel}>
+        <SelectItem value="_none" text="(none / error / wait)" />
         {#each boards.boards as boardId}
           <SelectItem
             value={boardId}
