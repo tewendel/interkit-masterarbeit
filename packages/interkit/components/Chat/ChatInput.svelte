@@ -15,6 +15,8 @@
   export let boardId
   export let nodeId
 
+  $: emptyInterface = !chatInterface.text && !chatInterface.image
+
   const dispatch = createEventDispatcher();
 
   const submit = () => {
@@ -49,7 +51,7 @@
 
 </script>
 
-<div class="ChatInput container">
+<div class="ChatInput container" class:emptyInterface>
   {#if chatInterface?.photo }
     <div class="left-button">
       <Button on:click={openCamera} type="ghost">
@@ -91,6 +93,8 @@
   .container {
     background-color: var(--color-background);
     display: flex;
+  }
+  .container:not(.emptyInterface) {
     padding: var(--distance-s);
   }
   .input {
