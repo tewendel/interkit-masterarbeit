@@ -201,7 +201,7 @@ const send = ({ projectId, Meteor, recipients, payload }) => {
       messaging = init(projectId)
       // console.log('FCM messaging OK', messaging)
     } catch (err) {
-      console.error('error setting up push notifications, bailing')
+      console.error('error setting up push notifications, bailing', err)
       return false
     }
     try {
