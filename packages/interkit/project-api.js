@@ -88,6 +88,10 @@ const sendSystem = async function (text, options) {
   await callWithDelay(server, "message.send", methodParams, options);
 };
 
+const sendSystemImage = async function ( mediafileKey, options) {
+  await sendMediaFile(this, "systemImage", mediafileKey, options);
+};
+
 
 const sendMediaFile = async function (callContext, type, mediafileKey, options) {
   const { message, server, projectId } = callContext
@@ -278,6 +282,7 @@ export default {
   sendText,
   sendLink,
   sendSystem,
+  sendSystemImage,
   sendImage,
   sendAudio,
   sendVideo,

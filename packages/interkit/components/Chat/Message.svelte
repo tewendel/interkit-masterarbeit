@@ -9,6 +9,7 @@
   import Icon from "../Icon.svelte";
   import InlineAudioPlayerButton from '../InlineAudioPlayerButton.svelte';
   import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
+  import MediaFileImage from '../MediaFileImage.svelte'
   import ChatImage from "./ChatImage.svelte"
 
   const dispatch = createEventDispatcher();
@@ -88,9 +89,22 @@
 {#if message?.payload?.type === 'empty'}
   {@html '<!-- empty message -->'}
 {:else if message?.payload?.type == "system" }
-<div class="system">
-  {message?.payload?.text}
-</div>
+  <div class="system">
+    {message?.payload?.text}
+  </div>
+{:else if message?.payload?.type == "systemImage" }
+  <div class="system system-image {message?.payload?.options?.placement ? `placement-${message?.payload?.options?.placement}` : ""}">
+    <MediaFileImage
+      mediafileRef={{
+        type: 'mediafile',
+        value: message?.payload?.mediafileKey
+      }}
+      fitDimension = "width"
+      objectFit = "contain"
+      style = { message?.payload?.options?.width ? `width: ${message?.payload?.options?.width}` : null}
+      doFallback={true}
+    />
+  </div>  
 {:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}
   <div 
     class="message message--{message.payload.type}"
@@ -239,6 +253,20 @@
     text-align: center;
     font: var(--font-caption-bold);
     padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
+  }
+
+  .system-image {
+    padding: var(--distance-s) 0 var(--distance-m) 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .system-image.placement-me {
+    justify-content: flex-end;
+  }
+
+  .system-image.placement-other {
+    justify-content: flex-start;
   }
   
   .message--image:not(.contain) .message__contents, 

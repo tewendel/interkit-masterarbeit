@@ -54,6 +54,13 @@ if(msg.payload.key == "a") {
 // send a system message
 api.sendSystem("Someone entered the channel")
 
+// send a system image
+api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789")
+api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789", {width: "200px"})
+// place the system image on either side of the chat
+api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789", {placement: "me"})
+api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789", {placement: "other"})
+
 // delays (this works for sendText, sendChoice, sendImage and moveTo)
 api.sendText("hello", {delay: 10}) // send the message 10 seconds later
 api.sendText("hello", {delay: {hours: 1, minutes: 30}}) // 1 hour, 30 minutes later
