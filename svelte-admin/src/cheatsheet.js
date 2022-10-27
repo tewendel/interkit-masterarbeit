@@ -22,8 +22,11 @@ api.sendImage("f00ba420-0123-4567-89abcdef012356789")
 api.sendAudio("e4770840-3c2e-4eeb-b59b-a0e15e14190b")
 api.sendVideo("b94eb8f3-72ef-476d-ad61-64adc18204e7")
 
-// imagas are normally scaled and cropped to fit ("cover" mode). to make sure that everything on the image is visible, you can switch to "contain" mode:
+// images are normally scaled and cropped to fit ("cover" mode). to make sure that everything on the image is visible, you can switch to "contain" mode:
 api.sendImage("f00ba420-0123-4567-89abcdef012356789", { objectFit: "contain" })
+
+// image are by default zoomable (enlarge on click or tap). prevent zoom:
+api.sendImage("f00ba420-0123-4567-89abcdef012356789", { zoomable: false })
 
 // send a clickable link
 api.sendLink("https://docs.interkit.app/")
