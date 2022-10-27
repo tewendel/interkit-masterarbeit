@@ -78,9 +78,70 @@
 
   let storeUpdates = 0
 
+  /* Messages can have a `setInterface` option in their payload,
+   * which is evaluated in the typing queue.
+   * So when messages arrive while the app is not visible,
+   * those `setInterfaces`s won't be evaluated.
+   * We have to "replay" the last "ignored" message.
+   * FIXME this is an overcomplicated fix to a problem that
+   * should not exist in the first place.
+   * TODO stick most of the console.logs behind `verbose` once tested.
+   */
+  const fastforwardOptionSetInterfaces = () => {
+    if (!hasStoreUpdated && hasInterfaceUpdated) {
+      console.log('fastforwardOptionSetInterfaces: interface updated, store not yet, bail')
+      return
+    }
+    if (hasStoreUpdated && !hasInterfaceUpdated) {
+      console.log('fastforwardOptionSetInterfaces: store updated, interface not yet, bail')
+      return
+    }
+    if (hasFastforwarded) {
+      console.log('fastforwardOptionSetInterfaces: done already, bail')
+      return
+    }
+    hasFastforwarded = true
+    let newestMessageWithSetInterface
+    $messageStore?.forEach(message => {
+      if (!message.payload?.options?.setInterface) return
+      if (!newestMessageWithSetInterface || message.createdAt > newestMessageWithSetInterface.createdAt) {
+        newestMessageWithSetInterface = message
+      }
+    })
+    if (!newestMessageWithSetInterface) {
+      console.log('fastforwardOptionSetInterfaces: no message with setInterface found, bail')
+      return
+    } else {
+      console.log('fastforwardOptionSetInterfaces found newest message:', newestMessageWithSetInterface)
+    }
+    if (!chatInterface._updatedAt) {
+      console.log('fastforwardOptionSetInterfaces: chatInterface sub did not provide _updatedAt, defaulting to newest message', newestMessageWithSetInterface)
+      setChatInterface(
+        newestMessageWithSetInterface.payload.options.setInterface,
+        newestMessageWithSetInterface.createdAt
+      )
+      return
+    }
+    if (newestMessageWithSetInterface.createdAt > chatInterface._updatedAt) {
+      console.log(
+        'fastforwardOptionSetInterfaces: newest message is newer than chatInterface _updatedAt, updating',
+        newestMessageWithSetInterface.createdAt, '>', chatInterface._updatedAt,
+        newestMessageWithSetInterface
+      )
+      setChatInterface(
+        newestMessageWithSetInterface.payload.options.setInterface,
+        newestMessageWithSetInterface.createdAt
+      )
+    } else {
+      console.log('fastforwardOptionSetInterfaces: newest message is older than chatInterface _updatedAt, ignoring')
+    }
+  }
+
   $: {
     if ($messageStore) {
       $messageStore = $messageStore.sort((a, b) => a.createdAt - b.createdAt)
+      hasStoreUpdated = true
+      fastforwardOptionSetInterfaces()
       console.log("message update", storeUpdates) // $messageStore)
       if (storeUpdates === 0) {
         typingQueuePointer = $messageStore.length
@@ -101,6 +162,16 @@
 
   $: showInputField = (chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked
 
+  /* fastforwardOptionSetInterfaces has to run once the two async subs/stores
+   * for interface AND messages have updated at least once.
+   * We use these flags to check when this has happened;
+   * the third one tells us to run fastforward… only once.
+   * TODO Not elegant, could maybe be done more idiomatically?
+   */
+  let hasInterfaceUpdated = false
+  let hasStoreUpdated = false
+  let hasFastforwarded = false
+
   // initialize chat interface and watch user data for changes
   const defaultChatInterface = {
     text: true
@@ -118,6 +189,18 @@
   $: {
     console.log("userProjectDataStore updated", $userProjectData)
     updateChatInterface($userProjectData?.boardState?.[channel_key]?.interfaceConfig)
+    hasInterfaceUpdated = true
+    fastforwardOptionSetInterfaces()
+  }
+
+  const setChatInterface = async (interfaceConfig, setUpdatedAt) => {
+    if (setUpdatedAt) interfaceConfig._updatedAt = setUpdatedAt
+    await InterkitClient.call('user.setBoardInterface', {
+      interfaceConfig,
+      projectId,
+      userId,
+      boardId: channel_key
+    })
   }
 
   let messagesScrollContainer
@@ -293,7 +376,10 @@
       const interfaceConfig = typingMessage?.payload?.options?.setInterface
       if (interfaceConfig) {
         console.log('Chat message has setInterface, calling…', typingMessage, interfaceConfig)
-        InterkitClient.call('user.setBoardInterface', { userId, projectId, boardId: channel_key, interfaceConfig })
+        setChatInterface(
+          interfaceConfig,
+          typingMessage.createdAt
+        )
       }
       typingShow = false
       typingQueuePointer++

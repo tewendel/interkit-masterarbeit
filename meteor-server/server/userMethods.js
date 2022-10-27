@@ -37,6 +37,7 @@ const updateUserBoardArrivalState = async (userId, projectId, boardId, value) =>
 
 const updateUserBoardInterface = async (userId, projectId, boardId, value) => {
   // write projectData updates to user
+  if (!value._updatedAt) value._updatedAt = new Date()
   const usersModifiedCount = Meteor.users.update(userId, {
     $set: {
       [`projectUserData.${projectId}.boardState.${boardId}.interfaceConfig`] : value      
