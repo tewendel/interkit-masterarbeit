@@ -107,7 +107,8 @@ Meteor.methods({
     if (isUserBlocked() === true) return
     const userId = Meteor.userId()
     const pushOnly = payload?.type === 'push'
-    console.log('message.send', { payload, channel_key, recipients, sender, userId, pushOnly })
+    const dontPush = payload?.type && ['system', 'systemImage', 'empty'].includes(payload.type)
+    console.log('message.send', { payload, channel_key, recipients, sender, userId, pushOnly, dontPush })
     let messageResult
     if (!pushOnly) {
       messageResult = Messages.insert({
@@ -119,6 +120,10 @@ Meteor.methods({
         origin,
         createdAt: new Date()
       })
+    }
+    if (dontPush) {
+      // console.log('not pushing')
+      return
     }
     if (pushOnly || messageResult) {
       // TODO: there is no return value here, no way to report errors to admin?
