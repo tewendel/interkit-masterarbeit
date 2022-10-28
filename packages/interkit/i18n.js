@@ -29,6 +29,12 @@ const setupFrontend = (setLangs) => {
         langIndex.set(get(langs)?.indexOf?.(data.lang))
       }
     } else {
+      // TODO this caused problems with the async-ness
+      // of (probably) projectId and multiple involved stores.
+      // Now, we set this in the AnonymousLogin component,
+      // which isn't ideal.
+      console.log('i18n userProjectData sub, fired, but no data.lang, ignoring', { data })
+      /*
       if (get(langs)) {
         console.log('i18n userProjectData sub, data.lang not set, but langs are here, defaulting to first', get(langs))
         setUserLang(get(langs)[0])
@@ -37,6 +43,7 @@ const setupFrontend = (setLangs) => {
         lang.set(false)
         langIndex.set(-1)
       }
+      */
     }
   })
 }

@@ -2,4 +2,10 @@ name: AnonymousLogin
 fields:
   - type: slot
     name: default
+  - type: string
+    name: defaultLang
+    defaultValue: en
+  - type: string
+    name: defaultLangIndex
+    defaultValue: 0
 toolboxCategory: User
