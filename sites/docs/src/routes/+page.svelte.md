@@ -1,20 +1,24 @@
 
 # Welcome to interkit docs
 
-## Structure
+### Audiences of the docs
 
-### Guides
+- 🖼 **Creator** – Craft an experience with interkit
+- 🎨 **Designer** – Design the visual style of your experience
+- 🔤 **Editor** – Edit the content of your experience
+- 💬 **Moderator** – Manage users and content
+- 🖥 **Developer** – Work on the interkit codebase
 
-How to archive something
+### Code levels
 
-### Components
+- "no code"
+- "low code"
+- "code"
 
-Description of UI components
+### Structure of the docs
 
-### Theory
-
-How the system and it's components work
-
-### Contribute
-
-How to contribute to the project
+- **Basics** – All the basics  
+- **Guides** – How to archive something  
+- **Components** – Description of UI components  
+- **Theory** – How the system and it's components work  
+- **Contribute** – How to contribute to the project  
