@@ -1,6 +1,8 @@
 
 # Welcome to interkit docs
 
+🏗 Please note: This site is under construction! 🏗
+
 ### Audiences of the docs
 
 - 🖼 **Creator** – Craft an experience with interkit
