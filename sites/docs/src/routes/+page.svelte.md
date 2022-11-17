@@ -1,13 +1,12 @@
-
 # Welcome to interkit docs
 
 🏗 Please note: This site is under construction! 🏗
 
 ### Audiences of the docs
 
-- 🖼 **Creator** – Craft an experience with interkit
+- 💭 **Creator** – Craft an experience with interkit
 - 🎨 **Designer** – Design the visual style of your experience
-- 🔤 **Editor** – Edit the content of your experience
+- 🖼 **Editor** – Edit the content of your experience
 - 💬 **Moderator** – Manage users and content
 - 🖥 **Developer** – Work on the interkit codebase
 
