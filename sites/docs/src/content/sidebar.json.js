@@ -3,6 +3,10 @@ export const items = [
 		title: 'Basics',
 		items: [
 			{
+				title: 'Creation process',
+				path: '/basics/process'
+			},
+			{
 				title: 'How to build an app',
 				path: '/basics/build_app'
 			}
