@@ -67,7 +67,7 @@ api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789", {placement: "other"}
 // delays (this works for sendText, sendChoice, sendImage and moveTo)
 api.sendText("hello", {delay: 10}) // send the message 10 seconds later
 api.sendText("hello", {delay: {hours: 1, minutes: 30}}) // 1 hour, 30 minutes later
-api.sendText("hello", {delay: {nextHour: 13}}) // the "next 13 o'clock", either later today, or tomorrow
+api.sendText("hello", {delay: {nextHour: 13}}) // the "next 13 o'clock", either later today, or tomorrow (in the server's timezone!)
 api.sendText("hello", {delay: {nextHour: 13, randomHours: 1}}) // add between 0 and 60 minutes, randomly
 
 // forward a message to other users currently in this node, uses user variable "name" as label

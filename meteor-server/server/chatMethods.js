@@ -201,6 +201,9 @@ Meteor.methods({
     if (delay instanceof Date) {
       execTime = delay
     } else if (typeof delay === "object") {
+      // TODO: this is server-time!, would be nice to be somehow syncable w/ client
+      // e.g. the client calculates their local nextHour and sends is as an absolute
+      // global/utc/timestamp to the server
       if (delay.nextHour) {
         let d = new Date(execTime)
         d = setHours(d, delay.nextHour)

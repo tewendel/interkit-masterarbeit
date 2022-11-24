@@ -20,6 +20,10 @@ export const items = [
 				path: '/guides/push_setup'
 			},
 			{
+				title: 'Setup server cron jobs',
+				path: '/guides/cron_setup'
+			},
+			{
 				title: 'Internationalization (i18n) and localization (l10n)',
 				path: '/guides/i18n'
 			},
