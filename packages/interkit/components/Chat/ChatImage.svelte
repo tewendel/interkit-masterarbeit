@@ -26,5 +26,5 @@
   objectFit={settings.objectFit}
   style={settings.height && `height: ${settings.height}`}
   doFallback={true}
-  zoomable={message?.payload?.options?.zoom !== false}
+  zoomable={message?.payload?.options?.zoom !== false && !message?.payload?.options?.url}
 />
