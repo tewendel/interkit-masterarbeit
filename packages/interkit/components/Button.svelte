@@ -79,7 +79,10 @@
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;   
+    -ms-user-select: none;    
+    user-select: none;        
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
