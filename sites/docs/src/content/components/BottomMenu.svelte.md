@@ -9,11 +9,11 @@
 
 The BottomMenu is often used as the main navigation for apps.
 
-![Example](./images/BottomMenuExample.png)
+![Example](./images/BottomMenuExample.png?bordered?width50)
 
 Here's the BottomMenu in the context of an interkit app:
 
-![Example](./images/BottomMenuExampleContext.png)
+![Example](./images/BottomMenuExampleContext.png?bordered?width50)
 
 ## How to Build
 

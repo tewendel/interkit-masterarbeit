@@ -49,5 +49,15 @@ em {
 }
 
 img {
-  max-width: 100%;
+  max-width: 95%;
+}
+
+img[src*="?bordered"] {
+  border: 1px solid #ccc;
+}
+
+@media (min-width: 768px) {
+  img[src*="?width50"] {
+    width: 50%;
+  }
 }

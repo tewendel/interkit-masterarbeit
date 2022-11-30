@@ -9,6 +9,7 @@
   <Submenu 
     title={section.title}
     items={section.items} 
+    open={section.open}
   />
 {/each}
 

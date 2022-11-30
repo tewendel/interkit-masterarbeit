@@ -1,19 +1,25 @@
 export const items = [
 	{
 		title: 'Basics',
+		open: true,
 		items: [
 			{
-				title: 'Creation process',
+				title: 'Introduction',
+				path: '/'
+			},
+			{
+				title: 'The process',
 				path: '/basics/process'
 			},
 			{
-				title: 'How to build an app',
+				title: 'How to start',
 				path: '/basics/build_app'
 			}
 		]
 	},
 	{
 		title: 'Guides',
+		open: false,
 		items: [
 			{
 				title: 'How to setup your own interkit server',
@@ -43,6 +49,7 @@ export const items = [
 	},
 	{
 		title: 'Components',
+		open: false,
 		items: [
 			{
 				title: 'BottomMenu',
@@ -92,6 +99,7 @@ export const items = [
 	},
 	{
 		title: 'Theory',
+		open: false,
 		items: [
 			{
 				title: 'Collection Schemas',
@@ -109,6 +117,7 @@ export const items = [
 	},
 	{
 		title: 'Contribute',
+		open: false,
 		items: [
 			{
 				title: 'Docs',
