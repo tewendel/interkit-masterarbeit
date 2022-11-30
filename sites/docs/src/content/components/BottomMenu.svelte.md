@@ -5,23 +5,33 @@
 
 # BottomMenu
 
-Use together with `BottomMenuButton` and `BottomMenuPage` to construct a row of buttons on the bottom to select different screens. 
+The BottomMenu is often used as the main navigation for apps.
 
-## Overview 
+![Example](/images/BottomMenuExample.png)
+
+Here's the BottomMenu in the context of an interkit app:
+
+![Example](/images/BottomMenuExampleContext.png)
+
+## How to Build
+
+Use the `BottomMenu` component together with `BottomMenuPage` and `BottomMenuButton` to construct a row of buttons on the bottom that select different screens.
+
+Arrange the components in the following way. This is an example with two buttons and two pages.
 
 - BottomMenu
-  - blocks
+  - pages
     - BottomMenuPage
       - TopNavBarCustom
     - BottomMenuPage
       - TopNavBarCustom
   - buttons
     - BottomMenuButton
-      - Icon
-      - Icon
+      - defaultIcon: Icon
+      - selectedIcon: Icon
     - BottomMenuButton
-      - Icon
-      - Icon
+      - defaultIcon: Icon
+      - selectedIcon: Icon
 
 ![Pages](/images/bottomMenuPages.png)
 ![Buttons](/images/bottomMenuButtons.png)
