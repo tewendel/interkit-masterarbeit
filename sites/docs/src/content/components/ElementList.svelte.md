@@ -20,7 +20,7 @@ Child should be a `ContentElement`.
       - ElementList
         - ContentElement
 
-![ElementList](/images/ElementList.png)
+![ElementList](images/ElementList.png)
 
 ```docs
 ../../../../../packages/interkit/components/ElementList.svelte

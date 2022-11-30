@@ -1,17 +1,19 @@
 <script>
   import ComponentInfo from "../../components/ComponentInfo.svelte";
-  import src from "../../../../../packages/interkit/components/BottomMenu.svelte?raw";
+  import src from "$interkit/components/BottomMenu.svelte?raw";
+  import sveld from "$interkit/components/BottomMenu.svelte?raw&sveld";
+  console.log(sveld);
 </script>
 
 # BottomMenu
 
 The BottomMenu is often used as the main navigation for apps.
 
-![Example](/images/BottomMenuExample.png)
+![Example](./images/BottomMenuExample.png)
 
 Here's the BottomMenu in the context of an interkit app:
 
-![Example](/images/BottomMenuExampleContext.png)
+![Example](./images/BottomMenuExampleContext.png)
 
 ## How to Build
 
@@ -33,8 +35,8 @@ Arrange the components in the following way. This is an example with two buttons
       - defaultIcon: Icon
       - selectedIcon: Icon
 
-![Pages](/images/bottomMenuPages.png)
-![Buttons](/images/bottomMenuButtons.png)
+![Pages](./images/bottomMenuPages.png)
+![Buttons](./images/bottomMenuButtons.png)
 
 ## Important Tips
 

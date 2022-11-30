@@ -8,6 +8,11 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
+		alias: {
+			// this will match a directory and its contents
+			// (`my-directory/x` resolves to `path/to/my-directory/x`)
+			'$interkit': '../../packages/interkit',
+		}
 	},
 
 	preprocess: [mdsvex(mdsvexConfig)]
