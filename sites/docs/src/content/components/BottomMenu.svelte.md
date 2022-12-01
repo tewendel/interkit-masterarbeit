@@ -7,7 +7,9 @@
 
 # BottomMenu
 
-The BottomMenu is often used as the main navigation for apps.
+The BottomMenu is often used as the main navigation for apps. 
+Research has found that most users use their phones with one hand. When they hold their phone, they’ll use either their right or left thumb to interact with the screen. The thumb is like the user’s mouse but with limitations. The bottom is the easiest to reach.
+For a bottom menu you should place high priority options at the bottom. This makes them quicker to reach and tap.
 
 ![Example](./images/BottomMenuExample.png?bordered?width50)
 
