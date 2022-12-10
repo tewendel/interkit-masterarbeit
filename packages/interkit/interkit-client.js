@@ -194,7 +194,7 @@ const getProjectId = async () => {
     } catch (e) {
       console.log(e);
       if(!connectionAlert) {
-        alert("Diese App benötigt Internet-Zugriff. Bitte überprüfen Sie Ihre Verbindung.")
+        // alert("Diese App benötigt Internet-Zugriff. Bitte überprüfen Sie Ihre Verbindung.")
         connectionAlert = true;
         connectionIssue.set(true);
       }
@@ -203,7 +203,9 @@ const getProjectId = async () => {
     if(result) {
       _projectId = await result.text();
     } else {
-      alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+      if (!connectionAlert) {
+        alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
+      }
     }
   } 
   console.log("INTERKIT_PROJECT_ID", _projectId);

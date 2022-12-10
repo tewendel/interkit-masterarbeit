@@ -1,17 +1,32 @@
 <script>
 
+  import { Capacitor } from '@capacitor/core'
+  import { Plugins } from '@capacitor/core'
+  const { SplashScreen, Network } = Plugins;
+
   import { InterkitClient } from '../'
   import { executeTrigger } from '../actions.js'
-  import { setupFrontend } from '../i18n.js'
+  import { t, lang, setupFrontend } from '../i18n.js'
   import { onMount, setContext } from 'svelte'
-  import { writable } from 'svelte/store';
+  import { get, writable } from 'svelte/store';
 
   import Styling from './Styling.svelte'
   import Overlay from './Overlay.svelte'
 
   export let languages
   export let projectIdOverride
-  setupFrontend(languages ? languages.split(',') : false)
+  languages = languages ? languages.split(',') : false
+  setupFrontend(languages)
+
+  // langT is a overly fail-safe reactive array to the translations
+  // we try to make it available as soon as possible, but since it
+  // depends on a server connection, it is likely not there yet
+  // in the init stage, especially when there is no internet connection
+  // TODO move this scheme into an i18n export, akin the api.t function
+  let langT
+  lang.subscribe(activeLang => {
+    langT = get(t)?.[activeLang || languages?.[0] || 'en']
+  })
 
   let initComplete = false;
 
@@ -21,6 +36,48 @@
   const desktopMQ = '(min-width: 600px)';
   const isDesktop = writable(!bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches);
   setContext('isDesktop', isDesktop)
+
+  let retryCountdownCounter = 20
+
+  const retryCountdown = () => {
+    if (retryCountdownCounter <= 1) {
+      retry()
+      return
+    }
+    retryCountdownCounter--
+    window.setTimeout(retryCountdown, 1000)
+  }
+
+  const checkRetryCountdown = () => {
+    console.log('AppBase', { issue: get(connectionIssue), projectId: get(projectId), initComplete })
+    if (get(connectionIssue) && !(get(projectId) && initComplete)) {
+      retryCountdown()
+    }
+  }
+
+  const retry = () => {
+    window.location.reload(true);
+  }
+
+  window._Network = Network
+
+  let showNetworkHint = false
+  let showNetworkHintConnection = false
+  let showNetworkHintNetwork = false
+
+  // the last term (and not not...) equals "show the retry button"
+  // i.e. when we have the retry button, we don't need the hint
+  // (which, as overlay, could block the button)
+  $: showNetworkHint = (showNetworkHintConnection || showNetworkHintNetwork) && !(!($projectId && initComplete) && connectionIssue)
+
+  Network.addListener('networkStatusChange', ({ connected }) => {
+    console.log('AppBase networkStatusChange', { connected, issue: get(connectionIssue) })
+    showNetworkHintNetwork = !connected
+    if (get(connectionIssue) && connected) {
+      console.log('AppBase retry because regained connection')
+      retry()
+    }
+  })
   
   onMount(async ()=>{
     initComplete = await InterkitClient.initApp({projectId: projectIdOverride})  
@@ -30,6 +87,7 @@
     // (capacitor plugin, interkit client, meteor)
     // are hard to get completely right
     InterkitClient.saveUserPushnotificationRegistrationToken()
+    checkRetryCountdown()
   });
 
   // tell frame parent (=admin) the userId
@@ -41,9 +99,33 @@
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;
   let connectionIssue = InterkitClient.connectionIssue;
+  let clientConnected = InterkitClient.connected;
 
-  import { Plugins } from '@capacitor/core';
-  const { SplashScreen } = Plugins;
+  connectionIssue.subscribe(value => {
+    checkRetryCountdown()
+  })
+
+  // when connection to server is lost, we delay feedback to get around two "false positives":
+  // 1. short after "onload", 2. right before "unload" (e.g. before a refresh)
+  let showNetworkHintConnectionDelay
+
+  clientConnected.subscribe(value => {
+    console.log('AppBase client connected subscription', value)
+    // clear any outstanding "queued" update
+    if (showNetworkHintConnectionDelay) { 
+      window.clearTimeout(showNetworkHintConnectionDelay)
+    }
+    if (value) {
+      // connection good/back, show immediately
+      showNetworkHintConnection = false
+    } else {
+      // connection bad/gone, delay showing it
+      showNetworkHintConnectionDelay = window.setTimeout(() => {
+        showNetworkHintConnection = true
+      }, 3000)
+    }
+  })
+
   import * as pushNotifications from '../pushnotifications.js'
 
   (async () => {
@@ -73,10 +155,6 @@
       SplashScreen.hide()  
     }
 
-  }
-
-  const retry = () => {
-    window.location.reload(true);
   }
 
   function popState(event) {
@@ -113,7 +191,12 @@
 
 <div class="AppBase Theming" id="Theming">
   <Styling>
-    <Overlay zIndex={0}>
+    <Overlay
+      zIndex={0}
+      customStyle={
+        `bottom: ${showNetworkHint && !($$slots.networkHint) ? 'var(--network-hint-height)' : '0'};`
+      }
+      >
       {#if $projectId && initComplete}
         {#if $$slots.desktopFallback && $isDesktop}
           <slot name="desktopFallback" />
@@ -123,13 +206,35 @@
         {/if}
       {:else}
         <div class="Loading">
-          <p class="static-loading-indicator">laden....</p>
           {#if $connectionIssue}
-          <button class="network-reload" on:click={retry}>verbinden</button>
+            <p>{langT['$init_noconnection']}</p>
+            <p>
+              <button class="network-reload" on:click={retry}>{langT['$init_retryconnection']}</button><br/>
+              {langT['$init_retrycountdown'].replace('%s', retryCountdownCounter)}
+            </p>
+          {:else}
+            <p class="static-loading-indicator">{langT['$init_loading']}</p>
           {/if}
         </div>
       {/if}
     </Overlay>
+    {#if showNetworkHint}
+      {#if $$slots.networkHint}
+        <slot name="networkHint"></slot>
+      {:else}
+        <div class="network-hint">
+          <div class="network-hint-message">
+            {#if showNetworkHintNetwork}
+              {langT['$appbase_noconnection_network']}
+            {:else if showNetworkHintConnection}
+              {langT['$appbase_noconnection_server']}
+            {:else}
+              {langT['$appbase_noconnection_error']}
+            {/if}
+          </div>
+        </div>
+      {/if}
+    {/if}
   </Styling>
 </div>
 
@@ -140,6 +245,7 @@
     touch-action: auto;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
     box-sizing: border-box;
+    --network-hint-height: 2em;
   }
 
   :global(html) {
@@ -174,6 +280,32 @@
     font-weight: 500;
   }
 
+  .network-reload {
+    border: 1px solid black;
+    padding: 1em;
+    margin: 1em 0;
+  }
+
+  .network-hint {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--network-hint-height);
+    background: black;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .network-hint-message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 2em);
+  }
 
 </style>
 

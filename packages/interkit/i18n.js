@@ -1,5 +1,6 @@
 import { InterkitClient } from './'
 import { get, writable } from 'svelte/store'
+import builtinT from './i18n_messages.js'
 
 let userProjectData = InterkitClient.userProjectDataStore
 
@@ -48,14 +49,7 @@ const setupFrontend = (setLangs) => {
   })
 }
 
-const t = writable({
-  'de': {
-    '$test': 'de test'
-  },
-  'en': {
-    '$test': 'en test'
-  }
-})
+const t = writable(builtinT)
 
 const sheetKey = 'translation'
 let sheetSub
@@ -96,7 +90,7 @@ const build = rows => {
   console.log('i18n build', { rows })
   if (!rows) return
   console.group('i18n build rows')
-  const newT = {}
+  const newT = { ...builtinT }
   rows.forEach(row => {
     const _id = row?.values?._id
     console.log('i18n build', { row, _id })
@@ -134,6 +128,7 @@ const setUserLang = async (newLang) => {
 }
 
 export {
+  builtinT,
   t,
   lang,
   langIndex,
