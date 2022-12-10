@@ -1,4 +1,4 @@
-# How to build an app
+# How to start
 
 ## Define your "elements"
 

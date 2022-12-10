@@ -1,16 +1,21 @@
 <script>
+  import { page } from '$app/stores';
+
   export let items
   export let title
+  export let open = false
+  
+  $: currentPath = $page.url.pathname
 </script>
 
-<details open>
+<details {open}>
   <summary>
     {title}
   </summary>
   <ul>
     {#each items as item}
       <li>
-        <a href="{item.path}">
+        <a href="{item.path}" class:active={currentPath == item.path}>
           {item.title}
         </a>
       </li>
@@ -41,7 +46,9 @@
   a:hover {
     background-color: #fff9;
   }
-
+  a.active {
+    font-weight: bold;
+  }
   summary {
     font-weight: bold;
     font-size: 110%;
