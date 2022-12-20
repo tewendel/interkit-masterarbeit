@@ -178,7 +178,7 @@
 {/if}
 
 {#if $runtimeError}
-  <div class="error">uncaught {$runtimeError}</div>
+  <div class="error">{$runtimeError} (check browser console for details)</div>
 {/if}
 
 <style>
