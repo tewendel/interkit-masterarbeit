@@ -50,8 +50,9 @@ const initProject = async (_projectId) => {
   console.log(bundleServerURL, projectId)
 
   window.addEventListener("message", (event) => {
-    console.log(event.data)
-    runtimeError.set(event.data.msg + " (check browser console for details)")
+    console.log("window message event", event.data)
+    if(event.data.msg)
+      runtimeError.set(event.data.msg)
   }, false);
 }
 

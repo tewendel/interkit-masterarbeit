@@ -68,7 +68,7 @@ npm i -g pm2
 
 use you command with `pm2 start`, for example:  
 ```
-npm start --restart-delay=60000 "npm start wss://api.v03.demo.interkit.app/websocket TB38WTNBewMYe6YYe raspi raspi"
+pm2 start --restart-delay=60000 "npm start wss://api.v03.demo.interkit.app/websocket TB38WTNBewMYe6YYe raspi raspi"
 ```
 
 #### restore at startup
@@ -79,6 +79,14 @@ npm start --restart-delay=60000 "npm start wss://api.v03.demo.interkit.app/webso
 2. execute the command it spits out: `sudo env ...`
 3. reboot
 4. it should replay the audio it played on startup
+
+#### setup ufw firewall 
+
+1. install ufw `sudo apt-get install ufw`
+2. deny all outgoing traffic `sudo ufw default deny outgoing`
+3. add ip address of your server to /etc/hosts eg 95.216.219.111 api.project.myserver.net
+4. allow traffic to your server `sudo ufw allow out to 95.216.219.111`
+5. activate firewall `sudo ufw enable`
 
 ## Usage
 
