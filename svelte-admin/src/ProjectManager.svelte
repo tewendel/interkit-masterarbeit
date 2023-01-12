@@ -25,6 +25,8 @@
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
 
+  import { projectId } from './admin.js'
+
   export let params = {}
 
   let userId = InterkitClient.userId;
@@ -73,6 +75,9 @@
   onDestroy(destroyProjectsSub)
 
   $: currentProjectId = params.projectId
+
+  // TODO this should probably go into App.svelte, "nearer" the router
+  $: projectId.set(params.projectId)
 
   $: manageProjectsSub(currentProjectId)
 
