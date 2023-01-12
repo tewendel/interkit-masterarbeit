@@ -6,7 +6,7 @@
 
   import { InterkitClient } from '../'
   import { executeTrigger } from '../actions.js'
-  import { t, lang, setupFrontend } from '../i18n.js'
+  import { translations, lang, setupFrontend } from '../i18n.js'
   import { onMount, setContext } from 'svelte'
   import { get, writable } from 'svelte/store';
 
@@ -22,10 +22,10 @@
   // we try to make it available as soon as possible, but since it
   // depends on a server connection, it is likely not there yet
   // in the init stage, especially when there is no internet connection
-  // TODO move this scheme into an i18n export, akin the api.t function
+  // in a less critical context, we would use the simpler t function
   let langT
   lang.subscribe(activeLang => {
-    langT = get(t)?.[activeLang || languages?.[0] || 'en']
+    langT = get(translations)?.[activeLang || languages?.[0] || 'en']
   })
 
   let initComplete = false;
@@ -220,9 +220,11 @@
     </Overlay>
     {#if showNetworkHint}
       {#if $$slots.networkHint}
-        <slot name="networkHint"></slot>
+        <div class="network-hint network-hint--custom">
+          <slot name="networkHint"></slot>
+        </div>
       {:else}
-        <div class="network-hint">
+        <div class="network-hint network-hint--default">
           <div class="network-hint-message">
             {#if showNetworkHintNetwork}
               {langT['$appbase_noconnection_network']}
@@ -286,7 +288,7 @@
     margin: 1em 0;
   }
 
-  .network-hint {
+  .network-hint--default {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -300,11 +302,13 @@
     justify-content: center;
   }
 
-  .network-hint-message {
+  .network-hint--default .network-hint-message {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 2em);
+    height: var(--network-hint-height);
+    line-height: var(--network-hint-height);
   }
 
 </style>
