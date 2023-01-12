@@ -7,8 +7,6 @@ import ModalPanel from '../ModalPanel.svelte'
 
 import { default as story, boards } from '../story.js'
 
-export let projectId
-
 let nodePanelLabel = 'start'
 
 </script>
