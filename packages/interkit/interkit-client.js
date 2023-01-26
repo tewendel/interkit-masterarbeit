@@ -607,8 +607,8 @@ const restoreUiSnapshot = id => {
   }
 }
 
-const initApp = async options => {
-  console.log('initApp')
+const initAuth = async () => {
+  console.log('initAuth')
   try {
     let userAuthObj = await Storage.get({ key: 'userAuth' })
     if (userAuthObj && userAuthObj.value) {
@@ -624,7 +624,11 @@ const initApp = async options => {
   } catch(e) {
     console.error(e)
   }
+}
 
+const initApp = async options => {
+  console.log('initApp')
+  await initAuth()
   await loadConfig();
   if (options.projectId) {
     projectId.set(options.projectId);
@@ -936,6 +940,7 @@ const InterkitClient = {
   connectionIssue,
   connect,
   initApp,
+  initAuth,
   createProjectTokenUser,
   loginTokenUser,
   createProjectTokenUserAndLogin,

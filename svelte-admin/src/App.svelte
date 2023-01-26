@@ -33,6 +33,7 @@
   $: connected = InterkitClient.connected;
 
   let userId = InterkitClient.userId;
+  InterkitClient.initAuth()
 
 </script>
 
