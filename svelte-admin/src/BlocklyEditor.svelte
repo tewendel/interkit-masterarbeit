@@ -8,6 +8,7 @@
 
   
   import Blockly from 'blockly';
+  import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
   import parseBlocklyXML from './parseBlocklyXML.js';
   
@@ -150,7 +151,7 @@
       }
     }
 
-    blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
+    blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects); // generates code generator from yaml component files
     
     // hide toolbox
     /*
@@ -181,7 +182,7 @@
     //console.log("myUpdateFunction")
     let code;
     try {
-      code = Blockly.JavaScript.workspaceToCode(workspace);
+      code = javascriptGenerator.workspaceToCode(workspace);
     } catch(e) {
       console.log(e)
     }
