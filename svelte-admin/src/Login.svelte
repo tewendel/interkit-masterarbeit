@@ -4,9 +4,17 @@
   let username = "admin"
   let password = "password";
 
+  let error = null;
+
   const submit = async e => {
     e.preventDefault();
-    await InterkitClient.login({username, password})
+    try {
+      await InterkitClient.login({username, password})
+      error = null
+    } catch (e) {
+      console.log(e)
+      error = e.message
+    }
   }
 
 </script>
@@ -16,6 +24,9 @@
   <input bind:value={password} type="password"/><br/>
   <input type="submit" value="login">
 </form>
+{#if error}
+  <div class="error">{error}</div>
+{/if}
 
 <style>
   div {
@@ -24,6 +35,7 @@
   input, button {
     margin: 5px;
   }
-
-
+  .error {
+    color: red;
+  }
 </style>
