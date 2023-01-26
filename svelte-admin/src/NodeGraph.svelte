@@ -6,7 +6,7 @@
   const dispatch = createEventDispatcher()
 
   import { boardsApi as api } from './BundleServer.js'
-  import { idRE } from 'interkit/project-boards-nodes.js'
+  import { idRE } from 'interkit/project-regex.js'
 
   // N.B. this also finds invalid code
   const parseREmoveTo = new RegExp(`moveTo\\s*\\(\\s*["'](${idRE})["']`, 'gu')

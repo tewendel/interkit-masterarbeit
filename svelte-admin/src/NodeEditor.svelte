@@ -30,7 +30,7 @@
   import NewNodeModal from './InputModals/NewNodeModal.svelte'
   import ChannelEditor from './ChannelEditor.svelte'
 
-  import { idRE } from 'interkit/project-boards-nodes.js'
+  import { idRE } from 'interkit/project-regex.js'
 
   const dispatch = createEventDispatcher()
   

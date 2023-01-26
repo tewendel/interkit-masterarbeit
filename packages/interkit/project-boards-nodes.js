@@ -1,6 +1,7 @@
 import * as path from 'path'
-import { existsSync, promises as fs } from 'fs'
+import { promises as fs } from 'fs'
 import beautify from 'js-beautify'
+import { idRE } from './project-regex.js'
 
 // handle non-node/browser environment so we can import this as a module there
 const REPOSITORIES_PATH = typeof process !== 'undefined' ? process.env.REPOSITORIES_PATH : ''
@@ -15,15 +16,6 @@ export const onArrive = async (api) => {\n // do something\n}\n
 export const onMessage = async (msg, api) => {\n  // do something\n}
 `
 const startNodeId = 'start'
-
-/* Should we run into incompatible browsers, the Unicode property escapes
- * can be expanded. See https://stackoverflow.com/a/37668315/629238
- * Affected: interkit admin on Safari <11.1, Chrome <64, FF <78
- * See https://caniuse.com/mdn-javascript_builtins_regexp_property_escapes
- */
-const idRE = '[\\p{L}\\p{Nd} -]+'
-// for slugification
-const negIdRE = '[^\\p{L}\\p{Nd} -]'
 
 const projectIdRE = /[\w\d]+/
 const idParamRE = new RegExp(idRE, 'u')
@@ -346,6 +338,4 @@ api.nodes.delete = expressify(
 export {
   lib,
   api,
-  idRE,
-  negIdRE
 }

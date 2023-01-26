@@ -1,6 +1,6 @@
 import beautify from 'js-beautify'
 
-import { idRE, negIdRE } from 'interkit/project-boards-nodes.js'
+import { idRE, negIdRE } from 'interkit/project-regex.js'
 
 const verbose = true
 
