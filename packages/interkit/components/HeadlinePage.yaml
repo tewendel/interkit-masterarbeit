@@ -7,7 +7,6 @@ fields:
     defaultValue: Headline
   - type: extraProps
     props:
-      - name: secret
+      - name: subtitle
         type: string
-        defaultValue: pssst    
 toolboxCategory: "Basics"
