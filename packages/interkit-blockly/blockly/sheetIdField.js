@@ -25,6 +25,16 @@ export default (Blockly, update) => {
       return new SheetIdField(value);
     }
 
+    saveState() {
+      return {
+        'value': this.getValue(),  // Value state
+      };
+    }
+    
+    loadState(state) {
+      this.setValue(state['value']);
+    }
+
     toXml(fieldElement) {
       //console.log(this.value_)
       fieldElement.setAttribute('value', this.value_.value);
@@ -46,7 +56,7 @@ export default (Blockly, update) => {
     async showEditor_() {
       try {
         let value = await update(this.getValue(), this.name);
-        console.log("got value", value)
+        //console.log("got value", value)
         this.setValue(value);
         this.render_();
       } catch(e) {

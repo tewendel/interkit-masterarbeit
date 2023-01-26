@@ -29,7 +29,7 @@
   
   let workspace;
   let blocklyXMLFile = "blocklyState.xml";
-  let blocklyXML;
+  let blocklyJsonFile = "blocklyState.json";
   let generatedCode = "";
   
   let openInputModal = null;
@@ -140,14 +140,27 @@
 
     workspace.addChangeListener(myUpdateFunction);
 
-    blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
-    if(blocklyXML.content) {
-      //console.log("blocklyXML", blocklyXML.content)
-      let xml = Blockly.Xml.textToDom(blocklyXML.content);
+    let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
+    if(blocklyJson?.content) {
       try {
-        Blockly.Xml.domToWorkspace(xml, workspace);
+        let stateToLoad = JSON.parse(blocklyJson.content)
+        Blockly.serialization.workspaces.load(stateToLoad, workspace)
       } catch(e) {
-        alert("error importing blockly xml")
+        alert("error importing blockly json")
+        console.log("json import error", e)
+      }
+    }
+
+    if(!blocklyJson) {
+      let blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
+      if(blocklyXML?.content) {
+        //console.log("blocklyXML", blocklyXML.content)
+        let xml = Blockly.Xml.textToDom(blocklyXML.content);
+        try {
+          Blockly.Xml.domToWorkspace(xml, workspace);
+        } catch(e) {
+          alert("error importing blockly xml")
+        }
       }
     }
 
@@ -173,6 +186,7 @@
 
   const createDatabase = () => {
 
+    // todo: update to json parsing
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
     parseBlocklyXML(xml_text, projectId);
@@ -222,10 +236,11 @@
 
   const save = async ()=>{
 
+    // save xml
+    /* deactivated
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
-    blocklyXML = {content: xml_text}
-
+    let blocklyXML = {content: xml_text}
     //console.log(xml_text)
 
     let file = {
@@ -233,6 +248,17 @@
       content: xml_text
     }
     await BundleServer.saveSrcFile({file, projectId})    
+    */
+
+    // save json
+    let jsonString = JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2)
+    // console.log("JSON blockly:", jsonString)
+    let jsonFile = {
+      filename: blocklyJsonFile,
+      content: jsonString
+    }
+    await BundleServer.saveSrcFile({file: jsonFile, projectId})    
+
 
     let appSvelteFile = {
       filename: "App.svelte",
