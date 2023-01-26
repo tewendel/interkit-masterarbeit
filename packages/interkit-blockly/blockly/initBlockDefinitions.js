@@ -10,7 +10,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
       init: function() {
 
         this.appendDummyInput().appendField("<"+blockObject.name+">");
-        
+
         // setup fields  
         for(let field of blockObject.fields) {
           
@@ -45,6 +45,17 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
             .appendField(field.name)
             .appendField(new customFields.SheetColumnField(field), field.name);
 
+            /*
+              // add button
+              let fieldImage = new Blockly.FieldImage(
+                "https://www.gstatic.com/codesite/ph/images/star_on.gif",
+                15,
+                15,
+                "*");
+              fieldImage.setOnClickHandler((f)=> {console.log("fieldImage", f)})
+              this.appendDummyInput().appendField(fieldImage)
+            */
+        
           } else if(field.type == "sheetId") {
 
             this.appendDummyInput()

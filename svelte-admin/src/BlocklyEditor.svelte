@@ -152,7 +152,23 @@
 
     blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
     
+    // hide toolbox
+    /*
+    let toolbox = workspace.getToolbox();
+    toolbox.setVisible(false);
+    */
+
   }
+
+  /*
+  const testBlockly = () => {
+    
+    // add a new block to the workspace programmatically
+    let newBlock = workspace.newBlock('HeadlinePage');
+    newBlock.initSvg();
+    newBlock.render();
+  }
+  */
 
   const createDatabase = () => {
 
