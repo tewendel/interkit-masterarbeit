@@ -130,6 +130,10 @@
 
   (async () => {
     console.log('pushNotifications...')
+    if (!pushNotifications.isPushNotificationsAvailable()) {
+      console.log('pushNotifications not available (web)')
+      return
+    }
     pushNotifications.startHeartbeat()
     await pushNotifications.addListeners()
     await pushNotifications.registerNotifications()
