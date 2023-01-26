@@ -24,6 +24,9 @@
   <input bind:value={password} type="password" autocomplete="current-password"/><br/>
   <input type="submit" value="login">
 </form>
+{#if error}
+  <div class="error">{error}</div>
+{/if}
 
 {#if error}
   <div class="error">{error}</div>

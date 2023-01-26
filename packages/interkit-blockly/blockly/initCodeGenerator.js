@@ -2,7 +2,7 @@
 
 const verbose = false
 
-export const initCodeGenerator = (Blockly, blockObjects) => {
+export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
@@ -52,7 +52,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
   }
 
   const slot = (block, slotName, slotProp) => {
-    var value = Blockly.JavaScript.statementToCode(block, slotName)
+    var value = javascriptGenerator.statementToCode(block, slotName)
     if (verbose) console.log('#CG# slot', { slotName, slotProp, value })
     return value ? 
         (`<svelte:fragment slot="${slotName}" `
@@ -62,19 +62,19 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
   }
 
   const statements = (block, blocklyAttributeName) => {
-    var statements_name = Blockly.JavaScript.statementToCode(block, blocklyAttributeName);    
+    var statements_name = javascriptGenerator.statementToCode(block, blocklyAttributeName);    
     if (verbose) console.log('#CG# statement', statements_name)
     return `${statements_name}`  
   }
 
   const getSubtreeStatements = (subtreeKey) => {
     //console.log("looking for subtree", subtreeKey)
-    const subtrees = Blockly.mainWorkspace.getBlocksByType("BlocklySubTree")
+    const subtrees = workspace.getBlocksByType("BlocklySubTree")
     //console.log(subtrees)
     for(let subtree of subtrees) {
       //console.log(subtree.getFieldValue("key"))
       if(subtree.getFieldValue("key") == subtreeKey) {        
-         let code = Blockly.JavaScript.statementToCode(subtree, "blocks")
+         let code = javascriptGenerator.statementToCode(subtree, "blocks")
          //console.log("found with code", code)
          return code;
       }
@@ -89,7 +89,7 @@ export const initCodeGenerator = (Blockly, blockObjects) => {
   //const blockObjects = getBlockObjects();    
 
   for(let blockObject of blockObjects) {
-    Blockly.JavaScript[blockObject.name] = function(block) {
+    javascriptGenerator[blockObject.name] = function(block) {
 
       // special blockly control blocks
 
