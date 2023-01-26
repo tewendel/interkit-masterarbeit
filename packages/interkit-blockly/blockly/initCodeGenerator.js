@@ -1,5 +1,8 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
+import extraPropsField from "./extraPropsField";
+import Blockly from 'blockly';
+
 const verbose = false
 
 export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) => {
@@ -49,6 +52,17 @@ export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) 
 
   const attributes = (block, attributeNames) => {
     return attributeNames.map(a => attribute(block, a)).join(" ")
+  }
+
+  // exract data from extraProps field and format as a prop
+  const extraProp = (block, prop) => {
+    
+    let blockJson = Blockly.serialization.blocks.save(block);
+    console.log("blockJson", blockJson) 
+
+    let value = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)?.value
+    
+    return value ? `${prop.name}="${value}"\n` : "";
   }
 
   const slot = (block, slotName, slotProp) => {
@@ -107,8 +121,14 @@ export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) 
        
       // props
       for(let field of blockObject.fields) {
-        if(field.type != "slot") {
+        if(field.type != "slot" && field.type != "extraProps") {
           code += "   " + attribute(block, field.name)
+        }
+        if(field.type == "extraProps") {
+          console.log("extraProps", field.props, block)
+          for(let prop of field.props) {
+            code += "   " + extraProp(block, prop);
+          }
         }
       }
       if(blockObject.hiddenProps) {

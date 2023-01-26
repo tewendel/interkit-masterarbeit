@@ -17,6 +17,7 @@
 
   import initSheetColumnField from 'interkit-blockly/blockly/sheetColumnField.js'
   import initSheetIdField from 'interkit-blockly/blockly/sheetIdField.js'
+  import initExtraPropsField from 'interkit-blockly/blockly/extraPropsField.js'
   
   import InputModal from './InputModals/InputModal.svelte';
   import CodeHighlighter from './CodeHighlighter.svelte';
@@ -32,15 +33,13 @@
   let blocklyJsonFile = "blocklyState.json";
   let generatedCode = "";
   
-  let openInputModal = null;
-  let inputModalValue;
-  let submitInputModal;
-  let cancelInputModal;
-  let inputModalParams;
+  let openInputModal = null; // which input modal to show
+  let inputModalValue; // the current value of the modal
+  let submitInputModal; // what happens on submit
+  let cancelInputModal; // what happens on cancel
+  let inputModalParams; // parameters for the modal
 
   const updateSheetColumn = (previousValue, notice) => {
-    console.log("notice", notice, previousValue)
-
     inputModalValue = {
       sheetKey: previousValue?.value?.split("/")[0], 
       columnKey: previousValue?.value?.split("/")[1]
@@ -69,7 +68,6 @@
   }
 
   const updateSheetId = (previousValue, notice) => {
-    console.log("notice", notice)
     inputModalValue = {
       sheetKey: previousValue?.value
     };
@@ -95,13 +93,34 @@
     });
   }
 
+  // passed into ExtraPropsField, activated when user clicks on it -> showEditor_()
+  const updateExtraProps = (currentProps, notice) => {
+    inputModalValue = currentProps; // this is bound to inputModal
+    inputModalParams = { notice }
+    openInputModal = "extraProps";
+    console.log("loading Modal for extraProps", inputModalValue)
+
+    // returns Promise so that modal stays open until user clicks something
+    return new Promise((resolve, reject) => {
+        submitInputModal = () => {
+          console.log("submitInputModal", inputModalValue)
+          resolve(inputModalValue);
+          setTimeout(myUpdateFunction, 100);
+        }
+        cancelInputModal = () => {
+          reject("cancelled")
+        }  
+    });
+  }
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
 
     const customFields = {
       SheetColumnField: initSheetColumnField(Blockly, updateSheetColumn),
-      SheetIdField: initSheetIdField(Blockly, updateSheetId)    
+      SheetIdField: initSheetIdField(Blockly, updateSheetId),
+      ExtraPropsField: initExtraPropsField(Blockly, updateExtraProps)    
     }
 
 
@@ -193,7 +212,7 @@
   }
 
   const myUpdateFunction = async (event) => {
-    //console.log("myUpdateFunction")
+    console.log("myUpdateFunction")
     let code;
     try {
       code = javascriptGenerator.workspaceToCode(workspace);
@@ -252,7 +271,7 @@
 
     // save json
     let jsonString = JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2)
-    //console.log("JSON blockly:", jsonString)
+    console.log("JSON blockly:", jsonString)
     let jsonFile = {
       filename: blocklyJsonFile,
       content: jsonString

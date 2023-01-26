@@ -1,0 +1,55 @@
+export default (Blockly, update) => {
+
+  console.log("init ExtraPropsField")
+  
+  /* ExtraPropsField field */
+
+  class ExtraPropsField extends Blockly.FieldImage {
+    constructor(props) {
+      // call FieldImage constructor and pass in update as onClick function
+      super("/images/sheet_icon_inv.png", 15, 15, "*")
+
+      console.log("setup FieldImage with this", this)
+
+      console.log("extra props field constructor with props", props)
+      this.props = props
+      
+      this.SERIALIZABLE = true;
+    }
+
+    fromJson(options) {
+      console.log("ExtraPropsField.fromJson", options);
+      return new ExtraPropsField([]);
+    }
+
+    saveState() {
+      console.log("saveState extraProps", this.props)
+      return {
+        'props': this.props, 
+      };
+    }
+    
+    loadState(state) {
+      console.log("loadState extraProps", state)
+      this.props = state['props'];
+    }
+
+    async showEditor_() {
+      console.log("showEditor_", this.props);
+      try {
+        let newProps = await update(this.props, this.name);
+        console.log("got props", newProps);
+        this.props = newProps;
+      } catch(e) {
+        console.log(e)
+      }
+    }
+
+  }
+
+
+  Blockly.fieldRegistry.register('extraProps', ExtraPropsField);
+
+
+  return ExtraPropsField;
+}
