@@ -2,7 +2,7 @@
 
 const verbose = false
 
-export const initCodeGenerator = (javascriptGenerator, blockObjects) => {
+export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
@@ -69,7 +69,7 @@ export const initCodeGenerator = (javascriptGenerator, blockObjects) => {
 
   const getSubtreeStatements = (subtreeKey) => {
     //console.log("looking for subtree", subtreeKey)
-    const subtrees = Blockly.mainWorkspace.getBlocksByType("BlocklySubTree")
+    const subtrees = workspace.getBlocksByType("BlocklySubTree")
     //console.log(subtrees)
     for(let subtree of subtrees) {
       //console.log(subtree.getFieldValue("key"))

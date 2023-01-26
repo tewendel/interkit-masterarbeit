@@ -164,7 +164,7 @@
       }
     }
 
-    blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects); // generates code generator from yaml component files
+    blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
     
     // hide toolbox
     /*
@@ -252,7 +252,7 @@
 
     // save json
     let jsonString = JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2)
-    // console.log("JSON blockly:", jsonString)
+    //console.log("JSON blockly:", jsonString)
     let jsonFile = {
       filename: blocklyJsonFile,
       content: jsonString
