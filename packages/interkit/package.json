@@ -24,7 +24,7 @@
     "ws": "^8.4.2"
   },
   "peerDependencies": {
-    "svelte": "^3.35.0"
+    "svelte": "^3.55.0"
   },
   "type": "module",
   "devDependencies": {
