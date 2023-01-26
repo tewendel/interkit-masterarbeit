@@ -208,9 +208,9 @@
     let imports = "<script>\n";
     //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
     imports += `import initActions from "./actions.js"; \ninitActions(); \n`
-    imports += `import { t, lang } from 'interkit/i18n.js';\n`
-    imports += `$: $t, t, $lang, lang, console.log('AppBase i18n $', { $t, t, $lang, lang });\n`
-    imports += `console.log('AppBase i18n', { $t, t, $lang, lang });\n`
+    imports += `import { t, translations, lang } from 'interkit/i18n.js';\n`
+    imports += `$: $translations, translations, t, $lang, lang, console.log('AppBase i18n $', { t, $translations, translations, $lang, lang });\n`
+    imports += `console.log('AppBase i18n', { t, $translations, translations, $lang, lang });\n`
     for(let block of allBlocksUnique.sort( (a,b) => a.type.localeCompare(b.type, 'en') )) {
       let origin = "interkit"
       try {

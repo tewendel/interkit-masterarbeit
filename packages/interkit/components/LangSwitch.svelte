@@ -1,7 +1,7 @@
 <script>
 
   import { InterkitClient, util } from '../'
-  import { setUserLang, langs, lang, t } from '../i18n.js'
+  import { setUserLang, langs, lang, translations } from '../i18n.js'
   import { get } from 'svelte/store';
 
   export let label
@@ -43,7 +43,7 @@
     {/if}
     {#if $langs}
       {#each $langs as l}
-        <option value={l}>{ $t?.[l]?.['$_LangSwitchLanguageOptionLabel'] || l }</option>
+        <option value={l}>{ $translations?.[l]?.['$_LangSwitchLanguageOptionLabel'] || l }</option>
       {/each}
     {/if}
   </select>
