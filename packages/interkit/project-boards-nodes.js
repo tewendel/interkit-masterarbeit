@@ -115,26 +115,52 @@ const api = {
   returns list of boards
 */
 lib.boards.list = (handle, params, req) => {
-  if (req?.query?.nodes) {
-    return fs.readdir(handle)
-      .then(allFiles => ({
-        boards: allFiles
-          .map(_ => _.match(boardFileNameRE)?.[1])
-          .filter(_ => _ !== undefined),
-        nodes: allFiles
-          .map(_ => {
+  switch (req?.query?.nodes) {
+    case 1:
+    case '1':
+    case 'flat':
+      return fs.readdir(handle)
+        .then(allFiles => ({
+          boards: allFiles
+            .map(_ => _.match(boardFileNameRE)?.[1])
+            .filter(_ => _ !== undefined),
+          nodes: allFiles
+            .map(_ => {
+              const m = _.match(nodeFileNameRE)
+              if (!m) return
+              return { boardId: m[1], nodeId: m[2] }
+            })
+            .filter(_ => _ !== undefined)
+        }))
+    case 'tree':
+      return fs.readdir(handle)
+        .then(allFiles => {
+          const orphanedNodes = []
+          const boards = allFiles
+            .map(_ => ({ id: _.match(boardFileNameRE)?.[1], nodes: [] }))
+            .filter(_ => _.id !== undefined)
+          allFiles.forEach(_ => {
             const m = _.match(nodeFileNameRE)
             if (!m) return
-            return { boardId: m[1], nodeId: m[2] }
+            const parentBoardId = m[1]
+            const nodeId = m[2]
+            const parentBoard = boards.find(b => b.id === parentBoardId) 
+            if (parentBoard) {
+              parentBoard.nodes.push({ id: nodeId })
+            } else {
+              orphanedNodes.push({ id: nodeId })
+            }
           })
+        if (orphanedNodes.length) boards['_orphaned'] = orphanedNodes
+        return boards
+      })
+    case 'boardsonly':
+    default:
+      return fs.readdir(handle)
+        .then(allFiles => allFiles
+          .map(_ => _.match(boardFileNameRE)?.[1])
           .filter(_ => _ !== undefined)
-      }))
-  } else {
-    return fs.readdir(handle)
-      .then(allFiles => allFiles
-        .map(_ => _.match(boardFileNameRE)?.[1])
-        .filter(_ => _ !== undefined)
-      )
+        )
   }
 }
 
