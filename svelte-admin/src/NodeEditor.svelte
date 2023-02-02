@@ -215,16 +215,16 @@
     // get channels collection
     let channels = get(channelsStore)
     for(let board of boards) {
-      if(!channels?.some(c => c.channel_key == board)) {
+      if(!channels?.some(c => c.channel_key == board.id)) {
         console.log("channel for board not found, creating...", board)
-        InterkitClient.call("channel.create", {channel_key: board, projectId})
+        InterkitClient.call("channel.create", {channel_key: board.id, projectId})
       } else {
-        console.log("channel found", board)
+        console.log("channel found", board.id)
       }
     }
 
     for(let channel of channels) {
-      if(boardsLoaded && !boards.includes(channel.channel_key)) {
+      if(boardsLoaded && !boards.some(_ => _.id === channel.channel_key)) {
         console.log("board not found for channel, deleting", channel.channel_key)
         InterkitClient.call("channel.delete", {channel_key: channel.channel_key, projectId})
       }
@@ -236,7 +236,7 @@
   } 
 
   const loadBoardList = async () => {
-    await api(projectId, '/')
+    await api(projectId, '/?nodes=tree')
       .then(async res => {
         const json = await res.json()
         errorify(json)
@@ -275,7 +275,7 @@
     let c = 0
     let newBoardId
     let newBoardIdDefault
-    while (!newBoardIdDefault || (boards.indexOf(newBoardIdDefault) > -1 && c < 1000)) {
+    while (!newBoardIdDefault || (boards.some(_ => _.id === newBoardIdDefault) && c < 1000)) {
       c++
       newBoardIdDefault = 'board' + c
     }
@@ -571,23 +571,24 @@
  
   onMount(async () => {
     await loadBoardList();
-    if (boards.length) currentBoardId = boards[0]
+    if (boards.length) currentBoardId = boards[0].id
   })
 
 </script>
 
 <MainColumns
   sidebarLeftLabel="Story"
-  modalPanelRightLabel="TODO currentEditId"
+  modalPanelRightLabel={editNodeId || '(node)'}
   bind:modalPanelRightOpenSet
+  rootClass="NodeEditor"
   >
   <svelte:fragment slot="sidebarLeft">
     <div class="ui">
       <button on:click={refresh}>refresh</button>
       <select bind:value={currentBoardId}>
         <option value={null}>(select)</option>
-        {#each boards as boardId}
-          <option value={boardId}>{boardId}</option>
+        {#each boards as b}
+          <option value={b.id}>{b.id}</option>
         {/each}
       </select>
       <button on:click={createBoard}>create board</button>
@@ -618,27 +619,45 @@
         {#if nodesModifiedCount}&#x1f534;{/if}
       </button><br>
     </div>
+    <ul>
+      {#each boards as board}
+        <li>{board.id}
+          <ul>
+            {#each board.nodes as node}
+              <li>{node.id}</li>
+            {/each}
+          </ul>
+        </li>
+      {/each}
+    </ul>
   </svelte:fragment>
   <svelte:fragment slot="contentMain">
-    {#if board}
-      <NodeGraph
-        {projectId}
-        boardId={currentBoardId}
-        bind:board
-        nodes={board.nodes}
-        {_update}
-        {userNodes}
-        {previewUserId}
-        on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
-        on:nodeclicked={modalPanelRightOpenSet(true)}
-        bind:editNodeId
-        {rectWidth}
-        {rectHeight}
-        bind:this={nodeGraph}
-        />
-    {:else}
-      <div class="nodegraph"></div>
-    {/if}
+    <div class="contentMain">
+      <div class="contentMainHeader">
+        <h2>{board ? currentBoardId : '(board)'}</h2>
+      </div>
+      <div class="contentMainNodeGraph">
+        {#if board}
+          <NodeGraph
+            {projectId}
+            boardId={currentBoardId}
+            bind:board
+            nodes={board.nodes}
+            {_update}
+            {userNodes}
+            {previewUserId}
+            on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
+            on:nodeclicked={modalPanelRightOpenSet(true)}
+            bind:editNodeId
+            {rectWidth}
+            {rectHeight}
+            bind:this={nodeGraph}
+            />
+        {:else}
+          <div class="nodegraph"></div>
+        {/if}
+      </div>
+    </div>
   </svelte:fragment>
   <svelte:fragment slot="modalPanelRight">
     {#if editNodeId}
@@ -800,13 +819,30 @@
   padding-bottom: 10px;
 }
 
-.nodegraph {
-  grid-area: left;
+:global(.NodeEditor) :global(.nodegraph) {
   border: 1px solid #888;
   background: white;
   box-shadow: inset 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
+}
+
+.contentMain {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentMainHeader {
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 50px; /* TODO var(--foo-headerheight) */
+}
+
+.contentMainNodeGraph {
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-basis: auto;
 }
 
 .node-menu {

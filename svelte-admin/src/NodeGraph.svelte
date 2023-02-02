@@ -334,6 +334,10 @@
 
 <style>
 
+.nodegraph {
+  background-color: #eee; /* TODO */
+}
+
 svg {
   position: relative;
   user-select: none;

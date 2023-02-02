@@ -1,5 +1,7 @@
 <script>
 
+  export let rootClass
+
   export let sidebarLeftLabel
   export let modalPanelRightLabel
 
@@ -13,7 +15,7 @@
 
 </script>
 
-<div class="MainColumns columns">
+<div class={`MainColumns columns ${rootClass}`}>
   <div
     class={`sidebarLeft ${sidebarLeftOpen ? 'sidebarLeft--open' : 'sidebarLeft--closed'}`}
     >

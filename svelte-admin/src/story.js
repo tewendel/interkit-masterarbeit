@@ -24,7 +24,7 @@ const loadBoardList = async (projectId) => {
 
 projectId.subscribe(id => {
   if (!id) return
-  loadBoardList(id)
+  // loadBoardList(id)
 })
 
 export default {

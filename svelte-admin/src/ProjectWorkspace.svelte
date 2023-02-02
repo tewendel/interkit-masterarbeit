@@ -71,7 +71,8 @@
           <TabContent>
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
-          <TabContent style="height: 100%">
+          <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+          <TabContent style="height: 100%; max-height: 70vh">
             <NodeEditor
               on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
               {projectId}
