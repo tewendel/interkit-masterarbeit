@@ -201,7 +201,7 @@
     </div>
   </Row>
   {/if}
-  <Row>{#if $userId} 
+  <Row>{#if $userId && !currentProjectId} 
     <div class="logout">
       <Logout/> 
     </div>

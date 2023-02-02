@@ -48,7 +48,7 @@
 </script>
 
 {#if $currentProject}
-  <div class="panes">
+  <div class="__ProjectWorkspace panes">
     <div class="left-pane">
       <Tabs type="container" bind:selected>
         <Tab label="Database" />
@@ -136,7 +136,7 @@
   }
   .left-pane {
     flex: 1;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
   }
 
   .right-pane {
@@ -156,6 +156,10 @@
   }
 
   .content {
-    height: 100%;
+    height: calc(100% - 48px); /* only give content the height without tab bar */
+  }
+
+  :global(.__ProjectWorkspace .bx--tab-content) {
+    height: 100%
   }
 </style>

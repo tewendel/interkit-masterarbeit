@@ -145,6 +145,7 @@
 
     workspace = Blockly.inject('blocklyDiv', {
       toolbox: blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
+      trashcan: false,
       zoom:
         {
           controls: true,
@@ -297,7 +298,7 @@
   }
 
   const resizeBlockly = (node) => {
-    //console.log("resize")
+    console.log("resize")
     if(workspace)
       Blockly.svgResize(workspace);
   }
@@ -306,31 +307,35 @@
 
 </script>
 
-  <div class="main-buttons">
-    <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
-    <Button on:click={()=>saveAndCompile(true)}>save</Button>            
-  </div>
+  <div class="__BlocklyEditor">
   
-  <Tabs bind:selected={selectedTab}>
-      <Tab label="blockly" />
-      <Tab label="App.svelte" />
-      <Tab label="actions.js" />
-        <div slot="content" class="content">
-          <TabContent>
-            <div class="blocklyTabContent">
-              <div id="blocklyDiv"use:watchResize={resizeBlockly}></div>
-            </div>
-          </TabContent>
-          <TabContent>
-            <div class="scroll">
-              <CodeHighlighter code={generatedCode} />
-            </div>
-          </TabContent>
-          <TabContent>
-            <ActionsEditor {projectId} active={selectedTab == 2}/>
-          </TabContent>
-      </div>
-  </Tabs>
+    <div class="main-buttons">
+      <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+      <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+    </div>
+  
+    <Tabs bind:selected={selectedTab}>
+        <Tab label="blockly" />
+        <Tab label="App.svelte" />
+        <Tab label="actions.js" />
+          <div slot="content" class="content">
+            <TabContent>
+              <div class="blocklyTabContent">
+                <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
+              </div>
+            </TabContent>
+            <TabContent>
+              <div class="scroll">
+                <CodeHighlighter code={generatedCode} />
+              </div>
+            </TabContent>
+            <TabContent>
+              <ActionsEditor {projectId} active={selectedTab == 2}/>
+            </TabContent>
+        </div>
+    </Tabs>
+
+  </div>  
   
   <InputModal
     type={openInputModal}
@@ -343,8 +348,12 @@
 
 <style>
 
-  .content, .blocklyTabContent {
-    height: calc(100vh - 260px);
+.blocklyTabContent, .__BlocklyEditor, :global(.__BlocklyEditor .bx--tab-content) {
+    height: 100%;
+  }
+
+  .content {
+    height: calc(100% - 40px);
   }
 
   .main-buttons {
@@ -353,7 +362,7 @@
 
   #blocklyDiv {
     width: 100%;
-    height: calc(100vh - 340px);
+    height: 100%;
   }
 
   .scroll {
