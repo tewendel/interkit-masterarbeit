@@ -5,6 +5,10 @@
   
   import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+
+  import MainColumns from './MainColumns.svelte'
+  import Sidebar from './Sidebar.svelte'
+  import Content from './Content.svelte'
   
   import { watchResize } from "svelte-watch-resize";
 
@@ -13,6 +17,8 @@
   import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
   import parseBlocklyXML from './parseBlocklyXML.js';
+
+  import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
@@ -31,6 +37,7 @@
   // let CustomFields = {}; // save blockly custom fields here
   
   let workspace;
+  let toolbox;
   let blocklyXMLFile = "blocklyState.xml";
   let blocklyJsonFile = "blocklyState.json";
   let generatedCode = "";
@@ -143,25 +150,35 @@
 
     //console.log(blocklyConfig.toolbox)
 
+    toolbox = blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
+
     workspace = Blockly.inject('blocklyDiv', {
-      toolbox: blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
+      //toolbox,
       trashcan: false,
-      zoom:
-        {
-          controls: true,
-          wheel: true,
-          startScale: 1.0,
-          maxScale: 3,
-          minScale: 0.3,
-          scaleSpeed: 1.2,
-          pinch: true
+      move: {
+        scrollbars: {
+          horizontal: true,
+          vertical: true
         },
+        drag: true,
+        wheel: false
+      },
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2,
+        pinch: true
+      },
     });
 
     //console.log(workspace)
 
     workspace.addChangeListener(myUpdateFunction);
 
+    
     let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
     if(blocklyJson?.content) {
       try {
@@ -189,23 +206,10 @@
     blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
     
     // hide toolbox
-    /*
-    let toolbox = workspace.getToolbox();
-    toolbox.setVisible(false);
-    */
-
+    //workspace.getToolbox().setVisible(false);
   }
 
-  /*
-  const testBlockly = () => {
-    
-    // add a new block to the workspace programmatically
-    let newBlock = workspace.newBlock('HeadlinePage');
-    newBlock.initSvg();
-    newBlock.render();
-  }
-  */
-
+  
   const createDatabase = () => {
 
     // todo: update to json parsing
@@ -307,36 +311,46 @@
 
 </script>
 
-  <div class="__BlocklyEditor">
-  
-    <div class="main-buttons">
-      <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
-      <Button on:click={()=>saveAndCompile(true)}>save</Button>            
-    </div>
-  
-    <Tabs bind:selected={selectedTab}>
-        <Tab label="blockly" />
-        <Tab label="App.svelte" />
-        <Tab label="actions.js" />
-          <div slot="content" class="content">
-            <TabContent>
-              <div class="blocklyTabContent">
-                <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
-              </div>
-            </TabContent>
-            <TabContent>
-              <div class="scroll">
-                <CodeHighlighter code={generatedCode} />
-              </div>
-            </TabContent>
-            <TabContent>
-              <ActionsEditor {projectId} active={selectedTab == 2}/>
-            </TabContent>
-        </div>
-    </Tabs>
+  <MainColumns>
 
-  </div>  
+    <Sidebar side="left" label="Components">
+      <BlocklyComponentPicker {workspace} {toolbox}/>
+    </Sidebar>
+   
+    <Content>
+      <div class="__BlocklyEditor">
+
+        <div class="main-buttons">
+          <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+          <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+        </div>
+      
+        <Tabs bind:selected={selectedTab}>
+            <Tab label="blockly" />
+            <Tab label="App.svelte" />
+            <Tab label="actions.js" />
+              <div slot="content" class="content">
+                <TabContent>
+                  <div class="blocklyTabContent">
+                    <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
+                  </div>
+                </TabContent>
+                <TabContent>
+                  <div class="scroll">
+                    <CodeHighlighter code={generatedCode} />
+                  </div>
+                </TabContent>
+                <TabContent>
+                  <ActionsEditor {projectId} active={selectedTab == 2}/>
+                </TabContent>
+            </div>
+        </Tabs>
+
+      </div>  
+    </Content>
   
+  </MainColumns>
+
   <InputModal
     type={openInputModal}
     bind:value={inputModalValue}
@@ -358,6 +372,8 @@
 
   .main-buttons {
     float: right;
+    z-index: 1000;
+    position:relative;
   }
 
   #blocklyDiv {

@@ -12,7 +12,7 @@ export let label
 <style>
 
 .Sidebar {
-  flex-grow: 1;
+  flex-grow: 0.1;
   background: lightgreen;
   border: 1em solid green;
   padding: 1em;
