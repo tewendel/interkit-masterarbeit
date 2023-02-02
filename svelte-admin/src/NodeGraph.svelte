@@ -156,6 +156,7 @@
 
   const mousemove = e => {
     // update dragging node
+    if (!svgEl) return
     const r = svgEl.getClientRects()
     if (!(r && r.length)) return
     mouseX = e.clientX - r[0].x
@@ -250,6 +251,7 @@
         on:click={() => {
           if (Date.now() - dragStart < 250) {
             editNodeId = node.id
+            dispatch('nodeclicked')
           }
         }}
         >

@@ -17,6 +17,7 @@
     AccordionItem
   } from "carbon-components-svelte"
 
+  import MainColumns from './MainColumns.svelte'
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
 
   import { boardsApi as api } from './BundleServer.js'
@@ -33,6 +34,8 @@
   import { idRE } from 'interkit/project-regex.js'
 
   const dispatch = createEventDispatcher()
+
+  let modalPanelRightOpenSet = () => { /* dummy */ }
   
   const useCodeMirror = true
   let editorMode = 2
@@ -105,6 +108,8 @@
   let editMode = false
 
   let editNodeId = null
+
+  $: if (editNodeId) modalPanelRightOpenSet(true)
 
   let copyEditNodeId
 
@@ -571,10 +576,12 @@
 
 </script>
 
-<div class="layout">
-
-  <div class="board-column">
-
+<MainColumns
+  sidebarLeftLabel="Story"
+  modalPanelRightLabel="TODO currentEditId"
+  bind:modalPanelRightOpenSet
+  >
+  <svelte:fragment slot="sidebarLeft">
     <div class="ui">
       <button on:click={refresh}>refresh</button>
       <select bind:value={currentBoardId}>
@@ -611,7 +618,8 @@
         {#if nodesModifiedCount}&#x1f534;{/if}
       </button><br>
     </div>
-
+  </svelte:fragment>
+  <svelte:fragment slot="contentMain">
     {#if board}
       <NodeGraph
         {projectId}
@@ -622,6 +630,7 @@
         {userNodes}
         {previewUserId}
         on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
+        on:nodeclicked={modalPanelRightOpenSet(true)}
         bind:editNodeId
         {rectWidth}
         {rectHeight}
@@ -630,10 +639,8 @@
     {:else}
       <div class="nodegraph"></div>
     {/if}
-
-  </div>
-
-  <div class="node-column">
+  </svelte:fragment>
+  <svelte:fragment slot="modalPanelRight">
     {#if editNodeId}
       <h3 class="node-menu">
         {editNodeId}
@@ -749,8 +756,6 @@
         {/each}
         </ButtonSet>
       {/if}
-    <!--Accordion>
-      <AccordionItem title="Cheatsheet"-->
         {#if useCodeMirror}
           <br>
           <p>Cheatsheet (click to activate)</p>
@@ -762,10 +767,8 @@
             readonly="readonly"
             />
         {/if}
-      <!--/AccordionItem>
-    </Accordion-->
-  </div>
-</div>
+  </svelte:fragment>
+</MainColumns>
 
 {#if showNewNodeModal}
   <NewNodeModal
@@ -792,37 +795,18 @@
 
 <style>
 
-.layout {
-  display: grid;
-  grid-template-rows: auto 70vh;
-  grid-template-columns: 50% 50%;
-  grid-template-areas:
-    "ui   ui"
-    "left right";
-}
-
 .ui {
   grid-area: ui;
   padding-bottom: 10px;
 }
 
-.nodegraph,
-.layout :global(.nodegraph) {
+.nodegraph {
   grid-area: left;
   border: 1px solid #888;
   background: white;
   box-shadow: inset 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
-}
-
-.board-column {
-  height: 70vh;
-}
-
-.node-column {
-  padding-top: 5px;
-
 }
 
 .node-menu {

@@ -71,7 +71,7 @@
           <TabContent>
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
-          <TabContent>
+          <TabContent style="height: 100%">
             <NodeEditor
               on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
               {projectId}
