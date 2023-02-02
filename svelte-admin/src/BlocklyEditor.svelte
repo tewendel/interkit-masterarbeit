@@ -4,9 +4,11 @@
   import indent from 'xml-formatter';
   
   import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
+  import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+  
   import { watchResize } from "svelte-watch-resize";
 
-  
+
   import Blockly from 'blockly';
   import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
@@ -304,6 +306,11 @@
 
 </script>
 
+  <div class="main-buttons">
+    <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+    <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+  </div>
+  
   <Tabs bind:selected={selectedTab}>
       <Tab label="blockly" />
       <Tab label="App.svelte" />
@@ -312,10 +319,6 @@
           <TabContent>
             <div class="blocklyTabContent">
               <div id="blocklyDiv"use:watchResize={resizeBlockly}></div>
-              <br />
-              <Button on:click={()=>saveAndCompile(true)}>save</Button>
-              &nbsp;&nbsp;
-              <Button on:click={createDatabase} kind="tertiary">check database</Button>
             </div>
           </TabContent>
           <TabContent>
@@ -342,6 +345,10 @@
 
   .content, .blocklyTabContent {
     height: calc(100vh - 260px);
+  }
+
+  .main-buttons {
+    float: right;
   }
 
   #blocklyDiv {
