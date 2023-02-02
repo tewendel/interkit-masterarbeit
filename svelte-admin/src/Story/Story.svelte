@@ -11,20 +11,21 @@ let nodePanelLabel = 'start'
 
 </script>
 
-<MainColumns>
-  <Sidebar side="left" label="Story">
-    <ul>
+<MainColumns
+  sidebarLeftLabel="Story"
+  modalPanelRightLabel={nodePanelLabel}
+  >
+  <svelte:fragment slot="sidebarLeft">
     {#each $boards as boardId}
       <li>{boardId}</li>
     {/each}
-    </ul>
-  </Sidebar>
+  </svelte:fragment>
   <Content>
     <h2>board1</h2>
     <pre>nodes</pre>
   </Content>
-  <ModalPanel label={nodePanelLabel}>
+  <svelte:fragment slot="modalPanelRight">
     Full/Twinish/Strings
-  </ModalPanel>
+  </svelte:fragment>
 </MainColumns>
 
