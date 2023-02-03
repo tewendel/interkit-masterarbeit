@@ -111,6 +111,13 @@ Meteor.methods({
     return res
   },
 
+  'project.projectServer.setCpu': async ({ projectId, cpu }) => {
+    //console.log("project.projectServer.setCpu", projectId, cpu)
+    const res = Projects.update({_id: projectId}, { $set: { 'projectServer.cpu': cpu } })
+    //console.log("project.projectServer.setCpu result", res)
+    return res
+  },
+
   'project.projectServer.start': async ({ projectId }) => {
     const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': "start" } })
   },

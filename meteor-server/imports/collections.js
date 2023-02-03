@@ -14,6 +14,7 @@ export const Projects = new Mongo.Collection('projects');
 - projectServer {
     status: <string>, // running, stopped, ...
     actionRequested: <string> // start, stop, null
+    cpu: <number>, // current cpu usage, 1 equals 100% of 1 core
     messages: [{
       type: <string>, // stdout, stderr, system, ...
       text: <string>,

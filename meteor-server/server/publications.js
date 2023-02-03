@@ -10,6 +10,7 @@ Meteor.publish('projects', function() {
     history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,
+      cpu:1,
       actionRequested: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
       messages: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     },
