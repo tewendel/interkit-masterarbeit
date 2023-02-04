@@ -12,7 +12,6 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import Story from './Story/Story.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -54,7 +53,6 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Chat" />
         <Tab label="Story" />
         <Tab label="Project" />
         <Tab label="Users" />
@@ -78,9 +76,6 @@
               {projectId}
               {previewUserId}
               />
-          </TabContent>
-          <TabContent style="height: 100%">
-            <Story />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
