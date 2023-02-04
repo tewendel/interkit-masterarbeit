@@ -348,7 +348,7 @@ svg:hover {
 }
 
 rect {
-  fill: #efe9d0;
+  fill: white;
   stroke: black;
   stroke-width: 1;
 }

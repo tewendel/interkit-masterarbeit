@@ -1,5 +1,10 @@
 <script>
 
+  import { Button } from 'carbon-components-svelte'
+  import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
+  import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
+  import Close from 'carbon-icons-svelte/lib/Close.svelte'
+
   export let rootClass
 
   export let sidebarLeftLabel
@@ -20,15 +25,25 @@
     class={`sidebarLeft ${sidebarLeftOpen ? 'sidebarLeft--open' : 'sidebarLeft--closed'}`}
     >
     {#if !sidebarLeftOpen}
-      <button
-        class="sidebarLeftToggle"
-        on:click={() => { sidebarLeftOpen = true }}>
-        +
-      </button>
+      <Button
+        kind="ghost"
+        on:click={() => { sidebarLeftOpen = true }}
+        iconDescription="maximize"
+        icon={Maximize}
+        />
     {:else}
-      <div class="sidebarLeftHeader">
-        <button on:click={() => { sidebarLeftOpen = false }}>minimize</button>
-        <h2>{sidebarLeftLabel}</h2>
+      <div
+        style="height: var(--mainContentHeaderHeight)"
+        >
+        <div class="headingWithButton">
+          <h2>{sidebarLeftLabel}</h2>
+          <Button
+            kind="ghost"
+            iconDescription="minimize"
+            on:click={() => { sidebarLeftOpen = false }}
+            icon={Minimize}
+            />
+        </div>
       </div>
       <div class="sidebarLeftSlot">
         <slot name="sidebarLeft" ></slot>
@@ -39,19 +54,38 @@
     <slot name="contentMain"></slot>
   </div>
   {#if modalPanelRightOpen}
-    <div
-      class="modalPanelRight"
-      >
-      <button on:click={() => { modalPanelRightOpen = false }}>close</button>
-      <h2>{modalPanelRightLabel}</h2>
-      <slot name="modalPanelRight" ></slot>
+    <div class="modalPanelRight">
+      <div class="modalPanelRightHeader">
+        <div class="headingWithButton">
+          <h2 style="font-size: 150%">{modalPanelRightLabel}</h2>
+          <Button
+            kind="ghost"
+            iconDescription="close"
+            on:click={() => { modalPanelRightOpen = false }}
+            icon={Close}
+            />
+        </div>
+        <slot name="modalPanelRightHeaderActions" ></slot>
+      </div>
+      <div class="modalPanelRightSlot">
+        <slot name="modalPanelRight" ></slot>
+      </div>
     </div>
   {/if}
 </div>
 
 <style>
 
-.button {
+:root {
+  --mainContentHeaderHeight: 96px;
+  --sidebarCollapsedWidth: 3rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
 }
 
 .columns {
@@ -63,36 +97,54 @@
   position: relative;
 }
 
+.headingWithButton {
+  display: flex;
+  align-items: center;
+}
+
+.headingWithButton h1,
+.headingWithButton h2,
+.headingWithButton h3 {
+  padding-left: 1rem;
+  font-size: 100%;
+  flex: 1 0;
+}
+
+.headingWithButton :global(button) {
+  flex: 0 0;
+}
+
 .sidebarLeft {
-  flex-grow: 0;
-  flex-basis: 20%;
-  background: lightgreen;
-  border: 1em solid green;
-  padding: 1em;
+  flex: 0 0 20%;
+  width: 20%;
+  max-width: 20%;
+  min-width: 8em;
+  background: white;
   display: flex;
   flex-direction: column;
 }
 
 .sidebarLeft--closed {
-  flex-basis: 2em;
+  flex-basis: var(--sidebarCollapsedWidth);
+  width: var(--sidebarCollapsedWidth);
+  max-width: var(--sidebarCollapsedWidth);
+  min-width: var(--sidebarCollapsedWidth);
 }
 
 .sidebarLeftHeader {
-  height: 50px;
+  height: var(--mainContentHeaderHeight);
   flex-grow: 0;
   flex-shrink: 0;
 }
 
 .sidebarLeftSlot {
   flex-grow: 1;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .contentMain {
   flex-grow: 1;
-  background: lightyellow;
-  border: 1em solid yellow;
-  padding: 1em;
+  background: #eee;
 }
 
 .modalPanelRight {
@@ -101,9 +153,22 @@
   top: 0;
   bottom: 0;
   width: 50%;
-  background: lightblue;
-  border: 1em solid blue;
-  padding: 1em;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalPanelRightHeader {
+  height: var(--mainContentHeaderHeight);
+  border-bottom: 1px solid #ccc;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.modalPanelRightSlot {
+  flex-grow: 1;
+  overflow: auto;
 }
 
 </style>
