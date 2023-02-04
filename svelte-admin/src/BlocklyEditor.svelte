@@ -7,8 +7,6 @@
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
 
   import MainColumns from './MainColumns.svelte'
-  import Sidebar from './Sidebar.svelte'
-  import Content from './Content.svelte'
   
   import { watchResize } from "svelte-watch-resize";
 
@@ -311,13 +309,15 @@
 
 </script>
 
-  <MainColumns>
+  <MainColumns
+    sidebarLeftLabel="Components"
+    >
 
-    <Sidebar side="left" label="Components">
+    <svelte:fragment slot="sidebarLeft">
       <BlocklyComponentPicker {workspace} {toolbox}/>
-    </Sidebar>
+    </svelte:fragment>
    
-    <Content>
+    <svelte:fragment slot="contentMain">
       <div class="__BlocklyEditor">
 
         <div class="main-buttons">
@@ -347,8 +347,7 @@
         </Tabs>
 
       </div>  
-    </Content>
-  
+    </svelte:fragment>
   </MainColumns>
 
   <InputModal

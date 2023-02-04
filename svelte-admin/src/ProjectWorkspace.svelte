@@ -12,7 +12,6 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import Story from './Story/Story.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -54,7 +53,6 @@
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Chat" />
         <Tab label="Story" />
         <Tab label="Project" />
         <Tab label="Users" />
@@ -71,15 +69,13 @@
           <TabContent>
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
-          <TabContent>
+          <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+          <TabContent style="height: 100%; max-height: 70vh">
             <NodeEditor
               on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
               {projectId}
               {previewUserId}
               />
-          </TabContent>
-          <TabContent style="height: 100%">
-            <Story />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
