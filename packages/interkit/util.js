@@ -144,8 +144,8 @@ export default {
 
   extractContextProp(propValue) {
     console.log("extractContextProp", propValue)
-
-    if(propValue.includes("#ElementProvider")) { // only implemented for ElementProvider for now
+    
+    if(propValue?.includes("#ElementProvider")) { // only implemented for ElementProvider for now
       console.log("getting channel_key from context...")
       const parts = propValue.split(".");
       const attributeName = parts[1]; 

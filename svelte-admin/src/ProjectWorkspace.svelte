@@ -12,7 +12,6 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import Story from './Story/Story.svelte'
   import { InterkitClient } from 'interkit'
 
 
@@ -48,13 +47,12 @@
 </script>
 
 {#if $currentProject}
-  <div class="panes">
+  <div class="__ProjectWorkspace panes">
     <div class="left-pane">
       <Tabs type="container" bind:selected>
         <Tab label="Database" />
         <Tab label="Media" />
         <Tab label="Components" />
-        <Tab label="Chat" />
         <Tab label="Story" />
         <Tab label="Project" />
         <Tab label="Users" />
@@ -71,15 +69,13 @@
           <TabContent>
             <BlocklyEditor {projectId} open={selected === 2}/>
           </TabContent>
-          <TabContent>
+          <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+          <TabContent style="height: 100%; max-height: 70vh">
             <NodeEditor
               on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
               {projectId}
               {previewUserId}
               />
-          </TabContent>
-          <TabContent style="height: 100%">
-            <Story />
           </TabContent>
           <TabContent>
             <ProjectEditor {projectId} {currentProject} />
@@ -136,7 +132,7 @@
   }
   .left-pane {
     flex: 1;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
   }
 
   .right-pane {
@@ -156,6 +152,10 @@
   }
 
   .content {
-    height: 100%;
+    height: calc(100% - 48px); /* only give content the height without tab bar */
+  }
+
+  :global(.__ProjectWorkspace .bx--tab-content) {
+    height: 100%
   }
 </style>

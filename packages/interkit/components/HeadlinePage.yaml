@@ -5,4 +5,8 @@ fields:
   - type: string # sheetColumn | slot | string | checkbox
     name: headline
     defaultValue: Headline
+  - type: extraProps
+    props:
+      - name: subtitle
+        type: string
 toolboxCategory: "Basics"

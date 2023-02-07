@@ -14,10 +14,13 @@
     Tab,
     TabContent,
     Accordion,
-    AccordionItem
+    AccordionItem,
+    TreeView
   } from "carbon-components-svelte"
 
+  import MainColumns from './MainColumns.svelte'
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
+  import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
 
   import { boardsApi as api } from './BundleServer.js'
   import { genericErrorHandler, errorify } from './apiHelpers.js'
@@ -33,6 +36,8 @@
   import { idRE } from 'interkit/project-regex.js'
 
   const dispatch = createEventDispatcher()
+
+  let modalPanelRightOpenSet = () => { /* dummy */ }
   
   const useCodeMirror = true
   let editorMode = 2
@@ -105,6 +110,8 @@
   let editMode = false
 
   let editNodeId = null
+
+  $: if (editNodeId) modalPanelRightOpenSet(true)
 
   let copyEditNodeId
 
@@ -210,16 +217,16 @@
     // get channels collection
     let channels = get(channelsStore)
     for(let board of boards) {
-      if(!channels?.some(c => c.channel_key == board)) {
+      if(!channels?.some(c => c.channel_key == board.id)) {
         console.log("channel for board not found, creating...", board)
-        InterkitClient.call("channel.create", {channel_key: board, projectId})
+        InterkitClient.call("channel.create", {channel_key: board.id, projectId})
       } else {
-        console.log("channel found", board)
+        console.log("channel found", board.id)
       }
     }
 
     for(let channel of channels) {
-      if(boardsLoaded && !boards.includes(channel.channel_key)) {
+      if(boardsLoaded && !boards.some(_ => _.id === channel.channel_key)) {
         console.log("board not found for channel, deleting", channel.channel_key)
         InterkitClient.call("channel.delete", {channel_key: channel.channel_key, projectId})
       }
@@ -231,7 +238,7 @@
   } 
 
   const loadBoardList = async () => {
-    await api(projectId, '/')
+    await api(projectId, '/?nodes=tree')
       .then(async res => {
         const json = await res.json()
         errorify(json)
@@ -270,7 +277,7 @@
     let c = 0
     let newBoardId
     let newBoardIdDefault
-    while (!newBoardIdDefault || (boards.indexOf(newBoardIdDefault) > -1 && c < 1000)) {
+    while (!newBoardIdDefault || (boards.some(_ => _.id === newBoardIdDefault) && c < 1000)) {
       c++
       newBoardIdDefault = 'board' + c
     }
@@ -566,23 +573,39 @@
  
   onMount(async () => {
     await loadBoardList();
-    if (boards.length) currentBoardId = boards[0]
+    if (boards.length) currentBoardId = boards[0].id
   })
 
 </script>
 
-<div class="layout">
-
-  <div class="board-column">
-
+<MainColumns
+  sidebarLeftLabel="Story"
+  modalPanelRightLabel={editNodeId || '(node)'}
+  bind:modalPanelRightOpenSet
+  rootClass="NodeEditor"
+  >
+  <svelte:fragment slot="sidebarLeft">
+    <TreeView
+      style="cursor: default"
+      children={boards?.map(b => ({
+        id: b.id,
+        text: b.id,
+        children: b.nodes?.map(n => ({
+          id: b.id + '_' + n.id,
+          text: n.id,
+        }))
+      }))}
+      on:select={({ detail }) => {
+        if (detail.id.indexOf('_') === -1) {
+          currentBoardId = detail.id
+        } else {
+          [currentBoardId, editNodeId] = detail.id.split('_')
+          // TODO scrollNodeIntoView
+        }
+      }}
+      />
     <div class="ui">
       <button on:click={refresh}>refresh</button>
-      <select bind:value={currentBoardId}>
-        <option value={null}>(select)</option>
-        {#each boards as boardId}
-          <option value={boardId}>{boardId}</option>
-        {/each}
-      </select>
       <button on:click={createBoard}>create board</button>
       <button
         on:click={deleteCurrentBoard}
@@ -611,61 +634,84 @@
         {#if nodesModifiedCount}&#x1f534;{/if}
       </button><br>
     </div>
-
-    {#if board}
-      <NodeGraph
-        {projectId}
-        boardId={currentBoardId}
-        bind:board
-        nodes={board.nodes}
-        {_update}
-        {userNodes}
-        {previewUserId}
-        on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
-        bind:editNodeId
-        {rectWidth}
-        {rectHeight}
-        bind:this={nodeGraph}
-        />
-    {:else}
-      <div class="nodegraph"></div>
-    {/if}
-
-  </div>
-
-  <div class="node-column">
+  </svelte:fragment>
+  <svelte:fragment slot="contentMain">
+    <div class="contentMain">
+      <div class="contentMainHeader">
+        <div
+          style="display: flex; align-items: center; height: 48px"
+          >
+          <h2
+            style="font-size: 150%; padding-left: 1rem"
+            >
+            {board ? currentBoardId : '(board)'}
+          </h2>
+        </div>
+      </div>
+      <div class="contentMainNodeGraph">
+        {#if board}
+          <NodeGraph
+            {projectId}
+            boardId={currentBoardId}
+            bind:board
+            nodes={board.nodes}
+            {_update}
+            {userNodes}
+            {previewUserId}
+            on:nodemoved={() => { saveCurrentBoard({ doPatch: true }); updateUserNodes() }}
+            on:nodeclicked={modalPanelRightOpenSet(true)}
+            bind:editNodeId
+            {rectWidth}
+            {rectHeight}
+            bind:this={nodeGraph}
+            />
+        {:else}
+          <div class="nodegraph"></div>
+        {/if}
+      </div>
+    </div>
+  </svelte:fragment>
+  <svelte:fragment slot="modalPanelRightHeaderActions">
     {#if editNodeId}
-      <h3 class="node-menu">
-        {editNodeId}
-        <button
+      <ButtonSet>
+        <Button
+          kind="ghost"
+          on:click={deleteCurrentNode}
+          disabled={!board || !editNodeId}
+          icon={TrashCan}
+          iconDescription="delete node"
+          />
+        <Button
           on:click={saveCurrentNode}
           disabled={!board || !editNodeId || !editNodeModified }
           >
           save
-        </button>
-        <button
+        </Button>
+        <Button
+          kind="ghost"
           on:click={restoreCurrentNode}
           disabled={!board || !editNodeId || !editNodeModified }
           >
           restore
-        </button>
-        <button
-          on:click={deleteCurrentNode}
-          disabled={!board || !editNodeId}
-          >
-          delete
-        </button>
-        <button
+        </Button>
+        <Button
+          kind="ghost"
           on:click={renameCurrentNode}
           disabled={!board || !editNodeId}
           >
           rename
-        </button>
-        <button on:click={moveTo}>moveTo</button>
-        <button on:click={()=>{syntaxCheck()}}>quickCheck</button>
-      </h3>
+        </Button>
+        <Button kind="ghost" on:click={moveTo}>moveTo</Button>
+        <Button kind="ghost" on:click={()=>{syntaxCheck()}}>quickCheck</Button>
+      </ButtonSet>
     {/if}
-    <Tabs bind:selected={editorMode} autoWidth={true}>
+  </svelte:fragment>
+  <svelte:fragment slot="modalPanelRight">
+    <div style="display: flex; flex-direction: column; height: 100%">
+    <Tabs
+      bind:selected={editorMode}
+      autoWidth={true}
+      > 
       <Tab label="Strings" />
       <Tab label="Handlers" />
       <Tab label="Full" />
@@ -673,6 +719,7 @@
     </Tabs>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
+        <div style="overflow: auto"><!-- wrapper for CodeMirror(s) -->
         {#if editorMode !== 3 && twinyHint === 'sync'}
           <p>
             <strong>Warning:</strong> This node contains twine-ish code.
@@ -725,12 +772,14 @@
             <p>Warning: this will overwrite this node's contents</p>
           {/if}
         {/if}
+        </div>
       {#if syntaxCheckMessage}
         <div class={`syntaxcheck syntaxcheck__status-${syntaxCheckStatus}`}>
           {@html syntaxCheckMessage}
         </div>
       {/if}
       {#if unmetMoveTos && editNodeId && unmetMoveTos[editNodeId]}
+        <div>
         <p>create nodes for dangling <code>moveTo</code>s:</p>
         {#if nodesModifiedCount}
           <p><strong>You have to save all nodes first</strong></p>
@@ -748,11 +797,10 @@
           </Button>
         {/each}
         </ButtonSet>
+        </div>
       {/if}
-    <!--Accordion>
-      <AccordionItem title="Cheatsheet"-->
+      <!-- TODO move cheatsheet to right docs sidebar
         {#if useCodeMirror}
-          <br>
           <p>Cheatsheet (click to activate)</p>
           <CodeEditor code={cheatsheetContents} readOnly={true} class="cheatsheet" />
         {:else}
@@ -762,10 +810,10 @@
             readonly="readonly"
             />
         {/if}
-      <!--/AccordionItem>
-    </Accordion-->
-  </div>
-</div>
+      -->
+    </div>
+  </svelte:fragment>
+</MainColumns>
 
 {#if showNewNodeModal}
   <NewNodeModal
@@ -792,49 +840,44 @@
 
 <style>
 
-.layout {
-  display: grid;
-  grid-template-rows: auto 70vh;
-  grid-template-columns: 50% 50%;
-  grid-template-areas:
-    "ui   ui"
-    "left right";
-}
-
 .ui {
   grid-area: ui;
   padding-bottom: 10px;
 }
 
-.nodegraph,
-.layout :global(.nodegraph) {
-  grid-area: left;
-  border: 1px solid #888;
+:global(.NodeEditor) :global(.nodegraph) {
   background: white;
-  box-shadow: inset 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.2);
+  /* box-shadow: inset 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.2); */
   width: 100%;
   height: 100%;
 }
 
-.board-column {
-  height: 70vh;
+.contentMain {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.node-column {
-  padding-top: 5px;
-
+.contentMainHeader {
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: var(--mainContentHeaderHeight);
+  border-bottom: 1px solid #ccc;
 }
 
-.node-menu {
-  padding: 10px;
+.contentMainNodeGraph {
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-basis: auto;
 }
 
+/*
 .editor {
-  grid-area: right;
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2.5rem);
 }
+*/
 
 .cheatsheet {
   grid-area: right;
@@ -869,6 +912,14 @@
 
 .syntaxcheck__status-bad {
   border-left-color: red;
+}
+
+:global(.NodeEditor) :global(.CodeMirror) {
+  height: calc(100% - 2.5rem) !important;
+}
+
+:global(.bx--btn-set) :global(.bx--btn) {
+  width: auto;
 }
 
 </style>

@@ -4,18 +4,26 @@
   import indent from 'xml-formatter';
   
   import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
+  import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+
+  import MainColumns from './MainColumns.svelte'
+  
   import { watchResize } from "svelte-watch-resize";
 
-  
+
   import Blockly from 'blockly';
+  import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
   import parseBlocklyXML from './parseBlocklyXML.js';
+
+  import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
 
   import initSheetColumnField from 'interkit-blockly/blockly/sheetColumnField.js'
   import initSheetIdField from 'interkit-blockly/blockly/sheetIdField.js'
+  import initExtraPropsField from 'interkit-blockly/blockly/extraPropsField.js'
   
   import InputModal from './InputModals/InputModal.svelte';
   import CodeHighlighter from './CodeHighlighter.svelte';
@@ -27,19 +35,18 @@
   // let CustomFields = {}; // save blockly custom fields here
   
   let workspace;
+  let toolbox;
   let blocklyXMLFile = "blocklyState.xml";
-  let blocklyXML;
+  let blocklyJsonFile = "blocklyState.json";
   let generatedCode = "";
   
-  let openInputModal = null;
-  let inputModalValue;
-  let submitInputModal;
-  let cancelInputModal;
-  let inputModalParams;
+  let openInputModal = null; // which input modal to show
+  let inputModalValue; // the current value of the modal
+  let submitInputModal; // what happens on submit
+  let cancelInputModal; // what happens on cancel
+  let inputModalParams; // parameters for the modal
 
   const updateSheetColumn = (previousValue, notice) => {
-    console.log("notice", notice, previousValue)
-
     inputModalValue = {
       sheetKey: previousValue?.value?.split("/")[0], 
       columnKey: previousValue?.value?.split("/")[1]
@@ -68,7 +75,6 @@
   }
 
   const updateSheetId = (previousValue, notice) => {
-    console.log("notice", notice)
     inputModalValue = {
       sheetKey: previousValue?.value
     };
@@ -94,13 +100,34 @@
     });
   }
 
+  // passed into ExtraPropsField, activated when user clicks on it -> showEditor_()
+  const updateExtraProps = (currentProps, notice) => {
+    inputModalValue = currentProps; // this is bound to inputModal
+    inputModalParams = { notice }
+    openInputModal = "extraProps";
+    console.log("loading Modal for extraProps", inputModalValue)
+
+    // returns Promise so that modal stays open until user clicks something
+    return new Promise((resolve, reject) => {
+        submitInputModal = () => {
+          console.log("submitInputModal", inputModalValue)
+          resolve(inputModalValue);
+          setTimeout(myUpdateFunction, 100);
+        }
+        cancelInputModal = () => {
+          reject("cancelled")
+        }  
+    });
+  }
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
 
     const customFields = {
       SheetColumnField: initSheetColumnField(Blockly, updateSheetColumn),
-      SheetIdField: initSheetIdField(Blockly, updateSheetId)    
+      SheetIdField: initSheetIdField(Blockly, updateSheetId),
+      ExtraPropsField: initExtraPropsField(Blockly, updateExtraProps)    
     }
 
 
@@ -121,51 +148,79 @@
 
     //console.log(blocklyConfig.toolbox)
 
+    toolbox = blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
+
     workspace = Blockly.inject('blocklyDiv', {
-      toolbox: blocklyConfig.getToolbox(Blockly, blockObjects), // generates toolbox from yaml component files
-      zoom:
-        {
-          controls: true,
-          wheel: true,
-          startScale: 1.0,
-          maxScale: 3,
-          minScale: 0.3,
-          scaleSpeed: 1.2,
-          pinch: true
+      //toolbox,
+      trashcan: false,
+      move: {
+        scrollbars: {
+          horizontal: true,
+          vertical: true
         },
+        drag: true,
+        wheel: false
+      },
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2,
+        pinch: true
+      },
     });
 
     //console.log(workspace)
 
     workspace.addChangeListener(myUpdateFunction);
 
-    blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
-    if(blocklyXML.content) {
-      //console.log("blocklyXML", blocklyXML.content)
-      let xml = Blockly.Xml.textToDom(blocklyXML.content);
+    
+    let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
+    if(blocklyJson?.content) {
       try {
-        Blockly.Xml.domToWorkspace(xml, workspace);
+        let stateToLoad = JSON.parse(blocklyJson.content)
+        Blockly.serialization.workspaces.load(stateToLoad, workspace)
       } catch(e) {
-        alert("error importing blockly xml")
+        alert("error importing blockly json")
+        console.log("json import error", e)
       }
     }
 
-    blocklyConfig.initCodeGenerator(Blockly, blockObjects); // generates code generator from yaml component files
+    if(!blocklyJson) {
+      let blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
+      if(blocklyXML?.content) {
+        //console.log("blocklyXML", blocklyXML.content)
+        let xml = Blockly.Xml.textToDom(blocklyXML.content);
+        try {
+          Blockly.Xml.domToWorkspace(xml, workspace);
+        } catch(e) {
+          alert("error importing blockly xml")
+        }
+      }
+    }
+
+    blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
     
+    // hide toolbox
+    //workspace.getToolbox().setVisible(false);
   }
 
+  
   const createDatabase = () => {
 
+    // todo: update to json parsing
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
     parseBlocklyXML(xml_text, projectId);
   }
 
   const myUpdateFunction = async (event) => {
-    //console.log("myUpdateFunction")
+    console.log("myUpdateFunction")
     let code;
     try {
-      code = Blockly.JavaScript.workspaceToCode(workspace);
+      code = javascriptGenerator.workspaceToCode(workspace);
     } catch(e) {
       console.log(e)
     }
@@ -205,10 +260,11 @@
 
   const save = async ()=>{
 
+    // save xml
+    /* deactivated
     let xml = Blockly.Xml.workspaceToDom(workspace);
     let xml_text = Blockly.Xml.domToPrettyText(xml);
-    blocklyXML = {content: xml_text}
-
+    let blocklyXML = {content: xml_text}
     //console.log(xml_text)
 
     let file = {
@@ -216,6 +272,17 @@
       content: xml_text
     }
     await BundleServer.saveSrcFile({file, projectId})    
+    */
+
+    // save json
+    let jsonString = JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2)
+    console.log("JSON blockly:", jsonString)
+    let jsonFile = {
+      filename: blocklyJsonFile,
+      content: jsonString
+    }
+    await BundleServer.saveSrcFile({file: jsonFile, projectId})    
+
 
     let appSvelteFile = {
       filename: "App.svelte",
@@ -233,7 +300,7 @@
   }
 
   const resizeBlockly = (node) => {
-    //console.log("resize")
+    console.log("resize")
     if(workspace)
       Blockly.svgResize(workspace);
   }
@@ -242,31 +309,47 @@
 
 </script>
 
-  <Tabs bind:selected={selectedTab}>
-      <Tab label="blockly" />
-      <Tab label="App.svelte" />
-      <Tab label="actions.js" />
-        <div slot="content" class="content">
-          <TabContent>
-            <div class="blocklyTabContent">
-              <div id="blocklyDiv"use:watchResize={resizeBlockly}></div>
-              <br />
-              <Button on:click={()=>saveAndCompile(true)}>save</Button>
-              &nbsp;&nbsp;
-              <Button on:click={createDatabase} kind="tertiary">check database</Button>
+  <MainColumns
+    sidebarLeftLabel="Components"
+    >
+
+    <svelte:fragment slot="sidebarLeft">
+      <BlocklyComponentPicker {workspace} {toolbox}/>
+    </svelte:fragment>
+   
+    <svelte:fragment slot="contentMain">
+      <div class="__BlocklyEditor">
+
+        <div class="main-buttons">
+          <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+          <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+        </div>
+      
+        <Tabs bind:selected={selectedTab}>
+            <Tab label="blockly" />
+            <Tab label="App.svelte" />
+            <Tab label="actions.js" />
+              <div slot="content" class="content">
+                <TabContent>
+                  <div class="blocklyTabContent">
+                    <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
+                  </div>
+                </TabContent>
+                <TabContent>
+                  <div class="scroll">
+                    <CodeHighlighter code={generatedCode} />
+                  </div>
+                </TabContent>
+                <TabContent>
+                  <ActionsEditor {projectId} active={selectedTab == 2}/>
+                </TabContent>
             </div>
-          </TabContent>
-          <TabContent>
-            <div class="scroll">
-              <CodeHighlighter code={generatedCode} />
-            </div>
-          </TabContent>
-          <TabContent>
-            <ActionsEditor {projectId} active={selectedTab == 2}/>
-          </TabContent>
-      </div>
-  </Tabs>
-  
+        </Tabs>
+
+      </div>  
+    </svelte:fragment>
+  </MainColumns>
+
   <InputModal
     type={openInputModal}
     bind:value={inputModalValue}
@@ -278,13 +361,23 @@
 
 <style>
 
-  .content, .blocklyTabContent {
-    height: calc(100vh - 260px);
+.blocklyTabContent, .__BlocklyEditor, :global(.__BlocklyEditor .bx--tab-content) {
+    height: 100%;
+  }
+
+  .content {
+    height: calc(100% - 40px);
+  }
+
+  .main-buttons {
+    float: right;
+    z-index: 1000;
+    position:relative;
   }
 
   #blocklyDiv {
     width: 100%;
-    height: calc(100vh - 340px);
+    height: 100%;
   }
 
   .scroll {
