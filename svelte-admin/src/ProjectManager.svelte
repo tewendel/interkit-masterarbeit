@@ -132,6 +132,7 @@
         headers={[
           { key: 'name', value: 'Projects' }, 
           { key: 'createdAt', value: 'Created At' }, 
+          { key: 'cpu', value: 'CPU usage' }, 
           { key: 'action', value: 'Action', empty: true }
         ]}
         rows={projectRows}
@@ -153,6 +154,13 @@
                 -
               {/if}
             </span>
+          {/if}
+          {#if cell.key === 'cpu'}
+            {#if row.projectServer?.status === 'running' }
+              { (100 * row.projectServer?.cpu).toFixed(2) }%
+            {:else}
+              {row.projectServer?.status}
+            {/if}
           {/if}
           {#if cell.key === 'name'}
             <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>

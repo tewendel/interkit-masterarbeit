@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { InterkitClient } from 'interkit'
-  import Checkmark from "carbon-icons-svelte/lib/Checkmark.svelte";
+  import Checkmark from "carbon-icons-svelte/lib/CheckmarkOutline.svelte";
   import Warning from "carbon-icons-svelte/lib/Warning.svelte";
   
   export let currentProjectServerStatus
@@ -36,7 +36,7 @@
     {#if currentProjectServerStatus == "running"}
       <Checkmark title="Project server is running" />
     {:else}
-      <Warning title={"Project server " + currentProjectServerStatus} /> {"Project server " + currentProjectServerStatus}
+      <Warning title={"Project server " + currentProjectServerStatus} style="color:red;"/>
     {/if}
   {/if}
   
@@ -45,7 +45,7 @@
   {#if connected}
     <Checkmark title="Connected to server" />
   {:else}
-    <Warning title="Disconnected from server" /> Server is offline
+    <Warning title="Disconnected from server" style="color:red;"/>
   {/if}
   
   &nbsp;
@@ -53,13 +53,15 @@
   {#if bundlerIsOnline}
     <Checkmark title="Bundler is online" />
   {:else}
-    <Warning title="Bundler is offline" /> Bundler is offline
+    <Warning title="Bundler is offline" style="color:red;"/>
   {/if}
   
 </span>
 
-<style>
+<style lang="scss">
+  @use '@carbon/styles/scss/theme';
+
   span {
-    color: white;
+    color: theme.$text-primary;
   }
 </style>
