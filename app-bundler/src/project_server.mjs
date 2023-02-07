@@ -115,7 +115,7 @@ async function startServer(projectId) {
     }
     servers.push(newServer)
   } else {
-    if (server.proc) {
+    if (server?.proc?.stdin) {
       server.proc.stdin.write('rs');
       console.warn(`projectServer ${projectId} restart`)
     }
