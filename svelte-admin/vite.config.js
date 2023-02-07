@@ -12,5 +12,6 @@ export default defineConfig({
       external: [], 
     },
   },
+  clearScreen: false,
   envPrefix: 'INTERKIT_',
 })
