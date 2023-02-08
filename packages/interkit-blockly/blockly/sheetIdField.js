@@ -81,8 +81,11 @@ export default (Blockly, update) => {
     }
   
   }
-  
+  try {
   Blockly.fieldRegistry.register('sheetId', SheetIdField);
+  } catch(e) {
+    console.log("error registering sheetId field", e)
+  }
   
   return SheetIdField;
 }

@@ -33,7 +33,7 @@
     })    
   }
 
-  onDestroy(unsubscribe);
+  onDestroy(()=> unsubscribe());
 
   const createNewUser = () => {
     const projectData = { createdInBackEnd: true }

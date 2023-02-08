@@ -1,5 +1,7 @@
 <script>
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { onDestroy } from 'svelte';
+
   import WorkArea from './WorkArea.svelte';
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
@@ -16,6 +18,7 @@
 
 
   export let projectId
+  export let tab
   export let currentProject
   
   let selected
@@ -31,7 +34,7 @@
   let nodeEditorBoardId
   let nodeEditorNodeId
 
-  window.addEventListener('message', evt => {
+  let messageListener = window.addEventListener('message', evt => {
     // console.log('received postMessage from iframe', evt, evt.data)
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
   })
@@ -44,69 +47,86 @@
   let messagesListNotification
   let scheduledeventsListNotification
 
+  onDestroy(() => {
+    console.log("destroying ProjectWorkspace")
+    window.removeEventListener('message', messageListener)
+  });
+
 </script>
 
 {#if $currentProject}
   <div class="__ProjectWorkspace panes">
     <div class="left-pane">
-      <Tabs type="container" bind:selected>
-        <Tab label="Database" />
-        <Tab label="Media" />
-        <Tab label="Components" />
-        <Tab label="Story" />
-        <Tab label="Project" />
-        <Tab label="Users" />
-        <Tab label={`${messagesListNotification ? '‼️ ' : ''}Messages`} />
-        <Tab label={'Schedule' + (scheduledeventsListNotification ? ` (${scheduledeventsListNotification})` : '')} />
-        <Tab label={ "Repository " + repoNotice } />
-        <div slot="content" class="content">
-          <TabContent>
-            <Sheets {projectId}/>
-          </TabContent>
-          <TabContent>
-            <MediaManager {projectId} />
-          </TabContent>
-          <TabContent>
-            <BlocklyEditor {projectId} open={selected === 2}/>
-          </TabContent>
-          <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
-          <TabContent style="height: 100%; max-height: 70vh">
-            <NodeEditor
-              on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
-              {projectId}
-              {previewUserId}
-              />
-          </TabContent>
-          <TabContent>
-            <ProjectEditor {projectId} {currentProject} />
-          </TabContent>
-          <TabContent>
-            <UsersManager
-              {projectId}
-              {previewUserId}
-              updatePreviewUserAuth={(data)=>previewUserAuth = data}
-              moveToBoardId={nodeEditorBoardId}
-              moveToNodeId={nodeEditorNodeId}
-              />
-          </TabContent>
-          <TabContent>
-            <MessagesManager
-              {projectId}
-              bind:notification={messagesListNotification}
-              />
-          </TabContent>
-          <TabContent>
-            <ScheduledeventsManager
-              {projectId}
-              bind:notification={scheduledeventsListNotification}
-              />
-          </TabContent>
-          <TabContent>
-            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
-          </TabContent>
-          
-        </div>
-      </Tabs>
+      
+      <!-- start -->
+      <div class:active={!tab}>
+        <h1>
+        Welcome to project {projectId}
+        </h1>
+      </div>
+
+      <!-- sheets -->
+      <div class:active={tab == 'sheets' }>
+        <Sheets {projectId}/>
+      </div>
+      
+      <!-- media -->
+      <div class:active={tab == 'media' }>
+        <MediaManager {projectId} />
+      </div>
+      
+      <!-- components -->
+      <div class:active={tab == 'components'}>
+        <BlocklyEditor {projectId} open={true}/>
+      </div>
+      
+      <!-- nodes -->
+      <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+      <div style="height: 100%; max-height: 70vh" class:active={tab == 'story'}>
+        <NodeEditor
+        on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
+        {projectId}
+        {previewUserId}
+        />
+      </div>
+      
+      <!-- project -->
+      <div class:active={tab == 'project'}>
+        <ProjectEditor {projectId} {currentProject} />
+      </div>
+      
+      <!-- users -->
+      <div class:active={tab == 'users'}>
+        <UsersManager
+        {projectId}
+        {previewUserId}
+        updatePreviewUserAuth={(data)=>previewUserAuth = data}
+        moveToBoardId={nodeEditorBoardId}
+        moveToNodeId={nodeEditorNodeId}
+        />
+      </div>
+      
+      <!-- messages -->
+      <div class:active={tab == 'messages'}>
+        <MessagesManager
+        {projectId}
+        bind:notification={messagesListNotification}
+        />
+      </div>
+      
+      <!-- scheduler -->
+      <div class:active={tab == 'schedule'}>
+        <ScheduledeventsManager
+        {projectId}
+        bind:notification={scheduledeventsListNotification}
+        />
+      </div>
+      
+      <!-- repository -->
+      <div class:active={tab == 'repository'}>
+        <RepositoryTab {projectId} {currentProject} />
+      </div>
+
     </div>
     {#if rightPaneHidden}
       <button class="toggle-right" on:click={toggleRightPane}>show preview</button>
@@ -157,5 +177,12 @@
 
   :global(.__ProjectWorkspace .bx--tab-content) {
     height: 100%
+  }
+  .left-pane > div.active {
+    display: block;
+    flex:1;
+  }
+  .left-pane > div:not(.active) {
+    display: none;
   }
 </style>

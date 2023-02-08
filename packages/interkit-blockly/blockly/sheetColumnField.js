@@ -110,8 +110,11 @@ export default (Blockly, update) => {
 
   }
 
-
+  try {
   Blockly.fieldRegistry.register('sheetColumn', SheetColumnField);
+  } catch(e) {
+    console.log("error registering sheetColumn field", e)
+  }
 
   
 

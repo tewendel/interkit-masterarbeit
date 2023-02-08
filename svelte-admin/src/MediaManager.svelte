@@ -25,7 +25,9 @@
     })    
   }
 
-  onDestroy(unsubscribe);
+  onDestroy(() => {
+    unsubscribe()
+  });
   
   let selectedTab
 

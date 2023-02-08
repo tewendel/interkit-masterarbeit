@@ -23,7 +23,9 @@
     })
   }
 
-  onDestroy(unsubscribe);
+  onDestroy(()=>{
+    if (unsubscribe) unsubscribe()
+  });
 
   const REPORTS_CHANNEL_KEY = 'REPORTS'
 

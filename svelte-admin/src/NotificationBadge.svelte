@@ -5,7 +5,7 @@
 
 {#if count}
   <span class="number {type}" >
-    1
+    {count}
   </span>
 {/if}
 

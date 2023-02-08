@@ -80,7 +80,7 @@
     })
   }
 
-  onDestroy(unsubscribe);
+  onDestroy(() => unsubscribe());
 
   // force update of the SVG hack
   // TODO: some sort of debounce

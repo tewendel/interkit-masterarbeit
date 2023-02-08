@@ -47,8 +47,11 @@ export default (Blockly, update) => {
 
   }
 
-
-  Blockly.fieldRegistry.register('extraProps', ExtraPropsField);
+  try {
+    Blockly.fieldRegistry.register('extraProps', ExtraPropsField);
+  } catch(e) {
+    console.log("error registering extraProps field", e)
+  }
 
 
   return ExtraPropsField;

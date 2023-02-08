@@ -1,6 +1,6 @@
 <script>
 
-  import {onMount} from 'svelte'
+  import {onMount, onDestroy} from 'svelte'
   import indent from 'xml-formatter';
   
   import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
@@ -251,12 +251,17 @@
     
   }
 
-  $: {
-    //console.log("blockly open", open)
-    if(open && !workspace) {
-      initBlockly();      
+  onMount(async () => {
+    console.log("blockly onMount")
+      initBlockly();
+  });
+
+  onDestroy(() => {
+    console.log("blockly onDestroy")
+    if (workspace) {
+      workspace.dispose();
     }
-  }
+  });
 
   const save = async ()=>{
 

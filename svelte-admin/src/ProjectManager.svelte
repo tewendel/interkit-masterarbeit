@@ -44,6 +44,7 @@
   ]
 
   const destroyProjectsSub = async () => {
+    console.log("destroy project subscription")
     if (sub) {
       await sub.stop();
       sub = null;
@@ -52,7 +53,7 @@
 
   const manageProjectsSub = async (projectId)=>{
     console.log("project subscription " + projectId)
-    destroyProjectsSub() // not sure if nessesary
+    await destroyProjectsSub() // not sure if nessesary
     if (projectId) {
       sub = await InterkitClient.getSub('projects', 'projects', null, (p)=>p.id == projectId, true)
       currentProject = sub.data
@@ -72,9 +73,12 @@
     newProjectName = null;
   }
 
-  onDestroy(destroyProjectsSub)
+  onDestroy(() =>
+    destroyProjectsSub()
+  )
 
   $: currentProjectId = params.projectId
+  $: tab = params.tab
 
   // TODO this should probably go into App.svelte, "nearer" the router
   $: projectId.set(params.projectId)
@@ -124,7 +128,7 @@
     <Column lg="{16}">
     
       {#if currentProjectId}
-        <ProjectWorkspace projectId={currentProjectId} {currentProject}/>
+        <ProjectWorkspace {tab} projectId={currentProjectId} {currentProject}/>
       {:else}
 
       

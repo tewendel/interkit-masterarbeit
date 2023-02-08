@@ -2,6 +2,7 @@
   import './base.scss'
 
   import Router, { querystring } from 'svelte-spa-router'
+  import {link} from 'svelte-spa-router'
   import ProjectManager, { currentProjectName, currentProjectServerStatus } from './ProjectManager.svelte'
   import { BundleServer } from './BundleServer'
   import Login from './Login.svelte';
@@ -31,11 +32,17 @@
   
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
 
+  let projectId = null;
+  let tab = null;
 
   // see https://github.com/ItalyPaleAle/svelte-spa-router/blob/master/README.md
   const routes = {
-      '/:projectId?': ProjectManager,
-      '/:projectId?/*': ProjectManager,
+      '/:projectId?/:tab?': ProjectManager,
+  }
+
+  const routeLoaded = event => {
+    projectId = event.detail?.params?.projectId
+    tab = event.detail?.params?.tab
   }
 
   import { InterkitClient } from 'interkit'
@@ -58,7 +65,7 @@
 <Header 
   company="interkit" 
   platformName={$currentProjectName || "Redaktionssystem"} 
-  href="/"
+  href="/#/"
   >
   
   <!--HeaderNav>
@@ -72,7 +79,11 @@
     </HeaderNavMenu>
   </HeaderNav-->
 
-  <TopTabs />
+  {#if projectId}
+    <TopTabs {projectId} {tab} />
+  {:else}
+    <div class="spacer" style="flex:1"></div>
+  {/if}
   
   <div class="status">
     {#if $userId}
@@ -103,12 +114,11 @@
   
 </Header>
 
-
 {#if $userId}
   <!-- set transform: none; to allow modal to be position fixed -->
   <Content style="padding:0;width:100%;transform:scale(1)">  
 
-    <Router {routes} />
+    <Router {routes} on:routeLoaded={routeLoaded} />
 
   </Content>
 {:else}

@@ -5,7 +5,6 @@
 
   export let projectId
   export let currentProject
-  export const open = false
 
   let selectedTab
 
