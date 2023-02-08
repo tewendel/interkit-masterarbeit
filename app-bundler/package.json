@@ -49,7 +49,7 @@
     "../packages/*"
   ],
   "engines": {
-    "node": "=16",
-    "npm": ">=7"
+    "node": "16",
+    "npm": "8"
   }
 }

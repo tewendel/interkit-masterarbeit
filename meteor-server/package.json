@@ -38,6 +38,6 @@
     "testModule": "tests/main.js"
   },
   "engines": {
-    "npm": ">=7"
+    "npm": "8"
   }
 }
