@@ -201,7 +201,7 @@
       }
     }
 
-    blocklyConfig.initCodeGenerator(javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
+    blocklyConfig.initCodeGenerator(Blockly, javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
     
     // hide toolbox
     //workspace.getToolbox().setVisible(false);

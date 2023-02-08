@@ -1,11 +1,11 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
 import extraPropsField from "./extraPropsField";
-import Blockly from 'blockly';
+
 
 const verbose = false
 
-export const initCodeGenerator = (javascriptGenerator, blockObjects, workspace) => {
+export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
   const attribute = (block, attributeName, blocklyAttributeName) => {
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
