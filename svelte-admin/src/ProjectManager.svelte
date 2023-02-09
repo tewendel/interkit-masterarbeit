@@ -213,12 +213,6 @@
     </div>
   </Row>
   {/if}
-  <Row>{#if $userId && !currentProjectId} 
-    <div class="logout">
-      <Logout/> 
-    </div>
-  {/if}
-  </Row>
   <Row>
     <Column>
       <Tile>
