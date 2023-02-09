@@ -1,5 +1,5 @@
 <script context="module">
-  import { writable } from 'svelte/store';
+  import { writable, get } from 'svelte/store';
   export let currentProjectName = writable(null);
   export let currentProjectServerStatus = writable(null);
 </script>
@@ -25,13 +25,13 @@
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
 
-  import { projectId } from './admin.js'
-
   export let params = {}
 
   let userId = InterkitClient.userId;
 
-  let sub;
+  let currentProjectSub;
+  let projectsListSub;
+
   let projects;
   let currentProject;
   let newProjectName;
@@ -43,23 +43,20 @@
     { id: "list", text: "List example" },
   ]
 
-  const destroyProjectsSub = async () => {
-    console.log("destroy project subscription")
-    if (sub) {
-      await sub.stop();
-      sub = null;
-    }
-  }
-
   const manageProjectsSub = async (projectId)=>{
     console.log("project subscription " + projectId)
-    await destroyProjectsSub() // not sure if nessesary
     if (projectId) {
-      sub = await InterkitClient.getSub('projects', 'projects', null, (p)=>p.id == projectId, true)
-      currentProject = sub.data
+      currentProjectSub = await InterkitClient.getSub('projects', 'project', projectId, (p)=>p.id == projectId, true)
+      currentProject = currentProjectSub.data
+      if (projectsListSub) { projectsListSub.stop() }
     } else {
-      sub = await InterkitClient.getSub('projects', 'projects') 
-      projects = sub.data;
+      projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
+      projects = projectsListSub.data;
+      if (currentProjectSub) { 
+        await currentProjectSub.stop(); 
+        currentProjectSub = null 
+        currentProject.set(null)
+      }
     }
   }
 
@@ -73,22 +70,21 @@
     newProjectName = null;
   }
 
-  onDestroy(() =>
-    destroyProjectsSub()
-  )
+  onDestroy(() => {
+    currentProjectSub?.stop()
+    projectsListSub?.stop()
+  })
 
   $: currentProjectId = params.projectId
   $: tab = params.tab
 
-  // TODO this should probably go into App.svelte, "nearer" the router
-  $: projectId.set(params.projectId)
-
-  $: manageProjectsSub(currentProjectId)
-
   $: {
-    currentProjectName.set($currentProject ? $currentProject.name : null)
+    console.log("currentProject xxx", $currentProject)
+    currentProjectName.set($currentProject ? $currentProject.name : null )
   }
   $: $currentProjectServerStatus = $currentProject?.projectServer?.status
+
+  $: manageProjectsSub(currentProjectId)
 
   // add "id" for carbon table
   $: projectRows = projects ? $projects

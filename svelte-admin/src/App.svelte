@@ -32,7 +32,8 @@
   
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
 
-  let projectId = null;
+  import { projectId } from './admin.js'
+
   let tab = null;
 
   // see https://github.com/ItalyPaleAle/svelte-spa-router/blob/master/README.md
@@ -41,7 +42,7 @@
   }
 
   const routeLoaded = event => {
-    projectId = event.detail?.params?.projectId
+    $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
   }
 
@@ -83,8 +84,8 @@
     </HeaderNavMenu>
   </HeaderNav-->
 
-  {#if projectId}
-    <TopTabs {projectId} {tab} />
+  {#if $projectId}
+    <TopTabs projectId={$projectId} {tab} />
   {:else}
     <div class="spacer" style="flex:1"></div>
   {/if}
