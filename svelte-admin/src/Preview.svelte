@@ -76,10 +76,10 @@
 
 
 </script>
-  <div style="float:right">
+  <!--div style="float:right">
     <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_back'},'*')  } iconDescription="Browser back" icon={ArrowLeft} />
     <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_forward'},'*') } iconDescription="Browser forward" icon={ArrowRight} />
-  </div>
+  </div-->
   <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
     <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
       {#if bundleServerURL && !$compileError}

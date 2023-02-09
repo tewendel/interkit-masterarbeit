@@ -89,12 +89,6 @@
     <div class="spacer" style="flex:1"></div>
   {/if}
   
-  <div class="status">
-    {#if $userId}
-      <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
-    {/if}
-  </div>
-
   <HeaderUtilities>
     {#if $userId}
       <HeaderAction 
@@ -103,8 +97,15 @@
         closeIcon={UserAvatarFilledAlt}
       >
         <HeaderPanelLinks>
-          <HeaderPanelDivider>user {$userId}</HeaderPanelDivider>
+          <HeaderPanelDivider>User {$userId}</HeaderPanelDivider>
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
+          <HeaderPanelDivider>System Status</HeaderPanelDivider>
+          <div class="status">
+            {#if $userId}
+              <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
+            {/if}
+          </div>  
+          
         </HeaderPanelLinks>
       </HeaderAction>
     {/if}
@@ -137,9 +138,9 @@
   @use '@carbon/styles/scss/theme';
 
   .status {
-    
     padding: 1em;
-    text-align: right;
+    padding-top: 0.5em;
+    text-align: left;
   }
   .centered {
     display: flex;

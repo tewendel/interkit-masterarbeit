@@ -62,6 +62,6 @@
   @use '@carbon/styles/scss/theme';
 
   span {
-    color: theme.$text-primary;
+    color: white /*theme.$text-primary*/;
   }
 </style>

@@ -4,74 +4,114 @@
   import NotificationBadge from "./NotificationBadge.svelte";
 
   export let projectId;
-  export let tab;
+  export let tab; // this is a string of the active path
 
-  const tabPaths = [
+  let mainSelected; // this is a numeric index
+  let selectedDropdownId = "more"; // this is a string
+
+  const mainTabPaths = [
     '',
     'components', 
     'sheets', 
     'media', 
     'story', 
+  ];
+  const dropdownPaths = [
     'project',
     'users',
     'messages',
     'schedule',
-    'repository'
+    'repository',
   ];
 
-  $: selected = tabPaths.indexOf(tab || '');
+  const updateTabFromPropChange = (newTab) => {
+    console.log("tab changed from prop to:", newTab)
+    if(mainTabPaths.includes(newTab)) {
+      mainSelected = mainTabPaths.indexOf(newTab);
+      selectedDropdownId = "more"
+    }
+    if(dropdownPaths.includes(newTab)) {
+      selectedDropdownId = newTab;
+      mainSelected = 5;
+    }
+  }
 
-  const navigate = (e) => {
-    console.log('navigate', e);
-    push(`/${projectId}/${tabPaths[e]}`);
+  $: updateTabFromPropChange(tab)
+  
+  const navigate = (path) => {
+    if(path != undefined) {
+      console.log("navigate", path)
+      push(`/${projectId}/${path}`);
+    }
   }
 
 </script>
 
-<div class="tabs">
-  <!--a use:link href="/components" >Appa</a>
-  <a use:link href="/sheets" >Daten</a-->
-  <Tabs autoWidth bind:selected on:change={ e => navigate(e.detail)}>
-    <Tab>
-      Start
-    </Tab>
-    <Tab>
-      App
-      <NotificationBadge count={0} />
-    </Tab>
-    <Tab label="Daten" />
-    <Tab label="Medien" />
-    <Tab label="Story" />
-    <Tab label="Projekt" />
+<div class="tabs-left">
+
+  <div class="tabs-main">
+    <!--a use:link href="/components" >Appa</a>
+    <a use:link href="/sheets" >Daten</a-->
+    <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+      <Tab>
+        Start
+      </Tab>
+      <Tab>
+        App
+        <NotificationBadge count={0} />
+      </Tab>
+      <Tab label="Daten" />
+      <Tab label="Medien" />
+      <Tab label="Story" />
+      <!-- disabled tab for when dropdown is active -->
+      <Tab label="" disabled />
+      
+    </Tabs>
     
+  </div>
+
+  <div class="extra-dropdown">
+
+    <Dropdown
+      light
+      type = "inline"
+      bind:selectedId={selectedDropdownId}
+      on:select={ e => navigate(e.detail.selectedId) }
+      items={[
+        { id: "more", text: "more", disabled: true },
+        { id: "project", text: "Projekt" },
+        { id: "users", text: "Users" },
+        { id: "messages", text: "Messages" },
+        { id: "schedule", text: "Schedule" },
+        { id: "repository", text: "Repository" },
+      ]}
+    />
+
+  </div>
+
+</div>
+
+<div class="tabs-preview">
+
+    
+
+  <Tabs autoWidth>
     <!-- separator -->
-    <span style="flex:1; border-left: solid 1px #eee"></span>
-
-    <Tab>
-      <small>
-        Users
-      </small>
-    </Tab>
-    <Tab>
-      <small>
-        Messages
-      </small>
-      <NotificationBadge count={0} />
-    </Tab>
-    <Tab>
-      <small>
-        Schedule
-      </small>
-      <NotificationBadge count={0} />
-    </Tab>
-    <Tab>
-      <small>
-        Repository
-      </small>
-    </Tab>
-
-  </Tabs>
+    <span class="tab-separator"><span/></span>
   
+    <Tab>
+        Preview
+    </Tab>
+    <Tab>
+        Docs
+      <NotificationBadge count={0} />
+    </Tab>
+    <Tab>
+        Logs
+      <NotificationBadge count={0} />
+    </Tab>
+  </Tabs>
+
 </div>
 
 
@@ -81,10 +121,37 @@
   @use '@carbon/styles/scss/theme';
   @use '@carbon/type';
 
-  .tabs {
+  .tabs-left {
     flex:1;
     width: 100%;
     color: white;
+    display: flex;
+  }
+  .tabs-main {
+    width: 375px;
+  }
+  .extra-dropdown {
+    width: 100px;
+    height: 100%;
+  }
+
+  .tab-separator {
+    display:flex;
+  }
+
+  .tab-separator span {
+    border-left: solid 1px #eee; 
+    width: 10px;
+    margin-top: 10px;
+  }
+
+  .tabs-preview {
+    width: calc(33.3333333vw - 45px);
+    height: 100%;
+  }
+
+  :global(.bx--list-box__menu #more) {
+    display: none
   }
 
   small {
