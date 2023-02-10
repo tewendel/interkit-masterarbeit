@@ -2,11 +2,14 @@
 
 Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games, and more. 
 
-*It is currently in early alpha stage.*
+*It is currently in alpha stage.*
 
-More information: https://interkit.app
+More information: https://interkit.app  
+Documentation: https://docs.interkit.app
 
 Interkit is being developed in the context of the [Offene Welten](https://offenewelten.de/) project (in the framework of Digitalfonds der Kulturstiftung des Bundes).
+
+![interkit admin interface](./interkit_teaser.png)
 
 ### overview
 
