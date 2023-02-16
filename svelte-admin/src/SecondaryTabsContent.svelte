@@ -8,6 +8,7 @@
 
   import Preview from './Preview.svelte'
   import DocsBrowser from '../DocsBrowser.svelte'
+  import ProjectServerInfo from './ProjectServerInfo.svelte';
 
   export let projectId;
   export let currentProject;
@@ -44,7 +45,8 @@
       </section>
     
       <section class:visible={$secondaryTabIndex == 2}>
-        <h2>logs</h2>
+        <h4> Project Server</h4>
+        <ProjectServerInfo {currentProject}/>
       </section>
     
     </div>
