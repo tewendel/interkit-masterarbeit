@@ -4,10 +4,10 @@
   import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
   import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
   
-  import { secondaryTabsVisible } from './admin.js'
+  import { secondaryTabsVisible, secondaryTabIndex } from './admin.js'
 
   import Preview from './Preview.svelte'
-  import { secondaryTabIndex } from './admin';
+  import DocsBrowser from '../DocsBrowser.svelte'
 
   export let projectId;
   export let currentProject;
@@ -40,7 +40,7 @@
       </section>
     
       <section class:visible={$secondaryTabIndex == 1}>
-        <h2>docs</h2>
+        <DocsBrowser/>
       </section>
     
       <section class:visible={$secondaryTabIndex == 2}>
@@ -89,10 +89,12 @@
   }
 
   section {
+    width: 100%;
     visibility: hidden;
     position: absolute;
     top: 0;
     left: 0;
+    /*border: 2px solid blue;*/
   }
 
   section.visible {

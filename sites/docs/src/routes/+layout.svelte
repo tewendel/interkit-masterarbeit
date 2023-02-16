@@ -19,12 +19,12 @@
       </a>
     </h1>
   </header>
-  <nav class="sidebar">
-    <Sidebar {items} />
-  </nav>
   <main class="main">
     <slot></slot>
   </main>
+  <nav class="sidebar">
+    <Sidebar {items} />
+  </nav>
 </div>
 
 <style>
@@ -48,6 +48,7 @@
 
   .sidebar {
     grid-column: 1;
+    grid-row: 2;
     background-color: var(--color-rose);
     padding: 1rem;
     overflow-y: auto;
@@ -57,5 +58,12 @@
     grid-column: 2;
     overflow-y: auto;
   }
+
+  @media screen and (max-width: 600px) {
+    .container {
+      display: block;
+    }
+  }
+
 
 </style>
