@@ -3,6 +3,8 @@
   import {push, pop, replace} from 'svelte-spa-router'
   import NotificationBadge from "./NotificationBadge.svelte";
 
+  import {secondaryTabIndex, secondaryTabsVisible} from "./admin.js"
+  
   export let projectId;
   export let tab; // this is a string of the active path
 
@@ -43,6 +45,11 @@
       console.log("navigate", path)
       push(`/${projectId}/${path}`);
     }
+  }
+
+  const changeSecondaryTab = (e) => {
+    //console.log("secondary Tab changed to ", e.detail)
+    secondaryTabIndex.set(e.detail)
   }
 
 </script>
@@ -91,11 +98,9 @@
 
 </div>
 
-<div class="tabs-preview">
+<div class="tabs-preview" class:visible={$secondaryTabsVisible}>
 
-    
-
-  <Tabs autoWidth>
+  <Tabs autoWidth on:change={changeSecondaryTab}>
     <!-- separator -->
     <span class="tab-separator"><span/></span>
   
@@ -148,6 +153,11 @@
   .tabs-preview {
     width: calc(33.3333333vw - 45px);
     height: 100%;
+    visibility: hidden;
+  }
+
+  .tabs-preview.visible {
+    visibility: visible;
   }
 
   :global(.bx--list-box__menu #more) {
@@ -157,4 +167,6 @@
   small {
     @include type.type-style('helper-text-01');
   }
+
+  
 </style>
