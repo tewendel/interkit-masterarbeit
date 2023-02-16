@@ -304,6 +304,45 @@ api.boards.delete = expressify(
   }
 )
 
+// renames all files prefixed with boardId
+api.boards.renameBoard = expressify(
+  async (handle, params) => {
+    const { projectId, oldBoardId, newBoardId } = params
+    const handlePrefix = projectBoardPath(false, projectId)
+    const oldBoardHandle = projectBoardPath(false, projectId, oldBoardId)
+    let board
+    try {
+      board = await fs.readFile(oldBoardHandle)
+        .then(file => JSON.parse(file.toString()))
+      console.log('renameBoard: board before update', board)
+      board.name = newBoardId
+      console.log('renameBoard: board after update', board)
+      await fs.writeFile(oldBoardHandle, JSON.stringify(board))
+    } catch (err) {
+      console.warn('renameBoard: error updating board json', err)
+    }
+    const files = await fs.readdir(handlePrefix)
+      .then(allFiles => allFiles.filter(
+        file => file.substr(0, oldBoardId.length) === oldBoardId)
+      )
+    return Promise.all(
+      files.map(file => {
+        if (boardFileNameRE.test(file)) {
+          const newBoardHandle = projectBoardPath(false, projectId, newBoardId)
+          console.log('renameBoard: renaming board', oldBoardHandle, '->', newBoardHandle)
+          return fs.rename(oldBoardHandle, newBoardHandle)
+        }
+        const nodeId = file.match(nodeFileNameRE)?.[2]
+        if (!nodeId) return
+        const oldNodeHandle = projectBoardPath(false, projectId, oldBoardId, nodeId)
+        const newNodeHandle = projectBoardPath(false, projectId, newBoardId, nodeId)
+        console.log('renameBoard: renaming node', oldNodeHandle, '->', newNodeHandle)
+        return fs.rename(oldNodeHandle, newNodeHandle)
+      })
+    )
+  }
+)
+
 api.boards.renameNode = expressify(
   async (handle, params) => {
     const { projectId, boardId, oldNodeId, newNodeId } = params

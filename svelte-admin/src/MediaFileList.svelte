@@ -1,6 +1,6 @@
 <script>
 
-  import { onDestroy } from 'svelte'
+  import { onDestroy, createEventDispatcher } from 'svelte'
   import {
     DataTable,
     Pagination,
@@ -11,6 +11,8 @@
     ToolbarSearch
   } from "carbon-components-svelte"
 
+  const dispatch = createEventDispatcher()
+
   import MediaFilePreview from './MediaFilePreview.svelte'
   import { InterkitClient, util } from 'interkit'
 
@@ -19,6 +21,8 @@
   export let value
   export let projectId
   export let showChatCols = false
+  export let sortKey = 'name'
+  export let sortDirection = 'ascending'
 
   let headers
 
@@ -74,18 +78,29 @@
   $: {
     rowsFiltered = rows
       .filter(m => searchFunction(m, searchQuery))
-    //console.log(rows, rowsFiltered)
   }
 
-  let selectedRowIds = [value?.value];
-  $: {
-    //console.log(selectedRowIds[0])
-    value = {
-      value: selectedRowIds[0],
-      type: "mediaFile"
-    }
-    //console.log(value)
+  let selectedRowIds = [value?.value]
+
+  /* have to use this clunky, explicit two-way data-flow,
+   * construct of update/selected to get around weird issues
+   * of either missed updates or infinited update loops
+   * (which happen with $ reactivity and regular bind)
+   * root cause: we can't normally two-bind the value 
+   * because it has to be wrapped into an array-of-ids for the DataTable,
+   * and { value: …, type: … } for the dispatch.
+   * i'm sure better solutions exist.
+   * see https://stackoverflow.com/q/72407572/629238
+   */
+
+  export let update = newValue => {
+    selectedRowIds = [newValue?.value]
   }
+
+  $: dispatch('selected', {
+    value: selectedRowIds[0],
+    type: 'mediaFile'
+  })
 
   const removeRow = (row)=> {
     if(confirm("permanently delete mediafile?")) {
@@ -117,6 +132,8 @@
   <div class="MediaFileListTableContainer">
     <DataTable
       sortable
+      {sortKey}
+      {sortDirection}
       {radio}
       bind:selectedRowIds
       pageSize={pagination.pageSize}

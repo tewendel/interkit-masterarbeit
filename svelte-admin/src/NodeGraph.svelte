@@ -5,6 +5,10 @@
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
 
+  import {
+    Button
+  } from "carbon-components-svelte"
+
   import { boardsApi as api } from './BundleServer.js'
   import { idRE } from 'interkit/project-regex.js'
 
@@ -73,8 +77,51 @@
 
   $: nodes, updateConnections()
 
+  let highlightNodeId
+
+  export const scrollNodeIntoView = nodeId => {
+    highlightNodeId = nodeId
+    const node = getNodeById(nodeId)
+    if (!node) return
+    const centerX = svgEl.clientWidth * 0.25
+    const centerY = svgEl.clientHeight * 0.5
+    // offsetX.set(-node.posX * get(zoom) + centerX)
+    // offsetY.set(-node.posY * get(zoom) + centerY)
+    panTo(
+      (-rectWidth / 2 - node.posX) * get(zoom) + centerX,
+      (-rectHeight / 2 - node.posY) * get(zoom) + centerY
+    )
+  }
+
+  let panXstart
+  let panYstart
+  let panXend
+  let panYend
+  let panT = 0.0
+  let panTimestamp
+  const panDuration = 600
+
+  const panTick = timestamp => {
+    if (!panTimestamp) panTimestamp = timestamp
+    let f = Math.min(1, (timestamp - panTimestamp) / panDuration)
+    f = 0.5 - 0.5 * (Math.cos(f * Math.PI))
+    offsetX.set(panXstart + f * (panXend - panXstart))
+    offsetY.set(panYstart + f * (panYend - panYstart))
+    if (f < 1) window.requestAnimationFrame(panTick)
+  }
+
+  const panTo = (x, y) => {
+    panXstart = get(offsetX)
+    panYstart = get(offsetY)
+    panXend = x
+    panYend = y
+    panTimestamp = false
+    window.requestAnimationFrame(panTick)
+  }
+
   const localStore = name => {
     let initialValue
+    // attention, please manually sync this magic string with NodeEditor
     const key = `interkit-admin-node-boardview-${projectId}-${boardId}-${name}`
     try {
       initialValue = JSON.parse(localStorage.getItem(key))
@@ -191,9 +238,28 @@
 </script>
 
 <div class="scale-controls">
-  <button on:click={() => { doZoom(-1) }}>-</button>
-  <button on:click={() => { resetCanvas() }}>0</button>
-  <button on:click={() => { doZoom(1) }}>+</button>
+  <!-- carbon doesn't have minus/plus -->
+  <Button
+    kind="ghost"
+    style="color: black"
+    on:click={() => { doZoom(-1) }}
+    >
+    &ndash;
+  </Button>
+  <Button
+    kind="ghost"
+    style="color: black"
+    on:click={() => { resetCanvas() }}
+    >
+    0
+  </Button>
+  <Button
+    kind="ghost"
+    style="color: black"
+    on:click={() => { doZoom(1) }}
+    >
+    +
+  </Button>
 </div>
 
 <svg
@@ -271,6 +337,7 @@
           width={rectWidth}
           height={rectHeight}
           class="node"
+          class:node__highlight={highlightNodeId === node.id}
           class:node__editing={editNodeId === node.id}
           class:node__modified={node.modified}
           style={nodeMetaStyle(node)}
@@ -356,6 +423,10 @@ rect {
 polyline {
   stroke: black;
   stroke-width: 1;
+}
+
+.node__highlight {
+  filter: drop-shadow(-0.4em 0 #0f62fe);
 }
 
 .node__editing {

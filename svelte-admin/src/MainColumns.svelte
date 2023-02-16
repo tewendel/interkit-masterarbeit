@@ -32,9 +32,7 @@
         icon={Maximize}
         />
     {:else}
-      <div
-        style="height: var(--mainContentHeaderHeight)"
-        >
+      <div>
         <div class="headingWithButton">
           <h2>{sidebarLeftLabel}</h2>
           <Button
@@ -77,7 +75,6 @@
 <style>
 
 :root {
-  --mainContentHeaderHeight: 96px;
   --sidebarCollapsedWidth: 3rem;
 }
 
@@ -122,6 +119,7 @@ h3 {
   background: white;
   display: flex;
   flex-direction: column;
+  transition: max-width 300ms, min-width 300ms, width 300ms, flex-basis 300ms;
 }
 
 .sidebarLeft--closed {
@@ -132,7 +130,6 @@ h3 {
 }
 
 .sidebarLeftHeader {
-  height: var(--mainContentHeaderHeight);
   flex-grow: 0;
   flex-shrink: 0;
 }
@@ -159,7 +156,6 @@ h3 {
 }
 
 .modalPanelRightHeader {
-  height: var(--mainContentHeaderHeight);
   border-bottom: 1px solid #ccc;
   flex-grow: 0;
   flex-shrink: 0;

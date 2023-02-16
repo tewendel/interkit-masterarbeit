@@ -58,7 +58,7 @@
       value={twinyCode}
       on:input={evt => twinyInput(evt.target.value) }
       ></textarea>
-    <p>generated code (live preview):</p>
+    <p style="font-size: 80%">generated code (live preview):</p>
     <CodeEditor
       style="background-color: transparent"
       code={jsCode}
@@ -90,6 +90,14 @@ pre {
   min-width: 100%;
   max-width: 100%;
   height: 250px;
+  border: none;
+  font-family: monospace;
+}
+
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .root--valid :global(.CodeMirror) {
