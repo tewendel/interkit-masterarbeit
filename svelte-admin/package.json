@@ -31,6 +31,7 @@
     "codemirror": "^5.63.3",
     "dayjs": "^1.10.7",
     "envsub": "^4.0.7",
+    "esbuild": "^0.17.8",
     "install": "^0.13.0",
     "interkit-dev": "*",
     "js-beautify": "^1.14.6",
