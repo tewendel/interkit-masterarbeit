@@ -79,7 +79,7 @@
   $: tab = params.tab
 
   $: {
-    console.log("currentProject xxx", $currentProject)
+    //console.log("currentProject xxx", $currentProject)
     currentProjectName.set($currentProject ? $currentProject.name : null )
   }
   $: $currentProjectServerStatus = $currentProject?.projectServer?.status

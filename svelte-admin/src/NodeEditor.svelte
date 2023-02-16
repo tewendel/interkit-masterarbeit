@@ -36,7 +36,6 @@
 
   import MainColumns from './MainColumns.svelte'
 
-  import ChannelEditor from './ChannelEditor.svelte'
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
   import CodeEditorStringy from './CodeEditorStringy.svelte'
