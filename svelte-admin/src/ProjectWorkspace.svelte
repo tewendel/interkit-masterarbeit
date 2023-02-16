@@ -56,9 +56,9 @@
       
       <!-- start -->
       <div class:active={!tab}>
-        <h1>
+        <h2 style="margin: 0.5em;">
         Welcome to project {projectId}
-        </h1>
+        </h2>
       </div>
 
       <!-- sheets -->
