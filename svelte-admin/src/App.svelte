@@ -64,6 +64,10 @@
     await InterkitClient.logout()
   }
 
+  // get commit hash from current image tag
+  const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
+  const commitHash = matches ? matches[0] : null
+  
 </script>
 
 
@@ -106,6 +110,17 @@
               <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
             {/if}
           </div>  
+
+          <HeaderPanelDivider>Admin Version</HeaderPanelDivider>
+          <div class="status">
+            {INTERKIT_IMAGE_TAG}
+            {#if commitHash}
+              <a target="gitlab" href="https://gitlab.interkit.app/interkit/interkit-experiments/-/commits/{commitHash}/">
+                What's new?
+              </a>
+            {/if}
+          </div>
+              
           
         </HeaderPanelLinks>
       </HeaderAction>
@@ -139,8 +154,7 @@
   @use '@carbon/styles/scss/theme';
 
   .status {
-    padding: 1em;
-    padding-top: 0.5em;
+    padding: 0.5em 1em 0.5em 1em;
     text-align: left;
   }
   .centered {

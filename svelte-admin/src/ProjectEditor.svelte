@@ -95,9 +95,6 @@
 <h4>Project History</h4>
 <HistoryList {currentProject} />
 
-<h4> Project Server</h4>
-<ProjectServerInfo {currentProject} />
-
 <h4>Snapshots (coming soon)</h4>
 
 <style>

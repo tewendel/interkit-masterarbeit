@@ -5,7 +5,6 @@
   import WorkArea from './WorkArea.svelte';
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
-  import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
   import RepositoryTab from "./RepositoryTab.svelte"
   import MediaManager from "./MediaManager.svelte"
@@ -14,12 +13,7 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import { InterkitClient } from 'interkit'
-
-  import { Button } from 'carbon-components-svelte'
-  import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
-  import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
-  
+  import SecondaryTabsContent from "./SecondaryTabsContent.svelte";
 
   export let projectId
   export let tab
@@ -29,9 +23,7 @@
   let repoNotice
   let editorFilesKey = "init"
 
-  let rightPaneHidden = false;
-  const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
-
+  
   let previewUserId
   let previewUserAuth
 
@@ -132,20 +124,9 @@
       </div>
 
     </div>
+
+    <SecondaryTabsContent {projectId} {currentProject} {previewUserAuth}/>
     
-    <div class="right-pane" class:minimized={rightPaneHidden}>        
-        <div class="pane-controls">
-          <Button
-              kind="ghost"
-              iconDescription={rightPaneHidden ? "maximize" : "minimize"}
-              on:click={toggleRightPane}
-              icon={rightPaneHidden ? Maximize : Minimize}
-          />
-          </div>
-        <div class="right-pane-content" class:hidden={rightPaneHidden}>
-          <Preview {projectId} {currentProject} {previewUserAuth}/>
-        </div>
-    </div>
   </div>
 {:else}
   loading...
@@ -166,43 +147,6 @@
     /*overflow-x: auto;*/
   }
 
-  .right-pane {
-    flex: 0.5;    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    border-left: 1px solid #ccc;
-  }
-
-  .right-pane.minimized {
-    max-width: var(--sidebarCollapsedWidth);
-    padding: 0;
-    height: 100vh;
-  }
-
-  .pane-controls {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-  }
-
-  .right-pane-content {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  div.hidden {
-    display: none;
-  }
-
-  .content {
-    height: calc(100% - 48px); /* only give content the height without tab bar */
-  }
-
-  :global(.__ProjectWorkspace .bx--tab-content) {
-    height: 100%
-  }
   .left-pane > div.active {
     display: block;
     flex:1;

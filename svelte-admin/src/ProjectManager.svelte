@@ -90,11 +90,7 @@
   $: projectRows = projects ? $projects
     .map( p => ({...p, id: p.id, createdAt: getCreatedDate(p)})) : []
     .sort( (p1,p2) => p1-p2)
-
-  // get commit hash from current image tag
-  const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
-  const commitHash = matches ? matches[0] : null
-      
+    
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
       await InterkitClient.call("project.remove", {projectId})
@@ -209,19 +205,6 @@
     </div>
   </Row>
   {/if}
-  <Row>
-    <Column>
-      <Tile>
-        Admin Version: {INTERKIT_IMAGE_TAG}
-        {#if commitHash}
-          &nbsp;&nbsp;
-          <a target="gitlab" href="https://gitlab.interkit.app/interkit/interkit-experiments/-/commits/{commitHash}/">
-            What's new?
-          </a>
-        {/if}
-      </Tile>
-    </Column>
-  </Row>
 </Grid>
 
 <style>
