@@ -64,6 +64,8 @@
     flex-direction: column;
     align-items: flex-end;
     border-left: 1px solid #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .right-pane.minimized {
@@ -87,7 +89,7 @@
 
 
   .secondary-content-container {
-    position: relative
+    position: relative;
   }
 
   section {

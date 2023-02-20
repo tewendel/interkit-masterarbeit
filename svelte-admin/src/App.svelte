@@ -93,7 +93,7 @@
   {:else}
     <div class="spacer" style="flex:1"></div>
   {/if}
-  
+
   <HeaderUtilities>
     {#if $userId}
       <HeaderAction 
@@ -131,7 +131,7 @@
 
 {#if $userId}
   <!-- set transform: none; to allow modal to be position fixed -->
-  <Content style="padding:0;width:100%;transform:scale(1)">  
+  <Content style="padding:0;width:100%;transform:scale(1);height:var(--content-height);overflow:hidden;">  
 
     <Router {routes} on:routeLoaded={routeLoaded} />
 
