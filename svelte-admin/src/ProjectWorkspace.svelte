@@ -150,6 +150,7 @@
     flex: 1;
     height: 100%;
     /*overflow-x: auto;*/
+    overflow-y: hidden; /* avoid stray vertical scrollbar */
   }
 
   .left-pane > div.active {
