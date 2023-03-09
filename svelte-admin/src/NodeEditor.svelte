@@ -647,8 +647,8 @@
   $: {
     searchHighlightNodeIds = board?.nodes
       ?.filter(node =>
-        node.id?.toLowerCase()?.includes(search) ||
-        node.contents?.toLowerCase()?.includes(search)
+        node.id?.toLowerCase()?.includes(search.toLowerCase()) ||
+        node.contents?.toLowerCase()?.includes(search.toLowerCase())
       )
       ?.map(node => node.id)
     if (search) treeView.expandAll()
