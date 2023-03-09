@@ -130,6 +130,10 @@ export const items = [
 			{
 				title: 'Component CSS',
 				path: '/contribute/component_css'
+			},
+			{
+				title: 'Custom Theme',
+				path: '/contribute/theme'
 			}
 		]
 	}
