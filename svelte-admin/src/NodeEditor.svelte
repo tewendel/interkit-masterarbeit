@@ -147,10 +147,10 @@
   $: currentBoardId, editNodeId, (() => { dispatch('nodeselected', { boardId: currentBoardId, nodeId: editNodeId }) })()
 
   const twinyHintIcons = {
-    'sync': '\u2705', // white heavy check mark
-    // 'broken': '\u274c', // cross mark
-    'broken': '\u26d4', // cross mark
-    'unknown': '\u2753', // red question mark
+    // \ufe0e doesn't really work here
+    'sync': '\u2713',
+    'broken': '\u2717',
+    'unknown': '\u2047',
     'none': ''
   }
   let twinyHint = ''
@@ -815,54 +815,66 @@
   <svelte:fragment slot="modalPanelRightHeaderActions">
     {#if editNodeId}
       <ButtonSet>
+        <!-- TODO/FIXME:
+          When there is not enough horizontal viewport, currently at <1200px,
+          this is really hard/impossible to make scroll horizontally,
+          or force the child buttons to shrink in width.
+          A proper solution should collapse this into a ⋮ menu.
+        -->
         <Button
           kind="ghost"
           on:click={moveTo}
           icon={WatsonHealthStudySkip}
-          iconDescription="move preview user to node"
+          iconDescription="Move preview user to node"
+          tooltipPosition="top"
           disabled={!board || !editNodeId}
-          />
-        <Button
-          kind="ghost"
-          on:click={deleteCurrentNode}
-          disabled={!board || !editNodeId}
-          icon={TrashCan}
-          iconDescription="delete node"
           />
         <Button
           kind="ghost"
           on:click={restoreCurrentNode}
           disabled={!board || !editNodeId || !editNodeModified }
           icon={Undo}
-          iconDescription="restore node"
+          iconDescription="Restore node"
+          tooltipPosition="top"
           />
         <Button
           kind="ghost"
           on:click={renameCurrentNode}
           disabled={!board || !editNodeId}
           icon={Edit}
-          iconDescription="rename node"
+          iconDescription="Rename node"
+          tooltipPosition="top"
           />
         <Button
           kind="ghost"
           on:click={() => { syntaxCheck() }}
           disabled={!board || !editNodeId}
           icon={CheckmarkOutlineWarning}
-          iconDescription="check syntax"
+          iconDescription="Check syntax"
+          tooltipPosition="top"
           />
         <Button
           kind="ghost"
           on:click={() => { copyCurrentNode() }}
           icon={Copy}
-          iconDescription="copy node"
+          iconDescription="Copy node"
+          tooltipPosition="top"
           disabled={!editNodeId}
+          />
+        <Button
+          kind="ghost"
+          on:click={deleteCurrentNode}
+          disabled={!board || !editNodeId}
+          icon={TrashCan}
+          iconDescription="Delete node"
+          tooltipPosition="top"
           />
         <Button
           on:click={saveCurrentNode}
           disabled={!board || !editNodeId || !editNodeModified }
           icon={Save}
           >
-          save
+          Save
         </Button>
       </ButtonSet>
     {/if}
@@ -888,7 +900,14 @@
             you can break it.
           </p>
           <p>
-            <button on:click={() => { editorMode = 3 }}>switch to Twine-ish tab</button>
+            <Button
+              on:click={() => { editorMode = 3 }}
+              kind="tertiary"
+              size="small"
+              style="margin: 0.5em auto"
+              >
+              Switch to Twine-ish tab
+            </Button>
           </p>
         {/if}
         {#if editorMode === 0}
@@ -941,11 +960,19 @@
       {/if}
       {#if unmetMoveTos && editNodeId && unmetMoveTos[editNodeId]}
         <div>
-        <p>create nodes for dangling <code>moveTo</code>s:</p>
-        {#if nodesModifiedCount}
-          <p><strong>You have to save all nodes first</strong></p>
-        {/if}
+        <p style="font-size: 80%">create nodes for dangling <code>moveTo</code>s:</p>
         <ButtonSet stacked>
+        {#if nodesModifiedCount}
+          <!--<p><strong>You have to save all nodes first</strong></p>-->
+          <Button
+            icon={Save}
+            kind="secondary"
+            size="small"
+            on:click={() => { saveModifiedNodes() }}
+            >
+            Save all nodes to enable
+          </Button>
+        {/if}
         {#each unmetMoveTos[editNodeId] as unmetMoveTo}
           <Button
             kind="tertiary"
@@ -1087,6 +1114,11 @@
 
 :global(.bx--tree) :global(.bx--tree-node) {
   background: transparent;
+}
+
+/* hack to fix disabled buttons having a darker left border */
+:global(.bx--btn-set .bx--btn.bx--btn--disabled) {
+  box-shadow: -0.0625rem 0 0 0 #e0e0e0;
 }
 
 .boardHeader {
