@@ -5,7 +5,6 @@
     Checkbox,
     Accordion,
     AccordionItem,
-    Pagination,
     DataTable,
     OverflowMenu,
     OverflowMenuItem,
@@ -23,6 +22,7 @@
     TextArea,
     Tag
   } from "carbon-components-svelte";
+
   import Movement from "carbon-icons-svelte/lib/Movement.svelte";
   import Send from "carbon-icons-svelte/lib/Send.svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
@@ -31,6 +31,8 @@
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
   import UserVarTableModal from './UserVarTableModal.svelte';
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
   import SchedulingForm from './InputModals/SchedulingForm.svelte'
 
@@ -424,11 +426,9 @@
       </span>
 
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
+    <DataTablePaginationAutofit
+      bind:pagination={pagination}
       totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
       />
 
     {#if usersSelection.length}
@@ -599,6 +599,7 @@
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   .UsersListTableContainer :global(td > span) {

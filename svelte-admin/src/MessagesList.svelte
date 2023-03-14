@@ -9,9 +9,10 @@
     Toolbar,
     ToolbarContent,
     ToolbarSearch,
-    Pagination,
     DataTable
   } from 'carbon-components-svelte'
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
   import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte'
@@ -244,6 +245,7 @@
     })
   }
 
+
 </script>
 
 {#if rows}
@@ -314,11 +316,9 @@
         {/if}
       </span>
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
+    <DataTablePaginationAutofit
+      bind:pagination={pagination}
       totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
       />
     {#if selection && selection.length}
       <ButtonSet>
