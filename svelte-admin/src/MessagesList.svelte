@@ -101,7 +101,7 @@
     }] : []),
     ...(showCol.recipientsCount ? [{
       key: 'recipientsCount',
-      value: 'Σ recipients',
+      value: 'Σ\u00a0recipients',
       sort: trivialSort
     }] : []),
     ...(showCol.recipients ? [{
@@ -111,7 +111,7 @@
     }] : []),
     ...(showCol.seenCount ? [{
       key: 'seenCount',
-      value: 'Σ seen',
+      value: 'Σ\u00a0seen',
       sort: trivialSort
     }] : []),
     ...(showCol.seen ? [{
@@ -340,11 +340,18 @@
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   .MessagesListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
   }
+
+  .MessagesListTableContainer :global(.bx--data-table-container) {
+    max-width: 100%;
+    overflow-x: scroll;
+  }
+
   .MessagesListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
