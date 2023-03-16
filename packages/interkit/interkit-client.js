@@ -386,13 +386,15 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       subscriptionCounter[pub] -= 1
       //console.log("reduced subscriptionCounter", pub, subscriptionCounter[pub])
     }
+
+    sub.reactiveCollection.stop()
     
     if(subscriptionCounter[pub] == 0) {
       console.log("stopping subscription to", pub)
+      await sub.sub.stop()
       await sub.sub.remove()
     }
 
-    sub.reactiveCollection.stop()
   } 
 
   sub.status = "subscribed";

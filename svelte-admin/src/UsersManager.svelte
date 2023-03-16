@@ -1,6 +1,6 @@
 <script>
 
-  import { onDestroy } from 'svelte';
+  import { onMount, onDestroy, tick } from 'svelte';
   import { InterkitClient } from 'interkit'
   import UsersList from './UsersList.svelte'
   import { Form, TextInput, Button } from "carbon-components-svelte"
@@ -19,21 +19,70 @@
   let usersStore;
   let unsubscribe;
   let usersArray;
+  let meta;
+  let resetting = false
+  
+
+  let skip = 0
+  let limit = 20
+  let total = 0
+  let page = 1
+  let searchQuery = ""
+  let sortKey = "createdAt"
+  let sortDirection = -1
+
+  $: {
+    const newSkip = (page - 1) * limit
+    skip = newSkip
+    //if (newSkip < total) {
+    //  skip = newSkip
+    //} else {
+    //  console.log("new skip would be too big", newSkip)
+    //}
+    console.log("new skip", skip, page, limit)
+  }
   
   let subHandle;  
-  $: resetSub(projectId)
+  //$: (async() => {await resetSub(projectId, skip, limit)})()
+  //$: (async() => {if (!resetting) await resetSub(projectId, skip, limit)})()
+  //$: resetSub(projectId, skip, limit)
+  $: tick().then(async() => {
+    await resetSub(projectId, skip, limit, searchQuery, sortKey, sortDirection)
+  })
 
-  const resetSub = async (projectId) => {
+  const resetSub = async (projectId, skip, limit, searchQuery, sortKey, sortDirection) => {
+    console.log("reset sub", projectId, skip, limit, searchQuery, sortKey, sortDirection)
+    if (resetting) return
+    resetting = true
     if(subHandle) await subHandle.stop()
-    subHandle = await InterkitClient.getSub('users', 'projectUsers', {projectId});
-    usersStore = subHandle.data
-    unsubscribe = usersStore.subscribe((data)=>{
-      //console.log("project users", data)
-      usersArray = data;
+    let i = 0
+    subHandle = await InterkitClient.getSub('projectUsersPaginated', 'projectUsersPaginated', {
+      projectId,
+      skip,
+      limit,
+      searchQuery,
+      sortKey,
+      sortDirection
+    });
+    unsubscribe = subHandle.data.subscribe((data)=>{
+      [meta, ...usersArray] = data;
+      total = meta && meta.total || 0
+      console.log("new total", total)
+      console.log("project users", data)
     })    
+    resetting = false
   }
 
-  onDestroy(()=> unsubscribe());
+  onMount(async()=> {
+    setInterval(()=>{
+      //skip = skip + 1
+    }, 2000)
+  });
+
+  onDestroy(async()=> {
+    if (unsubscribe) unsubscribe();
+    if (subHandle) subHandle.stop()
+  });
 
   const createNewUser = () => {
     const projectData = { createdInBackEnd: true }
@@ -43,7 +92,14 @@
   }
 
 </script>
-
+<ul>
+  <li>skip: {skip}</li>
+  <li>limit: {limit}</li>
+  <li>total: {meta && meta.total}</li>
+  <li>sortKey: {sortKey}</li>
+  <li>sortDirection: {sortDirection}</li>
+  <li>searchQuery: {searchQuery}</li>
+</ul>
 <UsersList
   users={usersArray}
   {projectId}
@@ -51,6 +107,12 @@
   {updatePreviewUserAuth}
   {moveToBoardId}
   {moveToNodeId}
+  total={meta && meta.total}
+  bind:page={page}
+  bind:limit={limit}
+  bind:searchQuery={searchQuery}
+  bind:sortKey={sortKey}
+  bind:sortDirection={sortDirection}
   />
 
 <br><br>

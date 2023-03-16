@@ -2,6 +2,7 @@ import assert from "assert";
 //import "./messages.js"
 import "./projects-publication-auth.js"
 import "./messages-publication-query.js"
+import "./publications/publication-projectUsers.js"
 
 
 describe("meteor-svelte-test", function () {

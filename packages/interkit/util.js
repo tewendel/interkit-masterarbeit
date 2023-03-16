@@ -33,11 +33,49 @@ const rowToObject = (row, columnMap) => {
   return object
 };
 
+const mongoSortCompare = (a, b, key, order) => {
+  const isAscending = order === 1 || order === true || order === 'asc';
+  const isDescending = order === -1 || order === false || order === 'desc';
+  if (!isAscending && !isDescending) {
+    //throw new Error('Invalid sort order');
+    return 0;
+  }
+  const aValue = typeof a[key] === 'undefined' ? null : a[key];
+  const bValue = typeof b[key] === 'undefined' ? null : b[key];
+  if (aValue === null && bValue !== null) {
+    return isAscending ? -1 : 1;
+  }
+  if (aValue !== null && bValue === null) {
+    return isAscending ? 1 : -1;
+  }
+  if (typeof aValue === 'string' && typeof bValue === 'string') {
+    const cmp = aValue.localeCompare(bValue);
+    if (cmp !== 0) {
+      return isAscending ? cmp : -cmp;
+    }
+  } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+    if (aValue !== bValue) {
+      return isAscending ? aValue - bValue : bValue - aValue;
+    }
+  } else if (typeof aValue === 'boolean' && typeof bValue === 'boolean') {
+    if (aValue !== bValue) {
+      return isAscending ? aValue - bValue : bValue - aValue;
+    }
+  } else if (aValue instanceof Date && bValue instanceof Date) {
+    if (aValue !== bValue) {
+      return isAscending ? aValue.getTime() - bValue.getTime() : bValue.getTime() - aValue.getTime();
+    }
+  } else {
+    //throw new Error('Invalid sort key type');
+    return 0;
+  }
+};
 
 export default {
 
   colKey,
   rowVal,
+  mongoSortCompare,
 
   rowValString: (row, sheetColumn) => {
     let v = rowVal(row, sheetColumn);

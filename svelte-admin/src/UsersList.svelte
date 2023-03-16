@@ -30,6 +30,8 @@
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
+  import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
+
   import UserVarTableModal from './UserVarTableModal.svelte';
 
   import SchedulingForm from './InputModals/SchedulingForm.svelte'
@@ -41,14 +43,17 @@
   export let users; // this should be an array, not a store
   export let projectId;
   export let previewUserId
+  export let total
+  export let page = 1
+  export let limit = 10
+  export let searchQuery = ""
+  export let sortKey
+  export let sortDirection
+
 
   let userId = InterkitClient.userId
 
   let usersSelection = []
-  let pagination = {
-    pageSize: 30,
-    page: 1
-  }
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
@@ -89,9 +94,16 @@
 
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
 
+  const setSort = ({key, direction}) => {
+    sortKey = key
+    sortDirection = direction === 'ascending' ? 1 : direction === 'descending' ? -1 : 0
+  }
+
+
   const trivialSort = (a, b) => a < b ? -1 : 1
   // FIXME this works only one way
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
+  const alreadySorted = (a, b) => 0
 
   // default values for columns to show/hide
   let showCol = {
@@ -113,46 +125,46 @@
   $: headers = [
     ...(showCol.userIcon ? [{
       key: 'userIcon',
-      value: 'u'
+      value: 'Icon',
+      width: '4em',
     }] : []),
     ...(showCol.username ? [{
       key: "username",
-      value: "username",
-      sort: trivialSort
+      value: "Username",
+      sort: alreadySorted
     }] : []),
     ...(showCol.blocked ? [{
       key: "blocked",
-      value: "blocked",
-      sort: boolSort
+      value: "Blocked",
+      sort: alreadySorted
     }] : []),
     ...(showCol.roles ? [{
       key: "roles",
-      value: "roles",
-      sort: trivialSort
+      value: "Roles",
     }] : []),    
     ...(showCol.id ? [{
       key: "id",
-      value: "id",
+      value: "ID",
       sort: false
     }] : []),
     ...(showCol.createdAt ? [{
       key: "createdAt",
       value: "createdAt",
-      sort: trivialSort
+      sort: alreadySorted
     }] : []),
     ...(showCol.online ? [{
       key: "status.online",
-      value: "online",
-      sort: trivialSort
+      value: "Online",
+      width: '4em',
     }] : []),
     ...(showCol.boards ? [{
       key: "boards",
-      value: "boards",
+      value: "Boards",
       sort: false
     }] : []),
     ...(showCol.userToken ? [{
       key: "userToken",
-      value: "userToken",
+      value: "UserToken",
       sort: false
     }] : []),
     ...(InterkitClient.userEnableHeartbeat
@@ -162,7 +174,6 @@
     ...(showCol.pushToken ? [{
       key: "pushnotificationRegistrationToken",
       value: "push token",
-      sort: trivialSort
     }] : []),
     ...(showCol.userVars ? [{
       key: 'userVars',
@@ -181,8 +192,10 @@
   let rows = [];
   // add links to list of mediafiles
   $: {
+    const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
     rows = users ? users
       // .filter(user => user.id !== $userId) // hide own user
+      .sort(sortFunction)
       .map(user => {
         return {
           ...user,
@@ -201,23 +214,10 @@
         }
     })
     : []
-    console.log(rows)
+    //console.log(rows)
     window._rows = rows
   }
 
-  let searchQuery;
-  const searchFunction = (row, query) => {
-    //console.log(m)
-    if(!query || query == "") return true;
-    else {
-      if(row?.userToken?.toLowerCase().includes(query.toLowerCase())
-        || row?.username?.toLowerCase()?.includes(query.toLowerCase())) {
-        return true
-      } else {
-        return false;
-      }
-    }
-  }
 
   const batchDelete = async () => {
     const expect = usersSelection.length
@@ -368,15 +368,17 @@
       size="compact"
       expandable
       sortable
+      on:click:header={ event => setSort({ key: event.detail.header.key, direction: event.detail.sortDirection})}
+      zebra
       batchSelection
       bind:selectedRowIds={usersSelection}
-      pageSize={pagination.pageSize}
-      page={pagination.page}
+      pageSize={limit}
+      page={1}
       {headers}
       {rows}
       >
 
-      <Toolbar>
+      <Toolbar >
         <!-- currently cant use Batch Actions and Search simultaneously https://github.com/carbon-design-system/carbon/issues/2275 (has been open for ages) -->
         <!--
         <ToolbarBatchActions>
@@ -386,7 +388,13 @@
         </ToolbarBatchActions>
         -->
         <ToolbarContent>
-          <ToolbarSearch persistent value="" shouldFilterRows />
+          <ToolbarSearch bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
+          <Pagination
+          bind:pageSize={limit}
+          bind:page={page}
+          totalItems={total}
+          pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+          />
         </ToolbarContent>
       </Toolbar>
 
@@ -417,19 +425,17 @@
         {:else if cell.key === 'blocked'}
           <span title="cell.value">{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
         {:else if cell.key === 'status.online'}
-          <span title={(cell.value ? "online" : "offline")} class="cell__1line">{ (cell.value ? "online" : "-") }</span>
+          <span title={(cell.value ? "online" : "offline")} class="cell__1line">
+            {#if cell.value}
+              <UserOnline />
+            {/if}
+          </span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
 
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
-      totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-      />
 
     {#if usersSelection.length}
       <ButtonSet style="margin-bottom: 2px">
