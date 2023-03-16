@@ -3,7 +3,6 @@
   import { onDestroy, createEventDispatcher } from 'svelte'
   import {
     DataTable,
-    Pagination,
     OverflowMenu,
     OverflowMenuItem,
     Toolbar,
@@ -13,6 +12,7 @@
 
   const dispatch = createEventDispatcher()
 
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
   import MediaFilePreview from './MediaFilePreview.svelte'
   import { InterkitClient, util } from 'interkit'
 
@@ -124,6 +124,16 @@
     pageSize: 10,
     page: 1
   }
+
+  const dataTableOverheadHeight = 0 +
+    48 + // header of outer UI
+    40 + // tabs: Project | User generated
+    16 + // tabpanel padding = 1rem
+    100 + // upload drop zone including margins
+    48 + // DataTable search
+    48 + // DataTable thead = 1 row height
+    40 + // DataTable tfoot
+    24   // potential horizontal scrollbar + buffer
   
 </script>
 
@@ -176,11 +186,11 @@
       </span>
 
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
+    <DataTablePaginationAutofit
+      bind:pagination={pagination}
       totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+      overheadHeight={dataTableOverheadHeight}
+      rowHeight={48}
       />
   </div>
 
@@ -195,6 +205,7 @@
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   .MediaFileListTableContainer :global(table) {

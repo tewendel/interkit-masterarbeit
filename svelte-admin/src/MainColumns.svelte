@@ -61,6 +61,7 @@
             iconDescription="close"
             on:click={() => { modalPanelRightOpen = false }}
             icon={Close}
+            tooltipAlignment="end"
             />
         </div>
         <slot name="modalPanelRightHeaderActions" ></slot>
@@ -159,7 +160,6 @@ h3 {
   border-bottom: 1px solid #ccc;
   flex-grow: 0;
   flex-shrink: 0;
-  overflow: hidden;
 }
 
 .modalPanelRightSlot {

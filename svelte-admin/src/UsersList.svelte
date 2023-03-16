@@ -1,11 +1,10 @@
 <script>
 
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import {
     Checkbox,
     Accordion,
     AccordionItem,
-    Pagination,
     DataTable,
     OverflowMenu,
     OverflowMenuItem,
@@ -16,6 +15,7 @@
     Button,
     ButtonSet,
     Modal,
+    Pagination,
     Select,
     SelectSkeleton,
     SelectItem,
@@ -23,7 +23,8 @@
     TextArea,
     Tag
   } from "carbon-components-svelte";
-  import Movement from "carbon-icons-svelte/lib/Movement.svelte";
+
+  import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import Send from "carbon-icons-svelte/lib/Send.svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
@@ -33,6 +34,9 @@
   import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
 
   import UserVarTableModal from './UserVarTableModal.svelte';
+  import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
   import SchedulingForm from './InputModals/SchedulingForm.svelte'
 
@@ -50,6 +54,8 @@
   export let sortKey
   export let sortDirection
 
+
+  const dispatch = createEventDispatcher()
 
   let userId = InterkitClient.userId
 
@@ -356,13 +362,7 @@
 {#if rows}
 
   <div class="UsersListTableContainer">
-    <Accordion>
-      <AccordionItem title="show/hide columns">
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
+
     <DataTable
       class="table"
       size="compact"
@@ -388,13 +388,14 @@
         </ToolbarBatchActions>
         -->
         <ToolbarContent>
-          <ToolbarSearch bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
-          <Pagination
-          bind:pageSize={limit}
-          bind:page={page}
-          totalItems={total}
-          pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-          />
+          <Accordion>
+            <AccordionItem title="show/hide columns" style="background-color:white">
+              {#each Object.keys(showCol) as colKey}
+                <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
+              {/each}
+            </AccordionItem>
+          </Accordion>
+          <ToolbarSearch persistent bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
         </ToolbarContent>
       </Toolbar>
 
@@ -437,24 +438,86 @@
 
     </DataTable>
 
-    {#if usersSelection.length}
-      <ButtonSet style="margin-bottom: 2px">
-        <Button size="small" kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
-        <Button size="small" icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
-        <Button size="small" icon={Send} on:click={() => { openQuickMessage = true }}>Message</Button>
-      </ButtonSet>
-      <ButtonSet>
-        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
-        <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
-      </ButtonSet>
-    {/if}
-    {#if usersSelection.length == 1}
+    <DataTablePaginationAutofit
+      bind:pageSize={limit}
+      bind:page={page}
+      totalItems={total}
+    />
+
     <ButtonSet>
-      <Button size="small" icon={MobileAdd} on:click={previewAttach}>Attach to preview</Button>
-      <Button size="small" icon={TableSplit} on:click={openUserVarEditor}>edit userVars</Button>
+      {#if usersSelection.length}
+        <Button
+          size="small"
+          kind="ghost"
+          on:click={() => {
+            window.alert('selected IDs: \n' + usersSelection.join(' '))
+          }}
+          >
+          {usersSelection.length} selected
+        </Button>
+        <Button
+          size="small"
+          icon={WatsonHealthStudySkip}
+          on:click={() => { moveToResult = ''; openMoveTo = true }}
+          iconDescription="move users to a Story board/node"
+          tooltipPosition="top"
+          tooltipAlignment="start"
+          />
+        <Button
+          size="small"
+          icon={Send}
+          on:click={() => { openQuickMessage = true }}
+          iconDescription="send message to users"
+          tooltipPosition="top"
+          />
+        <Button
+          size="small"
+          icon={TrashCan}
+          on:click={batchDelete}
+          iconDescription="delete users"
+          tooltipPosition="top"
+          />
+        <Button
+          size="small"
+          icon={ErrorFilled}
+          on:click={() => { batchBlock(true) }}
+          iconDescription="block users"
+          tooltipPosition="top"
+          />
+        <Button
+          size="small"
+          icon={ErrorOutline}
+          on:click={() => { batchBlock(false) }}
+          iconDescription="unblock users"
+          tooltipPosition="top"
+          />
+        <Button
+          size="small"
+          icon={MobileAdd}
+          on:click={previewAttach}
+          disabled={usersSelection.length !== 1}
+          iconDescription='attach user to preview'
+          tooltipPosition="top"
+          />
+        <Button
+          size="small"
+          icon={TableSplit}
+          on:click={openUserVarEditor}
+          disabled={usersSelection.length !== 1}
+          iconDescription='edit user variables'
+          tooltipPosition="top"
+          />
+      {/if}
+      <Button
+        style="margin-left: auto"
+        size="small"
+        icon={Add}
+        on:click={() => dispatch('clickedAddUser')}
+        iconDescription="create new project user"
+        tooltipPosition="top"
+        tooltipAlignment="end"
+        />
     </ButtonSet>
-    {/if}
     
   </div>
 
@@ -605,6 +668,7 @@
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   .UsersListTableContainer :global(td > span) {

@@ -3,7 +3,12 @@
   import { onMount, onDestroy, tick } from 'svelte';
   import { InterkitClient } from 'interkit'
   import UsersList from './UsersList.svelte'
-  import { Form, TextInput, Button } from "carbon-components-svelte"
+  import {
+    Form,
+    TextInput,
+    Button,
+    Modal
+  } from "carbon-components-svelte"
 
   export let projectId
   export let previewUserId
@@ -84,6 +89,8 @@
     if (subHandle) subHandle.stop()
   });
 
+  let openCreateNewUser = false
+
   const createNewUser = () => {
     const projectData = { createdInBackEnd: true }
     const data = { username, password, email, projectData, projectId }
@@ -92,14 +99,14 @@
   }
 
 </script>
-<ul>
+<!--ul>
   <li>skip: {skip}</li>
   <li>limit: {limit}</li>
   <li>total: {meta && meta.total}</li>
   <li>sortKey: {sortKey}</li>
   <li>sortDirection: {sortDirection}</li>
   <li>searchQuery: {searchQuery}</li>
-</ul>
+</ul-->
 <UsersList
   users={usersArray}
   {projectId}
@@ -113,17 +120,26 @@
   bind:searchQuery={searchQuery}
   bind:sortKey={sortKey}
   bind:sortDirection={sortDirection}
+  on:clickedAddUser={() => { openCreateNewUser = true }}
   />
 
-<br><br>
-
-<Form on:submit={createNewUser}>
-  <TextInput bind:value={username} inline light labelText="User name" />
-  <TextInput bind:value={email} inline light labelText="Email" />
-  <TextInput bind:value={password} inline light labelText="Password" />
-  <br>
-  <Button type="submit">Create New Project User</Button>
-</Form>
+<Modal
+  bind:open={openCreateNewUser}
+  modalHeading="Create new project user"
+  primaryButtonText="Create"
+  secondaryButtonText="Cancel"
+  on:click:button--secondary={() => { openCreateNewUser = false }}
+  on:submit={() => { createNewUser(); openCreateNewUser = false }}
+  shouldSubmitOnEnter={false}
+  >
+  <Form on:submit={createNewUser}>
+    <TextInput bind:value={username} inline light labelText="User name" />
+    <TextInput bind:value={email} inline light labelText="Email" />
+    <TextInput bind:value={password} inline light labelText="Password" />
+  </Form>
+  <!-- FIXME there is no error handling, e.g. if an email exists
+    you only get an error in the console -->
+</Modal>
 
 <!--pre>
 {JSON.stringify(usersArray, null, 2)}
