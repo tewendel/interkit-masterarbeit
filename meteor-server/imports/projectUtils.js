@@ -119,6 +119,9 @@ const getAllOfProject = async function (projectId)  {
   const files = getMediaFiles({ projectId }).fetch()
   const channels = Channels.find({ projectId }).fetch()
 
+  delete project.projectServer
+  delete project.uiState
+
   return {
     project: {...project, uiState: undefined},
     sheets,
