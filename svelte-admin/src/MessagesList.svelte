@@ -52,10 +52,8 @@
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
 
   let selection = []
-  let pagination = {
-    pageSize: 30,
-    page: 1
-  }
+  let pageSize = 30
+  let page = 1
 
   let headers
 
@@ -269,8 +267,8 @@
       selectable
       batchSelection
       bind:selectedRowIds={selection}
-      pageSize={pagination.pageSize}
-      page={pagination.page}
+      {pageSize}
+      {page}
       {headers}
       {rows}
       >
@@ -317,7 +315,8 @@
       </span>
     </DataTable>
     <DataTablePaginationAutofit
-      bind:pagination={pagination}
+      bind:page
+      bind:pageSize
       totalItems={rows.length}
       />
     {#if selection && selection.length}

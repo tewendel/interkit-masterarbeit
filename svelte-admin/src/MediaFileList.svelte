@@ -120,10 +120,8 @@
   }
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
 
-  let pagination = {
-    pageSize: 10,
-    page: 1
-  }
+  let pageSize = 10
+  let page = 1
 
   const dataTableOverheadHeight = 0 +
     48 + // header of outer UI
@@ -146,8 +144,8 @@
       {sortDirection}
       {radio}
       bind:selectedRowIds
-      pageSize={pagination.pageSize}
-      page={pagination.page}
+      {pageSize}
+      {page}
       {headers}
       rows={rowsFiltered}
       >
@@ -187,7 +185,8 @@
 
     </DataTable>
     <DataTablePaginationAutofit
-      bind:pagination={pagination}
+      {pageSize}
+      bind:page
       totalItems={rows.length}
       overheadHeight={dataTableOverheadHeight}
       rowHeight={48}
