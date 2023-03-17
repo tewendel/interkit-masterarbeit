@@ -14,7 +14,7 @@
   export let page
   export let pageSize
   export let totalItems
-  export let pageSizes = [10, 20, 30, 40, 50, 75, 100, 150, 200]
+  export let pageSizes = [5, 10, 20, 30, 40, 50, 75, 100, 150, 200]
   export let rowHeight = 24
   export let overheadHeight = 0 +
     48 + // header of outer UI
@@ -25,7 +25,10 @@
     32 + // ButtonSet actions (visible if rows selected)
     24   // potential horizontal scrollbar + buffer
 
-  let pageSizeAuto = true
+  export let pageSizeAuto = true
+
+  /* must be in pageSizes */
+  const defaultNonAutoPagesize = pageSizes[2] || pageSizes[0] || 20
 
   const fitTableRows = () => {
     if (!pageSizeAuto) return
@@ -49,7 +52,7 @@
     icon={pageSizeAuto ? FitToHeight : CharacterWholeNumber}
     on:click={() => {
       pageSizeAuto = !pageSizeAuto
-      if (!pageSizeAuto) pageSize = pageSizes[0]
+      if (!pageSizeAuto) pageSize = defaultNonAutoPagesize
       fitTableRows()
     }}
     iconDescription="toggle between automatic/manual row count"

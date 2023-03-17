@@ -69,6 +69,7 @@
       {mediafiles}
       sortKey="createdAt"
       sortDirection="descending"
+      pageSize={5}
       value={image}
       bind:update={updateMediaFileListSelected}
       on:selected={({ detail }) => { image = detail }}
