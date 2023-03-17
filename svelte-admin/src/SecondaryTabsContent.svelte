@@ -71,7 +71,8 @@
   .right-pane.minimized {
     max-width: var(--sidebarCollapsedWidth);
     padding: 0;
-    height: 100vh;
+    /* if needed: should be calc(100vh - interkit header height) */
+    /* height: 100vh; */
   }
 
   .pane-controls {
