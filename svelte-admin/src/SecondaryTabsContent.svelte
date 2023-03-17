@@ -25,12 +25,14 @@
 
 <div class="right-pane" class:minimized={rightPaneHidden}>        
   <div class="pane-controls">
+    <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
     <Button
-        kind="ghost"
-        iconDescription={rightPaneHidden ? "maximize" : "minimize"}
-        on:click={toggleRightPane}
-        icon={rightPaneHidden ? Maximize : Minimize}
-    />
+      kind="ghost"
+      iconDescription={rightPaneHidden ? "maxi\u00admize" : "minimize"}
+      tooltipAlignment={rightPaneHidden ? "center" : "end"}
+      on:click={toggleRightPane}
+      icon={rightPaneHidden ? Maximize : Minimize}
+      />
     </div>
   <div class="right-pane-content" class:hidden={rightPaneHidden}>
     
@@ -71,7 +73,16 @@
   .right-pane.minimized {
     max-width: var(--sidebarCollapsedWidth);
     padding: 0;
-    height: 100vh;
+    /* if needed: should be calc(100vh - interkit header height) */
+    /* height: 100vh; */
+  }
+
+  /* force tooltip to fit in narrow sidebar */
+  .right-pane.minimized :global(.bx--assistive-text) {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 
   .pane-controls {

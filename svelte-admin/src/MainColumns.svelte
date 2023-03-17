@@ -29,6 +29,7 @@
         kind="ghost"
         on:click={() => { sidebarLeftOpen = true }}
         iconDescription="maximize"
+        tooltipAlignment="start"
         icon={Maximize}
         />
     {:else}
@@ -74,10 +75,6 @@
 </div>
 
 <style>
-
-:root {
-  --sidebarCollapsedWidth: 3rem;
-}
 
 h1,
 h2,
@@ -128,6 +125,14 @@ h3 {
   width: var(--sidebarCollapsedWidth);
   max-width: var(--sidebarCollapsedWidth);
   min-width: var(--sidebarCollapsedWidth);
+}
+
+/* force tooltip to fit in narrow sidebar */
+.sidebarLeft--closed :global(.bx--assistive-text) {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .sidebarLeftHeader {

@@ -115,7 +115,7 @@
 
 </script>
 
-<Grid style="padding:0;height:100%; overflow-x: hidden; overflow-y: auto;">
+<Grid style="padding:0; height:100%; overflow-x: hidden; overflow-y: auto; max-width: none;">
   <Row>
     <Column lg="{16}">
     
