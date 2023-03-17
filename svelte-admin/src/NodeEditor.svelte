@@ -651,7 +651,7 @@
         node.contents?.toLowerCase()?.includes(search.toLowerCase())
       )
       ?.map(node => node.id)
-    if (search) treeView.expandAll()
+    if (search && treeView) treeView.expandAll()
   }
  
   onMount(async () => {
