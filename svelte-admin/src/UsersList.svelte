@@ -117,82 +117,76 @@
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
   const alreadySorted = (a, b) => 0
 
-  // default values for columns to show/hide
-  let showCol = {
-    userIcon: true,
-    blocked: true,
-    username: true,
-    roles: false,
-    id: true,
-    createdAt: true,
-    online: true,
-    boards: true,
-    userToken: true,
-    pushToken: false,
-    userVars: false
-  }
-
-  let headers
-
-  $: headers = [
-    ...(showCol.userIcon ? [{
+  const headers = [
+    {
       key: 'userIcon',
+      show: true,
       value: 'Icon',
       width: '4em',
-    }] : []),
-    ...(showCol.username ? [{
+    },
+    {
       key: "username",
+      show: true,
       value: "Username",
       sort: alreadySorted
-    }] : []),
-    ...(showCol.blocked ? [{
+    },
+    {
       key: "blocked",
+      show: true,
       value: "Blocked",
       sort: alreadySorted
-    }] : []),
-    ...(showCol.roles ? [{
+    },
+    {
       key: "roles",
-      value: "Roles",
-    }] : []),    
-    ...(showCol.id ? [{
+      show: false,
+      value: "Roles"
+    },
+    {
       key: "id",
+      show: true,
       value: "ID",
       sort: false
-    }] : []),
-    ...(showCol.createdAt ? [{
+    },
+    {
       key: "createdAt",
-      value: "createdAt",
+      show: true,
+      value: "Created\u00a0at",
       sort: alreadySorted
-    }] : []),
-    ...(showCol.online ? [{
+    },
+    {
       key: "status.online",
+      show: true,
       value: "Online",
       width: '4em',
-    }] : []),
-    ...(showCol.boards ? [{
+    },
+    {
       key: "boards",
+      show: true,
       value: "Boards",
       sort: false
-    }] : []),
-    ...(showCol.userToken ? [{
+    },
+    {
       key: "userToken",
-      value: "UserToken",
+      show: true,
+      value: "User\u00a0token",
       sort: false
-    }] : []),
+    },
     ...(InterkitClient.userEnableHeartbeat
-      ? [{ key: "lastHeartbeat", value: "lastHeartbeat" }]
+      ? [{ key: "lastHeartbeat", value: "Last\u00a0heartbeat", show: false, sort: trivialSort }]
       : []
     ),
-    ...(showCol.pushToken ? [{
+    {
       key: "pushnotificationRegistrationToken",
-      value: "push\u00a0token"
-    }] : []),
-    ...(showCol.userVars ? [{
+      show: false,
+      value: "Push\u00a0token"
+    },
+    {
       key: 'userVars',
-      value: 'userVars',
+      show: true,
+      value: 'User\u00a0vars',
       sort: false
-    }] : [])
-  ];
+    }
+  ]
 
   const userIconSelf = '\u{01f464}\uFE0E'
   const userIconPreview = '\u{01f4f1}\uFE0E'
@@ -384,7 +378,7 @@
       bind:selectedRowIds={usersSelection}
       pageSize={limit}
       page={1}
-      {headers}
+      headers={headers.filter(_ => _.show)}
       {rows}
       >
 
@@ -479,7 +473,7 @@
             />
         </ToolbarBatchActions>
         <ToolbarContent>
-          <ToolbarSearch persistent bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
+          <ToolbarSearch persistent bind:value={searchQuery} placeholder="search Username, ID, User token, User vars"/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
               toggle columns…
@@ -564,8 +558,8 @@
   passiveModal
   primaryButtonText="Done"
   >
-  {#each Object.keys(showCol) as colKey}
-    <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
   {/each}
 </Modal>
 
