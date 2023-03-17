@@ -75,10 +75,6 @@
 
 <style>
 
-:root {
-  --sidebarCollapsedWidth: 3rem;
-}
-
 h1,
 h2,
 h3 {
