@@ -18,11 +18,9 @@
   export let rowHeight = 24
   export let overheadHeight = 0 +
     48 + // header of outer UI
-    40 + // Accordion options (show/hide columns…)
-    48 + // DataTable search
+    32 + // DataTable search, Toolbar size "sm"
     24 + // DataTable thead = default dense row height
     40 + // DataTable tfoot = Pagination
-    32 + // ButtonSet actions (visible if rows selected)
     24   // potential horizontal scrollbar + buffer
 
   export let pageSizeAuto = true

@@ -701,18 +701,6 @@
 
 <style>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
-
-  .UsersListTableContainer :global(td > span) {
-    max-width: 100%;
-  }
-
   .UsersListTableContainer :global(.bx--data-table--sticky-header) {
     /* carbon sets a stupid max height here,
        to "force a scrollbar with sticky header"

@@ -187,4 +187,22 @@
   }
   /* END Hack to place stuff in Header */
 
+  /* BEGIN DataTable Hack */
+  /* to avoid problems with filters that hide all rows */
+
+  :global(.cell__1line) {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
+
+  :global(.bx--data-table td > span) {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* END DataTable Hack */
+
 </style>

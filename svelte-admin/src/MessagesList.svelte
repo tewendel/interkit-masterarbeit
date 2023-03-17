@@ -7,9 +7,13 @@
     Accordion,
     AccordionItem,
     Toolbar,
+    ToolbarBatchActions,
     ToolbarContent,
     ToolbarSearch,
-    DataTable
+    ToolbarMenu,
+    ToolbarMenuItem,
+    DataTable,
+    Modal
   } from 'carbon-components-svelte'
 
   import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
@@ -18,6 +22,8 @@
   import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte'
   import ErrorOutline from 'carbon-icons-svelte/lib/ErrorOutline.svelte'
   import Checkmark from 'carbon-icons-svelte/lib/Checkmark.svelte'
+  import Filter from 'carbon-icons-svelte/lib/Filter.svelte'
+  import FilterRemove from 'carbon-icons-svelte/lib/FilterRemove.svelte'
 
   import { InterkitClient } from 'interkit'
 
@@ -26,7 +32,8 @@
   export let messages
   export let projectId
 
-  let verbose = false
+  /* with better pagination we can be verbose always */
+  const verbose = true
 
   let filters = {
     channelReports: false
@@ -55,69 +62,79 @@
   let pageSize = 30
   let page = 1
 
-  let headers
-
-  $: headers = [
-    ...(showCol.id ? [{
+  const headers = [
+    {
       key: 'id',
-      value: 'id',
+      show: true,
+      value: 'ID',
       sort: trivialSort
-    }] : []),
-    ...(showCol.blocked ? [{
+    },
+    {
       key: 'blocked',
-      value: 'blocked',
+      show: true,
+      value: 'Blocked',
       sort: boolSort
-    }] : []),
-    ...(showCol.createdAt ? [{
+    },
+    {
       key: 'createdAt',
-      value: 'createdAt',
+      show: true,
+      value: 'Created\u00a0at',
       sort: trivialSort
-    }] : []),
-    ...(showCol.channel_key ? [{
+    },
+    {
       key: 'channel_key',
-      value: 'channel',
+      show: true,
+      value: 'Channel',
       sort: trivialSort
-    }] : []),
-    ...(showCol.sender ? [{
+    },
+    {
       key: 'sender',
-      value: 'sender',
+      show: true,
+      value: 'Sender',
       sort: trivialSort
-    }] : []),
-    ...(showCol.payloadType ? [{
+    },
+    {
       key: 'payloadType',
-      value: 'type',
+      show: false,
+      value: 'Type',
       sort: trivialSort
-    }] : []),
-    ...(showCol.payloadContent ? [{
+    },
+    {
       key: 'payloadContent',
-      value: 'content',
+      show: true,
+      value: 'Content',
       sort: trivialSort
-    }] : []),
-    ...(showCol.payloadLabel ? [{
+    },
+    {
       key: 'payloadLabel',
-      value: 'label',
+      show: true,
+      value: 'Label',
       sort: trivialSort
-    }] : []),
-    ...(showCol.recipientsCount ? [{
+    },
+    {
       key: 'recipientsCount',
+      show: false,
       value: 'Σ\u00a0recipients',
       sort: trivialSort
-    }] : []),
-    ...(showCol.recipients ? [{
+    },
+    {
       key: 'recipients',
-      value: 'recipients',
+      show: false,
+      value: 'Recipients',
       sort: false
-    }] : []),
-    ...(showCol.seenCount ? [{
+    },
+    {
       key: 'seenCount',
+      show: true,
       value: 'Σ\u00a0seen',
       sort: trivialSort
-    }] : []),
-    ...(showCol.seen ? [{
+    },
+    {
       key: 'seen',
-      value: 'seen',
+      show: false,
+      value: 'Seen',
       sort: false
-    }] : []),
+    }
   ]
 
   const createdAtdateTimeFormatLocaleOptions = {
@@ -243,24 +260,19 @@
     })
   }
 
+  let openShowHideColumns = false
+  let dataTableToolbarBatchActionsActive = false
 
 </script>
 
 {#if rows}
   <div class="MessagesListTableContainer">
-    <Accordion>
-      <AccordionItem title="options: verbose, filters, show/hide columns">
-        <div>Options:</div>
-        <Checkbox bind:checked={verbose} labelText="verbose (full message objects)" />
-        <div>Filters:</div>
-        <Checkbox bind:checked={filters.channelReports} labelText="only unseen reports (channel_key=REPORTS)" />
-        <div>Columns:</div>
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * dense row + search/actions + thead + data table padding-top */
+        min-height: ${(pageSize || 0) * 24 + 32 + 24 + 2}px;
+      `}
       size="compact"
       expandable
       sortable
@@ -269,10 +281,25 @@
       bind:selectedRowIds={selection}
       {pageSize}
       {page}
-      {headers}
+      headers={headers.filter(_ => _.show)}
       {rows}
       >
-      <Toolbar>
+
+      <Toolbar size="sm">
+        <ToolbarBatchActions
+          bind:active={dataTableToolbarBatchActionsActive}
+          on:cancel={(evt) => {
+            // do not clear selection after cancel
+            evt.preventDefault()
+            dataTableToolbarBatchActionsActive = false
+          }}
+          formatTotalSelected={num => `${num}\u00a0message${num > 1 ? 's' : ''}`}
+          >
+          <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
+          <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
+          <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
+        </ToolbarBatchActions>
+
         <ToolbarContent>
           <ToolbarSearch
             persistent
@@ -280,8 +307,28 @@
             shouldFilterRows
             on:input={ evt => { console.log('ToolbarSearch input', evt) }}
             />
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              toggle columns…
+            </ToolbarMenuItem>
+            <!--
+            <ToolbarMenuItem on:click={() => { verbose = !verbose }}>
+              {verbose ? 'show' : 'hide'}
+              full message objects in expanded rows
+            </ToolbarMenuItem>
+            -->
+            <ToolbarMenuItem
+              on:click={() => { filters.channelReports = !filters.channelReports }}
+              >
+              <Checkbox checked={filters.channelReports} labelText="only new reports" />
+            </ToolbarMenuItem>
+          </ToolbarMenu>
+          <!--
+          <Button kind="ghost" icon={Filter} size="small" />
+          -->
         </ToolbarContent>
       </Toolbar>
+
       <div slot="expanded-row" let:row>
         {#if row?.channel_key === REPORTS_CHANNEL_KEY}
           <pre style="font-family: monospace; white-space: pre-wrap">
@@ -302,9 +349,10 @@
           </pre>
         {/if}
       </div>
+
       <span slot="cell" let:row let:cell>
         {#if cell.key === 'payload'}
-          <span>{ JSON.stringify(cell.value) }</span>
+          <span class="cell__1line">{ JSON.stringify(cell.value) }</span>
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
         {:else if cell.key === 'blocked'}
@@ -313,49 +361,50 @@
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
+
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
+
     </DataTable>
+
     <DataTablePaginationAutofit
       bind:page
       bind:pageSize
       totalItems={rows.length}
       />
-    {#if selection && selection.length}
-      <ButtonSet>
-        <Button size="small" kind="ghost" on:click={() => { window.alert(selection.join(' ')) }}>{selection.length} selected</Button>
-        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
-        <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
-      </ButtonSet>
-    {/if}
   </div>
 {:else}
   loading...
 {/if}
 
-<style>
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
+  {/each}
+</Modal>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
+<style>
 
   .MessagesListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
-  }
-
-  .MessagesListTableContainer :global(.bx--data-table-container) {
-    max-width: 100%;
-    overflow-x: scroll;
   }
 
   .MessagesListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
 
-  .MessagesListTableContainer :global(td > span) {
+  .MessagesListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
   }
 

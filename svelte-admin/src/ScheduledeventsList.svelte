@@ -7,9 +7,13 @@
     Accordion,
     AccordionItem,
     Toolbar,
+    ToolbarBatchActions,
     ToolbarContent,
     ToolbarSearch,
-    DataTable
+    ToolbarMenu,
+    ToolbarMenuItem,
+    DataTable,
+    Modal
   } from 'carbon-components-svelte'
 
   import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
@@ -28,19 +32,10 @@
   export let scheduledevents
   export let projectId
 
-  let verbose = false
+  const verbose = true
 
   let filters = {
     statusScheduled: true
-  }
-
-  let showCol = {
-    id: true,
-    method: true,
-    execTime: true,
-    status: true,
-    usersSummary: true,
-    payloadSummary: true
   }
 
   const trivialSort = (a, b) => a < b ? -1 : 1
@@ -52,39 +47,43 @@
   let pageSize = 30
   let page = 1
 
-  let headers
-
-  $: headers = [
-    ...(showCol.id ? [{
+  const headers = [
+    {
       key: 'id',
-      value: 'id',
+      show: true,
+      value: 'ID',
       sort: trivialSort
-    }] : []),
-    ...(showCol.method ? [{
+    },
+    {
       key: 'method',
-      value: 'method',
+      show: true,
+      value: 'Method',
       sort: trivialSort
-    }] : []),
-    ...(showCol.execTime ? [{
+    },
+    {
       key: 'execTime',
-      value: 'execTime',
+      show: true,
+      value: 'Date',
       sort: trivialSort
-    }] : []),
-    ...(showCol.status ? [{
+    },
+    {
       key: 'status',
-      value: 'status',
+      show: true,
+      value: 'Status',
       sort: trivialSort
-    }] : []),
-    ...(showCol.usersSummary ? [{
+    },
+    {
       key: 'usersSummary',
-      value: 'users',
+      show: true,
+      value: 'Users',
       sort: false
-    }] : []),
-    ...(showCol.payloadSummary ? [{
+    },
+    {
       key: 'payloadSummary',
-      value: 'payload',
+      show: true,
+      value: 'Payload',
       sort: trivialSort
-    }] : []),
+    }
   ]
 
   const execTimeFormatLocaleOptions = {
@@ -195,23 +194,19 @@
     }
   }
 
+  let openShowHideColumns = false
+  let dataTableToolbarBatchActionsActive = false
+
 </script>
 
 {#if rows}
   <div class="ScheduledeventsListTableContainer">
-    <Accordion>
-      <AccordionItem title="options: verbose, filters, show/hide columns">
-        <div>Options:</div>
-        <Checkbox bind:checked={verbose} labelText="verbose (full message objects)" />
-        <div>Filters:</div>
-        <Checkbox bind:checked={filters.statusScheduled} labelText="only scheduled (not done) events (status=scheduled)" />
-        <div>Columns:</div>
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * dense row + search/actions + thead + data table padding-top */
+        min-height: ${(pageSize || 0) * 24 + 32 + 24 + 2}px;
+      `}
       size="compact"
       expandable
       sortable
@@ -220,10 +215,26 @@
       bind:selectedRowIds={selection}
       {pageSize}
       {page}
-      {headers}
+      headers={headers.filter(_ => _.show)}
       {rows}
       >
-      <Toolbar>
+
+      <Toolbar size="sm">
+        <ToolbarBatchActions
+          bind:active={dataTableToolbarBatchActionsActive}
+          on:cancel={(evt) => {
+            // do not clear selection after cancel
+            evt.preventDefault()
+            dataTableToolbarBatchActionsActive = false
+          }}
+          formatTotalSelected={num => `${num}\u00a0event${num > 1 ? 's' : ''}`}
+          >
+          <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
+          <Button size="small" icon={Checkmark} on:click={() => { batchSetStatus('done') }}>Set done</Button>
+          <Button size="small" icon={EventSchedule} on:click={() => { batchSetStatus('scheduled') }}>Set scheduled</Button>
+          <Button size="small" icon={MisuseOutline} on:click={() => { batchSetStatus('cancelled') }}>Set cancelled</Button>
+        </ToolbarBatchActions>
+
         <ToolbarContent>
           <ToolbarSearch
             persistent
@@ -231,8 +242,19 @@
             shouldFilterRows
             on:input={ evt => { console.log('ToolbarSearch input', evt) }}
             />
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              toggle columns…
+            </ToolbarMenuItem>
+            <ToolbarMenuItem
+              on:click={() => { filters.statusScheduled = !filters.statusScheduled }}
+              >
+              <Checkbox checked={filters.statusScheduled} labelText="hide done" />
+            </ToolbarMenuItem>
+          </ToolbarMenu>
         </ToolbarContent>
       </Toolbar>
+
       <div slot="expanded-row" let:row>
         {#if verbose}
           <pre>
@@ -240,6 +262,7 @@
           </pre>
         {/if}
       </div>
+
       <span slot="cell" let:row let:cell>
         {#if cell.key === 'execTime'}
           <span title={cell.value} class="cell__1line">{ execTimeFormat.format(cell.value) }</span>
@@ -247,46 +270,50 @@
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
+
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
+
     </DataTable>
+
     <DataTablePaginationAutofit
       bind:page
       bind:pageSize
       totalItems={rows.length}
       />
-    {#if selection && selection.length}
-      <ButtonSet style="margin-bottom: 2px">
-        <Button size="small" kind="ghost" on:click={() => { window.alert(selection.join(' ')) }}>{selection.length} selected</Button>
-        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-      </ButtonSet>
-      <ButtonSet>
-        <Button size="small" icon={Checkmark} on:click={() => { batchSetStatus('done') }}>Set done</Button>
-        <Button size="small" icon={EventSchedule} on:click={() => { batchSetStatus('scheduled') }}>Set scheduled</Button>
-        <Button size="small" icon={MisuseOutline} on:click={() => { batchSetStatus('cancelled') }}>Set cancelled</Button>
-      </ButtonSet>
-    {/if}
   </div>
 {:else}
   loading...
 {/if}
 
-<style>
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
+  {/each}
+</Modal>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
+<style>
 
   .ScheduledeventsListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
   }
+
   .ScheduledeventsListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
 
-  .ScheduledeventsListTableContainer :global(td > span) {
+  .ScheduledeventsListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
   }
 

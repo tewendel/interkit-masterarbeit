@@ -304,14 +304,6 @@
 
 <style>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
-
   .MediaFileListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
   }
@@ -320,7 +312,4 @@
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
 
-  .MediaFileListTableContainer :global(td > span) {
-    max-width: 100%;
-  }
 </style>
