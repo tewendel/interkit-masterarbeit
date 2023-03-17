@@ -49,6 +49,7 @@
     icon={pageSizeAuto ? FitToHeight : CharacterWholeNumber}
     on:click={() => {
       pageSizeAuto = !pageSizeAuto
+      if (!pageSizeAuto) pageSize = pageSizes[0]
       fitTableRows()
     }}
     iconDescription="toggle between automatic/manual row count"

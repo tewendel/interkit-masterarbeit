@@ -482,7 +482,7 @@
           <ToolbarSearch persistent bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
-              show/hide columns
+              toggle columns…
             </ToolbarMenuItem>
           </ToolbarMenu>
           <Button
@@ -527,13 +527,22 @@
         {:else if cell.key === 'status.online'}
           <span title={(cell.value ? "online" : "offline")} class="cell__1line">
             {#if cell.value}
-              <UserOnline />
+              <UserOnline style="vertical-align: middle" />
             {/if}
           </span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
+
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
 
     </DataTable>
     <!-- TODO: make all tables like this, adjust height calculation -->
@@ -726,8 +735,7 @@
   }
 
   .UsersListTableContainer :global(.bx--table-header-label) {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   /* lazy spacing hack since Svelte-Carbon doesn't have spacing helper classes yet
