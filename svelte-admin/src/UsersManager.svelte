@@ -105,6 +105,7 @@
   bind:searchQuery={searchQuery}
   bind:sortKey={sortKey}
   bind:sortDirection={sortDirection}
+  bind:loading={resetting}
   on:clickedAddUser={() => { openCreateNewUser = true }}
 />
 

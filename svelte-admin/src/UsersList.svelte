@@ -6,6 +6,7 @@
     Accordion,
     AccordionItem,
     DataTable,
+    InlineLoading,
     OverflowMenu,
     OverflowMenuItem,
     Toolbar,
@@ -54,6 +55,7 @@
   export let searchQuery = ""
   export let sortKey
   export let sortDirection
+  export let loading = false
 
   const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
 
@@ -479,6 +481,7 @@
         </ToolbarBatchActions>
         <ToolbarContent>
           <ToolbarSearch persistent bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
+          <InlineLoading style={`flex: 1; padding-left: 1em; visibility: ${loading ? "visible" : "hidden"}`}/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
               toggle columns…
