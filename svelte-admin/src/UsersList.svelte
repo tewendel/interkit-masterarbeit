@@ -15,7 +15,6 @@
     Button,
     ButtonSet,
     Modal,
-    Pagination,
     Select,
     SelectSkeleton,
     SelectItem,
@@ -54,6 +53,7 @@
   export let sortKey
   export let sortDirection
 
+  const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
 
   const dispatch = createEventDispatcher()
 
@@ -198,7 +198,6 @@
   let rows = [];
   // add links to list of mediafiles
   $: {
-    const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
     rows = users ? users
       // .filter(user => user.id !== $userId) // hide own user
       .sort(sortFunction)
