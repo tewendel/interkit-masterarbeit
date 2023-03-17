@@ -275,6 +275,15 @@
         {:else}{cell.value || ""}{/if}
       </span>
 
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
+
     </DataTable>
     <!-- we assume that in "radio" mode we're in a container that wouldn't like auto-height (like a Modal) -->
     <DataTablePaginationAutofit
@@ -310,6 +319,10 @@
 
   .MediaFileListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
+  }
+
+  .MediaFileListTableContainer :global(.bx--table-header-label) {
+    max-width: 100%;
   }
 
 </style>
