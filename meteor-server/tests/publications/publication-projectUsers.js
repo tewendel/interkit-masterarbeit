@@ -107,28 +107,5 @@ describe(testname, function () {
       assert.equal(res.count(), 1);
     });
 
-    //it("should publish metaSubscription to projectUsers for pagination", function () {
-    //  const user = Meteor.users.findOne({username: "admin"});
-    //  const res = Meteor.server.publish_handlers['projectUsers'].apply({ userId: user._id },[{projectId: testname}]);
-    //  assert.equal(res.count(), 1);
-    //});
-
-  it("should list projectUsers of requested project to admin", function () {
-    const user = Meteor.users.findOne({username: "admin"});
-    const res = Meteor.server.publish_handlers['free'].apply({ userId: user._id },[{projectId: testname}]);
-    assert.equal(res.count(), 1);
-  });
-
-
-/*
-
-    it("should list projectUsers of requested project", function () {
-      const user = Meteor.users.findOne({username: "admin"});
-      const res = Meteor.server.publish_handlers['projects'].apply({ userId: user._id },[]);
-      const docs = res.fetch();
-      assert.equal(docs.length, 1);
-    });
-    */
-
   }
 });

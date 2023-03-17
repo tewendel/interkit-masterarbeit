@@ -40,7 +40,9 @@ async function ensureProjectServers(projects) {
       if (!server) {
         if (project.projectServer) {
           // setup & start project server
-          startServer(projectId)
+          if (project.projectServer?.status == "running") {
+            startServer(projectId)
+          }
         } else {
           // initalize project server
           console.log(`initializing project server for project ${projectId}`)
