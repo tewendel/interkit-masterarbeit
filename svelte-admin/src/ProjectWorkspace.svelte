@@ -164,7 +164,8 @@
 
 
   .scrollable {
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: scroll;
   }
 
   .padding {

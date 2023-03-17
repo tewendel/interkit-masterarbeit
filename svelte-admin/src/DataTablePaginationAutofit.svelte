@@ -11,7 +11,8 @@
 
   import { onMount } from 'svelte'
 
-  export let pagination
+  export let page
+  export let pageSize
   export let totalItems
   export let pageSizes = [10, 20, 30, 40, 50, 75, 100, 150, 200]
   export let rowHeight = 24
@@ -29,7 +30,7 @@
   const fitTableRows = () => {
     if (!pageSizeAuto) return
     const fitRows = Math.floor((window.innerHeight - overheadHeight) / rowHeight)
-    pagination.pageSize = Math.max(1, fitRows)
+    pageSize = Math.max(1, fitRows)
   }
 
   onMount(() => {
@@ -57,8 +58,8 @@
     />
   <div style="padding-right: 1px; flex-grow: 1">
     <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
+      bind:pageSize
+      bind:page
       {totalItems}
       {pageSizes}
       pageSizeInputDisabled={pageSizeAuto}

@@ -3,6 +3,7 @@ const archiver = require('archiver');
 const slugify = require('slugify');
 const dateFormat = require('dateformat');
 const cryptoRandomString = require('crypto-random-string');
+const mime = require('mime-types')
 
 const { getAllOfProject } = require('./projectUtils.js')
 
@@ -32,8 +33,6 @@ const exportData = async (req, res) => {
 
   const data = await getAllOfProject(projectId)
 
-  console.log(data)
-
   if (!data.project) {
     res.sendStatus(500);
     console.warn("invalid project or project not found")
@@ -51,6 +50,11 @@ const exportData = async (req, res) => {
     hostname,
     success: true,
     filename,
+    // object of top level entries of data width lengths: { sheets: 3, rows: 5, channels: 2 }
+    data: Object.keys(data).reduce((acc, key) => {
+      acc[key] = data[key].length
+      return acc
+    }, {})
   }
 
   res.setHeader('Content-Type', 'application/zip');
@@ -76,18 +80,28 @@ const exportData = async (req, res) => {
   archive.pipe(res);
 
   // add json data to zip archive
-  archive.append(JSON.stringify(meta), { name: 'meta.json' });
+  archive.append(JSON.stringify(meta, null, 2), { name: 'meta.json' });
+  archive.append(JSON.stringify(data, null, 2), { name: 'project.json' });
   archive.append(BSON.serialize(data), { name: 'project.bson' });
 
   // add files to zip archive
   for (const file of data.files) { // TODO do not use absolute path
-    archive.file( file.path, { name: `files/${file.name}` });
+    console.log("adding file", file.path, file.name)
+    archive.file( file.path, { name: `files/${fixFilename(file)}` });
   }
 
   archive.finalize();
 
   //console.log(out)
   console.log("export done")
+}
+
+function fixFilename(file) {
+  // fix files that were uploaded as "blob"
+  if (file.name == "blob" && !file.ext && file.mime) {
+    return file._id + "." + mime.extension(file.mime)
+  }
+  return file.name
 }
 
 

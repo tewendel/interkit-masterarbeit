@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects, Sheets, Rows, Messages, Channels, ScheduledEvents } from '../imports/collections.js';
 import {userIsInRoles} from '../imports/userRoles.js';
+import { publishVirtual } from '../imports/publicationUtils.js';
 
 Meteor.publish('projects', function() {
   let fields = {
@@ -21,7 +22,7 @@ Meteor.publish('projects', function() {
     let projects = Projects.find({}, { fields});
     //console.log(projects.fetch())
     return projects;
-  }
+  } 
 });
 
 // list in admin interface
@@ -100,12 +101,76 @@ Meteor.methods({'row.get': ({key, projectId})=>{
 Meteor.publish("projectUsers", ({projectId}) => {
   const cursor = Meteor.users.find({ [`projectUserData.${projectId}`] : { $exists:true }}, { fields: { services: false } });
   console.log("publish projectUsers", projectId, cursor.count())
+  //console.log(this)
   return cursor
 });
 
+Meteor.publish('projectUsersPaginated', function({
+  projectId, 
+  skip=0, 
+  limit=1, 
+  searchQuery="", 
+  sortKey = "createdAt", 
+  sortDirection = -1
+}) {
+  const allowedSortKeys = ["createdAt", "username", "blocked", "projectUserData.userToken"];
+  const cursor = Meteor.users.find({ 
+    [`projectUserData.${projectId}`] : { $exists:true },
+    ...searchQuery && {$or: [
+      // search in id
+      {_id: { $regex: searchQuery, $options: 'i' }},
+      // search in username
+      {username: { $regex: searchQuery, $options: 'i' }},
+      // search in userToken
+      {[`projectUserData.${projectId}.userToken`]: { $regex: searchQuery, $options: 'i' }},
+      // search in names of userVars (exact match only!)
+      {[`projectUserData.${projectId}.userVars.${searchQuery}`] : { $exists:true } },
+      // search in values of userVars (credits: ChatGPT)
+      {
+        $and: [
+          { "projectUserData": { $exists: true } },
+          { [`projectUserData.${projectId}.userVars`] : { $ne: null } }
+        ],
+        $expr: {
+          $gt: [
+            {
+              $size: {
+                $filter: {
+                  input: { $objectToArray: `$projectUserData.${projectId}.userVars` },
+                  as: "item",
+                  cond: { $regexMatch: { input: { $toString: "$$item.v" }, regex: searchQuery, options: "i" } }
+                }
+              }
+            },
+            0
+          ]
+        }
+      }
+    ]},
+  }, { 
+    ...allowedSortKeys.includes(sortKey) && [1,-1].includes(parseInt(sortDirection)) && {sort: {[sortKey]: parseInt(sortDirection)}},
+    fields: { services: false },
+    skip,
+    limit
+  });
+  console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
+  return publishVirtual(this, 'projectUsersPaginated', cursor);
+})
+
+Meteor.publish('projectUsersPaginatedPure', function({projectId, skip=0, limit=1}) {
+  const cursor = Meteor.users.find({ 
+    [`projectUserData.${projectId}`] : { $exists:true }
+  }, { 
+    fields: { services: false },
+    skip,
+    limit
+  });
+  return cursor
+})
+
 Meteor.publish("user.projectUserData", ({ projectId }) => {
   const cursor = Meteor.users.find(Meteor.userId(), { fields: { [`projectUserData.${projectId}`]: true } });
-  console.log("user.projectUserData", Meteor.userId(), projectId, cursor.count())
+  console.log("user.projectUserData", Meteor.userId(), projectId)
   return cursor
 });
 

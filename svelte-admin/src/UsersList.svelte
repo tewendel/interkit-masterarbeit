@@ -17,6 +17,7 @@
     Button,
     ButtonSet,
     Modal,
+    Pagination,
     Select,
     SelectSkeleton,
     SelectItem,
@@ -32,6 +33,8 @@
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
+  import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
+
   import UserVarTableModal from './UserVarTableModal.svelte';
   import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
 
@@ -46,18 +49,23 @@
   export let users; // this should be an array, not a store
   export let projectId;
   export let previewUserId
+  export let total
+  export let page = 1
+  export let limit = 10
+  export let searchQuery = ""
+  export let sortKey
+  export let sortDirection
+
 
   const dispatch = createEventDispatcher()
 
   let userId = InterkitClient.userId
 
   let usersSelection = []
-  let pagination = {
-    pageSize: 30,
-    page: 1
-  }
 
   let openShowHideColumns = false
+
+  let dataTableToolbarBatchActionsActive = false
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
@@ -98,9 +106,16 @@
 
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
 
+  const setSort = ({key, direction}) => {
+    sortKey = key
+    sortDirection = direction === 'ascending' ? 1 : direction === 'descending' ? -1 : 0
+  }
+
+
   const trivialSort = (a, b) => a < b ? -1 : 1
   // FIXME this works only one way
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
+  const alreadySorted = (a, b) => 0
 
   // default values for columns to show/hide
   let showCol = {
@@ -122,46 +137,46 @@
   $: headers = [
     ...(showCol.userIcon ? [{
       key: 'userIcon',
-      value: 'u'
+      value: 'Icon',
+      width: '4em',
     }] : []),
     ...(showCol.username ? [{
       key: "username",
-      value: "username",
-      sort: trivialSort
+      value: "Username",
+      sort: alreadySorted
     }] : []),
     ...(showCol.blocked ? [{
       key: "blocked",
-      value: "blocked",
-      sort: boolSort
+      value: "Blocked",
+      sort: alreadySorted
     }] : []),
     ...(showCol.roles ? [{
       key: "roles",
-      value: "roles",
-      sort: trivialSort
+      value: "Roles",
     }] : []),    
     ...(showCol.id ? [{
       key: "id",
-      value: "id",
+      value: "ID",
       sort: false
     }] : []),
     ...(showCol.createdAt ? [{
       key: "createdAt",
       value: "createdAt",
-      sort: trivialSort
+      sort: alreadySorted
     }] : []),
     ...(showCol.online ? [{
       key: "status.online",
-      value: "online",
-      sort: trivialSort
+      value: "Online",
+      width: '4em',
     }] : []),
     ...(showCol.boards ? [{
       key: "boards",
-      value: "boards",
+      value: "Boards",
       sort: false
     }] : []),
     ...(showCol.userToken ? [{
       key: "userToken",
-      value: "userToken",
+      value: "UserToken",
       sort: false
     }] : []),
     ...(InterkitClient.userEnableHeartbeat
@@ -170,8 +185,7 @@
     ),
     ...(showCol.pushToken ? [{
       key: "pushnotificationRegistrationToken",
-      value: "push\u00a0token",
-      sort: trivialSort
+      value: "push\u00a0token"
     }] : []),
     ...(showCol.userVars ? [{
       key: 'userVars',
@@ -190,8 +204,10 @@
   let rows = [];
   // add links to list of mediafiles
   $: {
+    const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
     rows = users ? users
       // .filter(user => user.id !== $userId) // hide own user
+      .sort(sortFunction)
       .map(user => {
         return {
           ...user,
@@ -210,22 +226,8 @@
         }
     })
     : []
-    console.log(rows)
-    window._rows = rows
-  }
-
-  let searchQuery;
-  const searchFunction = (row, query) => {
-    //console.log(m)
-    if(!query || query == "") return true;
-    else {
-      if(row?.userToken?.toLowerCase().includes(query.toLowerCase())
-        || row?.username?.toLowerCase()?.includes(query.toLowerCase())) {
-        return true
-      } else {
-        return false;
-      }
-    }
+    //console.log(rows)
+    //window._rows = rows
   }
 
   const batchDelete = async () => {
@@ -359,8 +361,6 @@
       varEditorUser = users.find(u=>u._id == usersSelection[0])
     }
   }
-
-  let dataTableToolbarBatchActionsActive
   
 </script>
 
@@ -372,16 +372,18 @@
       style={`
         background: #f4f4f4;
         /* = pageSize * dense row + search/actions + thead + data table padding-top */
-        min-height: ${Math.min(pagination.pageSize, rows?.length || 0) * 24 + 32 + 24 + 2}px;
+        min-height: ${(limit || 0) * 24 + 32 + 24 + 2}px;
       `}
       class="table"
       size="compact"
       expandable
       sortable
+      on:click:header={ event => setSort({ key: event.detail.header.key, direction: event.detail.sortDirection})}
+      zebra
       batchSelection
       bind:selectedRowIds={usersSelection}
-      pageSize={pagination.pageSize}
-      page={pagination.page}
+      pageSize={limit}
+      page={1}
       {headers}
       {rows}
       >
@@ -477,7 +479,7 @@
             />
         </ToolbarBatchActions>
         <ToolbarContent>
-          <ToolbarSearch persistent value="" shouldFilterRows />
+          <ToolbarSearch persistent bind:value={searchQuery} placeholder="search username, id, userToken, userVars"/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
               show/hide columns
@@ -523,7 +525,11 @@
         {:else if cell.key === 'blocked'}
           <span title="cell.value">{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
         {:else if cell.key === 'status.online'}
-          <span title={(cell.value ? "online" : "offline")} class="cell__1line">{ (cell.value ? "online" : "-") }</span>
+          <span title={(cell.value ? "online" : "offline")} class="cell__1line">
+            {#if cell.value}
+              <UserOnline />
+            {/if}
+          </span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
@@ -532,9 +538,10 @@
     </DataTable>
     <!-- TODO: make all tables like this, adjust height calculation -->
     <DataTablePaginationAutofit
-      bind:pagination={pagination}
-      totalItems={rows.length}
-      />
+      bind:pageSize={limit}
+      bind:page={page}
+      totalItems={total}
+    />
     
   </div>
 

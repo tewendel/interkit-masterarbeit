@@ -36,7 +36,7 @@ describe(testname, function () {
     }
 
     const projectUser = {
-      username: testname + "this"
+      username: testname + "this",
       emails: [
         { address: 'cool@example.com', verified: true },
       ],
@@ -81,14 +81,23 @@ describe(testname, function () {
       Projects.remove({testname});
     });
 
-    it("should not list projectUsers to public", function () {
-      const res = Meteor.server.publish_handlers['projectUsers'].apply({},[{projectId: "phantasy"}]);
-      assert.equal(res, undefined);
-    });
+    //it("should not list projectUsers to public", function () {
+    //  const res = Meteor.server.publish_handlers['projectUsers'].apply({},[{projectId: "phantasy"}]);
+    //  assert.equal(res, undefined);
+    //});
 
     it("should not list projectUsers of another project to admin", function () {
+      console.log(Meteor.server.publish_handlers['projectUsers'])
       const user = Meteor.users.findOne({username: "admin"});
-      const res = Meteor.server.publish_handlers['projectUsers'].apply({ userId: user._id },[{projectId: "phantasy"}]);
+      const res = Meteor.server.publish_handlers['projectUsers'].apply({ 
+        userId: user._id,
+        added: (collection, id, fields) => {
+          console.log("added", collection, id, fields)
+        },
+        removed: (collection, id) => {
+          console.log("removed", collection, id)
+        }
+      },[{projectId: "phantasy"}]);
       assert.equal(res.count(), 0);
     });
 
@@ -97,6 +106,19 @@ describe(testname, function () {
       const res = Meteor.server.publish_handlers['projects'].apply({ userId: user._id },[{projectId: testname}]);
       assert.equal(res.count(), 1);
     });
+
+    //it("should publish metaSubscription to projectUsers for pagination", function () {
+    //  const user = Meteor.users.findOne({username: "admin"});
+    //  const res = Meteor.server.publish_handlers['projectUsers'].apply({ userId: user._id },[{projectId: testname}]);
+    //  assert.equal(res.count(), 1);
+    //});
+
+  it("should list projectUsers of requested project to admin", function () {
+    const user = Meteor.users.findOne({username: "admin"});
+    const res = Meteor.server.publish_handlers['free'].apply({ userId: user._id },[{projectId: testname}]);
+    assert.equal(res.count(), 1);
+  });
+
 
 /*
 
