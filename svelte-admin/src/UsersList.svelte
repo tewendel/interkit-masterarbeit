@@ -9,9 +9,11 @@
     OverflowMenu,
     OverflowMenuItem,
     Toolbar,
-    // ToolbarBatchActions,
+    ToolbarBatchActions,
     ToolbarContent,
     ToolbarSearch,
+    ToolbarMenu,
+    ToolbarMenuItem,
     Button,
     ButtonSet,
     Modal,
@@ -54,6 +56,8 @@
     pageSize: 30,
     page: 1
   }
+
+  let openShowHideColumns = false
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
@@ -166,7 +170,7 @@
     ),
     ...(showCol.pushToken ? [{
       key: "pushnotificationRegistrationToken",
-      value: "push token",
+      value: "push\u00a0token",
       sort: trivialSort
     }] : []),
     ...(showCol.userVars ? [{
@@ -355,20 +359,21 @@
       varEditorUser = users.find(u=>u._id == usersSelection[0])
     }
   }
+
+  let dataTableToolbarBatchActionsActive
   
 </script>
 
 {#if rows}
 
   <div class="UsersListTableContainer">
-    <Accordion>
-      <AccordionItem title="show/hide columns">
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
+    <!-- TODO get f4f4f4 from carbon -->
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * dense row + search/actions + thead + data table padding-top */
+        min-height: ${Math.min(pagination.pageSize, rows?.length || 0) * 24 + 32 + 24 + 2}px;
+      `}
       class="table"
       size="compact"
       expandable
@@ -381,17 +386,113 @@
       {rows}
       >
 
-      <Toolbar>
-        <!-- currently cant use Batch Actions and Search simultaneously https://github.com/carbon-design-system/carbon/issues/2275 (has been open for ages) -->
+      <Toolbar size="sm">
         <!--
-        <ToolbarBatchActions>
-          <Button icon={Movement} on:click={() => { openMoveTo = true }}>moveTo</Button>
-          <Button icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
-          <Button icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        </ToolbarBatchActions>
+          Batch Actions and Search simultaneously can be clunky,
+          but it is still better than hacks.
+          See https://github.com/carbon-design-system/carbon/issues/2275 (has been open for ages),
+          closed for https://github.com/carbon-design-system/carbon/issues/11856
         -->
+        <ToolbarBatchActions
+          bind:active={dataTableToolbarBatchActionsActive}
+          on:cancel={(evt) => {
+            // do not clear selection after cancel
+            evt.preventDefault()
+            dataTableToolbarBatchActionsActive = false
+          }}
+          formatTotalSelected={num => `${num}\u00a0user${num > 1 ? 's' : ''}`}
+          >
+          <!--
+          <Button
+            size="small"
+            kind="ghost"
+            on:click={() => {
+              window.alert('selected IDs: \n' + usersSelection.join(' '))
+            }}
+            >
+            {usersSelection.length} selected
+          </Button>
+          -->
+          <Button
+            size="small"
+            icon={WatsonHealthStudySkip}
+            on:click={() => { moveToResult = ''; openMoveTo = true }}
+            iconDescription="move users to a Story board/node"
+            tooltipPosition="bottom"
+            tooltipAlignment="start"
+            >
+            moveTo…
+          </Button>
+          <Button
+            size="small"
+            icon={Send}
+            on:click={() => { openQuickMessage = true }}
+            iconDescription="send message to users"
+            tooltipPosition="top"
+            >
+            message…
+          </Button>
+          <Button
+            size="small"
+            icon={TableSplit}
+            on:click={openUserVarEditor}
+            disabled={usersSelection.length !== 1}
+            iconDescription='edit user variables'
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            vars…
+          </Button>
+          <Button
+            size="small"
+            icon={MobileAdd}
+            on:click={previewAttach}
+            disabled={usersSelection.length !== 1}
+            iconDescription='attach user to preview'
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            preview
+          </Button>
+          <Button
+            size="small"
+            icon={ErrorFilled}
+            on:click={() => { batchBlock(true) }}
+            iconDescription="block"
+            tooltipPosition="right"
+            />
+          <Button
+            size="small"
+            icon={ErrorOutline}
+            on:click={() => { batchBlock(false) }}
+            iconDescription="unblock"
+            tooltipPosition="right"
+            />
+          <Button
+            size="small"
+            icon={TrashCan}
+            on:click={batchDelete}
+            iconDescription="delete"
+            tooltipPosition="left"
+            />
+        </ToolbarBatchActions>
         <ToolbarContent>
           <ToolbarSearch persistent value="" shouldFilterRows />
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              show/hide columns
+            </ToolbarMenuItem>
+          </ToolbarMenu>
+          <Button
+            size="small"
+            icon={Add}
+            on:click={() => dispatch('clickedAddUser')}
+            iconDescription="create new project user"
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            Create…
+          </Button>
         </ToolbarContent>
       </Toolbar>
 
@@ -429,91 +530,28 @@
       </span>
 
     </DataTable>
+    <!-- TODO: make all tables like this, adjust height calculation -->
     <DataTablePaginationAutofit
       bind:pagination={pagination}
       totalItems={rows.length}
       />
-
-    <ButtonSet>
-      {#if usersSelection.length}
-        <Button
-          size="small"
-          kind="ghost"
-          on:click={() => {
-            window.alert('selected IDs: \n' + usersSelection.join(' '))
-          }}
-          >
-          {usersSelection.length} selected
-        </Button>
-        <Button
-          size="small"
-          icon={WatsonHealthStudySkip}
-          on:click={() => { moveToResult = ''; openMoveTo = true }}
-          iconDescription="move users to a Story board/node"
-          tooltipPosition="top"
-          tooltipAlignment="start"
-          />
-        <Button
-          size="small"
-          icon={Send}
-          on:click={() => { openQuickMessage = true }}
-          iconDescription="send message to users"
-          tooltipPosition="top"
-          />
-        <Button
-          size="small"
-          icon={TrashCan}
-          on:click={batchDelete}
-          iconDescription="delete users"
-          tooltipPosition="top"
-          />
-        <Button
-          size="small"
-          icon={ErrorFilled}
-          on:click={() => { batchBlock(true) }}
-          iconDescription="block users"
-          tooltipPosition="top"
-          />
-        <Button
-          size="small"
-          icon={ErrorOutline}
-          on:click={() => { batchBlock(false) }}
-          iconDescription="unblock users"
-          tooltipPosition="top"
-          />
-        <Button
-          size="small"
-          icon={MobileAdd}
-          on:click={previewAttach}
-          disabled={usersSelection.length !== 1}
-          iconDescription='attach user to preview'
-          tooltipPosition="top"
-          />
-        <Button
-          size="small"
-          icon={TableSplit}
-          on:click={openUserVarEditor}
-          disabled={usersSelection.length !== 1}
-          iconDescription='edit user variables'
-          tooltipPosition="top"
-          />
-      {/if}
-      <Button
-        style="margin-left: auto"
-        size="small"
-        icon={Add}
-        on:click={() => dispatch('clickedAddUser')}
-        iconDescription="create new project user"
-        tooltipPosition="top"
-        tooltipAlignment="end"
-        />
-    </ButtonSet>
     
   </div>
 
 {:else}
   loading...
 {/if}
+
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each Object.keys(showCol) as colKey}
+    <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
+  {/each}
+</Modal>
 
 <Modal
   bind:open={openQuickMessage}
@@ -678,6 +716,11 @@
   }
   .UsersListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
+  }
+
+  .UsersListTableContainer :global(.bx--table-header-label) {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* lazy spacing hack since Svelte-Carbon doesn't have spacing helper classes yet
