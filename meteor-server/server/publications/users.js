@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import {userIsInRoles} from '../../imports/userRoles.js';
 import { publishVirtualWithMeta } from '../../imports/publicationUtils.js';
 
+// used by project server
 Meteor.publish("projectUsers", ({projectId}) => {
   const cursor = Meteor.users.find({ [`projectUserData.${projectId}`] : { $exists:true }}, { fields: { services: false } });
   console.log("publish projectUsers", projectId, cursor.count())
@@ -9,6 +10,7 @@ Meteor.publish("projectUsers", ({projectId}) => {
   return cursor
 });
 
+// used by admin
 Meteor.publish('projectUsersPaginated', function({
   projectId, 
   skip=0, 

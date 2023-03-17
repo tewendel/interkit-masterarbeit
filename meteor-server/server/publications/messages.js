@@ -1,7 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages } from '../../imports/collections.js';
+import { publishVirtualWithMeta } from '../../imports/publicationUtils.js';
+import { userIsInRoles } from '../../imports/userRoles.js';
 
-Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit, includeBlocked}) => {
+Meteor.publish("messages", ({
+  projectId, 
+  channel_key, 
+  origin, 
+  userId, 
+  limit, 
+  includeBlocked
+}) => {
   let query = {projectId};
   if (channel_key) {
     query.channel_key = channel_key;
@@ -34,6 +43,52 @@ Meteor.publish("messages", ({projectId, channel_key, origin, userId, limit, incl
   let messages = Messages.find(query, options);
   return messages;
 });
+
+Meteor.publish('messagesPaginated', function({
+    projectId, 
+    skip=0, 
+    limit=1, 
+    searchQuery="", 
+    sortKey = "createdAt", 
+    sortDirection = -1
+  }) {
+
+  if (!userIsInRoles(this.userId, ['admin', 'author'])) {
+    return null;
+  }
+
+  const allowedSortKeys = [
+    "createdAt", 
+    "blocked", 
+    "channel_key", 
+    "sender", 
+    "payload.type",
+  ];
+
+  const cursor = Messages.find({ 
+    projectId,
+    ...searchQuery && {$or: [
+      // search in id (exact match only!)
+      { _id: searchQuery },
+      // search in sender (exact match only!)
+      { sender: searchQuery },
+      // search in channel_key (exact match only!)
+      { channel_key: searchQuery },
+      // search in content
+      { "payload.text": { $regex: searchQuery, $options: 'i' }},
+      // search in array of recipients (exact match only!)
+      { recipients: searchQuery },
+    ]},
+  }, { 
+    ...allowedSortKeys.includes(sortKey) && [1,-1].includes(parseInt(sortDirection)) && {sort: {[sortKey]: parseInt(sortDirection)}},
+    fields: { services: false },
+    skip,
+    limit
+  }) 
+
+  //console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
+  return publishVirtualWithMeta(this, 'messagesPaginated', cursor);
+})
 
 Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked}) => {
   console.log("subscribing to messages.last with", projectId, channel_key, userId, includeBlocked)

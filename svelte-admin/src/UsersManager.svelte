@@ -6,7 +6,6 @@
   import {
     Form,
     TextInput,
-    Button,
     Modal
   } from "carbon-components-svelte"
 
@@ -36,10 +35,7 @@
   let sortKey = "createdAt"
   let sortDirection = -1
 
-  $: {
-    const newSkip = (page - 1) * limit
-    skip = newSkip
-  }
+  $: skip = (page - 1) * limit
   
   let subHandle;  
 
