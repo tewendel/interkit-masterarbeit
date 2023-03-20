@@ -1,7 +1,7 @@
 <script>
 
-  import { onMount, onDestroy, tick } from 'svelte';
   import { InterkitClient } from 'interkit'
+  import PaginatedCollectionSubscription from './PaginatedCollectionSubscription.svelte'
   import UsersList from './UsersList.svelte'
   import {
     Form,
@@ -20,62 +20,11 @@
   let email
   let password
 
-  let usersStore;
-  let unsubscribe;
-  let usersArray;
-  let meta;
-  let resetting = false
-  
-
-  let skip = 0
   let limit = 20
-  let total = 0
   let page = 1
   let searchQuery = ""
   let sortKey = "createdAt"
   let sortDirection = -1
-
-  $: skip = (page - 1) * limit
-  
-  let subHandle;  
-
-  $: tick().then(async() => {
-    await resetSub(projectId, skip, limit, searchQuery, sortKey, sortDirection)
-  })
-
-  const resetSub = async (projectId, skip, limit, searchQuery, sortKey, sortDirection) => {
-    console.log("reset sub", projectId, skip, limit, searchQuery, sortKey, sortDirection)
-    if (resetting) return
-    resetting = true
-    if(subHandle) await subHandle.stop()
-    let i = 0
-    subHandle = await InterkitClient.getSub('projectUsersPaginated', 'projectUsersPaginated', {
-      projectId,
-      skip,
-      limit,
-      searchQuery,
-      sortKey,
-      sortDirection
-    });
-    unsubscribe = subHandle.data.subscribe((data)=>{
-      [meta, ...usersArray] = data;
-      total = meta && meta.total || 0
-      console.log("new total", total)
-      console.log("project users", data)
-    })    
-    resetting = false
-  }
-
-  onMount(async()=> {
-    setInterval(()=>{
-      //skip = skip + 1
-    }, 2000)
-  });
-
-  onDestroy(async()=> {
-    if (unsubscribe) unsubscribe();
-    if (subHandle) subHandle.stop()
-  });
 
   let openCreateNewUser = false
 
@@ -88,22 +37,35 @@
 
 </script>
 
-<UsersList
-  users={usersArray}
-  {projectId}
-  {previewUserId}
-  {updatePreviewUserAuth}
-  {moveToBoardId}
-  {moveToNodeId}
-  total={meta && meta.total}
-  bind:page={page}
-  bind:limit={limit}
-  bind:searchQuery={searchQuery}
-  bind:sortKey={sortKey}
-  bind:sortDirection={sortDirection}
-  bind:loading={resetting}
-  on:clickedAddUser={() => { openCreateNewUser = true }}
-/>
+<PaginatedCollectionSubscription
+    {projectId}
+    publicationName="projectUsersPaginated"
+    let:items
+    let:resetting
+    let:total
+    bind:limit={limit}
+    bind:page={page}
+    bind:searchQuery={searchQuery}
+    bind:sortKey={sortKey}
+    bind:sortDirection={sortDirection}
+  >
+  <UsersList
+    {projectId}
+    users={items}
+    loading={resetting}
+    total={total}
+    bind:page={page}
+    bind:limit={limit}
+    bind:searchQuery={searchQuery}
+    bind:sortKey={sortKey}
+    bind:sortDirection={sortDirection}
+    {previewUserId}
+    {updatePreviewUserAuth}
+    {moveToBoardId}
+    {moveToNodeId}
+    on:clickedAddUser={() => { openCreateNewUser = true }}
+  />
+</PaginatedCollectionSubscription>
 
 <Modal
   bind:open={openCreateNewUser}
