@@ -4,8 +4,7 @@
     Checkbox,
     Button,
     ButtonSet,
-    Accordion,
-    AccordionItem,
+    InlineLoading,
     Toolbar,
     ToolbarBatchActions,
     ToolbarContent,
@@ -25,28 +24,42 @@
   import Filter from 'carbon-icons-svelte/lib/Filter.svelte'
   import FilterRemove from 'carbon-icons-svelte/lib/FilterRemove.svelte'
 
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient, util } from 'interkit'
 
   let userId = InterkitClient.userId
 
   export let messages
   export let projectId
 
+  export let total
+  export let page = 1
+  export let limit = 10
+  export let searchQuery = ""
+  export let sortKey
+  export let sortDirection
+  export let loading = false
+
+  export let channelReports = false
+
+  const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
+
+  const setSort = ({key, direction}) => {
+    sortKey = key
+    sortDirection = direction === 'ascending' ? 1 : direction === 'descending' ? -1 : 0
+  }
+
+
   /* with better pagination we can be verbose always */
   const verbose = true
-
-  let filters = {
-    channelReports: false
-  }
 
   let showCol = {
     id: true,
     blocked: true,
     channel_key: true,
     sender: true,
-    payloadType: false,
+    "payload.type": false,
     payloadContent: true,
-    payloadLabel: true,
+    "payload.options.label": true,
     createdAt: true,
     recipients: false,
     recipientsCount: false,
@@ -54,68 +67,64 @@
     seenCount: true
   }
 
-  const trivialSort = (a, b) => a < b ? -1 : 1
-  // FIXME this works only one way
-  const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
+  const alreadySorted = (a, b) => 0
 
   let selection = []
-  let pageSize = 30
-  let page = 1
 
   const headers = [
     {
       key: 'id',
       show: true,
       value: 'ID',
-      sort: trivialSort
+      sort: false
     },
     {
       key: 'blocked',
       show: true,
       value: 'Blocked',
-      sort: boolSort
+      sort: alreadySorted
     },
     {
       key: 'createdAt',
       show: true,
       value: 'Created\u00a0at',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'channel_key',
       show: true,
       value: 'Channel',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'sender',
       show: true,
       value: 'Sender',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
-      key: 'payloadType',
+      key: "payload.type",
       show: false,
       value: 'Type',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'payloadContent',
       show: true,
       value: 'Content',
-      sort: trivialSort
+      sort: false
     },
     {
-      key: 'payloadLabel',
+      key: "payload.options.label",
       show: true,
       value: 'Label',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'recipientsCount',
       show: false,
       value: 'Σ\u00a0recipients',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'recipients',
@@ -127,7 +136,7 @@
       key: 'seenCount',
       show: true,
       value: 'Σ\u00a0seen',
-      sort: trivialSort
+      sort: alreadySorted
     },
     {
       key: 'seen',
@@ -166,18 +175,18 @@
 
   let rows
   $: rows = messages ? messages
+    .sort(sortFunction)
     .map(message => ({
       ...message,
-      payloadType: message.payload?.type,
+      //"payload.type": message.payload?.type,
       payloadContent: summarizePayloadContent(message),
-      payloadLabel: message.payload?.options?.label,
-      createdAt: new Date(message.createdAt),
-      recipients: message.recipients?.join(' '),
-      recipientsCount: message.recipients?.length,
-      seen: message.seen?.join(' '),
-      seenCount: message.seen?.length
+      //"payload.options.label": message.payload?.options?.label,
+      //createdAt: new Date(message.createdAt),
+      //recipients: message.recipients?.join(' '),
+      //recipientsCount: message.recipientsCount,
+      //seen: message.seen?.join(' '),
+      //seenCount: message.seenCount
     }))
-    .filter(message => (!filters.channelReports || (filters.channelReports && message.channel_key === REPORTS_CHANNEL_KEY && (!message.seen || message?.seen?.length === 0))))
     : []
 
   const batchDelete = async () => {
@@ -271,16 +280,17 @@
       style={`
         background: #f4f4f4;
         /* = pageSize * dense row + search/actions + thead + data table padding-top */
-        min-height: ${(pageSize || 0) * 24 + 32 + 24 + 2}px;
+        min-height: ${(limit || 0) * 24 + 32 + 24 + 2}px;
       `}
       size="compact"
       expandable
       sortable
       selectable
       batchSelection
+      on:click:header={ event => setSort({ key: event.detail.header.key, direction: event.detail.sortDirection})}
       bind:selectedRowIds={selection}
-      {pageSize}
-      {page}
+      pageSize={limit}
+      page={1}
       headers={headers.filter(_ => _.show)}
       {rows}
       >
@@ -303,10 +313,10 @@
         <ToolbarContent>
           <ToolbarSearch
             persistent
-            value=""
-            shouldFilterRows
-            on:input={ evt => { console.log('ToolbarSearch input', evt) }}
+            placeholder="Seach message text, sender, channel, ID, recipient"
+            bind:value={searchQuery}
             />
+          <InlineLoading style={`flex: 1; padding-left: 1em; visibility: ${loading ? "visible" : "hidden"}`}/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
               toggle columns…
@@ -318,9 +328,9 @@
             </ToolbarMenuItem>
             -->
             <ToolbarMenuItem
-              on:click={() => { filters.channelReports = !filters.channelReports }}
+              on:click={() => { channelReports = !channelReports }}
               >
-              <Checkbox checked={filters.channelReports} labelText="only new reports" />
+              <Checkbox checked={channelReports} labelText="only new reports" />
             </ToolbarMenuItem>
           </ToolbarMenu>
           <!--
@@ -374,9 +384,9 @@
     </DataTable>
 
     <DataTablePaginationAutofit
-      bind:page
-      bind:pageSize
-      totalItems={rows.length}
+      bind:pageSize={limit}
+      bind:page={page}
+      totalItems={total}
       />
   </div>
 {:else}

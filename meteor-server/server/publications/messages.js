@@ -50,12 +50,15 @@ Meteor.publish('messagesPaginated', function({
     limit=1, 
     searchQuery="", 
     sortKey = "createdAt", 
-    sortDirection = -1
+    sortDirection = -1,
+    channelReports = false
   }) {
 
   if (!userIsInRoles(this.userId, ['admin', 'author'])) {
     return null;
   }
+
+  //console.log("subscribing to messagesPaginated with", projectId, skip, limit, searchQuery, sortKey, sortDirection, channelReports)
 
   const allowedSortKeys = [
     "createdAt", 
@@ -63,25 +66,37 @@ Meteor.publish('messagesPaginated', function({
     "channel_key", 
     "sender", 
     "payload.type",
+    "seenCount",
+    "recipientsCount",
+    "payload.options.label"
   ];
+
+  //if (searchQuery) {
+  //  searchQuery = searchQuery.replace(/[^a-zA-Z0-9]/g, " ");
+  //}
 
   const cursor = Messages.find({ 
     projectId,
-    ...searchQuery && {$or: [
+    ...searchQuery && { 
+    $or: [
+      // use text indexes defined in collections.js
+      {$text: { $search: searchQuery, $caseSensitive: false, $diacriticSensitive: false }},
       // search in id (exact match only!)
       { _id: searchQuery },
-      // search in sender (exact match only!)
-      { sender: searchQuery },
-      // search in channel_key (exact match only!)
-      { channel_key: searchQuery },
       // search in content
-      { "payload.text": { $regex: searchQuery, $options: 'i' }},
-      // search in array of recipients (exact match only!)
-      { recipients: searchQuery },
+      //{ "payload.text": { $regex: searchQuery, $options: 'i' }},
     ]},
+    ...channelReports && {
+      channel_key: "REPORTS",
+      // seenCount not set or below 1
+      $or: [
+        { seenCount: { $exists: false } },
+        { seenCount: { $lt: 1 } }
+      ]
+    }
   }, { 
     ...allowedSortKeys.includes(sortKey) && [1,-1].includes(parseInt(sortDirection)) && {sort: {[sortKey]: parseInt(sortDirection)}},
-    fields: { services: false },
+    //fields: { services: false },
     skip,
     limit
   }) 
@@ -89,6 +104,7 @@ Meteor.publish('messagesPaginated', function({
   //console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
   return publishVirtualWithMeta(this, 'messagesPaginated', cursor);
 })
+
 
 Meteor.publish("messages.last", ({projectId, channel_key, userId, includeBlocked}) => {
   console.log("subscribing to messages.last with", projectId, channel_key, userId, includeBlocked)
