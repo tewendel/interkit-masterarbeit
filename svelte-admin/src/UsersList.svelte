@@ -98,6 +98,7 @@
   }
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
 
+  /*
   let roleAssignmentStore = null
 
   onMount(async () => {
@@ -108,6 +109,7 @@
   })
 
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
+  */
 
   const setSort = ({key, direction}) => {
     sortKey = key
@@ -139,11 +141,11 @@
       value: "Blocked",
       sort: alreadySorted
     },
-    {
-      key: "roles",
-      show: false,
-      value: "Roles"
-    },
+    //{
+    //  key: "roles",
+    //  show: false,
+    //  value: "Roles"
+    //},
     {
       key: "id",
       show: true,
@@ -213,12 +215,12 @@
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
           boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState),
           userVars: JSON.stringify(user?.projectUserData?.[projectId]?.userVars),
-          roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
-            if (roleAssignment.user._id === user.id) {
-              acc.push(roleAssignment.role._id)
-            }
-            return acc
-          }, []).join(", ")
+          //roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
+          //  if (roleAssignment.user._id === user.id) {
+          //    acc.push(roleAssignment.role._id)
+          //  }
+          //  return acc
+          //}, []).join(", ")
         }
     })
     : []
