@@ -4,7 +4,6 @@
   import PaginatedCollectionSubscription from './PaginatedCollectionSubscription.svelte'
 
   export let projectId
-  export let notification = true
 
   let messagesArray
 
@@ -15,11 +14,6 @@
   let sortDirection = -1
 
   let channelReports = false
-
-  const REPORTS_CHANNEL_KEY = 'REPORTS'
-
-  // we have unseen reports about messages
-  $: notification = messagesArray?.some(message => (!message.seen || message?.seen?.length === 0) && message?.channel_key === REPORTS_CHANNEL_KEY)
 
 </script>
 

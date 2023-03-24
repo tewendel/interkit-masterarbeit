@@ -25,7 +25,7 @@
     line-height: 12px;
     padding: 1px 2px 0 2px;
     position: relative;
-    top: -10px;
+    top: -.1ex;
     left: 0px;
   }
 

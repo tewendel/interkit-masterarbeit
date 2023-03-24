@@ -20,10 +20,8 @@
   export let currentProject
   
   let selected
-  let repoNotice
   let editorFilesKey = "init"
 
-  
   let previewUserId
   let previewUserAuth
 
@@ -35,12 +33,6 @@
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
   })
 
-  $: {
-    const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
-    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
-  }
-
-  let messagesListNotification
   let scheduledeventsListNotification
 
   onDestroy(() => {
@@ -108,8 +100,7 @@
       <!-- messages -->
       <div class="scrollable" class:active={tab == 'messages'}>
         <MessagesManager
-        {projectId}
-        bind:notification={messagesListNotification}
+          {projectId}
         />
       </div>
       

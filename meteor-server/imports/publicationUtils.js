@@ -58,3 +58,36 @@ export const publishVirtualWithMeta = (sub, name, cursor) => {
   // return cursor for testing, normally return nothing
   if (Meteor.isTest) return cursor;
 }
+
+
+export const publishCounts = async (sub, name, cursor) => {
+
+  // mock Publication object for testing
+  if (Meteor.isTest) sub = publicationMock
+
+  let total = 0
+  let initializing = true
+
+  const updateCount = () => {
+    if (initializing) return
+    sub.changed(name, 'meta', {total} );
+  }
+
+  var observer = await cursor.observeChanges({
+    added  : function(id) { total++; updateCount() },
+    removed: function(id) { total--; updateCount() }
+  })
+  
+  sub.onStop(function() {
+    observer.stop() // important. Otherwise, it keeps running forever
+  })
+
+  // add meta document after counting is done
+  sub.added(name, 'meta', { total });
+
+  sub.ready();
+
+  // return cursor for testing, normally return nothing
+  if (Meteor.isTest) return cursor;
+
+}

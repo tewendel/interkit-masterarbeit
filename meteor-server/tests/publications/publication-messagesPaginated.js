@@ -26,7 +26,6 @@ describe(testname, function () {
       handledAt: new Date(),
       handledBy: ["handler1", "handler2"],
       origin: "handler",
-      seen: ["user1", "user2"],
     };
 
     const message2 = {
@@ -38,22 +37,35 @@ describe(testname, function () {
       }
     }
 
+    const message3 = {
+      ...message1,
+      _id: "message3",
+      projectId: "project1",
+      channel_key: "REPORTS",
+      payload: {
+        type: "text",
+        text: "got reported :(",
+      },
+    }
+
     before(function () {
       seedUser("admin", "admin", "admin");
       // TODO add projectUser and test permissions
       Messages.insert(message1);
       Messages.insert(message2);
+      Messages.insert(message3);
     })
 
     after(function () {
       Messages.remove("message1");
       Messages.remove("message2");
+      Messages.remove("message3");
     });
 
     it("should list the messages to admin", function () {
       const user = Meteor.users.findOne({username: "admin"});
       const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project1"}]);
-      assert.equal(res.count(), 2);
+      assert.equal(res.count(), 3);
     });
 
     it("should not list the messages of another project", function () {
@@ -65,6 +77,12 @@ describe(testname, function () {
     it("should find the message by text", function () {
       const user = Meteor.users.findOne({username: "admin"});
       const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project1", searchQuery: "hello"}]);
+      assert.equal(res.count(), 1);
+    });
+
+    it("should return REPORTS if channelReports is true", function () {
+      const user = Meteor.users.findOne({username: "admin"});
+      const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project1", channelReports: true}]);
       assert.equal(res.count(), 1);
     });
 

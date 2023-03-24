@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages } from '../../imports/collections.js';
-import { publishVirtualWithMeta } from '../../imports/publicationUtils.js';
+import { publishVirtualWithMeta, publishCounts } from '../../imports/publicationUtils.js';
 import { userIsInRoles } from '../../imports/userRoles.js';
 
 Meteor.publish("messages", ({
@@ -103,6 +103,20 @@ Meteor.publish('messagesPaginated', function({
 
   //console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
   return publishVirtualWithMeta(this, 'messagesPaginated', cursor);
+})
+
+Meteor.publish('messagesChannelReportsCount', function({projectId}){
+  const cursor = Messages.find({
+    projectId,
+    channel_key: "REPORTS",
+    // seenCount not set or below 1
+    $or: [
+      { seenCount: { $exists: false } },
+      { seenCount: { $lt: 1 } }
+    ]
+  })
+  
+  return publishCounts(this, 'messagesChannelReportsCount', cursor)
 })
 
 

@@ -4,6 +4,7 @@ import "./projects-publication-auth.js"
 import "./messages-publication-query.js"
 import "./publications/publication-projectUsers.js"
 import "./publications/publication-messagesPaginated.js"
+import "./publications/publication-messagesChannelReportsCount"
 
 
 describe("meteor-svelte-test", function () {

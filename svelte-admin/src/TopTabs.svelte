@@ -2,6 +2,8 @@
   import { Tabs, Tab, Dropdown } from "carbon-components-svelte";
   import {push, pop, replace} from 'svelte-spa-router'
   import NotificationBadge from "./NotificationBadge.svelte";
+  import ReportsNotificationBadge from "./ReportsNotificationBadge.svelte";
+  import RepositoryNotificationBadge from "./RepositoryNotificationBadge.svelte";
 
   import {secondaryTabIndex, secondaryTabsVisible} from "./admin.js"
   
@@ -84,6 +86,7 @@
       type = "inline"
       bind:selectedId={selectedDropdownId}
       on:select={ e => navigate(e.detail.selectedId) }
+      let:item
       items={[
         { id: "more", text: "more", disabled: true },
         { id: "project", text: "Projekt" },
@@ -92,7 +95,15 @@
         { id: "schedule", text: "Schedule" },
         { id: "repository", text: "Repository" },
       ]}
-    />
+    >
+      {item.text}
+      {#if item.id == "messages" }
+        <ReportsNotificationBadge {projectId} />
+      {/if}
+      {#if item.id == "repository" }
+        <!--RepositoryNotificationBadge  /-->
+      {/if}
+    </Dropdown>
 
   </div>
 
