@@ -38,7 +38,7 @@ Meteor.publish("messages", ({
     options.limit = limit;
   }
   
-  console.log("message sub with", query, options)
+  //console.log("message sub with", query, options)
 
   let messages = Messages.find(query, options);
   return messages;
@@ -106,6 +106,10 @@ Meteor.publish('messagesPaginated', function({
 })
 
 Meteor.publish('messagesChannelReportsCount', function({projectId}){
+  if (!userIsInRoles(this.userId, ['admin', 'author'])) {
+    return null;
+  }
+
   const cursor = Messages.find({
     projectId,
     channel_key: "REPORTS",
