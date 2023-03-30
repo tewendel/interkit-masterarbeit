@@ -1,10 +1,11 @@
 <script>
 
-  import { Tabs, Tab, Dropdown } from "carbon-components-svelte";
+  import { Tabs, Tab, Dropdown, Loading } from "carbon-components-svelte";
   import {push, pop, replace} from 'svelte-spa-router'
   import NotificationBadge from "./NotificationBadge.svelte";
   import ReportsNotificationBadge from "./ReportsNotificationBadge.svelte";
   import RepositoryNotificationBadge from "./RepositoryNotificationBadge.svelte";
+  import { compileError, runtimeError, bundleProcessing } from './BundleServer.js'
 
   import {secondaryTabIndex, secondaryTabsVisible} from "./admin.js"
   
@@ -123,11 +124,16 @@
       <!-- separator -->
       <span class="tab-separator"><span/></span>
     
-      <Tab>
-          Preview
+      <Tab style="position: relative">
+        Preview
+        <NotificationBadge
+          count={0}
+          loading={$bundleProcessing}
+          posAbs={true}
+          />
       </Tab>
       <Tab>
-          Docs
+        Docs
         <NotificationBadge count={0} />
       </Tab>
       <Tab disabled={!projectId}>
