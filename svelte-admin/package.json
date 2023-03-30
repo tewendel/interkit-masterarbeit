@@ -39,7 +39,7 @@
     "marked": "^2.0.3",
     "sirv-cli": "^1.0.0",
     "svelte-file-dropzone": "^0.0.15",
-    "svelte-qrcode": "^0.0.2",
+    "svelte-qrcode": "^1.0.0",
     "svelte-spa-router": "^3.1.0",
     "svelte-watch-resize": "^1.0.3",
     "xml-formatter": "^2.4.0",
