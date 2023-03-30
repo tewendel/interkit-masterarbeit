@@ -12,6 +12,7 @@ import { get_project_id } from './src/get_project_id.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
+import { setupViteServer } from './src/vite_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_git_commitAll } from './src/get_git_commitAll.mjs'
 import { get_git_checkout } from './src/get_git_checkout.mjs'
@@ -32,6 +33,7 @@ interkit_server.setup()
 const app = express();
 
 const server = http.createServer(app);
+
 const socket = new io.Server(server, {
   path: `${cloudcmd_prefix}socket.io`,
 });
@@ -97,14 +99,12 @@ app.get('/src/:projectId/:filename', project_files_api.read)
 app.put('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
 app.delete('/src/:projectId/:filename', project_files_api.delete)
 
-
-
 //app.use(express.static('public', { index: false }))
 
+await setupViteServer(app, '9Xbw9eoxZ7ZgW8sxJ')
 
 // get app public files
-app.use(get_app_files);
-
+app.use('/', get_app_files);
 
 server.listen(PORT, () => console.log('listening on port ' + PORT)); 
 

@@ -41,6 +41,7 @@
     "sirv-cli": "^1.0.0",
     "svelte-error-boundary": "^1.0.1",
     "the-answer": "^1.0.0",
+    "vite": "^4.2.1",
     "wolfy87-eventemitter": "^5.2.9",
     "ws": "^6.2.1",
     "yaml": "^2.0.0-8"
