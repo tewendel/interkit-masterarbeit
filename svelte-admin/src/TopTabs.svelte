@@ -1,4 +1,5 @@
 <script>
+
   import { Tabs, Tab, Dropdown } from "carbon-components-svelte";
   import {push, pop, replace} from 'svelte-spa-router'
   import NotificationBadge from "./NotificationBadge.svelte";
@@ -9,6 +10,8 @@
   
   export let projectId;
   export let tab; // this is a string of the active path
+  export let showTabsLeft;
+  export let showTabsRight;
 
   let mainSelected; // this is a numeric index
   let selectedDropdownId = "more"; // this is a string
@@ -56,81 +59,85 @@
 
 </script>
 
-<div class="tabs-left">
+{#if showTabsLeft}
+  <div class="tabs-left">
 
-  <div class="tabs-main">
-    <!--a use:link href="/components" >Appa</a>
-    <a use:link href="/sheets" >Daten</a-->
-    <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+    <div class="tabs-main">
+      <!--a use:link href="/components" >Appa</a>
+      <a use:link href="/sheets" >Daten</a-->
+      <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+        <Tab>
+          Start
+        </Tab>
+        <Tab>
+          App
+          <NotificationBadge count={0} />
+        </Tab>
+        <Tab label="Daten" />
+        <Tab label="Medien" />
+        <Tab label="Story" />
+        <!-- disabled tab for when dropdown is active -->
+        <Tab label="" disabled />
+        
+      </Tabs>
+      
+    </div>
+
+    <div class="extra-dropdown">
+
+      <Dropdown
+        light
+        type = "inline"
+        bind:selectedId={selectedDropdownId}
+        on:select={ e => navigate(e.detail.selectedId) }
+        let:item
+        items={[
+          { id: "more", text: "more", disabled: true },
+          { id: "project", text: "Projekt" },
+          { id: "users", text: "Users" },
+          { id: "messages", text: "Messages" },
+          { id: "schedule", text: "Schedule" },
+          { id: "repository", text: "Repository" },
+        ]}
+      >
+        {item.text}
+        {#if item.id == "messages" }
+          <ReportsNotificationBadge {projectId} />
+        {/if}
+        {#if item.id == "repository" }
+          <!--RepositoryNotificationBadge  /-->
+        {/if}
+      </Dropdown>
+
+    </div>
+
+  </div>
+{:else}
+  <div style="flex: 1; width: 100%"><!--spacer--></div>
+{/if}
+
+{#if showTabsRight}
+  <div class="tabs-preview" class:visible={$secondaryTabsVisible}>
+
+    <Tabs autoWidth on:change={changeSecondaryTab}>
+      <!-- separator -->
+      <span class="tab-separator"><span/></span>
+    
       <Tab>
-        Start
+          Preview
       </Tab>
       <Tab>
-        App
+          Docs
         <NotificationBadge count={0} />
       </Tab>
-      <Tab label="Daten" />
-      <Tab label="Medien" />
-      <Tab label="Story" />
-      <!-- disabled tab for when dropdown is active -->
-      <Tab label="" disabled />
-      
-    </Tabs>
-    
-  </div>
-
-  <div class="extra-dropdown">
-
-    <Dropdown
-      light
-      type = "inline"
-      bind:selectedId={selectedDropdownId}
-      on:select={ e => navigate(e.detail.selectedId) }
-      let:item
-      items={[
-        { id: "more", text: "more", disabled: true },
-        { id: "project", text: "Projekt" },
-        { id: "users", text: "Users" },
-        { id: "messages", text: "Messages" },
-        { id: "schedule", text: "Schedule" },
-        { id: "repository", text: "Repository" },
-      ]}
-    >
-      {item.text}
-      {#if item.id == "messages" }
-        <ReportsNotificationBadge {projectId} />
-      {/if}
-      {#if item.id == "repository" }
-        <!--RepositoryNotificationBadge  /-->
-      {/if}
-    </Dropdown>
-
-  </div>
-
-</div>
-
-<div class="tabs-preview" class:visible={$secondaryTabsVisible}>
-
-  <Tabs autoWidth on:change={changeSecondaryTab}>
-    <!-- separator -->
-    <span class="tab-separator"><span/></span>
-  
-    <Tab>
-        Preview
-    </Tab>
-    <Tab>
-        Docs
-      <NotificationBadge count={0} />
-    </Tab>
-    <Tab>
+      <Tab disabled={!projectId}>
         Logs
-      <NotificationBadge count={0} />
-    </Tab>
-  </Tabs>
+        <NotificationBadge count={0} />
+      </Tab>
+    </Tabs>
 
-</div>
-
-
+  </div>
+{/if}
 
 <style lang="scss">
 
@@ -178,6 +185,5 @@
   small {
     @include type.type-style('helper-text-01');
   }
-
   
 </style>

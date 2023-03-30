@@ -1,6 +1,6 @@
 <script>
 
-  import { Button } from 'carbon-components-svelte'
+  import { Button, ToastNotification } from 'carbon-components-svelte'
   import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
   import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
   
@@ -39,7 +39,19 @@
     <div class="secondary-content-container">
 
       <section class:visible={$secondaryTabIndex == 0}>
-        <Preview {projectId} {currentProject} {previewUserAuth}/>
+        {#if $currentProject}
+          <Preview {projectId} {currentProject} {previewUserAuth}/>
+        {:else}
+          <!-- TODO find better component -->
+          <ToastNotification
+            kind="info"
+            lowContrast
+            hideCloseButton
+            title="Preview"
+            caption="Pick a project from the dashboard to preview it here."
+            >
+          </ToastNotification>
+        {/if}
       </section>
     
       <section class:visible={$secondaryTabIndex == 1}>
@@ -48,7 +60,11 @@
     
       <section class:visible={$secondaryTabIndex == 2}>
         <h4> Project Server</h4>
-        <ProjectServerInfo {currentProject}/>
+        {#if $currentProject}
+          <ProjectServerInfo {currentProject}/>
+        {:else}
+          no current project
+        {/if}
       </section>
     
     </div>

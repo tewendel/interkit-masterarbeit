@@ -88,11 +88,12 @@
     </HeaderNavMenu>
   </HeaderNav-->
 
-  {#if $projectId}
-    <TopTabs projectId={$projectId} {tab} />
-  {:else}
-    <div class="spacer" style="flex:1"></div>
-  {/if}
+  <TopTabs
+    projectId={$projectId}
+    showTabsLeft={!!$projectId}
+    showTabsRight={true}
+    {tab}
+    />
 
   <HeaderUtilities>
     {#if $userId}
