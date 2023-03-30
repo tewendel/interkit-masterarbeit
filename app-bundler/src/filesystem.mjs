@@ -119,7 +119,7 @@ async function setupNewRepository(project, template="starter", gitRepository) {
       }
       
       await fs.promises.writeFile(
-        path.join(projectPath, "public/interkit.config.json"),
+        path.join(projectPath, "static/interkit.config.json"),
         interkitConfigJson
       )
 
