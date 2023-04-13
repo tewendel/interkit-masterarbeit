@@ -3,7 +3,7 @@
 
   import Router, { querystring } from 'svelte-spa-router'
   import {link} from 'svelte-spa-router'
-  import ProjectManager, { currentProjectName, currentProjectServerStatus } from './ProjectManager.svelte'
+  import ProjectManager from './ProjectManager.svelte'
   import { BundleServer } from './BundleServer'
   import Login from './Login.svelte';
   import SystemStatusBar from './SystemStatusBar.svelte';
@@ -32,7 +32,7 @@
   
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
 
-  import { projectId } from './admin.js'
+  import { projectId, currentProject } from './admin.js'
 
   let tab = null;
 
@@ -70,10 +70,9 @@
   
 </script>
 
-
 <Header 
   company="interkit" 
-  platformName={$currentProjectName || "Redaktionssystem"} 
+  platformName={$currentProject?.name || "Redaktionssystem"} 
   href="/#/"
   >
   
@@ -107,7 +106,7 @@
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
           <div class="status">
             {#if $userId}
-              <SystemStatusBar currentProjectServerStatus={$currentProjectServerStatus} />
+              <SystemStatusBar currentProjectServerStatus={$currentProject?.projectServer?.status} />
             {/if}
           </div>  
 

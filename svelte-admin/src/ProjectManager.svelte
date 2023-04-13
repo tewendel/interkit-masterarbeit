@@ -1,9 +1,3 @@
-<script context="module">
-  import { writable, get } from 'svelte/store';
-  export let currentProjectName = writable(null);
-  export let currentProjectServerStatus = writable(null);
-</script>
-
 <script>
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
@@ -18,22 +12,22 @@
     UnorderedList,
     ListItem,
     Tile,
+    Loading,
     DataTable, Link,
     Button, TextInput, Form, Dropdown, FormGroup
   } from "carbon-components-svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
+  import { currentProject } from './admin.js'
 
   export let params = {}
 
   let userId = InterkitClient.userId;
 
-  let currentProjectSub;
   let projectsListSub;
 
   let projects;
-  let currentProject;
   let newProjectName;
   let gitRepository;
   let newProjectTemplateIndex = 0
@@ -44,19 +38,11 @@
   ]
 
   const manageProjectsSub = async (projectId)=>{
-    console.log("project subscription " + projectId)
     if (projectId) {
-      currentProjectSub = await InterkitClient.getSub('projects', 'project', projectId, (p)=>p.id == projectId, true)
-      currentProject = currentProjectSub.data
       if (projectsListSub) { projectsListSub.stop() }
     } else {
       projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
       projects = projectsListSub.data;
-      if (currentProjectSub) { 
-        await currentProjectSub.stop(); 
-        currentProjectSub = null 
-        currentProject.set(null)
-      }
     }
   }
 
@@ -71,18 +57,11 @@
   }
 
   onDestroy(() => {
-    currentProjectSub?.stop()
     projectsListSub?.stop()
   })
 
   $: currentProjectId = params.projectId
   $: tab = params.tab
-
-  $: {
-    //console.log("currentProject xxx", $currentProject)
-    currentProjectName.set($currentProject ? $currentProject.name : null )
-  }
-  $: $currentProjectServerStatus = $currentProject?.projectServer?.status
 
   $: manageProjectsSub(currentProjectId)
 
@@ -120,7 +99,11 @@
     <Column lg="{16}">
     
       {#if currentProjectId}
-        <ProjectWorkspace {tab} projectId={currentProjectId} {currentProject}/>
+        {#if $currentProject}
+          <ProjectWorkspace {tab} projectId={currentProjectId} {currentProject}/>
+        {:else}
+          <Loading style="background-color:white"/>
+        {/if}
       {:else}
 
       
