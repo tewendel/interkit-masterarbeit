@@ -1,7 +1,6 @@
 <script>
   import NotificationBadge from "./NotificationBadge.svelte";
-
-  export let currentProject
+  import {currentProject} from "./admin.js"
 
   let repoNotice
 

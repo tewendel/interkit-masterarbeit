@@ -101,7 +101,7 @@
         <ReportsNotificationBadge {projectId} />
       {/if}
       {#if item.id == "repository" }
-        <!--RepositoryNotificationBadge  /-->
+        <RepositoryNotificationBadge />
       {/if}
     </Dropdown>
 
