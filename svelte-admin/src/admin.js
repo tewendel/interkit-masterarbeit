@@ -6,34 +6,27 @@ export const projectId = writable()
 export const secondaryTabIndex = writable(0);
 export const secondaryTabsVisible = writable(true);
 
-let subStatus = {}
+let currentProjectSub = null
 export const currentProject = derived(
   projectId,
   async ($projectId, set) => {
 
-    if(subStatus?.currentProjectSub?.stop && (subStatus.currentProjectId && subStatus.currentProjectId != $projectId || !$projectId)) {
-      console.log("unsubscribing project", subStatus.currentProjectId)
-      await subStatus.currentProjectSub.stop()
-      subStatus = {}
+    if (!$projectId && currentProjectSub?.stop) {
+      currentProjectSub.stop()
       set(null)
     }
 
     if ($projectId) {
       console.log("subscribing project", $projectId)
-
-      const currentProjectSub = await InterkitClient.getSub('projects', 'project', $projectId, (p)=>p.id == $projectId, true)
-
-      subStatus.currentProjectSub = currentProjectSub
-      subStatus.currentProjectId = $projectId
-
+      currentProjectSub = await InterkitClient.getSub('projects', 'project', $projectId, (p)=>p.id == $projectId, true, null, "adminCurrentProject")
       currentProjectSub.data?.subscribe((p)=>{
         set(p)
       })
-    }
+    } 
 
     return async () => {
-      if(subStatus?.currentProjectSub?.stop) {
-        await subStatus.currentProjectSub.stop()
+      if(currentProjectSub?.stop) {
+        await currentProjectSub.stop()
       }
     };
 
