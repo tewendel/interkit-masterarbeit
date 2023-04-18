@@ -58,10 +58,13 @@ console.log(value)
             <input value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
           {/if}
           {#if row.type == "number"}
-            <input type="number" value={row.value} on:input={(e)=>{updateCell(row, e.target.value)}}>
+            <input type="number" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
+          {/if}
+          {#if row.type == "color"}
+            <input type="color" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
           {/if}
           {#if row.type == "boolean"}
-            <input type="checkbox" checked={row.value} on:change={(e)=>{updateCell(row, e.target.checked)}}>
+            <input type="checkbox" checked={row.value || row.defaultValue} on:change={(e)=>{updateCell(row, e.target.checked)}}>
           {/if}
         {:else}
           {cell.value}
