@@ -20,10 +20,14 @@
     { key: "value", value: "Value" },
   ]
 
+console.log(value)
+
   let rows = value.map(v => {return {
+    id: v.name,
     name: v.name,
     value: v.value,
-    type: v.type
+    type: v.type,
+    defaultValue: v.defaultValue
   }})
 
   const updateCell = (row, cellValue) => {
@@ -35,7 +39,7 @@
     value = rows.map(r => {return {
       name: r.name,
       value: r.value,
-      type: r.type
+      type: r.type,
     }})
   }
 
@@ -51,7 +55,7 @@
       <svelte:fragment slot="cell" let:row let:cell>
         {#if cell.key === "value"}
           {#if row.type == "string"}
-            <input value={row.value} on:input={(e)=>{updateCell(row, e.target.value)}}>
+            <input value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
           {/if}
           {#if row.type == "number"}
             <input type="number" value={row.value} on:input={(e)=>{updateCell(row, e.target.value)}}>

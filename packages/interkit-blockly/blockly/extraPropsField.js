@@ -31,7 +31,7 @@ export default (Blockly, update) => {
     
     loadState(state) {
       console.log("loadState extraProps", state)
-      this.props = state['props'];
+      this.props = state['props'].map(p => ({ ...this.props.find(tp => tp.name === p.name) , ...p}));
     }
 
     async showEditor_() {
