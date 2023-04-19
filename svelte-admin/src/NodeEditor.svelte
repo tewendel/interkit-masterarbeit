@@ -898,7 +898,7 @@
           style="margin-left: auto"
           kind="ghost"
           icon={Help}
-          on:click={() => docsGo('/guides/story_cheatsheet')}
+          on:click={() => docsGo('/guides/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
           size="small"
           iconDescription="syntax cheatsheet"
           tooltipAlignment="end"
