@@ -1,5 +1,7 @@
 # How to setup your own interkit server
 
+## Table of contents
+
 In this guide, you will set up a server instance running interkit, using the available docker images.
 
 Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/interkit-experiments)

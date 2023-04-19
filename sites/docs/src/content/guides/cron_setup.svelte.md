@@ -1,8 +1,10 @@
 # The concept of hooks
 
+## Table of contents
+
 `hooks` are like nodes, but run by the system, triggered by certain events (instead of regular nodes, that are triggered by messages and user movements). they export `async init()` and `async run()` functions (instead of `onMessage()` and `onArrive()`).
 
-# Set up cron jobs in a project
+## Set up cron jobs in a project
 
 Cron jobs are hooks (JS callbacks) that are run periodically on the server.
 
@@ -12,7 +14,7 @@ Cron jobs are hooks (JS callbacks) that are run periodically on the server.
 4. `run` gets called regularly (every second)
 5. you are responsible for the rest!
 
-# API for callbacks
+## API for callbacks
 
 The `init` and `run` callbacks are called with these arguments:  
 (see `project-server.js` for details)

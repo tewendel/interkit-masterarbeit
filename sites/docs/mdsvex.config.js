@@ -1,6 +1,9 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import highlighter from './src/util/codeHighlighter.js';
 import relativeImages from 'mdsvex-relative-images';
+import remarkToc from 'remark-toc'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // mermaid not working yet, see 
 // - https://github.com/pngwn/MDsveX/issues/304
@@ -20,8 +23,8 @@ const config = defineConfig({
 		highlighter
 	},
 
-	remarkPlugins: [sveld, relativeImages],
-	rehypePlugins: []
+	remarkPlugins: [sveld, relativeImages, remarkToc],
+	rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
 });
 
 export default config;

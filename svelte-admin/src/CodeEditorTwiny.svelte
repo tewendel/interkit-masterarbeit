@@ -57,6 +57,7 @@
       class="twinycode"
       value={twinyCode}
       on:input={evt => twinyInput(evt.target.value) }
+      placeholder={`Write twinish code here.\n\n[[ExampleButton]]`}
       ></textarea>
     <p style="font-size: 80%">generated code (live preview):</p>
     <CodeEditor
@@ -66,16 +67,9 @@
       />
   {:else}
     <div>
-      <p>no twine-ish code found!</p>
-      <p>
-        <button on:click={prependMinimalSnippet}>try to twinify it</button>
-      </p>
-      <p>
-        <b>Warning!</b> After the click, this will prepend some
-        code to the node, but eventually, it will overwrite your code.
-      </p>
+      <!-- this should never happen, NodeEditor should catch it -->
+      <p>Error, no twine-ish code found!</p>
     </div>
-    <CodeEditor bind:code />
   {/if}
 </div>
 

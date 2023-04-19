@@ -15,12 +15,12 @@
 
 <hr />
 
-<a href="https://interkit.app">
+<a href="https://interkit.app" target="_blank">
   Website
 </a>
 
 <br>
 
-<a href="https://gitlab.interkit.app">
+<a href="https://gitlab.interkit.app" target="_blank">
   Repository
 </a>

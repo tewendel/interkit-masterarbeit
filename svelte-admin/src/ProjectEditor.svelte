@@ -95,8 +95,6 @@
 <h4>Project History</h4>
 <HistoryList {currentProject} />
 
-<h4>Snapshots (coming soon)</h4>
-
 <style>
   h4 {
     margin-top: 1em;

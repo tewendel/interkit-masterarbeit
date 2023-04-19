@@ -5,6 +5,8 @@
 
   import { InterkitClient } from 'interkit'
 
+  import { docsGo } from './docs.js'
+
   import { isTwinish, minimalSnippet } from './twinish.js'
 
   import {
@@ -22,6 +24,7 @@
 
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
+  import Help from 'carbon-icons-svelte/lib/Help.svelte'
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
   import Edit from 'carbon-icons-svelte/lib/Edit.svelte'
   import Save from 'carbon-icons-svelte/lib/Save.svelte'
@@ -881,34 +884,47 @@
   </svelte:fragment>
   <svelte:fragment slot="modalPanelRight">
     <div style="display: flex; flex-direction: column; height: 100%">
-    <Tabs
-      bind:selected={editorMode}
-      autoWidth={true}
-      > 
-      <Tab label="Strings" />
-      <Tab label="Handlers" />
-      <Tab label="Full" />
-      <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
-    </Tabs>
+      <div style="display: flex">
+        <Tabs
+          bind:selected={editorMode}
+          autoWidth={true}
+          >
+          <Tab label="Strings" />
+          <Tab label="Handlers" />
+          <Tab label="Full" />
+          <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
+        </Tabs>
+        <Button
+          style="margin-left: auto"
+          kind="ghost"
+          icon={Help}
+          on:click={() => docsGo('/guides/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
+          size="small"
+          iconDescription="syntax cheatsheet"
+          tooltipAlignment="end"
+          />
+      </div>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
         <div style="overflow: auto; display: flex; flex-direction: column"><!-- wrapper for CodeMirror(s) -->
         {#if editorMode !== 3 && twinyHint === 'sync'}
-          <p>
-            <strong>Warning:</strong> This node contains twine-ish code.
-            If you don't edit it via the Twine-ish tab,
-            you can break it.
-          </p>
-          <p>
-            <Button
-              on:click={() => { editorMode = 3 }}
-              kind="tertiary"
-              size="small"
-              style="margin: 0.5em auto"
-              >
-              Switch to Twine-ish tab
-            </Button>
-          </p>
+          <div class="textlike">
+            <p>
+              <strong>Warning:</strong> This node contains twine-ish code.
+              If you don't edit it via the Twine-ish tab,
+              you can break it.
+            </p>
+            <p>
+              <Button
+                on:click={() => { editorMode = 3 }}
+                kind="tertiary"
+                size="small"
+                style="margin: 0.5em auto"
+                >
+                Switch to Twine-ish tab
+              </Button>
+            </p>
+          </div>
         {/if}
         {#if editorMode === 0}
           <CodeEditorStringy
@@ -942,14 +958,16 @@
               class="editor"
               />
           {:else}
-            {#if twinyHint === 'broken'}
-              <p>This node contains twine-ish code, but it is broken.
-                Maybe somebody edited it manually.</p>
-            {:else if twinyHint === 'none'}
-              <p>This node does not contain twine-ish code.</p>
-            {/if}
-            <button on:click={() => { editorContents = minimalSnippet }}>twinify</button>
-            <p>Warning: this will overwrite this node's contents</p>
+            <div class="textlike">
+              {#if twinyHint === 'broken'}
+                <p>This node contains twine-ish code, but it is broken.
+                  Maybe somebody edited it manually.</p>
+              {:else if twinyHint === 'none'}
+                <p>This node does not contain twine-ish code.</p>
+              {/if}
+              <Button on:click={() => { editorContents = minimalSnippet }}>twinify</Button>
+              <p>Warning: this will overwrite this node's contents</p>
+            </div>
           {/if}
         {/if}
         </div>
@@ -959,32 +977,32 @@
         </div>
       {/if}
       {#if unmetMoveTos && editNodeId && unmetMoveTos[editNodeId]}
-        <div>
-        <p style="font-size: 80%">create nodes for dangling <code>moveTo</code>s:</p>
-        <ButtonSet stacked>
-        {#if nodesModifiedCount}
-          <!--<p><strong>You have to save all nodes first</strong></p>-->
-          <Button
-            icon={Save}
-            kind="secondary"
-            size="small"
-            on:click={() => { saveModifiedNodes() }}
-            >
-            Save all nodes to enable
-          </Button>
-        {/if}
-        {#each unmetMoveTos[editNodeId] as unmetMoveTo}
-          <Button
-            kind="tertiary"
-            icon={Add}
-            size="small"
-            disabled={nodesModifiedCount}
-            on:click={() => { createNodeInCurrentBoard(unmetMoveTo) }}
-            >
-            {unmetMoveTo}
-          </Button>
-        {/each}
-        </ButtonSet>
+        <div class="textlike">
+          <p>create nodes for dangling <code>moveTo</code>s:</p>
+          <ButtonSet stacked>
+          {#if nodesModifiedCount}
+            <!--<p><strong>You have to save all nodes first</strong></p>-->
+            <Button
+              icon={Save}
+              kind="secondary"
+              size="small"
+              on:click={() => { saveModifiedNodes() }}
+              >
+              Save all nodes to enable
+            </Button>
+          {/if}
+          {#each unmetMoveTos[editNodeId] as unmetMoveTo}
+            <Button
+              kind="tertiary"
+              icon={Add}
+              size="small"
+              disabled={nodesModifiedCount}
+              on:click={() => { createNodeInCurrentBoard(unmetMoveTo) }}
+              >
+              {unmetMoveTo}
+            </Button>
+          {/each}
+          </ButtonSet>
         </div>
       {/if}
       <!-- TODO move cheatsheet to right docs sidebar
@@ -1162,6 +1180,14 @@ hr {
   height: 1px;
   background-color: #eee; /* TODO */
   margin: 0.5em 16px; /* 16px spied from carbon */
+}
+
+.textlike {
+  padding: 0 1em;
+}
+
+.textlike p {
+  margin: 1em 0;
 }
 
 </style>

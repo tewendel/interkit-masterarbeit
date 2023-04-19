@@ -1,22 +1,24 @@
-## Building native apps
+# Building native apps
 
-### Prepare
+## Table of contents
+
+## Prepare
 
 - download your project onto your local machine that you will use for building the native apps
 
-### Update your interkit.config
+## Update your interkit.config
 
 This file will determine which server your app uses to load itself - make sure it points to the right place.
 
 
-### Basic capacitor setup
+## Basic capacitor setup
 
 Edit capacitor.config.json file with details for your project (name, identifier) or use init tool:
 ```bash
 npx cap init
 ```
 
-#### Android
+### Android
 
 If you used the starter, you must also manually change `android/res/values/strings.xml` or `/android/app/src/main/res/values/strings.xml` to update 
 - *app_name*
@@ -31,11 +33,11 @@ In addition, change the *app identifier* in the following files
 
 **Warning:** changing the *app identifier* will currently only work if you also replace the `google-services.json` with info from firebase (see [push setup dedicated guide](/guides/push_setup) )
 
-#### iOS
+### iOS
 
 Change the *display name* and *bundle* in xcode (click App in the tree on the left)
 
-### Updating the app 
+## Updating the app 
 
 Build the app bundle in /public
 ```bash
@@ -56,7 +58,7 @@ npx cap open android
 Warning: while developing, make sure you've set the version in your interkit.config.json to lower than the one on the server, otherwise the app will load the newer bundle from the server.
 
 
-### Icons and Splashscreen
+## Icons and Splashscreen
 
 replace the icon and splash screen files in the `/resources` directory (assuming you used starter to build you project) - make sure you use the exact same sizes
 
@@ -79,7 +81,7 @@ they should be included in your next build with the native dev tools
 see also: https://github.com/ionic-team/capacitor-assets/tree/cordova-res
 
 
-### Using live reload
+## Using live reload
 
 interkit comes with a system that allows a native app to download newer versions of a javascript bundle if it is available on the server.
 
@@ -88,7 +90,7 @@ interkit comes with a system that allows a native app to download newer versions
 
 
 
-### Publish to the app stores
+## Publish to the app stores
 
 you'll need screenshots - these are easiest to make with iphone and ipad simulators.
 - 5.5 inch -> use iphone 8plus simulator
@@ -99,7 +101,7 @@ Important: make sure you set a clear description of what you want to use the loc
 
 Important: If you want to use push messages, please go through [Push Setup Guide](/guides/push_setup)
 
-#### iOS
+### iOS
 
 1. In Xcode, select Any iOS Device as the deployment target.
 2. Choose Product from the top menu and click on Archive.
@@ -109,7 +111,7 @@ Important: If you want to use push messages, please go through [Push Setup Guide
 
 Additional info here: https://developer.apple.com/ios/submit/
 
-#### Android
+### Android
 
 Make sure you are using our fork of the cordova zip plugin - it prevents a "zip traversal vulnerability" that google detects during submission. Your package.json should contain
 ````json

@@ -2,13 +2,15 @@
   import Sidebar from "../components/Sidebar.svelte";
   import {items} from "../content/sidebar.json.js"
 
+  import { isIframed } from "$lib/iframed.js"
+
   import 'prismjs/themes/prism.css'
 
   //export const prerender = true;
 
 </script>
 
-<div class="container">
+<div class="container" class:container__iframed={isIframed}>
   <header class="header">
     <h1>
       <a href="/" style="text-decoration: none;">
@@ -28,6 +30,15 @@
 </div>
 
 <style>
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(html.iframed body) {
+    background-color: var(--color-bggrey);
+  }
+
   .container {
     display: grid;
     grid-template-columns: 15rem 1fr;
@@ -36,11 +47,29 @@
     height: 100vh;
   }
 
+  .container__iframed {
+    display: block;
+  }
+
   .header {
     grid-column: 1 / span 2;
     background-color: var(--color-beige);
     padding: 1rem;
   }
+
+  .container__iframed .header {
+    display: none;
+  }
+
+  /* only hide header 
+  .container__iframed {
+       grid-template-rows: 0 1fr;
+  }
+  .container__iframed .header {
+    padding: 0;
+    overflow: hidden;
+  }
+  */
 
   .header h1 {
     margin: 0;
@@ -54,9 +83,18 @@
     overflow-y: auto;
   }
 
+  .container__iframed .sidebar {
+    background-color: transparent;
+  }
+
   .main {
     grid-column: 2;
     overflow-y: auto;
+  }
+
+  .container__iframed .main {
+    padding: 0 1rem;
+    background-color: white;
   }
 
   @media screen and (max-width: 600px) {
@@ -65,5 +103,25 @@
     }
   }
 
+  :global(h2[id]:not([id="table-of-contents"]) a),
+  :global(h3[id] a),
+  :global(h4[id] a),
+  :global(h5[id] a),
+  :global(h6[id] a) {
+    text-decoration: none;
+  }
+
+  :global(h2[id]:not([id="table-of-contents"]) a::after),
+  :global(h3[id] a::after),
+  :global(h4[id] a::after),
+  :global(h5[id] a::after),
+  :global(h6[id] a::after) {
+    content: "§";
+    margin-right: 0.2em;
+  }
+
+  :global([id="table-of-contents"] + ul li p) {
+    margin: 0;
+  }
 
 </style>
