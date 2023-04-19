@@ -1,6 +1,8 @@
-## Story programming cheatsheet
+# Story programming cheatsheet
 
-### JavaScript
+## Table of contents
+
+## JavaScript
 
 ```js
 export const onArrive = async (api) => {
@@ -164,7 +166,7 @@ api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
 api.sendSystemT('Chat verlassen|Left the chat')
 ```
 
-### Twine-ish syntax
+## Twine-ish syntax
 
 <!-- FIXME there is no "plain" or txt language for the highlighter,
   empty crashes the sveltekit server. Ugly workaround with a JS string,

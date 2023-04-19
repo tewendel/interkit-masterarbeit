@@ -1,14 +1,14 @@
-## Migrate interkit to vite (Apps before April 2023)
+# Migrate interkit to vite (Apps before April 2023)
 
 (See commit [
 6dab1378](https://gitlab.interkit.app/interkit/interkit-experiments/-/commit/6dab1378f299f76aac7cd50a97bbb5dba097d73e))
 
-### Rename
+## Rename
 
 - rename `public` to `static`
 - move `public/index.html` one up to `index.html`
 
-### Add
+## Add
 
 - add `vite.config.js`:
 ```js
@@ -30,11 +30,11 @@ export default defineConfig({
 })
 ```
 
-### Delete
+## Delete
 
 - delete `rollup.config.js`
 
-### Modify
+## Modify
 
 - `.gitignore`
 ```diff

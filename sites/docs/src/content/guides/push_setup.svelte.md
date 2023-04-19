@@ -1,6 +1,10 @@
+# Push notification setup
+
+## Table of contents
+
 Note: You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
 
-# Google Firebase Services setup
+## Google Firebase Services setup
 
 These are non-secret keys to link our app to the Firebase Cloud Messaging app instance.
 
@@ -16,17 +20,17 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
         1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `fooproject/android/app/`  
           (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
 
-# Obtain APNs for iOS setup
+## Obtain APNs for iOS setup
 
 1. Go to your Apple Developer Account
 2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account.
 3. Plug it into Firebase Console
 
-# Android setup
+## Android setup
 
 Push and Firebase are enabled by default.
 
-# iOS setup
+## iOS setup
 
 `fooproject/ios/App/App/AppDelegate.swift`,
 following [the Capacitor docs for v2](https://capacitorjs.com/docs/v2/guides/push-notifications-firebase#add-initialization-code),
@@ -66,7 +70,7 @@ Add "Push Notifications" capability
 ![](/images/push_setup_ios_capability.jpg)
 
 
-# Provide credentials
+## Provide credentials
 
 These are private keys to be kept secret, get them from Firebase Console (Project settings › Service accounts › Firebase Admin SDK › Generate new private key -> it's ~2k of cert looking JSON). Provide them to the app:
 
@@ -79,7 +83,7 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
      2. in the project folder (found via `.env` `REPOSITORIES_PATH`),
         file name `firebase-admin.json`.
 
-# Push notification icon on Android
+## Push notification icon on Android
 
 (Not supported on iOS, it just uses the launcher icon)
 
