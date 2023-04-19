@@ -1,15 +1,33 @@
 <script>
 
-  import { Accordion, AccordionItem } from "carbon-components-svelte"; 
+  import { Accordion, AccordionItem, Button } from "carbon-components-svelte"; 
   import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
+  import Help from "carbon-icons-svelte/lib/Help.svelte";
   import { docsGo } from './docs.js'
 
   export let workspace;
+  export let topBlocks;
   export let toolbox;
 
   let activeId = "";
   let selectedIds = [];
   let children = [];
+
+  let subtrees = []
+
+  $: {
+    if(topBlocks) {
+      subtrees = topBlocks.filter(b => b.type == "BlocklySubTree" || b.type == "AppBase");
+      subtrees.sort(function(a, b) {
+        const A = a.type == "AppBase" ? "AppBase" : a.getFieldValue('key') 
+        const B = b.type == "AppBase" ? "AppBase" : b.getFieldValue('key')
+        return (A < B) ? -1 : (A > B) ? 1 : 0;
+      })
+      //console.log("subtrees", subtrees)
+    } else {
+      subtrees = [];
+    }
+  }
 
   $: {
     if(toolbox) {
@@ -51,13 +69,29 @@
 
   }
 
+  const referenceHelp = () => {
+    docsGo(`/components/BlocklySubtree`)
+  }
+
+  const panToSubtree = (block) => {
+    let xy = block.getRelativeToSurfaceXY();	// Scroll the workspace so that the block's top left corner
+    let m = workspace.getMetrics();					// is in the (0.2; 0.3) part of the viewport.
+    
+    console.log({scrollbar: workspace.scrollbar, metrics: m, xy: xy})
+    
+    workspace.scrollbar.set(
+        xy.x * workspace.scale - m.contentLeft + m.viewWidth  * 0.2,
+				xy.y * workspace.scale - m.contentTop + m.viewHeight * 0.3
+    );
+  }
+
 </script>
 
 
 {#if toolbox}
 
   <div class="blockly-picker-container">
-
+    
     <Accordion size="sm">
     {#each children as category}
       <AccordionItem title={category.text}>
@@ -74,6 +108,34 @@
 
   </div>
 
+  <div class="navigation-accordion">
+    <Accordion size="sm">
+      <AccordionItem title="SubTrees">
+        {#if subtrees.length}
+          <ul>
+          {#each subtrees as subtree} 
+            <li on:click={() => {panToSubtree(subtree)}}>{
+              subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')
+            }</li>
+          {/each}
+          </ul>
+        {:else}
+          <p>When you use BlocklySubTrees, they will appear here as shortcuts.</p>
+          <Button
+              kind="ghost"
+              size="small"
+              tooltipPosition="top"
+              icon={Help}
+              on:click={referenceHelp}
+              iconDescription="docs"
+            />
+        {/if}
+      </AccordionItem>    
+    </Accordion>
+  </div>
+
+  
+
 {/if}
 
 <style>
@@ -85,6 +147,25 @@
     padding-right: 1rem;
   }
 
+  .navigation-accordion {
+    padding: 5px;
+    margin-top: 1rem;
+  }
+
+  .navigation-accordion p {
+    font-size: 90%;
+    color: #999;
+  }
+
+  .navigation-accordion li {
+    padding: 5px;
+  }
+
+  .navigation-accordion li:hover {
+    cursor: pointer;
+  }
+
+  
 
 </style>
 

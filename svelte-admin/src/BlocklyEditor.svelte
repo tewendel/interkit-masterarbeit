@@ -35,6 +35,7 @@
   // let CustomFields = {}; // save blockly custom fields here
   
   let workspace;
+  let topBlocks = [];
   let toolbox;
   let blocklyXMLFile = "blocklyState.xml";
   let blocklyJsonFile = "blocklyState.json";
@@ -249,6 +250,7 @@
     // let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";
     generatedCode = imports + code;
     
+    topBlocks = workspace.getTopBlocks();
   }
 
   onMount(async () => {
@@ -319,7 +321,7 @@
     >
 
     <svelte:fragment slot="sidebarLeft">
-      <BlocklyComponentPicker {workspace} {toolbox}/>
+      <BlocklyComponentPicker {workspace} {topBlocks} {toolbox}/>
     </svelte:fragment>
    
     <svelte:fragment slot="contentMain">

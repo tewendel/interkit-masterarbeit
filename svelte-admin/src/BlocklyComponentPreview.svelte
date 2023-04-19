@@ -30,7 +30,7 @@
         <Button
           kind="ghost"
           size="small"
-          tooltipPosition="right"
+          tooltipPosition="top"
           icon={AddFilled}
           on:click={add}
           iconDescription="add"
@@ -38,7 +38,7 @@
         <Button
           kind="ghost"
           size="small"
-          tooltipPosition="right"
+          tooltipPosition="top"
           icon={Help}
           on:click={help}
           iconDescription="docs"
@@ -51,6 +51,7 @@
 <style>
   .container {
     padding: 5px;
+    padding-bottom: 0;
     margin-bottom: 5px;
   }
   .container span {
