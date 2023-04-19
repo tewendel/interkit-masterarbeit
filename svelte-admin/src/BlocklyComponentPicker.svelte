@@ -125,7 +125,7 @@
                     tooltipPosition="top"
                     icon={Move}
                     on:click={() => {panToSubtree(subtree)}}
-                    iconDescription="scroll canvas"
+                    iconDescription="center"
                   />  
                 </div>
               </li>
@@ -137,6 +137,7 @@
                 kind="ghost"
                 size="small"
                 tooltipPosition="top"
+                tooltipAlignment="end"
                 icon={Help}
                 on:click={referenceHelp}
                 iconDescription="docs"
