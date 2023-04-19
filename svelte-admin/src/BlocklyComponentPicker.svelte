@@ -173,10 +173,6 @@
     color: #999;
   }
 
-  .navigation-accordion li:hover {
-    cursor: pointer;
-  }
-
   .navigation-accordion li {
     display: flex;
     flex-direction: row;
