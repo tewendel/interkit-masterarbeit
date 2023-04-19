@@ -67,5 +67,25 @@
     }
   }
 
+  :global(h2[id]:not([id="table-of-contents"]) a),
+  :global(h3[id] a),
+  :global(h4[id] a),
+  :global(h5[id] a),
+  :global(h6[id] a) {
+    text-decoration: none;
+  }
+
+  :global(h2[id]:not([id="table-of-contents"]) a::after),
+  :global(h3[id] a::after),
+  :global(h4[id] a::after),
+  :global(h5[id] a::after),
+  :global(h6[id] a::after) {
+    content: "§";
+    margin-right: 0.2em;
+  }
+
+  :global([id="table-of-contents"] + ul li p) {
+    margin: 0;
+  }
 
 </style>
