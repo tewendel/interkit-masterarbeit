@@ -1,6 +1,7 @@
 <script>
 
-  import { TreeView } from "carbon-components-svelte";
+  import { Accordion, AccordionItem } from "carbon-components-svelte"; 
+  import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
 
   export let workspace;
   export let toolbox;
@@ -23,35 +24,53 @@
           text: child.type
         }})
       })
-      console.log(children)
+      console.log("toolbox children", children)
 
     }
   }
 
-  const selectComponent = ({ detail }) => {
-    if(detail.leaf) {
-      let name = detail.id;
-      if(confirm("add " + name + " to workspace?")) {
-        let newBlock = workspace.newBlock(name);
-        newBlock.initSvg();
-        newBlock.moveBy((workspace.getMetrics().viewLeft + 20) / workspace.scale, (workspace.getMetrics().viewTop + 20) / workspace.scale);
-        newBlock.render();
-      }
+  const selectComponent = (blockName) => {
+    if(confirm("add " + blockName + " to workspace?")) {
+      let newBlock = workspace.newBlock(blockName);
+      newBlock.initSvg();
+      newBlock.moveBy((workspace.getMetrics().viewLeft + 20) / workspace.scale, (workspace.getMetrics().viewTop + 20) / workspace.scale);
+      newBlock.render();
     }
   }
 
-  
+  const openBlocklyHelp = (blockName) => {
+    alert("open help for " + blockName)
+  }
+
 </script>
 
 
 {#if toolbox}
 
-  <TreeView
-    {children}
-    bind:activeId
-    bind:selectedIds
-    on:select={selectComponent}
-  />
+  <div class="container">
+
+    <Accordion size="sm">
+    {#each children as category}
+      <AccordionItem title={category.text}>
+        {#each category.children as block}
+          <BlocklyComponentPreview 
+            blockName={block.text} 
+            imageSrc={block.image}
+            add={()=>{selectComponent(block.text)}}
+            help={()=>{openBlocklyHelp(block.text)}}
+          />
+        {/each}
+      </AccordionItem>    
+    {/each}
+    </Accordion>
+
+  </div>
 
 {/if}
+
+<style>
+  .container {
+    padding: 5px;
+  }
+</style>
 
