@@ -121,7 +121,7 @@
 
   section {
     width: 100%;
-    visibility: hidden;
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -130,6 +130,7 @@
 
   section.visible {
     visibility: visible;
+    display: block;
   }
 
   div.hidden {
