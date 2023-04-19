@@ -1,6 +1,6 @@
 <script>
 
-  import { registerIframe } from './docs.js'
+  import { registerIframe, docsURL } from './docs.js'
 
   import { onMount } from 'svelte'
 
@@ -9,10 +9,6 @@
   onMount(() => {
     registerIframe(iframe)
   })
-
-  const localDocsURL = "http://localhost:3010"
-  const remoteDocsURL = "https://docs.interkit.app"
-  const docsURL = (location.hostname === "localhost" || location.hostname === "127.0.0.1") ? localDocsURL : remoteDocsURL;
 
 </script>
 
