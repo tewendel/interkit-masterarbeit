@@ -131,7 +131,8 @@
               </li>
             {/each}
             </ul>
-          {:else}
+          {/if}
+          {#if subtrees.length == 1}
             <p>When you use BlocklySubTrees, they will appear here as shortcuts.</p>
             <Button
                 kind="ghost"
