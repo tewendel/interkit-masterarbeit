@@ -2,6 +2,7 @@
 
   import { Accordion, AccordionItem } from "carbon-components-svelte"; 
   import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
+  import { docsGo } from './docs.js'
 
   export let workspace;
   export let toolbox;
@@ -24,6 +25,12 @@
           text: child.type
         }})
       })
+
+      children.sort(function(a, b) {
+        var textA = a.text.toUpperCase();
+        var textB = b.text.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      })
       console.log("toolbox children", children)
 
     }
@@ -39,7 +46,9 @@
   }
 
   const openBlocklyHelp = (blockName) => {
-    alert("open help for " + blockName)
+    //alert("open help for " + blockName)
+    docsGo(`/components/${blockName}`)
+
   }
 
 </script>
@@ -55,7 +64,6 @@
         {#each category.children as block}
           <BlocklyComponentPreview 
             blockName={block.text} 
-            imageSrc={block.image}
             add={()=>{selectComponent(block.text)}}
             help={()=>{openBlocklyHelp(block.text)}}
           />

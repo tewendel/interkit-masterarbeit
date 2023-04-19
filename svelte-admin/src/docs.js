@@ -20,3 +20,7 @@ export const docsGo = (route) => {
     '*'
   )
 }
+
+const localDocsURL = "http://localhost:3010"
+const remoteDocsURL = "https://docs.interkit.app"
+export const docsURL = (location.hostname === "localhost" || location.hostname === "127.0.0.1") ? localDocsURL : remoteDocsURL;

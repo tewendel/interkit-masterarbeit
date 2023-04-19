@@ -3,10 +3,12 @@
   import { Button } from "carbon-components-svelte";
   import AddFilled from "carbon-icons-svelte/lib/AddFilled.svelte";
   import Help from "carbon-icons-svelte/lib/Help.svelte";
-  
+
+  import { docsURL } from './docs.js'
 
   export let blockName;
-  export let imageSrc;
+  const imageSrc = docsURL + "/images/component_previews/" + blockName + ".png";
+  
   export let add;
   export let help;
 
@@ -22,16 +24,13 @@
 <div class="container" on:click={toggleActive} class:active>
   <span title={blockName}>{blockName}</span>
   <div class="preview">
-    {#if imageSrc}
-      <img class="blockPreviewImage" src={imageSrc}>
-    {:else}
-      <div class="previewImagePlaceholder"></div>
-    {/if}
+    <div class="previewImage" style="background-image: url({imageSrc})"></div>
     {#if active}
-      <div class="buttons">
+      <div class="buttons" on:click|stopPropagation={()=>{}}>
         <Button
           kind="ghost"
           size="small"
+          tooltipPosition="right"
           icon={AddFilled}
           on:click={add}
           iconDescription="add"
@@ -39,6 +38,7 @@
         <Button
           kind="ghost"
           size="small"
+          tooltipPosition="right"
           icon={Help}
           on:click={help}
           iconDescription="docs"
@@ -76,11 +76,11 @@
     flex-direction: column;
     flex: 0.25;
   }
-  .blockPreviewImage {
-    flex: 0.75;
-  }
-  .previewImagePlaceholder {
+  .previewImage {
     width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   
 </style>
