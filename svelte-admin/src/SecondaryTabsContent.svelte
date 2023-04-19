@@ -33,8 +33,12 @@
       on:click={toggleRightPane}
       icon={rightPaneHidden ? Maximize : Minimize}
       />
-    </div>
-  <div class="right-pane-content" class:hidden={rightPaneHidden}>
+  </div>
+  <div
+    class="right-pane-content"
+    class:right-pane-content__padded={true}
+    class:hidden={rightPaneHidden}
+    >
     
     <div class="secondary-content-container">
 
@@ -54,7 +58,7 @@
         {/if}
       </section>
     
-      <section class:visible={$secondaryTabIndex == 1}>
+      <section class:visible={$secondaryTabIndex == 1} class="right-pane-content-docs">
         <DocsBrowser />
       </section>
     
@@ -112,11 +116,17 @@
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
+    flex-grow: 1;
   }
-
 
   .secondary-content-container {
     position: relative;
+    height: 100%;
+  }
+
+  .right-pane-content-docs {
+    margin-left: -1rem;
+    width: calc(100% + 2rem);
   }
 
   section {
@@ -126,6 +136,10 @@
     top: 0;
     left: 0;
     /*border: 2px solid blue;*/
+  }
+
+  section.right-pane-content-docs {
+    height: 100%;
   }
 
   section.visible {

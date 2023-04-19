@@ -2,9 +2,21 @@ import { goto } from '$app/navigation'
 
 const logPrefix = 'interkit docs iframed'
 
+let isIframed
+
 console.info(logPrefix, 'init')
 
-const setupClientside = window => {
+const setupClientside = (window, document) => {
+  try {
+    isIframed = window.self !== window.top
+    // isIframed = window !== window.parent
+  } catch (e) {
+    console.warn(logPrefix, 'isIframe detection failed')
+    isIframed = false
+  }
+  if (isIframed) {
+    document.documentElement.classList.add('iframed')
+  }
   window.addEventListener('message', evt => {
     if (!evt?.data) {
       console.warn(logPrefix, 'message received, but no data, bailing')
@@ -24,9 +36,10 @@ const setupClientside = window => {
   })
 }
 
+// TODO will this work with ssr/prerendering?
 try {
   if (typeof window !== 'undefined') {
-    setupClientside(window)
+    setupClientside(window, document)
   } else {
     console.log('interkit docs iframed, no window object')
   }
@@ -34,6 +47,6 @@ try {
   console.log('interkit docs iframed, probably no window object')
 }
 
-export default {
-  test: () => window.alert('foo')
+export {
+  isIframed
 }

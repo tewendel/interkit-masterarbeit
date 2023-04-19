@@ -22,15 +22,16 @@
   title="interkit docs"
   src={docsURL}
   bind:this={iframe}
-  >
-</iframe>
+  ></iframe>
 
 <style>
 
 .ifr {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  /* FIXME make 100% */
-  min-height: 800px;
+  height: 100%;
 }
 
 </style>
