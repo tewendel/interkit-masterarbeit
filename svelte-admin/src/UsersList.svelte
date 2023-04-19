@@ -1,21 +1,24 @@
 <script>
 
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import {
     Checkbox,
     Accordion,
     AccordionItem,
-    Pagination,
     DataTable,
+    InlineLoading,
     OverflowMenu,
     OverflowMenuItem,
     Toolbar,
-    // ToolbarBatchActions,
+    ToolbarBatchActions,
     ToolbarContent,
     ToolbarSearch,
+    ToolbarMenu,
+    ToolbarMenuItem,
     Button,
     ButtonSet,
     Modal,
+    Pagination,
     Select,
     SelectSkeleton,
     SelectItem,
@@ -23,14 +26,20 @@
     TextArea,
     Tag
   } from "carbon-components-svelte";
-  import Movement from "carbon-icons-svelte/lib/Movement.svelte";
+
+  import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import Send from "carbon-icons-svelte/lib/Send.svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
+  import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
+
   import UserVarTableModal from './UserVarTableModal.svelte';
+  import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
   import SchedulingForm from './InputModals/SchedulingForm.svelte'
 
@@ -41,14 +50,25 @@
   export let users; // this should be an array, not a store
   export let projectId;
   export let previewUserId
+  export let total
+  export let page = 1
+  export let limit = 10
+  export let searchQuery = ""
+  export let sortKey
+  export let sortDirection
+  export let loading = false
+
+  const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
+
+  const dispatch = createEventDispatcher()
 
   let userId = InterkitClient.userId
 
   let usersSelection = []
-  let pagination = {
-    pageSize: 30,
-    page: 1
-  }
+
+  let openShowHideColumns = false
+
+  let dataTableToolbarBatchActionsActive = false
 
   let openQuickMessage = false
   let quickMsgText = 'hello'
@@ -78,6 +98,7 @@
   }
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
 
+  /*
   let roleAssignmentStore = null
 
   onMount(async () => {
@@ -88,88 +109,89 @@
   })
 
   $: if (roleAssignmentStore) console.log($roleAssignmentStore)
+  */
+
+  const setSort = ({key, direction}) => {
+    sortKey = key
+    sortDirection = direction === 'ascending' ? 1 : direction === 'descending' ? -1 : 0
+  }
+
 
   const trivialSort = (a, b) => a < b ? -1 : 1
   // FIXME this works only one way
   const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
+  const alreadySorted = (a, b) => 0
 
-  // default values for columns to show/hide
-  let showCol = {
-    userIcon: true,
-    blocked: true,
-    username: true,
-    roles: false,
-    id: true,
-    createdAt: true,
-    online: true,
-    boards: true,
-    userToken: true,
-    pushToken: false,
-    userVars: false
-  }
-
-  let headers
-
-  $: headers = [
-    ...(showCol.userIcon ? [{
+  const headers = [
+    {
       key: 'userIcon',
-      value: 'u'
-    }] : []),
-    ...(showCol.username ? [{
+      show: true,
+      value: 'Icon',
+      width: '4em',
+    },
+    {
       key: "username",
-      value: "username",
-      sort: trivialSort
-    }] : []),
-    ...(showCol.blocked ? [{
+      show: true,
+      value: "Username",
+      sort: alreadySorted
+    },
+    {
       key: "blocked",
-      value: "blocked",
-      sort: boolSort
-    }] : []),
-    ...(showCol.roles ? [{
-      key: "roles",
-      value: "roles",
-      sort: trivialSort
-    }] : []),    
-    ...(showCol.id ? [{
+      show: true,
+      value: "Blocked",
+      sort: alreadySorted
+    },
+    //{
+    //  key: "roles",
+    //  show: false,
+    //  value: "Roles"
+    //},
+    {
       key: "id",
-      value: "id",
+      show: true,
+      value: "ID",
       sort: false
-    }] : []),
-    ...(showCol.createdAt ? [{
+    },
+    {
       key: "createdAt",
-      value: "createdAt",
-      sort: trivialSort
-    }] : []),
-    ...(showCol.online ? [{
+      show: true,
+      value: "Created\u00a0at",
+      sort: alreadySorted
+    },
+    {
       key: "status.online",
-      value: "online",
-      sort: trivialSort
-    }] : []),
-    ...(showCol.boards ? [{
+      show: true,
+      value: "Online",
+      width: '4em',
+    },
+    {
       key: "boards",
-      value: "boards",
+      show: true,
+      value: "Boards",
       sort: false
-    }] : []),
-    ...(showCol.userToken ? [{
+    },
+    {
       key: "userToken",
-      value: "userToken",
+      show: true,
+      value: "User\u00a0token",
       sort: false
-    }] : []),
+    },
     ...(InterkitClient.userEnableHeartbeat
-      ? [{ key: "lastHeartbeat", value: "lastHeartbeat" }]
+      ? [{ key: "lastHeartbeat", value: "Last\u00a0heartbeat", show: false, sort: trivialSort }]
       : []
     ),
-    ...(showCol.pushToken ? [{
+    {
       key: "pushnotificationRegistrationToken",
-      value: "push token",
-      sort: trivialSort
-    }] : []),
-    ...(showCol.userVars ? [{
+      show: false,
+      value: "Push\u00a0token"
+    },
+    {
       key: 'userVars',
-      value: 'userVars',
+      show: true,
+      value: 'User\u00a0vars',
       sort: false
-    }] : [])
-  ];
+    }
+  ]
 
   const userIconSelf = '\u{01f464}\uFE0E'
   const userIconPreview = '\u{01f4f1}\uFE0E'
@@ -183,6 +205,7 @@
   $: {
     rows = users ? users
       // .filter(user => user.id !== $userId) // hide own user
+      .sort(sortFunction)
       .map(user => {
         return {
           ...user,
@@ -192,31 +215,17 @@
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
           boards: summarizeBoardState(user?.projectUserData?.[projectId]?.boardState),
           userVars: JSON.stringify(user?.projectUserData?.[projectId]?.userVars),
-          roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
-            if (roleAssignment.user._id === user.id) {
-              acc.push(roleAssignment.role._id)
-            }
-            return acc
-          }, []).join(", ")
+          //roles: roleAssignmentStore && $roleAssignmentStore.reduce((acc, roleAssignment) => {
+          //  if (roleAssignment.user._id === user.id) {
+          //    acc.push(roleAssignment.role._id)
+          //  }
+          //  return acc
+          //}, []).join(", ")
         }
     })
     : []
-    console.log(rows)
-    window._rows = rows
-  }
-
-  let searchQuery;
-  const searchFunction = (row, query) => {
-    //console.log(m)
-    if(!query || query == "") return true;
-    else {
-      if(row?.userToken?.toLowerCase().includes(query.toLowerCase())
-        || row?.username?.toLowerCase()?.includes(query.toLowerCase())) {
-        return true
-      } else {
-        return false;
-      }
-    }
+    //console.log(rows)
+    //window._rows = rows
   }
 
   const batchDelete = async () => {
@@ -356,37 +365,135 @@
 {#if rows}
 
   <div class="UsersListTableContainer">
-    <Accordion>
-      <AccordionItem title="show/hide columns">
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
+    <!-- TODO get f4f4f4 from carbon -->
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * dense row + search/actions + thead + data table padding-top */
+        min-height: ${(limit || 0) * 24 + 32 + 24 + 2}px;
+      `}
       class="table"
       size="compact"
       expandable
       sortable
+      on:click:header={ event => setSort({ key: event.detail.header.key, direction: event.detail.sortDirection})}
+      zebra
       batchSelection
       bind:selectedRowIds={usersSelection}
-      pageSize={pagination.pageSize}
-      page={pagination.page}
-      {headers}
+      pageSize={limit}
+      page={1}
+      headers={headers.filter(_ => _.show)}
       {rows}
       >
 
-      <Toolbar>
-        <!-- currently cant use Batch Actions and Search simultaneously https://github.com/carbon-design-system/carbon/issues/2275 (has been open for ages) -->
+      <Toolbar size="sm">
         <!--
-        <ToolbarBatchActions>
-          <Button icon={Movement} on:click={() => { openMoveTo = true }}>moveTo</Button>
-          <Button icon={Send} on:click={() => { openQuickMessage = true }}>Quick Message</Button>
-          <Button icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        </ToolbarBatchActions>
+          Batch Actions and Search simultaneously can be clunky,
+          but it is still better than hacks.
+          See https://github.com/carbon-design-system/carbon/issues/2275 (has been open for ages),
+          closed for https://github.com/carbon-design-system/carbon/issues/11856
         -->
+        <ToolbarBatchActions
+          bind:active={dataTableToolbarBatchActionsActive}
+          on:cancel={(evt) => {
+            // do not clear selection after cancel
+            evt.preventDefault()
+            dataTableToolbarBatchActionsActive = false
+          }}
+          formatTotalSelected={num => `${num}\u00a0user${num > 1 ? 's' : ''}`}
+          >
+          <!--
+          <Button
+            size="small"
+            kind="ghost"
+            on:click={() => {
+              window.alert('selected IDs: \n' + usersSelection.join(' '))
+            }}
+            >
+            {usersSelection.length} selected
+          </Button>
+          -->
+          <Button
+            size="small"
+            icon={WatsonHealthStudySkip}
+            on:click={() => { moveToResult = ''; openMoveTo = true }}
+            iconDescription="move users to a Story board/node"
+            tooltipPosition="bottom"
+            tooltipAlignment="start"
+            >
+            moveTo…
+          </Button>
+          <Button
+            size="small"
+            icon={Send}
+            on:click={() => { openQuickMessage = true }}
+            iconDescription="send message to users"
+            tooltipPosition="top"
+            >
+            message…
+          </Button>
+          <Button
+            size="small"
+            icon={TableSplit}
+            on:click={openUserVarEditor}
+            disabled={usersSelection.length !== 1}
+            iconDescription='edit user variables'
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            vars…
+          </Button>
+          <Button
+            size="small"
+            icon={MobileAdd}
+            on:click={previewAttach}
+            disabled={usersSelection.length !== 1}
+            iconDescription='attach user to preview'
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            preview
+          </Button>
+          <Button
+            size="small"
+            icon={ErrorFilled}
+            on:click={() => { batchBlock(true) }}
+            iconDescription="block"
+            tooltipPosition="right"
+            />
+          <Button
+            size="small"
+            icon={ErrorOutline}
+            on:click={() => { batchBlock(false) }}
+            iconDescription="unblock"
+            tooltipPosition="right"
+            />
+          <Button
+            size="small"
+            icon={TrashCan}
+            on:click={batchDelete}
+            iconDescription="delete"
+            tooltipPosition="left"
+            />
+        </ToolbarBatchActions>
         <ToolbarContent>
-          <ToolbarSearch persistent value="" shouldFilterRows />
+          <ToolbarSearch persistent bind:value={searchQuery} placeholder="search Username, ID, User token, User vars"/>
+          <InlineLoading style={`flex: 1; padding-left: 1em; visibility: ${loading ? "visible" : "hidden"}`}/>
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              toggle columns…
+            </ToolbarMenuItem>
+          </ToolbarMenu>
+          <Button
+            size="small"
+            icon={Add}
+            on:click={() => dispatch('clickedAddUser')}
+            iconDescription="create new project user"
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            >
+            Create…
+          </Button>
         </ToolbarContent>
       </Toolbar>
 
@@ -417,44 +524,49 @@
         {:else if cell.key === 'blocked'}
           <span title="cell.value">{cell.value ? '🚫' : (cell.value === false ? '🟢' : '')}</span>
         {:else if cell.key === 'status.online'}
-          <span title={(cell.value ? "online" : "offline")} class="cell__1line">{ (cell.value ? "online" : "-") }</span>
+          <span title={(cell.value ? "online" : "offline")} class="cell__1line">
+            {#if cell.value}
+              <UserOnline style="vertical-align: middle" />
+            {/if}
+          </span>
         {:else}
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
 
-    </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
-      totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-      />
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
 
-    {#if usersSelection.length}
-      <ButtonSet style="margin-bottom: 2px">
-        <Button size="small" kind="ghost" on:click={() => { window.alert(usersSelection.join(' ')) }}>{usersSelection.length} selected</Button>
-        <Button size="small" icon={Movement} on:click={() => { moveToResult = ''; openMoveTo = true }}>moveTo</Button>
-        <Button size="small" icon={Send} on:click={() => { openQuickMessage = true }}>Message</Button>
-      </ButtonSet>
-      <ButtonSet>
-        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
-        <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
-      </ButtonSet>
-    {/if}
-    {#if usersSelection.length == 1}
-    <ButtonSet>
-      <Button size="small" icon={MobileAdd} on:click={previewAttach}>Attach to preview</Button>
-      <Button size="small" icon={TableSplit} on:click={openUserVarEditor}>edit userVars</Button>
-    </ButtonSet>
-    {/if}
+    </DataTable>
+    <!-- TODO: make all tables like this, adjust height calculation -->
+    <DataTablePaginationAutofit
+      bind:pageSize={limit}
+      bind:page={page}
+      totalItems={total}
+    />
     
   </div>
 
 {:else}
   loading...
 {/if}
+
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
+  {/each}
+</Modal>
 
 <Modal
   bind:open={openQuickMessage}
@@ -594,17 +706,6 @@
 
 <style>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .UsersListTableContainer :global(td > span) {
-    max-width: 100%;
-  }
-
   .UsersListTableContainer :global(.bx--data-table--sticky-header) {
     /* carbon sets a stupid max height here,
        to "force a scrollbar with sticky header"
@@ -618,6 +719,10 @@
   }
   .UsersListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
+  }
+
+  .UsersListTableContainer :global(.bx--table-header-label) {
+    max-width: 100%;
   }
 
   /* lazy spacing hack since Svelte-Carbon doesn't have spacing helper classes yet

@@ -1,41 +1,47 @@
 <script>
 
-  import { onDestroy } from 'svelte'
-  import { InterkitClient } from 'interkit'
   import MessagesList from './MessagesList.svelte'
+  import PaginatedCollectionSubscription from './PaginatedCollectionSubscription.svelte'
 
   export let projectId
-  export let notification = true
 
-  let messagesStore
-  let unsubscribe
   let messagesArray
 
-  let subHandle
-  $: resetSub(projectId)
+  let limit = 20
+  let page = 1
+  let searchQuery = ""
+  let sortKey = "createdAt"
+  let sortDirection = -1
 
-  const resetSub = async (projectId) => {
-    if (subHandle) await subHandle.stop()
-    subHandle = await InterkitClient.getSub('messages', 'messages', { projectId, includeBlocked: true })
-    messagesStore = subHandle.data
-    unsubscribe = messagesStore.subscribe((data) => {
-      messagesArray = data
-    })
-  }
-
-  onDestroy(()=>{
-    if (unsubscribe) unsubscribe()
-  });
-
-  const REPORTS_CHANNEL_KEY = 'REPORTS'
-
-  // we have unseen reports about messages
-  $: notification = messagesArray?.some(message => (!message.seen || message?.seen?.length === 0) && message?.channel_key === REPORTS_CHANNEL_KEY)
+  let channelReports = false
 
 </script>
 
-<MessagesList
-  messages={messagesArray}
-  {projectId}
+<PaginatedCollectionSubscription
+    {projectId}
+    publicationName="messagesPaginated"
+    extraParams={{channelReports}}
+    let:items={messagesArray}
+    let:resetting
+    let:total
+    bind:limit={limit}
+    bind:page={page}
+    bind:searchQuery={searchQuery}
+    bind:sortKey={sortKey}
+    bind:sortDirection={sortDirection}
+  >
+  <MessagesList
+    {projectId}
+    messages={messagesArray}
+    loading={resetting}
+    total={total}
+    bind:page={page}
+    bind:limit={limit}
+    bind:searchQuery={searchQuery}
+    bind:sortKey={sortKey}
+    bind:sortDirection={sortDirection}
+    bind:channelReports
   />
+</PaginatedCollectionSubscription>
+
 

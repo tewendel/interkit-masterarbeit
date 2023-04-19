@@ -81,6 +81,7 @@ app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
 app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
 app.patch('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.patch)
 app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
+app.put('/boards/:projectId/renameboard/:oldBoardId/:newBoardId', board_node_api.boards.renameBoard)
 app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId/:newNodeId', board_node_api.boards.renameNode)
 
 // dont need it, build it into read board

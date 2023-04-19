@@ -4,41 +4,62 @@
     Checkbox,
     Button,
     ButtonSet,
-    Accordion,
-    AccordionItem,
+    InlineLoading,
     Toolbar,
+    ToolbarBatchActions,
     ToolbarContent,
     ToolbarSearch,
-    Pagination,
-    DataTable
+    ToolbarMenu,
+    ToolbarMenuItem,
+    DataTable,
+    Modal
   } from 'carbon-components-svelte'
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
   import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte'
   import ErrorOutline from 'carbon-icons-svelte/lib/ErrorOutline.svelte'
   import Checkmark from 'carbon-icons-svelte/lib/Checkmark.svelte'
+  import Filter from 'carbon-icons-svelte/lib/Filter.svelte'
+  import FilterRemove from 'carbon-icons-svelte/lib/FilterRemove.svelte'
 
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient, util } from 'interkit'
 
   let userId = InterkitClient.userId
 
   export let messages
   export let projectId
 
-  let verbose = false
+  export let total
+  export let page = 1
+  export let limit = 10
+  export let searchQuery = ""
+  export let sortKey
+  export let sortDirection
+  export let loading = false
 
-  let filters = {
-    channelReports: false
+  export let channelReports = false
+
+  const sortFunction = (a,b) => util.mongoSortCompare(a, b, sortKey, sortDirection)
+
+  const setSort = ({key, direction}) => {
+    sortKey = key
+    sortDirection = direction === 'ascending' ? 1 : direction === 'descending' ? -1 : 0
   }
+
+
+  /* with better pagination we can be verbose always */
+  const verbose = true
 
   let showCol = {
     id: true,
     blocked: true,
     channel_key: true,
     sender: true,
-    payloadType: false,
+    "payload.type": false,
     payloadContent: true,
-    payloadLabel: true,
+    "payload.options.label": true,
     createdAt: true,
     recipients: false,
     recipientsCount: false,
@@ -46,79 +67,83 @@
     seenCount: true
   }
 
-  const trivialSort = (a, b) => a < b ? -1 : 1
-  // FIXME this works only one way
-  const boolSort = (a, b) => (a === b) ? 0 : a ? -1 : 1
+  const alreadySorted = (a, b) => 0
 
   let selection = []
-  let pagination = {
-    pageSize: 30,
-    page: 1
-  }
 
-  let headers
-
-  $: headers = [
-    ...(showCol.id ? [{
+  const headers = [
+    {
       key: 'id',
-      value: 'id',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.blocked ? [{
+      show: true,
+      value: 'ID',
+      sort: false
+    },
+    {
       key: 'blocked',
-      value: 'blocked',
-      sort: boolSort
-    }] : []),
-    ...(showCol.createdAt ? [{
+      show: true,
+      value: 'Blocked',
+      sort: alreadySorted
+    },
+    {
       key: 'createdAt',
-      value: 'createdAt',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.channel_key ? [{
+      show: true,
+      value: 'Created\u00a0at',
+      sort: alreadySorted
+    },
+    {
       key: 'channel_key',
-      value: 'channel',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.sender ? [{
+      show: true,
+      value: 'Channel',
+      sort: alreadySorted
+    },
+    {
       key: 'sender',
-      value: 'sender',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.payloadType ? [{
-      key: 'payloadType',
-      value: 'type',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.payloadContent ? [{
+      show: true,
+      value: 'Sender',
+      sort: alreadySorted
+    },
+    {
+      key: "payload.type",
+      show: false,
+      value: 'Type',
+      sort: alreadySorted
+    },
+    {
       key: 'payloadContent',
-      value: 'content',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.payloadLabel ? [{
-      key: 'payloadLabel',
-      value: 'label',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.recipientsCount ? [{
+      show: true,
+      value: 'Content',
+      sort: false
+    },
+    {
+      key: "payload.options.label",
+      show: true,
+      value: 'Label',
+      sort: alreadySorted
+    },
+    {
       key: 'recipientsCount',
-      value: 'Σ recipients',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.recipients ? [{
+      show: false,
+      value: 'Σ\u00a0recipients',
+      sort: alreadySorted
+    },
+    {
       key: 'recipients',
-      value: 'recipients',
+      show: false,
+      value: 'Recipients',
       sort: false
-    }] : []),
-    ...(showCol.seenCount ? [{
+    },
+    {
       key: 'seenCount',
-      value: 'Σ seen',
-      sort: trivialSort
-    }] : []),
-    ...(showCol.seen ? [{
+      show: true,
+      value: 'Σ\u00a0seen',
+      sort: alreadySorted
+    },
+    {
       key: 'seen',
-      value: 'seen',
+      show: false,
+      value: 'Seen',
       sort: false
-    }] : []),
+    }
   ]
 
   const createdAtdateTimeFormatLocaleOptions = {
@@ -150,18 +175,18 @@
 
   let rows
   $: rows = messages ? messages
+    .sort(sortFunction)
     .map(message => ({
       ...message,
-      payloadType: message.payload?.type,
+      //"payload.type": message.payload?.type,
       payloadContent: summarizePayloadContent(message),
-      payloadLabel: message.payload?.options?.label,
-      createdAt: new Date(message.createdAt),
-      recipients: message.recipients?.join(' '),
-      recipientsCount: message.recipients?.length,
-      seen: message.seen?.join(' '),
-      seenCount: message.seen?.length
+      //"payload.options.label": message.payload?.options?.label,
+      //createdAt: new Date(message.createdAt),
+      //recipients: message.recipients?.join(' '),
+      //recipientsCount: message.recipientsCount,
+      //seen: message.seen?.join(' '),
+      //seenCount: message.seenCount
     }))
-    .filter(message => (!filters.channelReports || (filters.channelReports && message.channel_key === REPORTS_CHANNEL_KEY && (!message.seen || message?.seen?.length === 0))))
     : []
 
   const batchDelete = async () => {
@@ -244,44 +269,76 @@
     })
   }
 
+  let openShowHideColumns = false
+  let dataTableToolbarBatchActionsActive = false
+
 </script>
 
 {#if rows}
   <div class="MessagesListTableContainer">
-    <Accordion>
-      <AccordionItem title="options: verbose, filters, show/hide columns">
-        <div>Options:</div>
-        <Checkbox bind:checked={verbose} labelText="verbose (full message objects)" />
-        <div>Filters:</div>
-        <Checkbox bind:checked={filters.channelReports} labelText="only unseen reports (channel_key=REPORTS)" />
-        <div>Columns:</div>
-        {#each Object.keys(showCol) as colKey}
-          <Checkbox bind:checked={showCol[colKey]} labelText={colKey} />
-        {/each}
-      </AccordionItem>
-    </Accordion>
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * dense row + search/actions + thead + data table padding-top */
+        min-height: ${(limit || 0) * 24 + 32 + 24 + 2}px;
+      `}
       size="compact"
       expandable
       sortable
       selectable
       batchSelection
+      on:click:header={ event => setSort({ key: event.detail.header.key, direction: event.detail.sortDirection})}
       bind:selectedRowIds={selection}
-      pageSize={pagination.pageSize}
-      page={pagination.page}
-      {headers}
+      pageSize={limit}
+      page={1}
+      headers={headers.filter(_ => _.show)}
       {rows}
       >
-      <Toolbar>
+
+      <Toolbar size="sm">
+        <ToolbarBatchActions
+          bind:active={dataTableToolbarBatchActionsActive}
+          on:cancel={(evt) => {
+            // do not clear selection after cancel
+            evt.preventDefault()
+            dataTableToolbarBatchActionsActive = false
+          }}
+          formatTotalSelected={num => `${num}\u00a0message${num > 1 ? 's' : ''}`}
+          >
+          <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
+          <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
+          <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
+        </ToolbarBatchActions>
+
         <ToolbarContent>
           <ToolbarSearch
             persistent
-            value=""
-            shouldFilterRows
-            on:input={ evt => { console.log('ToolbarSearch input', evt) }}
+            placeholder="Seach message text, sender, channel, ID, recipient"
+            bind:value={searchQuery}
             />
+          <InlineLoading style={`flex: 1; padding-left: 1em; visibility: ${loading ? "visible" : "hidden"}`}/>
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              toggle columns…
+            </ToolbarMenuItem>
+            <!--
+            <ToolbarMenuItem on:click={() => { verbose = !verbose }}>
+              {verbose ? 'show' : 'hide'}
+              full message objects in expanded rows
+            </ToolbarMenuItem>
+            -->
+            <ToolbarMenuItem
+              on:click={() => { channelReports = !channelReports }}
+              >
+              <Checkbox checked={channelReports} labelText="only new reports" />
+            </ToolbarMenuItem>
+          </ToolbarMenu>
+          <!--
+          <Button kind="ghost" icon={Filter} size="small" />
+          -->
         </ToolbarContent>
       </Toolbar>
+
       <div slot="expanded-row" let:row>
         {#if row?.channel_key === REPORTS_CHANNEL_KEY}
           <pre style="font-family: monospace; white-space: pre-wrap">
@@ -302,9 +359,10 @@
           </pre>
         {/if}
       </div>
+
       <span slot="cell" let:row let:cell>
         {#if cell.key === 'payload'}
-          <span>{ JSON.stringify(cell.value) }</span>
+          <span class="cell__1line">{ JSON.stringify(cell.value) }</span>
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
         {:else if cell.key === 'blocked'}
@@ -313,43 +371,50 @@
           <span title={cell.value} class="cell__1line">{cell.value || ""}</span>
         {/if}
       </span>
+
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
+
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
-      totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+
+    <DataTablePaginationAutofit
+      bind:pageSize={limit}
+      bind:page={page}
+      totalItems={total}
       />
-    {#if selection && selection.length}
-      <ButtonSet>
-        <Button size="small" kind="ghost" on:click={() => { window.alert(selection.join(' ')) }}>{selection.length} selected</Button>
-        <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-        <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
-        <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
-      </ButtonSet>
-    {/if}
   </div>
 {:else}
   loading...
 {/if}
 
-<style>
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
+  {/each}
+</Modal>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+<style>
 
   .MessagesListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
   }
+
   .MessagesListTableContainer :global(.bx--table-expand__button) {
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
 
-  .MessagesListTableContainer :global(td > span) {
+  .MessagesListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
   }
 

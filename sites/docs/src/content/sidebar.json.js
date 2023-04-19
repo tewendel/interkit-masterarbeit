@@ -44,6 +44,10 @@ export const items = [
 			{
 				title: 'Setup Raspberry Player',
 				path: '/guides/raspi_setup'
+			},
+			{
+				title: 'Migrate app to vite',
+				path: '/guides/migrate_to_vite'
 			}
 		]
 	},
@@ -130,6 +134,10 @@ export const items = [
 			{
 				title: 'Component CSS',
 				path: '/contribute/component_css'
+			},
+			{
+				title: 'Custom Theme',
+				path: '/contribute/theme'
 			}
 		]
 	}

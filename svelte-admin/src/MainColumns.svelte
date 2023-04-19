@@ -29,12 +29,11 @@
         kind="ghost"
         on:click={() => { sidebarLeftOpen = true }}
         iconDescription="maximize"
+        tooltipAlignment="start"
         icon={Maximize}
         />
     {:else}
-      <div
-        style="height: var(--mainContentHeaderHeight)"
-        >
+      <div>
         <div class="headingWithButton">
           <h2>{sidebarLeftLabel}</h2>
           <Button
@@ -63,6 +62,7 @@
             iconDescription="close"
             on:click={() => { modalPanelRightOpen = false }}
             icon={Close}
+            tooltipAlignment="end"
             />
         </div>
         <slot name="modalPanelRightHeaderActions" ></slot>
@@ -75,11 +75,6 @@
 </div>
 
 <style>
-
-:root {
-  --mainContentHeaderHeight: 96px;
-  --sidebarCollapsedWidth: 3rem;
-}
 
 h1,
 h2,
@@ -122,6 +117,7 @@ h3 {
   background: white;
   display: flex;
   flex-direction: column;
+  transition: max-width 300ms, min-width 300ms, width 300ms, flex-basis 300ms;
 }
 
 .sidebarLeft--closed {
@@ -131,8 +127,15 @@ h3 {
   min-width: var(--sidebarCollapsedWidth);
 }
 
+/* force tooltip to fit in narrow sidebar */
+.sidebarLeft--closed :global(.bx--assistive-text) {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 .sidebarLeftHeader {
-  height: var(--mainContentHeaderHeight);
   flex-grow: 0;
   flex-shrink: 0;
 }
@@ -159,11 +162,9 @@ h3 {
 }
 
 .modalPanelRightHeader {
-  height: var(--mainContentHeaderHeight);
   border-bottom: 1px solid #ccc;
   flex-grow: 0;
   flex-shrink: 0;
-  overflow: hidden;
 }
 
 .modalPanelRightSlot {

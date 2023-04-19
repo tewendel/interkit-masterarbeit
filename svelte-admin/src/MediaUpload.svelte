@@ -1,6 +1,12 @@
 <script>
+
+  import { createEventDispatcher } from 'svelte'
+
   import Dropzone from "svelte-file-dropzone";
+
   import { InterkitClient, util } from 'interkit'
+
+  const dispatch = createEventDispatcher()
 
   export let projectId
 
@@ -40,10 +46,12 @@
     .then((result) => {
       console.log('Success:', result);
       files.uploaded = [...files.uploaded, file];
+      dispatch('success', { file })
     })
     .catch((error) => {
       console.error('Error:', error);
       files.failed = [...files.failed, file];
+      dispatch('error', { file, error })
     });
   }
   
@@ -69,8 +77,8 @@
   multiple={true}
   containerStyles="color: #444; border-color: #888; margin: 1em 0;"
   >
-  <p><strong>UPLOAD</strong></p>
-  <p>Drag &amp; drop file here, or click to select files</p>
+  <div><strong>UPLOAD</strong></div>
+  <div>Drag &amp; drop file here, or click to select files</div>
 </Dropzone>
 
 <ol>

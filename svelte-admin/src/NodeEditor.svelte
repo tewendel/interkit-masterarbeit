@@ -15,15 +15,26 @@
     TabContent,
     Accordion,
     AccordionItem,
-    TreeView
+    TreeView,
+    Search,
+    Grid, Row, Column
   } from "carbon-components-svelte"
 
-  import MainColumns from './MainColumns.svelte'
+
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
+  import Edit from 'carbon-icons-svelte/lib/Edit.svelte'
+  import Save from 'carbon-icons-svelte/lib/Save.svelte'
+  import Copy from 'carbon-icons-svelte/lib/Copy.svelte'
+  import Undo from 'carbon-icons-svelte/lib/Undo.svelte'
+  import CheckmarkOutlineWarning from 'carbon-icons-svelte/lib/CheckmarkOutlineWarning.svelte'
+  import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
+  import WatsonHealthRotate_360 from 'carbon-icons-svelte/lib/WatsonHealthRotate_360.svelte'
 
   import { boardsApi as api } from './BundleServer.js'
   import { genericErrorHandler, errorify } from './apiHelpers.js'
+
+  import MainColumns from './MainColumns.svelte'
 
   import NodeGraph from './NodeGraph.svelte'
   import CodeEditor from './CodeEditor.svelte'
@@ -31,7 +42,8 @@
   import CodeEditorExporty from './CodeEditorExporty.svelte'
   import CodeEditorTwiny from './CodeEditorTwiny.svelte'
   import NewNodeModal from './InputModals/NewNodeModal.svelte'
-  import ChannelEditor from './ChannelEditor.svelte'
+  import BoardEditModal from './InputModals/BoardEditModal.svelte'
+  import MediaFilePreview from './MediaFilePreview.svelte'
 
   import { idRE } from 'interkit/project-regex.js'
 
@@ -135,10 +147,10 @@
   $: currentBoardId, editNodeId, (() => { dispatch('nodeselected', { boardId: currentBoardId, nodeId: editNodeId }) })()
 
   const twinyHintIcons = {
-    'sync': '\u2705', // white heavy check mark
-    // 'broken': '\u274c', // cross mark
-    'broken': '\u26d4', // cross mark
-    'unknown': '\u2753', // red question mark
+    // \ufe0e doesn't really work here
+    'sync': '\u2713',
+    'broken': '\u2717',
+    'unknown': '\u2047',
     'none': ''
   }
   let twinyHint = ''
@@ -233,9 +245,14 @@
     }
   }
 
-  $: {
-    if($channelsStore && boards && boardsLoaded) boardChannelSync()
-  } 
+  let currentChannel
+  const updateChannel = (channels, _channel_key) => {
+    currentChannel = channels.find(c => c.channel_key === _channel_key)
+    console.log("currentChannel", currentChannel)
+  }
+
+  $: if ($channelsStore && currentBoardId) updateChannel($channelsStore, currentBoardId)
+  $: if ($channelsStore && boards && boardsLoaded) boardChannelSync()
 
   const loadBoardList = async () => {
     await api(projectId, '/?nodes=tree')
@@ -515,6 +532,34 @@
       .finally(() => { loadBoard(boardId) })
   }
 
+  const renameBoard = async (oldBoardId, newBoardId) => {
+    return api(projectId, `/renameboard/${oldBoardId}/${newBoardId}`, { method: 'put' })
+      .then(async res => {
+        const json = await res.json()
+        errorify(json)
+      })
+      .then(() => {
+        try {
+          // attention, please manually sync this magic string + props with NodeGraph
+          ['offsetX', 'offsetY', 'zoom'].forEach(prop => {
+            const oldLSkey = `interkit-admin-node-boardview-${projectId}-${oldBoardId}-${prop}`
+            const newLSkey = `interkit-admin-node-boardview-${projectId}-${newBoardId}-${prop}`
+            localStorage.setItem(newLSkey, localStorage.getItem(oldLSkey))
+            localStorage.removeItem(oldLSkey)
+          })
+        } catch (e) {
+          console.warn('renameBoard: error updating localStorage keys', e)
+        }
+        if (currentBoardId === oldBoardId) {
+          currentBoardId = newBoardId
+        }
+      })
+      .catch(genericErrorHandler)
+      .finally(async () => {
+         await loadBoardList()
+      })
+  }
+
   const moveTo = async () => {
     console.log("moveTo", editNodeId, previewUserId, currentBoardId)
     const usersMovedCount = InterkitClient.call("user.moveTo", {
@@ -570,6 +615,44 @@
       return {status: _syntaxCheckStatus, message: _syntaxCheckMessage}
     }
   }
+
+  let showBoardEditModal = false
+
+  const startBoardEdit = () => {
+    showBoardEditModal = true
+  }
+
+  const saveBoardMeta = async data => {
+    let newBoardId
+    if (data.name !== currentBoardId) {
+      newBoardId = data.name
+      await renameBoard(currentBoardId, newBoardId)
+    }
+    ['title', 'label', 'image'].forEach(property => {
+      // if (typeof data[property] !== 'string') return
+      InterkitClient.call('channel.setProperty', {
+        projectId,
+        channel_key: newBoardId || currentBoardId,
+        property,
+        value: data[property]
+      })
+    })
+  }
+
+  let treeView
+
+  let search = ''
+  let searchHighlightNodeIds = []
+
+  $: {
+    searchHighlightNodeIds = board?.nodes
+      ?.filter(node =>
+        node.id?.toLowerCase()?.includes(search.toLowerCase()) ||
+        node.contents?.toLowerCase()?.includes(search.toLowerCase())
+      )
+      ?.map(node => node.id)
+    if (search && treeView) treeView.expandAll()
+  }
  
   onMount(async () => {
     await loadBoardList();
@@ -585,67 +668,125 @@
   rootClass="NodeEditor"
   >
   <svelte:fragment slot="sidebarLeft">
+    <!--
+    <ButtonSet>
+      <Button
+        kind="ghost"
+        icon={WatsonHealthRotate_360}
+        iconDescription="refresh"
+        size="small"
+        on:click={refresh}
+        />
+    </ButtonSet>
+    -->
+    <Search
+      placeholder={`Search ${currentBoardId}…`}
+      disabled={!currentBoardId}
+      bind:value={search}
+      />
     <TreeView
       style="cursor: default"
-      children={boards?.map(b => ({
-        id: b.id,
-        text: b.id,
-        children: b.nodes?.map(n => ({
-          id: b.id + '_' + n.id,
-          text: n.id,
+      bind:this={treeView}
+      children={boards
+        ?.filter(b => !search || b.id === currentBoardId)
+        ?.map(b => ({
+          id: b.id,
+          text: b.id,
+          children: b.nodes
+            ?.filter(n => !search || searchHighlightNodeIds.includes(n.id))
+            ?.map(n => ({
+              id: b.id + '_' + n.id,
+              text: n.id,
+            }))
         }))
-      }))}
+      }
       on:select={({ detail }) => {
         if (detail.id.indexOf('_') === -1) {
           currentBoardId = detail.id
         } else {
-          [currentBoardId, editNodeId] = detail.id.split('_')
-          // TODO scrollNodeIntoView
+          let nodeId
+          // [currentBoardId, editNodeId] = detail.id.split('_')
+          [currentBoardId, nodeId] = detail.id.split('_')
+          nodeGraph.scrollNodeIntoView(nodeId)
         }
       }}
       />
-    <div class="ui">
-      <button on:click={refresh}>refresh</button>
-      <button on:click={createBoard}>create board</button>
-      <button
-        on:click={deleteCurrentBoard}
-        disabled={!board}
+    <hr />
+    <ButtonSet><!-- style="justify-content: end" -->
+      <Button
+        kind="ghost"
+        iconDescription="refresh"
+        size="small"
+        style="color: black; font-weight: 500; width: 100%"
+        on:click={createBoard}
+        icon={Add}
         >
-        delete board
-      </button><br>
-      <ChannelEditor channel_key={currentBoardId} {projectId}/>
-      <button
-        on:click={() => { createNodeInCurrentBoard() }}
-        disabled={!board}
-        >
-        new/paste node
-      </button>
-      <button
-        on:click={() => { copyCurrentNode() }}
-        disabled={!editNodeId}
-        >
-        copy node
-      </button>
-      <button
-        on:click={saveModifiedNodes}
-        disabled={!nodesModifiedCount}
-        >
-        save {nodesModifiedCount ? nodesModifiedCount : ''} nodes
-        {#if nodesModifiedCount}&#x1f534;{/if}
-      </button><br>
-    </div>
+        New Board
+      </Button>
+    </ButtonSet>
   </svelte:fragment>
   <svelte:fragment slot="contentMain">
     <div class="contentMain">
       <div class="contentMainHeader">
-        <div
-          style="display: flex; align-items: center; height: 48px"
-          >
-          <h2
-            style="font-size: 150%; padding-left: 1rem"
-            >
-            {board ? currentBoardId : '(board)'}
-          </h2>
+        <div>
+          <div class="boardHeader">
+            <div class="boardHeaderIcon">
+              {#if board && currentChannel?.image?.value}
+                <MediaFilePreview
+                  {projectId}
+                  key={currentChannel?.image?.value}
+                  />
+              {:else}
+                <div class="boardHeaderIconPlaceholder"></div>
+              {/if}
+            </div>
+            <h2 class="boardHeaderHeading">
+              {board ? currentBoardId : '—'}
+            </h2>
+            <div class="boardHeaderSubtitle">
+              Title: {currentChannel?.title || '—'}
+              Label: {currentChannel?.label || '—'}
+            </div>
+          </div>
+          <ButtonSet style="justify-content: end">
+            <Button
+              kind="ghost"
+              icon={TrashCan}
+              iconDescription="delete board"
+              disabled={!board}
+              on:click={deleteCurrentBoard}
+              />
+            <Button
+              kind="ghost"
+              icon={Edit}
+              iconDescription="edit board title, icon, label"
+              on:click={startBoardEdit}
+              disabled={!board}
+              />
+            <Button
+              kind="ghost"
+              icon={WatsonHealthRotate_360}
+              iconDescription="refresh"
+              on:click={refresh}
+              />
+            {#if nodesModifiedCount > 0}
+              <Button
+                kind="secondary"
+                on:click={saveModifiedNodes}
+                disabled={!nodesModifiedCount}
+                icon={Save}
+                >
+                Save {nodesModifiedCount} nodes
+              </Button>
+            {/if}
+            <Button
+              icon={Add}
+              on:click={() => { createNodeInCurrentBoard() }}
+              disabled={!board}
+              >
+              New Node
+            </Button>
+          </ButtonSet>
         </div>
       </div>
       <div class="contentMainNodeGraph">
@@ -674,35 +815,67 @@
   <svelte:fragment slot="modalPanelRightHeaderActions">
     {#if editNodeId}
       <ButtonSet>
+        <!-- TODO/FIXME:
+          When there is not enough horizontal viewport, currently at <1200px,
+          this is really hard/impossible to make scroll horizontally,
+          or force the child buttons to shrink in width.
+          A proper solution should collapse this into a ⋮ menu.
+        -->
+        <Button
+          kind="ghost"
+          on:click={moveTo}
+          icon={WatsonHealthStudySkip}
+          iconDescription="Move preview user to node"
+          tooltipPosition="top"
+          disabled={!board || !editNodeId}
+          />
+        <Button
+          kind="ghost"
+          on:click={restoreCurrentNode}
+          disabled={!board || !editNodeId || !editNodeModified }
+          icon={Undo}
+          iconDescription="Restore node"
+          tooltipPosition="top"
+          />
+        <Button
+          kind="ghost"
+          on:click={renameCurrentNode}
+          disabled={!board || !editNodeId}
+          icon={Edit}
+          iconDescription="Rename node"
+          tooltipPosition="top"
+          />
+        <Button
+          kind="ghost"
+          on:click={() => { syntaxCheck() }}
+          disabled={!board || !editNodeId}
+          icon={CheckmarkOutlineWarning}
+          iconDescription="Check syntax"
+          tooltipPosition="top"
+          />
+        <Button
+          kind="ghost"
+          on:click={() => { copyCurrentNode() }}
+          icon={Copy}
+          iconDescription="Copy node"
+          tooltipPosition="top"
+          disabled={!editNodeId}
+          />
         <Button
           kind="ghost"
           on:click={deleteCurrentNode}
           disabled={!board || !editNodeId}
           icon={TrashCan}
-          iconDescription="delete node"
+          iconDescription="Delete node"
+          tooltipPosition="top"
           />
         <Button
           on:click={saveCurrentNode}
           disabled={!board || !editNodeId || !editNodeModified }
+          icon={Save}
           >
-          save
+          Save
         </Button>
-        <Button
-          kind="ghost"
-          on:click={restoreCurrentNode}
-          disabled={!board || !editNodeId || !editNodeModified }
-          >
-          restore
-        </Button>
-        <Button
-          kind="ghost"
-          on:click={renameCurrentNode}
-          disabled={!board || !editNodeId}
-          >
-          rename
-        </Button>
-        <Button kind="ghost" on:click={moveTo}>moveTo</Button>
-        <Button kind="ghost" on:click={()=>{syntaxCheck()}}>quickCheck</Button>
       </ButtonSet>
     {/if}
   </svelte:fragment>
@@ -719,7 +892,7 @@
     </Tabs>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
-        <div style="overflow: auto"><!-- wrapper for CodeMirror(s) -->
+        <div style="overflow: auto; display: flex; flex-direction: column"><!-- wrapper for CodeMirror(s) -->
         {#if editorMode !== 3 && twinyHint === 'sync'}
           <p>
             <strong>Warning:</strong> This node contains twine-ish code.
@@ -727,7 +900,14 @@
             you can break it.
           </p>
           <p>
-            <button on:click={() => { editorMode = 3 }}>switch to Twine-ish tab</button>
+            <Button
+              on:click={() => { editorMode = 3 }}
+              kind="tertiary"
+              size="small"
+              style="margin: 0.5em auto"
+              >
+              Switch to Twine-ish tab
+            </Button>
           </p>
         {/if}
         {#if editorMode === 0}
@@ -780,11 +960,19 @@
       {/if}
       {#if unmetMoveTos && editNodeId && unmetMoveTos[editNodeId]}
         <div>
-        <p>create nodes for dangling <code>moveTo</code>s:</p>
-        {#if nodesModifiedCount}
-          <p><strong>You have to save all nodes first</strong></p>
-        {/if}
+        <p style="font-size: 80%">create nodes for dangling <code>moveTo</code>s:</p>
         <ButtonSet stacked>
+        {#if nodesModifiedCount}
+          <!--<p><strong>You have to save all nodes first</strong></p>-->
+          <Button
+            icon={Save}
+            kind="secondary"
+            size="small"
+            on:click={() => { saveModifiedNodes() }}
+            >
+            Save all nodes to enable
+          </Button>
+        {/if}
         {#each unmetMoveTos[editNodeId] as unmetMoveTo}
           <Button
             kind="tertiary"
@@ -838,12 +1026,15 @@
     />
 {/if}
 
-<style>
+<BoardEditModal
+  {projectId}
+  bind:open={showBoardEditModal}
+  name={currentBoardId}
+  channel={currentChannel}
+  on:submit={({ detail }) => saveBoardMeta(detail)}
+  />
 
-.ui {
-  grid-area: ui;
-  padding-bottom: 10px;
-}
+<style>
 
 :global(.NodeEditor) :global(.nodegraph) {
   background: white;
@@ -861,7 +1052,6 @@
 .contentMainHeader {
   flex-shrink: 0;
   flex-grow: 0;
-  height: var(--mainContentHeaderHeight);
   border-bottom: 1px solid #ccc;
 }
 
@@ -915,11 +1105,63 @@
 }
 
 :global(.NodeEditor) :global(.CodeMirror) {
-  height: calc(100% - 2.5rem) !important;
+  /* height: calc(100% - 2.5rem) !important; */
 }
 
 :global(.bx--btn-set) :global(.bx--btn) {
   width: auto;
+}
+
+:global(.bx--tree) :global(.bx--tree-node) {
+  background: transparent;
+}
+
+/* hack to fix disabled buttons having a darker left border */
+:global(.bx--btn-set .bx--btn.bx--btn--disabled) {
+  box-shadow: -0.0625rem 0 0 0 #e0e0e0;
+}
+
+.boardHeader {
+  display: grid;
+  grid-template-columns: 3em auto;
+  grid-template-rows: auto auto;
+  grid-template-areas: 
+    "bHicon bHheading" 
+    "bHicon bHsub";
+  column-gap: 0.5em;
+  padding: 0.5em; /* TODO */
+}
+
+.boardHeaderIcon {
+  grid-area: bHicon;
+}
+
+.boardHeaderIcon :global(.preview-image),
+.boardHeaderIconPlaceholder {
+  width: 3em;
+  height: 3em;
+  object-fit: cover;
+  border-radius: 0.5em;
+  background-color: rgba(0, 0, 0, 0.3);
+  max-height: none !important;
+}
+
+.boardHeaderHeading {
+  grid-area: bHheading;
+  font-size: 1.25rem;
+}
+
+.boardHeaderSubtitle {
+  grid-area: bHsub;
+  font-size: 0.75rem;
+  color: #888; /* TODO */
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #eee; /* TODO */
+  margin: 0.5em 16px; /* 16px spied from carbon */
 }
 
 </style>

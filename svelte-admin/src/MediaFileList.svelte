@@ -1,16 +1,26 @@
 <script>
 
-  import { onDestroy } from 'svelte'
+  import { onDestroy, createEventDispatcher } from 'svelte'
   import {
+    Button,
     DataTable,
-    Pagination,
     OverflowMenu,
     OverflowMenuItem,
     Toolbar,
+    ToolbarBatchActions,
     ToolbarContent,
-    ToolbarSearch
+    ToolbarSearch,
+    ToolbarMenu,
+    ToolbarMenuItem,
+    Checkbox,
+    Modal
   } from "carbon-components-svelte"
 
+  const dispatch = createEventDispatcher()
+
+  import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
   import MediaFilePreview from './MediaFilePreview.svelte'
   import { InterkitClient, util } from 'interkit'
 
@@ -19,22 +29,74 @@
   export let value
   export let projectId
   export let showChatCols = false
+  export let sortKey = 'name'
+  export let sortDirection = 'ascending'
 
-  let headers
+  const trivialSort = (a, b) => a < b ? -1 : 1
+  const dateSort = (a, b) => a - b
 
-  $: headers = [
-    { key: "name", value: "name" },
-    { key: "type", value: "type" },
-    { key: "duration", value: "duration" },
-    { key: "preview", value: "preview", sort: false },
-    { key: "link", value: "link", sort: false },
-    ...(showChatCols ? [
-      { key: "userId", value: "userId" },
-      { key: "boardId", value: "boardId" },
-      { key: "nodeId", value: "nodeId" },
-    ] : []),
-    { key: "createdAt", value: "createdAt" },
-    { key: "overflow", sort: false, empty: true },
+  const headers = [
+    {
+      key: "name",
+      show: true,
+      value: "Name",
+      sort: trivialSort
+    },
+    {
+      key: "key",
+      show: true,
+      value: "Key",
+      sort: trivialSort
+    },
+    {
+      key: "type",
+      show: true,
+      value: "Type",
+      sort: trivialSort
+    },
+    {
+      key: "duration",
+      /* we assume that we don't need all info in "radio mode" and try to save space */
+      show: !radio,
+      value: "Duration",
+      sort: trivialSort
+    },
+    {
+      key: "preview",
+      show: true,
+      value: "Preview",
+      sort: false
+    },
+    {
+      key: "link",
+      show: !radio,
+      value: "Link",
+      sort: false
+    },
+    {
+      key: "userId",
+      show: showChatCols,
+      value: "User\u00a0ID",
+      sort: trivialSort
+    },
+    {
+      key: "boardId",
+      show: showChatCols,
+      value: "Board\u00a0ID",
+      sort: trivialSort
+    },
+    {
+      key: "nodeId",
+      show: showChatCols,
+      value: "Node\u00a0ID",
+      sort: trivialSort
+    },
+    {
+      key: "createdAt",
+      show: true,
+      value: "Created\u00a0at",
+      sort: dateSort
+    }
   ];
 
   let rows = [];
@@ -74,23 +136,36 @@
   $: {
     rowsFiltered = rows
       .filter(m => searchFunction(m, searchQuery))
-    //console.log(rows, rowsFiltered)
   }
 
-  let selectedRowIds = [value?.value];
-  $: {
-    //console.log(selectedRowIds[0])
-    value = {
-      value: selectedRowIds[0],
-      type: "mediaFile"
-    }
-    //console.log(value)
+  let selectedRowIds = (value && value.value) ? [value.value] : []
+
+  /* have to use this clunky, explicit two-way data-flow,
+   * construct of update/selected to get around weird issues
+   * of either missed updates or infinited update loops
+   * (which happen with $ reactivity and regular bind)
+   * root cause: we can't normally two-bind the value 
+   * because it has to be wrapped into an array-of-ids for the DataTable,
+   * and { value: …, type: … } for the dispatch.
+   * i'm sure better solutions exist.
+   * see https://stackoverflow.com/q/72407572/629238
+   */
+
+  export let update = newValue => {
+    selectedRowIds = [newValue?.value]
   }
 
-  const removeRow = (row)=> {
-    if(confirm("permanently delete mediafile?")) {
-      InterkitClient.call('mediafile.delete', {key: row.meta.key, projectId})   
-    }
+  $: dispatch('selected', {
+    value: selectedRowIds[0],
+    type: 'mediaFile'
+  })
+
+  const batchDelete = () => {
+    selectedRowIds.forEach(key => {
+      InterkitClient.call('mediafile.delete', { key, projectId })
+    })
+    selectedRowIds = []
+    dataTableToolbarBatchActionsActive = false
   }
 
   const createdAtdateTimeFormatLocaleOptions = {
@@ -105,40 +180,82 @@
   }
   const createdAtdateTimeFormat = new Intl.DateTimeFormat('de-DE', createdAtdateTimeFormatLocaleOptions)
 
-  let pagination = {
-    pageSize: 10,
-    page: 1
-  }
-  
+  export let pageSize = 10
+  let page = 1
+
+  const dataTableOverheadHeight = 0 +
+    48 + // header of outer UI
+    40 + // tabs: Project | User generated
+    16 + // tabpanel padding = 1rem
+    100 + // upload drop zone including margins
+    32 + // DataTable search
+    48 + // DataTable thead = 1 row height
+    40 + // DataTable tfoot
+    24   // potential horizontal scrollbar + buffer
+
+  let dataTableToolbarBatchActionsActive = false
+  let openShowHideColumns = false
+
 </script>
 
 {#if rows}
 
   <div class="MediaFileListTableContainer">
+    <!-- TODO get f4f4f4 from carbon -->
     <DataTable
+      style={`
+        background: #f4f4f4;
+        /* = pageSize * row + search/actions + thead + data table padding-top */
+        min-height: ${(pageSize || 0) * 48 + 32 + 48 + 2}px;
+      `}
       sortable
+      selectable={!radio}
+      batchSelection={!radio}
+      {sortKey}
+      {sortDirection}
       {radio}
       bind:selectedRowIds
-      pageSize={pagination.pageSize}
-      page={pagination.page}
-      {headers}
+      {pageSize}
+      {page}
+      headers={headers.filter(_ => _.show)}
       rows={rowsFiltered}
       >
 
-      <Toolbar>
+      <Toolbar size="sm">
         <ToolbarContent>
           <ToolbarSearch bind:value={searchQuery}/>
+          <ToolbarMenu>
+            <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
+              toggle columns…
+            </ToolbarMenuItem>
+          </ToolbarMenu>
         </ToolbarContent>
+        {#if !radio}
+          <ToolbarBatchActions
+            bind:active={dataTableToolbarBatchActionsActive}
+            on:cancel={(evt) => {
+              // do not clear selection after cancel
+              evt.preventDefault()
+              dataTableToolbarBatchActionsActive = false
+            }}
+            formatTotalSelected={num => `${num}\u00a0file${num > 1 ? 's' : ''}`}
+            >
+            <Button
+              size="small"
+              icon={TrashCan}
+              on:click={batchDelete}
+              iconDescription="delete"
+              tooltipPosition="left"
+              >
+              delete
+            </Button>
+          </ToolbarBatchActions>
+        {/if}
       </Toolbar>
 
       <span slot="cell" let:row let:cell>
-        {#if cell.key === 'overflow'}
-            {#if row.name != "empty"}
-              <OverflowMenu style="float: right" flipped>
-                <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
-                <OverflowMenuItem on:click={()=>{alert(row.meta?.key)}} text="show key" />
-              </OverflowMenu>
-            {/if}
+        {#if cell.key === 'key'}
+          <span title={row.meta?.key} class="cell__1line">{row.meta?.key}</span>
         {:else if cell.key === 'name'}
           <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'type' && cell.value}
@@ -158,12 +275,24 @@
         {:else}{cell.value || ""}{/if}
       </span>
 
+      <svelte:fragment slot="cell-header" let:header>
+        <div
+          title={header.value}
+          style="max-width: 100%; overflow: hidden; text-overflow: ellipsis"
+          >
+          {header.value}
+        </div>
+      </svelte:fragment>
+
     </DataTable>
-    <Pagination
-      bind:pageSize={pagination.pageSize}
-      bind:page={pagination.page}
+    <!-- we assume that in "radio" mode we're in a container that wouldn't like auto-height (like a Modal) -->
+    <DataTablePaginationAutofit
+      bind:pageSize
+      bind:page
       totalItems={rows.length}
-      pageSizes={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+      overheadHeight={dataTableOverheadHeight}
+      rowHeight={48}
+      pageSizeAuto={!radio}
       />
   </div>
 
@@ -171,14 +300,18 @@
   loading...
 {/if}
 
-<style>
+<Modal
+  bind:open={openShowHideColumns}
+  modalHeading="Show/hide columns"
+  passiveModal
+  primaryButtonText="Done"
+  >
+  {#each headers as h, i}
+    <Checkbox bind:checked={h.show} labelText={h.value} />
+  {/each}
+</Modal>
 
-  .cell__1line {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+<style>
 
   .MediaFileListTableContainer :global(table) {
     table-layout: fixed; /* make text-overflow work + improve layout, hackily */
@@ -188,7 +321,8 @@
     min-width: 2em; /* table-layout fixed makes button disappear :( */
   }
 
-  .MediaFileListTableContainer :global(td > span) {
+  .MediaFileListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
   }
+
 </style>

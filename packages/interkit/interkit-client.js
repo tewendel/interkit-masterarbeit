@@ -46,6 +46,8 @@ let sheetSub;
 
 // can probably be deprecated - used to make sure last subcription is closed
 let subscriptionCounter = {};
+// a list of subscriptions that are currently active
+let subscriptions = [];
 
 let globalStores = {};
 let globalMethods = {};
@@ -285,27 +287,27 @@ const checkForUpdates = async () => {
     return false;   
 }
 
-/*
-  col: the meteor collection 
-  pub: the meteor publication to subscribe to
-  pubArgs: an object with arguments for the subscription - projectId is added from config
-  cFilter: a filter function to narrow down the results
-  single: track a single document or an array
-  columnMap: column keys for conversion into more convenient objects
+/**
 
-  returns {
-    data // a svelte store
-  }
-
-  -> components should not use this directly but use getRowSubStore (see below)
+Returns a svelte store based on a Meteor subscription.
+@async
+@function getSub
+@param {Object} col - The Meteor collection.
+@param {string} pub - The Meteor publication to subscribe to.
+@param {Object} [pubArgs={}] - An object with arguments for the subscription. projectId is added from config.
+@param {function} [cFilter=(a) => true] - A filter function to narrow down the results.
+@param {boolean} [single=false] - Track a single document or an array.
+@param {Object} columnMap - Column keys for conversion into more convenient objects.
+@param {string} autoUnsubscribeKey - If set, the subscription will be automatically unsubscribed when a new subscription with the same key comes in. This is useful when you intend to resubscribe with changed arguments.
+@return {Object} Returns an object containing a svelte store named 'data'.
+@example
+// Components should not use this directly but use getRowSubStore (see below)
+@note
+// Important notice: simpleDDP internally groups all messages from the same collection but different subscriptions into the same storage
 */
 
-/*
-  important notice: simpleDDP internally groups all messages from the same collection but different subscriptions into the same storage
-*/
+const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, columnMap, autoUnsubscribeKey) => {
 
-const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, columnMap) => {
-  
   // setup the store
   let sub = {};
   sub.data = writable([]); // save svelte store under data
@@ -386,16 +388,41 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       subscriptionCounter[pub] -= 1
       //console.log("reduced subscriptionCounter", pub, subscriptionCounter[pub])
     }
+
+    // remove the subscription from the subscriptions array
+    subscriptions = subscriptions.filter(s => s != sub)
+    console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
+
+    sub.reactiveCollection.stop()
     
     if(subscriptionCounter[pub] == 0) {
       console.log("stopping subscription to", pub)
+      await sub.sub.stop()
       await sub.sub.remove()
     }
 
-    sub.reactiveCollection.stop()
   } 
 
   sub.status = "subscribed";
+
+  subscriptions.push(sub);
+  console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
+
+  if(autoUnsubscribeKey) {
+    const autoUnsubscribeId = `${autoUnsubscribeKey}-${col}-${pub}`;
+    
+    // save the autoUnsubscribeId to the subscription
+    sub.autoUnsubscribeId = autoUnsubscribeId;
+  
+    // if we have an autoUnsubscribeKey, we need to check if we have a subscription with the same key and stop it
+  
+    subscriptions.forEach(s => {
+      if(s.autoUnsubscribeId == autoUnsubscribeId && s != sub) {
+        console.log("InterkitClient: stopping subscription automatically, autoUnsubscribeKey found: ", autoUnsubscribeKey)
+        s.stop();
+      }
+    })
+  }
 
   return sub;
 }

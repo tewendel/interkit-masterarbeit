@@ -96,3 +96,16 @@ if (Meteor.isServer && Messages._driver.mongo._oplogHandle) {
 } else {
   console.log('oplog is NOT enabled !!');
 }
+
+// create indexes for full text search
+Meteor.startup(() => {
+  Messages.createIndex({ 
+    "payload.options.label": "text", 
+    "payload.text": "text", 
+    "channel_key": "text", 
+    "sender": "text", 
+    "recipients": "text"
+  }, {
+    default_language: "none"
+  })
+});

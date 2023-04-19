@@ -60,7 +60,8 @@
 <style>
 
   :global(.CodeMirror) {
-    height: 500px !important;
+    /* height: 500px !important; */
+    height: 100%;
   }
 
 </style>

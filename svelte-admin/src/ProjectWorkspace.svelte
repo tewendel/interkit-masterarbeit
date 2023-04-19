@@ -13,17 +13,15 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import SecondaryTabsContent from "./SecondaryTabsContent.svelte";
 
   export let projectId
   export let tab
   export let currentProject
+  export let updatePreviewUserAuth
   
   let selected
-  let repoNotice
   let editorFilesKey = "init"
 
-  
   let previewUserId
   let previewUserAuth
 
@@ -35,12 +33,6 @@
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
   })
 
-  $: {
-    const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
-    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
-  }
-
-  let messagesListNotification
   let scheduledeventsListNotification
 
   onDestroy(() => {
@@ -50,108 +42,91 @@
 
 </script>
 
-{#if $currentProject}
-  <div class="__ProjectWorkspace panes">
-    <div class="left-pane">
-      
-      <!-- start -->
-      <div class:active={!tab}>
-        <h2 style="margin: 0.5em;">
-        Welcome to project {projectId}
-        </h2>
-      </div>
-
-      <!-- sheets -->
-      <div class:active={tab == 'sheets' }>
-        <Sheets {projectId}/>
-      </div>
-      
-      <!-- media -->
-      <div class:active={tab == 'media' }>
-        <MediaManager {projectId} />
-      </div>
-      
-      <!-- components -->
-      <div class:active={tab == 'components'}>
-        <BlocklyEditor {projectId} open={true}/>
-      </div>
-      
-      <!-- nodes -->
-      <!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
-      <div style="height: 100%; max-height: 70vh" class:active={tab == 'story'}>
-        <NodeEditor
-        on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
-        {projectId}
-        {previewUserId}
-        />
-      </div>
-      
-      <!-- project -->
-      <div class:active={tab == 'project'}>
-        <ProjectEditor {projectId} {currentProject} />
-      </div>
-      
-      <!-- users -->
-      <div class:active={tab == 'users'}>
-        <UsersManager
-        {projectId}
-        {previewUserId}
-        updatePreviewUserAuth={(data)=>previewUserAuth = data}
-        moveToBoardId={nodeEditorBoardId}
-        moveToNodeId={nodeEditorNodeId}
-        />
-      </div>
-      
-      <!-- messages -->
-      <div class:active={tab == 'messages'}>
-        <MessagesManager
-        {projectId}
-        bind:notification={messagesListNotification}
-        />
-      </div>
-      
-      <!-- scheduler -->
-      <div class:active={tab == 'schedule'}>
-        <ScheduledeventsManager
-        {projectId}
-        bind:notification={scheduledeventsListNotification}
-        />
-      </div>
-      
-      <!-- repository -->
-      <div class:active={tab == 'repository'}>
-        <RepositoryTab {projectId} {currentProject} />
-      </div>
-
-    </div>
-
-    <SecondaryTabsContent {projectId} {currentProject} {previewUserAuth}/>
-    
+<!-- start -->
+<div class="scrollable padding" class:active={!tab}>
+  <div class="ProjectDashboard">
+  <h1>
+  Welcome to project {projectId}
+  </h1>
+  Navigate using the menu in the header
   </div>
-{:else}
-  loading...
-{/if}
+</div>
 
+<!-- sheets -->
+<div class="scrollable" class:active={tab == 'sheets' }>
+  <Sheets {projectId}/>
+</div>
+
+<!-- media -->
+<div class="scrollable" class:active={tab == 'media' }>
+  <MediaManager {projectId} />
+</div>
+
+<!-- components -->
+<div class:active={tab == 'components'}>
+  <BlocklyEditor {projectId} open={true}/>
+</div>
+
+<!-- nodes -->
+<!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+<div style="height: 100%;" class:active={tab == 'story'}>
+  <NodeEditor
+  on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
+  {projectId}
+  {previewUserId}
+  />
+</div>
+
+<!-- project -->
+<div class="scrollable padding" class:active={tab == 'project'}>
+  <ProjectEditor {projectId} {currentProject} />
+</div>
+
+<!-- users -->
+<div class="scrollable" class:active={tab == 'users'}>
+  <UsersManager
+  {projectId}
+  {previewUserId}
+  {updatePreviewUserAuth}
+  moveToBoardId={nodeEditorBoardId}
+  moveToNodeId={nodeEditorNodeId}
+  />
+</div>
+
+<!-- messages -->
+<div class="scrollable" class:active={tab == 'messages'}>
+  <MessagesManager
+    {projectId}
+  />
+</div>
+
+<!-- scheduler -->
+<div class="scrollable" class:active={tab == 'schedule'}>
+  <ScheduledeventsManager
+  {projectId}
+  bind:notification={scheduledeventsListNotification}
+  />
+</div>
+
+<!-- repository -->
+<div class="scrollable" class:active={tab == 'repository'}>
+  <RepositoryTab {projectId} {currentProject} />
+</div>
 
 <style>
 
   h1 {
     margin-bottom: 10px;
   }
-  .panes {
-    display: flex;
-    height: 100%;
-  }
-  .left-pane {
-    flex: 1;
-    /*overflow-x: auto;*/
+
+  .scrollable {
+    overflow-x: auto;
+    overflow-y: auto;
   }
 
-  .left-pane > div.active {
-    display: block;
-    flex:1;
+  .padding {
+    padding: 1rem;
   }
-  .left-pane > div:not(.active) {
-    display: none;
-  }
+
 </style>
+
