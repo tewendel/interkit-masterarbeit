@@ -56,7 +56,7 @@
 
 {#if toolbox}
 
-  <div class="container">
+  <div class="blockly-picker-container">
 
     <Accordion size="sm">
     {#each children as category}
@@ -77,8 +77,14 @@
 {/if}
 
 <style>
-  .container {
+  .blockly-picker-container {
     padding: 5px;
   }
+
+  :global(.blockly-picker-container .bx--accordion__content) {
+    padding-right: 1rem;
+  }
+
+
 </style>
 
