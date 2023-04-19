@@ -5,6 +5,8 @@
 
   import { InterkitClient } from 'interkit'
 
+  import { docsGo } from './docs.js'
+
   import { isTwinish, minimalSnippet } from './twinish.js'
 
   import {
@@ -22,6 +24,7 @@
 
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
+  import Help from 'carbon-icons-svelte/lib/Help.svelte'
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
   import Edit from 'carbon-icons-svelte/lib/Edit.svelte'
   import Save from 'carbon-icons-svelte/lib/Save.svelte'
@@ -881,15 +884,26 @@
   </svelte:fragment>
   <svelte:fragment slot="modalPanelRight">
     <div style="display: flex; flex-direction: column; height: 100%">
-    <Tabs
-      bind:selected={editorMode}
-      autoWidth={true}
-      > 
-      <Tab label="Strings" />
-      <Tab label="Handlers" />
-      <Tab label="Full" />
-      <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
-    </Tabs>
+      <div style="display: flex">
+        <Tabs
+          bind:selected={editorMode}
+          autoWidth={true}
+          >
+          <Tab label="Strings" />
+          <Tab label="Handlers" />
+          <Tab label="Full" />
+          <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
+        </Tabs>
+        <Button
+          style="margin-left: auto"
+          kind="ghost"
+          icon={Help}
+          on:click={() => docsGo('/guides/story_cheatsheet')}
+          size="small"
+          iconDescription="syntax cheatsheet"
+          tooltipAlignment="end"
+          />
+      </div>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
         <div style="overflow: auto; display: flex; flex-direction: column"><!-- wrapper for CodeMirror(s) -->

@@ -120,7 +120,11 @@
 {#if showTabsRight}
   <div class="tabs-preview" class:visible={$secondaryTabsVisible}>
 
-    <Tabs autoWidth on:change={changeSecondaryTab}>
+    <Tabs
+      autoWidth
+      selected={$secondaryTabIndex}
+      on:change={changeSecondaryTab}
+      >
       <!-- separator -->
       <span class="tab-separator"><span/></span>
     

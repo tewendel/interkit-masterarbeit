@@ -2,6 +2,8 @@
   import Sidebar from "../components/Sidebar.svelte";
   import {items} from "../content/sidebar.json.js"
 
+  import iframed from "$lib/iframed.js"
+
   import 'prismjs/themes/prism.css'
 
   //export const prerender = true;

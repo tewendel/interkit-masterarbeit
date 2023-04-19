@@ -7,7 +7,7 @@
   import { secondaryTabsVisible, secondaryTabIndex } from './admin.js'
 
   import Preview from './Preview.svelte'
-  import DocsBrowser from '../DocsBrowser.svelte'
+  import DocsBrowser from './DocsBrowser.svelte'
   import ProjectServerInfo from './ProjectServerInfo.svelte';
 
   export let projectId;
@@ -55,7 +55,7 @@
       </section>
     
       <section class:visible={$secondaryTabIndex == 1}>
-        <DocsBrowser/>
+        <DocsBrowser />
       </section>
     
       <section class:visible={$secondaryTabIndex == 2}>
