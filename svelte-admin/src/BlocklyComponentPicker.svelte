@@ -165,7 +165,6 @@
   }
 
   .navigation-accordion {
-    padding: 5px;
     margin-top: 1rem;
   }
 
