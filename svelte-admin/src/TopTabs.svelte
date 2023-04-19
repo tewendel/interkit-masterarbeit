@@ -74,8 +74,8 @@
           App
           <NotificationBadge count={0} />
         </Tab>
-        <Tab label="Daten" />
-        <Tab label="Medien" />
+        <Tab label="Data" />
+        <Tab label="Media" />
         <Tab label="Story" />
         <!-- disabled tab for when dropdown is active -->
         <Tab label="" disabled />
@@ -94,7 +94,7 @@
         let:item
         items={[
           { id: "more", text: "more", disabled: true },
-          { id: "project", text: "Projekt" },
+          { id: "project", text: "Project" },
           { id: "users", text: "Users" },
           { id: "messages", text: "Messages" },
           { id: "schedule", text: "Schedule" },
