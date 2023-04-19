@@ -130,8 +130,7 @@
 </Header>
 
 {#if $userId}
-  <!-- set transform: none; to allow modal to be position fixed -->
-  <Content style="padding:0;width:100%;transform:scale(1);height:var(--content-height);overflow:hidden;">  
+  <Content style="padding:0;width:100%;height:var(--content-height);overflow:hidden;">
 
     <Router {routes} on:routeLoaded={routeLoaded} />
 
