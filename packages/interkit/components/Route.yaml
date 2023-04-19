@@ -1,0 +1,10 @@
+  name: Route
+  colour: 100
+  fields: 
+    - type: string
+      name: path
+      defaultValue: /
+    - type: slot
+      name: default
+  toolboxCategory: Basics
+  
