@@ -3,6 +3,7 @@
   import { Accordion, AccordionItem, Button } from "carbon-components-svelte"; 
   import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
   import Help from "carbon-icons-svelte/lib/Help.svelte";
+  import Move from "carbon-icons-svelte/lib/Move.svelte";
   import { docsGo } from './docs.js'
 
   export let workspace;
@@ -106,33 +107,47 @@
     {/each}
     </Accordion>
 
+  
+    <div class="navigation-accordion">
+      <Accordion size="sm">
+        <AccordionItem title="Quick Nav">
+          {#if subtrees.length}
+            <ul>
+            {#each subtrees as subtree} 
+              <li>
+                <span title={subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')}>
+                  {subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')}
+                </span>
+                <div class="move-button">
+                  <Button
+                    kind="ghost"
+                    size="small"
+                    tooltipPosition="top"
+                    icon={Move}
+                    on:click={() => {panToSubtree(subtree)}}
+                    iconDescription="scroll canvas"
+                  />  
+                </div>
+              </li>
+            {/each}
+            </ul>
+          {:else}
+            <p>When you use BlocklySubTrees, they will appear here as shortcuts.</p>
+            <Button
+                kind="ghost"
+                size="small"
+                tooltipPosition="top"
+                icon={Help}
+                on:click={referenceHelp}
+                iconDescription="docs"
+              />
+          {/if}
+        </AccordionItem>    
+      </Accordion>
+    </div>
+
   </div>
 
-  <div class="navigation-accordion">
-    <Accordion size="sm">
-      <AccordionItem title="SubTrees">
-        {#if subtrees.length}
-          <ul>
-          {#each subtrees as subtree} 
-            <li on:click={() => {panToSubtree(subtree)}}>{
-              subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')
-            }</li>
-          {/each}
-          </ul>
-        {:else}
-          <p>When you use BlocklySubTrees, they will appear here as shortcuts.</p>
-          <Button
-              kind="ghost"
-              size="small"
-              tooltipPosition="top"
-              icon={Help}
-              on:click={referenceHelp}
-              iconDescription="docs"
-            />
-        {/if}
-      </AccordionItem>    
-    </Accordion>
-  </div>
 
   
 
@@ -157,13 +172,28 @@
     color: #999;
   }
 
-  .navigation-accordion li {
-    padding: 5px;
-  }
-
   .navigation-accordion li:hover {
     cursor: pointer;
   }
+
+  .navigation-accordion li {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .navigation-accordion li span {
+    flex: 0.9;
+    align-self: center;
+    overflow: hidden;
+    padding: 2px;
+    text-overflow: "...";
+  }
+
+  .navigation-accordion li .move-button {
+    flex: 0.1;
+  }
+
+
 
   
 
