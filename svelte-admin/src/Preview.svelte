@@ -176,6 +176,7 @@
     icon={Settings}
     on:click={() => { showSettingsModal = true }}
     iconDescription="Settings…"
+    tooltipPosition="top"
     />
   <Button
     kind="ghost"
@@ -183,6 +184,7 @@
     icon={CopyLink}
     on:click={() => { showShareModal = true }}
     iconDescription="Share…"
+    tooltipPosition="top"
     />
   <Button
     kind="ghost"
@@ -190,6 +192,7 @@
     icon={Reset}
     on:click={() => reload(true)}
     iconDescription="Reset"
+    tooltipPosition="top"
     />
   <Button
     kind="tertiary"
