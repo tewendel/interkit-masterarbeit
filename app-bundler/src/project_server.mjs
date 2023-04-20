@@ -39,8 +39,10 @@ async function ensureProjectServers(projects) {
       const server = servers.find(s => s.projectId === projectId)
       if (!server) {
         if (project.projectServer) {
-          // setup & start project server
-          startServer(projectId)
+          // setup & start project server if state is running or init
+          if (("running", "init").includes(project.projectServer?.status)) {
+            startServer(projectId)
+          }
         } else {
           // initalize project server
           console.log(`initializing project server for project ${projectId}`)
@@ -115,7 +117,7 @@ async function startServer(projectId) {
     }
     servers.push(newServer)
   } else {
-    if (server.proc) {
+    if (server?.proc?.stdin) {
       server.proc.stdin.write('rs');
       console.warn(`projectServer ${projectId} restart`)
     }

@@ -21,6 +21,10 @@ const { PushNotifications } = Plugins;
 const enableHeartbeat = false
 const heartbeatDelay = 10000 // milliseconds
 
+const isPushNotificationsAvailable = () => {
+  return Capacitor.isPluginAvailable('PushNotifications');
+}
+
 const addListeners = async () => {
   await PushNotifications.addListener('registration', token => {
     console.info('Registration token', token);
@@ -104,5 +108,6 @@ export {
   getDeliveredNotifications,
   removeAllDeliveredNotifications,
   enableHeartbeat,
-  startHeartbeat
+  startHeartbeat,
+  isPushNotificationsAvailable
 }

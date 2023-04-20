@@ -1,0 +1,43 @@
+/* 
+  how to use custom theme: 
+  https: //github.com/carbon-design-system/carbon/blob/acead26eeb6f15ec6d39970e4af08aa23ee48cdc/examples/custom-theme/src/index.scss
+
+  .... implement with (npm install @carbon/themes)
+  @use '@carbon/themes/scss/themes' as *;
+  @use '@carbon/themes' with ($theme: $g100);
+
+  ... or like this?
+  @use '@carbon/themes';
+
+  How the colors work in Carbon: 
+  https://carbondesignsystem.com/guidelines/color/usage/
+
+  ... and how to use them: https://github.com/carbon-design-system/carbon/tree/main/packages/themes
+
+  use carbon colors (need to npm install @carbon/colors):
+  @use '@carbon/colors' as *;
+
+  // this one lets you access the variables from the theme
+  @use '@carbon/styles/scss/theme';
+
+  ... how to use it: https://github.com/carbon-design-system/carbon/tree/main/packages/styles
+*/
+
+/* include a theme */
+// We avoid scss here because it takes very long to compile.
+// We don't have to access any variables here anyway.
+// In case we might need scss here in the future,
+// investigate whether node-sass or embedded sass became usable.
+// https://github.com/vitejs/vite/issues/7140
+// https://github.com/vitejs/vite/discussions/6817#discussioncomment-3333742
+@import "carbon-components-svelte/css/white.css";
+//@import "carbon-components-svelte/css/g90.scss";
+
+$header-height: 3rem;
+// see https://github.com/carbon-design-system/carbon/blob/main/packages/styles/scss/components/ui-shell/header/_header.scss
+
+:root {
+  --header-height: #{$header-height};
+  --content-height: calc(100vh - #{$header-height});
+  --sidebarCollapsedWidth: 3rem;
+}

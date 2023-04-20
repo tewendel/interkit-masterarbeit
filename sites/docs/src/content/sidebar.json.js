@@ -44,6 +44,14 @@ export const items = [
 			{
 				title: 'Setup Raspberry Player',
 				path: '/guides/raspi_setup'
+			},
+			{
+				title: 'Migrate app to vite',
+				path: '/guides/migrate_to_vite'
+			},
+			{
+				title: 'Story programming cheatsheet',
+				path: '/guides/story_cheatsheet'
 			}
 		]
 	},

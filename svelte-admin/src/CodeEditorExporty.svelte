@@ -12,6 +12,7 @@
   let blocks = []
 
   const split = code => {
+    if (typeof code !== 'string') return []
     let ret = code.split(/((?:\n?[ \t]*\}[^\}]*)?export const[^\{]+\{[ \t]*\n*)/m)
     const last = ret.pop()
     const lastBracket = last.lastIndexOf('}')
@@ -32,7 +33,7 @@
 
 <div class="root">
   {#if !blocks || blocks.length === 0}
-    no blocks detected, please use a different editor mode
+    <p>no blocks detected, please use a different editor mode</p>
   {:else}
     {#each blocks as block, i}
       {#if i % 2 === 0 && i > 0}
@@ -49,10 +50,6 @@
 
 <style>
 
-  .root {
-    padding: 0 1em;
-  }
-
   .block {
     font-family: monospace;
     white-space: pre-wrap;
@@ -63,6 +60,11 @@
 
   .root :global(.CodeMirror) {
     height: 250px !important;
+  }
+
+  p {
+    margin: 1em 0;
+    padding: 0 1em;
   }
 
 </style>

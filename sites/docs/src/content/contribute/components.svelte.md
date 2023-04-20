@@ -24,6 +24,11 @@ Eeach component consists of two files:
 - `ComponentName.svelte` - a svelte component
 - `ComponentName.yaml` - definitions for the component editor
 
+## Documentation
+
+- add a doc entry at `content/components/ComponentName.md`
+- add a preview image (shown in the component picker inside the authoring system) to the docs repository at `static/images/component_previews/ComponentName.png`
+
 ## Example
 
 You can find this example for a custom project component in `src/components/ProjectComponentExample.svelte`

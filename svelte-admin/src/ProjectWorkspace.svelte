@@ -1,9 +1,10 @@
 <script>
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import { onDestroy } from 'svelte';
+
   import WorkArea from './WorkArea.svelte';
   import Sheets from './Sheets.svelte'
   import ComponentEditor from './ComponentEditor.svelte'
-  import Preview from './Preview.svelte'
   import BlocklyEditor from './BlocklyEditor.svelte'
   import RepositoryTab from "./RepositoryTab.svelte"
   import MediaManager from "./MediaManager.svelte"
@@ -12,18 +13,14 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
-  import { InterkitClient } from 'interkit'
-
 
   export let projectId
+  export let tab
   export let currentProject
+  export let updatePreviewUserAuth
   
   let selected
-  let repoNotice
   let editorFilesKey = "init"
-
-  let rightPaneHidden = false;
-  const toggleRightPane = () => rightPaneHidden = !rightPaneHidden;
 
   let previewUserId
   let previewUserAuth
@@ -31,126 +28,105 @@
   let nodeEditorBoardId
   let nodeEditorNodeId
 
-  window.addEventListener('message', evt => {
+  let messageListener = window.addEventListener('message', evt => {
     // console.log('received postMessage from iframe', evt, evt.data)
     if (evt.data && evt.data.userId) previewUserId = evt.data.userId
   })
 
-  $: {
-    const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
-    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
-  }
-
-  let messagesListNotification
   let scheduledeventsListNotification
+
+  onDestroy(() => {
+    console.log("destroying ProjectWorkspace")
+    window.removeEventListener('message', messageListener)
+  });
 
 </script>
 
-{#if $currentProject}
-  <div class="panes">
-    <div class="left-pane">
-      <Tabs type="container" bind:selected>
-        <Tab label="Database" />
-        <Tab label="Media" />
-        <Tab label="Components" />
-        <Tab label="Chat" />
-        <Tab label="Project" />
-        <Tab label="Users" />
-        <Tab label={`${messagesListNotification ? '‼️ ' : ''}Messages`} />
-        <Tab label={'Schedule' + (scheduledeventsListNotification ? ` (${scheduledeventsListNotification})` : '')} />
-        <Tab label={ "Repository " + repoNotice } />
-        <div slot="content" class="content">
-          <TabContent>
-            <Sheets {projectId}/>
-          </TabContent>
-          <TabContent>
-            <MediaManager {projectId} />
-          </TabContent>
-          <TabContent>
-            <BlocklyEditor {projectId} open={selected === 2}/>
-          </TabContent>
-          <TabContent>
-            <NodeEditor
-              on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
-              {projectId}
-              {previewUserId}
-              />
-          </TabContent>
-          <TabContent>
-            <ProjectEditor {projectId} {currentProject} />
-          </TabContent>
-          <TabContent>
-            <UsersManager
-              {projectId}
-              {previewUserId}
-              updatePreviewUserAuth={(data)=>previewUserAuth = data}
-              moveToBoardId={nodeEditorBoardId}
-              moveToNodeId={nodeEditorNodeId}
-              />
-          </TabContent>
-          <TabContent>
-            <MessagesManager
-              {projectId}
-              bind:notification={messagesListNotification}
-              />
-          </TabContent>
-          <TabContent>
-            <ScheduledeventsManager
-              {projectId}
-              bind:notification={scheduledeventsListNotification}
-              />
-          </TabContent>
-          <TabContent>
-            <RepositoryTab {projectId} {currentProject} open={selected === 3}/>
-          </TabContent>
-          
-        </div>
-      </Tabs>
-    </div>
-    {#if rightPaneHidden}
-      <button class="toggle-right" on:click={toggleRightPane}>show preview</button>
-    {/if}
-    <div class="right-pane" class:hidden={rightPaneHidden}>
-        <button on:click={toggleRightPane}>hide preview</button>
-        <Preview {projectId} {currentProject} {previewUserAuth}/>
-    </div>
+<!-- start -->
+<div class="scrollable padding" class:active={!tab}>
+  <div class="ProjectDashboard">
+  <h1>
+  Welcome to project {projectId}
+  </h1>
+  Navigate using the menu in the header
   </div>
-{:else}
-  loading...
-{/if}
+</div>
 
+<!-- sheets -->
+<div class="scrollable" class:active={tab == 'sheets' }>
+  <Sheets {projectId}/>
+</div>
+
+<!-- media -->
+<div class="scrollable" class:active={tab == 'media' }>
+  <MediaManager {projectId} />
+</div>
+
+<!-- components -->
+<div class:active={tab == 'components'}>
+  <BlocklyEditor {projectId} open={true}/>
+</div>
+
+<!-- nodes -->
+<!-- FIXME height/max-height will have to be set to something like calc(100vh - var(--interkitadmin-header-height)) -->
+<div style="height: 100%;" class:active={tab == 'story'}>
+  <NodeEditor
+  on:nodeselected={(evt) => { nodeEditorBoardId = evt.detail.boardId; nodeEditorNodeId = evt.detail.nodeId }}
+  {projectId}
+  {previewUserId}
+  />
+</div>
+
+<!-- project -->
+<div class="scrollable padding" class:active={tab == 'project'}>
+  <ProjectEditor {projectId} {currentProject} />
+</div>
+
+<!-- users -->
+<div class="scrollable" class:active={tab == 'users'}>
+  <UsersManager
+  {projectId}
+  {previewUserId}
+  {updatePreviewUserAuth}
+  moveToBoardId={nodeEditorBoardId}
+  moveToNodeId={nodeEditorNodeId}
+  />
+</div>
+
+<!-- messages -->
+<div class="scrollable" class:active={tab == 'messages'}>
+  <MessagesManager
+    {projectId}
+  />
+</div>
+
+<!-- scheduler -->
+<div class="scrollable" class:active={tab == 'schedule'}>
+  <ScheduledeventsManager
+  {projectId}
+  bind:notification={scheduledeventsListNotification}
+  />
+</div>
+
+<!-- repository -->
+<div class="scrollable" class:active={tab == 'repository'}>
+  <RepositoryTab {projectId} {currentProject} />
+</div>
 
 <style>
 
   h1 {
     margin-bottom: 10px;
   }
-  .panes {
-    display: flex;
-    height: 100%;
-  }
-  .left-pane {
-    flex: 1;
+
+  .scrollable {
     overflow-x: auto;
+    overflow-y: auto;
   }
 
-  .right-pane {
-    flex: 0.5;
-    min-width: 320px;
-    max-width: 550px;
+  .padding {
+    padding: 1rem;
   }
 
-  .toggle-right {
-    position: fixed;
-    right: 50px;
-    top: 50px;
-  }
-
-  div.hidden {
-    display: none;
-  }
-
-  .content {
-    height: 100%;
-  }
 </style>
+

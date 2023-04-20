@@ -1,5 +1,4 @@
-import pkg from 'geolib';
-const { getDistance } = pkg;
+import { getDistance } from 'geolib';
 
 const callWithDelay = async (server, method, methodParams, options) => {
   try {

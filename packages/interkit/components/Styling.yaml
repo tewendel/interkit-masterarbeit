@@ -9,41 +9,43 @@ fields:
   - name: googleFont2
     type: string
     defaultValue: Inter:wght@300;400;500
-  - name: colorText
-    type: string
-    defaultValue: "##32332E"
-  - name: colorTextHeadline
-    type: string
-    defaultValue: "##32332E"
-  - name: colorTextButtonPrimary
-    type: string
-    defaultValue: "white"
-  - name: colorBackground
-    type: string
-    defaultValue: "white"
-  - name: colorBackgroundHighlight
-    type: string,
-    defaultValue: "#F0F6F6"
-  - name: fontFamilyText
-    type: string
-    defaultValue: "Inter"
-  - name: fontFamilyHeadline
-    type: string
-    defaultValue: "Inter"
-  - name: borderRadius
-    type: string
-    defaultValue: "16px"
-  - name: borderRadiusButton
-    type: string
-    defaultValue: "16px"
-  - name: borderWidth
-    type: string
-    defaultValue: "1px"
-  - name: boxShadow
-    type: string
-    defaultValue: "none"
-  - name: distanceScaleFactor
-    type: string
-    defaultValue: "1.0"
+  - type: extraProps
+    props:
+    - name: colorText
+      type: color
+      defaultValue: "#32332E"
+    - name: colorTextHeadline
+      type: color
+      defaultValue: "#32332E"
+    - name: colorTextButtonPrimary
+      type: color
+      defaultValue: "white"
+    - name: colorBackground
+      type: color
+      defaultValue: "white"
+    - name: colorBackgroundHighlight
+      type: color
+      defaultValue: "#F0F6F6"
+    - name: fontFamilyText
+      type: string
+      defaultValue: "Inter"
+    - name: fontFamilyHeadline
+      type: string
+      defaultValue: "Inter"
+    - name: borderRadius
+      type: string
+      defaultValue: "16px"
+    - name: borderRadiusButton
+      type: string
+      defaultValue: "16px"
+    - name: borderWidth
+      type: string
+      defaultValue: "1px"
+    - name: boxShadow
+      type: string
+      defaultValue: "none"
+    - name: distanceScaleFactor
+      type: string
+      defaultValue: "1.0"
 toolboxCategory: Layout
 

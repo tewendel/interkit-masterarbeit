@@ -10,9 +10,10 @@
   import { onMount, setContext } from 'svelte'
   import { get, writable } from 'svelte/store';
 
+  import Router from './Router.svelte'
   import Styling from './Styling.svelte'
   import Overlay from './Overlay.svelte'
-
+  
   export let languages
   export let projectIdOverride
   languages = languages ? languages.split(',') : false
@@ -130,6 +131,10 @@
 
   (async () => {
     console.log('pushNotifications...')
+    if (!pushNotifications.isPushNotificationsAvailable()) {
+      console.log('pushNotifications not available (web)')
+      return
+    }
     pushNotifications.startHeartbeat()
     await pushNotifications.addListeners()
     await pushNotifications.registerNotifications()
@@ -177,8 +182,13 @@
 
   function receiveMessage(event) {
     switch (event.data?.command) {
+      /* This doesn't work in an iframe because the history is mixed/merged with the parent's
+       * it only happens to work if the last navigation took place within the iframe
+       * otherwise it "leaks" and the parent goes back, e.g. to about:blank or your home tab.
+       * To make this work, it would have to hook into svelte routing, which doesn't exist yet.
       case "go_back": history.back(); break;
       case "go_forward": history.forward(); break;
+      */
       case "clear_localStorage": localStorage.clear(); break;
       case "set_userAuth": if(event.data?.payload) { changeUser(event.data?.payload) }; break; // admin requests preview for a user
     }
@@ -190,54 +200,56 @@
 <svelte:window on:popstate={popState} on:message={receiveMessage} />
 
 <div class="AppBase Theming" id="Theming">
-  <Styling>
-    <Overlay
-      zIndex={0}
-      customStyle={
-        `bottom: ${showNetworkHint && !($$slots.networkHint) ? 'var(--network-hint-height)' : '0'};`
-      }
-      >
-      {#if $projectId && initComplete}
-        {#if $$slots.desktopFallback && $isDesktop}
-          <slot name="desktopFallback" />
-        {:else}
-          <slot ></slot>
-          <slot name="viewport"></slot>
-        {/if}
-      {:else}
-        <div class="Loading">
-          {#if $connectionIssue}
-            <p>{langT['$init_noconnection']}</p>
-            <p>
-              <button class="network-reload" on:click={retry}>{langT['$init_retryconnection']}</button><br/>
-              {langT['$init_retrycountdown'].replace('%s', retryCountdownCounter)}
-            </p>
+  <Router>
+    <Styling>
+      <Overlay
+        zIndex={0}
+        customStyle={
+          `bottom: ${showNetworkHint && !($$slots.networkHint) ? 'var(--network-hint-height)' : '0'};`
+        }
+        >
+        {#if $projectId && initComplete}
+          {#if $$slots.desktopFallback && $isDesktop}
+            <slot name="desktopFallback" />
           {:else}
-            <p class="static-loading-indicator">{langT['$init_loading']}</p>
+            <slot ></slot>
+            <slot name="viewport"></slot>
           {/if}
-        </div>
-      {/if}
-    </Overlay>
-    {#if showNetworkHint}
-      {#if $$slots.networkHint}
-        <div class="network-hint network-hint--custom">
-          <slot name="networkHint"></slot>
-        </div>
-      {:else}
-        <div class="network-hint network-hint--default">
-          <div class="network-hint-message">
-            {#if showNetworkHintNetwork}
-              {langT['$appbase_noconnection_network']}
-            {:else if showNetworkHintConnection}
-              {langT['$appbase_noconnection_server']}
+        {:else}
+          <div class="Loading">
+            {#if $connectionIssue}
+              <p>{langT['$init_noconnection']}</p>
+              <p>
+                <button class="network-reload" on:click={retry}>{langT['$init_retryconnection']}</button><br/>
+                {langT['$init_retrycountdown'].replace('%s', retryCountdownCounter)}
+              </p>
             {:else}
-              {langT['$appbase_noconnection_error']}
+              <p class="static-loading-indicator">{langT['$init_loading']}</p>
             {/if}
           </div>
-        </div>
+        {/if}
+      </Overlay>
+      {#if showNetworkHint}
+        {#if $$slots.networkHint}
+          <div class="network-hint network-hint--custom">
+            <slot name="networkHint"></slot>
+          </div>
+        {:else}
+          <div class="network-hint network-hint--default">
+            <div class="network-hint-message">
+              {#if showNetworkHintNetwork}
+                {langT['$appbase_noconnection_network']}
+              {:else if showNetworkHintConnection}
+                {langT['$appbase_noconnection_server']}
+              {:else}
+                {langT['$appbase_noconnection_error']}
+              {/if}
+            </div>
+          </div>
+        {/if}
       {/if}
-    {/if}
-  </Styling>
+    </Styling>
+  </Router>
 </div>
 
 <style>

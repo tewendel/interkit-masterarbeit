@@ -2,6 +2,7 @@
 
   import { executeTrigger } from '../actions'
   import { getContext } from 'svelte';
+  import { Link } from 'svelte-navigator';
 
   export let nopadding = false
   export let color = null;
@@ -11,7 +12,7 @@
   export let height = "fixed" // fixed | auto
   export let text = undefined;
   export let selected = false
-  export let clickType = 'payloadTrigger'; // link | linkTargetBlank
+  export let clickType = 'payloadTrigger'; // link | linkTargetBlank | path
   
   export let clickTrigger = null; // set this to execute a trigger on button click
   export let onClick = null // function to call on click if we are not using this with triggers
@@ -48,6 +49,19 @@
     <slot/>
     { text || "" }
   </span>
+{:else if clickType === 'path'}
+  <Link to={clickTrigger}>
+    <span 
+        class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
+        class:primary={type==='primary'}
+        class:selected={selected}
+        class:Button--selected={selected}
+        class:nopadding 
+      >
+      <slot/>
+      { text || "" }
+    </span>
+  </Link>
 {:else}
   <a
       href={clickTrigger}

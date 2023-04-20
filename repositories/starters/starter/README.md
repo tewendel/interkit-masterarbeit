@@ -11,17 +11,16 @@ based on [Svelte](https://svelte.dev)
 Install the dependencies...
 
 ```bash
-cd svelte-app
 npm install
 ```
 
-...then start [Rollup](https://rollupjs.org):
+...then start vite:
 
 ```bash
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. 
+Navigate to [localhost:8000](http://localhost:8000). You should see your app running. 
 
 #### Building and running in production mode
 

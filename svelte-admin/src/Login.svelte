@@ -1,6 +1,6 @@
 <script>
-  
   import { InterkitClient } from 'interkit'
+
   let username = "admin"
   let password = "password";
 
@@ -20,10 +20,14 @@
 </script>
 
 <form on:submit={submit}>  
-  <input bind:value={username} type="text"/><br/>
-  <input bind:value={password} type="password"/><br/>
+  <input bind:value={username} type="text" autocomplete="username"/><br/>
+  <input bind:value={password} type="password" autocomplete="current-password"/><br/>
   <input type="submit" value="login">
 </form>
+{#if error}
+  <div class="error">{error}</div>
+{/if}
+
 {#if error}
   <div class="error">{error}</div>
 {/if}

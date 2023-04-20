@@ -14,6 +14,7 @@ export const Projects = new Mongo.Collection('projects');
 - projectServer {
     status: <string>, // running, stopped, ...
     actionRequested: <string> // start, stop, null
+    cpu: <number>, // current cpu usage, 1 equals 100% of 1 core
     messages: [{
       type: <string>, // stdout, stderr, system, ...
       text: <string>,
@@ -95,3 +96,16 @@ if (Meteor.isServer && Messages._driver.mongo._oplogHandle) {
 } else {
   console.log('oplog is NOT enabled !!');
 }
+
+// create indexes for full text search
+Meteor.startup(() => {
+  Messages.createIndex({ 
+    "payload.options.label": "text", 
+    "payload.text": "text", 
+    "channel_key": "text", 
+    "sender": "text", 
+    "recipients": "text"
+  }, {
+    default_language: "none"
+  })
+});

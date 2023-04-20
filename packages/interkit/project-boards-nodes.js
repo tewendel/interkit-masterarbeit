@@ -1,6 +1,7 @@
 import * as path from 'path'
-import { existsSync, promises as fs } from 'fs'
+import { promises as fs } from 'fs'
 import beautify from 'js-beautify'
+import { idRE } from './project-regex.js'
 
 // handle non-node/browser environment so we can import this as a module there
 const REPOSITORIES_PATH = typeof process !== 'undefined' ? process.env.REPOSITORIES_PATH : ''
@@ -15,15 +16,6 @@ export const onArrive = async (api) => {\n // do something\n}\n
 export const onMessage = async (msg, api) => {\n  // do something\n}
 `
 const startNodeId = 'start'
-
-/* Should we run into incompatible browsers, the Unicode property escapes
- * can be expanded. See https://stackoverflow.com/a/37668315/629238
- * Affected: interkit admin on Safari <11.1, Chrome <64, FF <78
- * See https://caniuse.com/mdn-javascript_builtins_regexp_property_escapes
- */
-const idRE = '[\\p{L}\\p{Nd} -]+'
-// for slugification
-const negIdRE = '[^\\p{L}\\p{Nd} -]'
 
 const projectIdRE = /[\w\d]+/
 const idParamRE = new RegExp(idRE, 'u')
@@ -123,26 +115,52 @@ const api = {
   returns list of boards
 */
 lib.boards.list = (handle, params, req) => {
-  if (req?.query?.nodes) {
-    return fs.readdir(handle)
-      .then(allFiles => ({
-        boards: allFiles
-          .map(_ => _.match(boardFileNameRE)?.[1])
-          .filter(_ => _ !== undefined),
-        nodes: allFiles
-          .map(_ => {
+  switch (req?.query?.nodes) {
+    case 1:
+    case '1':
+    case 'flat':
+      return fs.readdir(handle)
+        .then(allFiles => ({
+          boards: allFiles
+            .map(_ => _.match(boardFileNameRE)?.[1])
+            .filter(_ => _ !== undefined),
+          nodes: allFiles
+            .map(_ => {
+              const m = _.match(nodeFileNameRE)
+              if (!m) return
+              return { boardId: m[1], nodeId: m[2] }
+            })
+            .filter(_ => _ !== undefined)
+        }))
+    case 'tree':
+      return fs.readdir(handle)
+        .then(allFiles => {
+          const orphanedNodes = []
+          const boards = allFiles
+            .map(_ => ({ id: _.match(boardFileNameRE)?.[1], nodes: [] }))
+            .filter(_ => _.id !== undefined)
+          allFiles.forEach(_ => {
             const m = _.match(nodeFileNameRE)
             if (!m) return
-            return { boardId: m[1], nodeId: m[2] }
+            const parentBoardId = m[1]
+            const nodeId = m[2]
+            const parentBoard = boards.find(b => b.id === parentBoardId) 
+            if (parentBoard) {
+              parentBoard.nodes.push({ id: nodeId })
+            } else {
+              orphanedNodes.push({ id: nodeId })
+            }
           })
+        if (orphanedNodes.length) boards['_orphaned'] = orphanedNodes
+        return boards
+      })
+    case 'boardsonly':
+    default:
+      return fs.readdir(handle)
+        .then(allFiles => allFiles
+          .map(_ => _.match(boardFileNameRE)?.[1])
           .filter(_ => _ !== undefined)
-      }))
-  } else {
-    return fs.readdir(handle)
-      .then(allFiles => allFiles
-        .map(_ => _.match(boardFileNameRE)?.[1])
-        .filter(_ => _ !== undefined)
-      )
+        )
   }
 }
 
@@ -286,6 +304,45 @@ api.boards.delete = expressify(
   }
 )
 
+// renames all files prefixed with boardId
+api.boards.renameBoard = expressify(
+  async (handle, params) => {
+    const { projectId, oldBoardId, newBoardId } = params
+    const handlePrefix = projectBoardPath(false, projectId)
+    const oldBoardHandle = projectBoardPath(false, projectId, oldBoardId)
+    let board
+    try {
+      board = await fs.readFile(oldBoardHandle)
+        .then(file => JSON.parse(file.toString()))
+      console.log('renameBoard: board before update', board)
+      board.name = newBoardId
+      console.log('renameBoard: board after update', board)
+      await fs.writeFile(oldBoardHandle, JSON.stringify(board))
+    } catch (err) {
+      console.warn('renameBoard: error updating board json', err)
+    }
+    const files = await fs.readdir(handlePrefix)
+      .then(allFiles => allFiles.filter(
+        file => file.substr(0, oldBoardId.length) === oldBoardId)
+      )
+    return Promise.all(
+      files.map(file => {
+        if (boardFileNameRE.test(file)) {
+          const newBoardHandle = projectBoardPath(false, projectId, newBoardId)
+          console.log('renameBoard: renaming board', oldBoardHandle, '->', newBoardHandle)
+          return fs.rename(oldBoardHandle, newBoardHandle)
+        }
+        const nodeId = file.match(nodeFileNameRE)?.[2]
+        if (!nodeId) return
+        const oldNodeHandle = projectBoardPath(false, projectId, oldBoardId, nodeId)
+        const newNodeHandle = projectBoardPath(false, projectId, newBoardId, nodeId)
+        console.log('renameBoard: renaming node', oldNodeHandle, '->', newNodeHandle)
+        return fs.rename(oldNodeHandle, newNodeHandle)
+      })
+    )
+  }
+)
+
 api.boards.renameNode = expressify(
   async (handle, params) => {
     const { projectId, boardId, oldNodeId, newNodeId } = params
@@ -346,6 +403,4 @@ api.nodes.delete = expressify(
 export {
   lib,
   api,
-  idRE,
-  negIdRE
 }

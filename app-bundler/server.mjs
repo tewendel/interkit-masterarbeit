@@ -74,13 +74,14 @@ app.get('/components/:projectId', get_yamls)
 
 // app.use(express.urlencoded({ extended: true }))
 
-const rawBodyParser = bodyParser.raw({ type: '*/*' })
+const rawBodyParser = bodyParser.raw({ type: '*/*', limit: '50mb' })
 app.get('/boards/:projectId', board_node_api.boards.list)
 app.post('/boards/:projectId/:boardId', board_node_api.boards.create)
 app.get('/boards/:projectId/:boardId', board_node_api.boards.read)
 app.put('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.update)
 app.patch('/boards/:projectId/:boardId', rawBodyParser, board_node_api.boards.patch)
 app.delete('/boards/:projectId/:boardId', board_node_api.boards.delete)
+app.put('/boards/:projectId/renameboard/:oldBoardId/:newBoardId', board_node_api.boards.renameBoard)
 app.put('/boards/:projectId/:boardId/renamenode/:oldNodeId/:newNodeId', board_node_api.boards.renameNode)
 
 // dont need it, build it into read board
@@ -89,7 +90,6 @@ app.post('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_
 app.get('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.create)
 app.put('/boards/:projectId/:boardId/nodes/:nodeId', rawBodyParser, board_node_api.nodes.update)
 app.delete('/boards/:projectId/:boardId/nodes/:nodeId', board_node_api.nodes.delete)
-
 
 // src files
 app.post('/src/:projectId/:filename', rawBodyParser, project_files_api.update)

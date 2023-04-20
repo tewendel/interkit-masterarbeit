@@ -4,22 +4,30 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
+
   import { 
     Tabs, 
     Tab, 
     TabContent, 
     Toggle,
     Button, 
+    ButtonSet,
+    Modal,
     AspectRatio,
-    Dropdown,
-    Grid,
-    Row,
-    Column,
-    Loading } from "carbon-components-svelte";
-  import ReloadIcon from "carbon-icons-svelte/lib/Play.svelte";
-  import ResetIcon from "carbon-icons-svelte/lib/Reset.svelte";
-  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft.svelte";
-  import ArrowRight from "carbon-icons-svelte/lib/ArrowRight.svelte";
+    Select,
+    SelectItem,
+    Loading,
+    TooltipDefinition
+  } from "carbon-components-svelte"
+
+  import ChevronLeft from "carbon-icons-svelte/lib/ChevronLeft.svelte"
+  import ChevronRight from "carbon-icons-svelte/lib/ChevronRight.svelte"
+  import Rotate from "carbon-icons-svelte/lib/Rotate.svelte"
+  import Settings from "carbon-icons-svelte/lib/Settings.svelte"
+  import CopyLink from "carbon-icons-svelte/lib/CopyLink.svelte"
+  import Reset from "carbon-icons-svelte/lib/Reset.svelte"
+  import Save from "carbon-icons-svelte/lib/Save.svelte"
+  import Launch from "carbon-icons-svelte/lib/Launch.svelte"
 
   export let projectId, previewURL = "", previewUserAuth;
   export let currentProject;
@@ -33,17 +41,18 @@
   let localConfig = true
   let iframeRef = null
 
+  $: window.__ifr = iframeRef
+
+  let showSettingsModal = false
+  let showShareModal = false
+
   let w, h
 
-  const dropdown_AR_items = [
-    { id: "4x3" },  
-    { id: "1x1" },
-    { id: "3x4" },
-    { id: "9x16" },
-  ];
-  let dropdown_AR_selectedIndex = 2;
+  const aspectRatios = '3x4 9x16 1x2 1x1 4x3'.split(' ')
 
-  onMount( async () => {
+  let aspectRatio = aspectRatios[0]
+
+  onMount(async () => {
     bundleServerURL = BundleServer.getServerURL()
     console.log(`BUNDLER_URL: ${bundleServerURL}`)
     BundleServer.initProject(projectId)
@@ -69,109 +78,210 @@
   // send new previewUserId to preview when it is changed in admin
   $: {
     console.log("PreviewUserAuth update", previewUserAuth)
-    if(iframeRef) {
-      iframeRef.contentWindow.postMessage({command: 'set_userAuth', payload: previewUserAuth}, '*')
+    if (iframeRef) {
+      ifrMsgCmd({ command: 'set_userAuth', payload: previewUserAuth })
     }
   }
 
+  const ifrMsgCmd = commandOrObj => {
+    if (typeof commandOrObj === 'string') {
+      iframeRef.contentWindow.postMessage({ command: commandOrObj }, '*') 
+    } else {
+      iframeRef.contentWindow.postMessage(commandOrObj, '*') 
+    }
+  }
+
+  const reload = withReset => {
+    if (withReset) {
+      ifrMsgCmd('clear_localStorage')
+      setTimeout(BundleServer.reloadPreview, 100)
+    } else {
+      BundleServer.reloadPreview()
+    }
+  }
+
+  const build = () => {
+    BundleServer.compileReloadPreview()
+  }
 
 </script>
-  <div style="float:right">
-    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_back'},'*')  } iconDescription="Browser back" icon={ArrowLeft} />
-    <Button kind="ghost" on:click={ () => iframeRef.contentWindow.postMessage({command: 'go_forward'},'*') } iconDescription="Browser forward" icon={ArrowRight} />
+
+<div style="display: flex; justify-content: space-between">
+  <ButtonSet>
+    <!-- Back/forward buttons do not work in the current state.
+      See interkit/components/AppBase for more info.
+    <Button
+      kind="ghost"
+      size="small"
+      icon={ChevronLeft}
+      on:click={() => ifrMsgCmd('go_back')}
+      iconDescription="Back (Preview History)"
+      />
+    <Button
+      kind="ghost"
+      size="small"
+      icon={ChevronRight}
+      on:click={() => ifrMsgCmd('go_forward')}
+      iconDescription="Forward (Preview History)"
+      />
+    -->
+    <Button
+      kind="ghost"
+      size="small"
+      icon={Rotate}
+      on:click={() => reload(false)}
+      iconDescription="Reload (Preview)"
+      tooltipAlignment="start"
+      tooltipPosition="top"
+      />
+  </ButtonSet>
+  <div style="align-self: center">
+    <TooltipDefinition
+      tooltipText="size of the preview window in device pixels"
+      >
+      {w}×{h}px
+    </TooltipDefinition>
   </div>
-  <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
-    <AspectRatio ratio={dropdown_AR_items[dropdown_AR_selectedIndex].id}>
-      {#if bundleServerURL && !$compileError}
-        {#key $buildHash}
-          <iframe 
-            title="embedded app preview" 
-            src={previewURL} 
-            allow="camera;microphone;geolocation;autoplay;accelerometer"
-            bind:this={iframeRef}
-            data-build-hash={$buildHash}>
-          </iframe><br>
-        {/key}
-      {/if}
-      {#if $bundleProcessing}
-        <div class="loader">
-          <Loading withOverlay={false}  />
-        </div>
-      {/if}
-    </AspectRatio>
-  </div>
-
-  <Button icon={ReloadIcon} on:click={BundleServer.reloadPreview}>reload</Button>
-  <Button kind="tertiary" icon={ResetIcon} on:click={() => { 
-    iframeRef.contentWindow.postMessage({command: 'clear_localStorage'},'*')
-    setTimeout(BundleServer.reloadPreview, 100)
-    }}>Reset & reload</Button>
-  
-  <br><br>
-  <Grid>
-    <Row>
-      <Column>
-        <Toggle size="sm" labelText="Apply Theme" toggled on:toggle={(e) => themed = e.detail.toggled}/>
-      </Column>
-      <Column>
-        <Toggle size="sm" labelText="Local Config" toggled on:toggle={(e) => localConfig = e.detail.toggled}/>
-      </Column>
-      <Column>
-        Frame: {w} x {h} px
-        <Dropdown
-          type="inline"
-          titleText="Aspect Ratio"
-          bind:selectedIndex={dropdown_AR_selectedIndex}
-          items={dropdown_AR_items}
-        />
-      </Column>
-    </Row>
-  </Grid>
-
-  <br>
-
-  <Button disabled={$bundleProcessing} kind={$bundleNotBuilt ? "primary" : "tertiary"} on:click={()=>BundleServer.compileReloadPreview()}>
-    {#if $bundleNotBuilt && $bundleProcessing}
-      Building&nbsp;&nbsp;<Loading withOverlay={false} small />
-    {:else}
-      Build App
-    {/if}  
-  </Button>
-
-    {#if !$bundleNotBuilt}
-      <Tabs>
-          <Tab label="web preview" />
-          <Tab label="app preview" />
-        <div slot="content">
-          <TabContent>
-            <div>
-              <a target="_blank" title={previewURL} href="{previewURL}">
-                  {#key previewURL}
-                    <QrCode value={previewURL} />
-                  {/key}
-                <br>
-                link to app
-              </a>
-            </div>          
-          </TabContent>
-          <TabContent>
-            <div>
-              <a target="_blank" href="{bundlezipURL}">
-                  {#key bundlezipURL}
-                    <QrCode value={bundlezipURL} />
-                  {/key}
-                <br>
-                bundle zip
-              </a>
-            </div>
-              
-          </TabContent>
-          
-        </div>
-      </Tabs>  
+  <Select inline bind:selected={aspectRatio} style="flex-grow: 0">
+    {#each aspectRatios as _}
+      <SelectItem value={_} text={_.replace('x', ':')} />
+    {/each}
+  </Select>
+</div>
+<div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
+  <AspectRatio ratio={aspectRatio}>
+    {#if bundleServerURL && !$compileError}
+      {#key $buildHash}
+        <iframe 
+          title="embedded app preview" 
+          src={previewURL} 
+          allow="camera;microphone;geolocation;autoplay;accelerometer"
+          bind:this={iframeRef}
+          data-build-hash={$buildHash}>
+        </iframe><br>
+      {/key}
     {/if}
-    
-  
+    {#if $bundleProcessing}
+      <div class="loader">
+        <Loading withOverlay={false}  />
+      </div>
+    {/if}
+  </AspectRatio>
+</div>
+
+<ButtonSet style="justify-content: flex-end">
+  <Button
+    kind="ghost"
+    size="small"
+    icon={Settings}
+    on:click={() => { showSettingsModal = true }}
+    iconDescription="Settings…"
+    tooltipPosition="top"
+    />
+  <Button
+    kind="ghost"
+    size="small"
+    icon={CopyLink}
+    on:click={() => { showShareModal = true }}
+    iconDescription="Share…"
+    tooltipPosition="top"
+    />
+  <Button
+    kind="ghost"
+    size="small"
+    icon={Reset}
+    on:click={() => reload(true)}
+    iconDescription="Reset"
+    tooltipPosition="top"
+    />
+  <Button
+    kind="tertiary"
+    size="small"
+    on:click={() => build()}
+    disabled={$bundleProcessing}
+    icon={Save}
+    >
+    Build
+  </Button>
+</ButtonSet>
+
+<Modal
+  bind:open={showSettingsModal}
+  modalHeading="Settings"
+  passiveModal
+  >
+  <!-- the margin prevents a stray vertical scrollbar -->
+  <div style="display: flex; margin-bottom: 1px">
+    <Toggle
+      size="sm"
+      labelText="Apply Theme"
+      toggled on:toggle={(e) => themed = e.detail.toggled}
+      />
+    <Toggle
+      size="sm"
+      labelText="Local Config"
+      toggled
+      on:toggle={(e) => localConfig = e.detail.toggled}
+      />
+  </div>
+</Modal>
+
+<Modal
+  bind:open={showShareModal}
+  modalHeading="Share…"
+  passiveModal
+  >
+  {#if $bundleNotBuilt}
+    <p>Please save/build first TODO</p>
+  {:else}
+    <Tabs>
+      <Tab label="Web preview" />
+      <Tab label="App preview" />
+      <div slot="content">
+        <TabContent>
+          <div>
+            <a
+              target="_blank"
+              title={previewURL}
+              href={previewURL}
+              style="text-decoration: none"
+              >
+              {#key previewURL}
+                <QrCode
+                  value={previewURL}
+                  padding={15}
+                  />
+              {/key}
+              <br/>
+              <Launch style="vertical-align: middle" />
+              <u>Link to app</u>
+            </a>
+          </div>
+        </TabContent>
+        <TabContent>
+          <div>
+            <a
+              download
+              title={bundlezipURL}
+              href={bundlezipURL}
+              style="text-decoration: none"
+              >
+              {#key bundlezipURL}
+                <QrCode
+                  value={bundlezipURL}
+                  padding={15}
+                  />
+              {/key}
+              <br>
+              <Launch style="vertical-align: middle" />
+              <u>Download bundle ZIP</u>
+            </a>
+          </div>
+        </TabContent>
+      </div>
+    </Tabs>  
+  {/if}
+</Modal>
   
 {#if $compileError}
   <div class="error">compile error: {@html convert.toHtml($compileError)}</div>

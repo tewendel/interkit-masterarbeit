@@ -60,7 +60,11 @@ Meteor.methods({
         $or: [{sender: userId}, {recipients: userId}], 
         seen: {"$nin": [userId]}
       }, 
-      {$push: {seen: userId}},
+      {
+        $push: {seen: userId},
+        // increase the seen count by 1
+        $inc: {seenCount: 1}
+      },
       {multi: true}
     );
   },
@@ -115,6 +119,7 @@ Meteor.methods({
         projectId,
         sender,
         recipients,
+        recipientsCount: recipients.length,
         channel_key,
         payload,
         origin,
@@ -156,7 +161,10 @@ Meteor.methods({
   'messages.see': async function ({ messageIds, seenByUserId }) {
     let result = await Messages.update(
       { _id: { $in: messageIds } },
-      { $push: { seen: seenByUserId } },
+      { 
+        $push: { seen: seenByUserId }, 
+        seenCount: { $size: '$seen' }
+      },
       { multi: true }
     )
     console.log('messages.see', { messageIds, seenByUserId, result })

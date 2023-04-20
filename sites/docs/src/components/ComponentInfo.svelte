@@ -18,7 +18,10 @@
 {/if}
 
 {#if code}
-<Highlight language={typescript} code={code} />
+<details>
+  <summary>see source code</summary>
+  <Highlight language={typescript} code={code} />
+</details>
 {:else}
   {#await import(`../../../../packages/interkit/components/${component}.svelte?raw`)}
     Loading component source...
@@ -28,3 +31,9 @@
     error: {error}
   {/await}
 {/if}
+
+<style>
+  details {
+    margin-bottom: 1em;
+  }
+</style>

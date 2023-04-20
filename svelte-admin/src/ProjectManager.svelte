@@ -1,15 +1,10 @@
-<script context="module">
-  import { writable } from 'svelte/store';
-  export let currentProjectName = writable(null);
-  export let currentProjectServerStatus = writable(null);
-</script>
-
 <script>
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
+  import SecondaryTabsContent from "./SecondaryTabsContent.svelte";
   import Logout from './Logout.svelte';
   import { 
     Grid,
@@ -17,6 +12,7 @@
     Column,
     UnorderedList,
     ListItem,
+    Loading,
     Tile,
     DataTable, Link,
     Button, TextInput, Form, Dropdown, FormGroup
@@ -24,14 +20,17 @@
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
+  import { currentProject } from './admin.js'
 
   export let params = {}
 
   let userId = InterkitClient.userId;
 
-  let sub;
+  let projectsListSub;
+
+  let previewUserAuth;
+
   let projects;
-  let currentProject;
   let newProjectName;
   let gitRepository;
   let newProjectTemplateIndex = 0
@@ -41,22 +40,13 @@
     { id: "list", text: "List example" },
   ]
 
-  const destroyProjectsSub = async () => {
-    if (sub) {
-      await sub.stop();
-      sub = null;
-    }
-  }
-
   const manageProjectsSub = async (projectId)=>{
     console.log("project subscription " + projectId)
-    destroyProjectsSub() // not sure if nessesary
     if (projectId) {
-      sub = await InterkitClient.getSub('projects', 'projects', null, (p)=>p.id == projectId, true)
-      currentProject = sub.data
+      if (projectsListSub) { projectsListSub.stop() }
     } else {
-      sub = await InterkitClient.getSub('projects', 'projects') 
-      projects = sub.data;
+      projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
+      projects = projectsListSub.data;
     }
   }
 
@@ -70,26 +60,20 @@
     newProjectName = null;
   }
 
-  onDestroy(destroyProjectsSub)
+  onDestroy(() => {
+    projectsListSub?.stop()
+  })
 
   $: currentProjectId = params.projectId
+  $: tab = params.tab
 
   $: manageProjectsSub(currentProjectId)
-
-  $: {
-    currentProjectName.set($currentProject ? $currentProject.name : null)
-  }
-  $: $currentProjectServerStatus = $currentProject?.projectServer?.status
 
   // add "id" for carbon table
   $: projectRows = projects ? $projects
     .map( p => ({...p, id: p.id, createdAt: getCreatedDate(p)})) : []
     .sort( (p1,p2) => p1-p2)
-
-  // get commit hash from current image tag
-  const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
-  const commitHash = matches ? matches[0] : null
-      
+    
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
       await InterkitClient.call("project.remove", {projectId})
@@ -114,105 +98,101 @@
 
 </script>
 
-<Grid style="padding:0;">
+<Grid style="padding:0; height:100%; overflow-x: hidden; overflow-y: auto; max-width: none;">
   <Row>
     <Column lg="{16}">
-    
-      {#if currentProjectId}
-        <ProjectWorkspace projectId={currentProjectId} {currentProject}/>
-      {:else}
-
-      
-      <DataTable
-        headers={[
-          { key: 'name', value: 'Projects' }, 
-          { key: 'createdAt', value: 'Created At' }, 
-          { key: 'action', value: 'Action', empty: true }
-        ]}
-        rows={projectRows}
-        size="tall"
-      >
-        <span slot="cell" let:row let:cell>
-          {#if cell.key === 'action'}
-            <div class="actions">
-              <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit /></span>
-              <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy /></span>
-              <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <TrashCan /></span>
-            </div>
+      <div class="__ProjectWorkspace panes">
+        <div class={`left-pane foo`} class:left-pane--has-current-project={!!currentProjectId}>
+          {#if !currentProjectId}
+            <DataTable
+              title="Your Projects"
+              stickyHeader
+              sortable
+              headers={[
+                { key: 'name', value: 'Projects' }, 
+                { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), }, 
+                { key: 'cpu', value: 'CPU usage' }, 
+                { key: 'action', value: 'Actions', sort: false }
+              ]}
+              rows={projectRows}
+              size="medium"
+              >
+              <span slot="cell" let:row let:cell>
+                {#if cell.key === 'action'}
+                  <div class="actions">
+                    <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit /></span>
+                    <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy /></span>
+                    <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <TrashCan /></span>
+                  </div>
+                {/if}
+                {#if cell.key === 'createdAt'}
+                  <span class="clickable soft">
+                    {#if row.createdAt}
+                      {row.createdAt.toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {:else}
+                      -
+                    {/if}
+                  </span>
+                {/if}
+                {#if cell.key === 'cpu'}
+                  {#if row.projectServer?.status === 'running' }
+                    { (100 * row.projectServer?.cpu).toFixed(2) }%
+                  {:else}
+                    {row.projectServer?.status}
+                  {/if}
+                {/if}
+                {#if cell.key === 'name'}
+                  <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
+                {/if}
+              </span>
+            </DataTable>
+            <Row>
+              <div class="project-create-form">
+                <Form>
+                  <FormGroup legendText="New project" style="display: flex">
+                    <TextInput 
+                      bind:value={newProjectName} 
+                      label="New project"
+                      placeholder="Enter project title..."
+                    />
+                    <!--Dropdown
+                      hideLabel
+                      inline
+                      titleText="Template"
+                      placeholder="Select template"
+                      bind:selectedIndex={newProjectTemplateIndex}
+                      items={newProjectItems}
+                    /-->
+                    <TextInput 
+                      bind:value={gitRepository} 
+                      label="Public Git Repository"
+                      placeholder="optional: Git Repository URL"
+                    />
+                    <Button 
+                      size="field"
+                      on:click={createProject}
+                      >
+                      create project
+                    </Button>
+                  </FormGroup>
+                </Form>
+              </div>
+            </Row>
+          {:else}
+            {#if $currentProject}
+              <ProjectWorkspace 
+                {tab} 
+                projectId={currentProjectId} 
+                {currentProject}
+                updatePreviewUserAuth={data => { previewUserAuth = data; }}
+                />
+            {:else}
+              <Loading style="background-color:white"/>
+            {/if}
           {/if}
-          {#if cell.key === 'createdAt'}
-            <span class="clickable soft">
-              {#if row.createdAt}
-                {row.createdAt.toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })}
-              {:else}
-                -
-              {/if}
-            </span>
-          {/if}
-          {#if cell.key === 'name'}
-            <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
-          {/if}
-        </span>
-      </DataTable>
-        
-        
-
-      {/if}
-
-    </Column>
-  </Row>
-
-  {#if !currentProjectId}
-  <Row>
-    <div class="project-create-form">
-      <Form>
-        <FormGroup legendText="New project" style="display: flex">
-          <TextInput 
-            bind:value={newProjectName} 
-            label="New project"
-            placeholder="Enter project title..."
-          />
-          <!--Dropdown
-            hideLabel
-            inline
-            titleText="Template"
-            placeholder="Select template"
-            bind:selectedIndex={newProjectTemplateIndex}
-            items={newProjectItems}
-          /-->
-          <TextInput 
-            bind:value={gitRepository} 
-            label="Public Git Repository"
-            placeholder="optional: Git Repository URL"
-          />
-          <Button 
-            size="field"
-            on:click={createProject}
-            >
-            create project
-          </Button>
-        </FormGroup>
-      </Form>
-    </div>
-  </Row>
-  {/if}
-  <Row>{#if $userId} 
-    <div class="logout">
-      <Logout/> 
-    </div>
-  {/if}
-  </Row>
-  <Row>
-    <Column>
-      <Tile>
-        Admin Version: {INTERKIT_IMAGE_TAG}
-        {#if commitHash}
-          &nbsp;&nbsp;
-          <a target="gitlab" href="https://gitlab.interkit.app/interkit/interkit-experiments/-/commits/{commitHash}/">
-            What's new?
-          </a>
-        {/if}
-      </Tile>
+        </div>
+        <SecondaryTabsContent projectId={currentProjectId} {currentProject} {previewUserAuth} />
+      </div>
     </Column>
   </Row>
 </Grid>
@@ -240,4 +220,25 @@
   .soft {
     color: grey;
   }
+
+  .panes {
+    display: flex;
+    height: 100%;
+    height: var(--content-height);
+  }
+  .left-pane {
+    flex: 1;
+    height: 100%;
+    /*overflow-x: auto;*/
+    overflow-y: hidden; /* avoid stray vertical scrollbar */
+  }
+  .left-pane--has-current-project > :global(div.active) {
+    display: block;
+    flex: 1;
+    height: 100%;
+  }
+  .left-pane--has-current-project > :global(div:not(.active)) {
+    display: none;
+  }
+
 </style>

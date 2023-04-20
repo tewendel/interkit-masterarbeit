@@ -1,7 +1,9 @@
 import { lib as boardNodeUtil } from './project-boards-nodes.js'
+import { cpuUsage } from 'node:process';
 
 const scheduledEventsProcessIntervalDelay = 2000
 const hookCronIntervalDelay = 10000
+const monitoringInterval = 10000
 
 let boardData;
 
@@ -404,6 +406,8 @@ const setupMessageHandling = async ({
   await subscribeScheduledEvents(server, projectId);
   await processEvents(server);
   setInterval(()=>{processEvents(server)}, scheduledEventsProcessIntervalDelay);
+
+  startMonitoring({server, projectId})
 }
 
 const setupHookHandling = async ({ hooks, projectApi, server, projectId }) => {
@@ -435,7 +439,36 @@ const setupHookHandling = async ({ hooks, projectApi, server, projectId }) => {
   }
 }
 
+let monitoring = {}
+
+async function startMonitoring({ server, projectId}) {
+  if (monitoring.active) return
+  console.log("starting monitoring")
+  monitoring.active = true
+  setInterval(async () => {
+    try {
+      const cpuUsageResult = cpuUsage()
+      if (cpuUsageResult) {
+        const cpu = cpuUsageResult.user + cpuUsageResult.system
+        if (monitoring.cpuTotal) {
+          monitoring.cpu = cpu - monitoring.cpuTotal
+        } else {
+          monitoring.cpu = cpu
+        }
+        monitoring.cpuTotal = cpu
+        const cpuRelative = monitoring.cpu / (monitoringInterval * 1000)
+        //console.log("relative cpu usage: " + cpuRelative * 100 + " %")
+        await server.call("project.projectServer.setCpu", { projectId, cpu: cpuRelative })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }, monitoringInterval )
+}
+
+
 export {
   setupMessageHandling,
-  setupHookHandling
+  setupHookHandling,
+  //startMonitoring
 }

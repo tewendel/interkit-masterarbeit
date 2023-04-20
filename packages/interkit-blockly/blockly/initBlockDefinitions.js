@@ -10,7 +10,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
       init: function() {
 
         this.appendDummyInput().appendField("<"+blockObject.name+">");
-        
+
         // setup fields  
         for(let field of blockObject.fields) {
           
@@ -44,13 +44,18 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
             this.appendDummyInput()
             .appendField(field.name)
             .appendField(new customFields.SheetColumnField(field), field.name);
-
+        
           } else if(field.type == "sheetId") {
 
             this.appendDummyInput()
             .appendField(field.name)
             .appendField(new customFields.SheetIdField(field), field.name);
+          
+          } else if(field.type == "extraProps") {
 
+            this.appendDummyInput()
+            .appendField(new customFields.ExtraPropsField(field.props), "extraProps");
+          
           } else {
             console.log("unsupported blockly field type", field.type);
           }
