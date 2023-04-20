@@ -45,9 +45,34 @@ You can find this example for a custom project component in `src/components/Proj
 
 ## List of supported attributes in `.yaml`
 
-- type
-  - slot
-  - options
-  - string
-  - ...
-- ...
+- `name` name of the file
+- `title` title for the editor
+- `colour` a number, see [Blockly colour picker](https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#block_colours)
+- `toolboxCategory` category for the editor
+- `slotCategory` (optional) name that corresponds to allowedChildren (it will only fit when mentioned there)
+- `fields` (optional) array of fields
+  - `name` name of the field
+  - `defaultValue` (optional) default value for the field
+  - `type` type of the field (type see below)
+
+### field types
+
+- `string`
+- `number`
+- `checkbox`
+- `options`
+- `sheetColumn`
+- `slot`
+
+### additional attributes for field type: options
+
+- `options`
+
+### additional attributes for field type: slot
+
+- `slotProps`
+- `allowedChildren`
+
+### additional attributes for field type: sheetColumn
+
+- `columnType`

@@ -39,6 +39,11 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
             this.appendDummyInput().appendField(field.name)
             this.appendStatementInput(field.name)
 
+            // Add the custom validator for the input connection if allowedChildren is defined
+            if (field.allowedChildren) {
+              this.getInput(field.name).connection.setCheck(field.allowedChildren);
+            }
+
           } else if(field.type == "sheetColumn") {
 
             this.appendDummyInput()
@@ -62,8 +67,8 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
         }
 
         // allow block to connect to other blocks top and below
-        this.setNextStatement(true)
-        this.setPreviousStatement(true)
+        this.setNextStatement(true);
+        this.setPreviousStatement(true, blockObject.slotCategory);
 
         // color
         this.setColour(blockObject.colour ? blockObject.colour : defaultBlockColour);
