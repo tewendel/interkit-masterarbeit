@@ -6,7 +6,9 @@
     ModalBody,
     ModalFooter,
     DataTable,
-    TextInput
+    TextInput,
+    Select, 
+    SelectItem,
   } from "carbon-components-svelte"
 
   import SheetColumnSelectForm from './SheetColumnSelectForm.svelte'
@@ -29,6 +31,7 @@
     name: v.name,
     value: v.value,
     type: v.type,
+    options: v.options,
     defaultValue: v.defaultValue
   }})
 
@@ -42,6 +45,7 @@
       name: r.name,
       value: r.value,
       type: r.type,
+      options: r.options,
     }})
   }
 
@@ -74,6 +78,16 @@
             {/if}
             {#if row.type == "sheetId"}
               <SheetIdSelectForm value={row.value} on:update={(e)=>updateCell(row, e.detail)}/>          
+            {/if}
+            {#if row.type == "options" && row?.options?.length}
+              <Select
+                on:change={(e) => updateCell(row, e.target.value)}
+                selected = {row.value}
+              >
+                {#each row.options as option}
+                  <SelectItem value={option} />
+                {/each}
+              </Select> 
             {/if}
           {:else}
             {cell.value}

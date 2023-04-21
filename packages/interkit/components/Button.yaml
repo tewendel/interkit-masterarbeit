@@ -4,37 +4,39 @@ colour: 300
 fields:
   - type: string
     name: text
-  - type: options
-    name: clickType
-    options:
-      - payloadTrigger
-      - link
-      - linkTargetBlank
-      - path
-    defaultValue: payloadTrigger
-  - type: string
-    name: clickTrigger
-  - type: options
-    name: type
-    options: 
-      - primary
-      - secondary
-      - ghost
-      - link
-      - spacer
-  - type: options
-    name: size
-    options: 
-      - medium
-      - small
-      - large
-    defaultValue: medium
-  - type: options
-    name: flex
-    options: 
-      - normal
-      - fill
-    defaultValue: normal
+  - type: extraProps
+    props:
+    - type: options
+      name: clickType
+      options:
+        - payloadTrigger
+        - link
+        - linkTargetBlank
+        - path
+      defaultValue: payloadTrigger
+    - type: string
+      name: clickTrigger
+    - type: options
+      name: type
+      options: 
+        - primary
+        - secondary
+        - ghost
+        - link
+        - spacer
+    - type: options
+      name: size
+      options: 
+        - medium
+        - small
+        - large
+      defaultValue: medium
+    - type: options
+      name: flex
+      options: 
+        - normal
+        - fill
+      defaultValue: normal
   - name: default
     type: slot
 toolboxCategory: Buttons
