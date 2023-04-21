@@ -58,7 +58,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   const extraProp = (block, prop) => {
     
     let blockJson = Blockly.serialization.blocks.save(block);
-    console.log("blockJson", blockJson) 
+    //console.log("blockJson", blockJson) 
 
     let value = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)?.value
     
@@ -125,7 +125,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
           code += "   " + attribute(block, field.name)
         }
         if(field.type == "extraProps") {
-          console.log("extraProps", field.props, block)
+          //console.log("extraProps", field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
           }

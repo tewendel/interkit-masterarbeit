@@ -218,7 +218,7 @@
   }
 
   const myUpdateFunction = async (event) => {
-    console.log("myUpdateFunction")
+    //console.log("myUpdateFunction")
     let code;
     try {
       code = javascriptGenerator.workspaceToCode(workspace);
@@ -283,7 +283,7 @@
 
     // save json
     let jsonString = JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2)
-    console.log("JSON blockly:", jsonString)
+    //console.log("JSON blockly:", jsonString)
     let jsonFile = {
       filename: blocklyJsonFile,
       content: jsonString
@@ -307,7 +307,7 @@
   }
 
   const resizeBlockly = (node) => {
-    console.log("resize")
+    //console.log("resize")
     if(workspace)
       Blockly.svgResize(workspace);
   }

@@ -42,7 +42,7 @@ import {
   <ModalBody style="height: 200px">
 
     {#if sheets}
-      <Select labelText="Pick a sheet" bind:selected={value.sheetKey} on:change={updateHumanReadable}>
+      <Select labelText="Pick a sheet" bind:selected={value.sheetKey} on:update={updateHumanReadable}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each sheets as sheet}
             <SelectItem value={sheet.key} text={sheet.name} />

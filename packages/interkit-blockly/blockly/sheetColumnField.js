@@ -38,7 +38,7 @@ export default (Blockly, update) => {
     }
 
     saveState() {
-      console.log("sheetColumnField.saveState")
+      //console.log("sheetColumnField.saveState")
       return {
         'value': this.getValue(),  // Value state
       };

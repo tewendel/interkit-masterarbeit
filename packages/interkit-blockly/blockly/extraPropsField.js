@@ -23,14 +23,14 @@ export default (Blockly, update) => {
     }
 
     saveState() {
-      console.log("saveState extraProps", this.props)
+      //console.log("saveState extraProps", this.props)
       return {
         'props': this.props, 
       };
     }
     
     loadState(state) {
-      console.log("loadState extraProps", state)
+      //console.log("loadState extraProps", state)
       this.props = state['props'].map(p => ({ ...this.props.find(tp => tp.name === p.name) , ...p}));
     }
 

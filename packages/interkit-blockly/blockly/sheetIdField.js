@@ -56,7 +56,7 @@ export default (Blockly, update) => {
     async showEditor_() {
       try {
         let value = await update(this.getValue(), this.name);
-        //console.log("got value", value)
+        console.log("got value", value)
         this.setValue(value);
         this.render_();
       } catch(e) {

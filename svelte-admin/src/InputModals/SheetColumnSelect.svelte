@@ -20,12 +20,6 @@ import {
   export let params;
 
   let sheets;
-  
-  onMount(async ()=>{
-    sheets = await InterkitClient.call("sheets.get", {projectId})         
-    console.log(sheets);
-  })
-
   let columns;
 
   const updateColumns = () => {
@@ -37,8 +31,14 @@ import {
     if(value.sheetKey == "empty") value.text = "";
   }
 
+  onMount(async ()=>{
+    sheets = await InterkitClient.call("sheets.get", {projectId})         
+    console.log("SheetColumnSelect mount with", sheets, value);
+    updateColumns();
+  })
+
   const updateHumanReadable = () => {
-    console.log(value)
+    console.log("updateHumanReadable", value)
     if(value.columnKey == "empty") {
       value.text = "";
     } else {
@@ -60,7 +60,7 @@ import {
   <ModalBody style="height: 200px">
 
     {#if sheets}
-      <Select labelText="First pick a sheet, then the column" bind:selected={value.sheetKey} on:change={updateColumns}>
+      <Select labelText="First pick a sheet, then the column" bind:selected={value.sheetKey} on:update={updateColumns}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each sheets as sheet}
             <SelectItem value={sheet.key} text={sheet.name} />
@@ -69,14 +69,14 @@ import {
     {/if}
 
     {#if columns}
-      <Select labelText="Columns" bind:selected={value.columnKey} on:change={updateHumanReadable}>
+      <Select labelText="Columns" bind:selected={value.columnKey} on:update={updateHumanReadable}>
           <SelectItem value="empty" text="nicht zugeordnet" />
           {#each columns as column}
             <SelectItem value={column.key} text={column.name} />
           {/each}
       </Select>
     {/if}
-     
+
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
     
