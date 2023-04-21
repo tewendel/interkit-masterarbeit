@@ -1,0 +1,15 @@
+name: AppBaseAdvanced
+title: App Base Advanced
+colour: 130
+fields:
+  - type: string
+    name: languages
+  - type: string
+    name: projectIdOverride
+  - type: slot
+    name: viewport
+  - type: slot
+    name: desktopFallback
+  - type: slot
+    name: networkHint
+toolboxCategory: AppBase

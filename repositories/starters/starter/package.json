@@ -11,7 +11,7 @@
     "dev": "vite"
   },
   "devDependencies": {
-    "svelte": "^3.44.0"
+    "svelte": "^3.58.0"
   },
   "dependencies": {
     "@capacitor-community/barcode-scanner": "^1.2.1",
