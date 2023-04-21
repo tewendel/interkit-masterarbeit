@@ -18,10 +18,10 @@
 
   $: {
     if(topBlocks) {
-      subtrees = topBlocks.filter(b => b.type == "BlocklySubTree" || b.type == "AppBase");
+      subtrees = topBlocks.filter(b => b.type == "Group" || b.type == "AppBase");
       subtrees.sort(function(a, b) {
-        const A = a.type == "AppBase" ? "AppBase" : a.getFieldValue('key') 
-        const B = b.type == "AppBase" ? "AppBase" : b.getFieldValue('key')
+        const A = a.type == "AppBase" ? "AppBase" : a.getFieldValue('name') 
+        const B = b.type == "AppBase" ? "AppBase" : b.getFieldValue('name')
         return (A < B) ? -1 : (A > B) ? 1 : 0;
       })
       //console.log("subtrees", subtrees)
@@ -115,8 +115,8 @@
             <ul>
             {#each subtrees as subtree} 
               <li>
-                <span title={subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')}>
-                  {subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('key')}
+                <span title={subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('name')}>
+                  {subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('name')}
                 </span>
                 <div class="move-button">
                   <Button
@@ -133,7 +133,7 @@
             </ul>
           {/if}
           {#if subtrees.length == 1}
-            <p>When you use BlocklySubTrees, they will appear here as shortcuts.</p>
+            <p>When you use Groups, they will appear here as shortcuts.</p>
             <Button
                 kind="ghost"
                 size="small"

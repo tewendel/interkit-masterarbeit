@@ -1,0 +1,6 @@
+name: GroupReference
+colour: 260
+fields:
+  - name: name
+    type: string
+toolboxCategory: Groups

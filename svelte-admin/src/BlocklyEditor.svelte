@@ -242,7 +242,7 @@
         const data = block.data ? JSON.parse(block.data) : {}
         if (data.origin) origin = data.origin
       } catch {}
-      if(block.type != "BlocklySubTree" && block.type != "SubtreeReference")
+      if(block.type != "Group" && block.type != "GroupReference")
         imports += `import ${block.type} from "${origin}/components/${block.type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler

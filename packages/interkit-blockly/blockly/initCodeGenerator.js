@@ -92,11 +92,11 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
   const getSubtreeStatements = (subtreeKey) => {
     //console.log("looking for subtree", subtreeKey)
-    const subtrees = workspace.getBlocksByType("BlocklySubTree")
+    const subtrees = workspace.getBlocksByType("Group")
     //console.log(subtrees)
     for(let subtree of subtrees) {
       //console.log(subtree.getFieldValue("key"))
-      if(subtree.getFieldValue("key") == subtreeKey) {        
+      if(subtree.getFieldValue("name") == subtreeKey) {        
          let code = javascriptGenerator.statementToCode(subtree, "blocks")
          //console.log("found with code", code)
          return code;
@@ -116,12 +116,12 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
       // special blockly control blocks
 
-      if(blockObject.name == "SubtreeReference") {
-        //console.log("found SubtreeReference")
-        return getSubtreeStatements(block.getFieldValue("key"))        
+      if(blockObject.name == "GroupReference") {
+        //console.log("found GroupReference")
+        return getSubtreeStatements(block.getFieldValue("name"))        
       }
 
-      if(blockObject.name == "BlocklySubTree") {
+      if(blockObject.name == "Group") {
         return ""
       }
       

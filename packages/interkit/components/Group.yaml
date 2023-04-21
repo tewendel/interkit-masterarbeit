@@ -1,8 +1,8 @@
-name: BlocklySubTree
+name: Group
 colour: 260
 fields:
-  - name: key
+  - name: name
     type: string
   - name: blocks 
     type: slot
-toolboxCategory: Blockly
+toolboxCategory: Groups

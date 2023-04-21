@@ -1,6 +1,0 @@
-name: SubtreeReference
-colour: 260
-fields:
-  - name: key
-    type: string
-toolboxCategory: Blockly
