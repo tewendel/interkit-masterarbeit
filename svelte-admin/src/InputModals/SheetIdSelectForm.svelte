@@ -14,12 +14,13 @@
   onMount(async ()=>{
     sheets = await InterkitClient.call("sheets.get", {projectId: $projectId})         
     console.log(sheets);
+    updateHumanReadable();
   })
 
   const updateHumanReadable = () => {
-    console.log(value)
     value.text = 
       sheets.find(s=>s.key == value.sheetKey)?.name
+    console.log("updateHumanReadable", value)
     
     dispatch("update", value);
   }

@@ -141,4 +141,4 @@
 
 </script>
 
-<slot name="DataConsumers"></slot>
+<slot/>

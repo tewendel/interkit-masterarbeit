@@ -1,7 +1,12 @@
-name: DataLoader
+name: DataRouteMulti
+colour: 100
 fields: 
-  - name: sheetKey
-    type: sheetId
+  - type: string
+    name: path
+    defaultValue: element
+  - type: sheetId
+    name: sheet
+    defaultValue: elements
   - type: extraProps
     props:
     - name: referenceElementStore
@@ -22,6 +27,7 @@ fields:
     - name: discoverProperty
       type: string
       defaultValue: discovered
-  - name: default
-    type: slot
-toolboxCategory: Data
+  - type: slot
+    name: default
+toolboxCategory: Routing
+  
