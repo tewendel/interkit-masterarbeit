@@ -91,13 +91,13 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   }
 
   const getSubtreeStatements = (subtreeKey) => {
-    //console.log("looking for subtree", subtreeKey)
+    console.log("looking for subtree", subtreeKey)
     const subtrees = workspace.getBlocksByType("Group")
-    //console.log(subtrees)
+    console.log(subtrees)
     for(let subtree of subtrees) {
       //console.log(subtree.getFieldValue("key"))
       if(subtree.getFieldValue("name") == subtreeKey) {        
-         let code = javascriptGenerator.statementToCode(subtree, "blocks")
+         let code = javascriptGenerator.statementToCode(subtree, "default")
          //console.log("found with code", code)
          return code;
       }

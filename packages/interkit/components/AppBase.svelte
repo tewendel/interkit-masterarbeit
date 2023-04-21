@@ -7,6 +7,6 @@
 <AppBaseAdvanced
   {languages}
 >
-  <slot name="viewport"></slot>
+  <slot/>
 </AppBaseAdvanced>
 

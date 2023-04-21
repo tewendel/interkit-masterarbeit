@@ -3,6 +3,6 @@ colour: 260
 fields:
   - name: name
     type: string
-  - name: blocks 
+  - name: default 
     type: slot
 toolboxCategory: Groups

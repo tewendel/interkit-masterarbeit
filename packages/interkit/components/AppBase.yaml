@@ -5,5 +5,5 @@ fields:
   - type: string
     name: languages
   - type: slot
-    name: viewport
+    name: default
 toolboxCategory: AppBase
