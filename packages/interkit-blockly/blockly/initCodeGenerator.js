@@ -58,10 +58,19 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   const extraProp = (block, prop) => {
     
     let blockJson = Blockly.serialization.blocks.save(block);
-    //console.log("blockJson", blockJson) 
+    //console.log("extraProp blockJson", blockJson) 
 
     let value = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)?.value
-    
+
+    // if value is an object with a text field (sheetColumn, sheetId), use that
+    if(typeof value == "object") {
+      if(value?.text) {
+        value = value.text
+      } else {
+        value = null;
+      }
+    }
+
     return value ? `${prop.name}="${value}"\n` : "";
   }
 

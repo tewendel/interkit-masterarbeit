@@ -34,7 +34,7 @@
     {/if}
 
     {#if configObj[key].type == "sheetColumn"}
-      <SheetColumnSelect {projectId} bind:sheetColumn={configObj[key].value}/>
+      <SheetColumnSelect bind:sheetColumn={configObj[key].value}/>
     {/if}
 
     {#if configObj[key].type == "boolean"}

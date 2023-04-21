@@ -106,7 +106,7 @@
     inputModalValue = currentProps; // this is bound to inputModal
     inputModalParams = { notice }
     openInputModal = "extraProps";
-    console.log("loading Modal for extraProps", inputModalValue)
+    //console.log("loading Modal for extraProps", inputModalValue)
 
     // returns Promise so that modal stays open until user clicks something
     return new Promise((resolve, reject) => {
