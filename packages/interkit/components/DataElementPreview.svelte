@@ -3,11 +3,12 @@
   import { util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
-  
-  export let element; // must be used with a prop (ElementList oder ElementProvider)
-  //console.log("contentElement_List with prop", element);
+
+  import { getContext } from 'svelte';
+  let element = getContext("element");
+  console.log("DataElementPreview got element from context", element)
   if(!element) {
-    alert("this needs an element prop, for example from ElementList or ElementProvider")
+    alert("DataElementPreview needs an element context, for example from DataList")
   }
   
   export let titleColumn

@@ -8,8 +8,6 @@ fields:
     type: checkbox
   - type: slot
     name: dataElement
-    slotProps:
-      - "element"
-  - type: "slot"
-    name: "emptyElement"
+  - type: slot
+    name: emptyElement
   

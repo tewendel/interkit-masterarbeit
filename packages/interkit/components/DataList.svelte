@@ -4,6 +4,7 @@
   import { executeTrigger } from '../actions'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import ContextProvider from './ContextProvider.svelte'
 
   // name of the trigger to activate on select
   export let selectTrigger
@@ -37,8 +38,14 @@
   {:else}
     <ul>
       {#each $elements as element}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <li class="item" on:click={()=>{onClick(element)}}>
-          <slot name="dataElement" element={{...element.row, size: "l"}}></slot>
+          <ContextProvider 
+            name="element" 
+            value={element.row}
+          >
+            <slot name="dataElement"></slot>
+          </ContextProvider>
           {#if showArrow}
             <span class="right-arrow"><Button type="link"><Icon type="arrow-right"/></Button></span>
           {/if}
