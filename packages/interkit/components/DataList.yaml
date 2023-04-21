@@ -2,10 +2,6 @@ name: DataList
 toolboxCategory: "Data"
 color: 230
 fields:
-  - name: selectTrigger
-    type: string
-  - name: showArrow
-    type: checkbox
   - type: slot
     name: dataElement
   - type: slot

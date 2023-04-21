@@ -1,17 +1,22 @@
 name: DataElementPreview
-fields: 
-  - name: titleColumn
-    type: sheetColumn
-    columnType: string
-    defaultValue: elements/title
-  - name: subtitleColumn
-    type: sheetColumn
-    columnType: string
-    defaultValue: elements/supertext
-  - name: subtitleTag
+fields:
+  - name: onSelectRoute
     type: string
-  - name: imageColumn
-    type: sheetColumn
-    columnType: mediaFile
-    defaultValue: elements/image
+    defaultValue: element
+  - type: extraProps  
+    props:
+    - name: titleColumn
+      type: sheetColumn
+      columnType: string
+      defaultValue: elements/title
+    - name: subtitleColumn
+      type: sheetColumn
+      columnType: string
+      defaultValue: elements/supertext
+    - name: subtitleTag
+      type: string
+    - name: imageColumn
+      type: sheetColumn
+      columnType: mediaFile
+      defaultValue: elements/image
 toolboxCategory: Data
