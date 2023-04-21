@@ -3,57 +3,62 @@
   import { util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
+  import LinkConditional from './LinkConditional.svelte';
 
   import { getContext } from 'svelte';
   let element = getContext("element");
-  console.log("DataElementPreview got element from context", element)
+  console.log("DataElementPreview got element store from context", $element)
   if(!element) {
     alert("DataElementPreview needs an element context, for example from DataList")
   }
+
+  export let onSelectRoute
   
   export let titleColumn
   export let subtitleColumn
   export let imageColumn
   
-  $: title = util.rowVal(element, titleColumn)
-  $: subtitle = util.rowVal(element, subtitleColumn)
-  $: imageRef = util.rowVal(element, imageColumn)
+  $: title = util.rowVal($element, titleColumn)
+  $: subtitle = util.rowVal($element, subtitleColumn)
+  $: imageRef = util.rowVal($element, imageColumn)
 
   export let subtitleTag // special Tag to show before subtitle
   
 </script>
 
-{#if element}
+{#if $element}
 
-  <section class={`ContentElement ContentElement_List container`}>
+  <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element.key}">
+    <section class={`ContentElement ContentElement_List container`}>
 
-    <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
-      <AspectRatio>
-        <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
-      </AspectRatio>
-    </figure>
-      
-    <div class="content">
-
-      {#key title}
-        <h3 class="title">
-          {title}
-        </h3>
-      {/key}
-
-      <h4>
-        {#if subtitleTag}
-          <span class="subtitleTag">{subtitleTag}</span>
-        {/if}
+      <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
+        <AspectRatio>
+          <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
+        </AspectRatio>
+      </figure>
         
-        {#if subtitle}
-          <span class="subtitle">{subtitle}</span>
-        {/if}
-      </h4>
+      <div class="content">
 
-    </div>
+        {#key title}
+          <h3 class="title">
+            {title}
+          </h3>
+        {/key}
 
-  </section>
+        <h4>
+          {#if subtitleTag}
+            <span class="subtitleTag">{subtitleTag}</span>
+          {/if}
+          
+          {#if subtitle}
+            <span class="subtitle">{subtitle}</span>
+          {/if}
+        </h4>
+
+      </div>
+
+    </section>
+  </LinkConditional>
 
 {/if}
 

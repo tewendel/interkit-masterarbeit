@@ -165,7 +165,7 @@ Meteor.methods({
     const rows = Rows.find({sheetKey: sheetKey, projectId}).fetch();
     return rows;
   },
- 
+
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
     console.log(rowKey, projectId, colKey, newVal);
     if(rowKey && projectId && colKey) {

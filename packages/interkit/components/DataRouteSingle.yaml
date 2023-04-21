@@ -1,0 +1,10 @@
+name: DataRouteSingle
+colour: 100
+fields: 
+  - type: string
+    name: path
+    defaultValue: element
+  - type: slot
+    name: default
+toolboxCategory: Routing
+  
