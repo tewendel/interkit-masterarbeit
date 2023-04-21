@@ -1,4 +1,4 @@
-name: ContentElement_List
+name: DataElementPreview
 fields: 
   - name: titleColumn
     type: sheetColumn
@@ -16,4 +16,4 @@ fields:
     defaultValue: elements/image
 hiddenProps: 
   - element
-toolboxCategory: Elements
+toolboxCategory: Data

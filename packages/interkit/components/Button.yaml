@@ -37,4 +37,4 @@ fields:
     defaultValue: normal
   - name: default
     type: slot
-toolboxCategory: Input
+toolboxCategory: Buttons

@@ -21,7 +21,7 @@
   
   import { onMount, onDestroy, setContext } from "svelte"
   import { get, writable } from "svelte/store"
-  import { InterkitClient, util } from "../"
+  import { InterkitClient, util } from ".."
 
   let unsubscribe;
   let unfilteredData;
@@ -141,4 +141,4 @@
 
 </script>
 
-<slot/>
+<slot name="DataConsumers"></slot>

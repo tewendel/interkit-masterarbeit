@@ -1,13 +1,13 @@
-name: ElementList
-toolboxCategory: "Lists"
+name: DataList
+toolboxCategory: "Data"
 color: 230
 fields:
   - name: selectTrigger
     type: string
-  - name: hideArrow
+  - name: showArrow
     type: checkbox
   - type: slot
-    name: contentElement
+    name: dataElement
     slotProps:
       - "element"
   - type: "slot"

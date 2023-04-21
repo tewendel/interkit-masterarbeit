@@ -1,6 +1,6 @@
 <script>
 
-  import { util } from '../'
+  import { util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   

@@ -1,5 +1,5 @@
 <script>
-  import { InterkitClient, util } from '../'
+  import { InterkitClient, util } from '..'
   import { onMount, getContext, onDestroy } from 'svelte'
   import { executeTrigger } from '../actions'
   import Button from './Button.svelte'
@@ -7,7 +7,7 @@
 
   // name of the trigger to activate on select
   export let selectTrigger
-  export let hideArrow = false; hideArrow = hideArrow == "TRUE" ? true : false;
+  export let showArrow = false; showArrow = showArrow == "TRUE" ? true : false;
   
   /*
     @example
@@ -38,8 +38,8 @@
     <ul>
       {#each $elements as element}
         <li class="item" on:click={()=>{onClick(element)}}>
-          <slot name="contentElement" element={{...element.row, size: "l"}}></slot>
-          {#if selectTrigger && !hideArrow}
+          <slot name="dataElement" element={{...element.row, size: "l"}}></slot>
+          {#if showArrow}
             <span class="right-arrow"><Button type="link"><Icon type="arrow-right"/></Button></span>
           {/if}
         </li>

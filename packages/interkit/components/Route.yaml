@@ -6,5 +6,5 @@
       defaultValue: /
     - type: slot
       name: default
-  toolboxCategory: Basics
+  toolboxCategory: Routing
   
