@@ -22,12 +22,11 @@
   let elements = elementsContext?.elements;
 
   const onClick = (element) => {
-
-    console.log("onClick", element)
-    
-    // also trigger the action, if set
-    if(selectTrigger)
+    // trigger the action, if set
+    if(selectTrigger) {
+      console.log("DataList onClick", element, selectTrigger)
       executeTrigger(selectTrigger, element.row)
+    }
   }
 
 </script>
