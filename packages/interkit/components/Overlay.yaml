@@ -2,10 +2,12 @@ name: Overlay
 title: Overlay
 colour: 100
 fields:
+  - type: extraProps
+    props:
+    - type: string
+      name: zIndex
+    - type: string
+      name: customStyle
   - type: slot
     name: default
-  - type: string
-    name: zIndex
-  - type: string
-    name: customStyle
 toolboxCategory: Layout
