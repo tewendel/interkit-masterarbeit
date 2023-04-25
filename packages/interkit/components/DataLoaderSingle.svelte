@@ -7,14 +7,29 @@
   export let sheetKey;
   export let rowKey;
 
-  const rowStore = writable(null)
-  setContext("element", rowStore)
+  let rows; // row sub store for the whole sheet
+  const rowStore = writable(null) // store to hold just the data for the row we want
+  setContext("element", rowStore) // put that store in an element context
   
-  onMount(async ()=>{
-    let row = await InterkitClient.call("row.get", {key: rowKey});
-    console.log("DataLoaderSingle", row)
-    rowStore.set(row)
+  // subscribe to the rows in that sheet
+  onMount(async () => {
+    rows = await InterkitClient.getRowSubStore(sheetKey)  
   })
+
+  // find the right row and update the store
+  const updateContent = async (rows) => {
+    console.log("updateContent DataLoaderSingle", rows)
+    let row;
+    if(rows) {
+      row = rows.find(r => r.key == rowKey);
+    }
+    rowStore.set(row);
+  }
+
+  // update the store when data changes
+  $: {
+    updateContent($rows)
+  }
 
 </script>
 
