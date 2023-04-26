@@ -1,6 +1,6 @@
 name: Overlay
 title: Overlay
-colour: 50
+colour: 140
 fields:
   - type: extraProps
     props:

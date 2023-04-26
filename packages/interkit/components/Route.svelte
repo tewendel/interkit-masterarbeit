@@ -4,21 +4,30 @@
   export let path = "";
   export let keepAlive;
   console.log("keepAlive", path, keepAlive)
-  
-  const match = useMatch(path);
 
+  let match; 
+  try {
+    match = useMatch(path);
+  } catch(e) {
+    console.log(e)
+  }
+  
 </script>
 
-<Route {path}>
-  {#if !keepAlive}
-    <slot />
-  {/if}
-</Route>
+{#if match}
 
-{#if keepAlive}
-  <div class="container" class:hide={!$match}>
-    <slot />
-  </div>
+  <Route {path}>
+    {#if !keepAlive}
+      <slot />
+    {/if}
+  </Route>
+
+  {#if keepAlive}
+    <div class="container" class:hide={!$match}>
+      <slot />
+    </div>
+  {/if}
+
 {/if}
 
 <style>

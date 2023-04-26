@@ -111,21 +111,23 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     return `${statements_name}`  
   }
 
-  const getSubtreeStatements = (subtreeKey) => {
-    //console.log("looking for subtree", subtreeKey)
-    const subtrees = workspace.getBlocksByType("Group")
-    //console.log(subtrees)
-    for(let subtree of subtrees) {
-      //console.log(subtree.getFieldValue("key"))
-      if(subtree.getFieldValue("name") == subtreeKey) {        
-         let code = javascriptGenerator.statementToCode(subtree, "default")
-         //console.log("found with code", code)
-         return code;
+  // helper for Group and Route references
+  const referencedBlockToCode = (types, field, key, method, slotName) => {
+    for(let type of types) {
+      //console.log("blockTypeToCode", type, field, key)
+      let blocks = workspace.getBlocksByType(type)
+      for(let block of blocks) {
+        if(block.getFieldValue(field) == key) {
+          let code;
+          if(method == "slot")
+            code = javascriptGenerator.statementToCode(block, slotName)
+          if(method == "block")
+            code = javascriptGenerator.blockToCode(block)
+          return code
+        }
       }
     }
-    return "";  
   }
-
   
   /* generate code generators from block definitions */
   console.log("initCodeGenerator");
@@ -139,7 +141,12 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
       if(blockObject.name == "GroupReference") {
         //console.log("found GroupReference")
-        return getSubtreeStatements(block.getFieldValue("name"))        
+        return referencedBlockToCode(["Group"], "name", block.getFieldValue("name"), "slot", "default")        
+      }
+
+      if(blockObject.name == "RouteReference") {
+        //console.log("found GroupReference")
+        return referencedBlockToCode(["Route", "DataRouteMulti", "DataRouteSingle"], "path", block.getFieldValue("path"), "block")        
       }
 
       if(blockObject.name == "Group") {
