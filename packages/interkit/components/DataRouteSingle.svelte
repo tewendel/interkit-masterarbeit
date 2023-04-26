@@ -8,7 +8,7 @@
   
 </script>
 
-<Route path={dynamicPath} let:params let:location>
+<Route path={dynamicPath} let:params>
   <DataLoaderSingle sheetKey={path} rowKey={params.key}>
     <slot/>
   </DataLoaderSingle>

@@ -4,6 +4,9 @@
     - type: string
       name: path
       defaultValue: /
+    - type: checkbox
+      name: keepAlive
+      defaultValue: FALSE
     - type: slot
       name: default
   toolboxCategory: Routing

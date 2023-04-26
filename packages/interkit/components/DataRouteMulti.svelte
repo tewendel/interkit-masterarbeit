@@ -1,9 +1,10 @@
 <script>
 
-  import { Route } from "svelte-navigator";
+  import Route from "./Route.svelte";
   import DataLoader from "./DataLoader.svelte"
   
   export let path;
+  export let keepAlive;
 
   // props for DataLoader
   export let sheet;
@@ -18,7 +19,7 @@
     
 </script>
 
-<Route path={path}>
+<Route path={path} {keepAlive}>
   <DataLoader 
     sheetKey = {sheet}
     {referenceElementStore} 

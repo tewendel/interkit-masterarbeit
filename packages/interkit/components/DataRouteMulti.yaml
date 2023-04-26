@@ -7,6 +7,9 @@ fields:
   - type: sheetId
     name: sheet
     defaultValue: elements
+  - type: checkbox
+    name: keepAlive
+    defaultValue: FALSE
   - type: extraProps
     props:
     - name: referenceElementStore
