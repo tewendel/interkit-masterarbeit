@@ -1,6 +1,6 @@
 name: TopBarShell
 toolboxCategory: Layout
-colour: 100
+colour: 140
 fields:
   - name: TopBar
     type: slot
