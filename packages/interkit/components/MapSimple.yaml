@@ -59,9 +59,10 @@ fields:
       name: singleElementContext
       defaultValue: false
     - type: string
-      name: style
+      name: tileLayer
+      defaultValue: https://tile.openstreetmap.org/{z}/{x}/{y}.png
     - type: string
-      name: apiKey
+      name: mapBoxGLStyle
     - type: string
       name: clickTrigger
     - type: string

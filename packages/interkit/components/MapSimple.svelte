@@ -32,9 +32,10 @@
   export let inline = false;
   export let disableControls = false;
   export let singleElementContext = false; // mode to retrieve element from context and show just that
-  export let style // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
-  export let apiKey 
-
+  
+  export let tileLayer // simple tilelyer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
+  
   export let closeButtonLabel = "Schließen"
   
   export let clickTrigger;
@@ -246,8 +247,8 @@
       {nearestElement}
       {singleElement}
       {disableControls}
-      {style}
-      {apiKey}
+      {tileLayer}
+      {mapBoxGLStyle}
       mapFocus={mapFocusProcessed}
       {permissionNotification}
       {enableGeolocationHint}

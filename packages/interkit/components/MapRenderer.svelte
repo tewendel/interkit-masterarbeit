@@ -120,12 +120,9 @@
   export let nearestElement;
   export let disableControls = false;
 
-  export let style;
+  export let tileLayer;
+  export let mapBoxGLStyle;  
   
-  const tileLayer = "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-  export let apiKey;
-  
-
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
 
@@ -368,16 +365,16 @@
       map.scrollWheelZoom.disable();
     }
 
-    if (apiKey) {
+    if (tileLayer) {
       // default interkit map style
       console.log("using tileLayer", tileLayer)
-      L.tileLayer(tileLayer + "?api_key=" + apiKey, {
+      L.tileLayer(tileLayer, {
         maxZoom: 20
       }).addTo(map);
     } else {
       L.maplibreGL({
         // attribution: 'TODO',
-        style: style,
+        style: mapBoxGLStyle,
       }).addTo(map);
     }
 

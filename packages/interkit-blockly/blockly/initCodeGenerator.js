@@ -4,6 +4,11 @@ const verbose = false
 
 export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
+
+  const escapeCurlyBrackets = (string) => {
+    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125")
+  }
+
   const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
     
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
@@ -51,7 +56,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       if(fieldType == "checkbox") {
         return `${attributeName}={${value == "TRUE" ? true : false}}\n`
       } else {
-        return `${attributeName}="${value}"\n`
+        return `${attributeName}="${escapeCurlyBrackets(value)}"\n`
       }
     }
     return "";
@@ -87,7 +92,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       return `${prop.name}={${value}}\n`;
     }
 
-    return value ? `${prop.name}="${value}"\n` : "";
+    return value ? `${prop.name}="${escapeCurlyBrackets(value)}"\n` : "";
   }
 
   const slot = (block, slotName, slotProp) => {

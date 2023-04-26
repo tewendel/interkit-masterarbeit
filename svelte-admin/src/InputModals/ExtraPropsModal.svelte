@@ -50,6 +50,13 @@
     }})
   }
 
+  const getValue = (row) => {
+    if(typeof row.value == "undefined") 
+      return row.defaultValue
+    else 
+      return row.value
+  }
+
 </script>
 
 <ComposedModal open
@@ -63,16 +70,16 @@
         <div style="padding:5px">
           {#if cell.key === "value"}
             {#if row.type == "string"}
-              <TextInput value={row.value || row.defaultValue} on:change={(e)=>{updateCell(row, e.detail)}}/>
+              <TextInput value={getValue(row)} on:change={(e)=>{updateCell(row, e.detail)}}/>
             {/if}
             {#if row.type == "number"}
-              <TextInput value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.detail)}}/>
+              <TextInput value={getValue(row)} on:input={(e)=>{updateCell(row, e.detail)}}/>
             {/if}
             {#if row.type == "color"}
-              <input type="color" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
+              <input type="color" value={getValue(row)} on:input={(e)=>{updateCell(row, e.target.value)}}>
             {/if}
             {#if row.type == "checkbox"}
-              <input type="checkbox" checked={row.value || row.defaultValue} on:change={(e)=>{updateCell(row, e.target.checked)}}>
+              <input type="checkbox" checked={getValue(row)} on:change={(e)=>{updateCell(row, e.target.checked)}}>
             {/if}
             {#if row.type == "sheetColumn"}
               <SheetColumnSelectForm value={row.value} on:update={(e)=>updateCell(row, e.detail)}/>          
