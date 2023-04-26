@@ -1,0 +1,70 @@
+name: MapSimple
+title: MapSimple
+fields:
+  - type: "string"
+    name: "defaultLocation"
+  - type: "sheetColumn"
+    name: "markerPositionsColumn"
+    columnType: "location"
+    defaultValue: "elements/position"
+  - type: "sheetColumn"
+    name: "customIconColumn"
+    columnType: "mediaFile"
+    defaultValue: "elements/mapMarkerIcon"
+  - type: "sheetColumn"
+    name: "markerLabelColumn"
+    columnType: "string"
+    defaultValue: "elements/markerLabel"
+  - type: "sheetColumn"
+    name: "markerTitleColumn"
+    columnType: "string"
+    defaultValue: "elements/markerTitle"
+  - type: string
+    name: checkedProperty
+    defaultValue: "checked"
+  - type: "string"
+    name: "secondaryPositionProperty"
+  - type: "sheetColumn"
+    name: "hideOnMapColumn"
+    columnType: "string"
+    defaultValue: "elements/hideOnMap"
+  - type: "string"
+    name: "permissionNotification"
+  - type: "string"
+    name: "enableGeolocationHint"
+  - type: string
+    name: mapId
+    defaultValue: map
+  - type: string
+    name: height
+    defaultValue: 100%
+  - type: checkbox
+    name: showControls
+    defaultValue: TRUE
+  - type: checkbox
+    name: showPopups
+    defaultValue: TRUE
+  - type: checkbox
+    name: inline
+    defaultValue: FALSE
+  - type: checkbox
+    name: nearestElementMode
+    defaultValue: FALSE
+  - type: checkbox
+    name: disableControls
+    defaultValue: FALSE
+  - type: checkbox
+    name: singleElementContext
+    defaultValue: FALSE
+  - type: string
+    name: style
+  - type: string
+    name: apiKey
+  - type: string
+    name: clickTrigger
+  - type: string
+    name: closeButtonLabel
+    defaultValue: "Schließen"
+  - type: "slot"
+    name: "element"  
+toolboxCategory: Map
