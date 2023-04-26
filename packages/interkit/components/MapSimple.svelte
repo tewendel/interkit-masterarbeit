@@ -25,13 +25,13 @@
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen.";
   export let enableGeolocationHint = "Bitte aktivieren Sie ihren Standort."
   export let height; // height of the container
-  export let showControls; // "TRUE" if we should show controls
-  export let showPopups; // "TRUE" if we should show popup on marker tap
+  export let showControls; // true if we should show controls
+  export let showPopups; // true if we should show popup on marker tap
   export let mapId; // id of the map
-  export let nearestElementMode = "FALSE"; // mode to show only the nearest element
-  export let inline = "FALSE";
-  export let disableControls = "FALSE";
-  export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
+  export let nearestElementMode = false; // mode to show only the nearest element
+  export let inline = false;
+  export let disableControls = false;
+  export let singleElementContext = false; // mode to retrieve element from context and show just that
   export let style // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
   export let apiKey 
 
@@ -146,7 +146,7 @@
       if(markerObjs_sorted.length) {
         nearestElement = markerObjs_sorted[0]
         // if nearestElementMode is set and we have a position, show only nearest element
-        if(nearestElementMode == "TRUE") {
+        if(nearestElementMode) {
           selectedData = [nearestElement]
         }
       }
@@ -172,7 +172,7 @@
   const markerClick = async (e) => {
     //console.log("marker clicked", e.target?.payload);
     
-    if(showPopups == "TRUE") {
+    if(showPopups) {
       selectedElement = {
         ...e.target?.payload?.elementRow,
         onPlay: () => {selectedElement = null}
@@ -213,7 +213,7 @@
   
 </script>
 
-  <div class="map-component-container" on:click={containerClick} class:inline="{inline == "TRUE"}">
+  <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
 
     {#if selectedElement}
       <div class="marker_popup" 

@@ -46,6 +46,7 @@
       value: r.value,
       type: r.type,
       options: r.options,
+      defaultValue: r.defaultValue
     }})
   }
 
@@ -70,7 +71,7 @@
             {#if row.type == "color"}
               <input type="color" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
             {/if}
-            {#if row.type == "boolean"}
+            {#if row.type == "checkbox"}
               <input type="checkbox" checked={row.value || row.defaultValue} on:change={(e)=>{updateCell(row, e.target.checked)}}>
             {/if}
             {#if row.type == "sheetColumn"}

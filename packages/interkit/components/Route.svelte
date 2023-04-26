@@ -2,7 +2,7 @@
   import { Route, useMatch } from "svelte-navigator";
   
   export let path = "";
-  export let keepAlive; keepAlive = keepAlive == "TRUE";
+  export let keepAlive;
   console.log("keepAlive", path, keepAlive)
   
   const match = useMatch(path);

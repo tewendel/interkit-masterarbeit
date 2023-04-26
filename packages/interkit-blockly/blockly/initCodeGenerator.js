@@ -1,13 +1,11 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
-import extraPropsField from "./extraPropsField";
-
-
 const verbose = false
 
 export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
-  const attribute = (block, attributeName, blocklyAttributeName) => {
+  const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
+    
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
     
     // if fieldValue is an object with value attribute, use that (eg special field sheetColumn)
@@ -43,11 +41,20 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
         }
       }
     } else {
-      console.log("attribute generator - warning, value not a string", { block, attributeName, value })
-      return "";
+      if(fieldType != "checkbox") {
+        console.log("attribute generator - warning, value not a string", { block, attributeName, value, fieldType })
+        return "";
+      }      
     }
 
-    return value ? `${attributeName}="${value}"\n` : "";
+    if(value) {
+      if(fieldType == "checkbox") {
+        return `${attributeName}={${value == "TRUE" ? true : false}}\n`
+      } else {
+        return `${attributeName}="${value}"\n`
+      }
+    }
+    return "";
   }
 
   const attributes = (block, attributeNames) => {
@@ -57,10 +64,15 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   // exract data from extraProps field and format as a prop
   const extraProp = (block, prop) => {
     
-    let blockJson = Blockly.serialization.blocks.save(block);
-    //console.log("extraProp blockJson", blockJson) 
+    let blockJson = Blockly.serialization.blocks.save(block);    
+    let jsonExtraProp = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)
+    
+    let value = jsonExtraProp?.value;
+    if(typeof value == "undefined" && typeof prop?.defaultValue != "undefined") {
+      value = jsonExtraProp?.defaultValue
+    }
 
-    let value = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)?.value
+    //console.log("extraProp", prop.name, value)
 
     // if value is an object with a text field (sheetColumn, sheetId), use that
     if(typeof value == "object") {
@@ -69,6 +81,10 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       } else {
         value = null;
       }
+    }
+
+    if(typeof value == "boolean") {
+      return `${prop.name}={${value}}\n`;
     }
 
     return value ? `${prop.name}="${value}"\n` : "";
@@ -131,13 +147,15 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       // props
       for(let field of blockObject.fields) {
         if(field.type != "slot" && field.type != "extraProps") {
-          code += "   " + attribute(block, field.name)
+          code += "   " + attribute(block, field.name, field.name, field.type)
         }
         if(field.type == "extraProps") {
           //console.log("extraProps", field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
+            //console.log(extraProp(block, prop));
           }
+
         }
       }
       if(blockObject.hiddenProps) {

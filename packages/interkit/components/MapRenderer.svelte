@@ -103,7 +103,7 @@
   export let permissionNotification;
   export let enableGeolocationHint;
   export let height; // height of the container
-  export let showControls; // "TRUE" if we should show controls
+  export let showControls; // true if we should show controls
   export let mapId; // id of the map
 
   export let markerData; // the markers to show
@@ -116,9 +116,9 @@
 
   export let defaultLocation; // where to center the map by default [lat, lng]
   
-  export let nearestElementMode = "FALSE";
+  export let nearestElementMode = false;
   export let nearestElement;
-  export let disableControls = "FALSE"
+  export let disableControls = false;
 
   export let style;
   
@@ -363,7 +363,7 @@
       map.panBy(qrContext?.mapOffset, {animate: false});
     }
 
-    if(disableControls == "TRUE") {
+    if(disableControls) {
       map.dragging.disable();
       map.scrollWheelZoom.disable();
     }
@@ -516,7 +516,7 @@
     </div> 
   {/if}
 
-  {#if showControls == "TRUE"}
+  {#if showControls}
     <div class="Map__Controls controls">
 
       <button class="Map__Controls__ZoomIn zoomIn">
