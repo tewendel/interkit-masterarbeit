@@ -3,11 +3,6 @@ fields:
   - type: options
     name: type
     options:
-      - arrow-up
-      - arrow-down
-      - arrow-left
-      - arrow-right
-
       - Thin-AR          
       - Thin-Archiv      
       - Thin-Arrow-Left  
@@ -77,30 +72,6 @@ fields:
       - Full-Splitscreen 
       - Full-Warning     
       - Full-to_Gallery
-
-      - close
-      - play
-      - settings
-      - plus
-      - minus
-      - position
-      - location
-      - layer
-      - filter
-      - skip-forward
-      - skip-backward
-      - hint
-      - qr-scan
-      - qr-scan-thin
-      - archive
-      - archive-full
-      - map
-      - map-full
-      - dashboard
-      - dashboard-full
-      - ar
-      - help
-      - hamburger-full
   - type: checkbox
     name: inverse
     defaultValue: FALSE
