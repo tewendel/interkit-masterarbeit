@@ -1,11 +1,15 @@
 <script>
-  import ProjectWorkspace from './ProjectWorkspace.svelte'
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
+
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
+
+  import ProjectWorkspace from './ProjectWorkspace.svelte'
   import SecondaryTabsContent from "./SecondaryTabsContent.svelte";
   import Logout from './Logout.svelte';
+  import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
+
   import { 
     Grid,
     Row,
@@ -14,7 +18,10 @@
     ListItem,
     Loading,
     Tile,
-    DataTable, Link,
+    DataTable,
+    Toolbar,
+    ToolbarContent,
+    Link,
     Button,
     ButtonSet,
     TextInput,
@@ -22,6 +29,8 @@
     Dropdown,
     FormGroup
   } from "carbon-components-svelte";
+
+  import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
@@ -106,6 +115,27 @@
     return (project?.history || []).find(h => h.event == "create_project")?.date
   }
 
+  let sortKey = 'createdAt'
+  let sortDirection = 'descending'
+  let pageSize = 10
+  let page = 1
+
+  const dataTableOverheadHeight = 0 +
+    48 + // header of outer UI
+    68 + // DataTable title
+    2 + // DataTable container padding top
+    48 + // DataTable toolbar
+    48 + // DataTable thead = 1 row height
+    40 + // DataTable tfoot
+    24   // potential horizontal scrollbar + buffer
+
+  const headers = [
+    { key: 'name', value: 'Projects' },
+    { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
+    { key: 'cpu', value: 'CPU usage' },
+    { key: 'action', value: 'Actions', sort: false }
+  ]
+
 </script>
 
 <Grid style="padding:0; height:100%; overflow-x: hidden; overflow-y: auto; max-width: none;">
@@ -115,60 +145,71 @@
         <div class={`left-pane foo`} class:left-pane--has-current-project={!!currentProjectId}>
           {#if !currentProjectId}
             <!-- need size=tall so actions ButtonSet fits in cell with padding -->
+            <div>{ JSON.stringify(projectRows, 0, 2) }</div>
             <DataTable
+              style={`
+                background: #f4f4f4;
+                /* = pageSize * row + search/actions + thead + data table padding-top */
+                min-height: ${(pageSize || 0) * 48 + 32 + 48 + 2 + 68}px;
+              `}
               title="Your Projects"
-              stickyHeader
               sortable
-              headers={[
-                { key: 'name', value: 'Projects' }, 
-                { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), }, 
-                { key: 'cpu', value: 'CPU usage' }, 
-                { key: 'action', value: 'Actions', sort: false }
-              ]}
+              {sortKey}
+              {sortDirection}
+              {pageSize}
+              {page}
+              {headers}
               rows={projectRows}
-              size="medium"
               >
+              <Toolbar>
+                <ToolbarContent>
+                  <Button
+                    size="small"
+                    icon={Add}
+                    >
+                    Create project…
+                  </Button>
+                </ToolbarContent>
+              </Toolbar>
               <span slot="cell" let:row let:cell>
                 {#if cell.key === 'name'}
                   <span on:click={() => previewProject(row.id)} class="clickable">{row.name}</span>
                 {/if}
                 {#if cell.key === 'action'}
-                  <div class="actions" style="position: relative; top: -.875rem">
-                    <ButtonSet>
-                      <Button
-                        kind="ghost"
-                        size="small"
-                        icon={Edit}
-                        iconDescription="Open"
-                        tooltipPosition="bottom"
-                        on:click={() => openProject(row.id)}
-                        />
-                      <Button
-                        kind="ghost"
-                        size="small"
-                        icon={QID}
-                        iconDescription="Rename"
-                        tooltipPosition="bottom"
-                        on:click={() => renameProject(row)}
-                        />
-                      <Button
-                        kind="ghost"
-                        size="small"
-                        icon={Copy}
-                        iconDescription="Duplicate"
-                        tooltipPosition="bottom"
-                        on:click={() => duplicateProject(row)}
-                        />
-                      <Button
-                        kind="ghost"
-                        size="small"
-                        icon={TrashCan}
-                        iconDescription="Delete"
-                        tooltipPosition="bottom"
-                        on:click={() => removeProject(row)}
-                        />
-                    </ButtonSet>
-                  </div>
+                  <ButtonSet>
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={Edit}
+                      iconDescription="Open"
+                      tooltipPosition="bottom"
+                      on:click={() => openProject(row.id)}
+                      />
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={QID}
+                      iconDescription="Rename"
+                      tooltipPosition="bottom"
+                      on:click={() => renameProject(row)}
+                      />
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={Copy}
+                      iconDescription="Duplicate"
+                      tooltipPosition="bottom"
+                      on:click={() => duplicateProject(row)}
+                      />
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={TrashCan}
+                      iconDescription="Delete"
+                      tooltipPosition="bottom"
+                      on:click={() => removeProject(row)}
+                      />
+                  </ButtonSet>
                 {/if}
                 {#if cell.key === 'createdAt'}
                   <span class="clickable soft">
@@ -188,6 +229,14 @@
                 {/if}
               </span>
             </DataTable>
+            <DataTablePaginationAutofit
+              bind:pageSize
+              bind:page
+              totalItems={projectRows.length}
+              overheadHeight={dataTableOverheadHeight}
+              rowHeight={48}
+              pageSizeAuto={true}
+              />
             <Row>
               <div class="project-create-form">
                 <Form>
