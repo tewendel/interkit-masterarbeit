@@ -3,8 +3,11 @@
 
   import Router, { querystring } from 'svelte-spa-router'
   import {link} from 'svelte-spa-router'
-  import ProjectManager from './ProjectManager.svelte'
+
   import { BundleServer } from './BundleServer'
+  import { InterkitClient } from 'interkit'
+
+  import ProjectManager from './ProjectManager.svelte'
   import Login from './Login.svelte';
   import SystemStatusBar from './SystemStatusBar.svelte';
   import TopTabs from './TopTabs.svelte';
@@ -31,8 +34,11 @@
   } from "carbon-components-svelte";
   
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
+  import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
   import { projectId, currentProject } from './admin.js'
+
+  let userIsRole = InterkitClient.userIsRole
 
   let tab = null;
 
@@ -45,8 +51,6 @@
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
   }
-
-  import { InterkitClient } from 'interkit'
 
   onMount(async ()=>{
     await InterkitClient.connect(INTERKIT_SERVER_WEBSOCKETS_URL);
@@ -103,6 +107,9 @@
       >
         <HeaderPanelLinks>
           <HeaderPanelDivider>User {$userId}</HeaderPanelDivider>
+          <div class="status">
+            {#if $userIsRole?.admin}<UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>{/if}
+          </div>
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
           <div class="status">
@@ -111,7 +118,7 @@
             {/if}
           </div>  
 
-          <HeaderPanelDivider>Admin Version</HeaderPanelDivider>
+          <HeaderPanelDivider>Redaktionssystem Version</HeaderPanelDivider>
           <div class="status">
             {INTERKIT_IMAGE_TAG}
             {#if commitHash}
