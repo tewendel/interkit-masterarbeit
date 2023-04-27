@@ -20,6 +20,8 @@ Meteor.methods({
 
     let projectId = await Projects.insert(doc);
 
+    return projectId
+
     // bundler will be notified via subscription
   },
 
@@ -36,8 +38,8 @@ Meteor.methods({
     }
   },
 
-  'project.duplicate': async ({ projectId }) => {
-      return duplicateProject(projectId)
+  'project.duplicate': async ({ projectId, newProjectName }) => {
+      return duplicateProject(projectId, newProjectName)
   },
 
   'project.setSlug': async ({ projectId, slug }) => {

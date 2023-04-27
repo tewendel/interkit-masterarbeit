@@ -1,9 +1,10 @@
 <script>
   import { push, replace } from 'svelte-spa-router';
   import { onMount, onDestroy } from 'svelte'
+  import { writable } from 'svelte/store'
 
   import { InterkitClient } from 'interkit'
-  import { BundleServer } from './BundleServer.js'
+  import { bundleServerURL$ } from './BundleServer.js'
 
   import ProjectWorkspace from './ProjectWorkspace.svelte'
   import SecondaryTabsContent from "./SecondaryTabsContent.svelte";
@@ -30,7 +31,12 @@
     FormGroup,
     Tag,
     OverflowMenu,
-    OverflowMenuItem
+    OverflowMenuItem,
+    RadioTile,
+    TileGroup,
+    ProgressIndicator,
+    ProgressStep,
+    ImageLoader
   } from "carbon-components-svelte";
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
@@ -44,6 +50,12 @@
 
   export let params = {}
 
+  let createProjectStep = false
+  let createProjectVariant
+  let createProjectTemplate
+  let createProjectGitRepo
+  let createProjectName
+
   let userId = InterkitClient.userId;
 
   let userIsRole = InterkitClient.userIsRole
@@ -53,14 +65,8 @@
   let previewUserAuth;
 
   let projects;
-  let newProjectName;
-  let gitRepository;
-  let newProjectTemplateIndex = 0
-  let newProjectItems = [
-    { id: "starter", text: "Empty" },
-    { id: "chat", text: "Chat example" },
-    { id: "list", text: "List example" },
-  ]
+
+  const bundleServerURL = bundleServerURL$
 
   const manageProjectsSub = async (projectId)=>{
     console.log("project subscription " + projectId)
@@ -73,13 +79,38 @@
   }
 
   const createProject = async () => {
-    await InterkitClient.call("project.create", {
-      name: newProjectName, 
-      template: newProjectItems[newProjectTemplateIndex].id,
-      gitRepository,
-
-    })
-    newProjectName = null;
+    let newProjectId
+    switch (createProjectVariant) {
+      case 'Template':
+        newProjectId = await InterkitClient.call("project.duplicate", {
+          projectId: createProjectTemplate.id,
+          newProjectName: createProjectName
+        })
+        break
+      case 'Empty':
+        if (createProjectEmptyTemplate) {
+          newProjectId = await InterkitClient.call("project.duplicate", {
+            projectId: createProjectEmptyTemplate.id,
+            newProjectName: createProjectName
+          })
+        } else {
+          newProjectId = await InterkitClient.call("project.create", {
+            name: createProjectName
+          })
+        }
+        break
+      case 'Import':
+        newProjectId = await InterkitClient.call("project.create", {
+          name: createProjectName,
+          gitRepository: createProjectGitRepo
+        })
+    }
+    createProjectStep = false
+    if (!newProjectId) {
+      window.alert('Something might have gone wrong. Please check the project list.')
+    } else {
+      push('/' + newProjectId)
+    }
   }
 
   onDestroy(() => {
@@ -92,9 +123,23 @@
   $: manageProjectsSub(currentProjectId)
 
   // add "id" for carbon table
-  $: projectRows = projects ? $projects
-    .map( p => ({...p, id: p.id, createdAt: getCreatedDate(p)})) : []
-    .sort( (p1,p2) => p1-p2)
+  $: projectRows = projects
+    ? $projects
+      .map(p => ({ ...p, id: p.id, createdAt: getCreatedDate(p) }))
+      // only admins can see templates in the project table
+      .filter(p => $userIsRole?.admin === true || !p.isTemplate)
+      .sort((p1, p2) => p1 - p2)
+    : []
+
+  let templates
+  $: templates = projects
+    ? $projects.filter(_ => _.isTemplate)
+        .map(p => ({ ...p, id: p.id, createdAt: getCreatedDate(p) }))
+    : []
+
+  let createProjectEmptyTemplate
+  $: createProjectEmptyTemplate = projectRows
+    .filter(_ => _.isTemplate && (_.slug === 'empty' || _.name === 'empty'))?.[0]
 
   const openProject = id => push('/' + id)
 
@@ -141,6 +186,7 @@
     24   // potential horizontal scrollbar + buffer
 
   const headers = [
+    { key: 'favicon', empty: true },
     { key: 'name', value: 'Projects' },
     { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
     { key: 'cpu', value: 'CPU usage' },
@@ -153,8 +199,19 @@
   <Row>
     <Column lg="{16}">
       <div class="__ProjectWorkspace panes">
-        <div class={`left-pane foo`} class:left-pane--has-current-project={!!currentProjectId}>
-          {#if !currentProjectId}
+        <div class={`left-pane`} class:left-pane--has-current-project={!!currentProjectId}>
+          {#if currentProjectId}
+            {#if $currentProject}
+              <ProjectWorkspace 
+                {tab} 
+                projectId={currentProjectId} 
+                {currentProject}
+                updatePreviewUserAuth={data => { previewUserAuth = data; }}
+                />
+            {:else}
+              <Loading style="background-color:white"/>
+            {/if}
+          {:else if createProjectStep === false}
             <DataTable
               style={`
                 background: #f4f4f4;
@@ -175,12 +232,26 @@
                   <Button
                     size="small"
                     icon={Add}
+                    on:click={() => { createProjectStep = 0 }}
                     >
                     Create project…
                   </Button>
                 </ToolbarContent>
               </Toolbar>
               <span slot="cell" let:row let:cell>
+                {#if cell.key === 'favicon'}
+                  {#if $bundleServerURL}
+                    <ImageLoader
+                      src={`${$bundleServerURL}/app/${row.id}/favicon.png`}
+                      alt="Favicon"
+                      fadeIn
+                      style="width: 2em"
+                      >
+                      <svelte:fragment slot="error">
+                      </svelte:fragment>
+                    </ImageLoader>
+                  {/if}
+                {/if}
                 {#if cell.key === 'name'}
                   <span on:click={() => previewProject(row.id)} class="clickable">
                     {#if row.isTemplate}
@@ -228,7 +299,7 @@
                         ><QID />&ensp;Rename</OverflowMenuItem>
                       <OverflowMenuItem
                         danger
-                        on:click={() => removeProject(row)}
+                        on:click={() => removeProject(row.id)}
                         ><TrashCan />&ensp;Delete</OverflowMenuItem>
                       {#if $userIsRole?.admin}
                         {#if row.isTemplate}
@@ -256,49 +327,171 @@
               rowHeight={48}
               pageSizeAuto={true}
               />
-            <Row>
-              <div class="project-create-form">
-                <Form>
-                  <FormGroup legendText="New project" style="display: flex">
-                    <TextInput 
-                      bind:value={newProjectName} 
-                      label="New project"
-                      placeholder="Enter project title..."
-                    />
-                    <!--Dropdown
-                      hideLabel
-                      inline
-                      titleText="Template"
-                      placeholder="Select template"
-                      bind:selectedIndex={newProjectTemplateIndex}
-                      items={newProjectItems}
-                    /-->
-                    <TextInput 
-                      bind:value={gitRepository} 
-                      label="Public Git Repository"
-                      placeholder="optional: Git Repository URL"
-                    />
-                    <Button 
-                      size="field"
-                      on:click={createProject}
+          {:else if createProjectStep !== false}
+            <!--
+            step {createProjectStep} variant {createProjectVariant} empty {createProjectEmptyTemplate}<br/>
+            -->
+            <Grid style="height: 100%; display: flex; flex-direction: column">
+              <Row padding>
+                <Column>
+                  <h2>Create new project</h2>
+                </Column>
+              </Row>
+              <Row padding style="flex-grow: 1">
+                <!-- FIXME this won't scroll if there is too many templates -->
+                <Column sm={3} md={5} style="height: 100%">
+                  {#if createProjectStep === 0}
+                    <TileGroup
+                      legend="Pick a variant to continue."
+                      bind:selected={createProjectVariant}
                       >
-                      create project
-                    </Button>
-                  </FormGroup>
-                </Form>
-              </div>
-            </Row>
-          {:else}
-            {#if $currentProject}
-              <ProjectWorkspace 
-                {tab} 
-                projectId={currentProjectId} 
-                {currentProject}
-                updatePreviewUserAuth={data => { previewUserAuth = data; }}
-                />
-            {:else}
-              <Loading style="background-color:white"/>
-            {/if}
+                      <RadioTile value="Template" disabled={!templates || !templates.length}>
+                        <h3>Template</h3>
+                        {#if !templates || !templates.length}
+                          <p>Error: No templates found!</p>
+                        {:else}
+                          <p>
+                            Select a template in the next step.<br/>
+                            If you're not sure, pick this option.
+                          </p>
+                        {/if}
+                      </RadioTile>
+                      <RadioTile value="Empty">
+                        <h3>Empty</h3>
+                        <p>Start with an empty project.</p>
+                      </RadioTile>
+                      <RadioTile value="Import">
+                        <h3>Import</h3>
+                        <p>Upload a project file or use a repository from Github/Gitlab.</p>
+                      </RadioTile>
+                    </TileGroup>
+                  {:else if createProjectStep === 1 && createProjectVariant === 'Template'}
+                    {#if !templates || !templates.length}
+                      <p>No templates found!</p>
+                    {/if}
+                    <TileGroup
+                      bind:selected={createProjectTemplate}
+                      legend="Click on a template title to select it."
+                      >
+                      {#each templates as template}
+                        <RadioTile value={template}>
+                          <h3 style="margin-bottom: 1rem">{template.name}</h3>
+                          {#if template.createdAt}
+                            <p style="margin-bottom: 1rem">{template.createdAt
+                              .toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })
+                            }</p>
+                          {/if}
+                          <ImageLoader
+                            src={`${$bundleServerURL}/app/${template.id}/screenshot.png`}
+                            alt="Screenshot"
+                            fadeIn
+                            style="width: 100%; height: auto"
+                            >
+                            <svelte:fragment slot="error">
+                              (This template does not provide a <code>screenshot.png</code>
+                              in its <code>/public</code> directory.)
+                            </svelte:fragment>
+                          </ImageLoader>
+                          <div style="text-align: right; margin-top: 1em;">
+                            <Button
+                              kind="tertiary"
+                              icon={WatsonHealthThumbnailPreview}
+                              on:click={() => previewProject(template.id)}
+                              >Preview</Button>
+                          </div>
+                        </RadioTile>
+                      {/each}
+                    </TileGroup>
+                  {:else if createProjectStep === 1 && createProjectVariant === 'Empty'}
+                    <!-- we need this weird empty step because otherwise the ProgressIndicator
+                      got irrationally confused, also skipping the step -->
+                    <p style="font-weight: bold; margin-bottom: 1em">
+                      We don't need a template for an empty project.<br/>
+                      You can skip this step.
+                    </p>
+                    <p>
+                      Technical note for advanced users:<br />
+                      {#if createProjectEmptyTemplate}
+                        The new project will be a clone of the empty template with
+                        id={createProjectEmptyTemplate.id}
+                      {:else}
+                        The new project will be based on a starter template.
+                      {/if}
+                    </p>
+                  {:else if createProjectStep === 1 && createProjectVariant === 'Import'}
+                    <Form>
+                      <FormGroup>
+                        <TextInput 
+                          bind:value={createProjectGitRepo} 
+                          label="Public Git Repository"
+                          placeholder="https://github.com/..."
+                        />
+                      </FormGroup>
+                    </Form>
+                  {:else if createProjectStep === 2}
+                    <p>Pick a name for the new project</p>
+                    <TextInput
+                      labelText="Project name"
+                      placeholder="Enter text"
+                      bind:value={createProjectName}
+                      />
+                  {/if}
+                </Column>
+                <Column sm={1} md={3} style="display: flex; flex-direction: column">
+                  <ProgressIndicator
+                    style="margin-bottom: auto"
+                    bind:currentIndex={createProjectStep}
+                    vertical
+                    preventChangeOnClick
+                    >
+                    {#each ['Variant', 'Template', 'Name'] as stepLabel, stepIndex}
+                      <ProgressStep
+                        complete={createProjectStep > stepIndex}
+                        current={createProjectStep === stepIndex}
+                        label={stepLabel}
+                        />
+                    {/each}
+                  </ProgressIndicator>
+                  <ButtonSet>
+                  {#if createProjectStep === 0}
+                    <Button
+                      kind="secondary"
+                      on:click={() => { createProjectStep = false}}
+                      >Cancel</Button>
+                    <Button
+                      disabled={!createProjectVariant}
+                      on:click={() => {
+                        createProjectStep = 1
+                        // this messes up the indicator, unfortunately
+                        // if (createProjectVariant === 'Empty') createProjectStep++
+                      }}
+                      >Continue</Button>
+                  {:else if createProjectStep === 1}
+                    <Button
+                      kind="secondary"
+                      on:click={() => { createProjectStep = 0}}
+                      >Back</Button>
+                    <Button
+                      disabled={
+                        (createProjectVariant === 'Template' && !createProjectTemplate) ||
+                        (createProjectVariant === 'Import' && !createProjectGitRepo)
+                      }
+                      on:click={() => { createProjectStep = 2 }}
+                      >Continue</Button>
+                  {:else if createProjectStep === 2}
+                    <Button
+                      kind="secondary"
+                      on:click={() => { createProjectStep = 1}}
+                      >Back</Button>
+                    <Button
+                      disabled={!createProjectName}
+                      on:click={() => createProject() }
+                      >Finish</Button>
+                  {/if}
+                  </ButtonSet>
+                </Column>
+              </Row>
+            </Grid>
           {/if}
         </div>
         <SecondaryTabsContent projectId={currentProjectId} {currentProject} {previewUserAuth} />
@@ -308,11 +501,6 @@
 </Grid>
 
 <style>
-  .project-create-form {
-    margin-top: 10px;
-    margin-left: 15px;
-    padding: 15px;
-  }
 
   .logout {
     padding: 15px;
@@ -349,6 +537,10 @@
   }
   .left-pane--has-current-project > :global(div:not(.active)) {
     display: none;
+  }
+
+  :global(.__ProjectWorkspace .bx--tile) {
+    margin-bottom: 1em;
   }
 
 </style>
