@@ -1,4 +1,4 @@
-name: RouteReference
+name: RouteConnector
 colour: 100
 fields:
   - name: path

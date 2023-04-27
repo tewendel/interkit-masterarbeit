@@ -16,12 +16,24 @@
 
   let subtrees = []
 
+  // blocks that appear as quick nav links at the bottom
+  let quickNavTypes = ["Group", "AppBase", "Route", "DataRouteSingle", "DataRouteMulti"]
+
+  // gets the title to show in quick nav from block
+  const quickNavblockToString = (block) => {
+    switch(block.type) {
+      case "AppBase": return "AppBase";
+      case "Group": return block.getFieldValue("name");
+      default: return block.getFieldValue("path");
+    }
+  }
+
   $: {
     if(topBlocks) {
-      subtrees = topBlocks.filter(b => b.type == "Group" || b.type == "AppBase");
+      subtrees = topBlocks.filter(b => quickNavTypes.includes(b.type))
       subtrees.sort(function(a, b) {
-        const A = a.type == "AppBase" ? "AppBase" : a.getFieldValue('name') 
-        const B = b.type == "AppBase" ? "AppBase" : b.getFieldValue('name')
+        const A = quickNavblockToString(a)
+        const B = quickNavblockToString(b)
         return (A < B) ? -1 : (A > B) ? 1 : 0;
       })
       //console.log("subtrees", subtrees)
@@ -115,8 +127,8 @@
             <ul>
             {#each subtrees as subtree} 
               <li>
-                <span title={subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('name')}>
-                  {subtree.type == "AppBase" ? "AppBase" : subtree.getFieldValue('name')}
+                <span title={quickNavblockToString(subtree)}>
+                  {quickNavblockToString(subtree)}
                 </span>
                 <div class="move-button">
                   <Button

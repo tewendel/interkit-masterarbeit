@@ -113,7 +113,7 @@
 
     // refilter data when data changes
     unsubscribe = rows.subscribe((data) => {
-      //console.log("ElementsContextProvider got data", sheetKey, data)
+      console.log("DataLoader got new data", sheetKey, data)
       unfilteredData = data;
       refilter();
     })
