@@ -331,15 +331,15 @@
             <!--
             step {createProjectStep} variant {createProjectVariant} empty {createProjectEmptyTemplate}<br/>
             -->
-            <Grid style="height: 100%; display: flex; flex-direction: column">
+            <Grid>
               <Row padding>
                 <Column>
                   <h2>Create new project</h2>
                 </Column>
               </Row>
-              <Row padding style="flex-grow: 1">
+              <Row padding>
                 <!-- FIXME this won't scroll if there is too many templates -->
-                <Column sm={3} md={5} style="height: 100%">
+                <Column sm={3} md={5}>
                   {#if createProjectStep === 0}
                     <TileGroup
                       legend="Pick a variant to continue."
@@ -437,7 +437,7 @@
                       />
                   {/if}
                 </Column>
-                <Column sm={1} md={3} style="display: flex; flex-direction: column">
+                <Column sm={1} md={3}>
                   <ProgressIndicator
                     style="margin-bottom: auto"
                     bind:currentIndex={createProjectStep}
@@ -452,7 +452,7 @@
                         />
                     {/each}
                   </ProgressIndicator>
-                  <ButtonSet>
+                  <ButtonSet style="margin-top: 3em">
                   {#if createProjectStep === 0}
                     <Button
                       kind="secondary"
