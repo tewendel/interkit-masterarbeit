@@ -139,12 +139,12 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
       // special blockly control blocks
 
-      if(blockObject.name == "GroupReference") {
+      if(blockObject.name == "GroupConnector") {
         //console.log("found GroupReference")
         return referencedBlockToCode(["Group"], "name", block.getFieldValue("name"), "slot", "default")        
       }
 
-      if(blockObject.name == "RouteReference") {
+      if(blockObject.name == "RouteConnector") {
         //console.log("found GroupReference")
         return referencedBlockToCode(["Route", "DataRouteMulti", "DataRouteSingle"], "path", block.getFieldValue("path"), "block")        
       }

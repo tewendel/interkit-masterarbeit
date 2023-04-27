@@ -48,6 +48,7 @@
   }
 
   const routeLoaded = event => {
+    //console.log("routeLoaded", event)
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
   }
