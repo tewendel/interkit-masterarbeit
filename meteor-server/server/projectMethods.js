@@ -52,6 +52,12 @@ Meteor.methods({
     
   },
 
+  'project.setIsTemplate': async ({ projectId, isTemplate }) => {
+    console.log('project.setIsTemplate', projectId, isTemplate)
+    const res = Projects.update({ _id: projectId }, { $set: { isTemplate } })
+    return res
+  },
+
   'project.getId': async ({ slug }) => {
     let project = Projects.findOne({ slug });
     console.log("getId for slug", slug, project?._id);

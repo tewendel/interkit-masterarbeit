@@ -30,6 +30,13 @@ let userAuth;
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
 
+let userIsRole = writable({ admin: false })
+
+userId.subscribe(async userId => {
+  const roles = await InterkitClient.call('user.getRoles', { userId })
+  userIsRole.set(roles)
+})
+
 let pushnotificationRegistrationToken = writable(null)
 
 // a global store to store the state history of stores relavant to the UI
@@ -961,6 +968,7 @@ userId.subscribe((data)=>{
 
 const InterkitClient = {
   userId,
+  userIsRole,
   pushnotificationRegistrationToken,
   config,
   connected, // svelte store

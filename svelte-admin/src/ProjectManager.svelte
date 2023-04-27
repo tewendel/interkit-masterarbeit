@@ -27,7 +27,10 @@
     TextInput,
     Form,
     Dropdown,
-    FormGroup
+    FormGroup,
+    Tag,
+    OverflowMenu,
+    OverflowMenuItem
   } from "carbon-components-svelte";
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
@@ -35,11 +38,15 @@
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
   import QID from 'carbon-icons-svelte/lib/QID.svelte'
+  import Template from 'carbon-icons-svelte/lib/Template.svelte'
+  import WatsonHealthThumbnailPreview from 'carbon-icons-svelte/lib/WatsonHealthThumbnailPreview.svelte'
   import { currentProject, secondaryTabPreviewProjectId } from './admin.js'
 
   export let params = {}
 
   let userId = InterkitClient.userId;
+
+  let userIsRole = InterkitClient.userIsRole
 
   let projectsListSub;
 
@@ -111,6 +118,10 @@
     const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
   }
 
+  const updateProjectSetIsTemplate = async (row, isTemplate) => {
+    await InterkitClient.call('project.setIsTemplate', { projectId: row._id, isTemplate })
+  }
+
   const getCreatedDate = project => {
     return (project?.history || []).find(h => h.event == "create_project")?.date
   }
@@ -133,7 +144,7 @@
     { key: 'name', value: 'Projects' },
     { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
     { key: 'cpu', value: 'CPU usage' },
-    { key: 'action', value: 'Actions', sort: false }
+    { key: 'overflow', empty: true }
   ]
 
 </script>
@@ -144,8 +155,6 @@
       <div class="__ProjectWorkspace panes">
         <div class={`left-pane foo`} class:left-pane--has-current-project={!!currentProjectId}>
           {#if !currentProjectId}
-            <!-- need size=tall so actions ButtonSet fits in cell with padding -->
-            <div>{ JSON.stringify(projectRows, 0, 2) }</div>
             <DataTable
               style={`
                 background: #f4f4f4;
@@ -173,43 +182,12 @@
               </Toolbar>
               <span slot="cell" let:row let:cell>
                 {#if cell.key === 'name'}
-                  <span on:click={() => previewProject(row.id)} class="clickable">{row.name}</span>
-                {/if}
-                {#if cell.key === 'action'}
-                  <ButtonSet>
-                    <Button
-                      kind="ghost"
-                      size="small"
-                      icon={Edit}
-                      iconDescription="Open"
-                      tooltipPosition="bottom"
-                      on:click={() => openProject(row.id)}
-                      />
-                    <Button
-                      kind="ghost"
-                      size="small"
-                      icon={QID}
-                      iconDescription="Rename"
-                      tooltipPosition="bottom"
-                      on:click={() => renameProject(row)}
-                      />
-                    <Button
-                      kind="ghost"
-                      size="small"
-                      icon={Copy}
-                      iconDescription="Duplicate"
-                      tooltipPosition="bottom"
-                      on:click={() => duplicateProject(row)}
-                      />
-                    <Button
-                      kind="ghost"
-                      size="small"
-                      icon={TrashCan}
-                      iconDescription="Delete"
-                      tooltipPosition="bottom"
-                      on:click={() => removeProject(row)}
-                      />
-                  </ButtonSet>
+                  <span on:click={() => previewProject(row.id)} class="clickable">
+                    {#if row.isTemplate}
+                      <Tag>Template</Tag>
+                    {/if}
+                    {row.name}
+                  </span>
                 {/if}
                 {#if cell.key === 'createdAt'}
                   <span class="clickable soft">
@@ -226,6 +204,47 @@
                   {:else}
                     {row.projectServer?.status}
                   {/if}
+                {/if}
+                {#if cell.key === 'overflow'}
+                  <ButtonSet>
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={Edit}
+                      on:click={() => openProject(row.id)}
+                      >Open</Button>
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={WatsonHealthThumbnailPreview}
+                      on:click={() => previewProject(row.id)} 
+                      >Preview</Button>
+                    <OverflowMenu flipped>
+                      <OverflowMenuItem
+                        on:click={() => duplicateProject(row)}
+                        ><Copy />&ensp;Duplicate</OverflowMenuItem>
+                      <OverflowMenuItem
+                        on:click={() => renameProject(row)}
+                        ><QID />&ensp;Rename</OverflowMenuItem>
+                      <OverflowMenuItem
+                        danger
+                        on:click={() => removeProject(row)}
+                        ><TrashCan />&ensp;Delete</OverflowMenuItem>
+                      {#if $userIsRole?.admin}
+                        {#if row.isTemplate}
+                          <OverflowMenuItem
+                            danger
+                            on:click={() => updateProjectSetIsTemplate(row, false)}
+                            ><Template />&ensp;Unset&nbsp;template</OverflowMenuItem>
+                        {:else}
+                          <OverflowMenuItem
+                            danger
+                            on:click={() => updateProjectSetIsTemplate(row, true)}
+                            ><Template />&ensp;Set&nbsp;template</OverflowMenuItem>
+                        {/if}
+                      {/if}
+                    </OverflowMenu>
+                  </ButtonSet>
                 {/if}
               </span>
             </DataTable>

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random'
 import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
-import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
+import { addUsersToRoles, userIsInRoles } from '../imports/userRoles.js';
 import { seedUser } from '../imports/userUtils.js';
 
 let projectServerPasswords = {}
@@ -405,5 +405,13 @@ Meteor.methods({
       password
     }
   },
+
+  'user.getRoles': async ({ userId }) => {
+    const user = Meteor.users.findOne(userId)
+    if (!user) return false
+    return {
+      admin: userIsInRoles(userId, ['admin'])
+    }
+  }
 
 });
