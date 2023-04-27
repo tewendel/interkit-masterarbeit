@@ -6,6 +6,8 @@
   export let path;
   let dynamicPath = path + "/:key"
 
+  export let sheet;
+
   // try to get navigate hook, this only works when component is inside of a router
   import { useNavigate } from "svelte-navigator";
   let navigate;
@@ -19,7 +21,7 @@
 
 {#if navigate}
   <Route path={dynamicPath} let:params>
-    <DataLoaderSingle sheetKey={path} rowKey={params.key}>
+    <DataLoaderSingle sheetKey={sheet} rowKey={params.key}>
       <slot/>
     </DataLoaderSingle>
   </Route>

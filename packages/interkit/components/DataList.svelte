@@ -10,14 +10,6 @@
   if(!elementsContext) alert("ElementList needs DataLoader or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
-  const onClick = (element) => {
-    // trigger the action, if set
-    if(selectTrigger) {
-      console.log("DataList onClick", element, selectTrigger)
-      executeTrigger(selectTrigger, element.row)
-    }
-  }
-
 </script>
 
 {#if $elements}
@@ -27,7 +19,7 @@
     <ul>
       {#each $elements as element}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li class="item" on:click={()=>{onClick(element)}}>
+        <li class="item">
           <ContextProvider 
             name="element" 
             value={element.row}
