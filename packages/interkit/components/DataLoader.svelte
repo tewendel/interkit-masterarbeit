@@ -31,7 +31,7 @@
   //console.log("ElementsContextProvider")
 
   const filterData = (data) => {
-    console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
+    //console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
     if(!data) return [];
 
     // if reference Element is defined, make sure to filter out all other elements
@@ -75,7 +75,7 @@
 
     // check for discoverables and exclude if not yet discoverd
     if(discoverableColumn && discoverProperty) {
-      console.log("ElementsContextProvider filtering for discovered elements", data, $elementProperties)
+      //console.log("DataLoader filtering for discovered elements", data, $elementProperties)
       let filteredData = [];
       for(let element of data) {
         if(!element.discoverableColumn 
@@ -113,7 +113,7 @@
 
     // refilter data when data changes
     unsubscribe = rows.subscribe((data) => {
-      console.log("DataLoader got new data", sheetKey, data)
+      //console.log("DataLoader got new data", sheetKey, data)
       unfilteredData = data;
       refilter();
     })

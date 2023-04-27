@@ -10,6 +10,10 @@
   if(!elementsContext) alert("ElementList needs DataLoader or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
+  /*$: {
+    console.log("DataList got data update", $elements)
+  }*/
+
 </script>
 
 {#if $elements}
