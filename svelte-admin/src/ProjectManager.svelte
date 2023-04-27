@@ -15,12 +15,18 @@
     Loading,
     Tile,
     DataTable, Link,
-    Button, TextInput, Form, Dropdown, FormGroup
+    Button,
+    ButtonSet,
+    TextInput,
+    Form,
+    Dropdown,
+    FormGroup
   } from "carbon-components-svelte";
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
   import Edit from "carbon-icons-svelte/lib/Edit.svelte";
-  import { currentProject } from './admin.js'
+  import QID from 'carbon-icons-svelte/lib/QID.svelte'
+  import { currentProject, secondaryTabPreviewProjectId } from './admin.js'
 
   export let params = {}
 
@@ -73,6 +79,10 @@
   $: projectRows = projects ? $projects
     .map( p => ({...p, id: p.id, createdAt: getCreatedDate(p)})) : []
     .sort( (p1,p2) => p1-p2)
+
+  const openProject = id => push('/' + id)
+
+  const previewProject = id => secondaryTabPreviewProjectId.set(id)
     
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
@@ -104,6 +114,7 @@
       <div class="__ProjectWorkspace panes">
         <div class={`left-pane foo`} class:left-pane--has-current-project={!!currentProjectId}>
           {#if !currentProjectId}
+            <!-- need size=tall so actions ButtonSet fits in cell with padding -->
             <DataTable
               title="Your Projects"
               stickyHeader
@@ -118,11 +129,45 @@
               size="medium"
               >
               <span slot="cell" let:row let:cell>
+                {#if cell.key === 'name'}
+                  <span on:click={() => previewProject(row.id)} class="clickable">{row.name}</span>
+                {/if}
                 {#if cell.key === 'action'}
-                  <div class="actions">
-                    <span title="rename" on:click={()=>renameProject(row)} class="clickable"> <Edit /></span>
-                    <span title="duplicate" on:click={()=>duplicateProject(row.id)} class="clickable"> <Copy /></span>
-                    <span title="delete" on:click={()=>removeProject(row.id)} class="clickable"> <TrashCan /></span>
+                  <div class="actions" style="position: relative; top: -.875rem">
+                    <ButtonSet>
+                      <Button
+                        kind="ghost"
+                        size="small"
+                        icon={Edit}
+                        iconDescription="Open"
+                        tooltipPosition="bottom"
+                        on:click={() => openProject(row.id)}
+                        />
+                      <Button
+                        kind="ghost"
+                        size="small"
+                        icon={QID}
+                        iconDescription="Rename"
+                        tooltipPosition="bottom"
+                        on:click={() => renameProject(row)}
+                        />
+                      <Button
+                        kind="ghost"
+                        size="small"
+                        icon={Copy}
+                        iconDescription="Duplicate"
+                        tooltipPosition="bottom"
+                        on:click={() => duplicateProject(row)}
+                        />
+                      <Button
+                        kind="ghost"
+                        size="small"
+                        icon={TrashCan}
+                        iconDescription="Delete"
+                        tooltipPosition="bottom"
+                        on:click={() => removeProject(row)}
+                        />
+                    </ButtonSet>
                   </div>
                 {/if}
                 {#if cell.key === 'createdAt'}
@@ -140,9 +185,6 @@
                   {:else}
                     {row.projectServer?.status}
                   {/if}
-                {/if}
-                {#if cell.key === 'name'}
-                  <span on:click={()=>{push('/'+row.id)}} class="clickable">{row.name}</span>
                 {/if}
               </span>
             </DataTable>

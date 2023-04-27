@@ -4,6 +4,9 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
+  import { currentProject } from './admin.js'
+
+  import { get } from 'svelte/store'
 
   import { 
     Tabs, 
@@ -30,7 +33,6 @@
   import Launch from "carbon-icons-svelte/lib/Launch.svelte"
 
   export let projectId, previewURL = "", previewUserAuth;
-  export let currentProject;
 
   const convert = new Convert();
   const query = new URLSearchParams(); // modify app configuration on request
@@ -64,7 +66,7 @@
     //query.set("projectId", projectId)
     //console.log("currentProject", $currentProject)
     //console.log("localConfig", localConfig)
-    if(localConfig) {
+    if (localConfig && $currentProject) {
       query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
     } else {
       query.delete("localConfigURL")
