@@ -330,6 +330,7 @@
           {:else if createProjectStep !== false}
             <!--
             step {createProjectStep} variant {createProjectVariant} empty {createProjectEmptyTemplate}<br/>
+            {JSON.stringify($userIsRole)}
             -->
             <Grid>
               <Row padding style="max-height: var(--createwizard-header-height); overflow: hidden">

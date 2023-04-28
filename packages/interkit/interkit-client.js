@@ -33,8 +33,16 @@ let userId = writable(null);
 let userIsRole = writable({ admin: false })
 
 userId.subscribe(async userId => {
-  const roles = await InterkitClient.call('user.getRoles', { userId })
-  userIsRole.set(roles)
+  // try-block to get around race condition:
+  // If this is called too early, there is a syntax/ReferenceError re declaration before initialization,
+  // in the case were we need this function we can ignore it, because the subscription fires again, in time.
+  try {
+    // console.log('try userId subscription InterkitClient.call...')
+    const roles = await InterkitClient.call('user.getRoles', { userId })
+    userIsRole.set(roles)
+  } catch (e) {
+    console.log('try userId subscription InterkitClient call: ignoring / failing gracefully...')
+  }
 })
 
 let pushnotificationRegistrationToken = writable(null)
