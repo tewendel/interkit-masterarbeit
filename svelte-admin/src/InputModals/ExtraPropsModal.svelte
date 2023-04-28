@@ -1,5 +1,6 @@
 <script>
   
+  import { util } from 'interkit'
   import {
     ComposedModal,
     ModalHeader,
@@ -28,11 +29,7 @@
   // rows in the table of extra props (not to be confused with rows in a data sheet!)
   let rows = value.map(v => {return {
     id: v.name,
-    name: v.name,
-    value: v.value,
-    type: v.type,
-    options: v.options,
-    defaultValue: v.defaultValue
+    ...v
   }})
 
   const updateCell = (row, cellValue) => {
@@ -42,19 +39,31 @@
   // write row changes back to bound value prop
   const updateValue = () => {
     value = rows.map(r => {return {
-      name: r.name,
-      value: r.value,
-      type: r.type,
-      options: r.options,
-      defaultValue: r.defaultValue
+      ...r
     }})
   }
 
   const getValue = (row) => {
-    if(typeof row.value == "undefined") 
+    console.log("getValue", row)
+    // construct default values if there is not value
+    if(typeof row.value == "undefined") {
+      if(row.type == "sheetColumn") {
+        return {
+          sheetKey: util.getSheetKey(row.defaultValue),
+          columnKey: util.colKey(row.defaultValue),
+          text: row.defaultValue
+        }
+      }
+      if(row.type == "sheetId") {
+        return {
+          sheetKey: row.defaultValue,
+          text: row.defaultValue
+        }
+      }
       return row.defaultValue
-    else 
+    } else {
       return row.value
+    }
   }
 
 </script>
@@ -82,10 +91,10 @@
               <input type="checkbox" checked={getValue(row)} on:change={(e)=>{updateCell(row, e.target.checked)}}>
             {/if}
             {#if row.type == "sheetColumn"}
-              <SheetColumnSelectForm value={row.value} on:update={(e)=>updateCell(row, e.detail)}/>          
+              <SheetColumnSelectForm columnInfo={row} value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>          
             {/if}
             {#if row.type == "sheetId"}
-              <SheetIdSelectForm value={row.value} on:update={(e)=>updateCell(row, e.detail)}/>          
+              <SheetIdSelectForm value={getValue(value)} on:update={(e)=>updateCell(row, e.detail)}/>          
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select

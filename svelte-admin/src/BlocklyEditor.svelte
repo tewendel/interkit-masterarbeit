@@ -14,8 +14,7 @@
   import Blockly from 'blockly';
   import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
-  import parseBlocklyXML from './parseBlocklyXML.js';
-
+  
   import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
   
   import { InterkitClient } from 'interkit'
@@ -210,11 +209,7 @@
 
   
   const createDatabase = () => {
-
-    // todo: update to json parsing
-    let xml = Blockly.Xml.workspaceToDom(workspace);
-    let xml_text = Blockly.Xml.domToPrettyText(xml);
-    parseBlocklyXML(xml_text, projectId);
+    checkDatabaseFromBlockly(workspace, projectId)
   }
 
   const myUpdateFunction = async (event) => {
@@ -328,7 +323,7 @@
       <div class="__BlocklyEditor">
 
         <div class="main-buttons">
-          <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+          <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
           <Button on:click={()=>saveAndCompile(true)}>save</Button>            
         </div>
       

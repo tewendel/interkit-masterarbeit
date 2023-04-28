@@ -809,7 +809,7 @@ const logout = async () => {
 const call = async (method, params = {}) => {
 
     if (config && params && !params?.projectId) {
-      //console.log("adding projectId to method params", params, method)
+      console.log("adding projectId to method params", params, method, get(projectId))
       params.projectId = get(projectId);
     }
 
