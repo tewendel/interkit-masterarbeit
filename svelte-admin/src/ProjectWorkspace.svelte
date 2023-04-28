@@ -16,8 +16,10 @@
 
   export let projectId
   export let tab
-  export let currentProject
+  //export let currentProject
   export let updatePreviewUserAuth
+
+  import { currentProject } from './admin.js'
   
   let selected
   let editorFilesKey = "init"
@@ -46,9 +48,9 @@
 <div class="scrollable padding" class:active={!tab}>
   <div class="ProjectDashboard">
   <h1>
-  Welcome to project {projectId}
+  Welcome to {$currentProject.name}
   </h1>
-  Navigate using the menu in the header
+  Navigate using the menu in the header.
   </div>
 </div>
 

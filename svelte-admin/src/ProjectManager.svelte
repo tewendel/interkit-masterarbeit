@@ -218,7 +218,7 @@
                 /* = pageSize * row + search/actions + thead + data table padding-top */
                 min-height: ${(pageSize || 0) * 48 + 32 + 48 + 2 + 68}px;
               `}
-              title="Your Projects"
+              title="Projects on this server"
               sortable
               {sortKey}
               {sortDirection}

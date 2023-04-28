@@ -77,7 +77,7 @@
 
 <Header 
   company="interkit" 
-  platformName={$currentProject?.name || "Redaktionssystem"} 
+  platformName={$currentProject?.name || "Authoring System"} 
   href="/#/"
   >
   
@@ -119,7 +119,7 @@
             {/if}
           </div>  
 
-          <HeaderPanelDivider>Redaktionssystem Version</HeaderPanelDivider>
+          <HeaderPanelDivider>Authoring System Version</HeaderPanelDivider>
           <div class="status">
             {INTERKIT_IMAGE_TAG}
             {#if commitHash}
