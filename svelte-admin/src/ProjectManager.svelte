@@ -332,14 +332,14 @@
             step {createProjectStep} variant {createProjectVariant} empty {createProjectEmptyTemplate}<br/>
             -->
             <Grid>
-              <Row padding>
+              <Row padding style="max-height: var(--createwizard-header-height); overflow: hidden">
                 <Column>
-                  <h2>Create new project</h2>
+                  <h2 class="createwizard-heading">Create new project</h2>
                 </Column>
               </Row>
               <Row padding>
                 <!-- FIXME this won't scroll if there is too many templates -->
-                <Column sm={3} md={5}>
+                <Column sm={3} md={5} style="max-height: calc(100vh - var(--header-height) - var(--createwizard-header-height)); overflow-y: auto">
                   {#if createProjectStep === 0}
                     <TileGroup
                       legend="Pick a variant to continue."
@@ -452,7 +452,7 @@
                         />
                     {/each}
                   </ProgressIndicator>
-                  <ButtonSet style="margin-top: 3em">
+                  <ButtonSet style="margin-top: 6em">
                   {#if createProjectStep === 0}
                     <Button
                       kind="secondary"
@@ -502,6 +502,10 @@
 
 <style>
 
+  .__ProjectWorkspace {
+    --createwizard-header-height: 72px;
+  }
+
   .logout {
     padding: 15px;
   }
@@ -541,6 +545,23 @@
 
   :global(.__ProjectWorkspace .bx--tile) {
     margin-bottom: 1em;
+  }
+
+  :global(.__ProjectWorkspace .bx--tile-input) {
+    /* This is a weird hack upon hacks upon hacks!
+     * Carbon uses invisible-ish <input type=radio>s for state management,
+     * themselves using :active~selector hacks.
+     * The invisibility is achieved by old-school clip-rect/negative margin/etc.
+     * This invisibility breaks height calculation in Chrome, and in term
+     * totally f's up the container's inner height, beyond repair by
+     * max-height+overflow:hidden and other measures.
+     * (There is a very stubborn margin at the bottom that forces the outermost
+     * container to scroll.)
+     * Here we just properly hide the element.
+     * Unfortunately, this breaks keyboard navigation; you can't highlight the input!
+     * So, a long-term TODO..., or a carbon bug, resp.
+     */
+    display: none;
   }
 
 </style>
