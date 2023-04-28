@@ -1,6 +1,6 @@
 <script>
 
-  import { util } from '..'
+  import { InterkitClient, util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import LinkConditional from './LinkConditional.svelte';
@@ -23,6 +23,13 @@
   $: imageRef = util.rowVal($element, imageColumn)
 
   export let subtitleTag // special Tag to show before subtitle
+
+  let showDummyData = InterkitClient.showDummyData;
+  const dummyData = {
+    title: "Title",
+    subtitleTag: "Tag",
+    subtitle: "Subtitle"
+  }
   
 </script>
 
@@ -41,17 +48,17 @@
 
         {#key title}
           <h3 class="title">
-            {title}
+            {$showDummyData ? dummyData.title : title}
           </h3>
         {/key}
 
         <h4>
-          {#if subtitleTag}
-            <span class="subtitleTag">{subtitleTag}</span>
+          {#if subtitleTag || $showDummyData}
+            <span class="subtitleTag">{$showDummyData ? dummyData.subtitleTag : subtitleTag}</span>
           {/if}
           
-          {#if subtitle}
-            <span class="subtitle">{subtitle}</span>
+          {#if subtitle || $showDummyData}
+            <span class="subtitle">{$showDummyData ? dummyData.subtitle : subtitle}</span>
           {/if}
         </h4>
 

@@ -26,6 +26,8 @@
   let unsubscribe;
   let unfilteredData;
   let providedData = writable([]);
+  const showDummyData = InterkitClient.showDummyData;
+  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {}}}})
 
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   //console.log("ElementsContextProvider")
@@ -97,7 +99,12 @@
 
   const refilter = () => {
     //console.log("ElementsContextProvider refilter", unfilteredData)
-    providedData.set(filterData(unfilteredData));    
+    if($showDummyData) {
+      providedData.set(dummyData);    
+    } else {
+      providedData.set(filterData(unfilteredData));    
+    }
+    
   }
 
   const initSubs = async () => {

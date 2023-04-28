@@ -41,6 +41,8 @@
   let bundleServerURL
   let themed = true
   let localConfig = true
+  let dummyData = false
+  
   let iframeRef = null
 
   $: window.__ifr = iframeRef
@@ -66,6 +68,7 @@
     //query.set("projectId", projectId)
     //console.log("currentProject", $currentProject)
     //console.log("localConfig", localConfig)
+    query.set("dummyData", dummyData)
     if (localConfig && $currentProject) {
       query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
     } else {
@@ -224,6 +227,11 @@
       labelText="Local Config"
       toggled
       on:toggle={(e) => localConfig = e.detail.toggled}
+      />
+    <Toggle
+      size="sm"
+      labelText="Dummy Data"
+      bind:toggled={dummyData}
       />
   </div>
 </Modal>

@@ -22,6 +22,8 @@ let projectId = writable(null);
 let connectionIssue = writable(false);
 let connected = writable(false);
 
+let showDummyData = writable(false);
+
 let server;
 
 let userAuth;
@@ -162,6 +164,12 @@ const loadConfig = async () => {
       _config.INTERKIT_APP_LOAD_THEME = params.get("loadTheme") === "true";
     }
     console.log(`INTERKIT_APP_LOAD_THEME=${_config.INTERKIT_APP_LOAD_THEME}`)
+
+    if(params.get("dummyData")) {
+      let d = params.get("dummyData") == "true" ? true : false
+      _config.showDummyData = d
+      showDummyData.set(d)
+    }
     
     config.set(_config);
 }
@@ -973,6 +981,7 @@ const InterkitClient = {
   config,
   connected, // svelte store
   projectId,
+  showDummyData,
   userProjectDataStore,
   connectionIssue,
   connect,

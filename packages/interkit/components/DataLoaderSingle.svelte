@@ -10,6 +10,9 @@
   let rows; // row sub store for the whole sheet
   const rowStore = writable(null) // store to hold just the data for the row we want
   setContext("element", rowStore) // put that store in an element context
+
+  const showDummyData = InterkitClient.showDummyData;
+  const dummyData = [{key: "1", values: {}}]
   
   // subscribe to the rows in that sheet
   onMount(async () => {
@@ -23,7 +26,11 @@
     if(rows) {
       row = rows.find(r => r.key == rowKey);
     }
-    rowStore.set(row);
+    if($showDummyData) {
+      rowStore.set(dummyData)
+    } else {
+      rowStore.set(row);
+    }
   }
 
   // update the store when data changes

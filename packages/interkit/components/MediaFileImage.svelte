@@ -35,10 +35,26 @@
     mediaFileStore = await InterkitClient.getMediaFileSubStore()
   })
 
+  const showDummyData = InterkitClient.showDummyData
+
+  function encodeSvg(svgString) {
+  return svgString.replace('<svg',(~svgString.indexOf('xmlns')?'<svg':'<svg xmlns="http://www.w3.org/2000/svg"'))
+        .replace(/"/g, '\'')
+        .replace(/%/g, '%25')
+        .replace(/#/g, '%23')       
+        .replace(/{/g, '%7B')
+        .replace(/}/g, '%7D')         
+        .replace(/</g, '%3C')
+        .replace(/>/g, '%3E')
+        .replace(/\s+/g,' ') 
+  ;}
+  const svgString = "<svg xmlns='http://www.w3.org/2000/svg' width='380' height='208' fill='none'><path fill='#FFDBD3' d='M0 0h380v208H0z'/></svg>"
+  const dummyDataImgURL = "data:image/svg+xml, " + encodeSvg(svgString)
+  
 </script>
 
-{#if mediafile}
-  <img on:click={ () => zoomed = true } {style} class={`fitDimension-${fitDimension} objectFit-${objectFit}`} alt="mediafile" src={encodeURI(mediafile.link)}/>
+{#if mediafile || $showDummyData}
+  <img on:click={ () => zoomed = true } {style} class={`fitDimension-${fitDimension} objectFit-${objectFit}`} alt="mediafile" src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}/>
   {#if zoomable && zoomed}
     <div class="fullscreen-overlay" on:click={ () => zoomed = false } >
       <div class="zoom-close-icon">
