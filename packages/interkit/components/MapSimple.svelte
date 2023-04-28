@@ -92,6 +92,19 @@
   let elements = elementsContext?.elements;
   console.log("MapSimple, got elements from context", elements)
 
+  let unsubElements; // unsubscribe method to this store
+  let markerObjs; // where we store the objects
+  
+  // retrieve row from qr scanner and convert to object with the columns specified in map
+  let qrContext = getContext("qr-scanner")
+  if(qrContext?.targetElementObj) {
+    singleElement = util.rowToObject(qrContext.targetElementObj.row, columnMap)
+    console.log("singleElement", singleElement)
+  }
+
+  if(!elements && !singleElement) alert("Warning: MapSimple needs elements or QRScanner context to show markers");
+
+  // setup dummy data
   function getRandomInRange(from, to, fixed) {
     return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
@@ -109,18 +122,6 @@
   if($showDummyData) {
     elements = dummyDataStore
   }
-
-  let unsubElements; // unsubscribe method to this store
-  let markerObjs; // where we store the objects
-  
-  // retrieve row from qr scanner and convert to object with the columns specified in map
-  let qrContext = getContext("qr-scanner")
-  if(qrContext?.targetElementObj) {
-    singleElement = util.rowToObject(qrContext.targetElementObj.row, columnMap)
-    console.log("singleElement", singleElement)
-  }
-
-  if(!elements && !singleElement) console.log("MapSimple needs elements or QRScanner context to show markers");
 
   // set up subscription
   const initDataSubs = async () => {
