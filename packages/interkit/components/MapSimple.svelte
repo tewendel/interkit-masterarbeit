@@ -10,6 +10,7 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
+  import ContextProvider from './ContextProvider.svelte';
   
   export let markerIconAsset; // default asset to use
   export let markerCheckedIconAsset; // checked asset
@@ -32,12 +33,9 @@
   export let inline = false;
   export let disableControls = false;
   export let singleElementContext = false; // mode to retrieve element from context and show just that
-  
   export let tileLayer // simple tilelyer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
   export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
-  
   export let closeButtonLabel = "Schließen"
-  
   export let clickTrigger;
 
   // for new iOS only at this moment
@@ -90,8 +88,28 @@
   let nearestElement;
   let singleElement;
 
-  let elements = getContext("elements");
-  
+  let elementsContext = getContext("elements");
+  let elements = elementsContext?.elements;
+  console.log("MapSimple, got elements from context", elements)
+
+  function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+  }
+  const showDummyData = InterkitClient.showDummyData;
+  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
+    position: {
+      lat: getRandomInRange(-90, 90, 3),
+      lng: getRandomInRange(-180, 180, 3)
+    },
+    markerTitle: "markerTitle",
+    markerLabel: `${k}`
+  }}}})
+  const dummyDataStore = writable(dummyData)
+  if($showDummyData) {
+    elements = dummyDataStore
+  }
+
   let unsubElements; // unsubscribe method to this store
   let markerObjs; // where we store the objects
   
@@ -103,13 +121,15 @@
   }
 
   if(!elements && !singleElement) console.log("MapSimple needs elements or QRScanner context to show markers");
-  
+
   // set up subscription
   const initDataSubs = async () => {
     if(elements) {
       // convert elements to objects with the columns we need
       unsubElements = elements.subscribe((data)=>{
+        console.log("map elements data", data)
         markerObjs = data.map(e => util.rowToObject(e.row, columnMap));
+        console.log("map elements markerObj", markerObjs)
         updateMarkerData();
       })
     }
@@ -167,7 +187,7 @@
       element: r
     }})
 
-    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
+    console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {
@@ -216,7 +236,7 @@
 
   <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
 
-    {#if selectedElement}
+    {#if selectedElement && $$slots.popup}
       <div class="marker_popup" 
         class:active={selectedElement ? true : false}
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
@@ -229,7 +249,12 @@
         </div>
         <div class="marker_popup_background">
           {#if selectedElement}
-            <slot name="element" element={{...selectedElement, size: "m"}}></slot>
+            <ContextProvider 
+              name="element" 
+              value={selectedElement}
+            >
+              <slot name="popup"></slot>
+            </ContextProvider>
           {/if}
         </div>
       </div>

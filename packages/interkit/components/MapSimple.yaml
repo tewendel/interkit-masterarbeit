@@ -69,5 +69,5 @@ fields:
       name: closeButtonLabel
       defaultValue: "Schließen"
   - type: "slot"
-    name: "element"  
+    name: "popup"  
 toolboxCategory: Map

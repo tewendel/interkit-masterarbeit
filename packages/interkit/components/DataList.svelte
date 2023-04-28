@@ -6,7 +6,7 @@
   import Icon from './Icon.svelte'
   import ContextProvider from './ContextProvider.svelte'
 
-  let elementsContext = getContext("elementsProvider");
+  let elementsContext = getContext("elements");
   if(!elementsContext) alert("ElementList needs DataLoader or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
@@ -14,14 +14,17 @@
     console.log("DataList got data update", $elements)
   }*/
 
+  const showDummyData = InterkitClient.showDummyData;
+  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {}}}})
+
 </script>
 
-{#if $elements}
-  {#if $elements.length == 0}
+{#if $elements || $showDummyData}
+  {#if $elements.length == 0 && !$showDummyData}
     <slot name="emptyElement"></slot>
   {:else}
     <ul>
-      {#each $elements as element}
+      {#each ($showDummyData ? dummyData : $elements) as element}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <li class="item">
           <ContextProvider 
@@ -34,7 +37,6 @@
       {/each}
     </ul>
   {/if}
-
 {/if}
 
 

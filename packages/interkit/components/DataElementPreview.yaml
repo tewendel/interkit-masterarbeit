@@ -4,7 +4,7 @@ fields:
     props:
     - name: onSelectRoute
       type: string
-      defaultValue: element
+      defaultValue: 
     - name: titleColumn
       type: sheetColumn
       columnType: string
