@@ -12,7 +12,6 @@ import { get_project_id } from './src/get_project_id.mjs'
 import { get_app_files } from './src/get_app_files.mjs'
 import { setup_cloudcmd } from './src/cloudcmd.mjs'
 import interkit_server from './src/interkit_server.mjs'
-import { setupViteServer } from './src/vite_server.mjs'
 import { get_git_status } from './src/get_git_status.mjs'
 import { get_git_commitAll } from './src/get_git_commitAll.mjs'
 import { get_git_checkout } from './src/get_git_checkout.mjs'
@@ -28,11 +27,11 @@ const PORT = process.env.PORT
 
 const cloudcmd_prefix = '/fs/';
 
-interkit_server.setup()
-
 const app = express();
 
 const server = http.createServer(app);
+
+interkit_server.setup(app, server);
 
 const socket = new io.Server(server, {
   path: `${cloudcmd_prefix}socket.io`,
@@ -101,10 +100,8 @@ app.delete('/src/:projectId/:filename', project_files_api.delete)
 
 //app.use(express.static('public', { index: false }))
 
-await setupViteServer(app, '9Xbw9eoxZ7ZgW8sxJ')
-
 // get app public files
-app.use('/', get_app_files);
+//app.get("/app/*", get_app_files);
+app.get("/*", get_app_files);
 
 server.listen(PORT, () => console.log('listening on port ' + PORT)); 
-

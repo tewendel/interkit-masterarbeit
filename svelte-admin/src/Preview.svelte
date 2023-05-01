@@ -29,7 +29,7 @@
   import Save from "carbon-icons-svelte/lib/Save.svelte"
   import Launch from "carbon-icons-svelte/lib/Launch.svelte"
 
-  export let projectId, previewURL = "", previewUserAuth;
+  export let projectId, previewURL = "", buildURL = "", previewUserAuth;
   export let currentProject;
 
   const convert = new Convert();
@@ -71,7 +71,8 @@
     }
     query.set("dev", true)
     //console.log("query", query.toString())
-    previewURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
+    previewURL = projectId ? bundleServerURL + "/dev/" + projectId + "/" + "?" + query : null
+    buildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
     bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
   }
 
@@ -242,13 +243,13 @@
           <div>
             <a
               target="_blank"
-              title={previewURL}
-              href={previewURL}
+              title={buildURL}
+              href={buildURL}
               style="text-decoration: none"
               >
-              {#key previewURL}
+              {#key buildURL}
                 <QrCode
-                  value={previewURL}
+                  value={buildURL}
                   padding={15}
                   />
               {/key}

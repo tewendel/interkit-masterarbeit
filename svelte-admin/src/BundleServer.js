@@ -57,6 +57,7 @@ const initProject = async (_projectId) => {
 }
 
 const compileReloadPreview = async (dev=false) => {
+  if (dev) return; // now handles by vite file watcher
   bundleProcessing.set(true)
   await compileProject(dev);
   bundleProcessing.set(false)

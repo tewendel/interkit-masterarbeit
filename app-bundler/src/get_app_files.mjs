@@ -6,11 +6,16 @@ import interkit_server from './interkit_server.mjs'
 const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 
 const get_app_files = async (req, res, next) => {
-  //console.log("request", req.url)
 
+  if (req.path.startsWith("/dev/")) {
+  next('route');
+  return
+  }
   // TODO this is too easy to exploit
 
-  const match = req.path.match(/\/app\/([a-zA-Z0-9]+)(.*)$/)
+  const match = req.path.match(/\/app\/([a-zA-Z0-9]{17})(.*)$/)
+
+  //console.log("request", req.path, req.url, match);
 
   const defaultProject = interkit_server.getDefaultProject()
 
@@ -23,8 +28,10 @@ const get_app_files = async (req, res, next) => {
   const slugOrId = match?.[1] || defaultProject.id
   let subpath = match?.[2] || req.path
 
+
   const projectId = resolveProjectPath(slugOrId)
-  
+
+  //console.log("request, found project", projectId, subpath);
   // console.log("url, match", req.url, match)
 
   if(projectId) {  
@@ -34,7 +41,7 @@ const get_app_files = async (req, res, next) => {
 
     const projectPublicPath = path.join(REPOSITORIES_PATH, "projects", projectId, "public")
 
-    //console.log(req.url, projectId, subpath, projectPublicPath)
+    //console.log("request, projectPublicPath", projectPublicPath)
 
     if (subpath == "/" || subpath == "") {
       subpath = "/index.html"
