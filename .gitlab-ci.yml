@@ -144,7 +144,7 @@ publish-package:
       - interkit.tar.gz
 
 test-server:
-  image: geoffreybooth/meteor-base:2.11
+  image: geoffreybooth/meteor-base:2.11.0
   stage: test
   script:
     - cd meteor-server
