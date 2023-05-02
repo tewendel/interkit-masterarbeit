@@ -10,8 +10,8 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
-  import ButtonBar from './ButtonBar.svelte'
-
+  import ContextProvider from './ContextProvider.svelte';
+  
   export let markerIconAsset; // default asset to use
   export let markerCheckedIconAsset; // checked asset
   export let markerPositionsColumn; // where the markers are
@@ -26,18 +26,16 @@
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen.";
   export let enableGeolocationHint = "Bitte aktivieren Sie ihren Standort."
   export let height; // height of the container
-  export let showControls; // "TRUE" if we should show controls
-  export let showPopups; // "TRUE" if we should show popup on marker tap
+  export let showControls; // true if we should show controls
+  export let showPopups; // true if we should show popup on marker tap
   export let mapId; // id of the map
-  export let nearestElementMode = "FALSE"; // mode to show only the nearest element
-  export let inline = "FALSE";
-  export let disableControls = "FALSE";
-  export let singleElementContext = "FALSE"; // mode to retrieve element from context and show just that
-  export let style // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
-  export let apiKey 
-
+  export let nearestElementMode = false; // mode to show only the nearest element
+  export let inline = false;
+  export let disableControls = false;
+  export let singleElementContext = false; // mode to retrieve element from context and show just that
+  export let tileLayer // simple tilelyer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
   export let closeButtonLabel = "Schließen"
-  
   export let clickTrigger;
 
   // for new iOS only at this moment
@@ -90,8 +88,10 @@
   let nearestElement;
   let singleElement;
 
-  let elementsContext = getContext("elementsProvider");
+  let elementsContext = getContext("elements");
   let elements = elementsContext?.elements;
+  console.log("MapSimple, got elements from context", elements)
+
   let unsubElements; // unsubscribe method to this store
   let markerObjs; // where we store the objects
   
@@ -102,16 +102,38 @@
     console.log("singleElement", singleElement)
   }
 
-  if(!elements && !singleElement) alert("MapSimple needs elementsContextProvider or QRScanner context");
-  
+  if(!elements && !singleElement) alert("Warning: MapSimple needs elements or QRScanner context to show markers");
+
+  // setup dummy data
+  function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+  }
+  const showDummyData = InterkitClient.showDummyData;
+  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
+    position: {
+      lat: getRandomInRange(-90, 90, 3),
+      lng: getRandomInRange(-180, 180, 3)
+    },
+    markerTitle: "markerTitle",
+    markerLabel: `${k}`
+  }}}})
+  const dummyDataStore = writable(dummyData)
+  if($showDummyData) {
+    elements = dummyDataStore
+  }
+
   // set up subscription
   const initDataSubs = async () => {
-    
-    // convert elements to objects with the columns we need
-    unsubElements = elements.subscribe((data)=>{
-      markerObjs = data.map(e => util.rowToObject(e.row, columnMap));
-      updateMarkerData();
-    })
+    if(elements) {
+      // convert elements to objects with the columns we need
+      unsubElements = elements.subscribe((data)=>{
+        console.log("map elements data", data)
+        markerObjs = data.map(e => util.rowToObject(e.row, columnMap));
+        console.log("map elements markerObj", markerObjs)
+        updateMarkerData();
+      })
+    }
   }
 
   const distanceSort = (a, b) => {
@@ -146,7 +168,7 @@
       if(markerObjs_sorted.length) {
         nearestElement = markerObjs_sorted[0]
         // if nearestElementMode is set and we have a position, show only nearest element
-        if(nearestElementMode == "TRUE") {
+        if(nearestElementMode) {
           selectedData = [nearestElement]
         }
       }
@@ -166,13 +188,13 @@
       element: r
     }})
 
-    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
+    console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {
     //console.log("marker clicked", e.target?.payload);
     
-    if(showPopups == "TRUE") {
+    if(showPopups) {
       selectedElement = {
         ...e.target?.payload?.elementRow,
         onPlay: () => {selectedElement = null}
@@ -213,9 +235,9 @@
   
 </script>
 
-  <div class="map-component-container" on:click={containerClick} class:inline="{inline == "TRUE"}">
+  <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
 
-    {#if selectedElement}
+    {#if selectedElement && $$slots.popup}
       <div class="marker_popup" 
         class:active={selectedElement ? true : false}
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
@@ -228,7 +250,12 @@
         </div>
         <div class="marker_popup_background">
           {#if selectedElement}
-            <slot name="element" element={{...selectedElement, size: "m"}}></slot>
+            <ContextProvider 
+              name="element" 
+              value={selectedElement}
+            >
+              <slot name="popup"></slot>
+            </ContextProvider>
           {/if}
         </div>
       </div>
@@ -246,18 +273,12 @@
       {nearestElement}
       {singleElement}
       {disableControls}
-      {style}
-      {apiKey}
+      {tileLayer}
+      {mapBoxGLStyle}
       mapFocus={mapFocusProcessed}
       {permissionNotification}
       {enableGeolocationHint}
     />
-
-    <div class="Map__Button__Bar button-bar-container">
-      <ButtonBar>
-        <slot name="button-bar" element={nearestElement}></slot>
-      </ButtonBar>
-    </div>
 
   </div>
 

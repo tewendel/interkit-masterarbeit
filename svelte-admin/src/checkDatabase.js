@@ -1,11 +1,18 @@
 import { InterkitClient } from 'interkit'
 
+import Blockly from 'blockly';
+
 const verifyValue = (v) => {
   return v && v !== "undefined" && v !== "null" && v !== ""
 }
 
-const parseBlocklyXML = async (xml, projectId) => {
+const checkDatabaseFromBlockly = async (workspace, projectId) => {
 
+  console.log("got all blocks", workspace.getAllBlocks())
+
+  /* Not in use - couldn't figure out how to iterate over all fields on blocks and get the field types without XML */
+
+  /*
   let prompted = false;
   let parser = new DOMParser();
   let xmlDoc = parser.parseFromString(xml, "text/xml");
@@ -89,7 +96,27 @@ const parseBlocklyXML = async (xml, projectId) => {
       }
     }
   }
-  alert("check completed." + (!prompted ? " looks good!" : ""));
+  alert("check completed." + (!prompted ? " looks good!" : ""));*/
 }
 
-export default parseBlocklyXML;
+export const createSheet = async (value, projectId) => {
+  if(confirm(`create sheet '${value.sheetKey}'?`)) {
+    await InterkitClient.call("sheet.create", {projectId, sheetKey: value.sheetKey, name: value.sheetKey}) 
+  }
+}
+
+export const createColumn = async (columnInfo, value, projectId) => {
+  console.log(columnInfo, value);  
+
+  await InterkitClient.call("sheet.addColumn", {
+    projectId, 
+    sheetKey: value.sheetKey, 
+    colKey: value.columnKey, 
+    name: value.columnKey, 
+    type: columnInfo.columnType, 
+    reference: columnInfo.refKey,
+    options: columnInfo.options
+  })
+
+
+}

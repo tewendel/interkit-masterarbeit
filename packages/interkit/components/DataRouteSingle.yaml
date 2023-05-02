@@ -1,0 +1,13 @@
+name: DataRouteSingle
+colour: 100
+fields: 
+  - type: string
+    name: path
+    defaultValue: elements
+  - type: sheetId
+    name: sheet
+    defaultValue: elements
+  - type: slot
+    name: default
+toolboxCategory: Routing
+  

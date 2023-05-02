@@ -20,6 +20,8 @@ Meteor.methods({
 
     let projectId = await Projects.insert(doc);
 
+    return projectId
+
     // bundler will be notified via subscription
   },
 
@@ -36,8 +38,8 @@ Meteor.methods({
     }
   },
 
-  'project.duplicate': async ({ projectId }) => {
-      return duplicateProject(projectId)
+  'project.duplicate': async ({ projectId, newProjectName }) => {
+      return duplicateProject(projectId, newProjectName)
   },
 
   'project.setSlug': async ({ projectId, slug }) => {
@@ -50,6 +52,12 @@ Meteor.methods({
       return false
     }
     
+  },
+
+  'project.setIsTemplate': async ({ projectId, isTemplate }) => {
+    console.log('project.setIsTemplate', projectId, isTemplate)
+    const res = Projects.update({ _id: projectId }, { $set: { isTemplate } })
+    return res
   },
 
   'project.getId': async ({ slug }) => {

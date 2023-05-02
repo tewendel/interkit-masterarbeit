@@ -1,0 +1,27 @@
+name: DataLoader
+fields: 
+  - name: sheetKey
+    type: sheetId
+  - type: extraProps
+    props:
+    - name: referenceElementStore
+      type: string
+    - name: referenceElementColumn
+      type: sheetColumn
+    - name: sortColumn
+      type: sheetColumn
+    - name: hideColumn
+      type: sheetColumn
+    - name: excludePropertiesAny
+      type: string
+    - name: includePropertiesAny
+      type: string
+    - name: discoverableColumn
+      type: sheetColumn
+      defaultValue: elements/discoverable
+    - name: discoverProperty
+      type: string
+      defaultValue: discovered
+  - name: default
+    type: slot
+toolboxCategory: Data

@@ -7,6 +7,7 @@ Meteor.publish('projects', function() {
     name: 1,
     slug: 1,
     isDefaultProject: 1,
+    isTemplate: 1,
     history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,
@@ -30,6 +31,7 @@ Meteor.publish('projects.list', function() {
     name: 1,
     slug: 1,
     isDefaultProject: 1,
+    isTemplate: 1,
     history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,

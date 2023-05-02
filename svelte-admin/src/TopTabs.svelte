@@ -33,7 +33,10 @@
   ];
 
   const updateTabFromPropChange = (newTab) => {
-    console.log("tab changed from prop to:", newTab)
+    if(!newTab) {
+      mainSelected = 0
+      selectedDropdownId = "more"
+    }
     if(mainTabPaths.includes(newTab)) {
       mainSelected = mainTabPaths.indexOf(newTab);
       selectedDropdownId = "more"
@@ -42,6 +45,7 @@
       selectedDropdownId = newTab;
       mainSelected = 5;
     }
+    console.log("tab changed from prop to:", newTab, mainSelected)
   }
 
   $: updateTabFromPropChange(tab)

@@ -1,13 +1,16 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
-import extraPropsField from "./extraPropsField";
-
-
 const verbose = false
 
 export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, workspace) => {
   /* helper functions */
-  const attribute = (block, attributeName, blocklyAttributeName) => {
+
+  const escapeCurlyBrackets = (string) => {
+    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125")
+  }
+
+  const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
+    
     if(!blocklyAttributeName) blocklyAttributeName = attributeName;
     
     // if fieldValue is an object with value attribute, use that (eg special field sheetColumn)
@@ -43,11 +46,20 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
         }
       }
     } else {
-      console.log("attribute generator - warning, value not a string", { block, attributeName, value })
-      return "";
+      if(fieldType != "checkbox") {
+        console.log("attribute generator - warning, value not a string", { block, attributeName, value, fieldType })
+        return "";
+      }      
     }
 
-    return value ? `${attributeName}="${value}"\n` : "";
+    if(value) {
+      if(fieldType == "checkbox") {
+        return `${attributeName}={${value == "TRUE" ? true : false}}\n`
+      } else {
+        return `${attributeName}="${escapeCurlyBrackets(value)}"\n`
+      }
+    }
+    return "";
   }
 
   const attributes = (block, attributeNames) => {
@@ -57,12 +69,30 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   // exract data from extraProps field and format as a prop
   const extraProp = (block, prop) => {
     
-    let blockJson = Blockly.serialization.blocks.save(block);
-    //console.log("blockJson", blockJson) 
-
-    let value = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)?.value
+    let blockJson = Blockly.serialization.blocks.save(block);    
+    let jsonExtraProp = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)
     
-    return value ? `${prop.name}="${value}"\n` : "";
+    let value = jsonExtraProp?.value;
+    if(typeof value == "undefined" && typeof prop?.defaultValue != "undefined") {
+      value = jsonExtraProp?.defaultValue
+    }
+
+    //console.log("extraProp", prop.name, value)
+
+    // if value is an object with a text field (sheetColumn, sheetId), use that
+    if(typeof value == "object") {
+      if(value?.text) {
+        value = value.text
+      } else {
+        value = null;
+      }
+    }
+
+    if(typeof value == "boolean") {
+      return `${prop.name}={${value}}\n`;
+    }
+
+    return value ? `${prop.name}="${escapeCurlyBrackets(value)}"\n` : "";
   }
 
   const slot = (block, slotName, slotProp) => {
@@ -81,21 +111,23 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     return `${statements_name}`  
   }
 
-  const getSubtreeStatements = (subtreeKey) => {
-    //console.log("looking for subtree", subtreeKey)
-    const subtrees = workspace.getBlocksByType("BlocklySubTree")
-    //console.log(subtrees)
-    for(let subtree of subtrees) {
-      //console.log(subtree.getFieldValue("key"))
-      if(subtree.getFieldValue("key") == subtreeKey) {        
-         let code = javascriptGenerator.statementToCode(subtree, "blocks")
-         //console.log("found with code", code)
-         return code;
+  // helper for Group and Route references
+  const referencedBlockToCode = (types, field, key, method, slotName) => {
+    for(let type of types) {
+      //console.log("blockTypeToCode", type, field, key)
+      let blocks = workspace.getBlocksByType(type)
+      for(let block of blocks) {
+        if(block.getFieldValue(field) == key) {
+          let code;
+          if(method == "slot")
+            code = javascriptGenerator.statementToCode(block, slotName)
+          if(method == "block")
+            code = javascriptGenerator.blockToCode(block)
+          return code
+        }
       }
     }
-    return "";  
   }
-
   
   /* generate code generators from block definitions */
   console.log("initCodeGenerator");
@@ -107,12 +139,17 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
       // special blockly control blocks
 
-      if(blockObject.name == "SubtreeReference") {
-        //console.log("found SubtreeReference")
-        return getSubtreeStatements(block.getFieldValue("key"))        
+      if(blockObject.name == "GroupConnector") {
+        //console.log("found GroupReference")
+        return referencedBlockToCode(["Group"], "name", block.getFieldValue("name"), "slot", "default")        
       }
 
-      if(blockObject.name == "BlocklySubTree") {
+      if(blockObject.name == "RouteConnector") {
+        //console.log("found GroupReference")
+        return referencedBlockToCode(["Route", "DataRouteMulti", "DataRouteSingle"], "path", block.getFieldValue("path"), "block")        
+      }
+
+      if(blockObject.name == "Group") {
         return ""
       }
       
@@ -122,13 +159,15 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       // props
       for(let field of blockObject.fields) {
         if(field.type != "slot" && field.type != "extraProps") {
-          code += "   " + attribute(block, field.name)
+          code += "   " + attribute(block, field.name, field.name, field.type)
         }
         if(field.type == "extraProps") {
           //console.log("extraProps", field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
+            //console.log(extraProp(block, prop));
           }
+
         }
       }
       if(blockObject.hiddenProps) {

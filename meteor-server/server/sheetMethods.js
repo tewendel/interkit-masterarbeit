@@ -108,7 +108,7 @@ const updateRowsWithNewColKey = async ({sheetKey, projectId, oldColKey, newColKe
 Meteor.methods({
 
   'sheet.create': async ({projectId, name, sheetKey}) => {
-      console.log('sheet.create')
+      console.log('sheet.create', projectId, name, sheetKey)
 
       if(!name) name = "untitled sheet"
       if(!sheetKey) sheetKey = uuidv4(); // create a new key for this sheet
@@ -165,7 +165,7 @@ Meteor.methods({
     const rows = Rows.find({sheetKey: sheetKey, projectId}).fetch();
     return rows;
   },
- 
+
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
     console.log(rowKey, projectId, colKey, newVal);
     if(rowKey && projectId && colKey) {

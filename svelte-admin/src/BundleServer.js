@@ -9,6 +9,9 @@ export const buildHash = writable("0");
 let bundleServerURL;
 let projectId;
 
+// ugly sigil to avoid collision, but very handy to avoid race conditions
+export const bundleServerURL$ = writable(false)
+
 const reloadPreview = () => {
     buildHash.set(Date.now()+"")
     runtimeError.set(null)
@@ -32,6 +35,7 @@ const compileProject = async (dev=false) => {
 const connect = async (url) => {
   if(!bundleServerURL) {
     bundleServerURL = url
+    bundleServerURL$.set(url)
     console.log("Bundle Server connected to " + bundleServerURL)
     // TODO maybe test connection and return result
   }

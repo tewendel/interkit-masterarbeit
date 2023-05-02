@@ -1,0 +1,6 @@
+name: RouteConnector
+colour: 100
+fields:
+  - name: path
+    type: string
+toolboxCategory: Routing

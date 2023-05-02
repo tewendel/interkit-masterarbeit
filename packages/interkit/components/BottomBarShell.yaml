@@ -1,0 +1,8 @@
+name: BottomBarShell
+toolboxCategory: Layout
+colour: 140
+fields:
+  - name: Content
+    type: slot
+  - name: BottomBar
+    type: slot

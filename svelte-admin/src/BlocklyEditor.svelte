@@ -14,8 +14,7 @@
   import Blockly from 'blockly';
   import {javascriptGenerator} from 'blockly/javascript';
   import { blocklyConfig } from 'interkit-blockly'
-  import parseBlocklyXML from './parseBlocklyXML.js';
-
+  
   import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
   
   import { InterkitClient } from 'interkit'
@@ -106,7 +105,7 @@
     inputModalValue = currentProps; // this is bound to inputModal
     inputModalParams = { notice }
     openInputModal = "extraProps";
-    console.log("loading Modal for extraProps", inputModalValue)
+    //console.log("loading Modal for extraProps", inputModalValue)
 
     // returns Promise so that modal stays open until user clicks something
     return new Promise((resolve, reject) => {
@@ -210,11 +209,7 @@
 
   
   const createDatabase = () => {
-
-    // todo: update to json parsing
-    let xml = Blockly.Xml.workspaceToDom(workspace);
-    let xml_text = Blockly.Xml.domToPrettyText(xml);
-    parseBlocklyXML(xml_text, projectId);
+    checkDatabaseFromBlockly(workspace, projectId)
   }
 
   const myUpdateFunction = async (event) => {
@@ -242,7 +237,7 @@
         const data = block.data ? JSON.parse(block.data) : {}
         if (data.origin) origin = data.origin
       } catch {}
-      if(block.type != "BlocklySubTree" && block.type != "SubtreeReference")
+      if(!["Group", "GroupConnector", "RouteConnector"].includes(block.type))
         imports += `import ${block.type} from "${origin}/components/${block.type}.svelte";\n`
     }
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
@@ -338,7 +333,7 @@
       <div class="__BlocklyEditor">
 
         <div class="main-buttons">
-          <Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/>
+          <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
           <Button on:click={()=>saveAndCompile(true)}>save</Button>            
         </div>
       
@@ -399,6 +394,7 @@
 
   .scroll {
     overflow-y: auto;
+    height: 100%;
   }
 
 </style>

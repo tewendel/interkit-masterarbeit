@@ -4,6 +4,9 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
+  import { currentProject } from './admin.js'
+
+  import { get } from 'svelte/store'
 
   import { 
     Tabs, 
@@ -29,8 +32,8 @@
   import Save from "carbon-icons-svelte/lib/Save.svelte"
   import Launch from "carbon-icons-svelte/lib/Launch.svelte"
 
+
   export let projectId, previewURL = "", buildURL = "", previewUserAuth;
-  export let currentProject;
 
   const convert = new Convert();
   const query = new URLSearchParams(); // modify app configuration on request
@@ -39,6 +42,8 @@
   let bundleServerURL
   let themed = true
   let localConfig = true
+  let dummyData = false
+  
   let iframeRef = null
 
   $: window.__ifr = iframeRef
@@ -64,7 +69,8 @@
     //query.set("projectId", projectId)
     //console.log("currentProject", $currentProject)
     //console.log("localConfig", localConfig)
-    if(localConfig) {
+    query.set("dummyData", dummyData)
+    if (localConfig && $currentProject) {
       query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
     } else {
       query.delete("localConfigURL")
@@ -224,6 +230,11 @@
       toggled
       on:toggle={(e) => localConfig = e.detail.toggled}
       />
+    <Toggle
+      size="sm"
+      labelText="Dummy Data"
+      bind:toggled={dummyData}
+      />
   </div>
 </Modal>
 
@@ -241,6 +252,7 @@
       <div slot="content">
         <TabContent>
           <div>
+            <!-- svelte-ignore security-anchor-rel-noreferrer -->
             <a
               target="_blank"
               title={buildURL}

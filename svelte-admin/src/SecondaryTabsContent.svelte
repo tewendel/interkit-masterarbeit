@@ -4,14 +4,18 @@
   import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
   import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
   
-  import { secondaryTabsVisible, secondaryTabIndex } from './admin.js'
+  import {
+    projectId,
+    currentProject,
+    secondaryTabsVisible,
+    secondaryTabIndex,
+    secondaryTabPreviewProjectId
+  } from './admin.js'
 
   import Preview from './Preview.svelte'
   import DocsBrowser from './DocsBrowser.svelte'
   import ProjectServerInfo from './ProjectServerInfo.svelte';
 
-  export let projectId;
-  export let currentProject;
   export let previewUserAuth;
 
   let rightPaneHidden = false;
@@ -44,7 +48,9 @@
 
       <section class:visible={$secondaryTabIndex == 0}>
         {#if $currentProject}
-          <Preview {projectId} {currentProject} {previewUserAuth}/>
+          <Preview projectId={$projectId} {previewUserAuth} />
+        {:else if $secondaryTabPreviewProjectId}
+          <Preview projectId={$secondaryTabPreviewProjectId} />
         {:else}
           <!-- TODO find better component -->
           <ToastNotification

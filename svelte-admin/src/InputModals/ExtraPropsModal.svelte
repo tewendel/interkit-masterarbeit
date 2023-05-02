@@ -1,13 +1,19 @@
-
 <script>
   
+  import { util } from 'interkit'
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
     DataTable,
-  } from "carbon-components-svelte";
+    TextInput,
+    Select, 
+    SelectItem,
+  } from "carbon-components-svelte"
+
+  import SheetColumnSelectForm from './SheetColumnSelectForm.svelte'
+  import SheetIdSelectForm from './SheetIdSelectForm.svelte'
 
   export let value = [] // array of objects with name, type, defaultValue, value
   export let submit;
@@ -20,14 +26,10 @@
     { key: "value", value: "Value" },
   ]
 
-console.log(value)
-
+  // rows in the table of extra props (not to be confused with rows in a data sheet!)
   let rows = value.map(v => {return {
     id: v.name,
-    name: v.name,
-    value: v.value,
-    type: v.type,
-    defaultValue: v.defaultValue
+    ...v
   }})
 
   const updateCell = (row, cellValue) => {
@@ -37,10 +39,31 @@ console.log(value)
   // write row changes back to bound value prop
   const updateValue = () => {
     value = rows.map(r => {return {
-      name: r.name,
-      value: r.value,
-      type: r.type,
+      ...r
     }})
+  }
+
+  const getValue = (row) => {
+    console.log("getValue", row)
+    // construct default values if there is not value
+    if(typeof row.value == "undefined") {
+      if(row.type == "sheetColumn") {
+        return {
+          sheetKey: util.getSheetKey(row.defaultValue),
+          columnKey: util.colKey(row.defaultValue),
+          text: row.defaultValue
+        }
+      }
+      if(row.type == "sheetId") {
+        return {
+          sheetKey: row.defaultValue,
+          text: row.defaultValue
+        }
+      }
+      return row.defaultValue
+    } else {
+      return row.value
+    }
   }
 
 </script>
@@ -53,22 +76,40 @@ console.log(value)
   <ModalBody>
     <DataTable {headers} {rows}>
       <svelte:fragment slot="cell" let:row let:cell>
-        {#if cell.key === "value"}
-          {#if row.type == "string"}
-            <input value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
+        <div style="padding:5px">
+          {#if cell.key === "value"}
+            {#if row.type == "string"}
+              <TextInput value={getValue(row)} on:change={(e)=>{updateCell(row, e.detail)}}/>
+            {/if}
+            {#if row.type == "number"}
+              <TextInput value={getValue(row)} on:input={(e)=>{updateCell(row, e.detail)}}/>
+            {/if}
+            {#if row.type == "color"}
+              <input type="color" value={getValue(row)} on:input={(e)=>{updateCell(row, e.target.value)}}>
+            {/if}
+            {#if row.type == "checkbox"}
+              <input type="checkbox" checked={getValue(row)} on:change={(e)=>{updateCell(row, e.target.checked)}}>
+            {/if}
+            {#if row.type == "sheetColumn"}
+              <SheetColumnSelectForm columnInfo={row} value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>          
+            {/if}
+            {#if row.type == "sheetId"}
+              <SheetIdSelectForm value={getValue(value)} on:update={(e)=>updateCell(row, e.detail)}/>          
+            {/if}
+            {#if row.type == "options" && row?.options?.length}
+              <Select
+                on:change={(e) => updateCell(row, e.target.value)}
+                selected = {row.value}
+              >
+                {#each row.options as option}
+                  <SelectItem value={option} />
+                {/each}
+              </Select> 
+            {/if}
+          {:else}
+            {cell.value}
           {/if}
-          {#if row.type == "number"}
-            <input type="number" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
-          {/if}
-          {#if row.type == "color"}
-            <input type="color" value={row.value || row.defaultValue} on:input={(e)=>{updateCell(row, e.target.value)}}>
-          {/if}
-          {#if row.type == "boolean"}
-            <input type="checkbox" checked={row.value || row.defaultValue} on:change={(e)=>{updateCell(row, e.target.checked)}}>
-          {/if}
-        {:else}
-          {cell.value}
-        {/if}
+        </div>
       </svelte:fragment>
     </DataTable>
 

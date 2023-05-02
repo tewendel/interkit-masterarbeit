@@ -1,0 +1,9 @@
+name: DataList
+toolboxCategory: "Data"
+color: 230
+fields:
+  - type: slot
+    name: dataElement
+  - type: slot
+    name: emptyElement
+  

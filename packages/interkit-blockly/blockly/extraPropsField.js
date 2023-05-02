@@ -35,7 +35,7 @@ export default (Blockly, update) => {
     }
 
     async showEditor_() {
-      console.log("showEditor_", this.props);
+      //console.log("showEditor_", this.props);
       try {
         let newProps = await update(this.props, this.name);
         console.log("got props", newProps);

@@ -9,7 +9,7 @@ require('dotenv').config({
 // see also: https://github.com/sebastianquack/interkit/blob/master/api/src/dbutil.js#L693
 
 
-duplicateProject = async function (projectId) {
+duplicateProject = async function (projectId, newProjectName) {
   const newProjectId = Random.id()
   console.log("duplicating project " + projectId + " to " + newProjectId)
   let projectData = await getAllOfProject(projectId)
@@ -17,7 +17,7 @@ duplicateProject = async function (projectId) {
   console.log(projectData)
 
   // determine new name
-  const newProjectName = "Copy of " + projectData.project.name
+  newProjectName = newProjectName || "Copy of " + projectData.project.name
 
   // duplicate files
   let newProjectFiles = []
@@ -32,6 +32,9 @@ duplicateProject = async function (projectId) {
   // change slug
   const newProjectSlug = newProjectData.project.slug + "_" + newProjectId
   newProjectData.project.slug = newProjectSlug
+
+  // unset isTemplate
+  newProjectData.project.isTemplate = false
 
   // start new history
   newProjectData.project.history = [

@@ -1,0 +1,8 @@
+name: Group
+colour: 260
+fields:
+  - name: name
+    type: string
+  - name: default 
+    type: slot
+toolboxCategory: Groups

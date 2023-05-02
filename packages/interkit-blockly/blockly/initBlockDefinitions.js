@@ -36,7 +36,8 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
 
           } else if(field.type == "slot") {
 
-            this.appendDummyInput().appendField(field.name)
+            if(field.name != "default")
+              this.appendDummyInput().appendField(field.name)
             this.appendStatementInput(field.name)
 
             // Add the custom validator for the input connection if allowedChildren is defined

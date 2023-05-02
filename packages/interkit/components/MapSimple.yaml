@@ -1,0 +1,73 @@
+name: MapSimple
+title: MapSimple
+fields:
+  - type: extraProps
+    props:
+    - type: "string"
+      name: "defaultLocation"
+    - type: "sheetColumn"
+      name: "markerPositionsColumn"
+      columnType: "location"
+      defaultValue: "elements/position"
+    - type: "sheetColumn"
+      name: "customIconColumn"
+      columnType: "mediaFile"
+      defaultValue: "elements/mapMarkerIcon"
+    - type: "sheetColumn"
+      name: "markerLabelColumn"
+      columnType: "string"
+      defaultValue: "elements/markerLabel"
+    - type: "sheetColumn"
+      name: "markerTitleColumn"
+      columnType: "string"
+      defaultValue: "elements/markerTitle"
+    - type: string
+      name: checkedProperty
+      defaultValue: "checked"
+    - type: "string"
+      name: "secondaryPositionProperty"
+    - type: "sheetColumn"
+      name: "hideOnMapColumn"
+      columnType: "string"
+      defaultValue: "elements/hideOnMap"
+    - type: "string"
+      name: "permissionNotification"
+    - type: "string"
+      name: "enableGeolocationHint"
+    - type: string
+      name: mapId
+      defaultValue: map
+    - type: string
+      name: height
+      defaultValue: 100%
+    - type: checkbox
+      name: showControls
+      defaultValue: true
+    - type: checkbox
+      name: showPopups
+      defaultValue: true
+    - type: checkbox
+      name: inline
+      defaultValue: false
+    - type: checkbox
+      name: nearestElementMode
+      defaultValue: false
+    - type: checkbox
+      name: disableControls
+      defaultValue: false
+    - type: checkbox
+      name: singleElementContext
+      defaultValue: false
+    - type: string
+      name: tileLayer
+      defaultValue: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+    - type: string
+      name: mapBoxGLStyle
+    - type: string
+      name: clickTrigger
+    - type: string
+      name: closeButtonLabel
+      defaultValue: "Schließen"
+  - type: "slot"
+    name: "popup"  
+toolboxCategory: Map

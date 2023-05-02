@@ -1,0 +1,36 @@
+name: DataRouteMulti
+colour: 100
+fields: 
+  - type: string
+    name: path
+    defaultValue: element
+  - type: sheetId
+    name: sheet
+    defaultValue: elements
+  - type: checkbox
+    name: keepAlive
+    defaultValue: FALSE
+  - type: extraProps
+    props:
+    - name: referenceElementStore
+      type: string
+    - name: referenceElementColumn
+      type: sheetColumn
+    - name: sortColumn
+      type: sheetColumn
+    - name: hideColumn
+      type: sheetColumn
+    - name: excludePropertiesAny
+      type: string
+    - name: includePropertiesAny
+      type: string
+    - name: discoverableColumn
+      type: sheetColumn
+      defaultValue: elements/discoverable
+    - name: discoverProperty
+      type: string
+      defaultValue: discovered
+  - type: slot
+    name: default
+toolboxCategory: Routing
+  

@@ -22,6 +22,8 @@ let projectId = writable(null);
 let connectionIssue = writable(false);
 let connected = writable(false);
 
+let showDummyData = writable(false);
+
 let server;
 
 let userAuth;
@@ -29,6 +31,21 @@ let userAuth;
 //console.log(get(userAuth))
 // this is set only after user logs in sucessfully / or continues user sessio
 let userId = writable(null); 
+
+let userIsRole = writable({ admin: false })
+
+userId.subscribe(async userId => {
+  // try-block to get around race condition:
+  // If this is called too early, there is a syntax/ReferenceError re declaration before initialization,
+  // in the case were we need this function we can ignore it, because the subscription fires again, in time.
+  try {
+    // console.log('try userId subscription InterkitClient.call...')
+    const roles = await InterkitClient.call('user.getRoles', { userId })
+    userIsRole.set(roles)
+  } catch (e) {
+    console.log('try userId subscription InterkitClient call: ignoring / failing gracefully...')
+  }
+})
 
 let pushnotificationRegistrationToken = writable(null)
 
@@ -155,6 +172,12 @@ const loadConfig = async () => {
       _config.INTERKIT_APP_LOAD_THEME = params.get("loadTheme") === "true";
     }
     console.log(`INTERKIT_APP_LOAD_THEME=${_config.INTERKIT_APP_LOAD_THEME}`)
+
+    if(params.get("dummyData")) {
+      let d = params.get("dummyData") == "true" ? true : false
+      _config.showDummyData = d
+      showDummyData.set(d)
+    }
     
     config.set(_config);
 }
@@ -794,7 +817,7 @@ const logout = async () => {
 const call = async (method, params = {}) => {
 
     if (config && params && !params?.projectId) {
-      //console.log("adding projectId to method params", params, method)
+      console.log("adding projectId to method params", params, method, get(projectId))
       params.projectId = get(projectId);
     }
 
@@ -961,10 +984,12 @@ userId.subscribe((data)=>{
 
 const InterkitClient = {
   userId,
+  userIsRole,
   pushnotificationRegistrationToken,
   config,
   connected, // svelte store
   projectId,
+  showDummyData,
   userProjectDataStore,
   connectionIssue,
   connect,

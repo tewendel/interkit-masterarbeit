@@ -103,7 +103,7 @@
   export let permissionNotification;
   export let enableGeolocationHint;
   export let height; // height of the container
-  export let showControls; // "TRUE" if we should show controls
+  export let showControls; // true if we should show controls
   export let mapId; // id of the map
 
   export let markerData; // the markers to show
@@ -116,16 +116,13 @@
 
   export let defaultLocation; // where to center the map by default [lat, lng]
   
-  export let nearestElementMode = "FALSE";
+  export let nearestElementMode = false;
   export let nearestElement;
-  export let disableControls = "FALSE"
+  export let disableControls = false;
 
-  export let style;
+  export let tileLayer;
+  export let mapBoxGLStyle;  
   
-  const tileLayer = "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-  export let apiKey;
-  
-
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
 
@@ -363,21 +360,21 @@
       map.panBy(qrContext?.mapOffset, {animate: false});
     }
 
-    if(disableControls == "TRUE") {
+    if(disableControls) {
       map.dragging.disable();
       map.scrollWheelZoom.disable();
     }
 
-    if (apiKey) {
+    if (tileLayer) {
       // default interkit map style
       console.log("using tileLayer", tileLayer)
-      L.tileLayer(tileLayer + "?api_key=" + apiKey, {
+      L.tileLayer(tileLayer, {
         maxZoom: 20
       }).addTo(map);
     } else {
       L.maplibreGL({
         // attribution: 'TODO',
-        style: style,
+        style: mapBoxGLStyle,
       }).addTo(map);
     }
 
@@ -516,7 +513,7 @@
     </div> 
   {/if}
 
-  {#if showControls == "TRUE"}
+  {#if showControls}
     <div class="Map__Controls controls">
 
       <button class="Map__Controls__ZoomIn zoomIn">

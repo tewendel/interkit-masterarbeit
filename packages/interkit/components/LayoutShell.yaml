@@ -1,0 +1,11 @@
+name: LayoutShell
+toolboxCategory: Layout
+colour: 140
+fields:
+  - name: TopBar
+    type: slot
+  - name: Content
+    type: slot
+  - name: BottomBar
+    type: slot
+  
