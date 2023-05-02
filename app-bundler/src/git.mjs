@@ -126,11 +126,16 @@ async function gitUnstagedChanges(projectPath) {
     dir: projectPath
   }
   const FILE = 0, WORKDIR = 2, STAGE = 3
-  const filenames = (await git.statusMatrix(repo))
-    .filter(row => row[WORKDIR] !== row[STAGE])
-    .map(row => row[FILE])
-  // console.log("unstaged changes:", filenames)
-  return filenames
+  try {
+    const filenames = (await git.statusMatrix(repo))
+      .filter(row => row[WORKDIR] !== row[STAGE])
+      .map(row => row[FILE])
+      // console.log("unstaged changes:", filenames)
+    return filenames;
+  } catch (error) {
+    console.warn(error)
+    return false
+  }
 }
 
 async function gitDiff(projectPath) {

@@ -34,11 +34,12 @@ const updateFiles = async function(projectId, watchedFiles) {
 }
 
 const watchignore = [
-  '**/node_modules/**',
-  '**/.git/**',
-  '**/ios/**',
-  '**/android/**'
-]
+  "**/node_modules/**",
+  "**/.git/**",
+  "**/ios/**",
+  "**/android/**",
+  "**/vite.config.js.timestamp-*.json",
+];
 
 const runUpdater = async function(projectId) {
   // make sure the project is watched only once
