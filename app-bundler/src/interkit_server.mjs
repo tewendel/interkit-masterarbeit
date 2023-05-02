@@ -2,11 +2,12 @@ import { setup as serverSetup } from 'interkit/interkit-connect.js';
 import { ensureRepositories } from './filesystem.mjs'
 import { updateProjectServers } from './project_server.mjs'
 import { runUpdaters } from './updater.mjs'
+import { ensureViteServers } from './vite_server.mjs'
 
 let projects = []
 let server = null
 
-const setup = async () => {
+const setup = async (app, main_server) => {
 
   server = await serverSetup({},{
     username: "bundler",
@@ -23,6 +24,7 @@ const setup = async () => {
     await ensureRepositories(newData)
     updateProjectServers(newData)
     runUpdaters(newData)
+    ensureViteServers(newData, app, main_server)
     projects = newData
   });
 }

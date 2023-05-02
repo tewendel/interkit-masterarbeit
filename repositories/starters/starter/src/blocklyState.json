@@ -1,0 +1,30 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 187,
+        "y": 86,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "languages": ""
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "StaticText",
+              "id": "@4W.$?xEjcU(4#wPM7)z",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "Welcome",
+                "tag": "h1"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

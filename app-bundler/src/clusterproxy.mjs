@@ -1,0 +1,167 @@
+import http from "http";
+import net from "net";
+import cluster from "cluster";
+
+let _portrange = [8001, 8100];
+let workerIdCounter = 0;
+
+const debug = false
+
+function initCluster({ settings, portrange, app, server }) {
+  cluster.settings = { ...cluster.settings, ...settings };
+
+  if (portrange) {
+    _portrange = portrange;
+  }
+
+  //const server = http.createServer(app)
+
+  app.use("/", (req, res, next) => {
+    if (debug) console.log("primary request", req.url, "baseUrl", req.baseUrl);
+
+    const worker = selectWorker(req, cluster.workers);
+
+    if (worker) {
+      if (debug) console.log("redirecting request to worker", worker.id, "-", req.url);
+      const targetPort = worker.port;
+      // remove the port number from the host
+      //req.headers.host = req.headers.host.replace(/:\d+$/, '')
+      // remove pathPrefix at the beginning of the url
+      const forwardedUrl = req.url
+        .replace(worker.pathPrefix, "")
+        .replace("//", "/");
+      const proxy = http.request(
+        {
+          ...req,
+          host: "localhost",
+          port: targetPort,
+          headers: {
+            ...req.headers,
+            "X-Forwarded-Url": forwardedUrl,
+          },
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode, proxyRes.headers);
+          proxyRes.pipe(res, { end: true });
+        }
+      );
+
+      req.pipe(proxy, { end: true });
+
+      proxy.on("error", (err) => {
+        console.error("Error while proxying request:", err);
+        res.writeHead(500);
+        res.end("Internal server error");
+      });
+    } else {
+      next();
+      //res.writeHead(404)
+      //res.end('Not Found (primary)')
+    }
+  });
+
+  // WebSocket proxy
+  server.on("upgrade", (req, socket, head) => {
+    if (debug) console.log("websocket upgrade request", req.url);
+    // Custom logic to select a worker based on the request
+    const selectedWorker = selectWorker(req, cluster.workers);
+
+    if (!selectedWorker) {
+      if (debug) console.log("no worker found for websocket upgrade request", req.url);
+      // ignore this request
+      return;
+    }
+
+    const targetPort = selectedWorker.port;
+
+      if (debug) {
+        console.log(
+          "redirecting websocket upgrade request to worker",
+          selectedWorker.id,
+          "-",
+          req.url
+        );
+      }
+
+    // Create a socket to forward the request to the worker
+    const workerSocket = net.connect(targetPort, "localhost", () => {
+      // Forward the upgrade request headers to the worker
+      workerSocket.write(
+        `${req.method} ${req.url} HTTP/${req.httpVersion}\r\n` +
+          `${req.rawHeaders
+            .map((v, i) => (i % 2 === 0 ? `${v}: ` : `${v}\r\n`))
+            .join("")}` +
+          "\r\n",
+        "utf-8"
+      );
+
+      // Forward the remaining data to the worker
+      workerSocket.write(head);
+
+      // Pipe the sockets together
+      socket.pipe(workerSocket).pipe(socket);
+    });
+  });
+}
+
+function selectWorker(req, workers) {
+  const selectedWorker = Object.values(workers).find((worker) =>
+    req.url.startsWith("/" + worker.pathPrefix)
+  );
+
+  if (selectedWorker) {
+    if (debug) {
+      console.log(
+        "selected worker",
+        selectedWorker.id,
+        "for path url",
+        req.url
+      );
+    }
+    return selectedWorker;
+  }
+}
+
+function getUnusedPort() {
+  for (let port = _portrange[0]; port <= _portrange[1]; port++) {
+    if (
+      !Object.values(cluster.workers).find((worker) => worker.port === port)
+    ) {
+      return port;
+    }
+  }
+  throw new Error("No more ports available");
+}
+
+function addWorker({ pathPrefix, env, id }) {
+  const workerPort = getUnusedPort();
+
+  const worker = cluster.fork({
+    ...env,
+    PATH_PREFIX: pathPrefix,
+    PORT: workerPort,
+  });
+  worker.pathPrefix = pathPrefix;
+  worker.id = id || workerIdCounter++;
+  worker.port = workerPort;
+  console.log(
+    "Vite Worker",
+    worker.id,
+    "started on port",
+    workerPort,
+    "with path prefix",
+    pathPrefix
+  );
+  return worker;
+}
+
+function removeWorker(workerId) {
+  const worker = Object.values(cluster.workers).find(
+    (worker) => worker.id === workerId
+  );
+  if (worker) {
+    worker.kill();
+  }
+}
+
+export { initCluster, addWorker, removeWorker };
