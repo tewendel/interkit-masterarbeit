@@ -9,6 +9,8 @@ const testname = "projects-publication-auth"
 
 describe(testname, function () {
 
+  this.timeout(15000);
+
   if (Meteor.isServer) {
 
     // generate messages
@@ -35,12 +37,12 @@ describe(testname, function () {
       testname,
     }
 
-    before(function () {
-      seedUser("admin", "admin", "admin");
-      seedUser("author", "author", "author");
-      seedUser("bundler", "bundler", "bundler");
-      seedUser("projectuser", "projectuser", "projectuser");
-      seedUser("projectserver", "projectserver", "projectserver");
+    before(async function () {
+      await seedUser("admin", "admin", "admin");
+      await seedUser("author", "author", "author");
+      await seedUser("bundler", "bundler", "bundler");
+      await seedUser("projectuser", "projectuser", "projectuser");
+      await seedUser("projectserver", "projectserver", "projectserver");
     })
 
     beforeEach(function () {
