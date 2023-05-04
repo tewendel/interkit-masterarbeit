@@ -38,7 +38,7 @@ const watchignore = [
   "**/.git/**",
   "**/ios/**",
   "**/android/**",
-  "**/vite.config.js.timestamp-*.json",
+  "**/vite.config.js.timestamp-*",
 ];
 
 const runUpdater = async function(projectId) {

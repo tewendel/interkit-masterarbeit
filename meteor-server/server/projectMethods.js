@@ -139,7 +139,7 @@ Meteor.methods({
   },
 
   'project.viteServer.setStatus': async ({ projectId, status, message }) => {
-    console.log("project.viteServer.setStatus", projectId, status, message)
+    //console.log("project.viteServer.setStatus", projectId, status, message)
     const res = Projects.update({_id: projectId}, { $set: { 'uiState.viteServer.status': status, 'uiState.viteServer.message': message } })
   },
 
