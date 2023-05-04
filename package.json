@@ -22,7 +22,8 @@
     "docker:build:bundler": "docker build . -f Dockerfile.app-bundler",
     "docker:build:docs": "docker build . -f Dockerfile.docs",
     "docker:build:all": "npm run docker:build:server && npm run docker:build:admin && npm run docker:build:bundler && npm run docker:build:docs",
-    "test:server": "cd meteor-server && npm run test"
+    "test:server": "cd meteor-server && npm run test",
+    "db:reset": "cd meteor-server && meteor reset"
   },
   "engines": {
     "node": "16",

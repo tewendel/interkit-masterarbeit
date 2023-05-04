@@ -109,6 +109,8 @@ function initCluster({ settings, portrange, app, server }) {
       worker.kill();
     }
   });
+
+  return cluster.workers;
   
 }
 
@@ -162,24 +164,33 @@ function addWorker({ pathPrefix, env, id }) {
   );
 
     worker.on("exit", (code, signal) => {
-      console.log(
-        `Vite Worker ${worker.id} died with code: ${code} and signal: ${signal}. Restarting in 10s...`
-      );
-      setTimeout(() => {
-        addWorker({ pathPrefix, env, id });
-      }, 10000);
+      if (signal) {
+        console.log(
+          `Vite Worker ${worker.id} was terminated by signal: ${signal}.`
+        );
+      } else if (code === 0) {
+        console.log(`Vite Worker ${worker.id} exited with code: ${code}.`);
+      } else {
+        console.log(
+          `Vite Worker ${worker.id} died with code: ${code} and signal: ${signal}. Restarting in 10s...`
+        );
+        setTimeout(() => {
+          addWorker({ pathPrefix, env, id });
+        }, 10000);
+      }
     });
 
   return worker;
 }
 
 function removeWorker(workerId) {
-  const worker = Object.values(cluster.workers).find(
-    (worker) => worker.id === workerId
-  );
-  if (worker) {
-    console.log("Killing worker", worker.id);
-    worker.kill();
+  for (let worker of Object.values(cluster.workers)) {
+    if (worker.id === workerId && worker.isConnected() && !worker.beingKilled)
+    {
+      worker.beingKilled = true;
+      console.log("Killing worker", worker.id);
+      worker.kill();
+    }
   }
 }
 

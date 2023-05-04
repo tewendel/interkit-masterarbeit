@@ -1,5 +1,6 @@
 import { getProjectPath } from './filesystem.mjs'
 import path from 'path'
+import interkit_server from "./interkit_server.mjs"
 
 import { initCluster, addWorker, removeWorker } from "./clusterproxy.mjs";
 
@@ -7,15 +8,16 @@ import { initCluster, addWorker, removeWorker } from "./clusterproxy.mjs";
 const interkitPath = path.resolve(
   path.join(process.cwd(), "..", "packages", "interkit")
 );
+console.log("interkitPath", interkitPath)
 
-const workers = [];
+let workers;
 
 let initialized = false;
 
 async function ensureViteServers(projects, app, server) {
 
   if (!initialized) {
-    initCluster({
+      workers = initCluster({
       app,
       server,
       settings: {
@@ -28,25 +30,46 @@ async function ensureViteServers(projects, app, server) {
   
   // add new servers
   for (const project of projects) {
-    if (!workers.find((worker) => worker.id === project.id)) {
-      const worker = addWorker({
-        id: project.id,
-        pathPrefix: "dev/" + project.id,
-        env: {
-          PROJECT_PATH: getProjectPath(project.id),
-          INTERKIT_PATH: interkitPath,
-        },
-      });
-      workers.push(worker);
-    }
+    ensureWorker(project);
   }
 
   // remove old servers
-  for (const worker of workers) {
+  for (const worker of Object.values(workers)) {
     if (!projects.find((project) => project.id === worker.id)) {
       removeWorker(worker.id);
-      workers.splice(workers.indexOf(worker), 1);
     }
+  }
+}
+
+function ensureWorker(project) {
+  if (
+    !Object.values(workers).find(
+      (worker) => worker.id === project.id && worker.isConnected()
+    )
+  ) {
+    const worker = addWorker({
+      id: project.id,
+      pathPrefix: "dev/" + project.id,
+      env: {
+        PROJECT_PATH: getProjectPath(project.id),
+        INTERKIT_PATH: interkitPath,
+      },
+    });
+    worker.on("message", (msg) => {
+      if (msg.type === "ready") {
+        interkit_server.call("project.viteServer.setStatus", {
+          projectId: project.id,
+          status: "running",
+        });
+      }
+    });
+    worker.on("exit", (code, signal) => {
+      interkit_server.call("project.viteServer.setStatus", {
+        projectId: project.id,
+        status: "dead",
+        message: `exited with code: ${code} and signal: ${signal}`,
+      });
+    });
   }
 }
 

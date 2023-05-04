@@ -46,8 +46,7 @@ async function ensureProjectServers(projects) {
         } else {
           // initalize project server
           console.log(`initializing project server for project ${projectId}`)
-          const result = await interkit_server.call("project.projectServer.init", { projectId })
-          console.log(result)
+          await interkit_server.call("project.projectServer.init", { projectId })
           // setup & start project server
           // startServer(projectId) <-- will get trigeered by ensureProjectServers on the next run (NOTE: may crash if there is another change, needs improvements)
         }

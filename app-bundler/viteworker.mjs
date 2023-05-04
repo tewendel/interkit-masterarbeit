@@ -65,6 +65,11 @@ async function createServer() {
   app.use(vite.middlewares);
 
   app.use("/", express.static(projectPath));
+
+  // send message to cluster primary
+  if (cluster.isWorker) {
+    process.send({ type: "ready" });
+  }
 }
 
 createServer();

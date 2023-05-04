@@ -138,6 +138,11 @@ Meteor.methods({
     const res = Projects.update({_id: projectId}, { $set: { 'projectServer.actionRequested': null } })
   },
 
+  'project.viteServer.setStatus': async ({ projectId, status, message }) => {
+    console.log("project.viteServer.setStatus", projectId, status, message)
+    const res = Projects.update({_id: projectId}, { $set: { 'uiState.viteServer.status': status, 'uiState.viteServer.message': message } })
+  },
+
   'project.makeDefaultProject': async ({ projectId }) => {
     console.log("makeDefaultProject", projectId, Meteor.userId())
     if (Projects.findOne(projectId)) {

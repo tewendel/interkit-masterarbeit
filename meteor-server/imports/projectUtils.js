@@ -9,7 +9,7 @@ require('dotenv').config({
 // see also: https://github.com/sebastianquack/interkit/blob/master/api/src/dbutil.js#L693
 
 
-duplicateProject = async function (projectId, newProjectName) {
+const duplicateProject = async function (projectId, newProjectName) {
   const newProjectId = Random.id()
   console.log("duplicating project " + projectId + " to " + newProjectId)
   let projectData = await getAllOfProject(projectId)
