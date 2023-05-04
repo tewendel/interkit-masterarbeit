@@ -165,9 +165,9 @@
     }
   }
 
-  const duplicateProject = async (projectId) => {
-    console.log("duplicating database")
-    const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
+  const duplicateProject = async (row) => {
+    console.log("duplicating project", row.id)
+    const newProjectId = await InterkitClient.call("project.duplicate", {projectId: row.id})
   }
 
   const updateProjectSetIsTemplate = async (row, isTemplate) => {

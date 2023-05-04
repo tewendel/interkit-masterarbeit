@@ -126,7 +126,7 @@ const getAllOfProject = async function (projectId)  {
   delete project.uiState
 
   return {
-    project: {...project, uiState: undefined},
+    project,
     sheets,
     rows,
     files,
