@@ -40,7 +40,7 @@ async function ensureProjectServers(projects) {
       if (!server) {
         if (project.projectServer) {
           // setup & start project server if state is running or init
-          if (("running", "init").includes(project.projectServer?.status)) {
+          if (["running", "init"].includes(project.projectServer?.status)) {
             startServer(projectId)
           }
         } else {
@@ -110,6 +110,7 @@ async function setupServerProcess(projectId) {
 async function startServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
   if (!server) {
+    console.log(`starting projectServer ${projectId}`)
     const newServer = {
       projectId,
       proc: setupServerProcess(projectId).then(p => newServer.proc=p) // put promise in proc (so it evalueates true in the next run, then replace it with the proc)
@@ -129,6 +130,7 @@ async function startServer(projectId) {
 
 function stopServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
+  console.log(server)
   if (server && server.proc && server.proc.kill) {
     console.log(`stopping projectServer ${projectId}`)
     const terminated = server.proc.kill('SIGINT');
