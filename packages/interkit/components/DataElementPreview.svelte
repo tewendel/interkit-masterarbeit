@@ -33,9 +33,9 @@
   
 </script>
 
-{#if $element}
+{#if $element || $showDummyData}
 
-  <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element.key}">
+  <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
     <section class={`ContentElement ContentElement_List container`}>
 
       <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
