@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import {addUsersToRoles, userIsInRole} from '../imports/userRoles.js';
 
-function seedUser(username, password, role) {
+async function seedUser(username, password, role) {
   if (Meteor.users.find({ username }).count() == 0) {
     console.log('seeding user "' + username + '"');
     Accounts.createUser({

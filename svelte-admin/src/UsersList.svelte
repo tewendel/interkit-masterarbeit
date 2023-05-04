@@ -26,6 +26,8 @@
     TextArea,
     Tag
   } from "carbon-components-svelte";
+  import { JsonView } from '@zerodevx/svelte-json-view'
+
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import Send from "carbon-icons-svelte/lib/Send.svelte";
@@ -500,9 +502,7 @@
       <div slot="expanded-row" let:row>
         <b>boards:</b> {row.boards}
         <hr/>
-        <pre>
-          {JSON.stringify(row, null, 2)}
-        </pre>
+        <JsonView json={row} />
       </div>
 
       <span slot="cell" let:row let:cell>

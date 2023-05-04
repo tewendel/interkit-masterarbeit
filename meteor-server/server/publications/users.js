@@ -20,7 +20,7 @@ Meteor.publish('projectUsersPaginated', function({
   sortDirection = -1
 }) {
   const allowedSortKeys = ["createdAt", "username", "blocked", "projectUserData.userToken"];
-  const cursor = Meteor.users.find({ 
+  const query = { 
     [`projectUserData.${projectId}`] : { $exists:true },
     ...searchQuery && {$or: [
       // search in id
@@ -53,14 +53,18 @@ Meteor.publish('projectUsersPaginated', function({
         }
       }
     ]},
-  }, { 
+  }
+
+  const options = { 
     ...allowedSortKeys.includes(sortKey) && [1,-1].includes(parseInt(sortDirection)) && {sort: {[sortKey]: parseInt(sortDirection)}},
     fields: { services: false },
-    skip,
-    limit
-  });
+  }
+  
+  const cursor = Meteor.users.find(query, { ...options, skip, limit });
+  const countCursor = Meteor.users.find(query)
+
   //console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
-  return publishVirtualWithMeta(this, 'projectUsersPaginated', cursor);
+  return publishVirtualWithMeta(this, 'projectUsersPaginated', cursor, countCursor);
 })
 
 Meteor.publish("user.projectUserData", ({ projectId }) => {
