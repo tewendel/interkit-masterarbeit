@@ -75,7 +75,7 @@ Meteor.publish('messagesPaginated', function({
   //  searchQuery = searchQuery.replace(/[^a-zA-Z0-9]/g, " ");
   //}
 
-  const cursor = Messages.find({ 
+  const query = { 
     projectId,
     ...searchQuery && { 
     $or: [
@@ -94,15 +94,21 @@ Meteor.publish('messagesPaginated', function({
         { seenCount: { $lt: 1 } }
       ]
     }
-  }, { 
+  }
+
+  const options = { 
     ...allowedSortKeys.includes(sortKey) && [1,-1].includes(parseInt(sortDirection)) && {sort: {[sortKey]: parseInt(sortDirection)}},
     //fields: { services: false },
     skip,
     limit
-  }) 
+  }
+
+  const cursor = Messages.find(query, options) 
+
+  const countCursor = Messages.find(query, {fields: {_id: 1}})
 
   //console.log("publish projectUsersPaginated", projectId, skip, limit, searchQuery, sortKey, sortDirection, cursor.count())
-  return publishVirtualWithMeta(this, 'messagesPaginated', cursor);
+  return publishVirtualWithMeta(this, "messagesPaginated", cursor, countCursor);
 })
 
 Meteor.publish('messagesChannelReportsCount', function({projectId}){
