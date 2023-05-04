@@ -158,7 +158,7 @@
 <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
   <AspectRatio ratio={aspectRatio}>
     {#if bundleServerURL && !$compileError}
-      {#key $buildHash + $currentProject?.id && $currentProject?.uiState?.viteServer?.status !== "running" }
+      {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
         <iframe 
           title="embedded app preview" 
           src={previewURL} 

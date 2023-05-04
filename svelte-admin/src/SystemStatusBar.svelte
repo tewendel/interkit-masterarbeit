@@ -45,7 +45,7 @@
 
   &nbsp;
 
-  {#if currentProject}
+  {#if $currentProject}
     {#if currentProjectServerStatus == "running"}
       <Checkmark title="Project server is running" />
     {:else}
