@@ -48,6 +48,7 @@ async function createServer() {
           projectPath,
           //".",
           "/Users/holger/Documents/Projekte/interkit/code/interkit-experiments/packages/interkit/",
+          "/Users/sebquack/dev/interkit/code/interkit-experiments/packages/interkit/",
           "/var/packages/interkit/",
         ],
       },
