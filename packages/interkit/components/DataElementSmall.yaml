@@ -1,0 +1,19 @@
+name: DataElementSmall
+fields: 
+  - type: extraProps
+    props:
+    - name: titleColumn
+      type: sheetColumn
+      columnType: string
+      defaultValue: elements/title
+    - name: subtitleColumn
+      type: sheetColumn
+      columnType: string
+      defaultValue: elements/supertext
+    - name: subtitleTag
+      type: string
+    - name: imageColumn
+      type: sheetColumn
+      columnType: mediaFile
+      defaultValue: elements/image
+toolboxCategory: Data
