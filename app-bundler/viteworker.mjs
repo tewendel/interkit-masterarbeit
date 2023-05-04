@@ -48,6 +48,7 @@ async function createServer() {
         allow: [
           projectPath,
           interkitPath,
+          '/var/packages/interkit' // for dockerized environment
         ],
       },
     },
