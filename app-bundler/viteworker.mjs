@@ -10,6 +10,7 @@ dns.setDefaultResultOrder("verbatim");
 const port = Number(process.env.PORT) || 8000;
 const projectPath = process.env.PROJECT_PATH || process.cwd();
 const pathPrefix = process.env.PATH_PREFIX || "";
+const interkitPath = process.env.INTERKIT_PATH || ".";
 
 const htmlPlugin = () => {
   return {
@@ -46,9 +47,7 @@ async function createServer() {
       fs: {
         allow: [
           projectPath,
-          //".",
-          "/Users/holger/Documents/Projekte/interkit/code/interkit-experiments/packages/interkit/",
-          "/var/packages/interkit/",
+          interkitPath,
         ],
       },
     },

@@ -102,11 +102,19 @@ function initCluster({ settings, portrange, app, server }) {
       socket.pipe(workerSocket).pipe(socket);
     });
   });
+
+  process.on('exit', (code) => {
+    console.log(`Master process exited with code ${code} – removing all workers`);
+    for (const worker of Object.values(cluster.workers)) {
+      worker.kill();
+    }
+  });
+  
 }
 
 function selectWorker(req, workers) {
   const selectedWorker = Object.values(workers).find((worker) =>
-    req.url.startsWith("/" + worker.pathPrefix)
+    req.url.startsWith("/" + worker.pathPrefix) && worker.isConnected()
   );
 
   if (selectedWorker) {
@@ -152,6 +160,16 @@ function addWorker({ pathPrefix, env, id }) {
     "with path prefix",
     pathPrefix
   );
+
+    worker.on("exit", (code, signal) => {
+      console.log(
+        `Vite Worker ${worker.id} died with code: ${code} and signal: ${signal}. Restarting in 10s...`
+      );
+      setTimeout(() => {
+        addWorker({ pathPrefix, env, id });
+      }, 10000);
+    });
+
   return worker;
 }
 
@@ -160,6 +178,7 @@ function removeWorker(workerId) {
     (worker) => worker.id === workerId
   );
   if (worker) {
+    console.log("Killing worker", worker.id);
     worker.kill();
   }
 }

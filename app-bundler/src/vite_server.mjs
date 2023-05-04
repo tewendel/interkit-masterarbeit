@@ -1,7 +1,12 @@
 import { getProjectPath } from './filesystem.mjs'
+import path from 'path'
 
 import { initCluster, addWorker, removeWorker } from "./clusterproxy.mjs";
 
+// absolute path to ../packages/interkit
+const interkitPath = path.resolve(
+  path.join(process.cwd(), "..", "packages", "interkit")
+);
 
 const workers = [];
 
@@ -16,7 +21,7 @@ async function ensureViteServers(projects, app, server) {
       settings: {
         exec: "viteworker.mjs",
       },
-      portrange: [3011, 3400],
+      portrange: [10000, 11000],
     });
     initialized = true;
   }
@@ -29,9 +34,18 @@ async function ensureViteServers(projects, app, server) {
         pathPrefix: "dev/" + project.id,
         env: {
           PROJECT_PATH: getProjectPath(project.id),
+          INTERKIT_PATH: interkitPath,
         },
       });
       workers.push(worker);
+    }
+  }
+
+  // remove old servers
+  for (const worker of workers) {
+    if (!projects.find((project) => project.id === worker.id)) {
+      removeWorker(worker.id);
+      workers.splice(workers.indexOf(worker), 1);
     }
   }
 }
