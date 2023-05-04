@@ -1,19 +1,17 @@
 <script>
 
-  import { setContext } from 'svelte';
+  import { getContext } from 'svelte';
   import { writable } from 'svelte/store'
   
   import { InterkitClient, util } from '../'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
-  import ButtonBar from './ButtonBar.svelte'
-
+  
   import Icon from './Icon.svelte'
   
-  export let element; // must be used with a prop (ElementList oder ElementProvider)
-  console.log("contentElement_List with prop", element);
+  let element = getContext("element");
   if(!element) {
-    alert("this needs an element prop, for example from ElementList or ElementProvider")
+    console.warn("DataElementSmall needs an element context, for example from DataList")
   }
   
   export let titleColumn
@@ -23,25 +21,22 @@
   export let checkedProperty = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   
-  $: title = util.rowVal(element, titleColumn)
-  $: subtitle = util.rowVal(element, subtitleColumn)
-  $: imageRef = util.rowVal(element, imageColumn)
+  $: title = util.rowVal($element, titleColumn)
+  $: subtitle = util.rowVal($element, subtitleColumn)
+  $: imageRef = util.rowVal($element, imageColumn)
 
   export let subtitleTag // special Tag to show before subtitle
 
-  // set context for buttons in buttons slot
-  const buttonPayloadStore = writable(element)
-  setContext("buttonBar", {
-    buttonPayload: buttonPayloadStore
-  });
-
-  // update store whenever it changes
-  $: buttonPayloadStore.set(element)
-
+  let showDummyData = InterkitClient.showDummyData;
+  const dummyData = {
+    title: "Title",
+    subtitleTag: "Tag",
+    subtitle: "Subtitle"
+  }
   
 </script>
 
-{#if element}
+{#if $element || $showDummyData}
 
   <section class={`ContentElement container`}>
       
@@ -55,24 +50,20 @@
 
       {#key title}
       <h3 class="title">
-        {title}
+        {$showDummyData ? dummyData.title : title}
       </h3>
       {/key}
 
       <h4>
-        {#if subtitleTag}
-          <span class="subtitleTag">{subtitleTag}</span>
+        {#if subtitleTag || $showDummyData}
+          <span class="subtitleTag">{$showDummyData ? dummyData.subtitleTag : subtitleTag}</span>
         {/if}
         
-        {#if subtitle}
-          <span class="subtitle">{subtitle}</span>
+        {#if subtitle || $showDummyData}
+          <span class="subtitle">{$showDummyData ? dummyData.subtitle : subtitle}</span>
         {/if}
       </h4>
-
-      <div class="special">
-        <slot name="special"></slot>
-      </div>
-      
+            
     </div>
 
     {#if $elementProperties?.[element?.key]?.[checkedProperty]}
@@ -80,11 +71,6 @@
           <Icon type="check" height="24px"/>
       </div>
     {/if}
-
-
-    <ButtonBar>    
-      <slot name="buttons"></slot>
-    </ButtonBar>
 
   </section>
 

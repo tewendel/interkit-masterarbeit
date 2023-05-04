@@ -9,7 +9,7 @@
   let element = getContext("element");
   console.log("DataElementPreview got element store from context", $element)
   if(!element) {
-    alert("DataElementPreview needs an element context, for example from DataList")
+    console.warn("DataElementPreview needs an element context, for example from DataList")
   }
 
   export let onSelectRoute
