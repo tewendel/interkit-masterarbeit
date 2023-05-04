@@ -27,11 +27,12 @@ const PORT = process.env.PORT
 
 const cloudcmd_prefix = '/fs/';
 
-interkit_server.setup()
-
 const app = express();
 
 const server = http.createServer(app);
+
+interkit_server.setup(app, server);
+
 const socket = new io.Server(server, {
   path: `${cloudcmd_prefix}socket.io`,
 });
@@ -97,14 +98,10 @@ app.get('/src/:projectId/:filename', project_files_api.read)
 app.put('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
 app.delete('/src/:projectId/:filename', project_files_api.delete)
 
-
-
 //app.use(express.static('public', { index: false }))
 
-
 // get app public files
-app.use(get_app_files);
-
+//app.get("/app/*", get_app_files);
+app.get("/*", get_app_files);
 
 server.listen(PORT, () => console.log('listening on port ' + PORT)); 
-

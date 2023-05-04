@@ -309,7 +309,17 @@
 
   let selectedTab;
 
+  function onKeyDown(e) {
+    if (!open) return
+    if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault()
+      saveAndCompile(true)
+    }
+  }
+
 </script>
+
+  <svelte:window on:keydown={onKeyDown} />
 
   <MainColumns
     sidebarLeftLabel="Components"

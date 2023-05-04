@@ -66,7 +66,7 @@
 
 <!-- components -->
 <div class:active={tab == 'components'}>
-  <BlocklyEditor {projectId} open={true}/>
+  <BlocklyEditor {projectId} open={tab == 'components'}/>
 </div>
 
 <!-- nodes -->
