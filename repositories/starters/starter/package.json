@@ -7,7 +7,6 @@
     "build": "vite build",
     "start": "sirv public",
     "preview": "vite preview",
-    "build:dev": "npm run build",
     "dev": "vite"
   },
   "devDependencies": {
