@@ -23,6 +23,10 @@ Meteor.startup(() => {
 
   // see if there is an admin user, otherwise seed one
   seedUser('admin', process.env.ADMIN_PASSWORD, 'admin');
+  
+  // seed author user
+  seedUser('author', process.env.ADMIN_PASSWORD, 'author');
+
   // setup bundler user
   seedUser('bundler', process.env.BUNDLER_PASSWORD, 'bundler');
 

@@ -2,8 +2,10 @@ name: AppBase
 title: App Base
 colour: 130
 fields:
-  - type: string
-    name: languages
+  - type: extraProps
+    props:
+    - type: string
+      name: languages
   - type: slot
     name: default
 toolboxCategory: AppBase

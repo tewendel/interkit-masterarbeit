@@ -13,18 +13,12 @@ const compile_project = async function (projectId, dev=false) {
 
   const command_npm = `cd ${projectPath} && npm install && cd server && npm install`
   const command_build = `cd ${projectPath} && npm run build`
-  const command_build_dev = `cd ${projectPath} && npm run build:dev`
 
   let code, message
   try {
-    if (dev) {
-      const result_build_dev = await execPromise(command_build_dev);
-      message = result_build_dev?.stdout + result_build_dev?.stderr
-    } else {
-      const result_npm = await execPromise(command_npm);
-      const result_build = await  await execPromise(command_build);
-      message = result_npm.stdout + result_npm.stderr + result_build?.stdout + result_build?.stderr
-    }
+    const result_npm = await execPromise(command_npm);
+    const result_build = await execPromise(command_build);
+    message = result_npm.stdout + result_npm.stderr + result_build?.stdout + result_build?.stderr
     code = 0
   } catch (error) {
     console.log("caught error", error)

@@ -17,7 +17,8 @@
 
   const { Geolocation } = Plugins;
 
-  export let channel_key = "DEFAULT"
+  export let board = "board1"
+  let boardId = board;
   export let messagesReportableDefault = 'TRUE'
 
   // limited by typingMaxDuration!
@@ -48,12 +49,12 @@
     // if a globalStore has been set, use that
     let channelKeyDynamic = InterkitClient.getGlobalStore("chatChannelKey");
     if(get(channelKeyDynamic)) {
-      channel_key = get(channelKeyDynamic)
+      boardId = get(channelKeyDynamic)
     }    
 
-    console.log("getting sub with channel", channel_key)
+    console.log("getting sub with channel", boardId)
 
-    sub = await InterkitClient.getMessageSub(channel_key);
+    sub = await InterkitClient.getMessageSub(boardId);
     messageStore = sub.data
 
     userId = get(InterkitClient.userId)
@@ -152,7 +153,7 @@
       // mark all in channel as seen
       // setTimeout required for autoplay of unseen messages
       setTimeout(()=>{
-          InterkitClient.call("channel.seeAll", {userId, channel_key});
+          InterkitClient.call("channel.seeAll", {userId, channel_key: boardId});
         },
         2000
       )
@@ -188,7 +189,7 @@
   const userProjectData = InterkitClient.userProjectDataStore;
   $: {
     console.log("userProjectDataStore updated", $userProjectData)
-    updateChatInterface($userProjectData?.boardState?.[channel_key]?.interfaceConfig)
+    updateChatInterface($userProjectData?.boardState?.[boardId]?.interfaceConfig)
     hasInterfaceUpdated = true
     fastforwardOptionSetInterfaces()
   }
@@ -199,7 +200,7 @@
       interfaceConfig,
       projectId,
       userId,
-      boardId: channel_key
+      boardId
     })
   }
 
@@ -241,7 +242,7 @@
   const sendMessage = (messageText) => {
     InterkitClient.call("message.send", {
       sender: userId,
-      channel_key, 
+      channel_key: boardId, 
       payload: {type: "text", text: messageText},
       origin: "user"
     })
@@ -250,7 +251,7 @@
   const sendImage = (imageKey) => {
     InterkitClient.call("message.send", {
       sender: userId,
-      channel_key, 
+      channel_key: boardId, 
       payload: {type: "image", mediafileKey: imageKey},
       origin: "user"
     })
@@ -261,7 +262,7 @@
       console.log("selected", selectedKey, message)
       InterkitClient.call("message.submitChoice", {
         sender: userId,
-        channel_key, 
+        channel_key: boardId, 
         messageId: message.id,
         selectedKey
       })
@@ -284,7 +285,7 @@
     }    
     await InterkitClient.call("message.submitLocation", {
       sender: userId,
-      channel_key, 
+      channel_key: boardId, 
       messageId: message.id,
       location: location ? {lng: location.coords.longitude, lat: location.coords.latitude} : undefined,
       canceled
@@ -396,7 +397,7 @@
 <div class="Chat root">
   <div class="channel-info-overlay">
     <!--span>channel {channel_key}</span-->
-    <ChatChannelImage channel_key={channel_key}/>
+    <ChatChannelImage channel_key={boardId}/>
   </div>
   <div
     class="messages-container"
@@ -439,8 +440,8 @@
     <ChatInput 
       {chatInterface} 
       userId={userId}
-      boardId={channel_key}
-      nodeId={channel_key ? $userProjectData?.boardState?.[channel_key]?.nodeId : undefined}
+      boardId={boardId}
+      nodeId={boardId ? $userProjectData?.boardState?.[boardId]?.nodeId : undefined}
       on:submit={ event => sendMessage(event.detail.messageText)} 
       on:imageSubmit={ event => sendImage(event.detail.imageKey) }
     />

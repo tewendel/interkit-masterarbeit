@@ -145,7 +145,7 @@
             </ul>
           {/if}
           {#if subtrees.length == 1}
-            <p>When you use Groups, they will appear here as shortcuts.</p>
+            <p>Groups and Routes will appear here as shortcuts.</p>
             <Button
                 kind="ghost"
                 size="small"

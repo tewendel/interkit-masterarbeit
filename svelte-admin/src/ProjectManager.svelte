@@ -29,6 +29,7 @@
     Form,
     Dropdown,
     FormGroup,
+    InlineLoading,
     Tag,
     OverflowMenu,
     OverflowMenuItem,
@@ -55,6 +56,7 @@
   let createProjectTemplate
   let createProjectGitRepo
   let createProjectName
+  let createProjectInitializing = false
 
   let userId = InterkitClient.userId;
 
@@ -105,11 +107,16 @@
           gitRepository: createProjectGitRepo
         })
     }
-    createProjectStep = false
     if (!newProjectId) {
+      createProjectStep = false
       window.alert('Something might have gone wrong. Please check the project list.')
     } else {
-      push('/' + newProjectId)
+      createProjectInitializing = true
+      setTimeout(() => {
+        createProjectInitializing = false
+        push('/' + newProjectId)
+        createProjectStep = false
+      }, 2000)
     }
   }
 
@@ -158,9 +165,9 @@
     }
   }
 
-  const duplicateProject = async (projectId) => {
-    console.log("duplicating database")
-    const newProjectId = await InterkitClient.call("project.duplicate", {projectId})
+  const duplicateProject = async (row) => {
+    console.log("duplicating project", row.id)
+    const newProjectId = await InterkitClient.call("project.duplicate", {projectId: row.id})
   }
 
   const updateProjectSetIsTemplate = async (row, isTemplate) => {
@@ -485,9 +492,18 @@
                       on:click={() => { createProjectStep = 1}}
                       >Back</Button>
                     <Button
-                      disabled={!createProjectName}
+                      disabled={!createProjectName || createProjectInitializing}
                       on:click={() => createProject() }
-                      >Finish</Button>
+                      >
+                      {#if createProjectInitializing}
+                        <InlineLoading
+                          status="active"
+                          size="sm"
+                          /> Initializing
+                      {:else}
+                        Finish
+                      {/if}
+                    </Button>
                   {/if}
                   </ButtonSet>
                 </Column>
