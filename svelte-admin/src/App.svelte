@@ -115,7 +115,7 @@
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
           <div class="status">
             {#if $userId}
-              <SystemStatusBar currentProjectServerStatus={$currentProject?.projectServer?.status} />
+              <SystemStatusBar />
             {/if}
           </div>  
 

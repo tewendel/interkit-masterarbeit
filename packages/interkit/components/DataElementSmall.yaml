@@ -1,10 +1,7 @@
-name: DataElementPreview
-fields:
-  - type: extraProps  
+name: DataElementSmall
+fields: 
+  - type: extraProps
     props:
-    - name: onSelectRoute
-      type: string
-      defaultValue: 
     - name: titleColumn
       type: sheetColumn
       columnType: string

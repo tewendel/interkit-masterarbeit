@@ -27,6 +27,11 @@
   onMount(async ()=>{
     files = await InterkitClient.call("mediafiles.get", {projectId})
   })
+  
+  const onSelect = (select) => {
+    console.log("onSelect", select.detail)
+    value = select.detail
+  }
 
 </script>
 
@@ -36,7 +41,13 @@
 >
   <ModalHeader label="{value.key}" title="Update Column" />
   <ModalBody>
-    <MediaFileList radio mediafiles={files} bind:value={value} {projectId}/>
+    <MediaFileList 
+      radio 
+      mediafiles={files} 
+      {value} 
+      {projectId}
+      on:selected={onSelect}
+    />
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>

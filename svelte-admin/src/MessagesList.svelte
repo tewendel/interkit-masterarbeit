@@ -14,6 +14,7 @@
     DataTable,
     Modal
   } from 'carbon-components-svelte'
+  import { JsonView } from '@zerodevx/svelte-json-view'
 
   import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
 
@@ -354,9 +355,7 @@
           </ButtonSet>
         {/if}
         {#if verbose}
-          <pre>
-            {JSON.stringify(row, null, 2)}
-          </pre>
+          <JsonView json={row} />
         {/if}
       </div>
 

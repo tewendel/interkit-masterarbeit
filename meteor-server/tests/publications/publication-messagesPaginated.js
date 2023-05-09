@@ -40,7 +40,6 @@ describe(testname, function () {
     const message3 = {
       ...message1,
       _id: "message3",
-      projectId: "project1",
       channel_key: "REPORTS",
       payload: {
         type: "text",
@@ -48,12 +47,12 @@ describe(testname, function () {
       },
     }
 
-    before(function () {
-      seedUser("admin", "admin", "admin");
+    before(async function () {
+      await seedUser("admin", "admin", "admin");
       // TODO add projectUser and test permissions
-      Messages.insert(message1);
-      Messages.insert(message2);
-      Messages.insert(message3);
+      await Messages.insertAsync(message1);
+      await Messages.insertAsync(message2);
+      await Messages.insertAsync(message3);
     })
 
     after(function () {
@@ -63,20 +62,38 @@ describe(testname, function () {
     });
 
     it("should list the messages to admin", function () {
-      const user = Meteor.users.findOne({username: "admin"});
-      const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project1"}]);
+      const user = Meteor.users.findOne({ username: "admin" });
+      const res = Meteor.server.publish_handlers["messagesPaginated"].apply(
+        { userId: user._id },
+        [{ projectId: "project1", skip: 0, limit: 10 }]
+      );
       assert.equal(res.count(), 3);
     });
 
+    it("should apply limit", function () {
+      const user = Meteor.users.findOne({ username: "admin" });
+      const res = Meteor.server.publish_handlers["messagesPaginated"].apply(
+        { userId: user._id },
+        [{ projectId: "project1", skip: 0, limit: 2 }]
+      );
+      assert.equal(res.count(), 2);
+    });
+
     it("should not list the messages of another project", function () {
-      const user = Meteor.users.findOne({username: "admin"});
-      const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project2"}]);
+      const user = Meteor.users.findOne({ username: "admin" });
+      const res = Meteor.server.publish_handlers["messagesPaginated"].apply(
+        { userId: user._id },
+        [{ projectId: "project2" }]
+      );
       assert.equal(res.count(), 0);
     });
 
     it("should find the message by text", function () {
       const user = Meteor.users.findOne({username: "admin"});
-      const res = Meteor.server.publish_handlers['messagesPaginated'].apply({userId: user._id},[{projectId: "project1", searchQuery: "hello"}]);
+      const res = Meteor.server.publish_handlers["messagesPaginated"].apply(
+        { userId: user._id },
+        [{ projectId: "project1", searchQuery: "hello", skip: 0, limit: 10 }]
+      );
       assert.equal(res.count(), 1);
     });
 

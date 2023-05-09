@@ -75,8 +75,10 @@
 
       // subscribe to the current sheet itself
       if(currentSheetSub) currentSheetSub.stop()
-      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', {key: sheetKey, projectId}, (s)=>s.key == sheetKey, true);
-      currentSheet = currentSheetSub.data;      
+      currentSheetSub = await InterkitClient.getSub('sheets', 'sheets', {key: sheetKey, projectId}, (s)=>s.key == sheetKey && s.projectId == projectId, true);
+      currentSheet = currentSheetSub.data;
+      
+      console.log("Sheet: got currentSheet sub", $currentSheet ? $currentSheet : "")
     }
   }
 

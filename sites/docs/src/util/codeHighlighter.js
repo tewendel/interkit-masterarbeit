@@ -21,6 +21,7 @@ const THEME = 'nord';
  * @returns {Promise<string>} - highlighted html
  */
 async function highlighter(code, lang, meta) {
+  if (lang === 'docs') return code;
 	const shikiHighlighter = await getHighlighter({
 		theme: THEME
 	});

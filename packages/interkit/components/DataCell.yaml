@@ -1,0 +1,29 @@
+name: DataCell
+# green
+color: 230
+fields:
+  - name: contentKey
+    type: string
+  - type: extraProps
+    props:
+    - type: sheetColumn # | slot | string | checkbox | options
+      name: keyColumn
+      columnType: string # | mediaFile | richText | sheetRef | number | location | optionSelect
+      # options: 
+      #   - one
+      #   - two
+      defaultValue: settings/contentKey
+    - type: sheetColumn
+      name: contentColumn
+      columnType: richText
+      defaultValue: settings/content
+    - name: format
+      type: string
+      defaultValue: richText
+    - name: inline
+      type: checkbox
+      defaultValue: "TRUE"
+    - name: centerContent
+      type: checkbox
+      defaultValue: "FALSE"
+toolboxCategory: "Data"

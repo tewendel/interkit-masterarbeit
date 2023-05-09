@@ -1,8 +1,10 @@
 <script>
 
   import { executeTrigger } from '../actions'
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
   import { Link } from 'svelte-navigator';
+  
+  import Icon from './Icon.svelte'
 
   export let nopadding = false
   export let color = null;
@@ -17,6 +19,10 @@
   export let clickTrigger = null; // set this to execute a trigger on button click
   export let onClick = null // function to call on click if we are not using this with triggers
 
+  setContext("button", {
+    type,
+    path: clickTrigger    
+  })
 
   // get context from parent element, for example ContentElement and pass the payload to the action
   const c = getContext("buttonBar");
@@ -48,6 +54,11 @@
     >
     <slot/>
     { text || "" }
+    {#if type == "list-item"}
+      <div class="button-extra-icon">
+        <Icon type="Thin-Arrow-Right"/> 
+      </div>
+    {/if}
   </span>
 {:else if clickType === 'path'}
   <Link to={clickTrigger}>
@@ -60,6 +71,11 @@
       >
       <slot/>
       { text || "" }
+      {#if type == "list-item"}
+        <div class="button-extra-icon">
+          <Icon type="Thin-Arrow-Right"/> 
+        </div>
+      {/if}
     </span>
   </Link>
 {:else}
@@ -74,6 +90,11 @@
     >
     <slot/>
     { text || "" }
+    {#if type == "list-item"}
+    <div class="button-extra-icon">
+       <Icon type="Thin-Arrow-Right"/> 
+    </div>
+    {/if}
   </a>
 {/if}
 
@@ -158,6 +179,22 @@
   .button.spacer {
     visibility: hidden;
     pointer-events: none;
+  }
+
+  .button.list-item {
+    width: 100%;
+    justify-content: left;
+    font: var(--font-headline-4);
+    border: none;
+    border-bottom: var(--border-width) solid var(--border-color);
+    border-radius: 0%;
+  }
+
+  .button.list-item .button-extra-icon {
+    position: absolute;
+    right: var(--distance-s);
+    display: flex;
+    align-items: center;
   }
 
   .primary {

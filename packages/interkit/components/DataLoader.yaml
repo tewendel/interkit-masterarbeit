@@ -2,6 +2,7 @@ name: DataLoader
 fields: 
   - name: sheetKey
     type: sheetId
+    defaultValue: "elements"
   - type: extraProps
     props:
     - name: referenceElementStore
@@ -11,7 +12,7 @@ fields:
     - name: sortColumn
       type: sheetColumn
     - name: hideColumn
-      type: sheetColumn
+      defaultValue: "elements/hide"
     - name: excludePropertiesAny
       type: string
     - name: includePropertiesAny

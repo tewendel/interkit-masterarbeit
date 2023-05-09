@@ -1,10 +1,12 @@
 <script>
   import { onMount } from 'svelte';
   import { InterkitClient } from 'interkit'
+  import { currentProject } from './admin.js'
   import Checkmark from "carbon-icons-svelte/lib/CheckmarkOutline.svelte";
   import Warning from "carbon-icons-svelte/lib/Warning.svelte";
   
-  export let currentProjectServerStatus
+  $: currentProjectServerStatus = $currentProject?.projectServer?.status
+  $: viteServerStatus = $currentProject?.uiState?.viteServer?.status
 
   let sub = null;
   let bundlerIsOnline = null;
@@ -32,7 +34,18 @@
 </script>
 
 <span>
-  {#if currentProjectServerStatus}
+
+  {#if $currentProject}
+    {#if viteServerStatus == "running"}
+      <Checkmark title="Vite server is running" />
+    {:else}
+      <Warning title={"Vite server " + viteServerStatus} style="color:orange;"/>
+    {/if}
+  {/if}
+
+  &nbsp;
+
+  {#if $currentProject}
     {#if currentProjectServerStatus == "running"}
       <Checkmark title="Project server is running" />
     {:else}

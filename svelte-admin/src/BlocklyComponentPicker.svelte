@@ -98,6 +98,8 @@
     );
   }
 
+  let activeBlockPreview;
+
 </script>
 
 
@@ -113,6 +115,7 @@
             blockName={block.text} 
             add={()=>{selectComponent(block.text)}}
             help={()=>{openBlocklyHelp(block.text)}}
+            bind:activeBlockPreview
           />
         {/each}
       </AccordionItem>    
@@ -145,7 +148,7 @@
             </ul>
           {/if}
           {#if subtrees.length == 1}
-            <p>When you use Groups, they will appear here as shortcuts.</p>
+            <p>Groups and Routes will appear here as shortcuts.</p>
             <Button
                 kind="ghost"
                 size="small"

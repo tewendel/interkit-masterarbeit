@@ -18,8 +18,8 @@ services:
       - mongo
     environment:
       ROOT_URL: $INTERKIT_SERVER_URL
-      MONGO_URL: mongodb://mongo:27017/meteor
-      MONGO_OPLOG_URL: mongodb://mongo:27017/local?replicaSet=meteor"
+      MONGO_URL: &mongo_connection_string mongodb://mongo:27017/local?replicaSet=meteor&retryWrites=false
+      MONGO_OPLOG_URL: *mongo_connection_string
       MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
       BUNDLER_URL: $INTERKIT_BUNDLER_URL
@@ -34,7 +34,7 @@ services:
       - default
 
   mongo:
-    image: bitnami/mongodb:4.4
+    image: bitnami/mongodb:6.0
     restart: always
     volumes:
       - db-data:/bitnami/mongodb
@@ -44,7 +44,11 @@ services:
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: meteor
       MONGODB_ADVERTISED_HOSTNAME: mongo
+      #MONGODB_ROOT_USER: root
+      #MONGODB_ROOT_PASSWORD: password123
+      #MONGODB_REPLICA_SET_KEY: replicasetkey123
       ALLOW_EMPTY_PASSWORD: "yes"
+      
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
     restart: always

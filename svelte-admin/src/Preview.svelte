@@ -158,7 +158,7 @@
 <div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
   <AspectRatio ratio={aspectRatio}>
     {#if bundleServerURL && !$compileError}
-      {#key $buildHash}
+      {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
         <iframe 
           title="embedded app preview" 
           src={previewURL} 
@@ -168,9 +168,9 @@
         </iframe><br>
       {/key}
     {/if}
-    {#if $bundleProcessing}
+    {#if $bundleProcessing || ($currentProject && $currentProject?.uiState?.viteServer?.status !== "running")}
       <div class="loader">
-        <Loading withOverlay={false}  />
+        <Loading withOverlay={false} />
       </div>
     {/if}
   </AspectRatio>

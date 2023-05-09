@@ -50,7 +50,8 @@
       ...extraParams
     });
     unsubscribe = subHandle.data.subscribe((data)=>{
-      [meta, ...items] = data;
+      const meta = data.find(i => i.id == "meta")
+      items = data.filter(i => i.id != "meta")
       total = meta && meta.total || 0
       console.log("sub data", meta, items)
     })    

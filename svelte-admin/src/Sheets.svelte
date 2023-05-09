@@ -41,6 +41,8 @@
 
 </script>
 
+<div class="container">
+
 {#if !currentSheetKey}
 
   {#if sheets}
@@ -66,8 +68,15 @@
   <Sheet sheetKey={currentSheetKey} {projectId} close={()=>{currentSheetKey=null}}/>
 {/if}
 
+</div>
+
   
 <style>
+
+  .container {
+    padding: 16px;
+  }
+
   li:hover {cursor: pointer}
 
   .active {

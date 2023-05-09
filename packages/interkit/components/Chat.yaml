@@ -1,0 +1,22 @@
+name: Chat
+title: Chat
+colour: 100
+fields:
+  - type: string
+    name: board
+    defaultValue: "board1"
+  - type: extraProps
+    props:
+    - type: checkbox
+      name: messagesReportableDefault
+      defaultValue: "TRUE"
+    - type: string
+      name: typingDurationTypeChoiceDefault
+      defaultValue: "0.0"
+    - type: string
+      name: typingDurationTypeTextPerCharacter
+      defaultValue: "0.075"
+    - type: string
+      name: typingHideTypes
+      defaultValue: ""
+toolboxCategory: Chat

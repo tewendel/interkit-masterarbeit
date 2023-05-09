@@ -1,0 +1,13 @@
+name: AnonymousLogin
+fields:
+  - type: extraProps
+    props:
+    - type: string
+      name: defaultLang
+      defaultValue: en
+    - type: string
+      name: defaultLangIndex
+      defaultValue: 0
+  - type: slot
+    name: default
+toolboxCategory: User
