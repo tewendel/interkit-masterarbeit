@@ -130,7 +130,6 @@ async function startServer(projectId) {
 
 function stopServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
-  console.log(server)
   if (server && server.proc && server.proc.kill) {
     console.log(`stopping projectServer ${projectId}`)
     const terminated = server.proc.kill('SIGINT');
