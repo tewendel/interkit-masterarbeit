@@ -111,12 +111,8 @@
   export let markerClick;
   export let mapClick;
 
-  // fallback - this seems to work
-  export let markerIconAsset = "/leaflet/marker-icon-2x.png"; // default asset to use
-
-  // this doesn't work: 
-  //export let markerIconAsset = "./icons/Location.svg"; // default asset to use
-  export let markerCheckedIconAsset = "./icons/Check-Thin.svg"; // checked asset
+  import markerIconAsset from "./icons/Location.svg?url"; // default asset to use
+  import markerCheckedIconAsset from "./icons/Check-Thin.svg?url"; // checked asset
 
   export let defaultLocation; // where to center the map by default [lat, lng]
   
