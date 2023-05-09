@@ -98,6 +98,8 @@
     );
   }
 
+  let activeBlockPreview;
+
 </script>
 
 
@@ -113,6 +115,7 @@
             blockName={block.text} 
             add={()=>{selectComponent(block.text)}}
             help={()=>{openBlocklyHelp(block.text)}}
+            bind:activeBlockPreview
           />
         {/each}
       </AccordionItem>    

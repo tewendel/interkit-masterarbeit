@@ -12,10 +12,16 @@
   export let add;
   export let help;
 
-  let active = false;
+  export let activeBlockPreview; // the blockName that is currently active
+
+  $: active = activeBlockPreview == blockName;
 
   const toggleActive = () => {
-    active = !active;
+    if(active) {
+      activeBlockPreview = null;
+    } else {
+      activeBlockPreview = blockName;
+    }
   }
   
 </script>
