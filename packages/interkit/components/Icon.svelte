@@ -1,9 +1,15 @@
 <script>
   import { getContext } from 'svelte';
 
+  import { useLocation } from "svelte-navigator";
+
+	const location = useLocation();
+	
   export let type
   export let height = "25px"
   export let inverse = false
+
+  let activeType = type;
 
   const iconHeightOverride = getContext("iconHeight")
 
@@ -11,9 +17,21 @@
 
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 
+  const buttonContext = getContext("button");
+  console.log("buttonContext", buttonContext);
+  
+  $: {
+    console.log("icon", $location.pathname, buttonContext.path)
+    if($location.pathname == buttonContext.path) {
+      activeType = type.replace("Thin", "Full")
+    } else {
+      activeType = type;
+    }
+  }
+
 </script>
 
-<span on:click class:inverse class={`icon icon-${type}`} style={`--height: ${height};`}>
+<span on:click class:inverse class={`icon icon-${activeType}`} style={`--height: ${height};`}>
   <slot />
 </span>
 

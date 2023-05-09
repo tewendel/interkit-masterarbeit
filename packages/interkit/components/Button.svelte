@@ -1,9 +1,9 @@
 <script>
 
   import { executeTrigger } from '../actions'
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
   import { Link } from 'svelte-navigator';
-
+  
   import Icon from './Icon.svelte'
 
   export let nopadding = false
@@ -19,6 +19,10 @@
   export let clickTrigger = null; // set this to execute a trigger on button click
   export let onClick = null // function to call on click if we are not using this with triggers
 
+  setContext("button", {
+    type,
+    path: clickTrigger    
+  })
 
   // get context from parent element, for example ContentElement and pass the payload to the action
   const c = getContext("buttonBar");
