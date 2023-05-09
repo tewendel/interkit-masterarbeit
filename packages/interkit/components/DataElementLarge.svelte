@@ -9,7 +9,7 @@
   let element = getContext("element");
   console.log("DataElementPreview got element store from context", $element)
   if(!element) {
-    alert("DataElementPreview needs an element context, for example from DataList")
+    console.warn("DataElementPreview needs an element context, for example from DataList")
   }
 
   export let onSelectRoute
@@ -33,9 +33,9 @@
   
 </script>
 
-{#if $element}
+{#if $element || $showDummyData}
 
-  <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element.key}">
+  <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
     <section class={`ContentElement ContentElement_List container`}>
 
       <figure class="ContentElement__Picture ContentElementAudio__Picture picture">

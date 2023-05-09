@@ -1,16 +1,14 @@
 name: Styling
 colour: 100
 fields:
-  - name: default
-    type: slot
-  - name: googleFont
-    type: string
-    defaultValue: Inter:wght@300;400;500
-  - name: googleFont2
-    type: string
-    defaultValue: Inter:wght@300;400;500
   - type: extraProps
     props:
+    - name: googleFont
+      type: string
+      defaultValue: Inter:wght@300;400;500
+    - name: googleFont2
+      type: string
+      defaultValue: Inter:wght@300;400;500
     - name: colorText
       type: color
       defaultValue: "#32332E"
@@ -47,5 +45,7 @@ fields:
     - name: distanceScaleFactor
       type: string
       defaultValue: "1.0"
-toolboxCategory: Draft
+  - name: default
+    type: slot  
+toolboxCategory: Styling
 

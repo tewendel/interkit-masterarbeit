@@ -102,7 +102,7 @@
     console.log("singleElement", singleElement)
   }
 
-  if(!elements && !singleElement) alert("Warning: MapSimple needs elements or QRScanner context to show markers");
+  if(!elements && !singleElement) console.warn("Warning: MapSimple needs elements or QRScanner context to show markers");
 
   // setup dummy data
   function getRandomInRange(from, to, fixed) {
