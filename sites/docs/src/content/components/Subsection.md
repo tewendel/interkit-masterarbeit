@@ -1,6 +1,5 @@
 <script>
-  import ComponentInfo from "../../components/ComponentInfo.svelte";
-  import src from "../../../../../packages/interkit/components/Subsection.svelte?raw";
+
 </script>
 
 # Subsection
@@ -20,8 +19,3 @@ Help would be top level subsection, map the subsection on the second level you w
 ![blockly example](./images/Subsections.png)
 
 
-```docs
-../../../../../packages/interkit/components/Subsection.svelte
-```
-
-<ComponentInfo code={src} />
