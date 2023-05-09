@@ -18,6 +18,7 @@ import { get_git_checkout } from './src/get_git_checkout.mjs'
 import { get_git_push } from "./src/get_git_push.mjs";
 import { get_git_pull } from "./src/get_git_pull.mjs";
 import { get_yamls } from './src/get_yamls.mjs'
+import { get_readme } from './src/get_readme.mjs'
 
 import { api as board_node_api } from 'interkit/project-boards-nodes.js'
 
@@ -97,6 +98,10 @@ app.post('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
 app.get('/src/:projectId/:filename', project_files_api.read)
 app.put('/src/:projectId/:filename', rawBodyParser, project_files_api.update)
 app.delete('/src/:projectId/:filename', project_files_api.delete)
+
+// readme / docs
+// TODO remove if unnecessary
+app.get('/readme/:projectId', get_readme)
 
 //app.use(express.static('public', { index: false }))
 
