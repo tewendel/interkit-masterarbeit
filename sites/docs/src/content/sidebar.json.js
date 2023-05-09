@@ -9,11 +9,11 @@ export const items = [
 			},
 			{
 				title: 'How to start',
-				path: '/basics/process'
+				path: '/basics/build_app'
 			},
 			{
 				title: 'Elements',
-				path: '/basics/build_app'
+				path: '/basics/elements'
 			}
 		]
 	},
