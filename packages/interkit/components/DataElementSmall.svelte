@@ -85,8 +85,11 @@
   }
   .content {
     padding: var(--distance-m) var(--distance-m) var(--distance-m) 0;
-
   }
+  .content:first-child {
+    padding-left: var(--distance-m);
+  }
+
   .check-icon {
     position: absolute;
     top: var(--distance-m);
