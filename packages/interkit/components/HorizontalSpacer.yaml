@@ -1,0 +1,11 @@
+name: HorizontalSpacer
+toolboxCategory: Layout
+colour: 140
+fields:
+  - name: left
+    type: slot
+  - name: center
+    type: slot
+  - name: right
+    type: slot
+  

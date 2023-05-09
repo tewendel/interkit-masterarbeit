@@ -1,0 +1,44 @@
+name: Spacing
+colour: 100
+toolboxCategory: Layout
+fields:
+  - type: extraProps
+    props:
+    - name: top
+      type: options
+      options:
+        - none
+        - xs
+        - s
+        - m
+        - l
+        - xl
+    - name: right
+      type: options
+      options:
+        - none
+        - xs
+        - s
+        - m
+        - l
+        - xl
+    - name: bottom
+      type: options
+      options:
+        - none
+        - xs
+        - s
+        - m
+        - l
+        - xl
+    - name: left
+      type: options
+      options:
+        - none
+        - xs
+        - s
+        - m
+        - l
+        - xl     
+  - name: default
+    type: slot     

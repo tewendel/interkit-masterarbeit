@@ -23,6 +23,7 @@ fields:
         - secondary
         - ghost
         - link
+        - list-item
         - spacer
     - type: options
       name: size

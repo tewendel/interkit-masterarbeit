@@ -29,7 +29,7 @@
 
   .top-bar {
     height: 64px;
-    border-bottom: 1px solid gray;
+    border-bottom: var(--border-width) solid var(--border-color);
 
     flex-direction: row;
     justify-content: space-around;
