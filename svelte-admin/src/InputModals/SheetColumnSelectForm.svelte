@@ -9,52 +9,59 @@
 
   export let value = {};
   export let columnInfo;
+  
+  export let databaseUpdateCount = 0;
 
   const dispatch = createEventDispatcher();
 
   let sheets;
   let columns;
 
-  const updateColumns = () => {
-    let sheet = sheets.find(s=>s.key == value?.sheetKey)
-    columns = sheet?.columns;
-    //console.log(sheet)
-    if(value.sheetKey == "empty") value.text = "";
-  }
-
   const loadSheets = async () => {
+    //console.log("SheetColumnSelectForm loadSheets", databaseUpdateCount)
     sheets = await InterkitClient.call("sheets.get", {projectId: $projectId})         
   }
 
-  onMount(async ()=>{
+  const updateColumns = () => {
+    let sheet = sheets.find(s=>s.key == value?.sheetKey)
+    columns = sheet?.columns;
+    if(value.sheetKey == "empty") value.text = "";
+    //console.log("updateColumns", value)
+    updateHumanReadable();
+  }
+
+  const refreshDatabase = async () => {
     await loadSheets();
-    //console.log("SheetColumnSelectForm mount with", sheets, value);
     updateColumns();
-  })
+  }
+
+  $: {
+    databaseUpdateCount;
+    refreshDatabase();
+  }
 
   const createSheetAndReload = async (value) => {
     await createSheet(value, $projectId)
-    await loadSheets();
-    updateColumns();
+    databaseUpdateCount += 1;
   }
 
   const createColumnAndReload = async (value) => {
     await createColumn(columnInfo, value, $projectId)
-    await loadSheets();
-    updateColumns();
+    databaseUpdateCount += 1;
   }
 
-
   const updateHumanReadable = () => {
-    //console.log("updateHumanReadable", value)
+    //console.log("updateHumanReadable", value, sheets, columns)
     if(value.columnKey == "empty") {
       value.text = "";
     } else {
-      value.text = 
-        sheets.find(s=>s.key == value?.sheetKey)?.name + 
-        "/" + 
-        columns.find(c=>c.key == value?.columnKey)?.name;
-      value.columnType = columns.find(c=>c.key == value?.columnKey)?.type;
+      if(columns) {
+        value.text = 
+          sheets.find(s=>s.key == value?.sheetKey)?.name + 
+          "/" + 
+          columns.find(c=>c.key == value?.columnKey)?.name;
+        value.columnType = columns.find(c=>c.key == value?.columnKey)?.type;
+      }
     }
     dispatch("update", value);
   }
@@ -68,16 +75,16 @@
           <SelectItem value={sheet.key} text={sheet.name} />
         {/each}
     </Select>
-    {#if !sheets.find(s => s.key == value.sheetKey)}
-    <InlineNotification
-      lowContrast
-      hideCloseButton
-      kind="warning"
-      subtitle="This sheet is currently set to '{value.sheetKey}', but this sheet doesn't exist in your database. Would you like to create it?"
-    >
-      <svelte:fragment slot="actions">
-        <NotificationActionButton on:click={()=>createSheetAndReload(value)}>Create</NotificationActionButton>
-      </svelte:fragment>
+    {#if !sheets.find(s => s.key == value.sheetKey) && value.sheetKey != 'empty'}
+      <InlineNotification
+        lowContrast
+        hideCloseButton
+        kind="warning"
+        subtitle="This sheet is currently set to '{value.sheetKey}', but this sheet doesn't exist in your database. Would you like to create it?"
+      >
+        <svelte:fragment slot="actions">
+          <NotificationActionButton on:click={()=>createSheetAndReload(value)}>Create</NotificationActionButton>
+        </svelte:fragment>
       </InlineNotification>
     {/if}
   {/if}

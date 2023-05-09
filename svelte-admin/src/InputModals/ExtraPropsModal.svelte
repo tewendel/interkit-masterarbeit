@@ -22,7 +22,7 @@
   export let projectId;
 
   let headers = [
-    { key: "name", value: "Prop" },
+    { key: "name", value: "Setting" },
     { key: "value", value: "Value" },
   ]
 
@@ -33,6 +33,7 @@
   }})
 
   const updateCell = (row, cellValue) => {
+    //console.log("updateCell", row, cellValue)
     rows.find(r => r.name == row.name).value = cellValue
   }
 
@@ -44,7 +45,7 @@
   }
 
   const getValue = (row) => {
-    console.log("getValue", row)
+    // console.log("getValue", row)
     // construct default values if there is not value
     if(typeof row.value == "undefined") {
       if(row.type == "sheetColumn") {
@@ -65,6 +66,8 @@
       return row.value
     }
   }
+  
+  let databaseUpdateCount = 0 // counter to notify subcomponents to relad database structure on changes
 
 </script>
 
@@ -72,7 +75,7 @@
   on:submit={() => {updateValue(); submit();}}
   on:close={close}
 >
-  <ModalHeader label="" title="Extra Props" />
+  <ModalHeader label="" title="Component Settings" />
   <ModalBody>
     <DataTable {headers} {rows}>
       <svelte:fragment slot="cell" let:row let:cell>
@@ -91,10 +94,10 @@
               <input type="checkbox" checked={getValue(row)} on:change={(e)=>{updateCell(row, e.target.checked)}}>
             {/if}
             {#if row.type == "sheetColumn"}
-              <SheetColumnSelectForm columnInfo={row} value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>          
+              <SheetColumnSelectForm columnInfo={row} value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
             {/if}
             {#if row.type == "sheetId"}
-              <SheetIdSelectForm value={getValue(value)} on:update={(e)=>updateCell(row, e.detail)}/>          
+              <SheetIdSelectForm value={getValue(value)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select

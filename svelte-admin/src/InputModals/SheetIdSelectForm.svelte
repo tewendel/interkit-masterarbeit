@@ -9,6 +9,7 @@
   const dispatch = createEventDispatcher();
 
   export let value = {};
+  export let  databaseUpdateCount = 0;
   
   let sheets;
 
@@ -18,9 +19,10 @@
     updateHumanReadable();
   }
   
-  onMount(()=>{
-    loadSheets()
-  })
+  $: {
+    databaseUpdateCount;
+    loadSheets();
+  }
 
   const updateHumanReadable = () => {
     value.text = 
@@ -32,7 +34,7 @@
 
   const createSheetAndReload = async (value) => {
     await createSheet(value, $projectId)
-    loadSheets();
+    databaseUpdateCount += 1;
   }
   
 </script>
@@ -44,7 +46,7 @@
         <SelectItem value={sheet.key} text={sheet.name} />
       {/each}
   </Select>
-  {#if !sheets.find(s => s.key == value.sheetKey)}
+  {#if !sheets.find(s => s.key == value.sheetKey) && value.sheetKey != 'empty'}
     <InlineNotification
       lowContrast
       hideCloseButton
