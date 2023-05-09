@@ -62,7 +62,7 @@ async function setupServerProcess(projectId) {
   console.log(`running projectServer process for project ${projectId}`)
   const proc = spawn('nodemon', ['npm', 'start'], {
     cwd: serverPath,
-    stdio: ['pipe', 'pipe', 'pipe', 'ipc'], // enable IPC
+    stdio: ['pipe', 'pipe', 'pipe'], 
     env: {
       ...process.env,
       INTERKIT_PROJECT_ID: projectId,
