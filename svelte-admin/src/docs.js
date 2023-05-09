@@ -1,4 +1,4 @@
-import { secondaryTabIndex, secondaryTabsVisible } from './admin.js'
+import { secondaryTabIndex, secondaryTabsVisible, secondaryTabSpecialDoc } from './admin.js'
 
 let iframe
 
@@ -12,6 +12,7 @@ export const docsGo = (route) => {
   }
   secondaryTabsVisible.set(true)
   secondaryTabIndex.set(1)
+  secondaryTabSpecialDoc.set(false)
   iframe.contentWindow.postMessage(
     {
       method: 'docsGo',

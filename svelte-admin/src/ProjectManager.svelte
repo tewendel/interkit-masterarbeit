@@ -88,7 +88,6 @@
     } else {
       projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
       projects = projectsListSub.data;
-      projects = []
     }
   }
 
