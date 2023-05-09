@@ -33,11 +33,16 @@
   import Launch from "carbon-icons-svelte/lib/Launch.svelte"
 
 
-  export let projectId, previewURL = "", buildURL = "", previewUserAuth;
-
+  export let projectId
+  export let previewUserAuth;
+  export let appVariant = "dev"
+  
   const convert = new Convert();
   const query = new URLSearchParams(); // modify app configuration on request
 
+
+  let previewURL = ""
+  let buildURL = ""
   let bundlezipURL = "";
   let bundleServerURL
   let themed = true
@@ -161,7 +166,7 @@
       {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
         <iframe 
           title="embedded app preview" 
-          src={previewURL} 
+          src={ appVariant == "dev" ? previewURL : buildURL }
           allow="camera;microphone;geolocation;autoplay;accelerometer"
           bind:this={iframeRef}
           data-build-hash={$buildHash}>
@@ -201,16 +206,25 @@
     iconDescription="Reset"
     tooltipPosition="top"
     />
-  <Button
-    kind="tertiary"
-    size="small"
-    on:click={() => build()}
-    disabled={$bundleProcessing}
-    icon={Save}
-    >
-    Build
-  </Button>
+  {#if appVariant == "dev"}
+    <Button
+      kind="tertiary"
+      size="small"
+      on:click={() => build()}
+      disabled={$bundleProcessing}
+      icon={Save}
+      >
+      Publish
+    </Button>
+  {/if}
 </ButtonSet>
+
+{#if $currentProject && $currentProject?.uiState?.lastBuildDate}
+<br>
+<div class="lastBuildDate">
+Last Published: {new Date($currentProject?.uiState?.lastBuildDate).toLocaleString()}
+</div>
+{/if}
 
 <Modal
   bind:open={showSettingsModal}
@@ -304,7 +318,9 @@
   <div class="error">{$runtimeError} (check browser console for details)</div>
 {/if}
 
-<style>
+<style lang="scss">
+
+  @use '@carbon/type';
   
   .frame {
     width: 100%;
@@ -335,5 +351,10 @@
     color: #f0f0f0;
     padding: 1ex;
     overflow: scroll;
+  }
+
+  .lastBuildDate {
+    text-align: right;
+    @include type.type-style('helper-text-01');
   }
 </style>
