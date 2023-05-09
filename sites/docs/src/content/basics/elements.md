@@ -33,6 +33,3 @@ The "Build App" button does the same, but also generates a link to test the app 
 
 Changes in the database do not need a rebuild, they update immediately.
 
-## Interactions
-
-...

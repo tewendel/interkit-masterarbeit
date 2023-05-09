@@ -1,10 +1,12 @@
-# App creation process
+# The process of creating an app
 
 Creating an app is a multi-stage process that often involves several people with different responsibilities. It starts with conceptualizing your idea and ends with a finished app that you can share with others.
 
-## Stages
+--- 
 
-### 1. Concept
+## Stage 1: Planning
+
+### Concept - what do you want to do?
 
 - think about goals and objectives 
     - information
@@ -29,28 +31,42 @@ Creating an app is a multi-stage process that often involves several people with
 - consider interactions between users and their environment
     - Where should the experience take place? In public space? Indoor?
 
-### 2. COmceptualizing in the framework of interkit
+### Implementation - how can you do it with interkit?
 
 Before you start building your app, you should think about how to structure it in the framework of interkit.
 
-- Check the templates for similar apps
+- Check the templates for similar apps and how they are done
 - [Define your "elements"](./build_app)
+- Think about the layout of your app
+    - Which screens do you need?
+    - Check if suitable components exist
+    - Think about the interactions between the screens and components - what happens on which tap?
 - Determine if you need the `Story` section
     - User generated content? -> yes
     - Chat interaction? -> yes
     - Chatbot? -> yes
+    - User log in? -> yes
+- Be aware of the privacy implications and responsibilities connected to the design choices of the experience [link to guide]
 
-### 2. Build the Structure
+--- 
+
+## Stage 2: Building
+
+### Build the App Structure
 
 Sections `App` and `Data`
 
 - create a new project
-- setup [components](../components)
-- setup component [actions](../components/actions)
-- setup database sheets
+- setup components 
+    - Do you need a list of elements?
+    - Do you need a single element view?
+    - map, menu, chat, ... 
+- set up routing
+- set up component [actions](../components/actions) (optional)
+- set up database sheets
 - connect components to database sheets
 
-### 3. Content
+### Insert the Content
 
 Sections `Data` and `Media`
 
@@ -60,8 +76,11 @@ Sections `Data` and `Media`
 - upload video
 - upload 3d assets
 
-### 4. Story (optional)
-Design Chat interaction and server-side actions 
+### Story (optional)
+
+Section `Story`
+
+Design Chat interaction and server-side actions.
 
 - write interactions in the chat interface
 - add chat channels and bots
@@ -69,15 +88,45 @@ Design Chat interaction and server-side actions
 - connect external services
 - use [cron](../guides/cron_setup) for global timed actions
 
-### 5. Styling
+### Styling
 Tweak visual appearance of the app  
 [...]
 
-### 6. Deploy
+### Testing
+
+It is a good idea to have people test your app, gather feedback and improve it. 
+[...]
+
+--- 
+
+## Stage 3: Publishing
+
+### Legal
+
+- add imprint
+- add data protection declaration (if necessary)
+- add privacy policy (if necessary)
+- add terms of use (if necessary)
+- add license information (if necessary)
+- add credits (if necessary)
+- add contact information (if necessary)
+
+### Internationalization (optional)
+
+see [Internationalization guide](../guides/i18n)  
+[...]
+
+### Deployment
 
 Publish App  
 [...]
 
-### 7. Moderation
+optinal: App Store and Play Store 
+
+--- 
+
+## Stage 4: Maintaining
+
+### Moderation
 Moderate users and user generated content (optional)  
 [...]
