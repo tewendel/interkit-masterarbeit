@@ -40,11 +40,13 @@
 
   <section class={`ContentElement container`}>
       
-    <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
-      <AspectRatio aspectRatioType="square">
-        <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
-      </AspectRatio>
-    </figure>
+    {#if imageRef || $showDummyData}
+      <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
+        <AspectRatio aspectRatioType="square">
+          <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
+        </AspectRatio>
+      </figure>
+    {/if}
 
     <div class="content">
 
@@ -78,9 +80,11 @@
 
 <style>
   .container {
+    display: flex;
+    padding: var(--distance-xs)
   }
   .content {
-    padding: var(--distance-m) var(--distance-m) var(--distance-s) var(--distance-m);
+    padding: var(--distance-m) var(--distance-m) var(--distance-m) 0;
 
   }
   .check-icon {
@@ -89,12 +93,11 @@
     right: var(--distance-m);
   }
   .picture {
-    margin: var(--distance-s) var(--distance-m) var(--distance-s) var(--distance-s);
+    margin: var(--distance-s);
     border-radius: var(--border-radius-button);
     overflow: hidden;
     width: 96px;
     height: 96px;
-    float: left;
   }
   .title {
     font: var(--font-content-headline-3);
