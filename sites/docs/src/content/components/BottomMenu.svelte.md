@@ -1,8 +1,9 @@
 <script>
+  /*
   import ComponentInfo from "../../components/ComponentInfo.svelte";
   import src from "$interkit/components/BottomMenu.svelte?raw";
   import sveld from "$interkit/components/BottomMenu.svelte?raw&sveld";
-  console.log(sveld);
+  console.log(sveld);*/
 </script>
 
 # BottomMenu
@@ -45,8 +46,3 @@ Arrange the components in the following way. This is an example with two buttons
 - the key prop on `BottomMenuButton` needs to be set to a unique key for each button for it to work
 - currently only works correctly if you put `TopNavBarCustom` in the `BottomMenuPage`
 
-```docs
-../../../../../packages/interkit/components/BottomMenu.svelte
-```
-
-<ComponentInfo code={src} />

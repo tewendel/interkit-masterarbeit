@@ -8,11 +8,11 @@ export const items = [
 				path: '/'
 			},
 			{
-				title: 'The process',
+				title: 'How to start',
 				path: '/basics/process'
 			},
 			{
-				title: 'How to start',
+				title: 'Elements',
 				path: '/basics/build_app'
 			}
 		]

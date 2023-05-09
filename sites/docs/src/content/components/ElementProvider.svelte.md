@@ -1,6 +1,5 @@
 <script>
-  import ComponentInfo from "../../components/ComponentInfo.svelte";
-  import src from "../../../../../packages/interkit/components/ElementProvider.svelte?raw";
+
 </script>
 
 # ElementProvider
@@ -14,8 +13,3 @@ gets the contents of specified global store and provides them
 Special: in ChatPreview and DynamicContent you can use the syntax $ElementProvider.columnKey in a blockly prop to reference a column of the element provided through ElementProvider
 
 
-```docs
-../../../../../packages/interkit/components/ElementProvider.svelte
-```
-
-<ComponentInfo code={src} />
