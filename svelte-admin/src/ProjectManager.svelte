@@ -39,6 +39,8 @@
     ImageLoader
   } from "carbon-components-svelte";
 
+  import Help from 'carbon-icons-svelte/lib/Help.svelte'
+  import Information from 'carbon-icons-svelte/lib/Information.svelte'
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
   import Copy from "carbon-icons-svelte/lib/Copy.svelte";
@@ -46,7 +48,14 @@
   import QID from 'carbon-icons-svelte/lib/QID.svelte'
   import Template from 'carbon-icons-svelte/lib/Template.svelte'
   import WatsonHealthThumbnailPreview from 'carbon-icons-svelte/lib/WatsonHealthThumbnailPreview.svelte'
-  import { currentProject, secondaryTabPreviewProjectId } from './admin.js'
+  import {
+    currentProject,
+    secondaryTabIndex,
+    secondaryTabSpecialDoc,
+    secondaryTabPreviewProjectId
+  } from './admin.js'
+
+  import { docsGo } from './docs.js'
 
   export let params = {}
 
@@ -55,6 +64,8 @@
   let createProjectTemplate
   let createProjectGitRepo
   let createProjectName
+
+  let specialDoc
 
   let userId = InterkitClient.userId;
 
@@ -75,6 +86,7 @@
     } else {
       projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
       projects = projectsListSub.data;
+      projects = []
     }
   }
 
@@ -143,7 +155,16 @@
 
   const openProject = id => push('/' + id)
 
-  const previewProject = id => secondaryTabPreviewProjectId.set(id)
+  const infoProject = row => {
+    specialDoc = row.uiState.metafile.readme.html
+    secondaryTabIndex.set(1)
+    secondaryTabSpecialDoc.set(true)
+  }
+
+  const previewProject = id => {
+    secondaryTabIndex.set(0)
+    secondaryTabPreviewProjectId.set(id)
+  }
     
   const removeProject = async (projectId) => {
     if(confirm("really delete project?")) {
@@ -231,6 +252,14 @@
                 <ToolbarContent>
                   <Button
                     size="small"
+                    kind="ghost"
+                    icon={Help}
+                    on:click={() => docsGo('/basics/process')}
+                    >
+                    Help
+                  </Button>
+                  <Button
+                    size="small"
                     icon={Add}
                     on:click={() => { createProjectStep = 0 }}
                     >
@@ -253,7 +282,8 @@
                   {/if}
                 {/if}
                 {#if cell.key === 'name'}
-                  <span on:click={() => previewProject(row.id)} class="clickable">
+                  <!--<span on:click={() => previewProject(row.id)} class="clickable">-->
+                  <span>
                     {#if row.isTemplate}
                       <Tag>Template</Tag>
                     {/if}
@@ -261,7 +291,7 @@
                   </span>
                 {/if}
                 {#if cell.key === 'createdAt'}
-                  <span class="clickable soft">
+                  <span class="soft">
                     {#if row.createdAt}
                       {row.createdAt.toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })}
                     {:else}
@@ -273,7 +303,7 @@
                   {#if row.projectServer?.status === 'running' }
                     { (100 * row.projectServer?.cpu).toFixed(2) }%
                   {:else}
-                    {row.projectServer?.status}
+                    {row.projectServer?.status || ''}
                   {/if}
                 {/if}
                 {#if cell.key === 'overflow'}
@@ -283,7 +313,14 @@
                       size="small"
                       icon={Edit}
                       on:click={() => openProject(row.id)}
-                      >Open</Button>
+                      >Edit</Button>
+                    <Button
+                      kind="ghost"
+                      size="small"
+                      icon={Information}
+                      disabled={!row.uiState?.metafile?.readme?.html}
+                      on:click={() => infoProject(row)}
+                      >Readme</Button>
                     <Button
                       kind="ghost"
                       size="small"
@@ -328,10 +365,6 @@
               pageSizeAuto={true}
               />
           {:else if createProjectStep !== false}
-            <!--
-            step {createProjectStep} variant {createProjectVariant} empty {createProjectEmptyTemplate}<br/>
-            {JSON.stringify($userIsRole)}
-            -->
             <Grid>
               <Row padding style="max-height: var(--createwizard-header-height); overflow: hidden">
                 <Column>
@@ -350,10 +383,18 @@
                         <h3>Template</h3>
                         {#if !templates || !templates.length}
                           <p>Error: No templates found!</p>
+                          {#if $userIsRole?.admin}
+                            <p>
+                              As an admin, you can turn projects into templates.<br/>
+                              Go back (cancel), and use a project's &#8942; menu.
+                            </p>
+                          {:else}
+                            <p>Please ask your admin!</p>
+                          {/if}
                         {:else}
                           <p>
                             Select a template in the next step.<br/>
-                            If you're not sure, pick this option.
+                            <Information /> If you're not sure, pick this option.
                           </p>
                         {/if}
                       </RadioTile>
@@ -377,6 +418,11 @@
                       {#each templates as template}
                         <RadioTile value={template}>
                           <h3 style="margin-bottom: 1rem">{template.name}</h3>
+                          {#if template.uiState?.metafile?.description?.html}
+                            <div style="margin: 1rem 0">
+                              {@html template.uiState.metafile.description.html}
+                            </div>
+                          {/if}
                           {#if template.createdAt}
                             <p style="margin-bottom: 1rem">{template.createdAt
                               .toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })
@@ -389,16 +435,30 @@
                             style="width: 100%; height: auto"
                             >
                             <svelte:fragment slot="error">
+                              <!--
                               (This template does not provide a <code>screenshot.png</code>
                               in its <code>/public</code> directory.)
+                              -->
                             </svelte:fragment>
                           </ImageLoader>
                           <div style="text-align: right; margin-top: 1em;">
-                            <Button
-                              kind="tertiary"
-                              icon={WatsonHealthThumbnailPreview}
-                              on:click={() => previewProject(template.id)}
-                              >Preview</Button>
+                            <ButtonSet style="justify-content: end">
+                              <Button
+                                kind="tertiary"
+                                icon={Help}
+                                on:click={() => infoProject(template)}
+                                disabled={!template.uiState?.metafile?.readme?.html}
+                                >Info</Button>
+                              <Button
+                                kind="tertiary"
+                                icon={WatsonHealthThumbnailPreview}
+                                on:click={() => previewProject(template.id)}
+                                >Preview</Button>
+                              <Button
+                                kind="secondary"
+                                on:click={() => { createProjectTemplate = template }}
+                                >Select</Button>
+                            </ButtonSet>
                           </div>
                         </RadioTile>
                       {/each}
@@ -495,7 +555,12 @@
             </Grid>
           {/if}
         </div>
-        <SecondaryTabsContent projectId={currentProjectId} {currentProject} {previewUserAuth} />
+        <SecondaryTabsContent
+          projectId={currentProjectId}
+          {currentProject}
+          {previewUserAuth}
+          {specialDoc}
+          />
       </div>
     </Column>
   </Row>

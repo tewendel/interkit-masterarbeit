@@ -4,8 +4,8 @@ import {InterkitClient} from 'interkit'
 export const projectId = writable()
 
 export const secondaryTabIndex = writable(0);
+export const secondaryTabSpecialDoc = writable(false)
 export const secondaryTabsVisible = writable(true);
-
 
 let currentProjectSub = null
 export const currentProject = derived(

@@ -47,10 +47,16 @@
 <!-- start -->
 <div class="scrollable padding" class:active={!tab}>
   <div class="ProjectDashboard">
-  <h1>
-  Welcome to {$currentProject.name}
-  </h1>
-  Navigate using the menu in the header.
+    {#if $currentProject?.uiState?.metafile?.project?.html}
+      {@html $currentProject?.uiState?.metafile?.project?.html}
+    {:else if $currentProject?.uiState?.metafile?.project?.md}
+      {@html $currentProject?.uiState?.metafile?.project?.md}
+    {:else}
+      <h1>
+      Welcome to {$currentProject.name}
+      </h1>
+      This project/template does not provide an information file (project.md).
+    {/if}
   </div>
 </div>
 

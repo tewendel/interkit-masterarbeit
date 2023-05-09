@@ -37,6 +37,7 @@ Meteor.publish('projects.list', function() {
       status: 1,
       cpu: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     },
+    uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler'])
   }
   //console.log("projects sub")
   if (userIsInRoles(this.userId, ['admin', 'author', 'bundler'])) {

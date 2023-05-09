@@ -11,7 +11,8 @@
     "sirv": "sirv public"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "remark-html": "^15.0.2"
   },
   "dependencies": {
     "archiver": "^5.3.0",
