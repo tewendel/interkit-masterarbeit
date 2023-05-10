@@ -1,6 +1,7 @@
 export const items = [
 	{
 		title: 'Basics',
+		path: 'basics',
 		open: true,
 		items: [
 			{
@@ -12,18 +13,35 @@ export const items = [
 				path: '/basics/build_app'
 			},
 			{
-				title: 'Elements',
+				title: 'Working with Data and Components',
 				path: '/basics/elements'
 			}
 		]
 	},
 	{
 		title: 'Guides',
+		path: 'guides',
 		open: false,
 		items: [
 			{
+				title: 'Adding Actions to components',
+				path: '/guides/actions'
+			},
+			{
+				title: 'Story programming cheatsheet',
+				path: '/guides/story_cheatsheet'
+			},
+			{
+				title: 'Internationalization (i18n) and localization (l10n)',
+				path: '/guides/i18n'
+			},
+			{
 				title: 'How to setup your own interkit server',
 				path: '/guides/server_setup'
+			},
+			{
+				title: 'Build for native app and deploy to app stores',
+				path: '/guides/native'
 			},
 			{
 				title: 'Setup push notifications',
@@ -34,14 +52,6 @@ export const items = [
 				path: '/guides/cron_setup'
 			},
 			{
-				title: 'Internationalization (i18n) and localization (l10n)',
-				path: '/guides/i18n'
-			},
-			{
-				title: 'Build for native app and deploy to app stores',
-				path: '/guides/native'
-			},
-			{
 				title: 'Setup Raspberry Player',
 				path: '/guides/raspi_setup'
 			},
@@ -49,64 +59,42 @@ export const items = [
 				title: 'Migrate app to vite',
 				path: '/guides/migrate_to_vite'
 			},
-			{
-				title: 'Story programming cheatsheet',
-				path: '/guides/story_cheatsheet'
-			}
 		]
 	},
 	{
 		title: 'Components',
+		path: 'components',
 		open: false,
 		items: [
 			{
-				title: 'BottomMenu',
-				path: '/components/BottomMenu'
+				title: 'AppBase',
+				path: '/components/AppBase'
 			},
 			{
 				title: 'Button',
 				path: '/components/Button'
 			},
 			{
+				title: 'Icon',
+				path: '/components/Icon'
+			},
+			{
+				title: 'StaticText',
+				path: '/components/StaticText'
+			},
+			{
 				title: 'MapSimple',
 				path: '/components/MapSimple'
-			},
-			{
-				title: 'ElementList',
-				path: '/components/ElementList'
-			},
-			{
-				title: 'ContentElement',
-				path: '/components/ContentElement'
-			},
-			{
-				title: 'ElementsContextProvider',
-				path: '/components/ElementsContextProvider'
-			},
-			{
-				title: 'ElementProvider',
-				path: '/components/ElementProvider'
 			},
 			{
 				title: 'Chat',
 				path: '/components/Chat'
 			},
-			{
-				title: 'SubsectionsNav',
-				path: '/components/SubsectionsNav'
-			},
-			{
-				title: 'Subsection',
-				path: '/components/Subsection'
-			},
-			{
-				title: 'actions.js',
-				path: '/components/actions'
-			}
 		]
 	},
 	{
 		title: 'Theory',
+		path: 'theory',
 		open: false,
 		items: [
 			{

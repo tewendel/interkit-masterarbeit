@@ -3,12 +3,14 @@
 
   export let items
   export let title
+  export let path
   export let open = false
   
   $: currentPath = $page.url.pathname
+
 </script>
 
-<details {open}>
+<details open={currentPath?.includes(path)}>
   <summary>
     {title}
   </summary>
