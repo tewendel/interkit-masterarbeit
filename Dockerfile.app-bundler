@@ -31,4 +31,12 @@ RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > .env
 # npm install starter
 # RUN cd ${REPOSITORIES_PATH}/starters/starter && npm ci
 
+# Increase the max amount of file watchers
+RUN echo "" >> /etc/sysctl.conf && \
+    echo "fs.inotify.max_user_instances=8192" >> /etc/sysctl.conf && \
+    echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf
+
+# Rest of your Dockerfile instructions...
+
+
 CMD ["npm", "start"]

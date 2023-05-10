@@ -18,8 +18,8 @@ services:
       - mongo
     environment:
       ROOT_URL: $INTERKIT_SERVER_URL
-      MONGO_URL: &mongo_connection_string mongodb://mongo:27017/local?replicaSet=meteor&retryWrites=false
-      MONGO_OPLOG_URL: *mongo_connection_string
+      MONGO_URL: mongodb://mongo:27017/meteor
+      MONGO_OPLOG_URL: mongodb://mongo:27017/local?replicaSet=meteor&directConnection=true&retryWrites=true
       MEDIAFILES_PATH: /var/mediafiles
       PORT: 3000
       BUNDLER_URL: $INTERKIT_BUNDLER_URL
