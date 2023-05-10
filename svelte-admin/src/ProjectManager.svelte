@@ -394,7 +394,7 @@
               bind:page
               totalItems={projectRows.length}
               overheadHeight={dataTableOverheadHeight}
-              rowHeight={48*2}
+              rowHeight={72}
               pageSizeAuto={true}
               />
           {:else if createProjectStep !== false}
@@ -639,6 +639,7 @@
   .name-field {
     display: inline-block;
     padding: 5px 0px 5px 0px;
+    max-height: 72px;
   }
 
   .project-description {
