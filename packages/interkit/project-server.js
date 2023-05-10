@@ -429,7 +429,7 @@ const setupHookHandling = async ({ hooks, projectApi, server, projectId }) => {
   }
   if (typeof hooks?.cron?.run === 'function') {
     const run = () => {
-      console.log('cron run')
+      //console.log('cron run')
       hooks.cron.run(api)
     }
     run()
