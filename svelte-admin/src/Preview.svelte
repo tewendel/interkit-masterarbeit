@@ -222,7 +222,9 @@
 {#if $currentProject && $currentProject?.uiState?.lastBuildDate}
 <br>
 <div class="lastBuildDate">
-Last Published: {new Date($currentProject?.uiState?.lastBuildDate).toLocaleString()}
+  {#key $currentProject.uiState.lastBuildDate}
+    Last Published: {new Date($currentProject.uiState.lastBuildDate).toLocaleString()}
+  {/key}
 </div>
 {/if}
 
