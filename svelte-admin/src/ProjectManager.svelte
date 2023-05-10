@@ -149,6 +149,9 @@
       .sort((p1, p2) => p1 - p2)
     : []
 
+  // needs work
+  // $: expandedRowIds = projectRows.map(row => row.id)
+
   let templates
   $: templates = projects
     ? $projects.filter(_ => _.isTemplate)
@@ -198,8 +201,8 @@
     return (project?.history || []).find(h => h.event == "create_project")?.date
   }
 
-  let sortKey = 'createdAt'
-  let sortDirection = 'descending'
+  let sortKey = 'name'
+  let sortDirection = 'ascending'
   let pageSize = 10
   let page = 1
 
@@ -214,8 +217,8 @@
 
   const headers = [
     { key: 'favicon', empty: true },
-    { key: 'name', value: 'Projects' },
-    { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
+    { key: 'name', value: 'Project name' },
+    // { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
     { key: 'cpu', value: 'CPU usage' },
     { key: 'overflow', empty: true }
   ]
@@ -254,6 +257,10 @@
               {headers}
               rows={projectRows}
               >
+              <!-- needs work
+              batchExpansion
+              bind:expandedRowIds={expandedRowIds}
+              -->
               <Toolbar>
                 <ToolbarContent>
                   <Button
@@ -361,6 +368,11 @@
                   </ButtonSet>
                 {/if}
               </span>
+              <!-- needs work
+              <svelte:fragment slot="expanded-row" let:row>
+                {row.uiState?.metafile?.readme?.html}
+              </svelte:fragment>
+              -->
             </DataTable>
             <DataTablePaginationAutofit
               bind:pageSize
