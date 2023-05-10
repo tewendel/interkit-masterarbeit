@@ -17,8 +17,9 @@
 
   const resetSub = async (projectId) => {
     if(subHandle) await subHandle.stop()
-    subHandle = await InterkitClient.getSub('mediafiles', 'mediafiles', {projectId});
+    subHandle = await InterkitClient.getSub('mediafiles', 'mediafiles', {projectId}, f=>f?.meta?.projectId == projectId);
     mediafilesStore = subHandle.data
+    console.log("mediafilesStore", $mediafilesStore)
     unsubscribe = mediafilesStore.subscribe((data)=>{
       //console.log("new mediafiles", data)
       allMediafilesArray = data;
