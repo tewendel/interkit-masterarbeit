@@ -136,5 +136,26 @@
     padding: 1rem;
   }
 
+  :global(.ProjectDashboard h2) {
+    margin-bottom: 0.25em;
+    font-weight: bold;
+  }
+  
+  :global(.ProjectDashboard h4) {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+
+  .ProjectDashboard :global(ul) {
+    list-style: disc;
+    margin-left: 1em;
+  }
+
+  .ProjectDashboard :global(li) {
+    margin-bottom: 1em;
+
+  }
+
 </style>
 
