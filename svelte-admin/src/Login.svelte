@@ -1,6 +1,15 @@
 <script>
   import { InterkitClient } from 'interkit'
 
+  import {
+    Form,
+    FormGroup,
+    TextInput,
+    PasswordInput,
+    Button,
+    ToastNotification
+  } from "carbon-components-svelte";
+
   let username = "admin"
   let password = "password";
 
@@ -19,27 +28,23 @@
 
 </script>
 
-<form on:submit={submit}>  
-  <input bind:value={username} type="text" autocomplete="username"/><br/>
-  <input bind:value={password} type="password" autocomplete="current-password"/><br/>
-  <input type="submit" value="login">
-</form>
-{#if error}
-  <div class="error">{error}</div>
-{/if}
+<Form on:submit={submit}>
+  <FormGroup>
+    <TextInput bind:value={username} labelText="User name" autocomplete="username"/>
+  </FormGroup>
+  <FormGroup>
+    <PasswordInput bind:value={password} labelText="Password" autocomplete="current-password"/>
+  </FormGroup>
+  <FormGroup>
+    <Button type="submit">Login</Button>
+  </FormGroup>
+</Form>
 
 {#if error}
-  <div class="error">{error}</div>
+  <ToastNotification
+    title="Error"
+    lowContrast
+    hideCloseButton
+    caption={error}
+    />
 {/if}
-
-<style>
-  div {
-    padding: 10px;
-  }
-  input, button {
-    margin: 5px;
-  }
-  .error {
-    color: red;
-  }
-</style>
