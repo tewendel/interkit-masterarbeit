@@ -92,12 +92,14 @@
     </HeaderNavMenu>
   </HeaderNav-->
 
-  <TopTabs
-    projectId={$projectId}
-    showTabsLeft={!!$projectId}
-    showTabsRight={true}
-    {tab}
-    />
+  {#if $userId}
+    <TopTabs
+      projectId={$projectId}
+      showTabsLeft={!!$projectId}
+      showTabsRight={true}
+      {tab}
+      />
+  {/if}
 
   <HeaderUtilities>
     {#if $userId}
