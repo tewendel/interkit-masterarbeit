@@ -262,7 +262,7 @@
               {headers}
               rows={projectRows}
               batchExpansion
-              {expandedRowIds}
+              
               {nonExpandableRowIds}
               >
               <Toolbar>
@@ -300,11 +300,14 @@
                 {/if}
                 {#if cell.key === 'name'}
                   <!--<span on:click={() => previewProject(row.id)} class="clickable">-->
-                  <span>
+                  <span class="name-field">
                     {#if row.isTemplate}
                       <Tag>Template</Tag>
                     {/if}
-                    {row.name}
+                    {row.name}<br>
+                    <span class="project-description">
+                      {@html row.uiState?.metafile?.description?.html}
+                    </span>
                   </span>
                 {/if}
                 {#if cell.key === 'createdAt'}
@@ -385,11 +388,6 @@
                   </ButtonSet>
                 {/if}
               </span>
-              <svelte:fragment slot="expanded-row" let:row>
-                <div class="project-description soft">
-                  {@html row.uiState?.metafile?.description?.html}
-                </div>
-              </svelte:fragment>
             </DataTable>
             <DataTablePaginationAutofit
               bind:pageSize
@@ -638,12 +636,19 @@
     color: grey;
   }
 
+  .name-field {
+    display: inline-block;
+    padding: 5px 0px 5px 0px;
+  }
+
   .project-description {
-    white-space: nowrap;
-    max-width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-height: 24px;
+    display: inline-block;
+  }
+
+  :global(.project-description p) {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-bottom: 0.25rem;
   }
 
   .project-description br {
@@ -694,5 +699,6 @@
   :global(.__ProjectWorkspace .bx--table-expand) {
     display: none;
   }
+
 
 </style>
