@@ -480,21 +480,25 @@
                           </ImageLoader>
                           <div style="text-align: right; margin-top: 1em;">
                             <ButtonSet style="justify-content: end">
-                              <Button
-                                kind="tertiary"
-                                icon={Help}
-                                on:click={() => infoProject(template, 'readme')}
-                                disabled={!template.uiState?.metafile?.readme?.html}
-                                >Info</Button>
+                              {#if template.uiState?.metafile?.project?.html}
+                                <Button
+                                  kind="tertiary"
+                                  icon={Help}
+                                  on:click={() => infoProject(template, 'project')}
+                                  disabled={!template.uiState?.metafile?.project?.html}
+                                  >Info</Button>
+                              {/if}
                               <Button
                                 kind="tertiary"
                                 icon={WatsonHealthThumbnailPreview}
                                 on:click={() => previewProject(template.id)}
                                 >Preview</Button>
+                              <!--
                               <Button
                                 kind="secondary"
                                 on:click={() => { createProjectTemplate = template }}
                                 >Select</Button>
+                              -->
                             </ButtonSet>
                           </div>
                         </RadioTile>
