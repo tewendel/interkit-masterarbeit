@@ -52,11 +52,20 @@ Before you start building your app, you should think about how to structure it i
 
 ## Stage 2: Building
 
+### Creating a project
+
+Click **Create project…** to start the wizard, where you can pick between three ways to start your project.
+
+- If your server has **templates** pre-installed, you choose between them in the following step.
+- Advanced users might want to start with an **empty&nbsp;project**.
+- You can **import** a starter project from a repository.
+  Interkit hosts several at 
+  <a href="https://gitlab.interkit.app/interkit-project-templates" target="_blank">gitlab.interkit.app/interkit-project-templates</a>
+
 ### Build the App Structure
 
 Sections `App` and `Data`
 
-- create a new project
 - setup components 
     - Do you need a list of elements?
     - Do you need a single element view?

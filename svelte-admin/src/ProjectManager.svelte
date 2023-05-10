@@ -260,7 +260,7 @@
                     size="small"
                     kind="ghost"
                     icon={Help}
-                    on:click={() => docsGo('/basics/process')}
+                    on:click={() => docsGo('/basics/build_app#creating-a-project')}
                     >
                     Help
                   </Button>
