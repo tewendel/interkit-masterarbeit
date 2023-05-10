@@ -65,7 +65,7 @@
 
 <!-- start -->
 <div class="scrollable padding" class:active={!tab}>
-  <div class="ProjectDashboard">
+  <div class="ProjectDashboard markdownContent">
     {#if $currentProject?.uiState?.metafile?.project?.html}
       {@html $currentProject?.uiState?.metafile?.project?.html}
     {:else}
@@ -75,7 +75,7 @@
       This project/template does not provide an information file (project.md).
     {/if}
     <ButtonSet style="margin-top: 4em">
-      <Button
+      <!--Button
         kind="tertiary"
         size="small"
         on:click={() => info('readme')}
@@ -83,7 +83,7 @@
         disabled={!$currentProject?.uiState?.metafile?.readme?.html}
         >
         Show Readme
-      </Button>
+      </Button-->
       {#if $currentProject?.uiState?.metafile?.project?.html}
         <Button
           kind="ghost"
@@ -93,7 +93,7 @@
           icon={OpenPanelFilledRight}
           disabled={!$currentProject?.uiState?.metafile?.project?.html}
           >
-          Show the text above in the sidebar 
+          Show this text on the right
         </Button>
       {/if}
     </ButtonSet>
@@ -176,23 +176,23 @@
     padding: 1rem;
   }
 
-  :global(.ProjectDashboard h2) {
+  :global(.markdownContent h2) {
     margin-bottom: 0.25em;
     font-weight: bold;
   }
   
-  :global(.ProjectDashboard h4) {
+  :global(.markdownContent h4) {
     margin-top: 1em;
     margin-bottom: 0.5em;
     font-weight: bold;
   }
 
-  .ProjectDashboard :global(ul) {
+  :global(.markdownContent ul) {
     list-style: disc;
     margin-left: 1em;
   }
 
-  .ProjectDashboard :global(li) {
+  :global(.markdownContent li) {
     margin-bottom: 1em;
 
   }

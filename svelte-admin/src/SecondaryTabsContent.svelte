@@ -97,7 +97,7 @@
     
       <section class:visible={$secondaryTabIndex == 1} class="right-pane-content-docs">
         <div
-          class="right-pane-content-docs-special"
+          class="right-pane-content-docs-special markdownContent"
           style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'}`}
           >
           {@html $secondaryTabSpecialDoc}
