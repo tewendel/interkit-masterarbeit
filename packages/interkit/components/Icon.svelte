@@ -21,8 +21,8 @@
   console.log("buttonContext", buttonContext);
   
   $: {
-    console.log("icon", $location.pathname, buttonContext.path)
-    if($location.pathname == buttonContext.path) {
+    console.log("icon", $location.pathname, buttonContext?.path)
+    if($location.pathname == buttonContext?.path) {
       activeType = type.replace("Thin", "Full")
     } else {
       activeType = type;

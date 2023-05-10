@@ -62,7 +62,7 @@ async function setupServerProcess(projectId) {
   console.log(`running projectServer process for project ${projectId}`)
   const proc = spawn('nodemon', ['npm', 'start'], {
     cwd: serverPath,
-    stdio: ['pipe', 'pipe', 'pipe', 'ipc'], // enable IPC
+    stdio: ['pipe', 'pipe', 'pipe'], 
     env: {
       ...process.env,
       INTERKIT_PROJECT_ID: projectId,
@@ -130,7 +130,6 @@ async function startServer(projectId) {
 
 function stopServer(projectId) {
   const server = servers.find(s => s.projectId === projectId)
-  console.log(server)
   if (server && server.proc && server.proc.kill) {
     console.log(`stopping projectServer ${projectId}`)
     const terminated = server.proc.kill('SIGINT');

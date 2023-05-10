@@ -180,6 +180,11 @@ function addWorker({ pathPrefix, env, id }) {
       }
     });
 
+    worker.on("error", (error) => {
+      console.error(`Error in worker ${worker.id}:`, error);
+
+    });
+
   return worker;
 }
 

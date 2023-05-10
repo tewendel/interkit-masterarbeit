@@ -77,9 +77,9 @@
 
       <section class:visible={$secondaryTabIndex == 0}>
         {#if $currentProject}
-          <Preview projectId={$projectId} {previewUserAuth} />
+          <Preview projectId={$projectId} {previewUserAuth} appVariant="dev"/>
         {:else if $secondaryTabPreviewProjectId}
-          <Preview projectId={$secondaryTabPreviewProjectId} />
+          <Preview projectId={$secondaryTabPreviewProjectId} appVariant="build"/>
         {:else}
           <!-- TODO find better component -->
           <ToastNotification

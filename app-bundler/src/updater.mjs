@@ -11,6 +11,8 @@ import { getProjectPath } from './filesystem.mjs'
 import interkit_server from './interkit_server.mjs'
 import { gitUnstagedChanges, gitLog, gitListRemotes, gitDiff } from "./git.mjs";
 
+const buildDirName = "public"
+
 const watchedProjectIds = []
 
 const watchedFileReMd = /^(project|readme|description)\.(md|markdown)$/i
@@ -71,9 +73,26 @@ const updateFiles = async function(projectId, watchedFiles) {
     data: watchedFiles
   })
 }
+const updateLastBuildDate = async function(projectId, watchedFiles) {
+  // check if there is any changed file starting with buildDirName
+  const found = Object.keys(watchedFiles).some((file) => {
+    if (file.startsWith(buildDirName)) {
+      return true;
+    }
+  });
+
+  if (found) {
+    const dir = getProjectPath(projectId) + "/" + buildDirName;
+    const timestamp = await fs.stat(dir).then((stat) => stat.mtimeMs);
+    const date = new Date(timestamp);
+    console.log("updateLastBuild", projectId, date);
+    interkit_server.call("project.updateUiState", { projectId, section:"lastBuildDate" , data:date });
+  }
+}
 
 const watchignore = [
   "**/node_modules/**",
+  "**/node_modules/.*",
   "**/.git/**",
   "**/ios/**",
   "**/android/**",
@@ -91,6 +110,10 @@ const runUpdater = async function(projectId) {
   // prepare updater methods
   const updateProjectFilesDebounced = debounce( wF =>updateFiles(projectId, wF), 100)
   const updateGitDebounced = debounce(() => updateGit(projectId), 100)
+  const updateLastBuildDateDebounced = debounce(
+    (wF) => updateLastBuildDate(projectId, wF),
+    500
+  );
 
   // watch project path and trigger updaters
   const projectPath = getProjectPath(projectId)
@@ -114,6 +137,7 @@ const runUpdater = async function(projectId) {
     watchedFiles[file] = Date.now()
     updateGitDebounced()
     updateProjectFilesDebounced(watchedFiles)
+    updateLastBuildDateDebounced(watchedFiles);
   });
 }
 
