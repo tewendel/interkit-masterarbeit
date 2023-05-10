@@ -1,6 +1,15 @@
 <script>
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
+  import {
+    Tabs,
+    Tab,
+    TabContent,
+    Button,
+    ButtonSet
+  } from "carbon-components-svelte";
   import { onDestroy } from 'svelte';
+
+  import Information from 'carbon-icons-svelte/lib/Information.svelte'
+  import OpenPanelFilledRight from 'carbon-icons-svelte/lib/OpenPanelFilledRight.svelte'
 
   import WorkArea from './WorkArea.svelte';
   import Sheets from './Sheets.svelte'
@@ -19,7 +28,12 @@
   //export let currentProject
   export let updatePreviewUserAuth
 
-  import { currentProject } from './admin.js'
+  import {
+    currentProject,
+    secondaryTabIndex,
+    secondaryTabSpecialDoc,
+    secondaryTabPreviewProjectId
+  } from './admin.js'
   
   let selected
   let editorFilesKey = "init"
@@ -37,6 +51,11 @@
 
   let scheduledeventsListNotification
 
+  const info = file => {
+    secondaryTabIndex.set(1)
+    secondaryTabSpecialDoc.set($currentProject.uiState.metafile[file].html)
+  }
+
   onDestroy(() => {
     console.log("destroying ProjectWorkspace")
     window.removeEventListener('message', messageListener)
@@ -49,14 +68,35 @@
   <div class="ProjectDashboard">
     {#if $currentProject?.uiState?.metafile?.project?.html}
       {@html $currentProject?.uiState?.metafile?.project?.html}
-    {:else if $currentProject?.uiState?.metafile?.project?.md}
-      {@html $currentProject?.uiState?.metafile?.project?.md}
     {:else}
       <h1>
       Welcome to {$currentProject.name}
       </h1>
       This project/template does not provide an information file (project.md).
     {/if}
+    <ButtonSet style="margin-top: 4em">
+      <Button
+        kind="tertiary"
+        size="small"
+        on:click={() => info('readme')}
+        icon={Information}
+        disabled={!$currentProject?.uiState?.metafile?.readme?.html}
+        >
+        Show Readme
+      </Button>
+      {#if $currentProject?.uiState?.metafile?.project?.html}
+        <Button
+          kind="ghost"
+          size="small"
+          on:click={() => info('project')}
+          style="max-width: none; margin-left: 1px"
+          icon={OpenPanelFilledRight}
+          disabled={!$currentProject?.uiState?.metafile?.project?.html}
+          >
+          Show the text above in the sidebar 
+        </Button>
+      {/if}
+    </ButtonSet>
   </div>
 </div>
 

@@ -8,8 +8,9 @@
 
   import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
   import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
-  import PageFirst from 'carbon-icons-svelte/lib/PageFirst.svelte'
-  import PageLast from 'carbon-icons-svelte/lib/PageLast.svelte'
+  // import PageFirst from 'carbon-icons-svelte/lib/PageFirst.svelte'
+  // import PageLast from 'carbon-icons-svelte/lib/PageLast.svelte'
+  import ChevronLeft from 'carbon-icons-svelte/lib/ChevronLeft.svelte'
   
   import {
     projectId,
@@ -25,8 +26,6 @@
   import ProjectServerInfo from './ProjectServerInfo.svelte'
 
   export let previewUserAuth
-
-  export let specialDoc
 
   let rightPaneHidden = false;
   const toggleRightPane = () => {
@@ -45,16 +44,19 @@
           <Button
             kind="ghost"
             on:click={() => { secondaryTabSpecialDoc.set(false) }}
-            icon={PageFirst}
-            >interkit docs
+            icon={ChevronLeft}
+            >
+            back&nbsp;to&nbsp;docs
           </Button>
         {:else}
+          <!--
           <Button
             kind="ghost"
             on:click={() => { secondaryTabSpecialDoc.set(true) }}
             icon={PageLast}
             >project docs
           </Button>
+          -->
         {/if}
       {/if}
     <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
@@ -98,7 +100,7 @@
           class="right-pane-content-docs-special"
           style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'}`}
           >
-          {@html specialDoc}
+          {@html $secondaryTabSpecialDoc}
         </div>
         <div style={`display: ${$secondaryTabSpecialDoc ? 'none' : 'block'}`}>
           <DocsBrowser />

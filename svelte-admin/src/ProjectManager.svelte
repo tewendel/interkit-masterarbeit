@@ -67,8 +67,6 @@
   let createProjectName
   let createProjectInitializing = false
 
-  let specialDoc
-
   let userId = InterkitClient.userId;
 
   let userIsRole = InterkitClient.userIsRole
@@ -149,8 +147,15 @@
       .sort((p1, p2) => p1 - p2)
     : []
 
-  // needs work
-  // $: expandedRowIds = projectRows.map(row => row.id)
+  let expandedRowIds = []
+  $: expandedRowIds = projectRows
+    .filter(row => row.uiState?.metafile?.description?.html)
+    .map(row => row.id)
+
+  let nonExpandableRowIds = []
+  $: nonExpandableRowIds = projectRows
+    .filter(row => !row.uiState?.metafile?.description?.html)
+    .map(row => row.id)
 
   let templates
   $: templates = projects
@@ -164,10 +169,9 @@
 
   const openProject = id => push('/' + id)
 
-  const infoProject = row => {
-    specialDoc = row.uiState.metafile.readme.html
+  const infoProject = (row, file) => {
     secondaryTabIndex.set(1)
-    secondaryTabSpecialDoc.set(true)
+    secondaryTabSpecialDoc.set(row.uiState.metafile[file].html)
   }
 
   const previewProject = id => {
@@ -256,11 +260,10 @@
               {page}
               {headers}
               rows={projectRows}
-              >
-              <!-- needs work
               batchExpansion
-              bind:expandedRowIds={expandedRowIds}
-              -->
+              {expandedRowIds}
+              {nonExpandableRowIds}
+              >
               <Toolbar>
                 <ToolbarContent>
                   <Button
@@ -320,13 +323,14 @@
                   {/if}
                 {/if}
                 {#if cell.key === 'overflow'}
-                  <ButtonSet>
+                  <ButtonSet style="justify-content: end">
                     <Button
                       kind="ghost"
                       size="small"
                       icon={Edit}
                       on:click={() => openProject(row.id)}
                       >Edit</Button>
+                    <!--
                     <Button
                       kind="ghost"
                       size="small"
@@ -334,6 +338,7 @@
                       disabled={!row.uiState?.metafile?.readme?.html}
                       on:click={() => infoProject(row)}
                       >Readme</Button>
+                    -->
                     <Button
                       kind="ghost"
                       size="small"
@@ -351,14 +356,25 @@
                         danger
                         on:click={() => removeProject(row.id)}
                         ><TrashCan />&ensp;Delete</OverflowMenuItem>
+                      <OverflowMenuItem
+                        hasDivider
+                        on:click={() => infoProject(row, 'readme')}
+                        disabled={!row.uiState?.metafile?.readme?.html}
+                        ><Information />&ensp;Readme.md</OverflowMenuItem>
+                      <OverflowMenuItem
+                        on:click={() => infoProject(row, 'project')}
+                        disabled={!row.uiState?.metafile?.project?.html}
+                        ><Information />&ensp;Project.md</OverflowMenuItem>
                       {#if $userIsRole?.admin}
                         {#if row.isTemplate}
                           <OverflowMenuItem
+                            hasDivider
                             danger
                             on:click={() => updateProjectSetIsTemplate(row, false)}
                             ><Template />&ensp;Unset&nbsp;template</OverflowMenuItem>
                         {:else}
                           <OverflowMenuItem
+                            hasDivider
                             danger
                             on:click={() => updateProjectSetIsTemplate(row, true)}
                             ><Template />&ensp;Set&nbsp;template</OverflowMenuItem>
@@ -368,18 +384,18 @@
                   </ButtonSet>
                 {/if}
               </span>
-              <!-- needs work
               <svelte:fragment slot="expanded-row" let:row>
-                {row.uiState?.metafile?.readme?.html}
+                <div class="project-description soft">
+                  {@html row.uiState?.metafile?.description?.html}
+                </div>
               </svelte:fragment>
-              -->
             </DataTable>
             <DataTablePaginationAutofit
               bind:pageSize
               bind:page
               totalItems={projectRows.length}
               overheadHeight={dataTableOverheadHeight}
-              rowHeight={48}
+              rowHeight={48*2}
               pageSizeAuto={true}
               />
           {:else if createProjectStep !== false}
@@ -464,7 +480,7 @@
                               <Button
                                 kind="tertiary"
                                 icon={Help}
-                                on:click={() => infoProject(template)}
+                                on:click={() => infoProject(template, 'readme')}
                                 disabled={!template.uiState?.metafile?.readme?.html}
                                 >Info</Button>
                               <Button
@@ -586,7 +602,6 @@
           projectId={currentProjectId}
           {currentProject}
           {previewUserAuth}
-          {specialDoc}
           />
       </div>
     </Column>
@@ -614,6 +629,18 @@
   }
   .soft {
     color: grey;
+  }
+
+  .project-description {
+    white-space: nowrap;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 24px;
+  }
+
+  .project-description br {
+    display: none;
   }
 
   .panes {
@@ -654,6 +681,10 @@
      * Unfortunately, this breaks keyboard navigation; you can't highlight the input!
      * So, a long-term TODO..., or a carbon bug, resp.
      */
+    display: none;
+  }
+
+  :global(.__ProjectWorkspace .bx--table-expand) {
     display: none;
   }
 
