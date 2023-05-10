@@ -74,7 +74,7 @@
       </h1>
       This project/template does not provide an information file (project.md).
     {/if}
-    <ButtonSet style="margin-top: 4em">
+    <ButtonSet style="margin-top: 2em">
       <!--Button
         kind="tertiary"
         size="small"

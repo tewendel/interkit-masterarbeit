@@ -304,10 +304,13 @@
                     {#if row.isTemplate}
                       <Tag>Template</Tag>
                     {/if}
-                    {row.name}<br>
-                    <span class="project-description">
-                      {@html row.uiState?.metafile?.description?.html}
-                    </span>
+                    {row.name}
+                    {#if row.uiState?.metafile?.description?.html}
+                      <br>
+                      <span class="project-description">
+                        {@html row.uiState?.metafile?.description?.html}
+                      </span>
+                    {/if}
                   </span>
                 {/if}
                 {#if cell.key === 'createdAt'}
