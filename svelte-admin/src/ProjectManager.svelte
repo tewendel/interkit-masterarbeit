@@ -161,6 +161,7 @@
   $: templates = projects
     ? $projects.filter(_ => _.isTemplate)
         .map(p => ({ ...p, id: p.id, createdAt: getCreatedDate(p) }))
+        .sort((a, b) => a.name < b.name ? -1 : 1)
     : []
 
   let createProjectEmptyTemplate
@@ -205,8 +206,8 @@
     return (project?.history || []).find(h => h.event == "create_project")?.date
   }
 
-  let sortKey = 'name'
-  let sortDirection = 'ascending'
+  let sortKey = 'createdAt'
+  let sortDirection = 'descending'
   let pageSize = 10
   let page = 1
 
@@ -222,7 +223,7 @@
   const headers = [
     { key: 'favicon', empty: true },
     { key: 'name', value: 'Project name' },
-    // { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
+    { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
     { key: 'cpu', value: 'CPU usage' },
     { key: 'overflow', empty: true }
   ]
@@ -457,11 +458,13 @@
                               {@html template.uiState.metafile.description.html}
                             </div>
                           {/if}
+                          <!--
                           {#if template.createdAt}
                             <p style="margin-bottom: 1rem">{template.createdAt
                               .toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric' })
                             }</p>
                           {/if}
+                          -->
                           <ImageLoader
                             src={`${$bundleServerURL}/app/${template.id}/screenshot.png`}
                             alt="Screenshot"
