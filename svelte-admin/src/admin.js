@@ -5,7 +5,10 @@ export const projectId = writable()
 
 export const secondaryTabIndex = writable(0)
 export const secondaryTabSpecialDoc = writable(false)
-export const secondaryTabsVisible = writable(true)
+/* the Tabs (their buttons, not their contents) */
+export const secondaryTabsHidden = writable(false)
+/* the pane / tab content */
+export const secondaryTabsMinimized = writable(false)
 
 let currentProjectSub = null
 export const currentProject = derived(
