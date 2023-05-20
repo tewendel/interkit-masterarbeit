@@ -3,8 +3,9 @@
   import {onMount, onDestroy} from 'svelte'
   import indent from 'xml-formatter';
   
-  import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
+  import { Tabs, Tab, TabContent, Button, ButtonSet } from "carbon-components-svelte";
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+  import Help from "carbon-icons-svelte/lib/Help.svelte";
 
   import MainColumns from './MainColumns.svelte'
   
@@ -19,6 +20,7 @@
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
+  import { docsGo } from './docs.js'
 
   import initSheetColumnField from 'interkit-blockly/blockly/sheetColumnField.js'
   import initSheetIdField from 'interkit-blockly/blockly/sheetIdField.js'
@@ -334,7 +336,19 @@
 
         <div class="main-buttons">
           <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
-          <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+          <ButtonSet>
+            <!-- size=field matches Tabs in height -->
+            <Button
+              icon={Help}
+              kind="ghost"
+              size="field"
+              on:click={() => docsGo('/basics/build_app#build-the-app-structure')}
+              >Help</Button>
+            <Button
+              size="field"
+              on:click={() => saveAndCompile(true)}
+              >Save</Button>
+          </ButtonSet>
         </div>
       
         <Tabs bind:selected={selectedTab}>
@@ -395,6 +409,13 @@
   .scroll {
     overflow-y: auto;
     height: 100%;
+  }
+
+  @media (max-width: 80rem) {
+    /* tiny hack so Tabs blockly/App/actions don't overlap with the top right buttons */
+    :global(.__BlocklyEditor .bx--tabs__nav-link) {
+      width: auto;
+    }
   }
 
 </style>
