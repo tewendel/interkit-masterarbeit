@@ -82,11 +82,11 @@ async function duplicateRepository(project, sourceProjectId) {
   const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
   // ...and overwrite interkit.config
   await fs.promises.writeFile(
-    path.join(projectPath, "public/interkit.config.json"),
+    path.join(projectPath, "static/interkit.config.json"),
     interkitConfigJson
   )
   // ...and commit
-  await gitAdd(projectPath, "public/interkit.config.json")
+  await gitAdd(projectPath, "static/interkit.config.json")
   await gitCommit(projectPath, "generate new interkit.config.json because of project duplication")
 
 }
