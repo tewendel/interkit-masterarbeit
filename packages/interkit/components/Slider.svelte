@@ -1,5 +1,6 @@
 <script>
 
+  import ContextProvider from './ContextProvider.svelte'
   export let slides
 
 </script>
@@ -10,7 +11,12 @@
       {#if slides.length}
         {#each slides as slide}
           <div class="Slider__Slide slide">
-            <slot {slide}></slot>
+            <ContextProvider 
+              name="element" 
+              value={slide}
+            >
+              <slot></slot>
+            </ContextProvider>
           </div>
         {/each}
       {/if}

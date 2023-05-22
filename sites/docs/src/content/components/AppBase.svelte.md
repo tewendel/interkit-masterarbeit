@@ -16,3 +16,8 @@ Use this instead of AppBase to use advanced features.
 |networkHint|
 
 
+```docs
+../../../../../packages/interkit/components/AppBaseAdvanced.svelte
+```
+
+
