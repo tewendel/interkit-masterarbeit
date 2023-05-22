@@ -73,6 +73,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
 
         // color
         this.setColour(blockObject.colour ? blockObject.colour : defaultBlockColour);
+
       },
       data: JSON.stringify({ origin: blockObject.origin }) // TODO escape characters or use a more appropriate format https://stackoverflow.com/questions/7918868/how-to-escape-xml-entities-in-javascript
     }

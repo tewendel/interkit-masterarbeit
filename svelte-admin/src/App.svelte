@@ -148,7 +148,7 @@
 {:else}
   <div class="centered">
     <h1 style="padding-bottom: 1em; text-align: center;">
-      Welcome to Interkit
+      Welcome to interkit
     </h1>
     {#if $connected}
       <Login/>

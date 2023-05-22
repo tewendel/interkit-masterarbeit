@@ -1,6 +1,6 @@
 # StaticText
 
-Display text that changes rarely
+Display static text that changes rarely.
 
 #### Settings
 

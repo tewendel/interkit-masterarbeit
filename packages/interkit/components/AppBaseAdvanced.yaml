@@ -12,4 +12,5 @@ fields:
     name: desktopFallback
   - type: slot
     name: networkHint
+docsPath: AppBase#appbaseadvanced
 toolboxCategory: AppBase

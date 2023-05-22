@@ -5,12 +5,6 @@
 
 # MapSimple
 
-## Usage
-
-important: needs ElementsContextProvider as a parent in the component tree
-
-
-
 ```docs
 ../../../../../packages/interkit/components/MapSimple.svelte
 ```

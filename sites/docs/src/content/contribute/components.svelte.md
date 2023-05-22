@@ -54,6 +54,7 @@ You can find this example for a custom project component in `src/components/Proj
   - `name` name of the field
   - `defaultValue` (optional) default value for the field
   - `type` type of the field (type see below)
+- `docsPath` (optional) a path to the documentation for this block, if not set, will use the name of the component
 
 ### field types
 
