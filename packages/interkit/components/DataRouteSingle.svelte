@@ -21,7 +21,7 @@
 
 {#if navigate}
   <Route path={dynamicPath} let:params>
-    <DataLoaderSingle sheetKey={sheet} rowKey={params.key}>
+    <DataLoaderSingle {sheet} rowKey={params.key}>
       <slot/>
     </DataLoaderSingle>
   </Route>

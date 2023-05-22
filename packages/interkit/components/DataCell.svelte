@@ -1,38 +1,25 @@
 <script>
 
-  import { InterkitClient, util } from '../'
-  import { onMount } from 'svelte';
+  import { InterkitClient, util } from '..'
+  import { getContext } from 'svelte';
   import { get } from 'svelte/store';
   import MarkdownContent from './MarkdownContent.svelte'
 
-  export let keyColumn; // the column for the human readable keys 
-  export let contentColumn; // the column for the content
-  
-  export let contentKey; // the key to select the row by
-  let real_contentKey = util.extractContextProp(contentKey); // support providing this via ElementProvider context
-
+  export let column; // the column for the content
   export let format; // the format to use to display it
   export let defaultContent; // what to use instead
   export let inline = false // add spacings or not
   export let centerContent = false // center content
+  
+  let element = getContext("element");
+  console.log("DataCell got element store from context", $element)
+  if(!element) {
+    console.warn("DataCell needs an element context, for example from DataList")
+  }
 
-  // blockly conversion
-  if (typeof inline == "string") inline = inline === "TRUE" 
-  if (typeof centerContent == "string") centerContent = centerContent === "TRUE"
+  let userProjectData = InterkitClient.userProjectDataStore  
 
-  // we first identify the sheet that contains our data
-  let contentSheetKey = util.getSheetKey(contentColumn)
-  //console.log(contentSheetKey)
-  let contentRow;
   let content;
-
-  let userProjectData = InterkitClient.userProjectDataStore
-
-  // subscribe to the rows in that sheet
-  let rowStore;
-  onMount(async () => {
-    rowStore = await InterkitClient.getRowSubStore(contentSheetKey)  
-  })
 
   const addSpecialElements = (c) => {
     let result = c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
@@ -41,44 +28,35 @@
     return result
   }
 
-  const updateContent = async (contentSheetKey, _contentKey, rows) => {
-    if(rows) {
-      contentRow = rows.find(r => util.rowVal(r, keyColumn) == _contentKey);
-      let original_content = util.rowVal(contentRow, contentColumn)
-      content = addSpecialElements(original_content);
-    }    
+  const updateContent = async (row) => {
+    let original_content = util.rowVal(row, column)
+    content = addSpecialElements(original_content);
   }
 
   $: {
-    updateContent(contentSheetKey, real_contentKey, $rowStore)
+    updateContent($element)
     $userProjectData // trigger this function
   }
 
 </script>
 
-
-
-{#if $$slots.default}
-  <slot content={content || defaultContent}></slot>
-{:else}
-  <div class="DynamicContent container" class:richText={format == "richText"} class:inline style={`--text-align: ${centerContent ? "center" : "left"}`}>
-    {#if $rowStore}
-      {#if format == "richText"}
-        {#if content}
-          <MarkdownContent {content} />
-        {:else if defaultContent}
-          <MarkdownContent content={defaultContent} />
-        {/if}
-      {:else}
-        {#if content}
-          {content}
-        {:else if defaultContent}
-          { defaultContent}
-        {/if}
+<div class="DynamicContent container" class:richText={format == "richText"} class:inline style={`--text-align: ${centerContent ? "center" : "left"}`}>
+  {#if $element}
+    {#if format == "richText"}
+      {#if content}
+        <MarkdownContent {content} />
+      {:else if defaultContent}
+        <MarkdownContent content={defaultContent} />
+      {/if}
+    {:else}
+      {#if content}
+        {content}
+      {:else if defaultContent}
+        {defaultContent}
       {/if}
     {/if}
-  </div>
-{/if}
+  {/if}
+</div>
 
 <style>
   .container {

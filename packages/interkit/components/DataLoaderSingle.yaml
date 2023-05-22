@@ -1,0 +1,17 @@
+name: DataLoaderSingle
+# green
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - name: sheet
+      type: sheetId
+    - name: rowKey
+      type: string
+    - name: customKeyColumn
+      type: sheetColumn
+      columnType: string
+      defaultValue: settings/contentKey    
+  - name: default
+    type: slot
+toolboxCategory: "Data"

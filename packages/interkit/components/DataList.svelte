@@ -7,7 +7,7 @@
   import ContextProvider from './ContextProvider.svelte'
 
   let elementsContext = getContext("elements");
-  if(!elementsContext) console.warn("ElementList needs DataLoader or DataRouteMulti as parent");
+  if(!elementsContext) console.warn("ElementList needs DataLoaderSingle or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
   /*$: {

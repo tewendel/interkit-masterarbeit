@@ -1,10 +1,7 @@
-name: DataElementLarge
+name: DataCardLarge
 fields:
   - type: extraProps  
     props:
-    - name: onSelectRoute
-      type: string
-      defaultValue: 
     - name: titleColumn
       type: sheetColumn
       columnType: string
@@ -19,4 +16,7 @@ fields:
       type: sheetColumn
       columnType: mediaFile
       defaultValue: elements/image
+    - name: onSelectRoute
+      type: string
+      defaultValue: 
 toolboxCategory: Data

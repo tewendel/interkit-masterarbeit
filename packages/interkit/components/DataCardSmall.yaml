@@ -1,4 +1,4 @@
-name: DataElementSmall
+name: DataCardSmall
 fields: 
   - type: extraProps
     props:
@@ -16,4 +16,7 @@ fields:
       type: sheetColumn
       columnType: mediaFile
       defaultValue: elements/image
+    - name: onSelectRoute
+      type: string
+      defaultValue: 
 toolboxCategory: Data

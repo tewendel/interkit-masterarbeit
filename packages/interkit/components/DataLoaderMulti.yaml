@@ -1,4 +1,4 @@
-name: DataLoader
+name: DataLoaderMulti
 fields: 
   - name: sheetKey
     type: sheetId

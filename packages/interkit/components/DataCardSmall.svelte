@@ -3,20 +3,22 @@
   import { getContext } from 'svelte';
   import { writable } from 'svelte/store'
   
-  import { InterkitClient, util } from '../'
+  import { InterkitClient, util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
+  import LinkConditional from './LinkConditional.svelte';
   
   import Icon from './Icon.svelte'
   
   let element = getContext("element");
   if(!element) {
-    console.warn("DataElementSmall needs an element context, for example from DataList")
+    console.warn("DataCardSmall needs an element context, for example from DataList")
   }
   
   export let titleColumn
   export let subtitleColumn
   export let imageColumn
+  export let onSelectRoute
 
   export let checkedProperty = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
@@ -38,6 +40,7 @@
 
 {#if $element || $showDummyData}
 
+<LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
     {#if imageRef || $showDummyData}
@@ -75,6 +78,7 @@
     {/if}
 
   </section>
+  </LinkConditional>
 
 {/if}
 

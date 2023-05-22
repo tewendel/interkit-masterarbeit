@@ -2,8 +2,15 @@
 
   import { executeTrigger } from '../actions'
   import { getContext, setContext } from 'svelte';
-  import { Link } from 'svelte-navigator';
-  
+  import { Link, useLocation } from 'svelte-navigator';
+
+  let location;
+  try {
+    location = useLocation();
+  } catch(e) {
+    console.log(e)
+  }
+
   import Icon from './Icon.svelte'
 
   export let nopadding = false
@@ -68,6 +75,7 @@
         class:selected={selected}
         class:Button--selected={selected}
         class:nopadding 
+        class:nav-tab-selected={$location.pathname == clickTrigger}
       >
       <slot/>
       { text || "" }
@@ -195,6 +203,16 @@
     right: var(--distance-s);
     display: flex;
     align-items: center;
+  }
+
+  .button.nav-tab {
+    border: none;
+    border-radius: 0;
+    font: var(--font-headline-3);
+  }
+
+  .button.nav-tab-selected {
+    font-weight: bold;
   }
 
   .primary {

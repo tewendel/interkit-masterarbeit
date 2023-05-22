@@ -9,7 +9,7 @@
   const dispatch = createEventDispatcher();
 
   export let value = {};
-  export let  databaseUpdateCount = 0;
+  export let databaseUpdateCount = 0;
   
   let sheets;
 
@@ -25,9 +25,15 @@
   }
 
   const updateHumanReadable = () => {
-    value.text = 
-      sheets.find(s=>s.key == value.sheetKey)?.name
-    console.log("updateHumanReadable", value)
+    console.log("updateHumanReadable 1", value)
+    if(value?.sheetKey) {
+      value.text = 
+        sheets.find(s=>s.key == value.sheetKey)?.name
+    } else {
+      if(!value) value = {}
+      value.text = "empty"
+    }
+    console.log("updateHumanReadable 2", value)
     
     dispatch("update", value);
   }

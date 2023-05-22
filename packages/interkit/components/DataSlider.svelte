@@ -6,7 +6,7 @@
   import Slider from './Slider.svelte';
 
   let elementsContext = getContext("elements");
-  if(!elementsContext) console.warn("DataSlider needs DataLoader or DataRouteMulti as parent");
+  if(!elementsContext) console.warn("DataSlider needs DataLoaderSingle or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
   const showDummyData = InterkitClient.showDummyData;

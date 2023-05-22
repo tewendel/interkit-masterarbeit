@@ -1,12 +1,12 @@
 <script>
 
   import Route from "./Route.svelte";
-  import DataLoader from "./DataLoader.svelte"
+  import DataLoaderMulti from "./DataLoaderMulti.svelte"
   
   export let path;
   export let keepAlive;
 
-  // props for DataLoader
+  // props for DataLoaderMulti
   export let sheet;
   export let referenceElementStore // a store that contains an element that we use to filter this list
   export let referenceElementColumn // the column on that element that contains the references  
@@ -20,7 +20,7 @@
 </script>
 
 <Route path={path} {keepAlive}>
-  <DataLoader 
+  <DataLoaderMulti 
     sheetKey = {sheet}
     {referenceElementStore} 
     {referenceElementColumn}
@@ -32,5 +32,5 @@
     {discoverProperty}
     >
     <slot/>
-  </DataLoader>
+  </DataLoaderMulti>
 </Route>

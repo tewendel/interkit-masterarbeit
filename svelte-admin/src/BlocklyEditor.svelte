@@ -183,6 +183,7 @@
     if(blocklyJson?.content) {
       try {
         let stateToLoad = JSON.parse(blocklyJson.content)
+        console.log("blockly stateToLoad", stateToLoad)
         Blockly.serialization.workspaces.load(stateToLoad, workspace)
       } catch(e) {
         alert("error importing blockly json")
