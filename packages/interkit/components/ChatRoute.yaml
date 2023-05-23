@@ -1,0 +1,10 @@
+name: ChatRoute
+colour: 100
+fields: 
+  - type: string
+    name: path
+    defaultValue: /chat
+  - type: slot
+    name: default
+toolboxCategory: Routing
+  

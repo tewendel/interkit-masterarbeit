@@ -146,7 +146,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
       if(blockObject.name == "RouteConnector") {
         //console.log("found GroupReference")
-        return referencedBlockToCode(["Route", "DataRouteMulti", "DataRouteSingle"], "path", block.getFieldValue("path"), "block")        
+        return referencedBlockToCode(["Route", "DataRouteMulti", "DataRouteSingle", "ChatRoute"], "path", block.getFieldValue("path"), "block")        
       }
 
       if(blockObject.name == "Group") {

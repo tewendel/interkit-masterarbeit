@@ -3,5 +3,6 @@ title: ChatsOverview
 colour: 100
 fields:
   - type: string
-    name: selectTrigger
+    name: path
+    defaultValue: "/chat"
 toolboxCategory: Chat

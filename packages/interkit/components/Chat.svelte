@@ -1,6 +1,6 @@
 <script>
 
-  import { onMount, onDestroy, tick, beforeUpdate, afterUpdate } from "svelte"
+  import { onMount, onDestroy, tick, beforeUpdate, afterUpdate, getContext } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient } from "../"
   import Message from './Chat/Message.svelte'
@@ -19,6 +19,13 @@
 
   export let board = "board1"
   let boardId = board;
+
+  const boardContext = getContext("board")
+  if(boardContext) {
+    boardId = $boardContext
+    console.log("using board context", $boardContext)
+  }
+  
   export let messagesReportableDefault = 'TRUE'
 
   // limited by typingMaxDuration!
@@ -46,7 +53,7 @@
 
   onMount(async () => {
 
-    // if a globalStore has been set, use that
+    // DEPRECATED if a globalStore has been set, use that
     let channelKeyDynamic = InterkitClient.getGlobalStore("chatChannelKey");
     if(get(channelKeyDynamic)) {
       boardId = get(channelKeyDynamic)
@@ -455,6 +462,7 @@
     flex-direction: column;
     height: 100%;
     background-color: var(--color-background-highlight);
+    position: relative;
   }
 
   .channel-info-overlay {

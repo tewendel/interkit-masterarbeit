@@ -1,17 +1,18 @@
 <script>
 
-  import { onMount, getContext } from "svelte"
+  import { onMount } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient, util } from "../"
-  import { executeTrigger } from '../actions'
-
+  
   import MessagePreview from './Chat/MessagePreview.svelte';
 
   import AspectRatio from "./AspectRatio.svelte";
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
+  import LinkConditional from "./LinkConditional.svelte";
 
-  export let channel_key = "DEFAULT"
-  export let selectTrigger
+  export let board = "board1"
+  let channel_key = board
+  export let path
 
   let real_channel_key = util.extractContextProp(channel_key);
   
@@ -82,43 +83,45 @@
     }
 
   const onClick = (element) => {
-    if(selectTrigger)
-      executeTrigger(selectTrigger, real_channel_key)
+    if(path) {
+      alert("routing to " + path)
+    }
   }
 
 </script>
 
-<div class="ChatPreview container" on:click={onClick}>
-  <div class="ChatPreview__top top">
-    <span class="ChatPreview__title title">
-      {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
-    </span>
-    {#if numUnseen}
-      <span class="ChatPreview__unseen unseen">
-        {numUnseen}
+<LinkConditional to={path + "/" + real_channel_key}>
+  <div class="ChatPreview container">
+    <div class="ChatPreview__top top">
+      <span class="ChatPreview__title title">
+        {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
       </span>
-    {/if}
+      {#if numUnseen}
+        <span class="ChatPreview__unseen unseen">
+          {numUnseen}
+        </span>
+      {/if}
+    </div>
+    <div class="ChatPreview__image image">
+      <AspectRatio aspectRatioType="square">
+        <ChatChannelImage channel_key={real_channel_key}/>
+      </AspectRatio>
+    </div>
+    <div class="ChatPreview__message message">
+      {#if currentChannel?.label}
+        <span class="ChatPreview__message__label label">
+          {currentChannel?.label}
+        </span>  
+      {/if}
+      {#if latestMessage}
+        <span class="ChatPreview__message__text text">
+          <MessagePreview message={latestMessage} />
+        </span>
+      {/if}
+    </div>
   </div>
-  <div class="ChatPreview__image image">
-    <AspectRatio aspectRatioType="square">
-      <ChatChannelImage channel_key={real_channel_key}/>
-    </AspectRatio>
-  </div>
-  <div class="ChatPreview__message message">
-    {#if currentChannel?.label}
-      <span class="ChatPreview__message__label label">
-        {currentChannel?.label}
-      </span>  
-    {/if}
-    {#if latestMessage}
-      <span class="ChatPreview__message__text text">
-        <MessagePreview message={latestMessage} />
-      </span>
-    {/if}
-  </div>
+</LinkConditional>
   
-</div>
-
 <style>
   .container {
     font: var(--font-headline-4);
