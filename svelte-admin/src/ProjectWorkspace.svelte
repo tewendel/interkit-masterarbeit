@@ -22,6 +22,7 @@
   import MessagesManager from './MessagesManager.svelte'
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
+  import Theming from './Theming.svelte'
 
   export let projectId
   export let tab
@@ -113,6 +114,11 @@
 <!-- components -->
 <div class:active={tab == 'components'}>
   <BlocklyEditor {projectId} open={tab == 'components'}/>
+</div>
+
+<!-- theming -->
+<div class="scrollable" class:active={tab == 'style' }>
+  <Theming />
 </div>
 
 <!-- nodes -->
