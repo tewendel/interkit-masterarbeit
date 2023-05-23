@@ -3,7 +3,8 @@ title: ChatPreview
 colour: 100
 fields:
   - type: string
-    name: channel_key
+    name: board
+    defaultValue: board1
   - type: string
-    name: selectTrigger
+    name: path
 toolboxCategory: Chat

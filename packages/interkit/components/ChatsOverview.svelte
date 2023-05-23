@@ -5,7 +5,7 @@
   import ChatPreview from './ChatPreview.svelte'
   import { InterkitClient } from "../"
 
-  export let selectTrigger;
+  export let path;
 
   let channelsStore;
   let channelsSorted;
@@ -86,8 +86,8 @@
       {#if $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
         <ChatPreview
-          channel_key={channel.channel_key}
-          {selectTrigger}
+          board={channel.channel_key}
+          {path}
         />
       </div>
       {/if}

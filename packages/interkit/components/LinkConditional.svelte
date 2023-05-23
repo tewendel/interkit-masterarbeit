@@ -1,5 +1,5 @@
 <script>
-  export let condition;
+  export let condition = true;
   export let to;
 
   import { useNavigate } from "svelte-navigator";
