@@ -20,6 +20,7 @@
   const mainTabPaths = [
     '',
     'components', 
+    'style',
     'sheets', 
     'media', 
     'story', 
@@ -78,6 +79,7 @@
           App
           <NotificationBadge count={0} />
         </Tab>
+        <Tab label="Style" />
         <Tab label="Data" />
         <Tab label="Media" />
         <Tab label="Story" />
