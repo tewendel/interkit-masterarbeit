@@ -167,7 +167,7 @@
     display: flex;
   }
   .tabs-main {
-    width: 375px;
+    width: 440px;
   }
   .extra-dropdown {
     width: 100px;
