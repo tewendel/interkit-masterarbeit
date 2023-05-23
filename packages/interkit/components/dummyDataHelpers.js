@@ -2,7 +2,9 @@ import { getContext } from 'svelte';
 import { readable } from 'svelte/store';
 import { InterkitClient, util } from "..";
 
-const showDummyDataStoreGenerator = () => {
+const getShowDummyDataStore = () => {
+
+  
 
   if (getContext("showDummyData")) {
     return readable(true);
@@ -11,4 +13,4 @@ const showDummyDataStoreGenerator = () => {
   };
 }
 
-export { showDummyDataStoreGenerator };
+export { getShowDummyDataStore };

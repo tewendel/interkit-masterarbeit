@@ -6,6 +6,7 @@
   
   import { InterkitClient, util } from '../'
   import { executeTrigger } from '../actions'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -28,7 +29,7 @@
   export let height; // height of the container
   export let showControls; // true if we should show controls
   export let showPopups; // true if we should show popup on marker tap
-  export let mapId; // id of the map
+  export let mapId = "map"; // id of the map
   export let nearestElementMode = false; // mode to show only the nearest element
   export let inline = false;
   export let disableControls = false;
@@ -109,7 +110,7 @@
     return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
   }
-  const showDummyData = InterkitClient.showDummyData;
+  const showDummyData = getShowDummyDataStore()
   const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
     position: {
       lat: getRandomInRange(-90, 90, 3),

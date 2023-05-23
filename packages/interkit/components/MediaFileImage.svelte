@@ -2,6 +2,7 @@
   import { onMount } from 'svelte'
   import Zoom from 'svelte-zoom'
   import { InterkitClient } from '../'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   
@@ -35,7 +36,7 @@
     mediaFileStore = await InterkitClient.getMediaFileSubStore()
   })
 
-  const showDummyData = InterkitClient.showDummyData
+  const showDummyData = getShowDummyDataStore()
 
   function encodeSvg(svgString) {
   return svgString.replace('<svg',(~svgString.indexOf('xmlns')?'<svg':'<svg xmlns="http://www.w3.org/2000/svg"'))
