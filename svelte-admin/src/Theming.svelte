@@ -12,10 +12,18 @@
   </svelte:fragment>
    
   <svelte:fragment slot="contentMain">
-    <div class="__">
+    <div class="main">
       
       <ComponentsShowcase />
 
     </div>  
   </svelte:fragment>
 </MainColumns>
+
+<style>
+  .main {
+    padding: .5rem;
+    height: 100%;
+    overflow: auto;
+  }
+</style>
