@@ -3,7 +3,7 @@
   import { createHashHistory } from "history";
 
   // memory is the alternative to hash history, but does not keep the route on vite hmr
-  // const memoryHistory = createHistory(createMemorySource());
+  const memoryHistory = createHistory(createMemorySource());
 
   // source: https://github.com/mefechoel/svelte-navigator/tree/main/example/custom-hash-history
   function createHashSource(basename) {
@@ -34,12 +34,15 @@
           return history.location.state;
         },
         pushState(state, title, uri) {
+          console.log("router history pushState", uri, state)
           history.push(uri, state);
         },
         replaceState(state, title, uri) {
+          console.log("router history replaceState", uri, state)
           history.replace(uri, state);
         },
         go(to) {
+          console.log("router history go", to)
           history.go(to);
         },
       },
@@ -50,6 +53,6 @@
 
 </script>
 
-<Router history={hashHistory}>
+<Router history={memoryHistory}>
   <slot />
 </Router>

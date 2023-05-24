@@ -57,7 +57,7 @@
     }
   }
 
-  const columnMap = {
+  let columnMap = {
     customIconColumn,
     markerLabelColumn,
     markerTitleColumn,
@@ -122,7 +122,9 @@
   const dummyDataStore = writable(dummyData)
   if($showDummyData) {
     elements = dummyDataStore
+    console.log("set elements to dummyData")
   }
+  if($showDummyData) columnMap.markerPositionsColumn = "elements/position"
 
   // set up subscription
   const initDataSubs = async () => {
@@ -189,7 +191,7 @@
       element: r
     }})
 
-    console.log("updateMarkerData", markerData, mapId, $elementProperties)
+    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {

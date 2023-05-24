@@ -1,12 +1,13 @@
 <script>
+  import { useNavigate } from "svelte-navigator";
+
   export let condition = true;
   export let to;
 
-  import { useNavigate } from "svelte-navigator";
 	const navigate = useNavigate();
   
   const click = () => {
-    console.log("LinkConditional", to)
+    console.log("Navigate to", to)
     navigate(to)
   }
 </script>

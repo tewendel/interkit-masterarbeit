@@ -10,10 +10,11 @@ fields:
       name: clickType
       options:
         - path
+        - back
         - payloadTrigger
         - link
         - linkTargetBlank
-      defaultValue: payloadTrigger
+      defaultValue: path
     - type: string
       name: clickTrigger
     - type: options

@@ -72,7 +72,7 @@
 
 <style>
   .container {
-    margin: 0 var(--distance-m) var(--distance-m) var(--distance-m);
+    margin: 0;
   }
   .content {
     padding: var(--distance-m) var(--distance-l) var(--distance-s) var(--distance-m);

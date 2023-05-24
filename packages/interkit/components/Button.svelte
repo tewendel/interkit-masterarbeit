@@ -2,16 +2,16 @@
 
   import { executeTrigger } from '../actions'
   import { getContext, setContext } from 'svelte';
+  import Icon from './Icon.svelte'
+  import LinkConditional from './LinkConditional.svelte';
   import { Link, useLocation } from 'svelte-navigator';
-
+  
   let location;
   try {
     location = useLocation();
   } catch(e) {
     console.log(e)
   }
-
-  import Icon from './Icon.svelte'
 
   export let nopadding = false
   export let color = null;
@@ -21,10 +21,13 @@
   export let height = "fixed" // fixed | auto
   export let text = undefined;
   export let selected = false
-  export let clickType = 'payloadTrigger'; // link | linkTargetBlank | path
-  
-  export let clickTrigger = null; // set this to execute a trigger on button click
+  export let clickType = 'path'; // link | linkTargetBlank | path | back | payloadTrigger
+  export let clickTrigger = null; // parameter for the click action
   export let onClick = null // function to call on click if we are not using this with triggers
+  
+  if(clickType == 'back') {
+    clickTrigger = -1;
+  }
 
   setContext("button", {
     type,
@@ -50,6 +53,7 @@
 </script>
 
 {#if clickType === 'payloadTrigger'}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span 
       on:click
       on:click={handleClick}
@@ -67,26 +71,32 @@
       </div>
     {/if}
   </span>
-{:else if clickType === 'path'}
-  <Link to={clickTrigger}>
-    <span 
-        class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
-        class:primary={type==='primary'}
-        class:selected={selected}
-        class:Button--selected={selected}
-        class:nopadding 
-        class:nav-tab-selected={$location.pathname == clickTrigger}
-      >
-      <slot/>
-      { text || "" }
-      {#if type == "list-item"}
-        <div class="button-extra-icon">
-          <Icon type="Thin-Arrow-Right"/> 
-        </div>
-      {/if}
-    </span>
-  </Link>
-{:else}
+ {/if}
+
+ {#if clickType === 'path' || clickType === 'back'}
+  {#if clickTrigger}
+    <LinkConditional to={clickTrigger}>
+      <span 
+          class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
+          class:primary={type==='primary'}
+          class:selected={selected}
+          class:Button--selected={selected}
+          class:nopadding 
+          class:nav-tab-selected={$location.pathname == clickTrigger}
+        >
+        <slot/>
+        { text || "" }
+        {#if type == "list-item"}
+          <div class="button-extra-icon">
+            <Icon type="Thin-Arrow-Right"/> 
+          </div>
+        {/if}
+      </span>
+    </LinkConditional>
+  {/if}
+{/if}
+
+{#if clickType == "link" || clickType == "linkTargetBlank"}
   <a
       href={clickTrigger}
       target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
