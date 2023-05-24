@@ -43,7 +43,7 @@
 <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
-    {#if imageRef || $showDummyData}
+    {#if imageRef || $showDummyData}
       <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
         <AspectRatio aspectRatioType="square">
           <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    

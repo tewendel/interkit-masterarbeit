@@ -33,7 +33,12 @@ Eeach component consists of two files:
 
 For components that use data from sheets, it is useful to define some dummy data to make it easier to see how the component looks even without data. In the preview pane you can toggle Dummy Data on and off.
 
-In your component code, use `const showDummyData = InterkitClient.showDummyData;` to get a reactive store containing the value of this toggle.
+In your component code, the following to get a reactive store containing the value of this toggle.
+
+```svelte
+import { getShowDummyDataStore } from './dummyDataHelpers.js'
+const showDummyData = getShowDummyDataStore()
+```
 
 ## Example
 
