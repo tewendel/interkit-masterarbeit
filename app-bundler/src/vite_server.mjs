@@ -36,6 +36,7 @@ async function ensureViteServers(projects, app, server) {
   // remove old servers
   for (const worker of Object.values(workers)) {
     if (!projects.find((project) => project.id === worker.id)) {
+      //console.log("removing old worker", worker.id);
       removeWorker(worker.id);
     }
   }
@@ -44,9 +45,10 @@ async function ensureViteServers(projects, app, server) {
 function ensureWorker(project) {
   if (
     !Object.values(workers).find(
-      (worker) => worker.id === project.id && worker.isConnected()
+      (worker) => worker.id === project.id && worker.isConnected() && !worker.beingKilled
     )
   ) {
+    //console.log("adding new worker", project.id);
     const worker = addWorker({
       id: project.id,
       pathPrefix: "dev/" + project.id,

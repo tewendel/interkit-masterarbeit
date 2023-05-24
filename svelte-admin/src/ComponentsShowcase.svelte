@@ -1,32 +1,64 @@
 <script>
   import InterkitComponentFrame from './InterkitComponentFrame.svelte'
   import Styling from '../../packages/interkit/components/Styling.svelte'
+  import Router from '../../packages/interkit/components/Router.svelte'
+  import MapSimple from '../../packages/interkit/components/MapSimple.svelte'
+  import { InlineLoading } from "carbon-components-svelte";
 
   const components = [
-    {name: "DataElementSmall", showDummyData: true},
-    {name: "DataElementSmall", showDummyData: false},
-    {name: "DataElementLarge"},
+    {name: "DataCardSmall", showDummyData: true},
+    {name: "DataCardLarge", showDummyData: true},
+    {name: "Button", showDummyData: true, props: {size: "large", type: "primary", text: "Button primary"}},
+    {name: "Button", showDummyData: true, props: {size: "large", type: "secondary", text: "Button secondary"}},
+    {name: "Button", showDummyData: true, props: {size: "large", type: "link", text: "Button link"}},
+    {name: "Button", showDummyData: true, props: {size: "medium", type: "primary", text: "Button primary"}},
+    {name: "Button", showDummyData: true, props: {size: "medium", type: "secondary", text: "Button secondary"}},
+    {name: "Button", showDummyData: true, props: {size: "medium", type: "link", text: "Button link"}},
+    {name: "Button", showDummyData: true, props: {size: "small", type: "primary", text: "Button primary"}},
+    {name: "Button", showDummyData: true, props: {size: "small", type: "secondary", text: "Button secondary"}},
+    {name: "Button", showDummyData: true, props: {size: "small", type: "link", text: "Button link"}},
     {name: "StaticText"},
-    //{name: "MapSimple"},
+    //{name: "Icon", showDummyData: true},
+    {name: "MapSimple", showDummyData: true, props: {
+        tileLayer: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        height: "40vh"
+      }
+    },
   ]
 </script>
 
 <Styling>
-  {#each components as component}
-    <div class="component">
-      <InterkitComponentFrame name={component.name} showDummyData={component.showDummyData} >
-        {#await import(`../../packages/interkit/components/${component.name}.svelte`)}
-          <p>loading...</p>
-        {:then component}
-          <svelte:component this={component.default} withDummyData />
-        {/await}
-      </InterkitComponentFrame>
-    </div>
-  {/each}
+  <Router>
+    {#each components as c}
+      <div class="component">
+        
+          {#await import(`../../packages/interkit/components/${c.name}.svelte`)}
+            <p class="Loading">
+              <InlineLoading description="Loading &lt;{c.name}&gt;" />
+            </p>
+          {:then component}
+            <InterkitComponentFrame name={c.name} showDummyData={c.showDummyData} >
+              <svelte:component this={component.default} withDummyData {...c.props} />
+            </InterkitComponentFrame>
+          {:catch error}
+            <p style="color: red">{error.message}</p>
+          {/await}
+        
+      </div>
+    {/each}
+  </Router>
 </Styling>
 
-<style>
+<style lang="scss">
+  @use '@carbon/type';
+
   .component {
     margin: 10px;
   }
+
+  .loading {
+    @include type.type-style('label-01');
+    padding-bottom: .22em;
+  }
+  
 </style>

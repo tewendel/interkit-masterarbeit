@@ -1,8 +1,7 @@
 <script>
 
   import { getContext } from 'svelte';
-  import { writable } from 'svelte/store'
-  import { showDummyDataStoreGenerator } from './dummyDataHelpers.js'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   
   import { InterkitClient, util } from '..'
   import AspectRatio from './AspectRatio.svelte'
@@ -23,7 +22,6 @@
 
   export let checkedProperty = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
-
   
   $: title = util.rowVal($element, titleColumn)
   $: subtitle = util.rowVal($element, subtitleColumn)
@@ -31,13 +29,12 @@
 
   export let subtitleTag // special Tag to show before subtitle
 
+  let showDummyData = getShowDummyDataStore()
   const dummyData = {
     title: "Title",
     subtitleTag: "Tag",
     subtitle: "Subtitle"
   }
-
-  let showDummyData = showDummyDataStoreGenerator()
   
 </script>
 
@@ -46,7 +43,7 @@
 <LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
-    {#if imageRef || $showDummyData}
+    {#if imageRef || $showDummyData}
       <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
         <AspectRatio aspectRatioType="square">
           <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    

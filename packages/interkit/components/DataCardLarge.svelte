@@ -1,6 +1,7 @@
 <script>
 
   import { InterkitClient, util } from '..'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import LinkConditional from './LinkConditional.svelte';
@@ -24,7 +25,7 @@
 
   export let subtitleTag // special Tag to show before subtitle
 
-  let showDummyData = InterkitClient.showDummyData;
+  let showDummyData =  getShowDummyDataStore();
   const dummyData = {
     title: "Title",
     subtitleTag: "Tag",
