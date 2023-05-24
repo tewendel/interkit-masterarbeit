@@ -3,9 +3,9 @@
   import { onMount } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient, util } from "../"
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
   
   import MessagePreview from './Chat/MessagePreview.svelte';
-
   import AspectRatio from "./AspectRatio.svelte";
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
   import LinkConditional from "./LinkConditional.svelte";
@@ -14,6 +14,13 @@
   let channel_key = board
   export let path
 
+  let showDummyData = getShowDummyDataStore()
+  const dummyData = {
+    title: "Title",
+    label: "Label",
+    numUnseen: 3
+  }
+  
   let real_channel_key = util.extractContextProp(channel_key);
   
   let channelsStore;
@@ -94,11 +101,14 @@
   <div class="ChatBoardCard container">
     <div class="ChatPreview__top top">
       <span class="ChatPreview__title title">
-        {currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"}
+        {
+          $showDummyData ? dummyData.title : 
+          currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"
+        }
       </span>
-      {#if numUnseen}
+      {#if $showDummyData || numUnseen}
         <span class="ChatPreview__unseen unseen">
-          {numUnseen}
+          {$showDummyData ? dummyData.numUnseen : numUnseen}
         </span>
       {/if}
     </div>
@@ -108,12 +118,12 @@
       </AspectRatio>
     </div>
     <div class="ChatPreview__message message">
-      {#if currentChannel?.label}
+      {#if currentChannel?.label || $showDummyData}
         <span class="ChatPreview__message__label label">
-          {currentChannel?.label}
+          {$showDummyData ? dummyData.label : currentChannel?.label}
         </span>  
       {/if}
-      {#if latestMessage}
+      {#if latestMessage || $showDummyData}
         <span class="ChatPreview__message__text text">
           <MessagePreview message={latestMessage} />
         </span>

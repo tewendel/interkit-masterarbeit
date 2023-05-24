@@ -4,6 +4,7 @@
   import { get } from 'svelte/store'
   import ChatBoardCard from './ChatBoardCard.svelte'
   import { InterkitClient } from ".."
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
   export let path;
 
@@ -14,6 +15,9 @@
   let userId;
 
   let userProjectData = InterkitClient.userProjectDataStore
+
+  let showDummyData = getShowDummyDataStore()
+  const dummyData = [...Array(5).keys()].map((k) => {return {channel_key: `${k}`}})
 
   onMount(async () => {
     userId = get(InterkitClient.userId);
@@ -81,9 +85,9 @@
 </script>
 
 <div class="sort-container">
-{#if $channelsStore}
-  {#each $channelsStore as channel}
-      {#if $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
+{#if $channelsStore || $showDummyData}
+  {#each ($showDummyData ? dummyData : $channelsStore) as channel}
+      {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
         <ChatBoardCard
           board={channel.channel_key}

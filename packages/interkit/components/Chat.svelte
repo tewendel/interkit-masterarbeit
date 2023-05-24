@@ -7,6 +7,7 @@
   import MessageTyping from './Chat/MessageTyping.svelte'
   import ChatInput from './Chat/ChatInput.svelte'
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
   import { Plugins } from '@capacitor/core';
   import { decimalToSexagesimal } from "geolib";
@@ -50,6 +51,12 @@
   let projectId;
 
   let typingQueuePointer
+
+  let showDummyData = getShowDummyDataStore()
+  const dummyData = {
+    
+  }
+
 
   onMount(async () => {
 
