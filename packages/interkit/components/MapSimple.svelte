@@ -238,6 +238,7 @@
   
 </script>
 
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
 
     {#if selectedElement && $$slots.popup}
@@ -246,7 +247,7 @@
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
         <div class="marker_popup_close">
-          <Button type="secondary" on:click={mapClick}>
+          <Button type="secondary" onClick={mapClick}>
             <Icon type="close" />
             <span>{closeButtonLabel}</span>
           </Button>

@@ -21,7 +21,7 @@
   export let height = "fixed" // fixed | auto
   export let text = undefined;
   export let selected = false
-  export let clickType = 'path'; // link | linkTargetBlank | path | back | payloadTrigger
+  export let clickType; // link | linkTargetBlank | path | back | payloadTrigger
   export let clickTrigger = null; // parameter for the click action
   export let onClick = null // function to call on click if we are not using this with triggers
   
@@ -52,10 +52,9 @@
 
 </script>
 
-{#if clickType === 'payloadTrigger'}
+{#if clickType === 'payloadTrigger' || onClick}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span 
-      on:click
       on:click={handleClick}
       class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
       class:primary={type==='primary'}
@@ -71,9 +70,9 @@
       </div>
     {/if}
   </span>
- {/if}
-
- {#if clickType === 'path' || clickType === 'back'}
+ 
+ {:else if clickType === 'path' || clickType === 'back'} 
+  
   {#if clickTrigger}
     <LinkConditional to={clickTrigger}>
       <span 
@@ -94,9 +93,8 @@
       </span>
     </LinkConditional>
   {/if}
-{/if}
 
-{#if clickType == "link" || clickType == "linkTargetBlank"}
+{:else}
   <a
       href={clickTrigger}
       target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
