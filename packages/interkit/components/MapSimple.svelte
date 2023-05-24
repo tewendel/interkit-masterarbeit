@@ -289,6 +289,7 @@
 
   .map-component-container {
     height: 100%;
+    position: relative;
   }
 
   .map-component-container.inline {
