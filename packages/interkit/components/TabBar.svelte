@@ -16,23 +16,23 @@
     display: flex;
   }
 
-  :global(.TabBar a span) {
+  :global(.TabBar a span, .TabBar span) {
     border-top: 1px solid var(--border-color) !important;
     border-bottom: 1px solid var(--border-color) !important;
     border-right: 1px solid var(--border-color) !important;
   }
 
-  :global(.TabBar a:first-child span) {
+  :global(.TabBar a:first-child span, .TabBar div.link:first-child span) {
     border-left: 1px solid var(--border-color) !important;
   }
 
-  :global(.TabBar a span.nav-tab-selected) {
+  :global(.TabBar a span.nav-tab-selected, .TabBar div.link span.nav-tab-selected) {
     border-top: none !important;
     border-bottom: none !important;
     border-left: none !important;
   }
 
-  :global(.TabBar a:last-child .nav-tab-selected) {
+  :global(.TabBar a:last-child .nav-tab-selected, .TabBar div.link:last-child .nav-tab-selected) {
     border-right: none !important;
   }
 </style>
