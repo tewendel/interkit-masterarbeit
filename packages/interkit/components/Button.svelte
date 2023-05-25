@@ -71,7 +71,7 @@
     {/if}
   </span>
  
- {:else if clickType === 'path' || clickType === 'back'} 
+ {:else if (clickType === 'path' && clickTrigger) || clickType === 'back'} 
   
   {#if clickTrigger}
     <LinkConditional to={clickTrigger}>
@@ -96,6 +96,7 @@
 
 {:else}
   <a
+      on:click
       href={clickTrigger}
       target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
       class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}

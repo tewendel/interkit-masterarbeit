@@ -18,10 +18,10 @@
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 
   const buttonContext = getContext("button");
-  console.log("buttonContext", buttonContext);
+  //console.log("buttonContext", buttonContext);
   
   $: {
-    console.log("icon", $location.pathname, buttonContext?.path)
+    //console.log("icon", $location.pathname, buttonContext?.path)
     if($location.pathname == buttonContext?.path) {
       activeType = type.replace("Thin", "Full")
     } else {

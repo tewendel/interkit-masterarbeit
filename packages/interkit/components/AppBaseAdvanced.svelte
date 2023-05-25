@@ -194,6 +194,24 @@
     }
   }
 
+  // subscribe to global audio player status and load media file on changes
+  const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
+  let mediafileAudio;
+  const loadAudiofile = async (key) => {
+    console.log("AppBase loadAudioFile", $audioPlayerStatus)
+    if(key) {
+      mediafileAudio = await InterkitClient.getMediaFile(key)
+      console.log("got mediafileAudio", mediafileAudio)
+    } else {
+      mediafileAudio = null;
+    }
+  }
+  $: audioKey = $audioPlayerStatus?.audioKey
+  $: {
+    console.log("AppBaseAdvanced audioKey", audioKey)
+    loadAudiofile(audioKey)
+  }
+
   
 </script>
 
@@ -250,6 +268,30 @@
       {/if}
     </Styling>
   </Router>
+
+  {#key mediafileAudio}
+    {#if mediafileAudio}
+      <span class="audio-player">
+        <audio 
+          id="audio"
+          controls
+          on:playing={() => { 
+            if($audioPlayerStatus.loading) {
+              audioPlayerStatus.update(s=>({...s, loading: false}))
+              //console.log("playing")
+            }
+          }}
+          bind:currentTime={$audioPlayerStatus.currentTime}
+          bind:duration={$audioPlayerStatus.duration}
+          bind:paused={$audioPlayerStatus.paused} 
+          autoplay={$audioPlayerStatus.autoplay}
+        >
+          <source src={encodeURI(mediafileAudio.link)} type="audio/mpeg">
+        </audio>
+      </span>
+    {/if}
+  {/key}
+
 </div>
 
 <style>
@@ -321,6 +363,10 @@
     max-width: calc(100% - 2em);
     height: var(--network-hint-height);
     line-height: var(--network-hint-height);
+  }
+
+  .audio-player, audio {
+    display:none;
   }
 
 </style>
