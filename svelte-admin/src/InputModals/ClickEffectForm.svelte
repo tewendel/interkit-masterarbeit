@@ -4,6 +4,7 @@
   import { createEventDispatcher } from 'svelte'
 
   export let value = {};
+  let _value = {...value}; // make a local copy to prevent weird side effects after block duplication
 
   const effectTypes = ["none", "route", "back", "link", "linkTargetBlank", "actionTrigger", "setUIKey", "setDataAnnotation", "setUserVar"]
   /* 
@@ -16,36 +17,38 @@
 
   const dispatch = createEventDispatcher();  
   const update = () => {    
-    if(value.effectType == "none" || value.effectType == "back") {
-      value.path = undefined
-      value.url = undefined
-      value.trigger = undefined
-      value.key = undefined
-      value.value = undefined
+    if(_value.effectType == "none" || _value.effectType == "back") {
+      _value.path = undefined
+      _value.url = undefined
+      _value.trigger = undefined
+      _value.key = undefined
+      _value.value = undefined
     }
-    if(value.effectType == "route") {
-      value.url = undefined
-      value.trigger = undefined
-      value.key = undefined
-      value.value = undefined
+    if(_value.effectType == "route") {
+      _value.url = undefined
+      _value.trigger = undefined
+      _value.key = undefined
+      _value.value = undefined
     }
-    if(value.effectType == "link" || value.effectType == "linkTargetBlank") {
-      value.path = undefined
-      value.trigger = undefined
-      value.key = undefined
-      value.value = undefined
+    if(_value.effectType == "link" || _value.effectType == "linkTargetBlank") {
+      _value.path = undefined
+      _value.trigger = undefined
+      _value.key = undefined
+      _value.value = undefined
     }
-    if(["setUIKey", "setDataAnnotation", "setUserVar"].includes(value.effectType)) {
-      value.path = undefined
-      value.url = undefined
-      value.trigger = undefined
+    if(["setUIKey", "setDataAnnotation", "setUserVar"].includes(_value.effectType)) {
+      _value.path = undefined
+      _value.url = undefined
+      _value.trigger = undefined
     }
-    dispatch("update", {...value});
+
+    console.log("ClickeEffectForm dispatch", _value);
+    dispatch("update", _value);
   }
 
   </script>
 
-  <Select labelText="effectType" bind:selected={value.effectType} on:update={update}>
+  <Select labelText="effectType" bind:selected={_value.effectType} on:update={update}>
       {#each effectTypes as effectType}
         <SelectItem value={effectType} text={effectType} />
       {/each}
@@ -53,21 +56,21 @@
 
   <div style="margin-top: 8px">
 
-    {#if value.effectType == "route"}
-      <TextInput labelText="path" bind:value={value.path} on:update={update}/>
+    {#if _value.effectType == "route"}
+      <TextInput labelText="path" bind:value={_value.path} on:change={update}/>
     {/if}
 
-    {#if value.effectType == "link" || value.effectType == "linkTargetBlank"}
-      <TextInput labelText="url" bind:value={value.url} on:update={update}/>
+    {#if _value.effectType == "link" || _value.effectType == "linkTargetBlank"}
+      <TextInput labelText="url" bind:value={_value.url} on:change={update}/>
     {/if}
 
-    {#if value.effectType == "actionTrigger"}
-      <TextInput labelText="trigger" bind:value={value.trigger} on:update={update}/>
+    {#if _value.effectType == "actionTrigger"}
+      <TextInput labelText="trigger" bind:value={_value.trigger} on:change={update}/>
     {/if}
 
-    {#if ["setUIKey", "setDataAnnotation", "setUserVar"].includes(value.effectType)}
-      <TextInput labelText="key" bind:value={value.key} on:update={update}/>
-      <TextInput labelText="value" bind:value={value.value} on:update={update}/>
+    {#if ["setUIKey", "setDataAnnotation", "setUserVar"].includes(_value.effectType)}
+      <TextInput labelText="key" bind:value={_value.key} on:change={update}/>
+      <TextInput labelText="value" bind:value={_value.value} on:change={update}/>
     {/if}
 
   </div>

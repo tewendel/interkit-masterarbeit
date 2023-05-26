@@ -35,7 +35,7 @@
 
   // temporary storage
   const updateCell = (row, cellValue) => {
-    //console.log("updateCell", row, cellValue)
+    console.log("updateCell", row, cellValue)
     rows.find(r => r.name == row.name).value = cellValue
   }
 
