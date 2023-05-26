@@ -29,20 +29,21 @@ const setupHistory = () => {
       case 'form':
       case 'leave':
       default:
-        console.log('### afterNavigate ignore type', type)
+        // noop
+        // console.log('### afterNavigate ignore type', type)
     }
     if (routerRestoreScroll) {
       // disableScrollHandling()
       await tick()
       window.setTimeout(() => {
-        console.log('### afterNavigate restore scroll', routerRestoreScroll.top, document.documentElement.scrollHeight)
+        // console.log('### afterNavigate restore scroll', routerRestoreScroll.top, document.documentElement.scrollHeight)
         document.documentElement.scrollTop = routerRestoreScroll.top
         // somehow setting left also breaks everything :(
         // document.documentElement.scrollLeft = routerRestoreScroll.left
         routerRestoreScroll = false
       }, 100)
     }
-    console.log('### afterNavigate history:', routerHistory)
+    // console.log('### afterNavigate history:', routerHistory)
   })
 }
 
@@ -69,9 +70,9 @@ const routerHistoryBack = () => {
   // const lastRoute = routerHistory?.[routerHistory.length - 1]
   if (routerHistoryPointer < 1) return
   const lastRoute = routerHistory[routerHistoryPointer - 1]
-  console.log('### routerHistoryBack', routerHistory, routerHistoryPointer)
+  // console.log('### routerHistoryBack', routerHistory, routerHistoryPointer)
   if (!lastRoute) return
-  console.log('### routerHistoryBack', lastRoute, routerHistory)
+  // console.log('### routerHistoryBack', lastRoute, routerHistory)
   routerRestoreScroll = lastRoute.scroll
   goto(lastRoute.route, { replaceState: true })
   routerHistoryPointer--
