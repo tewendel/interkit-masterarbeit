@@ -5,13 +5,13 @@
 
   export let value = {};
 
-  const effectTypes = ["none", "route", "back", "link", "linkTargetBlank", "actionTrigger", "setUIKey", "setElementAnnotation", "setUserVar"]
+  const effectTypes = ["none", "route", "back", "link", "linkTargetBlank", "actionTrigger", "setUIKey", "setDataAnnotation", "setUserVar"]
   /* 
   - path // used for route, 
   - url // used for link, linkTargetBlank
 	- trigger // used for actionTrigger
-	- key // used for setUIKey, setElementAnnotation, setUserVar
-	- value // used for setUIKey, setElementAnnotation, setUserVar
+	- key // used for setUIKey, setDataAnnotation, setUserVar
+	- value // used for setUIKey, setDataAnnotation, setUserVar
   */
 
   const dispatch = createEventDispatcher();  
@@ -35,7 +35,7 @@
       value.key = undefined
       value.value = undefined
     }
-    if(["setUIKey", "setElementAnnotation", "setUserVar"].includes(value.effectType)) {
+    if(["setUIKey", "setDataAnnotation", "setUserVar"].includes(value.effectType)) {
       value.path = undefined
       value.url = undefined
       value.trigger = undefined
@@ -65,7 +65,7 @@
       <TextInput labelText="trigger" bind:value={value.trigger} on:update={update}/>
     {/if}
 
-    {#if ["setUIKey", "setElementAnnotation", "setUserVar"].includes(value.effectType)}
+    {#if ["setUIKey", "setDataAnnotation", "setUserVar"].includes(value.effectType)}
       <TextInput labelText="key" bind:value={value.key} on:update={update}/>
       <TextInput labelText="value" bind:value={value.value} on:update={update}/>
     {/if}

@@ -2,6 +2,7 @@
   import { getContext } from 'svelte'
   import { useNavigate } from 'svelte-navigator';
   import { executeTrigger } from '../actions'
+  import InterkitClient from '../interkit-client';
 
   export let effect;
 
@@ -39,6 +40,21 @@
 
     if(effectType == "actionTrigger" && effect.trigger) {
       executeTrigger(effect.trigger, elementContext ? $elementContext : undefined)
+    }
+
+    if(effectType == "setUIKey" && effect.key && effect.value) {
+      let store = InterkitClient.getUiKeyStore(effect.key)
+      store.set(effect.value)
+    }
+
+    if(effectType == "setUserVar" && effect.key && effect.value) {
+      InterkitClient.setUserVar(effect.key, effect.value)
+    }
+
+    if(effectType == "setDataAnnotation" && effect.key && effect.value) {
+      if($elementContext) {
+        InterkitClient.setElementProperty($elementContext?.key, effect.key, effect.value)
+      }
     }
   }
 

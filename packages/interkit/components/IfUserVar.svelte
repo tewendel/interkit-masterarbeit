@@ -2,12 +2,14 @@
   import { InterkitClient } from '../'
 
   export let variable;
+  export let value;
+
   const projectDataStore = InterkitClient.userProjectDataStore;  
-  $: value = $projectDataStore?.userVars?.[variable]
+  $: currentValue = $projectDataStore?.userVars?.[variable]
 
 </script>
 
-{#if value}
+{#if currentValue == value}
   <slot name="iftrue"></slot>
 {:else}
   <slot name="else"></slot>

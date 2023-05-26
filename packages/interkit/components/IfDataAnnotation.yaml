@@ -1,8 +1,10 @@
-name: UserVarShowIf
+name: IfDataAnnotation
 colour: 50
 fields:
   - type: string
-    name: variable  
+    name: key
+  - type: string
+    name: value
   - type: slot
     name: iftrue
   - type: slot

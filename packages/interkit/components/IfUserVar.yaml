@@ -1,13 +1,12 @@
-name: ElementShowIf
-title: Element Show If
+name: IfUserVar
 colour: 50
 fields:
   - type: string
-    name: property  
+    name: variable  
+  - type: string
+    name: value  
   - type: slot
     name: iftrue
   - type: slot
     name: else
-hiddenProps: 
-  - element   
 toolboxCategory: "Conditionals"
