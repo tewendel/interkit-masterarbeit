@@ -334,11 +334,6 @@
    
     <svelte:fragment slot="contentMain">
       <div class="__BlocklyEditor">
-
-        <div class="main-buttons">
-          <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
-          <Button on:click={()=>saveAndCompile(true)}>save</Button>            
-        </div>
       
         <Tabs bind:selected={selectedTab}>
             <Tab label="blockly" />
@@ -346,6 +341,10 @@
             <Tab label="actions.js" />
               <div slot="content" class="content">
                 <TabContent>
+                  <div class="main-buttons">
+                    <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
+                    <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+                  </div>          
                   <div class="blocklyTabContent">
                     <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
                   </div>
@@ -385,9 +384,10 @@
   }
 
   .main-buttons {
-    float: right;
     z-index: 1000;
-    position:relative;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   #blocklyDiv {

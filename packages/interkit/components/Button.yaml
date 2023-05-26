@@ -6,27 +6,8 @@ fields:
     name: text
   - type: extraProps
     props:
-    - type: options
-      name: clickType
-      options:
-        - path
-        - back
-        - payloadTrigger
-        - link
-        - linkTargetBlank
-      defaultValue: path
-    - type: string
-      name: clickTrigger
-    - type: options
-      name: type
-      options: 
-        - primary
-        - secondary
-        - ghost
-        - link
-        - list-item
-        - nav-tab
-        - spacer
+    - type: clickEffect
+      name: effect
     - type: options
       name: size
       options: 
