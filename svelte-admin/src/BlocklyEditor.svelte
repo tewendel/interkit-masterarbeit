@@ -3,8 +3,9 @@
   import {onMount, onDestroy} from 'svelte'
   import indent from 'xml-formatter';
   
-  import { Tabs, Tab, TabContent, Button } from "carbon-components-svelte";
+  import { Tabs, Tab, TabContent, Button, ButtonSet } from "carbon-components-svelte";
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+  import Help from "carbon-icons-svelte/lib/Help.svelte";
 
   import MainColumns from './MainColumns.svelte'
   
@@ -19,6 +20,7 @@
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from './BundleServer.js'
+  import { docsGo } from './docs.js'
 
   import initSheetColumnField from 'interkit-blockly/blockly/sheetColumnField.js'
   import initSheetIdField from 'interkit-blockly/blockly/sheetIdField.js'
@@ -334,6 +336,23 @@
    
     <svelte:fragment slot="contentMain">
       <div class="__BlocklyEditor">
+
+        <div class="main-buttons">
+          <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
+          <ButtonSet>
+            <!-- size=field matches Tabs in height -->
+            <Button
+              icon={Help}
+              kind="ghost"
+              size="field"
+              on:click={() => docsGo('/basics/interface_overview#app')}
+              >Help</Button>
+            <Button
+              size="field"
+              on:click={() => saveAndCompile(true)}
+              >Save</Button>
+          </ButtonSet>
+        </div>
       
         <Tabs bind:selected={selectedTab}>
             <Tab label="blockly" />
@@ -350,6 +369,7 @@
                   </div>
                 </TabContent>
                 <TabContent>
+                  <!-- FIXME this is too wide and causes weird horizontal scroll -->
                   <div class="scroll">
                     <CodeHighlighter code={generatedCode} />
                   </div>
@@ -375,8 +395,14 @@
 
 <style>
 
-.blocklyTabContent, .__BlocklyEditor, :global(.__BlocklyEditor .bx--tab-content) {
+  .blocklyTabContent,
+  .__BlocklyEditor,
+  :global(.__BlocklyEditor .bx--tab-content) {
     height: 100%;
+  }
+
+  .__BlocklyEditor {
+    position: relative;
   }
 
   .content {
@@ -384,10 +410,10 @@
   }
 
   .main-buttons {
-    z-index: 1000;
     position: absolute;
-    right: 0;
     top: 0;
+    right: 0;
+    z-index: 1;
   }
 
   #blocklyDiv {
@@ -398,6 +424,13 @@
   .scroll {
     overflow-y: auto;
     height: 100%;
+  }
+
+  @media (max-width: 80rem) {
+    /* tiny hack so Tabs blockly/App/actions don't overlap with the top right buttons */
+    :global(.__BlocklyEditor .bx--tabs__nav-link) {
+      width: auto;
+    }
   }
 
 </style>

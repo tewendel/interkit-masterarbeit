@@ -7,7 +7,7 @@
   import RepositoryNotificationBadge from "./RepositoryNotificationBadge.svelte";
   import { compileError, runtimeError, bundleProcessing } from './BundleServer.js'
 
-  import {secondaryTabIndex, secondaryTabsVisible} from "./admin.js"
+  import { secondaryTabIndex, secondaryTabsHidden } from "./admin.js"
   
   export let projectId;
   export let tab; // this is a string of the active path
@@ -124,7 +124,7 @@
 {/if}
 
 {#if showTabsRight}
-  <div class="tabs-preview" class:visible={$secondaryTabsVisible}>
+  <div class="tabs-preview" class:visible={!$secondaryTabsHidden}>
 
     <Tabs
       autoWidth

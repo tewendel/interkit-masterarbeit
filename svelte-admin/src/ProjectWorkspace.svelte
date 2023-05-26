@@ -65,17 +65,9 @@
 </script>
 
 <!-- start -->
-<div class="scrollable padding" class:active={!tab}>
+<div class="scrollable" class:active={!tab}>
   <div class="ProjectDashboard markdownContent">
-    {#if $currentProject?.uiState?.metafile?.project?.html}
-      {@html $currentProject?.uiState?.metafile?.project?.html}
-    {:else}
-      <h1>
-      Welcome to {$currentProject.name}
-      </h1>
-      This project/template does not provide an information file (project.md).
-    {/if}
-    <ButtonSet style="margin-top: 2em">
+    <ButtonSet style="justify-content: end">
       <!--Button
         kind="tertiary"
         size="small"
@@ -88,7 +80,7 @@
       {#if $currentProject?.uiState?.metafile?.project?.html}
         <Button
           kind="ghost"
-          size="small"
+          size="field"
           on:click={() => info('project')}
           style="max-width: none; margin-left: 1px"
           icon={OpenPanelFilledRight}
@@ -98,6 +90,16 @@
         </Button>
       {/if}
     </ButtonSet>
+    <div class="content">
+      {#if $currentProject?.uiState?.metafile?.project?.html}
+        {@html $currentProject?.uiState?.metafile?.project?.html}
+      {:else}
+        <h1>
+        Welcome to {$currentProject.name}
+        </h1>
+        This project/template does not provide an information file (project.md).
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -178,8 +180,9 @@
     overflow-y: auto;
   }
 
-  .padding {
-    padding: 1rem;
+  .content {
+    padding: 0 1rem;
+    margin: 1rem 0;
   }
 
   :global(.markdownContent h2) {

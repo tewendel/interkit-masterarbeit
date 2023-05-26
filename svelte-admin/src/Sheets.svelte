@@ -1,10 +1,15 @@
 <script>
 
   import { onDestroy } from 'svelte'
-  import Sheet from './Sheet.svelte'
-  import { Button } from "carbon-components-svelte";
-  import Add from "carbon-icons-svelte/lib/Add.svelte";
+
   import { InterkitClient } from 'interkit'
+  import Sheet from './Sheet.svelte'
+  import { docsGo } from './docs.js'
+
+  import { Button, ButtonSet } from "carbon-components-svelte"
+
+  import Add from "carbon-icons-svelte/lib/Add.svelte"
+  import Help from "carbon-icons-svelte/lib/Help.svelte"
 
   export let projectId
 
@@ -45,6 +50,22 @@
 
 {#if !currentSheetKey}
 
+  <div class="main-buttons">
+    <ButtonSet>
+      <Button
+        icon={Help}
+        kind="ghost"
+        size="field"
+        on:click={() => docsGo('/basics/interface_overview#data')}
+        >Help</Button>
+      <Button
+        icon={Add}
+        size="field"
+        on:click={createSheet}
+        >Create Sheet</Button>
+    </ButtonSet>
+  </div>
+
   {#if sheets}
     <ul>
     <!-- we need to use $sheets here to get the reactive value of the store -->
@@ -59,8 +80,6 @@
     loading...
   {/if}
 
-  <br>
-  <Button icon={Add} size="small" on:click={createSheet}>Create Sheet</Button>
 
 {/if}
 
@@ -74,7 +93,14 @@
 <style>
 
   .container {
-    padding: 16px;
+    padding: 56px 16px 16px 16px;
+    position: relative;
+  }
+
+  .main-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   li:hover {cursor: pointer}

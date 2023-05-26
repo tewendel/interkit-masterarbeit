@@ -58,9 +58,19 @@
 
   let w, h
 
-  const aspectRatios = '3x4 9x16 1x2 1x1 4x3'.split(' ')
+  const sizes = [
+    { width: 390, height: 844, name: 'iPhone 14', type: 'absolute' },
+    { width: 375, height: 667, name: 'iPhone SE', type: 'absolute' },
+    { width: 320, height: 480, name: 'iPhone 4', type: 'absolute' },
+    { width: 393, height: 851, name: 'Pixel 5', type: 'absolute' },
+    { width: 3, height: 4, name: '3:4', type: 'ratio' },
+    { width: 9, height: 16, name: '9:16', type: 'ratio' },
+    { width: 1, height: 2, name: '1:2', type: 'ratio' },
+    { width: 1, height: 1, name: '1:1', type: 'ratio' },
+    { width: 4, height: 3, name: '4:3', type: 'ratio' },
+  ]
 
-  let aspectRatio = aspectRatios[0]
+  let size = 0
 
   onMount(async () => {
     bundleServerURL = BundleServer.getServerURL()
@@ -154,14 +164,22 @@
       {w}×{h}px
     </TooltipDefinition>
   </div>
-  <Select inline bind:selected={aspectRatio} style="flex-grow: 0">
-    {#each aspectRatios as _}
-      <SelectItem value={_} text={_.replace('x', ':')} />
+  <Select inline bind:selected={size} style="flex-grow: 0">
+    {#each sizes as _, idx}
+      <SelectItem value={idx} text={_.name} />
     {/each}
   </Select>
 </div>
-<div class="frame" bind:clientWidth={w} bind:clientHeight={h}>
-  <AspectRatio ratio={aspectRatio}>
+<div
+  class="frame"
+  bind:clientWidth={w}
+  bind:clientHeight={h}
+  style={sizes[size].type === 'absolute' ? `width: ${sizes[size].width}px; height: ${sizes[size].height}px; margin-left: auto; margin-right: auto;` : ''}
+  >
+  <AspectRatio
+    ratio={`${sizes[size].width}x${sizes[size].height}`}
+    style={sizes[size].type === 'absolute' ? `width: ${sizes[size].width}px; height: ${sizes[size].height}px;` : ''}
+    >
     {#if bundleServerURL && !$compileError}
       {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
         <iframe 

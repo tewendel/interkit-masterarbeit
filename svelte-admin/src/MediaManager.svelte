@@ -1,11 +1,23 @@
 <script>
 
-  import { Tabs, Tab, TabContent } from "carbon-components-svelte";
-
   import { onDestroy } from 'svelte';
+
+  import {
+    Tabs,
+    Tab,
+    TabContent,
+    Button,
+    ButtonSet
+  } from "carbon-components-svelte"
+
+  import Help from "carbon-icons-svelte/lib/Help.svelte"
+
   import { InterkitClient } from 'interkit'
+  import { docsGo } from './docs.js'
+
   import MediaFileList from './MediaFileList.svelte'
   import MediaUpload from './MediaUpload.svelte'
+
   export let projectId
 
   let mediafilesStore;
@@ -42,23 +54,51 @@
 
 </script>
 
-<Tabs bind:selected={selectedTab}>
-  <Tab label={`Project (${mediafiles[0].length})`} />
-  <Tab label={`User generated (${mediafiles[1].length})`} />
-  <div slot="content">
-    <TabContent>
-      <MediaUpload {projectId} />
-      <MediaFileList
-        mediafiles={mediafiles[0]}
-        {projectId}
-        />
-    </TabContent>
-    <TabContent>
-      <MediaFileList
-        mediafiles={mediafiles[1]}
-        showChatCols={true}
-        {projectId}
-        />
-    </TabContent>
+<div class="__MediaManager">
+  <Tabs bind:selected={selectedTab}>
+    <Tab label={`Project (${mediafiles[0].length})`} />
+    <Tab label={`User generated (${mediafiles[1].length})`} />
+    <div slot="content">
+      <TabContent>
+        <MediaUpload {projectId} />
+        <MediaFileList
+          mediafiles={mediafiles[0]}
+          {projectId}
+          />
+      </TabContent>
+      <TabContent>
+        <MediaFileList
+          mediafiles={mediafiles[1]}
+          showChatCols={true}
+          {projectId}
+          />
+      </TabContent>
+    </div>
+  </Tabs>
+  <div class="main-buttons">
+    <ButtonSet>
+      <!-- size=field matches Tabs in height -->
+      <Button
+        icon={Help}
+        kind="ghost"
+        size="field"
+        on:click={() => docsGo('/basics/interface_overview#media')}
+        >Help</Button>
+    </ButtonSet>
   </div>
-</Tabs>
+</div>
+
+<style>
+
+  .__MediaManager {
+    position: relative;
+  }
+
+  .main-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+</style>

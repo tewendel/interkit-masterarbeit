@@ -664,12 +664,16 @@
     height: 100%;
     height: var(--content-height);
   }
+
   .left-pane {
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 66.6%;
     height: 100%;
     /*overflow-x: auto;*/
     overflow-y: hidden; /* avoid stray vertical scrollbar */
   }
+
   .left-pane--has-current-project > :global(div.active) {
     display: block;
     flex: 1;
