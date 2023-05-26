@@ -2,6 +2,7 @@
 
     import { onMount } from "svelte"
     import { InterkitClient } from "../../"
+    import { getShowDummyDataStore } from '../dummyDataHelpers.js' 
     
     import MediaFileImage from "../MediaFileImage.svelte";
   
@@ -16,6 +17,8 @@
   
     let currentChannel 
     let channelImage;
+
+    let showDummyData = getShowDummyDataStore()
   
     $: {
       if($channelsStore) {
@@ -27,7 +30,7 @@
   
 </script>
     
-{#if channelImage}
+{#if channelImage || $showDummyData}
   <div class="ChatChannelImage container">
     <MediaFileImage fitDimension="both" mediafileRef={channelImage}/>
   </div>

@@ -79,4 +79,4 @@
 ../../../../../packages/interkit/components/Button.svelte
 ```
 
-<ComponentInfo code={src} />
+

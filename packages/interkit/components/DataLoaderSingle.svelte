@@ -1,11 +1,12 @@
 <script>
 
-  import { InterkitClient } from '../'
+  import { InterkitClient, util } from '../'
   import { onMount, setContext } from "svelte";
   import { writable } from 'svelte/store';
 
-  export let sheetKey;
-  export let rowKey;
+  export let sheet;
+  export let rowKey; 
+  export let customKeyColumn = null; // a column that we can optionally use as key to find the row
 
   let rows; // row sub store for the whole sheet
   const rowStore = writable(null) // store to hold just the data for the row we want
@@ -16,15 +17,16 @@
   
   // subscribe to the rows in that sheet
   onMount(async () => {
-    rows = await InterkitClient.getRowSubStore(sheetKey)  
+    rows = await InterkitClient.getRowSubStore(sheet)  
   })
 
   // find the right row and update the store
   const updateContent = async (rows) => {
-    console.log("updateContent DataLoaderSingle", rows)
     let row;
     if(rows) {
-      row = rows.find(r => r.key == rowKey);
+      console.log("DataLoaderSingle finding row", customKeyColumn, rowKey, rows)
+      // if customKeyColumn is set, we use that to find the row, otherwise the row key
+      row = rows.find(r => rowKey == (customKeyColumn ? util.rowVal(r, customKeyColumn) : r.key));
     }
     if($showDummyData) {
       rowStore.set(dummyData)

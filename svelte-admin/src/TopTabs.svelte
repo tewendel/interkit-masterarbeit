@@ -20,6 +20,7 @@
   const mainTabPaths = [
     '',
     'components', 
+    'style',
     'sheets', 
     'media', 
     'story', 
@@ -78,6 +79,7 @@
           App
           <NotificationBadge count={0} />
         </Tab>
+        <Tab label="Style" />
         <Tab label="Data" />
         <Tab label="Media" />
         <Tab label="Story" />
@@ -165,7 +167,7 @@
     display: flex;
   }
   .tabs-main {
-    width: 375px;
+    width: 440px;
   }
   .extra-dropdown {
     width: 100px;

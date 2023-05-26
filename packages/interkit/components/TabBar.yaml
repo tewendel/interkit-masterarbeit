@@ -1,0 +1,7 @@
+name: TabBar
+toolboxCategory: Layout
+colour: 140
+fields:
+  - name: default
+    type: slot
+  

@@ -1,21 +1,24 @@
 <script>
 
-  import { InterkitClient, util } from '../'
+  import { InterkitClient, util } from '..'
   import { getContext } from 'svelte'
 
   import Icon from './Icon.svelte'
 
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
-  export let audioKeyDirect // or just specify the key directly as a prop
+  export let audioKeyDirect // or just specify the key directly as a prop, used by Chat
   export let hideSkipControls = true; hideSkipControls = util.blocklyBool(hideSkipControls);
   
   export let autoplay = false
 
   export let playbackControl = "stopped"; // use to start/stop playback through prop
   
-  const c = getContext('buttonBar')
-  const buttonPayload = c?.buttonPayload 
-  $: audioKey = audioKeyDirect || util.rowVal($buttonPayload, audioColumn)?.value
+  const elementContext = getContext("element")
+  if(!elementContext && !audioKeyDirect) {
+    console.warn("InlineAudioButton needs an element context, for example from DataList")
+  }
+  
+  $: audioKey = audioKeyDirect || util.rowVal($elementContext, audioColumn)?.value
 
   let audioElement
   let mediafile
@@ -100,7 +103,7 @@
 {#key mediafile}
   {#if mediafile}
     <span
-      class="container InlineAudioPlayerButton"
+      class="container InlineAudioButton"
       class:open={open}
       on:click|capture={containerClick}
       >

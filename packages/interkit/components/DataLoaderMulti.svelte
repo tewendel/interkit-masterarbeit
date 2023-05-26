@@ -75,7 +75,7 @@
 
     // check for discoverables and exclude if not yet discoverd
     if(discoverableColumn && discoverProperty) {
-      //console.log("DataLoader filtering for discovered elements", data, $elementProperties)
+      //console.log("DataLoaderMulti filtering for discovered elements", data, $elementProperties)
       let filteredData = [];
       for(let element of data) {
         if(!element.discoverableColumn 
@@ -113,7 +113,7 @@
 
     // refilter data when data changes
     unsubscribe = rows.subscribe((data) => {
-      //console.log("DataLoader got new data", sheetKey, data)
+      //console.log("DataLoaderMulti got new data", sheetKey, data)
       unfilteredData = data;
       refilter();
     })

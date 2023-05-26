@@ -1,22 +1,24 @@
 <script>
 
   import { getContext } from 'svelte';
-  import { writable } from 'svelte/store'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   
-  import { InterkitClient, util } from '../'
+  import { InterkitClient, util } from '..'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
+  import LinkConditional from './LinkConditional.svelte';
   
   import Icon from './Icon.svelte'
   
   let element = getContext("element");
   if(!element) {
-    console.warn("DataElementSmall needs an element context, for example from DataList")
+    console.warn("DataCardSmall needs an element context, for example from DataList")
   }
   
   export let titleColumn
   export let subtitleColumn
   export let imageColumn
+  export let onSelectRoute
 
   export let checkedProperty = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
@@ -27,7 +29,7 @@
 
   export let subtitleTag // special Tag to show before subtitle
 
-  let showDummyData = InterkitClient.showDummyData;
+  let showDummyData = getShowDummyDataStore()
   const dummyData = {
     title: "Title",
     subtitleTag: "Tag",
@@ -38,9 +40,10 @@
 
 {#if $element || $showDummyData}
 
+<LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
-    {#if imageRef || $showDummyData}
+    {#if imageRef || $showDummyData}
       <figure class="ContentElement__Picture ContentElementAudio__Picture picture">
         <AspectRatio aspectRatioType="square">
           <MediaFileImage objectFit="cover" fitDimension="both" mediafileRef={imageRef} />    
@@ -75,6 +78,7 @@
     {/if}
 
   </section>
+  </LinkConditional>
 
 {/if}
 

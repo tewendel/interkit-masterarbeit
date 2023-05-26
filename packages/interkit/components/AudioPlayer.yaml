@@ -1,0 +1,14 @@
+name: AudioPlayer
+toolboxCategory: Media
+colour: 140
+fields:
+  - name: audioColumn
+    type: sheetColumn
+    defaultValue: "elements/audio"
+  - name: titleColumn
+    type: sheetColumn
+    defaultValue: "elements/audio"
+  - name: default
+    type: slot
+
+  

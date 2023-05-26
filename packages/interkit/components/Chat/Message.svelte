@@ -7,7 +7,7 @@
   import Bubble from "./Bubble.svelte"
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
-  import InlineAudioPlayerButton from '../InlineAudioPlayerButton.svelte';
+  import InlineAudioButton from '../InlineAudioButton.svelte';
   import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
   import MediaFileImage from '../MediaFileImage.svelte'
   import ChatImage from "./ChatImage.svelte"
@@ -153,7 +153,7 @@
             <ChatImage {message} />
           {/if}
         {:else if message?.payload?.type == "audio"}
-            <InlineAudioPlayerButton
+            <InlineAudioButton
               audioKeyDirect={message?.payload?.mediafileKey}
               autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}
             />

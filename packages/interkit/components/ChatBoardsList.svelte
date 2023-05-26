@@ -2,10 +2,11 @@
 
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
-  import ChatPreview from './ChatPreview.svelte'
-  import { InterkitClient } from "../"
+  import ChatBoardCard from './ChatBoardCard.svelte'
+  import { InterkitClient } from ".."
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
-  export let selectTrigger;
+  export let path;
 
   let channelsStore;
   let channelsSorted;
@@ -15,10 +16,13 @@
 
   let userProjectData = InterkitClient.userProjectDataStore
 
+  let showDummyData = getShowDummyDataStore()
+  const dummyData = [...Array(5).keys()].map((k) => {return {channel_key: `${k}`}})
+
   onMount(async () => {
     userId = get(InterkitClient.userId);
     // find out what chat channels exist
-    console.log("onMount ChatsOverview")
+    console.log("onMount ChatBoardsList")
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
   })
@@ -81,13 +85,13 @@
 </script>
 
 <div class="sort-container">
-{#if $channelsStore}
-  {#each $channelsStore as channel}
-      {#if $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
+{#if $channelsStore || $showDummyData}
+  {#each ($showDummyData ? dummyData : $channelsStore) as channel}
+      {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
-        <ChatPreview
-          channel_key={channel.channel_key}
-          {selectTrigger}
+        <ChatBoardCard
+          board={channel.channel_key}
+          {path}
         />
       </div>
       {/if}

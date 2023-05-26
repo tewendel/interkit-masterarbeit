@@ -29,6 +29,17 @@ Eeach component consists of two files:
 - add a doc entry at `content/components/ComponentName.md`
 - add a preview image (shown in the component picker inside the authoring system) to the docs repository at `static/images/component_previews/ComponentName.png`
 
+## Dummy Data
+
+For components that use data from sheets, it is useful to define some dummy data to make it easier to see how the component looks even without data. In the preview pane you can toggle Dummy Data on and off.
+
+In your component code, the following to get a reactive store containing the value of this toggle.
+
+```svelte
+import { getShowDummyDataStore } from './dummyDataHelpers.js'
+const showDummyData = getShowDummyDataStore()
+```
+
 ## Example
 
 You can find this example for a custom project component in `src/components/ProjectComponentExample.svelte`
@@ -54,6 +65,7 @@ You can find this example for a custom project component in `src/components/Proj
   - `name` name of the field
   - `defaultValue` (optional) default value for the field
   - `type` type of the field (type see below)
+- `docsPath` (optional) a path to the documentation for this block, if not set, will use the name of the component
 
 ### field types
 
@@ -76,3 +88,5 @@ You can find this example for a custom project component in `src/components/Proj
 ### additional attributes for field type: sheetColumn
 
 - `columnType`
+
+ 

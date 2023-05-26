@@ -517,19 +517,19 @@
     <div class="Map__Controls controls">
 
       <button class="Map__Controls__ZoomIn zoomIn">
-        <Button on:click={zoomIn}>
+        <Button onClick={zoomIn}>
           <Icon type="plus" />
         </Button>
       </button>
 
       <button class="Map__Controls__ZoomOut zoomOut">
-        <Button on:click={zoomOut}>
+        <Button onClick={zoomOut}>
           <Icon type="minus" />
         </Button>
       </button>
 
       <button class="Map__Controls__Locate locate" id="locateButton">
-        <Button on:click={panToUserPosition}>
+        <Button onClick={panToUserPosition}>
           <Icon type="position" />
         </Button>
       </button>

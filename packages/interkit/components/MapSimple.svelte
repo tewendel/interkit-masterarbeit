@@ -6,6 +6,7 @@
   
   import { InterkitClient, util } from '../'
   import { executeTrigger } from '../actions'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -28,7 +29,7 @@
   export let height; // height of the container
   export let showControls; // true if we should show controls
   export let showPopups; // true if we should show popup on marker tap
-  export let mapId; // id of the map
+  export let mapId = "map"; // id of the map
   export let nearestElementMode = false; // mode to show only the nearest element
   export let inline = false;
   export let disableControls = false;
@@ -56,7 +57,7 @@
     }
   }
 
-  const columnMap = {
+  let columnMap = {
     customIconColumn,
     markerLabelColumn,
     markerTitleColumn,
@@ -109,7 +110,7 @@
     return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
   }
-  const showDummyData = InterkitClient.showDummyData;
+  const showDummyData = getShowDummyDataStore()
   const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
     position: {
       lat: getRandomInRange(-90, 90, 3),
@@ -121,7 +122,9 @@
   const dummyDataStore = writable(dummyData)
   if($showDummyData) {
     elements = dummyDataStore
+    console.log("set elements to dummyData")
   }
+  if($showDummyData) columnMap.markerPositionsColumn = "elements/position"
 
   // set up subscription
   const initDataSubs = async () => {
@@ -188,7 +191,7 @@
       element: r
     }})
 
-    console.log("updateMarkerData", markerData, mapId, $elementProperties)
+    //console.log("updateMarkerData", markerData, mapId, $elementProperties)
   }
 
   const markerClick = async (e) => {
@@ -235,6 +238,7 @@
   
 </script>
 
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
 
     {#if selectedElement && $$slots.popup}
@@ -243,7 +247,7 @@
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
         <div class="marker_popup_close">
-          <Button type="secondary" on:click={mapClick}>
+          <Button type="secondary" onClick={mapClick}>
             <Icon type="close" />
             <span>{closeButtonLabel}</span>
           </Button>
@@ -286,6 +290,7 @@
 
   .map-component-container {
     height: 100%;
+    position: relative;
   }
 
   .map-component-container.inline {

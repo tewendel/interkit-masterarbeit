@@ -1,15 +1,16 @@
 <script>
 
   import { InterkitClient, util } from '..'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import LinkConditional from './LinkConditional.svelte';
 
   import { getContext } from 'svelte';
   let element = getContext("element");
-  console.log("DataElementPreview got element store from context", $element)
+  console.log("DataCardLarge got element store from context", $element)
   if(!element) {
-    console.warn("DataElementPreview needs an element context, for example from DataList")
+    console.warn("DataCardLarge needs an element context, for example from DataList")
   }
 
   export let onSelectRoute
@@ -24,7 +25,7 @@
 
   export let subtitleTag // special Tag to show before subtitle
 
-  let showDummyData = InterkitClient.showDummyData;
+  let showDummyData =  getShowDummyDataStore();
   const dummyData = {
     title: "Title",
     subtitleTag: "Tag",
@@ -71,7 +72,7 @@
 
 <style>
   .container {
-    margin: 0 var(--distance-m) var(--distance-m) var(--distance-m);
+    margin: 0;
   }
   .content {
     padding: var(--distance-m) var(--distance-l) var(--distance-s) var(--distance-m);

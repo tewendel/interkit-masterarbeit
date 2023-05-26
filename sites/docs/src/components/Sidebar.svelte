@@ -8,6 +8,7 @@
 {#each items as section}
   <Submenu 
     title={section.title}
+    path={section.path}
     items={section.items} 
     open={section.open}
   />

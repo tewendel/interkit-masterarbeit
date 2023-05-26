@@ -1,0 +1,8 @@
+name: ChatBoardsList
+title: ChatBoardsList
+colour: 100
+fields:
+  - type: string
+    name: path
+    defaultValue: "/chat"
+toolboxCategory: Chat

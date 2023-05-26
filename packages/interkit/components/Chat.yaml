@@ -2,11 +2,11 @@ name: Chat
 title: Chat
 colour: 100
 fields:
-  - type: string
-    name: board
-    defaultValue: "board1"
   - type: extraProps
     props:
+    - type: string
+      name: board
+      defaultValue: board1
     - type: checkbox
       name: messagesReportableDefault
       defaultValue: "TRUE"

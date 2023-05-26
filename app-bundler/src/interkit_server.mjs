@@ -13,20 +13,21 @@ const setup = async (app, main_server) => {
     username: "bundler",
     password: process.env.BUNDLER_PASSWORD
   })
-  
-  let projectsSub = server.subscribe("projects");
 
-  await projectsSub.ready();
+  server.on('login', async () => {
 
-  let reactiveCollection = server.collection('projects').reactive();
+    let reactiveCollection = server.collection('projects').reactive();
 
-  reactiveCollection.onChange( async (newData) => {
-    await ensureRepositories(newData)
-    updateProjectServers(newData)
-    runUpdaters(newData)
-    ensureViteServers(newData, app, main_server)
-    projects = newData
-  });
+    reactiveCollection.onChange( async (newData) => {
+      projects = newData;
+      await ensureRepositories(newData)
+      updateProjectServers(newData)
+      runUpdaters(newData)
+      ensureViteServers(newData, app, main_server)
+    });
+
+    let projectsSub = server.subscribe("projects");
+  })
 }
 
 const getProjectIdFromProjectSlug = (slug) => {

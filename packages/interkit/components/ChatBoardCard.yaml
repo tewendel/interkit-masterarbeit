@@ -1,0 +1,10 @@
+name: ChatBoardCard
+title: ChatBoardCard
+colour: 100
+fields:
+  - type: string
+    name: board
+    defaultValue: board1
+  - type: string
+    name: path
+toolboxCategory: Chat

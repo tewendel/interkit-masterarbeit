@@ -45,7 +45,7 @@
   }
 
   const getValue = (row) => {
-    // console.log("getValue", row)
+    console.log("getValue", row)
     // construct default values if there is not value
     if(typeof row.value == "undefined") {
       if(row.type == "sheetColumn") {
@@ -97,7 +97,7 @@
               <SheetColumnSelectForm columnInfo={row} value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
             {/if}
             {#if row.type == "sheetId"}
-              <SheetIdSelectForm value={getValue(value)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
+              <SheetIdSelectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select

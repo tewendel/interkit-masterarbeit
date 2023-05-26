@@ -7,7 +7,7 @@
   import ContextProvider from './ContextProvider.svelte'
 
   let elementsContext = getContext("elements");
-  if(!elementsContext) alert("ElementList needs DataLoader or DataRouteMulti as parent");
+  if(!elementsContext) console.warn("ElementList needs DataLoaderSingle or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
 
   /*$: {
@@ -19,10 +19,7 @@
 
 </script>
 
-{#if $elements || $showDummyData}
-  {#if $elements.length == 0 && !$showDummyData}
-    <slot name="emptyElement"></slot>
-  {:else}
+  {#if $elements?.length || $showDummyData}
     <ul>
       {#each ($showDummyData ? dummyData : $elements) as element}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -36,9 +33,9 @@
         </li>
       {/each}
     </ul>
+  {:else}
+    <slot name="emptyElement"></slot>
   {/if}
-{/if}
-
 
 <style>
   

@@ -122,6 +122,8 @@
     });
   }
 
+  let blockObjects; // the block definitions from the yaml files
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
@@ -139,7 +141,7 @@
       alert("error loading block data" + blockData.errors.reduce( (result, entry)=> result + "\n\n" + entry.errorMessage, ""))
       console.log(blockData)
     }
-    let blockObjects = blockData.components.map(e => ({
+    blockObjects = blockData.components.map(e => ({
       ...e.json, 
       origin: e.origin 
     }));
@@ -183,6 +185,7 @@
     if(blocklyJson?.content) {
       try {
         let stateToLoad = JSON.parse(blocklyJson.content)
+        console.log("blockly stateToLoad", stateToLoad)
         Blockly.serialization.workspaces.load(stateToLoad, workspace)
       } catch(e) {
         alert("error importing blockly json")
@@ -328,7 +331,7 @@
     >
 
     <svelte:fragment slot="sidebarLeft">
-      <BlocklyComponentPicker {workspace} {topBlocks} {toolbox}/>
+      <BlocklyComponentPicker {workspace} {toolbox} {topBlocks} blockDefinitionsYaml={blockObjects}/>
     </svelte:fragment>
    
     <svelte:fragment slot="contentMain">

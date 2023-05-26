@@ -1,0 +1,9 @@
+name: PopoutAudioButton
+toolboxCategory: Media
+colour: 300
+fields: 
+  - name: audioColumn
+    type: sheetColumn
+    defaultValue: "elements/audio"
+  
+  

@@ -1,9 +1,0 @@
-name: ChatPreview
-title: ChatPreview
-colour: 100
-fields:
-  - type: string
-    name: channel_key
-  - type: string
-    name: selectTrigger
-toolboxCategory: Chat

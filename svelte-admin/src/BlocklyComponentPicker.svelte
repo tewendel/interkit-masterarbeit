@@ -7,8 +7,9 @@
   import { docsGo } from './docs.js'
 
   export let workspace;
-  export let topBlocks;
   export let toolbox;
+  export let topBlocks;
+  export let blockDefinitionsYaml; // unprocessed block definitions loaded from yaml
 
   let activeId = "";
   let selectedIds = [];
@@ -44,16 +45,19 @@
 
   $: {
     if(toolbox) {
+      // build categories
       children = toolbox?.contents.filter(c => c.kind == "category").map(c => { return {
         id: c.name,
         text: c.name
       }})
       console.log(children)
 
+      // build components
       children.forEach(c => {
         c.children = toolbox.contents.find(t => t.name == c.text).contents.map(child => { return {
           id: child.type,
-          text: child.type
+          text: child.type,
+          block: child
         }})
       })
 
@@ -68,18 +72,18 @@
   }
 
   const selectComponent = (blockName) => {
-    if(confirm("add " + blockName + " to workspace?")) {
+    //if(confirm("add " + blockName + " to workspace?")) {
       let newBlock = workspace.newBlock(blockName);
       newBlock.initSvg();
       newBlock.moveBy((workspace.getMetrics().viewLeft + 20) / workspace.scale, (workspace.getMetrics().viewTop + 20) / workspace.scale);
       newBlock.render();
-    }
+    //}
   }
 
   const openBlocklyHelp = (blockName) => {
-    //alert("open help for " + blockName)
-    docsGo(`/components/${blockName}`)
-
+    const blockDef = blockDefinitionsYaml.find(b => b.name == blockName)
+    const docsPath = blockDef?.docsPath || blockName // use either explicit docsPath or block name
+    docsGo(`/components/${docsPath}`)
   }
 
   const referenceHelp = () => {

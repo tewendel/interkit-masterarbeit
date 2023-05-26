@@ -9,11 +9,12 @@ fields:
     - type: options
       name: clickType
       options:
+        - path
+        - back
         - payloadTrigger
         - link
         - linkTargetBlank
-        - path
-      defaultValue: payloadTrigger
+      defaultValue: path
     - type: string
       name: clickTrigger
     - type: options
@@ -24,6 +25,7 @@ fields:
         - ghost
         - link
         - list-item
+        - nav-tab
         - spacer
     - type: options
       name: size

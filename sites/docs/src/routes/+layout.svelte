@@ -132,6 +132,7 @@
   .main {
     grid-column: 2;
     overflow-y: auto;
+    padding-bottom: 1em !important;
   }
 
   .container__iframed .main {
@@ -221,6 +222,10 @@
 
   :global([id="table-of-contents"] + ul li p) {
     margin: 0;
+  }
+
+  :global(td, th) {
+    padding: 5px;
   }
 
 </style>

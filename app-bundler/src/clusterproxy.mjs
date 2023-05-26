@@ -106,6 +106,7 @@ function initCluster({ settings, portrange, app, server }) {
   process.on('exit', (code) => {
     console.log(`Master process exited with code ${code} – removing all workers`);
     for (const worker of Object.values(cluster.workers)) {
+      //console.log("Gonna kill worker", worker.id);
       worker.kill();
     }
   });
@@ -192,9 +193,9 @@ function removeWorker(workerId) {
   for (let worker of Object.values(cluster.workers)) {
     if (worker.id === workerId && worker.isConnected() && !worker.beingKilled)
     {
+      worker.kill();
       worker.beingKilled = true;
       console.log("Killing worker", worker.id);
-      worker.kill();
     }
   }
 }
