@@ -1,14 +1,31 @@
 <script>
+
+  import { onDestroy } from 'svelte'
+
   import { InterkitClient } from 'interkit'
-  import { DataTable, OverflowMenu, OverflowMenuItem, Button, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
-  import Add from "carbon-icons-svelte/lib/Add.svelte";
-  // import Delete from "carbon-icons-svelte/lib/Delete.svelte";
-  import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
-  import InputModal from './InputModals/InputModal.svelte';
-  import SheetRenameModal from './InputModals/SheetRenameModal.svelte';
-  import SheetCell from './SheetCell.svelte';
+  import { docsGo } from './docs.js'
+
+  import {
+    DataTable,
+    OverflowMenu,
+    OverflowMenuItem,
+    Button,
+    ButtonSet,
+    Toolbar,
+    ToolbarContent,
+    ToolbarSearch
+  } from "carbon-components-svelte"
+
+  import Add from 'carbon-icons-svelte/lib/Add.svelte'
+  import Help from 'carbon-icons-svelte/lib/Help.svelte'
+  import ChevronLeft from 'carbon-icons-svelte/lib/ChevronLeft.svelte'
+  // import Delete from 'carbon-icons-svelte/lib/Delete.svelte'
+  import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
+  import InputModal from './InputModals/InputModal.svelte'
+  import SheetRenameModal from './InputModals/SheetRenameModal.svelte'
+  import SheetCell from './SheetCell.svelte'
+
   import { columnTypes } from './baseConfig.js';
-  import { onDestroy } from 'svelte';
 
   export let sheetKey;
   export let projectId;
@@ -289,8 +306,29 @@
 
 </script>
 
+<div class="main-buttons">
+  <ButtonSet>
+    <Button
+      kind="ghost"
+      size="field"
+      on:click={close}
+      style="margin-right: auto"
+      icon={ChevronLeft}
+      >
+      back
+    </Button>
+    <Button
+      size="field"
+      kind="ghost"
+      icon={Help}
+      on:click={() => docsGo('/basics/interface_overview#data')}
+      >
+      Help
+    </Button>
+  </ButtonSet>
+</div>
+
 {#if $currentSheet}
-  <Button kind="tertiary" size="small" on:click={close}>{"<"} back to sheet overview</Button><br><br>
   <h4>{$currentSheet.name} 
     <small>key={$currentSheet.key}</small>
   </h4>
@@ -380,17 +418,40 @@
   />
 
 <style>
-  .sheet-header:hover {cursor: pointer}
-  .header-type {font-weight: normal; margin-bottom: 5px;}
-  .sheet-cell:hover {cursor: pointer}
+
+  .main-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .sheet-header:hover {
+    cursor: pointer;
+  }
+
+  .header-type {
+    font-weight: normal;
+    margin-bottom: 5px;
+  }
+
+  .sheet-cell:hover {
+    cursor: pointer;
+  }
+
   .sheet-cell {
     width: 100%;
     height: 1.5em;
     display: block;
   }
-  .marker-icon { height: 30px; }
+
+  .marker-icon {
+    height: 30px;
+  }
+
   small {
     font-size: 50%;
     font-family: monospace;
   } 
+
 </style>

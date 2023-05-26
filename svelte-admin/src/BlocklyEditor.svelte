@@ -342,7 +342,7 @@
               icon={Help}
               kind="ghost"
               size="field"
-              on:click={() => docsGo('/basics/build_app#build-the-app-structure')}
+              on:click={() => docsGo('/basics/interface_overview#app')}
               >Help</Button>
             <Button
               size="field"
@@ -362,6 +362,7 @@
                   </div>
                 </TabContent>
                 <TabContent>
+                  <!-- FIXME this is too wide and causes weird horizontal scroll -->
                   <div class="scroll">
                     <CodeHighlighter code={generatedCode} />
                   </div>
@@ -387,8 +388,14 @@
 
 <style>
 
-.blocklyTabContent, .__BlocklyEditor, :global(.__BlocklyEditor .bx--tab-content) {
+  .blocklyTabContent,
+  .__BlocklyEditor,
+  :global(.__BlocklyEditor .bx--tab-content) {
     height: 100%;
+  }
+
+  .__BlocklyEditor {
+    position: relative;
   }
 
   .content {
@@ -396,9 +403,10 @@
   }
 
   .main-buttons {
-    float: right;
-    z-index: 1000;
-    position:relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
   }
 
   #blocklyDiv {
