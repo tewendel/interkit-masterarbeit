@@ -12,6 +12,12 @@
 
 </script>
 
+
+<!-- how you would navigate the Docs from outside the iframe:
+<button
+  style="position: absolute; z-index: 2000"
+  on:click={() => iframe.contentWindow.postMessage({ method: 'routerHistoryBack' }, '*')}>back</button>
+-->
 <!-- weird classname because svelte kept losing scope -->
 <iframe
   class="ifr"

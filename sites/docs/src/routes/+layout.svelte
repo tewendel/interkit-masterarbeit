@@ -1,9 +1,16 @@
 <script>
   import Sidebar from "../components/Sidebar.svelte"
   import Breadcrumbs from "../components/Breadcrumbs.svelte"
-  import {items} from "../content/sidebar.json.js"
+  import { items } from "../content/sidebar.json.js"
 
-  import { isIframed } from "$lib/iframed.js"
+  import {
+    setupHistory,
+    isIframed,
+    routerHistoryBack,
+    routerHistoryForward,
+    routerCanForward,
+    routerCanBack
+  } from "$lib/iframed.js"
 
   import 'prismjs/themes/prism.css'
 
@@ -12,6 +19,8 @@
   import { page } from '$app/stores'
 
   let sidebarEl
+
+  setupHistory()
 
 </script>
 
@@ -36,6 +45,18 @@
     <div class="breadcrumbs">
       <Breadcrumbs {items} />
     </div>
+    <div class="history">
+      <button
+        class="history-button"
+        on:click={routerHistoryBack}
+        disabled={!$routerCanBack}
+        >&larr;</button>
+      <button
+        class="history-button"
+        on:click={routerHistoryForward}
+        disabled={!$routerCanForward}
+        >&rarr;</button>
+    </div>
   </div>
   <main class="main">
     <slot></slot>
@@ -53,6 +74,7 @@
 
   :global(html.iframed) {
     scroll-padding-top: 3rem;
+    overflow-y: scroll;
   }
 
   :global(html.iframed body) {
@@ -138,14 +160,20 @@
     display: flex;
   }
 
+  .fixedheader > * {
+    flex-shrink: 1;
+    flex-grow: 0;
+  }
+
   .fixedheader .breadcrumbs {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0.25rem 0;
+    margin-right: auto;
   }
 
-  .fixedheader .burger {
+  .fixedheader button {
     border: 0;
     background: none;
     font-weight: bold;
@@ -155,11 +183,23 @@
     text-align: center;
     position: relative;
     vertical-align: bottom;
+  }
+
+  .fixedheader button:disabled {
+    opacity: 0.5;
+    cursor: normal;
+  }
+
+  .fixedheader button:not(:disabled):hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .fixedheader .burger {
     margin-right: 0.33em;
   }
 
-  .fixedheader .burger:hover {
-    background: rgba(0, 0, 0, 0.05);
+  .history {
+    display: flex;
   }
 
   :global(h2[id]:not([id="table-of-contents"]) a),
