@@ -8,7 +8,7 @@
   >
 
   <svelte:fragment slot="sidebarLeft">
-    left
+    
   </svelte:fragment>
    
   <svelte:fragment slot="contentMain">
