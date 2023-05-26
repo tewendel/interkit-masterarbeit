@@ -8,6 +8,16 @@ fields:
     props:
     - type: clickEffect
       name: effect
+    - name: type
+      type: options
+      options:
+        - primary 
+        - secondary
+        - ghost 
+        - link 
+        - spacer
+        - list-item
+        - nav-tab
     - type: options
       name: size
       options: 

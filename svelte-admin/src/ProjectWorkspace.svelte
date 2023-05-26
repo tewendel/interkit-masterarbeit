@@ -89,7 +89,7 @@
         Show Readme
       </Button-->
       {#if $currentProject?.uiState?.metafile?.project?.html}
-        <Button
+        <!--Button
           kind="ghost"
           size="field"
           on:click={() => info('project')}
@@ -98,7 +98,7 @@
           disabled={!$currentProject?.uiState?.metafile?.project?.html}
           >
           Show this text on the right
-        </Button>
+        </Button-->
       {/if}
     </ButtonSet>
     <div class="content">

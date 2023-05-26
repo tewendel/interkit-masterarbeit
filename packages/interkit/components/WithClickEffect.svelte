@@ -61,6 +61,6 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div on:click={handleClickEffect}>
+<div class="click-effect" on:click={handleClickEffect}>
   <slot></slot>
 </div>

@@ -3,7 +3,15 @@
   import { setContext } from 'svelte';
   import Icon from './Icon.svelte'
   import WithClickEffect from './WithClickEffect.svelte'
-  
+  import { useLocation } from 'svelte-navigator';
+
+  let location;
+  try {
+    location = useLocation();
+  } catch(e) {
+    console.log(e)
+  }
+
   export let nopadding = false
   export let type = "secondary" // primary | secondary | ghost | link | spacer
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
@@ -30,6 +38,7 @@
     class:selected={selected}
     class:Button--selected={selected}
     class:nopadding 
+    class:nav-tab-selected={$location.pathname == effect?.path}
   >
     <slot/>
     { text || "" }
@@ -144,7 +153,7 @@
     border-radius: 0;
     font: var(--font-headline-3);
   }
-
+  
   .button.nav-tab-selected {
     font-weight: bold;
   }
