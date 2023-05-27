@@ -1,67 +1,45 @@
 <script>
 
-  import { executeTrigger } from '../actions'
-  import { getContext, setContext } from 'svelte';
+  import { setContext } from 'svelte';
   import Icon from './Icon.svelte'
-  import LinkConditional from './LinkConditional.svelte';
-  import { Link, useLocation } from 'svelte-navigator';
-  
+  import WithClickEffect from './WithClickEffect.svelte'
+  import { useLocation } from 'svelte-navigator';
+
   let location;
   try {
     location = useLocation();
-  } catch(e) {
+  } catch(e) {
     console.log(e)
   }
 
   export let nopadding = false
-  export let color = null;
   export let type = "secondary" // primary | secondary | ghost | link | spacer
   export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
   export let flex = "normal" // normal | fill
   export let height = "fixed" // fixed | auto
   export let text = undefined;
-  export let selected = false
-  export let clickType; // link | linkTargetBlank | path | back | payloadTrigger
-  export let clickTrigger = null; // parameter for the click action
-  export let onClick = null // function to call on click if we are not using this with triggers
-  
-  if(clickType == 'back') {
-    clickTrigger = -1;
-  }
+  export let selected = false  
+  export let effect; // clickEffect object used to decide what happens on click
 
+  // context for icons to know what path they are on
   setContext("button", {
     type,
-    path: clickTrigger    
+    path: effect?.path    
   })
-
-  // get context from parent element, for example ContentElement and pass the payload to the action
-  const c = getContext("buttonBar");
-  const buttonPayload = c?.buttonPayload // this is a store
-  if(buttonPayload) {
-    //console.log("buttonPayload", $buttonPayload)
-  }
-
-  const handleClick = () => {
-
-    if(clickTrigger)
-      executeTrigger(clickTrigger, buttonPayload ? $buttonPayload : undefined)
-
-    if(onClick)
-      onClick(buttonPayload ? $buttonPayload : undefined);
-  }
 
 </script>
 
-{#if clickType === 'payloadTrigger' || onClick}
+<WithClickEffect {effect}>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <span 
-      on:click={handleClick}
-      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
-      class:primary={type==='primary'}
-      class:selected={selected}
-      class:Button--selected={selected}
-      class:nopadding 
-    >
+  <span
+    on:click 
+    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
+    class:primary={type==='primary'}
+    class:selected={selected}
+    class:Button--selected={selected}
+    class:nopadding 
+    class:nav-tab-selected={$location.pathname == effect?.path}
+  >
     <slot/>
     { text || "" }
     {#if type == "list-item"}
@@ -70,50 +48,7 @@
       </div>
     {/if}
   </span>
- 
- {:else if clickType === 'path' || clickType === 'back'} 
-  
-  {#if clickTrigger}
-    <LinkConditional to={clickTrigger}>
-      <span 
-          class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
-          class:primary={type==='primary'}
-          class:selected={selected}
-          class:Button--selected={selected}
-          class:nopadding 
-          class:nav-tab-selected={$location.pathname == clickTrigger}
-        >
-        <slot/>
-        { text || "" }
-        {#if type == "list-item"}
-          <div class="button-extra-icon">
-            <Icon type="Thin-Arrow-Right"/> 
-          </div>
-        {/if}
-      </span>
-    </LinkConditional>
-  {/if}
-
-{:else}
-  <a
-      href={clickTrigger}
-      target={clickType === 'linkTargetBlank' ? '_blank' : '_self'}
-      class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
-      class:primary={type==='primary'}
-      class:selected={selected}
-      class:Button--selected={selected}
-      class:nopadding 
-    >
-    <slot/>
-    { text || "" }
-    {#if type == "list-item"}
-    <div class="button-extra-icon">
-       <Icon type="Thin-Arrow-Right"/> 
-    </div>
-    {/if}
-  </a>
-{/if}
-
+</WithClickEffect>
 
 <style>
 
@@ -218,7 +153,7 @@
     border-radius: 0;
     font: var(--font-headline-3);
   }
-
+  
   .button.nav-tab-selected {
     font-weight: bold;
   }

@@ -8,9 +8,9 @@
 
   import { getContext } from 'svelte';
   let element = getContext("element");
-  console.log("DataElementPreview got element store from context", $element)
+  console.log("DataCardLarge got element store from context", $element)
   if(!element) {
-    console.warn("DataElementPreview needs an element context, for example from DataList")
+    console.warn("DataCardLarge needs an element context, for example from DataList")
   }
 
   export let onSelectRoute

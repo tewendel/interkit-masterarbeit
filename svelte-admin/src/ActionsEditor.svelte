@@ -20,6 +20,7 @@
   }
 
   const save = async ()=>{
+    console.log("saving actions")
     let actionsFile = {
       filename,
       content: code
@@ -46,9 +47,21 @@
 {#if code && activated}
   <CodeEditor bind:code/>
   <br/>
-  <Button on:click={()=>saveAndCompile(true)}>save</Button>
+  <div class="main-buttons">
+    <Button on:click={()=>saveAndCompile(true)}>save</Button>
+  </div>
 {:else}
   <span>loading actions.js</span>
 {/if}
 
+<style>
+
+.main-buttons {
+  z-index: 1000;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+</style>
 

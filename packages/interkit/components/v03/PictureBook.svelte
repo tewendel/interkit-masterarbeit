@@ -7,7 +7,7 @@
   import AspectRatio from './AspectRatio.svelte';
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
-  import InlineAudioPlayerButton from './InlineAudioPlayerButton.svelte';
+  import InlineAudioButton from './InlineAudioButton.svelte';
   import Overlay from './Overlay.svelte';
   import TopNavBarCustom from './TopNavBarCustom.svelte';
   import InlineVideoPlayer from './InlineVideoPlayer.svelte';
@@ -146,7 +146,7 @@
     <div class="left">
       {#key slideIndex}
         {#if slides[slideIndex].audio}
-          <InlineAudioPlayerButton
+          <InlineAudioButton
             audioKeyDirect={slides[slideIndex].audio?.value}
             hideSkipControls={false}
             bind:playbackControl={audioPlaybackControl}

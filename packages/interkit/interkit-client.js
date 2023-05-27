@@ -921,6 +921,15 @@ const loadElementPropertiesFromUser = async () => {
 
 }
 
+const setUserVar = (varName, value) => {  
+  InterkitClient.call('user.setUserVar', {
+    userId: get(userId),
+    varName,
+    value
+  })
+}
+
+
 const usersMoveTo = async ({ userIds, projectId, boardId, nodeId }) => {
   const result = await InterkitClient.call(
     'users.moveTo',
@@ -1019,6 +1028,7 @@ const InterkitClient = {
   setGlobalStore,
   setElementProperty,
   getElementProperty,
+  setUserVar,
   saveElementPropertiesToUser,
   loadElementPropertiesFromUser,
   usersMoveTo,

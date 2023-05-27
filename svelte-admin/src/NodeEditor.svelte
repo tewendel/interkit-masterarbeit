@@ -753,6 +753,11 @@
           </div>
           <ButtonSet style="justify-content: end">
             <Button
+              icon={Help}
+              kind="ghost"
+              on:click={() => docsGo('/basics/interface_overview#story')}
+              >Help</Button>
+            <Button
               kind="ghost"
               icon={TrashCan}
               iconDescription="delete board"

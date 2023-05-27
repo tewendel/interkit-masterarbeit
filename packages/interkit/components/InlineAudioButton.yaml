@@ -1,4 +1,4 @@
-name: InlineAudioPlayerButton
+name: InlineAudioButton
 fields:
   - name: audioColumn
     type: sheetColumn
@@ -7,4 +7,4 @@ fields:
   - name: hideSkipControls
     type: checkbox
     defaultValue: "TRUE"
-toolboxCategory: MediaPlayer
+toolboxCategory: Media

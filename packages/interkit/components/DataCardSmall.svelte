@@ -71,7 +71,7 @@
             
     </div>
 
-    {#if $elementProperties?.[element?.key]?.[checkedProperty]}
+    {#if $elementProperties?.[$element?.key]?.[checkedProperty] == "true"}
       <div class="check-icon">
           <Icon type="check" height="24px"/>
       </div>
@@ -83,9 +83,11 @@
 {/if}
 
 <style>
+
   .container {
     display: flex;
-    padding: var(--distance-xs)
+    padding: var(--distance-xs);
+    position: relative;
   }
   .content {
     padding: var(--distance-m) var(--distance-m) var(--distance-m) 0;

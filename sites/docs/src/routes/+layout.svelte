@@ -1,12 +1,26 @@
 <script>
-  import Sidebar from "../components/Sidebar.svelte";
-  import {items} from "../content/sidebar.json.js"
+  import Sidebar from "../components/Sidebar.svelte"
+  import Breadcrumbs from "../components/Breadcrumbs.svelte"
+  import { items } from "../content/sidebar.json.js"
 
-  import { isIframed } from "$lib/iframed.js"
+  import {
+    setupHistory,
+    isIframed,
+    routerHistoryBack,
+    routerHistoryForward,
+    routerCanForward,
+    routerCanBack
+  } from "$lib/iframed.js"
 
   import 'prismjs/themes/prism.css'
 
   //export const prerender = true;
+
+  import { page } from '$app/stores'
+
+  let sidebarEl
+
+  setupHistory()
 
 </script>
 
@@ -21,10 +35,33 @@
       </a>
     </h1>
   </header>
+  <div class="fixedheader">
+    <button
+      class="burger"
+      on:click={() => { sidebarEl.scrollIntoView({ behavior: 'smooth', block: 'end' }) }}
+      >
+      ≡
+    </button>
+    <div class="breadcrumbs">
+      <Breadcrumbs {items} />
+    </div>
+    <div class="history">
+      <button
+        class="history-button"
+        on:click={routerHistoryBack}
+        disabled={!$routerCanBack}
+        >&larr;</button>
+      <button
+        class="history-button"
+        on:click={routerHistoryForward}
+        disabled={!$routerCanForward}
+        >&rarr;</button>
+    </div>
+  </div>
   <main class="main">
     <slot></slot>
   </main>
-  <nav class="sidebar">
+  <nav class="sidebar" bind:this={sidebarEl}>
     <Sidebar {items} />
   </nav>
 </div>
@@ -33,6 +70,11 @@
 
   :global(html) {
     scroll-behavior: smooth;
+  }
+
+  :global(html.iframed) {
+    scroll-padding-top: 3rem;
+    overflow-y: scroll;
   }
 
   :global(html.iframed body) {
@@ -94,7 +136,7 @@
   }
 
   .container__iframed .main {
-    padding: 0 1rem;
+    padding: 2em 1rem 0 1rem;
     background-color: white;
   }
 
@@ -102,6 +144,63 @@
     .container {
       display: block;
     }
+  }
+
+  .fixedheader {
+    display: none;
+    padding: 0rem 1rem;
+  }
+
+  .container__iframed .fixedheader {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+  }
+
+  .fixedheader > * {
+    flex-shrink: 1;
+    flex-grow: 0;
+  }
+
+  .fixedheader .breadcrumbs {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.25rem 0;
+    margin-right: auto;
+  }
+
+  .fixedheader button {
+    border: 0;
+    background: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5em;
+    width: 2em;
+    text-align: center;
+    position: relative;
+    vertical-align: bottom;
+  }
+
+  .fixedheader button:disabled {
+    opacity: 0.5;
+    cursor: normal;
+  }
+
+  .fixedheader button:not(:disabled):hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .fixedheader .burger {
+    margin-right: 0.33em;
+  }
+
+  .history {
+    display: flex;
   }
 
   :global(h2[id]:not([id="table-of-contents"]) a),

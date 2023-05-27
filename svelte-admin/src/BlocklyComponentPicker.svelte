@@ -72,12 +72,12 @@
   }
 
   const selectComponent = (blockName) => {
-    if(confirm("add " + blockName + " to workspace?")) {
+    //if(confirm("add " + blockName + " to workspace?")) {
       let newBlock = workspace.newBlock(blockName);
       newBlock.initSvg();
       newBlock.moveBy((workspace.getMetrics().viewLeft + 20) / workspace.scale, (workspace.getMetrics().viewTop + 20) / workspace.scale);
       newBlock.render();
-    }
+    //}
   }
 
   const openBlocklyHelp = (blockName) => {

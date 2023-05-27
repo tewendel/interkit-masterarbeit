@@ -247,7 +247,7 @@
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
         <div class="marker_popup_close">
-          <Button type="secondary" onClick={mapClick}>
+          <Button type="secondary" on:click={mapClick}>
             <Icon type="close" />
             <span>{closeButtonLabel}</span>
           </Button>

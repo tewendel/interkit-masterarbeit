@@ -1,15 +1,16 @@
-name: ShowIf
-title: Show If
+name: IfUIKey
 colour: 50
 fields:
-  - type: string
-    name: uiKey
-    defaultValue: showIf
   - type: options
     name: storeType
     options: 
-      - uiKey
+      - UIKey
       - globalStore
+    defaultValue: UIKey
+  - type: string
+    name: key
+  - type: string
+    name: value
   - type: slot
     name: iftrue
   - type: slot

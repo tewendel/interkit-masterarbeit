@@ -23,7 +23,7 @@
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
   import Theming from './Theming.svelte'
-
+  
   export let projectId
   export let tab
   //export let currentProject
@@ -35,6 +35,7 @@
     secondaryTabSpecialDoc,
     secondaryTabPreviewProjectId
   } from './admin.js'
+  import { docsGo } from "./docs";
   
   let selected
   let editorFilesKey = "init"
@@ -62,20 +63,22 @@
     window.removeEventListener('message', messageListener)
   });
 
+  const filterDocLink = (url) => {
+    if(url.includes("interkit-docs")) {
+      let docsPath = url.split("interkit-docs")[1]
+      console.log("docsGo with", docsPath)
+      docsGo(docsPath)
+    } else {
+      window.open(url, '_blank')
+    }
+  }
+
 </script>
 
 <!-- start -->
-<div class="scrollable padding" class:active={!tab}>
+<div class="scrollable" class:active={!tab}>
   <div class="ProjectDashboard markdownContent">
-    {#if $currentProject?.uiState?.metafile?.project?.html}
-      {@html $currentProject?.uiState?.metafile?.project?.html}
-    {:else}
-      <h1>
-      Welcome to {$currentProject.name}
-      </h1>
-      This project/template does not provide an information file (project.md).
-    {/if}
-    <ButtonSet style="margin-top: 2em">
+    <ButtonSet style="justify-content: end">
       <!--Button
         kind="tertiary"
         size="small"
@@ -86,18 +89,30 @@
         Show Readme
       </Button-->
       {#if $currentProject?.uiState?.metafile?.project?.html}
-        <Button
+        <!--Button
           kind="ghost"
-          size="small"
+          size="field"
           on:click={() => info('project')}
           style="max-width: none; margin-left: 1px"
           icon={OpenPanelFilledRight}
           disabled={!$currentProject?.uiState?.metafile?.project?.html}
           >
           Show this text on the right
-        </Button>
+        </Button-->
       {/if}
     </ButtonSet>
+    <div class="content">
+      {#if $currentProject?.uiState?.metafile?.project?.html}
+        <div on:click={(e)=>{filterDocLink(e.target.href); e.preventDefault()}}>
+        {@html $currentProject?.uiState?.metafile?.project?.html}
+        </div>
+      {:else}
+        <h1>
+        Welcome to {$currentProject.name}
+        </h1>
+        This project/template does not provide an information file (project.md).
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -178,8 +193,9 @@
     overflow-y: auto;
   }
 
-  .padding {
-    padding: 1rem;
+  .content {
+    padding: 0 1rem;
+    margin: 1rem 0;
   }
 
   :global(.markdownContent h2) {

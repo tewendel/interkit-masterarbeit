@@ -1,4 +1,11 @@
-import { secondaryTabIndex, secondaryTabsVisible, secondaryTabSpecialDoc } from './admin.js'
+import { tick } from 'svelte'
+
+import {
+  secondaryTabIndex,
+  secondaryTabsHidden,
+  secondaryTabsMinimized,
+  secondaryTabSpecialDoc
+} from './admin.js'
 
 let iframe
 
@@ -6,13 +13,16 @@ export const registerIframe = element => {
   iframe = element
 }
 
-export const docsGo = (route) => {
-  if (!iframe) {
-    console.warn('docsGo called, but no iframe')
-  }
-  secondaryTabsVisible.set(true)
+export const docsGo = async (route) => {
+  secondaryTabsHidden.set(false)
+  secondaryTabsMinimized.set(false)
   secondaryTabIndex.set(1)
   secondaryTabSpecialDoc.set(false)
+  /* wait until the iframe is in DOM */
+  await tick()
+  if (!iframe?.contentWindow?.postMessage) {
+    console.warn('docsGo called, but no iframe', { iframe, contentWindow: iframe?.contentWindow, postMessage: iframe?.contentWindow?.postMessage })
+  }
   iframe.contentWindow.postMessage(
     {
       method: 'docsGo',

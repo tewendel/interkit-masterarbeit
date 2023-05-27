@@ -1,5 +1,7 @@
 <script>
 
+  import { get } from 'svelte/store'
+
   import {
     Button,
     ButtonSet,
@@ -15,7 +17,8 @@
   import {
     projectId,
     currentProject,
-    secondaryTabsVisible,
+    secondaryTabsHidden,
+    secondaryTabsMinimized,
     secondaryTabIndex,
     secondaryTabSpecialDoc,
     secondaryTabPreviewProjectId
@@ -27,16 +30,16 @@
 
   export let previewUserAuth
 
-  let rightPaneHidden = false;
   const toggleRightPane = () => {
-    rightPaneHidden = !rightPaneHidden;
-    secondaryTabsVisible.set(!rightPaneHidden);
+    const was = get(secondaryTabsMinimized)
+    secondaryTabsMinimized.set(!was)
+    secondaryTabsHidden.set(!was)
   }
 
 
 </script>
 
-<div class="right-pane" class:minimized={rightPaneHidden}>        
+<div class="right-pane" class:minimized={$secondaryTabsMinimized}>
   <div class="pane-controls">
     <ButtonSet>
       {#if $secondaryTabIndex}
@@ -62,17 +65,17 @@
     <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
     <Button
       kind="ghost"
-      iconDescription={rightPaneHidden ? "maxi\u00admize" : "minimize"}
-      tooltipAlignment={rightPaneHidden ? "center" : "end"}
+      iconDescription={$secondaryTabsMinimized ? "maxi\u00admize" : "minimize"}
+      tooltipAlignment={$secondaryTabsMinimized ? "center" : "end"}
       on:click={toggleRightPane}
-      icon={rightPaneHidden ? Maximize : Minimize}
+      icon={$secondaryTabsMinimized ? Maximize : Minimize}
       />
     </ButtonSet>
   </div>
   <div
     class="right-pane-content"
     class:right-pane-content__padded={true}
-    class:hidden={rightPaneHidden}
+    class:hidden={$secondaryTabsMinimized}
     >
     
     <div class="secondary-content-container">
@@ -126,7 +129,10 @@
 <style>
 
   .right-pane {
-    flex: 0.5;    
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 33.3%;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

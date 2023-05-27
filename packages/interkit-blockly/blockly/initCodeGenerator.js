@@ -79,6 +79,10 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
     //console.log("extraProp", prop.name, value)
 
+    if(prop.name == "effect") {
+      return `${prop.name}={${JSON.stringify(value)}}\n`;
+    }
+
     // if value is an object with a text field (sheetColumn, sheetId), use that
     if(typeof value == "object") {
       if(value?.text) {
