@@ -20,7 +20,6 @@
   const mainTabPaths = [
     '',
     'components', 
-    'style',
     'sheets', 
     'media', 
     'story', 
@@ -31,6 +30,7 @@
     'messages',
     'schedule',
     'repository',
+    'style'
   ];
 
   const updateTabFromPropChange = (newTab) => {
@@ -79,7 +79,6 @@
           App
           <NotificationBadge count={0} />
         </Tab>
-        <Tab label="Style" />
         <Tab label="Data" />
         <Tab label="Media" />
         <Tab label="Story" />
@@ -105,6 +104,7 @@
           { id: "messages", text: "Messages" },
           { id: "schedule", text: "Schedule" },
           { id: "repository", text: "Repository" },
+          { id: "style", text: "Style"}
         ]}
       >
         {item.text}
