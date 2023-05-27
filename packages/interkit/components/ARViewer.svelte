@@ -1,7 +1,7 @@
 <script>
 
   import { InterkitClient, util } from '../'
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
 
   import MediaFileResolver from './MediaFileResolver.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
@@ -28,8 +28,21 @@
   export let ARmode = "only" // "preferred" | "only"
 
 
-  const ARElementStore = InterkitClient.getGlobalStore("ARElement")
+  let ARElement = getContext("element");
+  if(!ARElement) {
+    console.warn("DataCardSmall needs an element context, for example from DataList")
+  }
   let element
+  $: {
+    element = {
+      title: util.rowVal($ARElement, titleColumn),
+      glbFileRef: util.rowVal($ARElement, glbColumn),
+      usdzFileRef: util.rowVal($ARElement, usdzColumn),
+      imageFileRef: util.rowVal($ARElement, modelPreviewImageColumn),
+      videoFileRef: util.rowVal($ARElement, videoColumn),
+    }
+    console.log("element", element)
+  }
 
   let iosLinkRef
   let androidLinkRef
@@ -83,24 +96,13 @@
 
   })
 
-  $: {
-    element = {
-      title: util.rowVal($ARElementStore, titleColumn),
-      glbFileRef: util.rowVal($ARElementStore, glbColumn),
-      usdzFileRef: util.rowVal($ARElementStore, usdzColumn),
-      imageFileRef: util.rowVal($ARElementStore, modelPreviewImageColumn),
-      videoFileRef: util.rowVal($ARElementStore, videoColumn),
-    }
-    console.log(element)
-  }
-
 </script>
-
+{mode}
 <div class="ARViewer container">
   {#if element}
 
     <div class="ARViewer__Close close">
-      <Button>
+      <Button clickType="back">
         <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
       </Button>
     </div>
@@ -155,7 +157,13 @@
                   </div>
 
                   <div class="buttonInfo">
-                    <slot name="androidInfo"></slot>
+                    {#if $$slots.androidInfo}
+                      <slot name="androidInfo"></slot>
+                    {:else}
+                      <p>
+                        Press "Start AR" to start the Augmented Reality mode and place the object in the space!
+                      </p>
+                    {/if}
                   </div>
 
                 </div>
@@ -173,7 +181,13 @@
                   </div>
 
                   <div class="buttonInfo">
-                    <slot name="iosInfo"></slot>
+                    {#if $$slots.iosInfo}
+                      <slot name="iosInfo"></slot>
+                    {:else}
+                      <p>
+                        Press "Start AR" to start the Augmented Reality mode and place the object in the space!
+                      </p>
+                    {/if}
                   </div>
 
                   <div style="position: absolute; z-index:-1; visibility: hidden">
@@ -193,7 +207,7 @@
               <div class="block">
 
                 <div class="buttonContainer">
-                  <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
+                  <Button flex="fill" type="secondary" size="large" on:click={() => {alert("vid");mode = "video"}}>
                     {videoButtonText}
                   </Button>
                 </div>
@@ -201,11 +215,23 @@
                 <div class="buttonInfo">
                   {#if capability === "video"}
 
-                    <slot name="videoOnlyInfo"></slot>
+                    {#if $$slots.videoOnlyInfo}
+                      <slot name="videoOnlyInfo"></slot>
+                    {:else}
+                      <p>
+                        This device does not support Augmented Reality. We have prepared a video that shows you the object in the space.
+                      </p>
+                    {/if}
 
                   {:else}
 
-                    <slot name="videoFallbackInfo"></slot>
+                    {#if $$slots.videoFallbackInfo}
+                      <slot name="videoFallbackInfo"></slot>
+                    {:else}
+                      <p>
+                        If Augmented Reality does not work, you can alternatively see a video here that shows the object in the space.
+                      </p>
+                    {/if}
 
                   {/if}
                 </div>
