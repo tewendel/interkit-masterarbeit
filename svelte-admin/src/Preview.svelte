@@ -4,7 +4,7 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from './BundleServer.js'
   import { onMount } from 'svelte'
-  import { currentProject } from './admin.js'
+  import { currentProject, secondaryTabsPreviewSize } from './admin.js'
 
   import { get } from 'svelte/store'
 
@@ -16,7 +16,6 @@
     Button, 
     ButtonSet,
     Modal,
-    AspectRatio,
     Select,
     SelectItem,
     Loading,
@@ -31,7 +30,6 @@
   import Reset from "carbon-icons-svelte/lib/Reset.svelte"
   import Save from "carbon-icons-svelte/lib/Save.svelte"
   import Launch from "carbon-icons-svelte/lib/Launch.svelte"
-
 
   export let projectId
   export let previewUserAuth;
@@ -56,21 +54,46 @@
   let showSettingsModal = false
   let showShareModal = false
 
-  let w, h
+  let iframeWidth, iframeHeight
+  let containerWidth, containerHeight
 
+  let size
   const sizes = [
+    { name: 'responsive', type: 'responsive' },
     { width: 390, height: 844, name: 'iPhone 14', type: 'absolute' },
     { width: 375, height: 667, name: 'iPhone SE', type: 'absolute' },
     { width: 320, height: 480, name: 'iPhone 4', type: 'absolute' },
     { width: 393, height: 851, name: 'Pixel 5', type: 'absolute' },
-    { width: 3, height: 4, name: '3:4', type: 'ratio' },
-    { width: 9, height: 16, name: '9:16', type: 'ratio' },
-    { width: 1, height: 2, name: '1:2', type: 'ratio' },
-    { width: 1, height: 1, name: '1:1', type: 'ratio' },
-    { width: 4, height: 3, name: '4:3', type: 'ratio' },
+    { width: 1024, height: 768, name: 'iPad landsc.', type: 'absolute' },
+    { width: 768, height: 1024, name: 'iPad portr.', type: 'absolute' },
+    { width: 360, height: 640, name: 'generic 9:16', type: 'absolute' },
+    { width: 360, height: 720, name: 'generic 1:2', type: 'absolute' },
   ]
 
-  let size = 0
+  /* sync with style .preview-iframe! */
+  const frameWidthX = 2 * 16
+  const frameWidthY = 2 * 32
+
+  let iframeStyle
+  let scaleFactor
+  $: {
+    size = $secondaryTabsPreviewSize
+    scaleFactor = Math.min(
+      (containerWidth || 0) / (sizes[size].width + frameWidthX),
+      ((containerHeight - 2 * 8) || 0) / (sizes[size].height + frameWidthY),
+      //                  ^ padding
+      1
+    )
+    /* any other transform-origin than top left is very complicated.
+       calculation in scaled space, hence the scaleFactor multiplication and division */
+    const translateX = Math.max(0, (containerWidth - (sizes[size].width + frameWidthX) * scaleFactor) / ( 2 * scaleFactor))
+    iframeStyle = sizes[size].type === 'absolute'
+      ? `width: ${sizes[size].width}px;
+         height: ${sizes[size].height}px;
+         transform: scale(${scaleFactor}) translateX(${translateX}px);
+         box-sizing: content-box;`
+      : 'width: 100%; height: 100%; box-sizing: border-box;'
+  }
 
   onMount(async () => {
     bundleServerURL = BundleServer.getServerURL()
@@ -159,47 +182,59 @@
   </ButtonSet>
   <div style="align-self: center">
     <TooltipDefinition
-      tooltipText="size of the preview window in device pixels"
+      tooltipText="Size of the preview window in device pixels"
       >
-      {w}×{h}px
+      {iframeWidth}×{iframeHeight}px
     </TooltipDefinition>
+    {#if scaleFactor < 1.0}
+      <TooltipDefinition
+        tooltipText="Scale factor to fit the preview"
+        >
+        @{Math.round(scaleFactor * 100)}%
+      </TooltipDefinition>
+    {/if}
   </div>
-  <Select inline bind:selected={size} style="flex-grow: 0">
+  <Select inline bind:selected={$secondaryTabsPreviewSize} style="flex-grow: 0">
     {#each sizes as _, idx}
       <SelectItem value={idx} text={_.name} />
     {/each}
   </Select>
 </div>
-<div
-  class="frame"
-  bind:clientWidth={w}
-  bind:clientHeight={h}
-  style={sizes[size].type === 'absolute' ? `width: ${sizes[size].width}px; height: ${sizes[size].height}px; margin-left: auto; margin-right: auto;` : ''}
+<div class="preview-container"
+  bind:clientWidth={containerWidth}
+  bind:clientHeight={containerHeight}
   >
-  <AspectRatio
-    ratio={`${sizes[size].width}x${sizes[size].height}`}
-    style={sizes[size].type === 'absolute' ? `width: ${sizes[size].width}px; height: ${sizes[size].height}px;` : ''}
-    >
-    {#if bundleServerURL && !$compileError}
-      {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
-        <iframe 
-          title="embedded app preview" 
-          src={ appVariant == "dev" ? previewURL : buildURL }
-          allow="camera;microphone;geolocation;autoplay;accelerometer"
-          bind:this={iframeRef}
-          data-build-hash={$buildHash}>
-        </iframe><br>
-      {/key}
-    {/if}
-    {#if $bundleProcessing || ($currentProject && $currentProject?.uiState?.viteServer?.status !== "running")}
-      <div class="loader">
-        <Loading withOverlay={false} />
-      </div>
-    {/if}
-  </AspectRatio>
+  {#if bundleServerURL && !$compileError}
+    {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
+      <iframe 
+        class="preview-iframe"
+        style={iframeStyle}
+        bind:clientWidth={iframeWidth}
+        bind:clientHeight={iframeHeight}
+        title="embedded app preview" 
+        src={ appVariant == "dev" ? previewURL : buildURL }
+        allow="camera;microphone;geolocation;autoplay;accelerometer"
+        bind:this={iframeRef}
+        data-build-hash={$buildHash}>
+      </iframe>
+    {/key}
+  {/if}
+  {#if $bundleProcessing || ($currentProject && $currentProject?.uiState?.viteServer?.status !== "running")}
+    <div class="loader">
+      <Loading withOverlay={false} />
+    </div>
+  {/if}
 </div>
 
 <ButtonSet style="justify-content: flex-end">
+  {#if $currentProject && $currentProject?.uiState?.lastBuildDate}
+    <div class="lastBuildDate">
+      {#key $currentProject.uiState.lastBuildDate}
+        Last Published:<br/>
+        {new Date($currentProject.uiState.lastBuildDate).toLocaleString()}
+      {/key}
+    </div>
+  {/if}
   <Button
     kind="ghost"
     size="small"
@@ -215,6 +250,7 @@
     on:click={() => { showShareModal = true }}
     iconDescription="Share…"
     tooltipPosition="top"
+    tooltipAlignment="end"
     />
   <Button
     kind="ghost"
@@ -223,6 +259,7 @@
     on:click={() => reload(true)}
     iconDescription="Reset"
     tooltipPosition="top"
+    tooltipAlignment="end"
     />
   {#if appVariant == "dev"}
     <Button
@@ -237,14 +274,6 @@
   {/if}
 </ButtonSet>
 
-{#if $currentProject && $currentProject?.uiState?.lastBuildDate}
-<br>
-<div class="lastBuildDate">
-  {#key $currentProject.uiState.lastBuildDate}
-    Last Published: {new Date($currentProject.uiState.lastBuildDate).toLocaleString()}
-  {/key}
-</div>
-{/if}
 
 <Modal
   bind:open={showSettingsModal}
@@ -342,11 +371,20 @@
 
   @use '@carbon/type';
   
-  .frame {
-    width: 100%;
-    border: 1px solid lightgray;
-    margin: 10px 0px 10px 0px;
-    position: relative;
+  .preview-container {
+    /* ...- .pane-controls - top ButtonSet - bottom ButtonSet - bottom padding */
+    height: calc(var(--content-height) - 48px - 40px - 32px - 8px);
+    overflow: hidden;
+    padding: 8px 0;
+  }
+
+  .preview-iframe {
+    transform-origin: top left;
+    border-color: lightgray; 
+    border-style: solid;
+    /* sync with frameWidthX/Y! */
+    border-width: 32px 16px;
+    border-radius: 24px;
     box-shadow: 1px 1px 15px lightgray;
   }
 
@@ -360,10 +398,6 @@
     backdrop-filter: blur(2px);
   }
 
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
   .error {
     white-space: pre-wrap;
     font-family: courier;
@@ -374,7 +408,11 @@
   }
 
   .lastBuildDate {
-    text-align: right;
+    text-align: left;
     @include type.type-style('helper-text-01');
+    margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

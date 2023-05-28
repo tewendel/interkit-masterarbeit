@@ -36,7 +36,6 @@
     secondaryTabsHidden.set(!was)
   }
 
-
 </script>
 
 <div class="right-pane" class:minimized={$secondaryTabsMinimized}>
