@@ -23,6 +23,17 @@ export const items = [
     ]
   },
   {
+    title: 'Tutorial',
+    path: 'tutorial',
+    open: false,
+    items: [
+      {
+        title: 'Part 1: Welcome',
+        path: '/tutorial/part-1'
+      },
+    ]
+  },
+  {
     title: 'Guides',
     path: 'guides',
     open: false,

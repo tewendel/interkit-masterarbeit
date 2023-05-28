@@ -3,6 +3,7 @@
   import { onDestroy, createEventDispatcher } from 'svelte'
   import {
     Button,
+    CopyButton,
     DataTable,
     OverflowMenu,
     OverflowMenuItem,
@@ -12,13 +13,21 @@
     ToolbarSearch,
     ToolbarMenu,
     ToolbarMenuItem,
+    Truncate,
     Checkbox,
     Modal
   } from "carbon-components-svelte"
+  import NotAvailable from "carbon-icons-svelte/lib/NotAvailable.svelte";
 
   const dispatch = createEventDispatcher()
 
   import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+  import Launch from "carbon-icons-svelte/lib/Launch.svelte";
+  import DocumentVideo from "carbon-icons-svelte/lib/Video.svelte";
+  import DocumentAudio from "carbon-icons-svelte/lib/Music.svelte";
+  import DocumentModel from "carbon-icons-svelte/lib/ModelAlt.svelte";
+  import DocumentImage from "carbon-icons-svelte/lib/Image.svelte";
+  import Document from "carbon-icons-svelte/lib/DocumentBlank.svelte";
 
   import DataTablePaginationAutofit from './DataTablePaginationAutofit.svelte'
   import MediaFilePreview from './MediaFilePreview.svelte'
@@ -37,10 +46,17 @@
 
   const headers = [
     {
+      key: "preview",
+      show: true,
+      value: "Preview",
+      sort: false,
+      width: "4em"
+    },
+    {
       key: "name",
       show: true,
       value: "Name",
-      sort: trivialSort
+      sort: trivialSort,
     },
     {
       key: "key",
@@ -49,29 +65,26 @@
       sort: trivialSort
     },
     {
+      key: "link",
+      show: !radio,
+      value: "Link",
+      sort: false,
+      width: "4em"
+    },
+    {
       key: "type",
       show: true,
       value: "Type",
-      sort: trivialSort
+      sort: trivialSort,
+      width: "6em"
     },
     {
       key: "duration",
       /* we assume that we don't need all info in "radio mode" and try to save space */
       show: !radio,
       value: "Duration",
-      sort: trivialSort
-    },
-    {
-      key: "preview",
-      show: true,
-      value: "Preview",
-      sort: false
-    },
-    {
-      key: "link",
-      show: !radio,
-      value: "Link",
-      sort: false
+      sort: trivialSort,
+      width: "6em"
     },
     {
       key: "userId",
@@ -255,22 +268,41 @@
 
       <span slot="cell" let:row let:cell>
         {#if cell.key === 'key'}
-          <span title={row.meta?.key} class="cell__1line">{row.meta?.key}</span>
+          {#if row.meta?.key}
+            <span title={row.meta?.key} class="cell__1line">
+              {#if !radio}
+                <CopyButton style="display: inline;" text={row.meta?.key} feedback="Copied mediaKey to clipboard!"/>
+              {/if}
+              {row.meta?.key}
+            </span>
+          {/if}
         {:else if cell.key === 'name'}
           <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'type' && cell.value}
-          {row.type}
+            {#if cell.value.split('/')[0] == 'image'}
+              <DocumentImage title={row.type} />
+            {:else if cell.value.split('/')[0] == 'video'}
+              <DocumentVideo title={row.type} />
+            {:else if cell.value.split('/')[0] == 'audio'}
+              <DocumentAudio title={row.type} />
+            {:else if cell.value.split('/')[0] == 'model'}
+              <DocumentModel title={row.type} />
+            {:else}
+              <Document title={row.type} />
+            {/if}
         {:else if cell.key === 'preview'}
-          <MediaFilePreview key={row.meta?.key} {projectId} mediaManager/>
+          <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>
         {:else if cell.key === 'link' && cell.value}
-          <a href={row.link} title={row.link} target="_blank">url</a>
+          <a href={row.link} title={row.link} target="_blank">
+            <Launch />
+          </a>
         {:else if cell.key === 'userId' || cell.key === 'boardId' || cell.key === 'nodeId'}
           <span title={cell.value} class="cell__1line">{cell.value}</span>
         {:else if cell.key === 'createdAt'}
           {#if cell.value}
             <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>
           {:else}
-            <i>undefined</i>
+            <NotAvailable />
           {/if}
         {:else}{cell.value || ""}{/if}
       </span>

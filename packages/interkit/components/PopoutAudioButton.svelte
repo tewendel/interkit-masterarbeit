@@ -35,7 +35,7 @@
 {#if loading && playing}
   <Loading/>
 {:else}
-  <Button onClick={play}>
+  <Button on:click={play}>
     {#if playing}
       <Icon height="1em" type={ paused ? "play" : "pause"} />
     {:else}

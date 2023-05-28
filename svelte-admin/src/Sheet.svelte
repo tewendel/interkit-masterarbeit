@@ -358,8 +358,8 @@
           </OverflowMenu>   
         {:else}
           <div class="sheet-header" >
-            <OverflowMenu size="sm" style="width: 100%;">
-              <div slot="menu" style="font-weight:bold">
+            <OverflowMenu size="sm" style="width: 100%; justify-content: flex-start">
+              <div slot="menu" style="font-weight:bold;">
                 {#if header.value}
                   {header.value}
                 {:else}
@@ -440,8 +440,6 @@
   }
 
   .sheet-cell {
-    width: 100%;
-    height: 1.5em;
     display: block;
   }
 

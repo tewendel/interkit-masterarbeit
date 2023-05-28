@@ -1,12 +1,20 @@
 <script>
-  import '@google/model-viewer'
-
   import { InterkitClient } from 'interkit'
+  import ModelViewer from './ModelViewer.svelte'
+
+  import MediaFilePreviewLarge from './MediaFilePreviewLarge.svelte'
+  import { Modal, Button } from "carbon-components-svelte";
+  import Music from "carbon-icons-svelte/lib/Music.svelte";
+  import DocumentBlank from "carbon-icons-svelte/lib/DocumentBlank.svelte";
+
   export let key;
   export let projectId;
   export let mediaManager = false;
+  export let enlargable = false;
+  export let border = false;
 
-  let mediafile;
+  let mediafile, large;
+
   $: {
     lookupMediafile(key)
   }
@@ -15,43 +23,90 @@
     //console.log("loaded new mediafile for preview", mediafile)
   }
 
+  const enlarge = (mediafile) => {
+    if (!enlargable) return
+    console.log("enlarge", mediafile);
+    large = mediafile;
+  }
+
 </script>
 
-{#if mediafile?.isAudio}
-  {#key mediafile}
-  <a href="{mediafile.link}" target="_blank">play</a> 
-    {#if !mediaManager}[change]{/if}
-  <!--audio controls>
-    <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
-  </audio-->
-  {/key}
-{:else if mediafile?.isVideo}
-  {#key mediafile}
-  <a href="{mediafile.link}" target="_blank">play</a> 
-    {#if !mediaManager}[change]{/if}
-  {/key}
-{:else if mediafile?.isImage}
-  <img class="preview-image" src={encodeURI(mediafile.link)}/>
-{:else if mediafile?.type.split("/")?.[0] === "model"}
-  {#if mediafile?.type.indexOf("model/gltf") === 0}
-    <model-viewer auto-rotate autoplay style="height: 3em; width: 3em" src={mediafile.link}/>
+<a title={mediafile?.name} class="frame" class:enlargable class:border href={mediafile?.link} on:click|preventDefault={() => enlarge(mediafile)} on:keypress={() => enlarge(mediafile)}>
+  {#if mediafile?.isAudio}
+    {#key mediafile}
+      <span class="audio">
+        <Music />
+      </span>
+    {/key}
+  {:else if mediafile?.isVideo}
+    {#key mediafile}
+      <video>
+        <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
+      </video>
+    {/key}
+  {:else if mediafile?.isImage}
+      <img class="preview-image" src={encodeURI(mediafile.link)}/>
+  {:else if mediafile?.type.split("/")?.[0] === "model"}
+      <ModelViewer mediafile={mediafile} small />
   {:else}
-    3d model without preview
+    {#if mediafile}
+      <div class="centered" class:border>
+        <DocumentBlank title={`Preview not available for ${mediafile?.type}`}/>
+      </div>
+    {/if}
   {/if}
-{:else}
-  {#if mediafile}
-  no preview for this media type
+</a>
+
+<Modal passiveModal bind:open={large} modalHeading={large?.name} on:open on:close>
+  {#if large}
+    <MediaFilePreviewLarge mediafile={large} />
   {/if}
-{/if}
-
-
+</Modal>
 
 <style>
 
-img.preview-image {
-  max-height: 1.5rem;
+.frame {
+  display: inline-flex;
+  overflow: hidden;
+  width: 3em;
+  height: 3em;
 }
 
+.frame.enlargable {
+  cursor: zoom-in;
+}
+
+.frame.border {
+  outline: 1px solid #aaa;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+img.preview-image, video, .audio {
+  width: 3em;
+  height: 3em;
+  object-fit: contain;
+}
+
+.audio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
 
 </style>
 

@@ -14,6 +14,7 @@
 
   import SheetColumnSelectForm from './SheetColumnSelectForm.svelte'
   import SheetIdSelectForm from './SheetIdSelectForm.svelte'
+  import ClickEffectForm from './ClickEffectForm.svelte';
 
   export let value = [] // array of objects with name, type, defaultValue, value
   export let submit;
@@ -32,21 +33,20 @@
     ...v
   }})
 
+  // temporary storage
   const updateCell = (row, cellValue) => {
-    //console.log("updateCell", row, cellValue)
+    console.log("updateCell", row, cellValue)
     rows.find(r => r.name == row.name).value = cellValue
   }
 
-  // write row changes back to bound value prop
+  // write changes back to bound value prop - make copies to avoid connected blocks after duplicate
   const updateValue = () => {
-    value = rows.map(r => {return {
-      ...r
-    }})
+    value = rows.map(r => {return JSON.parse(JSON.stringify(r))})
   }
 
+  // construct default values if needed
   const getValue = (row) => {
     console.log("getValue", row)
-    // construct default values if there is not value
     if(typeof row.value == "undefined") {
       if(row.type == "sheetColumn") {
         return {
@@ -98,6 +98,9 @@
             {/if}
             {#if row.type == "sheetId"}
               <SheetIdSelectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
+            {/if}
+            {#if row.type == "clickEffect"}
+              <ClickEffectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select

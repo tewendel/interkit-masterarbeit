@@ -23,7 +23,7 @@
   import ScheduledeventsManager from './ScheduledeventsManager.svelte'
   import NodeEditor from './NodeEditor.svelte'
   import Theming from './Theming.svelte'
-
+  
   export let projectId
   export let tab
   //export let currentProject
@@ -35,6 +35,7 @@
     secondaryTabSpecialDoc,
     secondaryTabPreviewProjectId
   } from './admin.js'
+  import { docsGo } from "./docs";
   
   let selected
   let editorFilesKey = "init"
@@ -62,6 +63,16 @@
     window.removeEventListener('message', messageListener)
   });
 
+  const filterDocLink = (url) => {
+    if(url.includes("interkit-docs")) {
+      let docsPath = url.split("interkit-docs")[1]
+      console.log("docsGo with", docsPath)
+      docsGo(docsPath)
+    } else {
+      window.open(url, '_blank')
+    }
+  }
+
 </script>
 
 <!-- start -->
@@ -78,7 +89,7 @@
         Show Readme
       </Button-->
       {#if $currentProject?.uiState?.metafile?.project?.html}
-        <Button
+        <!--Button
           kind="ghost"
           size="field"
           on:click={() => info('project')}
@@ -87,12 +98,14 @@
           disabled={!$currentProject?.uiState?.metafile?.project?.html}
           >
           Show this text on the right
-        </Button>
+        </Button-->
       {/if}
     </ButtonSet>
     <div class="content">
       {#if $currentProject?.uiState?.metafile?.project?.html}
+        <div on:click={(e)=>{filterDocLink(e.target.href); e.preventDefault()}}>
         {@html $currentProject?.uiState?.metafile?.project?.html}
+        </div>
       {:else}
         <h1>
         Welcome to {$currentProject.name}

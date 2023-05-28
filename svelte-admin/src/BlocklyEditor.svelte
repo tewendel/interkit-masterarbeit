@@ -360,6 +360,10 @@
             <Tab label="actions.js" />
               <div slot="content" class="content">
                 <TabContent>
+                  <div class="main-buttons">
+                    <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
+                    <Button on:click={()=>saveAndCompile(true)}>save</Button>            
+                  </div>          
                   <div class="blocklyTabContent">
                     <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
                   </div>
