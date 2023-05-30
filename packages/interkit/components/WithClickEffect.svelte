@@ -19,7 +19,7 @@
     
     console.log("handling effect", effect)
     
-    const effectType = effect.effectType;
+    const effectType = effect?.effectType;
     if(!effectType || effectType == "none") return
 
     if(effectType == "route" || effectType == "back") {

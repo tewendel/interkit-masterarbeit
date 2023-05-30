@@ -10,7 +10,7 @@ export const items = [
       },
       {
         title: 'Interface Overview',
-        path: '/interface_overview'
+        path: '/basics/interface_overview'
       },
       {
         title: 'How to start',
