@@ -1,5 +1,6 @@
 <script>
   import ComponentInfo from "../../components/ComponentInfo.svelte";
+  import ComponentInfoYaml from "../../components/ComponentInfoYaml.svelte";
   import src from "../../../../../packages/interkit/components/Button.svelte?raw";
   import Button from "../../../../../packages/interkit/components/Button.svelte";
   import Styling from "../../../../../packages/interkit/components/Styling.svelte";
@@ -7,6 +8,10 @@
 </script>
 
 # Button
+
+Use the Button to trigger actions.
+
+<ComponentInfoYaml component="Button" />
 
 ## Examples
 
@@ -75,8 +80,11 @@
 
 <Figma url="https://www.figma.com/file/7y5c91AmKjRnfsnglX7yAD/Interkit-App-Interface?node-id=3240%3A21589" />
 
+<details>
+<summary>Developer docs</summary>
+
 ```docs
 ../../../../../packages/interkit/components/Button.svelte
 ```
-
+</details>
 

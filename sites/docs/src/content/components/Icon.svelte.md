@@ -1,13 +1,12 @@
+<script>
+  import ComponentInfoYaml from "../../components/ComponentInfoYaml.svelte";
+</script>
+
 # Icon
 
 Use the Icon component to select one of the built in icons.
 
-#### Settings
-
-|Setting|Description|
-|-----------|-----------|
-|type|select the icon|
-|inverse|show white lines instead of black|
+<ComponentInfoYaml component="Icon" />
 
 #### Advanced
 

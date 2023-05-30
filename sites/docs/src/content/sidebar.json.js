@@ -117,18 +117,12 @@ export const items = [
     path: 'components',
     open: false,
     items: [
+      /* AppBase */
       {
         title: 'AppBase',
         path: '/components/AppBase'
       },
-      {
-        title: 'Button',
-        path: '/components/Button'
-      },
-      {
-        title: 'DataLoaderSingle',
-        path: '/components/DataLoaderSingle'
-      },
+      /* Basics */
       {
         title: 'Icon',
         path: '/components/Icon'
@@ -138,13 +132,32 @@ export const items = [
         path: '/components/StaticText'
       },
       {
-        title: 'MapSimple',
-        path: '/components/MapSimple'
+        title: 'Tag',
+        path: '/components/Tag'
       },
+      /* Buttons */
+      {
+        title: 'Button',
+        path: '/components/Button'
+      },
+      /* Chat */
       {
         title: 'Chat',
         path: '/components/Chat'
       },
+      {
+        title: 'ChatBoard*',
+        path: '/components/ChatBoard'
+      },
+      /* Data */
+      {
+        title: 'DataLoaderSingle',
+        path: '/components/DataLoaderSingle'
+      },
+      {
+        title: 'MapSimple',
+        path: '/components/MapSimple'
+      }
     ]
   },
   {
