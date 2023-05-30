@@ -13,7 +13,10 @@
       console.log(yaml)
       extraProps = yaml?.fields?.find(f => f.type == "extraProps")
       console.log(extraProps)
-      allFields = [...yaml.fields, ...extraProps.props]
+      allFields = [
+        ...(yaml?.fields ? yaml.fields : []),
+        ...(extraProps?.props ? extraProps.props : [])
+      ]
       console.log(allFields)
 
     })
@@ -27,20 +30,37 @@
   <tr>
     <th>name</th>
     <th>type</th>
-    <th>help</th>
+    <!--<th>help</th>-->
     <th>defaultValue</th>
   </tr>
   {#each allFields as field}
     {#if field.type != "extraProps"}
-      <tr>  
-          <td>{field.name}</td>
-          <td>{field.type}</td>
-          <td>{field.help || ""}</td>
-          <td>{field.defaultValue || ""}</td>
+      <tr data-type={field.type} data-name={field.name}>
+          <td class="name">{field.name}</td>
+          <td class="type">{field.type}</td>
+          <td class="default">{field.defaultValue || ""}</td>
       </tr>
+      {#if field.help}
+        <tr class="help">
+          <td colspan="3">
+            {field.help}
+          </td>
+        </tr>
+      {/if}
     {/if}
   {/each}
 </table>
 
 {/if}
 
+<style>
+  .help {
+    font-size: 80%;
+  }
+  .help td:first-child {
+    padding-left: 1em;
+  }
+  [data-type="slot"][data-name="default"] .name {
+    color: #ddd;
+  }
+</style>
