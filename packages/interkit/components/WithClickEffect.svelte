@@ -64,3 +64,9 @@
 <div class="click-effect" on:click={handleClickEffect}>
   <slot></slot>
 </div>
+
+<style>
+  .click-effect {
+    display: contents; /* the wrapper should not have an effect on styling */
+  }
+</style>
