@@ -3,48 +3,60 @@ title: AR Viewer
 # green
 color: 230
 fields:
-  - type: slot
-    name: iosInfo
-  - type: slot
-    name: androidInfo    
-  - type: slot
-    name: videoFallbackInfo    
-  - type: slot
-    name: videoOnlyInfo
   - type: extraProps
     props:
     - type: sheetColumn
       name: titleColumn
       columnType: string
       defaultValue: elements/title
+      help: "Column that contains the title of the element"
     - type: sheetColumn
       name: glbColumn
       columnType: mediaFile
       defaultValue: elements/glbFile
+      help: "Column that contains the glb file of the element"
     - type: sheetColumn
       name: usdzColumn
       columnType: mediaFile
       defaultValue: elements/usdzFile
+      help: "Column that contains the usdz file of the element"
     - type: sheetColumn
       name: modelPreviewImageColumn
       columnType: mediaFile
       defaultValue: elements/modelPreviewImageColumn
+      help: "Column that contains a preview image of the element"
     - type: sheetColumn
       name: videoColumn
       columnType: mediaFile
       defaultValue: elements/video
+      help: "Column that contains the fallback video for the element, showing how it looks like in AR"
     - type: string
       name: startButtonText
       defaultValue: "Start AR"
+      help: "Button text for opening the actual AR experience"
     - type: string
       name: videoButtonText
       defaultValue: "Watch Video"
+      help: "Button text for video fallback when AR is not supported"
     - type: string
-      name: closeTrigger      
-#  - type: options
-#    name: ARmode
-#    defaultValue: "preferred"
-#    options:
-#      - "preferred"
-#      - "only"
+      name: closeTrigger
+      help: "Optional: Trigger an action when the AR viewer is closed"
+    #- type: options
+    #  name: ARmode
+    #  defaultValue: "preferred"
+    #  options:
+    #    - "preferred"
+    #    - "only"
+  - type: slot
+    name: iosInfo
+    help: "Optional: The text to show on iOS (e.g.: <DataCell> or <StaticText>), defaults to standard text"
+  - type: slot
+    name: androidInfo
+    help: "Optional: The text to show on Android (e.g.: <DataCell> or <StaticText>), defaults to standard text"
+  - type: slot
+    name: videoFallbackInfo
+    help: "Optional: The text to inform about the additional video (e.g.: <DataCell> or <StaticText>), defaults to standard text"
+  - type: slot
+    name: videoOnlyInfo
+    help: "Optional: The text to show when AR is not supported and video is the only option (e.g.: <DataCell> or <StaticText>), defaults to standard text"
 toolboxCategory: "MediaPlayer"
