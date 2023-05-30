@@ -64,8 +64,9 @@
   });
 
   const filterDocLink = (url) => {
-    if(url.includes("interkit-docs")) {
-      let docsPath = url.split("interkit-docs")[1]
+    const docsURL = "https://docs.interkit.app"
+    if(url.includes(docsURL)) {
+      let docsPath = url.replace(docsURL, "")
       console.log("docsGo with", docsPath)
       docsGo(docsPath)
     } else {
