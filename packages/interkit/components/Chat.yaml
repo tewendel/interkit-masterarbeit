@@ -7,16 +7,21 @@ fields:
     - type: string
       name: board
       defaultValue: board1
+      help: "The Story board to use first."
     - type: checkbox
       name: messagesReportableDefault
       defaultValue: "TRUE"
+      help: "If messages should be reportable (for admin moderation) by default. The reportability of individual messages can be changed by code."
     - type: string
       name: typingDurationTypeChoiceDefault
       defaultValue: "0.0"
+      help: "How long a multiple-choice message should from the server should be displayed as 'typing'. 0 to disable completely."
     - type: string
       name: typingDurationTypeTextPerCharacter
       defaultValue: "0.075"
+      help: "Used to calculate how long 'typing' dots should be displayed for a message from the server. In seconds."
     - type: string
       name: typingHideTypes
       defaultValue: ""
+      help: "Don't show the 'typing' dots for certain message types. Provide a comma seperated list of types."
 toolboxCategory: Chat

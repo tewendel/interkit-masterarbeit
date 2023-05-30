@@ -13,6 +13,8 @@ fields:
       - h5
       - h6
     defaultValue: span
+    help: "Use span for generic inline text. All others are blocks: p is a paragraph, hX are hierarchical headings."
   - type: slot
     name: default
+    help: "The content of your tag. Should be a string; other components might work."
 toolboxCategory: Basics
