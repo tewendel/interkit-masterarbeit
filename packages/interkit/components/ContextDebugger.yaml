@@ -4,10 +4,5 @@ color: 230
 fields:
 - name: context
   type: string
-  defaultValue: items
-- type: options
-  name: type
-  options:
-    - list
-    - object
+  defaultValue: element
 toolboxCategory: Debug
