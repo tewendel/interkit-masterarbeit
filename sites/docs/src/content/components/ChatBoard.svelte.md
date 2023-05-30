@@ -4,7 +4,7 @@
 
 # ChatBoardCard
 
-Usage..
+Display a summary of a chat channel (or Story board).
 
 <ComponentInfoYaml component="ChatBoardCard" />
 
@@ -19,7 +19,7 @@ Usage..
 
 # ChatBoardsList
 
-Usage..
+TODO
 
 <ComponentInfoYaml component="ChatBoardsList" />
 

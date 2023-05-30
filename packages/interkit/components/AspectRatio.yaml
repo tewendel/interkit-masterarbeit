@@ -16,3 +16,4 @@ fields:
     defaultValue: FALSE
   - name: default
     type: slot
+docsPath: Containers#aspectratio

@@ -6,4 +6,5 @@ fields:
     type: slot
   - name: Content
     type: slot
-  
+docsPath: Shell#topbarshell  
+

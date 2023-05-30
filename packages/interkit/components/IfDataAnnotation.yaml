@@ -3,10 +3,15 @@ colour: 50
 fields:
   - type: string
     name: key
+    help: "Key/name of the annotation to check"
   - type: string
     name: value
+    help: "Value to compare to"
   - type: slot
     name: iftrue
+    help: "Show if variable equal to given value"
   - type: slot
     name: else
+    help: "Show otherwise"
 toolboxCategory: "Conditionals"
+docsPath: If#ifdataannotation

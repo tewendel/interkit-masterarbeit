@@ -6,3 +6,4 @@ fields:
   - name: default 
     type: slot
 toolboxCategory: Groups
+docsPath: Group#group
