@@ -5,89 +5,20 @@ import match from 'minimatch'
 import watch from 'node-watch'
 import debounce from 'debounce'
 import { promises as fs } from 'fs'
-import { processMarkdown } from './projectmeta.mjs'
 
 import { getProjectPath } from './filesystem.mjs'
-import interkit_server from './interkit_server.mjs'
-import { gitUnstagedChanges, gitLog, gitListRemotes, gitDiff } from "./git.mjs";
 
-const buildDirName = "public"
+import { updateLastBuildDate } from "./updaters/lastBuildDate.mjs";
+import { updateGit } from "./updaters/gitFiles.mjs";
+import { updateProjectMdFiles } from "./updaters/mdFiles.mjs";
+import { updateProjectDirFiles } from "./updaters/projectFiles.mjs";
 
 const watchedProjectIds = []
-
-const watchedFileReMd = /^(project|readme|description)\.(md|markdown)$/i
-
-const updateGit = async function(projectId) {
-  const projectPath = getProjectPath(projectId)
-  const data = {
-    unstagedChanges: await gitUnstagedChanges(projectPath),
-    log: await gitLog(projectPath),
-    remotes: await gitListRemotes(projectPath),
-  }
-  interkit_server.call('project.updateUiState', {
-    projectId: projectId, 
-    section: 'git',
-    data
-  })
-}
-
-const updateFileMd = (projectId, { path, filename, basename, extension }) => {
-  console.log('updateFileMd', { path, filename, basename, extension })
-  fs.readFile(path)
-    .then(file => file.toString())
-    .then(async mdStr => {
-      const html = await processMarkdown(mdStr)
-      interkit_server.call('project.updateUiState', {
-        projectId: projectId, 
-        section: 'metafile.' + basename.toLowerCase(),
-        data: {
-          md: mdStr,
-          html: html || 'markdown error'
-        }
-      })
-    })
-    .catch(e => { console.error('updateFileMd error', { path, filename, basename, extension }, e) })
-}
 
 const processAllProjectFiles = async projectId => {
   const projectPath = getProjectPath(projectId)
   fs.readdir(projectPath)
-    .then(allFiles => processProjectFiles(projectId, allFiles))
-}
-
-const processProjectFiles = async (projectId, files) => files.forEach(file => {
-  const projectPath = getProjectPath(projectId)
-  let matchMd = file.match(watchedFileReMd)
-  if (matchMd) {
-    const [filename, basename, extension] = matchMd
-    const path = projectPath + '/' + filename
-    updateFileMd(projectId, { path, filename, basename, extension })
-  }
-})
-
-const updateFiles = async function(projectId, watchedFiles) {
-  processProjectFiles(projectId, Object.keys(watchedFiles))
-  interkit_server.call('project.updateUiState', {
-    projectId: projectId, 
-    section: 'files',
-    data: watchedFiles
-  })
-}
-const updateLastBuildDate = async function(projectId, watchedFiles) {
-  // check if there is any changed file starting with buildDirName
-  const found = Object.keys(watchedFiles).some((file) => {
-    if (file.startsWith(buildDirName)) {
-      return true;
-    }
-  });
-
-  if (found) {
-    const dir = getProjectPath(projectId) + "/" + buildDirName;
-    const timestamp = await fs.stat(dir).then((stat) => stat.mtimeMs);
-    const date = new Date(timestamp);
-    console.log("updateLastBuild", projectId, date);
-    interkit_server.call("project.updateUiState", { projectId, section:"lastBuildDate" , data:date });
-  }
+    .then(allFiles => updateProjectMdFiles(projectId, allFiles))
 }
 
 const watchignore = [
@@ -108,7 +39,8 @@ const runUpdater = async function(projectId) {
   const watchedFiles = {}
 
   // prepare updater methods
-  const updateProjectFilesDebounced = debounce( wF =>updateFiles(projectId, wF), 100)
+  const updateProjectDirFilesDebounced = debounce( wF =>updateProjectDirFiles(projectId, wF), 100)
+  const updateProjectMdFilesDebounced = debounce( wF => updateProjectMdFiles(projectId, Object.keys(wF)), 100);
   const updateGitDebounced = debounce(() => updateGit(projectId), 100)
   const updateLastBuildDateDebounced = debounce(
     (wF) => updateLastBuildDate(projectId, wF),
@@ -134,9 +66,12 @@ const runUpdater = async function(projectId) {
   }, function(event, filename) {
     const file = path.relative(projectPath, filename)
     // console.log('file %s of project %s changed.', file, projectId)
+    // collecting files as this functions runs for each file
     watchedFiles[file] = Date.now()
+    // trigger debounced updaters
     updateGitDebounced()
-    updateProjectFilesDebounced(watchedFiles)
+    //updateProjectDirFilesDebounced(watchedFiles) // not used yet
+    updateProjectMdFilesDebounced(watchedFiles)
     updateLastBuildDateDebounced(watchedFiles);
   });
 }
