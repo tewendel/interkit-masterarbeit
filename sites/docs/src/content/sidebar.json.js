@@ -134,6 +134,10 @@ export const items = [
         path: '/components/Icon'
       },
       {
+        title: 'QRScanner',
+        path: '/components/QRScanner'
+      },
+      {
         title: 'StaticText',
         path: '/components/StaticText'
       },

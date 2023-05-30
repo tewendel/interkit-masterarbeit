@@ -77,9 +77,9 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       value = jsonExtraProp?.defaultValue
     }
 
-    console.log("extraProp", prop, value)
+    //console.log("extraProp", prop, value)
 
-    if(prop.type == "clickEffect") {
+    if(prop.type == "effect") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
     }
 

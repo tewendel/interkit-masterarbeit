@@ -1,5 +1,5 @@
 <script >
-  import { getContext } from 'svelte'
+  import { getContext, setContext } from 'svelte'
   import { useNavigate } from 'svelte-navigator';
   import { executeTrigger } from '../actions'
   import InterkitClient from '../interkit-client';
@@ -15,7 +15,7 @@
     console.log(e)
   }
 
-  const handleClickEffect = () => {
+  const handleClickEffect = (payload) => {
     
     console.log("handling effect", effect)
     
@@ -29,6 +29,10 @@
       if(effectType == "back") {
         navigate(-1)
       }
+    }
+
+    if(effectType == "dataRouteSingle" && effect.path && payload?.elementKey) {
+      navigate(effect.path + "/" + payload?.elementKey)
     }
 
     if(effectType == "link" && effect.url) {
@@ -58,11 +62,17 @@
     }
   }
 
+  const execute = (payload) => {
+    console.log("received effect", payload)
+    handleClickEffect(payload);
+  }
+  setContext("effect", {execute});
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="click-effect" on:click={handleClickEffect}>
-  <slot></slot>
+<div class="click-effect">
+  <slot {execute}></slot>
 </div>
 
 <style>

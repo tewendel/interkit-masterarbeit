@@ -6,7 +6,7 @@
   export let value = {};
   let _value = {...value}; // make a local copy to prevent weird side effects after block duplication
 
-  const effectTypes = ["none", "route", "back", "link", "linkTargetBlank", "actionTrigger", "setUIKey", "setDataAnnotation", "setUserVar"]
+  const effectTypes = ["none", "route", "dataRouteSingle", "back", "link", "linkTargetBlank", "actionTrigger", "setUIKey", "setDataAnnotation", "setUserVar"]
   /* 
   - path // used for route, 
   - url // used for link, linkTargetBlank
@@ -24,7 +24,7 @@
       _value.key = undefined
       _value.value = undefined
     }
-    if(_value.effectType == "route") {
+    if(_value.effectType == "route" || _value.effectType == "dataRouteSingle") {
       _value.url = undefined
       _value.trigger = undefined
       _value.key = undefined
@@ -56,7 +56,7 @@
 
   <div style="margin-top: 8px">
 
-    {#if _value.effectType == "route"}
+    {#if _value.effectType == "route" || _value.effectType == "dataRouteSingle"}
       <TextInput labelText="path" bind:value={_value.path} on:change={update}/>
     {/if}
 

@@ -6,7 +6,7 @@ fields:
     name: text
   - type: extraProps
     props:
-    - type: clickEffect
+    - type: effect
       name: effect
     - name: type
       type: options

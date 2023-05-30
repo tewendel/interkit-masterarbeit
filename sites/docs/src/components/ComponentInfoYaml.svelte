@@ -16,6 +16,8 @@
       allFields = [...yaml.fields, ...extraProps.props]
       console.log(allFields)
 
+    }).catch(e=>{
+      console.error(e)
     })
   })
 

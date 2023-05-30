@@ -1,0 +1,40 @@
+name: QRScanner
+colour: 100
+fields: 
+  - type: extraProps
+    props:
+    - type: sheetColumn
+      name: elementKeyColumn
+      columnType: string
+      defaultValue: elements/qrKey
+      help: The column containing the codes that you want to detect with the scanner.
+    - type: sheetColumn
+      name: tipQrKeyColumn
+      columnType: string
+      defaultValue: tips/qrKey
+      help: Use this column to specify which code the tip belongs to.
+    - type: sheetColumn
+      name: tipImageColumn
+      columnType: mediaFile
+      defaultValue: tips/image
+      help: An image shown as a tip.
+    - type: sheetColumn
+      name: tipTextColumn
+      columnType: string
+      defaultValue: tips/text
+      help: A clue to help the user find the qr code.
+    - type: sheetColumn
+      name: tipOrderColumn
+      columnType: number
+      defaultValue: tips/order
+      help: Specify the order in which the tips are shown per code.
+    - type: string
+      name: closeTrigger
+      defaultValue: closeQR
+      help: The action triggered when the user closes the scanner from the tips interface
+    - type: effect
+      name: onScanEffect
+      help: What schould happen when the scanner scans a code
+  - type: slot
+    name: map
+toolboxCategory: QR Scanner

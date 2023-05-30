@@ -1,8 +1,8 @@
 <script>
 
-  import { setContext } from 'svelte';
+  import { getContext,setContext } from 'svelte';
   import Icon from './Icon.svelte'
-  import WithClickEffect from './WithClickEffect.svelte'
+  import WithEffect from './WithEffect.svelte'
   import { useLocation } from 'svelte-navigator';
 
   let location;
@@ -19,7 +19,7 @@
   export let height = "fixed" // fixed | auto
   export let text = undefined;
   export let selected = false  
-  export let effect; // clickEffect object used to decide what happens on click
+  export let effect; // effect object used to decide what happens on click
 
   // context for icons to know what path they are on
   setContext("button", {
@@ -29,10 +29,11 @@
 
 </script>
 
-<WithClickEffect {effect}>
+<WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span
-    on:click 
+    on:click
+    on:click={execute} 
     class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
     class:primary={type==='primary'}
     class:selected={selected}
@@ -48,7 +49,7 @@
       </div>
     {/if}
   </span>
-</WithClickEffect>
+</WithEffect>
 
 <style>
 

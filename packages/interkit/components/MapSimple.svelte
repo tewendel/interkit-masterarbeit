@@ -100,7 +100,7 @@
   let qrContext = getContext("qr-scanner")
   if(qrContext?.targetElementObj) {
     singleElement = util.rowToObject(qrContext.targetElementObj.row, columnMap)
-    console.log("singleElement", singleElement)
+    console.log("singleElement", singleElement, columnMap)
   }
 
   if(!elements && !singleElement) console.warn("Warning: MapSimple needs elements or QRScanner context to show markers");

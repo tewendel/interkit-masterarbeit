@@ -71,16 +71,16 @@
       <div class="Button__Bar button-bar">
         {#if slideIndex > 0 && backButtonText}<Button text={backButtonText} onClick={()=>{slideIndex -= 1}} flex="fill" />{/if}
         {#if slideIndex < slides.length - 1}
-          <Button text={nextButtonText} onClick={incrIndex} flex="fill" type="primary" />
+          <Button text={nextButtonText} on:click={incrIndex} flex="fill" type="primary" />
         {/if}
         {#if !finalButtonText && slideIndex == slides.length - 1 && onClose}
-          <Button text={nextButtonText} onClick={incrIndex} flex="fill" type="primary" />
+          <Button text={nextButtonText} on:click={incrIndex} flex="fill" type="primary" />
         {/if}
         {#if finalButtonText && slideIndex == slides.length - 1 && onClose} 
-          <Button text={finalButtonText} onClick={onClose} flex="fill" type="primary" />
+          <Button text={finalButtonText} on:click={onClose} flex="fill" type="primary" />
         {/if}
         {#if skipButtonText && slideIndex < slides.length - 1 && onClose} 
-          <Button text={skipButtonText} onClick={onClose} flex="fill" type="secondary" />
+          <Button text={skipButtonText} on:click={onClose} flex="fill" type="secondary" />
         {/if}
       </div>
       

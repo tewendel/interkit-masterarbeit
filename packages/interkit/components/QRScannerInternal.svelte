@@ -1,6 +1,6 @@
 <script>
 
-import { setContext } from "svelte"
+import { setContext, getContext, createEventDispatcher } from "svelte"
 
 import { InterkitClient, util } from '../'
 
@@ -12,7 +12,6 @@ import Button from './Button.svelte'
 import Overlay from './Overlay.svelte'
 import TopNavBarCustom from './TopNavBarCustom.svelte'
 import Icon from './Icon.svelte'
-import MapRenderer from './MapRenderer.svelte'
 import MultiStepContent from './MultiStepContent.svelte'
 
 let video;
@@ -23,7 +22,6 @@ let running = true;
 let scanInterval;
     
 export let elementKeyColumn; // the column on a sheet to select an element (optional)
-export let elementLocationColumn;
 
 // columns for tips sheet
 export let tipQrKeyColumn;
@@ -38,36 +36,41 @@ export let finalButtonText = "Jetzt Scannen"
 
 export let closeTrigger;
 
-const QRElementStore = InterkitClient.getGlobalStore("QRElement") // this is a store
-const targetElement = QRElementStore ? $QRElementStore : undefined
-const targetElementObj = targetElement ? util.rowToObject(targetElement, { elementKeyColumn, elementLocationColumn }) : undefined
+const effectContext = getContext("effect"); 
 
-console.log("setting qr-scanner context with", targetElementObj)
-setContext("qr-scanner", {
-  mapOffset: [0, 150],
-  targetElementObj 
-});
+const targetElementStore = getContext("element") // if this context is set, the qr scanner will focus on one element
+$: targetElementObj = $targetElementStore ? util.rowToObject($targetElementStore, { elementKeyColumn }) : undefined
+
+$: {
+  console.log("setting qr-scanner context with", targetElementObj)
+  setContext("qr-scanner", {
+    mapOffset: [0, 150],
+    targetElementObj 
+  });
+}
 
 let dataRows; 
 
 const onScan = (code) => {
   if(!code || code == "") return
-  console.log("found code", code)
+  console.log("qr scanner found code", code)
 
   // try to find element by that key
   let elementRows = $dataRows.filter(r => util.rowVal(r, elementKeyColumn) == code)
-  console.log(elementRows)
+  console.log("qr scanner searching rows", elementRows)
 
   let elementRow = elementRows?.[0]
-  console.log(elementRow)
+  console.log("qr scanner identified row", elementRow)
   
   let payload = {
     code,
     elementRow,
-    targetFound: elementRow ? (elementRow.key == targetElement?.key) : false
+    elementKey: elementRow?.key,
+    targetFound: elementRow ? (elementRow.key == $targetElementStore?.key) : false
   }
 
-  executeTrigger("QRCodeScanned", payload);
+  executeTrigger("QRCodeScanned", payload)
+  if(effectContext) effectContext.execute(payload);
 }
 
 const initRowSub = async ()=> {
@@ -207,13 +210,13 @@ const closeTips = () => {
 <div id="scanner-container">
   <canvas id="canvas"></canvas>
   {#if loading}
-    <div class="loadingMessage" hidden="">Warte auf Kamera...</div>
+    <div class="loadingMessage" hidden="">Waiting for camera...</div>
   {:else}
     <div class="qr-frame"></div>
   {/if}
-  {#if targetElement && tips?.length}
+  {#if $targetElementStore && tips?.length}
     <div class="tip-button-container">
-      <Button text="Such-Hinweise zeigen" onClick={()=>showTips = true}/>
+      <Button text="Such-Hinweise zeigen" on:click={()=>showTips = true}/>
     </div>
   {/if}
 </div>
@@ -226,7 +229,7 @@ const closeTips = () => {
       headline="QR-Code Scannen"
     >
       <svelte:fragment slot="left">
-        <Button text="" onClick={closeQR} type="secondary">
+        <Button text="" on:click={closeQR} type="secondary">
           <Icon type="arrow-left"/>
         </Button><span>QR-Code Scannen</span>
       </svelte:fragment>

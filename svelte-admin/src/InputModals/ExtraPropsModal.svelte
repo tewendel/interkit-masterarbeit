@@ -14,7 +14,7 @@
 
   import SheetColumnSelectForm from './SheetColumnSelectForm.svelte'
   import SheetIdSelectForm from './SheetIdSelectForm.svelte'
-  import ClickEffectForm from './ClickEffectForm.svelte';
+  import EffectForm from './EffectForm.svelte';
 
   export let value = [] // array of objects with name, type, defaultValue, value, help
   console.log("ExtraPropsModal value", value)
@@ -104,8 +104,8 @@
             {#if row.type == "sheetId"}
               <SheetIdSelectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} bind:databaseUpdateCount/>          
             {/if}
-            {#if row.type == "clickEffect"}
-              <ClickEffectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
+            {#if row.type == "effect"}
+              <EffectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select
