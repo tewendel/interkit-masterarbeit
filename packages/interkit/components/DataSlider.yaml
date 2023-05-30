@@ -8,3 +8,5 @@ fields:
       - "element"
   - name: emptyElement
     type: slot
+docsPath: Data#dataslider
+

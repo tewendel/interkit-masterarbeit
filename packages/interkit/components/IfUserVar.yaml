@@ -3,10 +3,15 @@ colour: 50
 fields:
   - type: string
     name: variable  
+    help: "Name of the user variable to check"
   - type: string
-    name: value  
+    name: value
+    help: "Value to compare to"
   - type: slot
     name: iftrue
+    help: "Show if variable equal to given value"
   - type: slot
     name: else
+    help: "Show otherwise"
 toolboxCategory: "Conditionals"
+docsPath: If#ifuservar

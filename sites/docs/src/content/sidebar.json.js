@@ -146,14 +146,47 @@ export const items = [
         path: '/components/Chat'
       },
       {
-        title: 'ChatBoard*',
+        title: 'ChatBoard…',
         path: '/components/ChatBoard'
+      },
+      /* Conditionals */
+      {
+        title: 'If…',
+        path: '/components/If'
       },
       /* Data */
       {
-        title: 'DataLoaderSingle',
-        path: '/components/DataLoaderSingle'
+        title: 'Data…',
+        path: '/components/Data'
       },
+      /* Debug */
+      {
+        title: 'ContextDebugger',
+        path: '/components/ContextDebugger'
+      },
+      /* Groups */
+      {
+        title: 'Group…',
+        path: '/components/Group'
+      },
+      /* Layout */
+      {
+        title: 'Shell (LayoutShell, LayoutShellAudio, TopBarShell, BottomBarShell)',
+        path: '/components/Shell'
+      },
+      {
+        title: 'Spacing',
+        path: '/components/Spacing'
+      },
+      {
+        title: 'Containers (Overlay, AspectRatio, ScrollContainer)',
+        path: '/components/Containers'
+      },
+      {
+        title: 'TabBar',
+        path: '/components/TabBar'
+      },
+      /* Map */
       {
         title: 'MapSimple',
         path: '/components/MapSimple'

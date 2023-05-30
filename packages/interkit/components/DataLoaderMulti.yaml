@@ -26,3 +26,5 @@ fields:
   - name: default
     type: slot
 toolboxCategory: Data
+docsPath: Data#dataloadermulti
+
