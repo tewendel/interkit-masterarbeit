@@ -17,7 +17,9 @@
   
   // subscribe to the rows in that sheet
   onMount(async () => {
-    rows = await InterkitClient.getRowSubStore(sheet)  
+    if (sheet) {
+      rows = await InterkitClient.getRowSubStore(sheet)  
+    }
   })
 
   // find the right row and update the store
@@ -27,6 +29,7 @@
       console.log("DataLoaderSingle finding row", customKeyColumn, rowKey, rows)
       // if customKeyColumn is set, we use that to find the row, otherwise the row key
       row = rows.find(r => rowKey == (customKeyColumn ? util.rowVal(r, customKeyColumn) : r.key));
+      console.log("DataLoaderSingle found row", row, util.rowVal(rows[0], customKeyColumn))
     }
     if($showDummyData) {
       rowStore.set(dummyData)

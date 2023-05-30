@@ -3,28 +3,6 @@ title: AR Viewer
 # green
 color: 230
 fields:
-  - type: string
-    name: closeTrigger
-  - type: sheetColumn
-    name: titleColumn
-    columnType: string
-    defaultValue: elements/title
-  - type: sheetColumn
-    name: glbColumn
-    columnType: mediaFile
-    defaultValue: elements/glbFile
-  - type: sheetColumn
-    name: usdzColumn
-    columnType: mediaFile
-    defaultValue: elements/usdzFile
-  - type: sheetColumn
-    name: modelPreviewImageColumn
-    columnType: mediaFile
-    defaultValue: elements/modelPreviewImageColumn
-  - type: sheetColumn
-    name: videoColumn
-    columnType: mediaFile
-    defaultValue: elements/video
   - type: slot
     name: iosInfo
   - type: slot
@@ -33,10 +11,36 @@ fields:
     name: videoFallbackInfo    
   - type: slot
     name: videoOnlyInfo
-  - type: string
-    name: startButtonText
-  - type: string
-    name: videoButtonText
+  - type: extraProps
+    props:
+    - type: sheetColumn
+      name: titleColumn
+      columnType: string
+      defaultValue: elements/title
+    - type: sheetColumn
+      name: glbColumn
+      columnType: mediaFile
+      defaultValue: elements/glbFile
+    - type: sheetColumn
+      name: usdzColumn
+      columnType: mediaFile
+      defaultValue: elements/usdzFile
+    - type: sheetColumn
+      name: modelPreviewImageColumn
+      columnType: mediaFile
+      defaultValue: elements/modelPreviewImageColumn
+    - type: sheetColumn
+      name: videoColumn
+      columnType: mediaFile
+      defaultValue: elements/video
+    - type: string
+      name: startButtonText
+      defaultValue: "Start AR"
+    - type: string
+      name: videoButtonText
+      defaultValue: "Watch Video"
+    - type: string
+      name: closeTrigger      
 #  - type: options
 #    name: ARmode
 #    defaultValue: "preferred"

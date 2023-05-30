@@ -97,12 +97,12 @@
   })
 
 </script>
-{mode}
+
 <div class="ARViewer container">
   {#if element}
 
     <div class="ARViewer__Close close">
-      <Button clickType="back">
+      <Button effect={{effectType:"back"}}>
         <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
       </Button>
     </div>
@@ -207,7 +207,7 @@
               <div class="block">
 
                 <div class="buttonContainer">
-                  <Button flex="fill" type="secondary" size="large" on:click={() => {alert("vid");mode = "video"}}>
+                  <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
                     {videoButtonText}
                   </Button>
                 </div>
