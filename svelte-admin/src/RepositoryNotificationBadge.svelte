@@ -2,13 +2,13 @@
   import NotificationBadge from "./NotificationBadge.svelte";
   import {currentProject} from "./admin.js"
 
-  let repoNotice
+  let count = ""
 
   $: {
     const unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
-    repoNotice = unstagedFiles.length > 0 ? `(${unstagedFiles.length})` : ""
+    count = unstagedFiles.length > 0 ? unstagedFiles.length : ""
   }
 
 </script>
 
-<NotificationBadge count={repoNotice} />
+<NotificationBadge {count} />
