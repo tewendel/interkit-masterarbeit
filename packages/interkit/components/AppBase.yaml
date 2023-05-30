@@ -6,6 +6,8 @@ fields:
     props:
     - type: string
       name: languages
+      help: List available language codes, for example "en,de". The first is the default language.
   - type: slot
     name: default
+    help: All blocks of an interkit app must be children of AppBase
 toolboxCategory: AppBase

@@ -10,7 +10,7 @@ export const items = [
       },
       {
         title: 'Interface Overview',
-        path: '/interface_overview'
+        path: '/basics/interface_overview'
       },
       {
         title: 'How to start',
@@ -88,6 +88,10 @@ export const items = [
       {
         title: 'Button',
         path: '/components/Button'
+      },
+      {
+        title: 'DataLoaderSingle',
+        path: '/components/DataLoaderSingle'
       },
       {
         title: 'Icon',

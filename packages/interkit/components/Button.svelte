@@ -38,7 +38,7 @@
     class:selected={selected}
     class:Button--selected={selected}
     class:nopadding 
-    class:nav-tab-selected={$location.pathname == effect?.path}
+    class:nav-tab-selected={$location?.pathname == effect?.path}
   >
     <slot/>
     { text || "" }
