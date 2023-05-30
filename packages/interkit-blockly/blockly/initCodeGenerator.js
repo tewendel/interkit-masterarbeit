@@ -77,7 +77,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       value = jsonExtraProp?.defaultValue
     }
 
-    //console.log("extraProp", prop, value)
+    console.log("extraProp", prop, value)
 
     if(prop.type == "clickEffect") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
@@ -87,11 +87,11 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       return `${prop.name}={${value}}\n`;
     }
 
-    if(prop.type == "sheetColumn") {
+    if(prop.type == "sheetColumn" && value) {
       value = value.sheetKey + "/" + value.columnKey
     }
 
-    if(prop.type == "sheetId") {
+    if(prop.type == "sheetId" && value) {
       value = value.sheetKey
     }
 
