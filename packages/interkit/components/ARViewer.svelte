@@ -2,6 +2,7 @@
 
   import { InterkitClient, util } from '../'
   import { onMount, getContext } from 'svelte';
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
   import MediaFileResolver from './MediaFileResolver.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
@@ -29,6 +30,12 @@
 
 
   let ARElement = getContext("element");
+
+  let showDummyData = getShowDummyDataStore()
+  const dummyData = {
+    
+  }
+
   if(!ARElement) {
     console.warn("DataCardSmall needs an element context, for example from DataList")
   }
