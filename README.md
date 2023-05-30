@@ -108,6 +108,18 @@ vi .env
 docker-compose up -d
 ````
 
+### increase file watcher limit
+
+If your systems hosts many projects, you may need to increase the file watcher limit.
+
+Run this on the host system:
+
+````
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+echo fs.inotify.max_user_instances=8192 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+````
+
 ### deploy locally
 ````
 docker network create frontproxy
