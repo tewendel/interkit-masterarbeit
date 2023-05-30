@@ -71,29 +71,28 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     
     let blockJson = Blockly.serialization.blocks.save(block);    
     let jsonExtraProp = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)
-    
+
     let value = jsonExtraProp?.value;
     if(typeof value == "undefined" && typeof prop?.defaultValue != "undefined") {
       value = jsonExtraProp?.defaultValue
     }
 
-    //console.log("extraProp", prop.name, value)
+    //console.log("extraProp", prop, value)
 
-    if(prop.name == "effect") {
+    if(prop.type == "clickEffect") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
-    }
-
-    // if value is an object with a text field (sheetColumn, sheetId), use that
-    if(typeof value == "object") {
-      if(value?.text) {
-        value = value.text
-      } else {
-        value = null;
-      }
     }
 
     if(typeof value == "boolean") {
       return `${prop.name}={${value}}\n`;
+    }
+
+    if(prop.type == "sheetColumn") {
+      value = value.sheetKey + "/" + value.columnKey
+    }
+
+    if(prop.type == "sheetId") {
+      value = value.sheetKey
     }
 
     return value ? `${prop.name}="${escapeCurlyBrackets(value)}"\n` : "";

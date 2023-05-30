@@ -6,12 +6,15 @@ fields:
     props:
     - name: sheet
       type: sheetId
+      help: Select the sheet you want to load data from.
     - name: rowKey
       type: string
+      help: The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.
     - name: customKeyColumn
       type: sheetColumn
       columnType: string
       defaultValue: settings/contentKey    
+      help: "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values." 
   - name: default
     type: slot
 toolboxCategory: "Data"

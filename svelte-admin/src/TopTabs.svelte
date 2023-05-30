@@ -44,7 +44,7 @@
     }
     if(dropdownPaths.includes(newTab)) {
       selectedDropdownId = newTab;
-      mainSelected = 6;
+      mainSelected = mainTabPaths.length;
     }
     console.log("tab changed from prop to:", newTab, mainSelected)
   }

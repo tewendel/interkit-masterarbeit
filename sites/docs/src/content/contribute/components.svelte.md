@@ -15,7 +15,7 @@ There are  ...
 
 ## Blockly
 
-Components are arranged via Blockly. The `blocklyState.xml` gets translated into an `App.svelte`. Both files are equivalent to the blockly representation you see in the component editor.
+Components are arranged via Blockly. The `blocklyState.json` gets translated into an `App.svelte`. Both files are equivalent to the blockly representation you see in the component editor.
 
 ## Component Files
 
@@ -75,6 +75,7 @@ You can find this example for a custom project component in `src/components/Proj
 - `options`
 - `sheetColumn`
 - `slot`
+- `extraProps`
 
 ### additional attributes for field type: options
 
@@ -88,5 +89,14 @@ You can find this example for a custom project component in `src/components/Proj
 ### additional attributes for field type: sheetColumn
 
 - `columnType`
+
+### using extraProps
+
+Add a field with type `extraProps` to move component settings into a modal. List the fields (inlucding type, name, defaultValue) in the `props` attribute.
+
+### Documentation
+
+You can add a `help` attribute to fields and extraProps fields. The extraProps help is displayed in the modal. All help is displayed when you use the `ComponentInfoYaml` component on a documentation page for the component.
+
 
  

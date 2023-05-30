@@ -16,7 +16,8 @@
   import SheetIdSelectForm from './SheetIdSelectForm.svelte'
   import ClickEffectForm from './ClickEffectForm.svelte';
 
-  export let value = [] // array of objects with name, type, defaultValue, value
+  export let value = [] // array of objects with name, type, defaultValue, value, help
+  console.log("ExtraPropsModal value", value)
   export let submit;
   export let close;
   export let params;
@@ -27,43 +28,43 @@
     { key: "value", value: "Value" },
   ]
 
-  // rows in the table of extra props (not to be confused with rows in a data sheet!)
-  let rows = value.map(v => {return {
+  // rows in the table of extra props
+  let propRows = value.map(v => {return {
     id: v.name,
     ...v
   }})
 
   // temporary storage
-  const updateCell = (row, cellValue) => {
-    console.log("updateCell", row, cellValue)
-    rows.find(r => r.name == row.name).value = cellValue
+  const updateCell = (propRow, cellValue) => {
+    console.log("updateCell", propRow, cellValue)
+    propRows.find(r => r.name == propRow.name).value = cellValue
   }
 
   // write changes back to bound value prop - make copies to avoid connected blocks after duplicate
   const updateValue = () => {
-    value = rows.map(r => {return JSON.parse(JSON.stringify(r))})
+    value = propRows.map(r => {return JSON.parse(JSON.stringify(r))})
   }
 
   // construct default values if needed
-  const getValue = (row) => {
-    console.log("getValue", row)
-    if(typeof row.value == "undefined") {
-      if(row.type == "sheetColumn") {
+  const getValue = (propRow) => {
+    console.log("getValue", propRow)
+    if(typeof propRow.value == "undefined") {
+      if(propRow.type == "sheetColumn") {
         return {
-          sheetKey: util.getSheetKey(row.defaultValue),
-          columnKey: util.colKey(row.defaultValue),
-          text: row.defaultValue
+          sheetKey: util.getSheetKey(propRow.defaultValue),
+          columnKey: util.colKey(propRow.defaultValue),
+          text: propRow.defaultValue
         }
       }
-      if(row.type == "sheetId") {
+      if(propRow.type == "sheetId") {
         return {
-          sheetKey: row.defaultValue,
-          text: row.defaultValue
+          sheetKey: propRow.defaultValue,
+          text: propRow.defaultValue
         }
       }
-      return row.defaultValue
+      return propRow.defaultValue
     } else {
-      return row.value
+      return propRow.value
     }
   }
   
@@ -77,9 +78,13 @@
 >
   <ModalHeader label="" title="Component Settings" />
   <ModalBody>
-    <DataTable {headers} {rows}>
+    <DataTable {headers} rows={propRows}>
       <svelte:fragment slot="cell" let:row let:cell>
         <div style="padding:5px">
+          {#if cell.key === "name"}
+            <div class="prop-name">{row.name}</div>
+            {#if row.help}<div class="prop-help">{row.help}</div>{/if}
+          {/if}
           {#if cell.key === "value"}
             {#if row.type == "string"}
               <TextInput value={getValue(row)} on:change={(e)=>{updateCell(row, e.detail)}}/>
@@ -112,8 +117,6 @@
                 {/each}
               </Select> 
             {/if}
-          {:else}
-            {cell.value}
           {/if}
         </div>
       </svelte:fragment>
@@ -123,3 +126,11 @@
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
 </ComposedModal>
 
+
+<style>
+  .prop-help {
+    font-size: 80%;
+    padding-top: 6px;
+    max-width: 300px;
+  }
+</style>
