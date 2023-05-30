@@ -90,6 +90,10 @@ export const items = [
         path: '/components/Button'
       },
       {
+        title: 'DataLoaderSingle',
+        path: '/components/DataLoaderSingle'
+      },
+      {
         title: 'Icon',
         path: '/components/Icon'
       },
