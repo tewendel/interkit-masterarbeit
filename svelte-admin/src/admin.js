@@ -10,6 +10,8 @@ export const secondaryTabsHidden = writable(false)
 /* the pane / tab content */
 export const secondaryTabsMinimized = writable(false)
 
+export const secondaryTabsPreviewSize = writable(0)
+
 let currentProjectSub = null
 export const currentProject = derived(
   projectId,
