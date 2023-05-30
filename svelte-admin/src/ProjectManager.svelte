@@ -481,14 +481,14 @@
                           </ImageLoader>
                           <div style="text-align: right; margin-top: 1em;">
                             <ButtonSet style="justify-content: end">
-                              {#if template.uiState?.metafile?.project?.html}
+                              <!--{#if template.uiState?.metafile?.project?.html}
                                 <Button
                                   kind="tertiary"
                                   icon={Help}
                                   on:click={() => infoProject(template, 'project')}
                                   disabled={!template.uiState?.metafile?.project?.html}
                                   >Info</Button>
-                              {/if}
+                              {/if}-->
                               <Button
                                 kind="tertiary"
                                 icon={WatsonHealthThumbnailPreview}

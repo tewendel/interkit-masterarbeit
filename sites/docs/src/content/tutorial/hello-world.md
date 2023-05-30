@@ -1,0 +1,36 @@
+## Hello World
+
+This is the first project in the tutorial. This template renders static text to the screen. 
+
+To see the preview of the app, select the Preview tab in the top menu. You can always switch back and forth between Preview and Docs to continue with the tutorial.
+
+#### Which parts of the system were used
+
+This template was created entirely using basic components in the **App** section. You can navigate there by selecting the App tab at the top of the screen.
+
+#### Techniques demonstrated
+
+- The **AppBase** component ist the starting point for all interkit apps and needs to be the outermost component you add.
+
+- The **Spacing** component helps you add whitespace around content.
+
+- Use **StaticText** to show text on the screen. Static means that the text should not change frequently.
+
+#### Next Steps
+
+- Modify the content by changing it in the StaticText blocks.
+
+- Change the spacing around the content by playing with the settings on the Spacing block.
+
+- Change the order of components by dragging.
+
+- Add new StaticText components from the component sidebar. 
+
+- Right click to duplicate and delete component blocks.
+
+- Remove the Spacing block and see what happens. Put it back.
+
+
+#### Advanced
+
+You can change the content of this help screen for your project by editing the **project.md** file in the project repository. Use the more/project and the cloudcmd tab.

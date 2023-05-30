@@ -28,8 +28,44 @@ export const items = [
     open: false,
     items: [
       {
-        title: 'Part 1: Welcome',
-        path: '/tutorial/part-1'
+        title: 'Intro',
+        path: '/tutorial/intro'
+      },
+      {
+        title: 'Project 1: Hello World',
+        path: '/tutorial/hello-world'
+      },
+      {
+        title: 'Project 2: DataCell',
+        path: '/tutorial/datacell'
+      },
+      {
+        title: 'Project 3: DataList',
+        path: '/tutorial/datalist'
+      },
+      {
+        title: 'Project 4: DataSlider',
+        path: '/tutorial/dataslider'
+      },
+      {
+        title: 'Project 5: Map basics',
+        path: '/tutorial/map-basics'
+      },
+      {
+        title: 'Project 6: Chat basics',
+        path: '/tutorial/chat-basics'
+      },
+      {
+        title: 'Project 7: Bottom Menu',
+        path: '/tutorial/bottom-menu'
+      },
+      {
+        title: 'Project 8: Top Menu',
+        path: '/tutorial/top-menu'
+      },
+      {
+        title: 'Project 9: Tabs Simple',
+        path: '/tutorial/tabs-simple'
       },
     ]
   },
