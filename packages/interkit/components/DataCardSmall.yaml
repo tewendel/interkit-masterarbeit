@@ -23,3 +23,5 @@ fields:
       type: string
       defaultValue: 
 toolboxCategory: Data
+docsPath: Data#datacardsmall
+

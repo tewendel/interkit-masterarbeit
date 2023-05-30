@@ -5,4 +5,5 @@ fields:
   - type: string 
     name: text
     defaultValue: lorem ipsum
+    help: "The text you want to show."
 toolboxCategory: Basics

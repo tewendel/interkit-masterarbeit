@@ -4,3 +4,4 @@ fields:
   - name: name
     type: string
 toolboxCategory: Groups
+docsPath: Group#groupconnector

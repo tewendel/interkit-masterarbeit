@@ -4,10 +4,12 @@ colour: 300
 fields:
   - type: string
     name: text
+    help: "Text on the button."
   - type: extraProps
     props:
     - type: effect
       name: effect
+      help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
     - name: type
       type: options
       options:
@@ -18,6 +20,7 @@ fields:
         - spacer
         - list-item
         - nav-tab
+      help: "Appearance of the button."
     - type: options
       name: size
       options: 
@@ -25,12 +28,15 @@ fields:
         - small
         - large
       defaultValue: medium
+      help: "Large, medium or small."
     - type: options
       name: flex
       options: 
         - normal
         - fill
       defaultValue: normal
+      help: "If used in the slot of a flex-supported parent component, determines how the available space is used."
   - name: default
     type: slot
+    help: "If text is not enough, you can place child components here, e.g. formatted text. Will override text."
 toolboxCategory: Buttons

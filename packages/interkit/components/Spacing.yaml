@@ -42,3 +42,4 @@ fields:
         - xl     
   - name: default
     type: slot     
+docsPath: Spacing#spacing

@@ -6,3 +6,5 @@ fields:
     type: slot
   - name: BottomBar
     type: slot
+docsPath: Shell#bottombarshell  
+

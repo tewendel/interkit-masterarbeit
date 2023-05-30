@@ -21,3 +21,5 @@ fields:
       type: checkbox
       defaultValue: false
 toolboxCategory: "Data"
+docsPath: Data#datacell
+

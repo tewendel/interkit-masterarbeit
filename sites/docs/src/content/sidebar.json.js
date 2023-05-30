@@ -117,18 +117,12 @@ export const items = [
     path: 'components',
     open: false,
     items: [
+      /* AppBase */
       {
         title: 'AppBase',
         path: '/components/AppBase'
       },
-      {
-        title: 'Button',
-        path: '/components/Button'
-      },
-      {
-        title: 'DataLoaderSingle',
-        path: '/components/DataLoaderSingle'
-      },
+      /* Basics */
       {
         title: 'Icon',
         path: '/components/Icon'
@@ -142,13 +136,65 @@ export const items = [
         path: '/components/StaticText'
       },
       {
-        title: 'MapSimple',
-        path: '/components/MapSimple'
+        title: 'Tag',
+        path: '/components/Tag'
       },
+      /* Buttons */
+      {
+        title: 'Button',
+        path: '/components/Button'
+      },
+      /* Chat */
       {
         title: 'Chat',
         path: '/components/Chat'
       },
+      {
+        title: 'ChatBoard…',
+        path: '/components/ChatBoard'
+      },
+      /* Conditionals */
+      {
+        title: 'If…',
+        path: '/components/If'
+      },
+      /* Data */
+      {
+        title: 'Data…',
+        path: '/components/Data'
+      },
+      /* Debug */
+      {
+        title: 'ContextDebugger',
+        path: '/components/ContextDebugger'
+      },
+      /* Groups */
+      {
+        title: 'Group…',
+        path: '/components/Group'
+      },
+      /* Layout */
+      {
+        title: 'Shell (LayoutShell, LayoutShellAudio, TopBarShell, BottomBarShell)',
+        path: '/components/Shell'
+      },
+      {
+        title: 'Spacing',
+        path: '/components/Spacing'
+      },
+      {
+        title: 'Containers (Overlay, AspectRatio, ScrollContainer)',
+        path: '/components/Containers'
+      },
+      {
+        title: 'TabBar',
+        path: '/components/TabBar'
+      },
+      /* Map */
+      {
+        title: 'MapSimple',
+        path: '/components/MapSimple'
+      }
     ]
   },
   {

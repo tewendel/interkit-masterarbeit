@@ -10,4 +10,5 @@ fields:
   - type: slot
     name: default
 toolboxCategory: Routing
-  
+docsPath: Routing#dataroutesingle
+
