@@ -15,7 +15,7 @@
   export let excludeAnnotated // exclude elements with any of these properties
   export let includeOnlyAnnotated // include elements with any of these properties 
   export let discoverableColumn // a column that filters elements unless they are explicitly discovered
-  export let discoverProperty // a property that overrides the discoverableColumn
+  export let discoverAnnotation // the annotation to use for marking elements as discovered
     
 </script>
 
@@ -29,7 +29,7 @@
     {excludeAnnotated}
     {includeOnlyAnnotated}
     {discoverableColumn}
-    {discoverProperty}
+    {discoverAnnotation}
     >
     <slot/>
   </DataLoaderMulti>

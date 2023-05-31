@@ -7,6 +7,10 @@
 
   const elementContext = getContext("element")
   const dataAnnotations = InterkitClient.getGlobalStore("elementProperties");
+
+  $: {
+    console.log("IfDataAnnotation", key, value, $elementContext, $dataAnnotations)
+  }
   
   let currentValue;
   $: {

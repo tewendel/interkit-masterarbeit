@@ -505,6 +505,13 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
   }
 }
 
+// helper function to simplify data loading in action - just get all the data
+const getRows = async (sheetkey) => {
+  let store = await getRowSubStore(sheetkey);
+  return store ? get(store) : [];
+}
+
+
 // returns the row store for a given sheet, created one if not available or waits for subscription to complete
 // returns only one row
 // if a columnMap is passed in, returns the converted object store
@@ -1019,6 +1026,7 @@ const InterkitClient = {
   getSub,
   getMessageSub,
   getRowSubStore,
+  getRows,
   getOneRowSubStore,
   getMediaFileSubStore,
   getMediaFile,

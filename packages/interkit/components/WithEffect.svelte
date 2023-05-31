@@ -49,7 +49,7 @@
     }
 
     if(effectType == "actionTrigger" && effect.trigger) {
-      executeTrigger(effect.trigger, elementContext ? $elementContext : undefined)
+      executeTrigger(effect.trigger, payload ? payload : (elementContext ? $elementContext : undefined))
     }
 
     if(effectType == "setUIKey" && effect.key && effect.value) {

@@ -20,8 +20,7 @@
   export let excludeAnnotated // exclude elements with any of these properties
   
   export let discoverableColumn // a column that filters elements unless they are explicitly discovered
-  export let discoverProperty // a property that overrides the discoverableColumn
-  
+  export let discoverAnnotation // a property that overrides the discoverableColumn
   
   const contextElement = getContext("element");
   console.log("DataLoaderMulti got reference element store from context", $contextElement)
@@ -89,12 +88,12 @@
     }
 
     // check for discoverables and exclude if not yet discoverd
-    if(discoverableColumn && discoverProperty) {
-      //console.log("DataLoaderMulti filtering for discovered elements", data, $elementProperties)
+    if(discoverableColumn && discoverAnnotation) {
+      //console.log("DataLoaderMulti filtering for discovered elements", data, $elementProperties, discoverableColumn, discoverAnnotation)
       let filteredData = [];
       for(let element of data) {
-        if(!element.discoverableColumn 
-            || (element.discoverableColumn && $elementProperties?.[element.key]?.[discoverProperty])) {
+        if(element.discoverableColumn != "true"
+            || (element.discoverableColumn == "true" && ($elementProperties?.[element.key]?.[discoverAnnotation] == "true"))) {
           filteredData.push(element)  
         }
       }
@@ -103,6 +102,7 @@
 
     // sort elemets by sortcolumn
     if(sortColumn) {
+      console.log("DataLoaderMulti sorting", data)
       data.sort((a, b) => { return (a.sortColumn || 0) - (b.sortColumn || 0) })
     }
 
