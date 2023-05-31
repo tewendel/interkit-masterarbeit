@@ -7,9 +7,6 @@ fields:
     help: "Text on the button."
   - type: extraProps
     props:
-    - type: effect
-      name: effect
-      help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
     - name: type
       type: options
       options:
@@ -36,6 +33,12 @@ fields:
         - fill
       defaultValue: normal
       help: "If used in the slot of a flex-supported parent component, determines how the available space is used."
+    - type: effect
+      name: effect
+      help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+    - type: checkbox
+      name: execOnMount
+      help: "Runs the effect once when the button is rendered (for example to set a default value)"
   - name: default
     type: slot
     help: "If text is not enough, you can place child components here, e.g. formatted text. Will override text."

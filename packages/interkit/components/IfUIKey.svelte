@@ -5,7 +5,7 @@
   export let key;
   export let value;
   
-  let currentValue = null
+  let currentValue = undefined
 
   if(key && storeType == "UIKey") {
     InterkitClient.getUiKeyStore(key).subscribe(v => {

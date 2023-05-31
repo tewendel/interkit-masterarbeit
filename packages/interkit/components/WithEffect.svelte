@@ -1,10 +1,11 @@
 <script >
-  import { getContext, setContext } from 'svelte'
+  import { getContext, setContext, onMount } from 'svelte'
   import { useNavigate } from 'svelte-navigator';
   import { executeTrigger } from '../actions'
   import InterkitClient from '../interkit-client';
 
   export let effect;
+  export let execOnMount = false;
 
   const elementContext = getContext("element");
 
@@ -72,6 +73,10 @@
     handleClickEffect(payload);
   }
   setContext("effect", {execute});
+
+  onMount(()=>{
+    if(execOnMount) execute();
+  })
 
 </script>
 
