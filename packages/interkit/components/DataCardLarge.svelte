@@ -67,7 +67,7 @@
           {/if}
         </h4>
 
-        {#if $elementProperties?.[$element?.key]?.[checkedAnnotation] == "true"}
+        {#if $showDummyData || $elementProperties?.[$element?.key]?.[checkedAnnotation] == "true"}
           <div class="check-icon">
               <Icon type="check" height="24px"/>
           </div>
