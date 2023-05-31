@@ -40,7 +40,7 @@
 
 {#if $element || $showDummyData}
 
-<LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
+<LinkConditional condition={onSelectRoute ? true : false} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
     {#if imageRef || $showDummyData}

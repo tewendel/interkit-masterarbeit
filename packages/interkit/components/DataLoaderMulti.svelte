@@ -1,5 +1,9 @@
 <script>
 
+  import { onMount, onDestroy, getContext, setContext } from "svelte"
+  import { get, writable } from "svelte/store"
+  import { InterkitClient, util } from ".."
+
   /*
     provides a context with a store containing the elements specified
     consumed by elementList, elementSlider, map
@@ -7,22 +11,21 @@
 
   export let sheetKey // the sheet to get the elements from
 
-  export let referenceElementStore // a store that contains an element that we use to filter this list
-  export let referenceElementColumn // the column on that element that contains the references
+  export let referenceColumn // the column on that element that contains the references
     
   export let sortColumn // the column by which to sort the elements
   export let hideColumn // a column that filters elements 
   
-  export let excludePropertiesAny // exclude elements with any of these properties
-  export let includePropertiesAny // include elements with any of these properties 
-
+  export let includeOnlyAnnotated // include elements with any of these properties 
+  export let excludeAnnotated // exclude elements with any of these properties
+  
   export let discoverableColumn // a column that filters elements unless they are explicitly discovered
   export let discoverProperty // a property that overrides the discoverableColumn
   
-  import { onMount, onDestroy, setContext } from "svelte"
-  import { get, writable } from "svelte/store"
-  import { InterkitClient, util } from ".."
-
+  
+  const contextElement = getContext("element");
+  console.log("DataLoaderMulti got reference element store from context", $contextElement)
+  
   let unsubscribe;
   let unfilteredData;
   let providedData = writable([]);
@@ -31,19 +34,31 @@
   //console.log("ElementsContextProvider")
 
   const filterData = (data) => {
-    //console.log("filterData", data, $elementProperties, hideColumn, sortColumn, excludePropertiesAny, includePropertiesAny)
+    console.log("filterData", $contextElement)
     if(!data) return [];
 
-    // if reference Element is defined, make sure to filter out all other elements
-    if(referenceElementStore && referenceElementColumn) {
-      const referenceElement = InterkitClient.getGlobalStore(referenceElementStore);
-      if(referenceElement) {
-        let references = get(referenceElement)?.values?.[util.colKey(referenceElementColumn)]?.rowKeys
+    // get the references pointing to our sheet from the contextElement
+    if($contextElement && referenceColumn) {                
+
+      // the contextElement and the referenceColumn are from the same sheet
+      if($contextElement?.sheetKey == util.getSheetKey(referenceColumn)) {
+        // we include data that is referenced by the referenceColumn on the contextElement
+        let references = get(contextElement)?.values?.[util.colKey(referenceColumn)]?.rowKeys
         if(references) {
-          data = data.filter(a => references.includes(a.key))
+          data = data.filter(e => references.includes(e.key))
         }
+      // the contextElement and the referenceColumn are from different sheets
+      } else {
+        // we include data from our sheet that references the contextElement in the referenceColumn
+        console.log("filtering", data, $contextElement, referenceColumn)
+        data = data.filter(e => {
+          let references = e?.row?.values?.[util.colKey(referenceColumn)]?.rowKeys
+          return references?.includes($contextElement.key)
+        })
       }
     }
+
+    // opposite case: filter the data from our sheet to include only elements that have a reference to the contextElement
 
     // exclude elements that have true in hideColumn
     if(hideColumn) {
@@ -52,19 +67,19 @@
 
     
     // exclude elements with any of these properties set to true
-    if(excludePropertiesAny) {
-      for(let property of excludePropertiesAny.split(", ")) {
-        data = data.filter(a => $elementProperties?.[a.key]?.[property])
+    if(excludeAnnotated) {
+      for(let property of excludeAnnotated.split(", ")) {
+        data = data.filter(a => $elementProperties?.[a.key]?.[property] != "true")
       }
     }
 
     // include only elements with one of these properties set to true
-    if(includePropertiesAny) {
-      //console.log("includePropertiesAny")
+    if(includeOnlyAnnotated) {
+      //console.log("includeOnlyAnnotated")
       let filteredData = [];
       for(let element of data) {
-        for(let property of includePropertiesAny.split(", ")) {
-          if($elementProperties?.[element.key]?.[property]) {
+        for(let property of includeOnlyAnnotated.split(", ")) {
+          if($elementProperties?.[element.key]?.[property] == "true") {
             filteredData.push(element)
             break;
           }
@@ -119,9 +134,9 @@
     })
   }
 
-  // refilter data if elementProperties change
+  // refilter data if elementProperties or contextElement change
   $: {
-    if($elementProperties) {
+    if($elementProperties || $contextElement) {
       //console.log("ElementsContextProvider detected change in elementProperties, refiltering")
       refilter();
     }

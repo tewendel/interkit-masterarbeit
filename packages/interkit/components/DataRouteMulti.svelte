@@ -12,8 +12,8 @@
   export let referenceElementColumn // the column on that element that contains the references  
   export let sortColumn // the column by which to sort the elements
   export let hideColumn // a column that filters elements 
-  export let excludePropertiesAny // exclude elements with any of these properties
-  export let includePropertiesAny // include elements with any of these properties 
+  export let excludeAnnotated // exclude elements with any of these properties
+  export let includeOnlyAnnotated // include elements with any of these properties 
   export let discoverableColumn // a column that filters elements unless they are explicitly discovered
   export let discoverProperty // a property that overrides the discoverableColumn
     
@@ -26,8 +26,8 @@
     {referenceElementColumn}
     {sortColumn}
     {hideColumn}
-    {excludePropertiesAny}
-    {includePropertiesAny}
+    {excludeAnnotated}
+    {includeOnlyAnnotated}
     {discoverableColumn}
     {discoverProperty}
     >

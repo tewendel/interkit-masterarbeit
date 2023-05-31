@@ -7,7 +7,7 @@
 	const navigate = useNavigate();
   
   const click = () => {
-    console.log("Navigate to", to)
+    console.log("Navigate to", to, condition, typeof condition)
     navigate(to)
   }
 </script>

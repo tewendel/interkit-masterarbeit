@@ -17,7 +17,7 @@
 
   const handleClickEffect = (payload) => {
     
-    console.log("handling effect", effect)
+    console.log("handling effect", effect, payload, $elementContext)
     
     const effectType = effect?.effectType;
     if(!effectType || effectType == "none") return
@@ -31,8 +31,13 @@
       }
     }
 
-    if(effectType == "dataRouteSingle" && effect.path && payload?.elementKey) {
-      navigate(effect.path + "/" + payload?.elementKey)
+    if(effectType == "dataRouteSingle" && effect.path && (payload?.elementKey || $elementContext?.key)) {
+      // if a key is provided via the payload, use that (eg qr scanner)
+      if(payload?.elementKey)
+        navigate(effect.path + "/" + payload?.elementKey)
+      // otherwise, use the key from element context (eg button)
+      if($elementContext?.key)
+        navigate(effect.path + "/" + $elementContext?.key)
     }
 
     if(effectType == "link" && effect.url) {

@@ -20,10 +20,12 @@ fields:
       type: sheetColumn
     - name: hideColumn
       type: sheetColumn
-    - name: excludePropertiesAny
+    - name: includeOnlyAnnotated
       type: string
-    - name: includePropertiesAny
+      help: Filter to only include elements that have a Data Annotation set to "true", for example "bookmarked". You can list multiple anotations with "checked, bookmarked".
+    - name: excludeAnnotated
       type: string
+      help: Filter to exclude elements that have a Data Annotation set to "true", for example "checked". You can list multiple anotations with "checked, bookmarked".
     - name: discoverableColumn
       type: sheetColumn
       defaultValue: elements/discoverable
