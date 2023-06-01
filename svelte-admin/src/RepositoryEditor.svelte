@@ -43,11 +43,13 @@
   }
 
   const push = async (remote) => {
-    BundleServer.gitPush(projectId, remote)
+    const res = await BundleServer.gitPush(projectId, remote)
+    alert(res.status + "\n\n" + JSON.stringify(res))
   }
 
   const pull = async (remote) => {
-    BundleServer.gitPull(projectId, remote)
+    const res = await BundleServer.gitPull(projectId, remote)
+    alert(res.status + "\n\n" + JSON.stringify(res))
   }
 
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || []
