@@ -16,6 +16,9 @@ fields:
       type: sheetColumn
       columnType: mediaFile
       defaultValue: elements/image
+    - name: checkedAnnotation
+      type: string
+      defaultValue: checked 
     - name: onSelectRoute
       type: string
       defaultValue: 

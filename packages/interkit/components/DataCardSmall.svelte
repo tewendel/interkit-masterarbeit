@@ -20,7 +20,7 @@
   export let imageColumn
   export let onSelectRoute
 
-  export let checkedProperty = "checked"
+  export let checkedAnnotation = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   
   $: title = util.rowVal($element, titleColumn)
@@ -40,7 +40,7 @@
 
 {#if $element || $showDummyData}
 
-<LinkConditional condition={onSelectRoute} to="{onSelectRoute}/{$element?.key}">
+<LinkConditional condition={onSelectRoute ? true : false} to="{onSelectRoute}/{$element?.key}">
   <section class={`ContentElement container`}>
       
     {#if imageRef || $showDummyData}
@@ -71,7 +71,7 @@
             
     </div>
 
-    {#if $elementProperties?.[$element?.key]?.[checkedProperty] == "true"}
+    {#if $showDummyData || $elementProperties?.[$element?.key]?.[checkedAnnotation] == "true"}
       <div class="check-icon">
           <Icon type="check" height="24px"/>
       </div>

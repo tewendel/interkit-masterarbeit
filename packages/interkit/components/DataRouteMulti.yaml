@@ -12,24 +12,27 @@ fields:
     defaultValue: FALSE
   - type: extraProps
     props:
-    - name: referenceElementStore
-      type: string
-    - name: referenceElementColumn
-      type: sheetColumn
     - name: sortColumn
       type: sheetColumn
     - name: hideColumn
-      type: sheetColumn
-    - name: excludePropertiesAny
+      defaultValue: "elements/hide"
+    - name: includeOnlyAnnotated
       type: string
-    - name: includePropertiesAny
+      help: Filter to only include elements that have a Data Annotation set to "true", for example "bookmarked". You can list multiple anotations with "checked, bookmarked".
+    - name: excludeAnnotated
       type: string
+      help: Filter to exclude elements that have a Data Annotation set to "true", for example "checked". You can list multiple anotations with "checked, bookmarked".
     - name: discoverableColumn
       type: sheetColumn
       defaultValue: elements/discoverable
-    - name: discoverProperty
+      help: When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below
+    - name: discoverAnnotation
       type: string
       defaultValue: discovered
+      help: The data annotation to use for discovering elements.
+    - name: referenceColumn
+      type: sheetColumn
+      help: The column that contains references to the elements we want to select. Which element to use is determined through the "element" context.
   - type: slot
     name: default
 toolboxCategory: Routing

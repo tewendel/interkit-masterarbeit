@@ -4,6 +4,7 @@
   import Icon from './Icon.svelte'
   import WithEffect from './WithEffect.svelte'
   import { useLocation } from 'svelte-navigator';
+  import InterkitClient from '../interkit-client';
 
   let location;
   try {
@@ -27,9 +28,16 @@
     path: effect?.path    
   })
 
+  const uiKey = effect?.key ? InterkitClient.getUiKeyStore(effect?.key) : undefined;
+  $: tabSelected = 
+    (effect?.effectType == "route" && $location?.pathname == effect?.path) ||
+    (effect?.effectType == "setUIKey" && $uiKey == effect?.value)
+
+  export let execOnMount = false;
+
 </script>
 
-<WithEffect {effect} let:execute>
+<WithEffect {effect} {execOnMount} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span
     on:click
@@ -39,7 +47,7 @@
     class:selected={selected}
     class:Button--selected={selected}
     class:nopadding 
-    class:nav-tab-selected={$location?.pathname == effect?.path}
+    class:nav-tab-selected={tabSelected}
   >
     <slot/>
     { text || "" }

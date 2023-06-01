@@ -5,6 +5,7 @@
   import AspectRatio from './AspectRatio.svelte'
   import MediaFileImage from './MediaFileImage.svelte'
   import LinkConditional from './LinkConditional.svelte';
+  import Icon from './Icon.svelte'
 
   import { getContext } from 'svelte';
   let element = getContext("element");
@@ -18,6 +19,9 @@
   export let titleColumn
   export let subtitleColumn
   export let imageColumn
+
+  export let checkedAnnotation = "checked"
+  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   
   $: title = util.rowVal($element, titleColumn)
   $: subtitle = util.rowVal($element, subtitleColumn)
@@ -63,6 +67,12 @@
           {/if}
         </h4>
 
+        {#if $showDummyData || $elementProperties?.[$element?.key]?.[checkedAnnotation] == "true"}
+          <div class="check-icon">
+              <Icon type="check" height="24px"/>
+          </div>
+        {/if}
+
       </div>
 
     </section>
@@ -91,6 +101,14 @@
   .subtitle {
     font: var(--font-headline-5);
     letter-spacing: var(--letter-spacing-headline-5);
+  }
+  .content {
+    position: relative;
+  }
+  .check-icon {
+    position: absolute;
+    top: var(--distance-m);
+    right: var(--distance-m);
   }
 
 </style>

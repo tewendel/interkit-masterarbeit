@@ -32,40 +32,89 @@ export const items = [
         path: '/tutorial/intro'
       },
       {
-        title: 'Project 1: Hello World',
+        title: '1: Hello World',
         path: '/tutorial/hello-world'
       },
       {
-        title: 'Project 2: DataCell',
+        title: '2: DataCell',
         path: '/tutorial/datacell'
       },
       {
-        title: 'Project 3: DataList',
+        title: '3: DataList',
         path: '/tutorial/datalist'
       },
       {
-        title: 'Project 4: DataSlider',
+        title: '4: DataSlider',
         path: '/tutorial/dataslider'
       },
       {
-        title: 'Project 5: Map basics',
+        title: '5: Map basics',
         path: '/tutorial/map-basics'
       },
       {
-        title: 'Project 6: Chat basics',
+        title: '6: Chat basics',
         path: '/tutorial/chat-basics'
       },
       {
-        title: 'Project 7: Bottom Menu',
+        title: '7: Bottom Menu',
         path: '/tutorial/bottom-menu'
       },
       {
-        title: 'Project 8: Top Menu',
+        title: '8: Top Menu',
         path: '/tutorial/top-menu'
       },
       {
-        title: 'Project 9: Tabs Simple',
+        title: '9: Tabs Simple',
         path: '/tutorial/tabs-simple'
+      },
+      /* medium */
+      {
+        title: '10: DataList with Detail View',
+        path: '/tutorial/datalist-detail-view'
+      },
+      {
+        title: '11: Chat multi',
+        path: '/tutorial/chat-multi'
+      },
+      {
+        title: '12: DataList + Map + Detail View',
+        path: '/tutorial/datalist-map-detail'
+      },
+      {
+        title: '13: Audio Player',
+        path: '/tutorial/audio-player'
+      },
+      {
+        title: '14: AR Viewer',
+        path: '/tutorial/ar-viewer'
+      },
+      {
+        title: '15: QR Scanner simple',
+        path: '/tutorial/qr-scanner-simple'
+      },
+      {
+        title: '16: Button effects',
+        path: '/tutorial/button-effects'
+      },
+      {
+        title: '17: Todo list',
+        path: '/tutorial/todo-list'
+      },
+      {
+        title: '18: Bookmarks',
+        path: '/tutorial/bookmarks'
+      },
+      {
+        title: '19: Categories',
+        path: '/tutorial/categories'
+      },
+      {
+        title: '20: Tabs multiple',
+        path: '/tutorial/tabs-multi'
+      },
+      {
+        title: '21: Scavenger Hunt',
+        path: '/tutorial/scavenger-hunt'
       },
     ]
   },

@@ -4,6 +4,7 @@
 
 import { promises as fs } from "fs";
 import interkit_server from "../interkit_server.mjs";
+import { getProjectPath } from "../filesystem.mjs";
 
 const buildDirName = "public";
 
