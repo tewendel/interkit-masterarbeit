@@ -7,10 +7,10 @@
   import { BundleServer } from './BundleServer'
   import { InterkitClient } from 'interkit'
 
-  import ProjectManager from './ProjectManager.svelte'
-  import Login from './Login.svelte';
-  import SystemStatusBar from './SystemStatusBar.svelte';
-  import TopTabs from './TopTabs.svelte';
+  import ProjectManager from './Layout/ProjectManager.svelte'
+  import Login from './User/Login.svelte';
+  import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
+  import TopTabs from './Layout/TopTabs.svelte';
 
   import { onMount } from 'svelte'
 

@@ -11,7 +11,7 @@
     Select, SelectItem, FormGroup
   } from "carbon-components-svelte";
 
-  import { templates as staticTemplates } from '../newNodeTemplates.js'
+  import { templates as staticTemplates } from '../Story/newNodeTemplates.js'
 
   export let submit
   export let close
