@@ -5,7 +5,7 @@
   import { Select, SelectItem, InlineNotification, NotificationActionButton } from "carbon-components-svelte";
   import { onMount, createEventDispatcher } from 'svelte'
 
-  import { createSheet, createColumn } from '../checkDatabase.js'
+  import { createSheet, createColumn } from '../App/checkDatabase.js'
 
   export let value = {};
   export let columnInfo;
