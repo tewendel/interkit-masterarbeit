@@ -1,6 +1,6 @@
 <script>
 
-  import { InterkitClient } from '../'
+  
   
 </script>
 
@@ -41,8 +41,7 @@
 
   .top-bar {
     height: 64px;
-    border-bottom: 1px solid gray;
-
+    
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -54,13 +53,12 @@
   }
 
   .audio-player {    
-    height: 64px;
+    max-height: 64px;
   }
   
   .bottom-bar {
     height: 64px;
-    border-top: 1px solid gray;
-
+    
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
