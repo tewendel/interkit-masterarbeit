@@ -1,7 +1,7 @@
 <script>
 
   import { InterkitClient } from 'interkit'
-  import MediaFileList from '../MediaFileList.svelte'
+  import MediaFileList from '../Media/MediaFileList.svelte'
 
   import {
     ComposedModal,

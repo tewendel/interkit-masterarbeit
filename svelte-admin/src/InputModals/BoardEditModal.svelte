@@ -13,8 +13,8 @@
     Select, SelectItem, FormGroup
   } from "carbon-components-svelte"
 
-  import MediaFileList from '../MediaFileList.svelte'
-  import MediaUpload from '../MediaUpload.svelte'
+  import MediaFileList from '../Media/MediaFileList.svelte'
+  import MediaUpload from '../Media/MediaUpload.svelte'
 
   export let projectId
 

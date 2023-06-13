@@ -8,12 +8,21 @@ const get_git_push = async (req, res) => {
   const projectPath = getProjectPath(projectId);
   const remote = req.query.remote;
 
-  const result = await gitPush(projectPath, remote)
-  updateGit(projectId)
+  let error, result
+
+  try {
+    result = await gitPush(projectPath, remote)
+    updateGit(projectId)
+  } catch (e) {
+    error = e
+    console.log(e)
+  }
 
   res.send({
     projectId,
     status: result.ok && !result.error ? "OK" : "fail",
+    result,
+    error
   });
 }
 

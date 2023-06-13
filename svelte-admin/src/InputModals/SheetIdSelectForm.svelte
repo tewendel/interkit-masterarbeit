@@ -4,7 +4,7 @@
   import { projectId } from '../admin.js'
   import { Select, SelectItem, InlineNotification, NotificationActionButton } from "carbon-components-svelte";
   import { onMount, createEventDispatcher } from 'svelte'
-  import { createSheet } from '../checkDatabase.js'
+  import { createSheet } from '../App/checkDatabase.js'
 
   const dispatch = createEventDispatcher();
 
