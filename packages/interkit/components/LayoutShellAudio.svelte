@@ -11,9 +11,7 @@
     </div>
   {/if}
   <div class="content">
-    <div class="reset">
-      <slot name="Content"></slot>
-    </div>
+      <slot name="Content"></slot>    
   </div>
   {#if $$slots.Player}
     <div class="audio-player">
@@ -49,7 +47,11 @@
 
   .content {
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: hidden;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
   }
 
   .audio-player {    
@@ -64,11 +66,5 @@
     align-items: center;
   }
 
-  .reset {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
+  
 </style>
