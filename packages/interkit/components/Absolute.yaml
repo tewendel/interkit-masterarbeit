@@ -1,0 +1,19 @@
+name: Absolute
+title: Absolute
+colour: 100
+fields:
+  - type: string
+    name: top
+    help: Distance from top of container in pixel
+  - type: string
+    name: left
+    help: Distance from left side of container in pixel
+  - type: string
+    name: right
+    help: Distance from right side of container in pixel
+  - type: string
+    name: bottom
+    help: Distance from bottom of container in pixel
+  - type: slot
+    name: default
+toolboxCategory: Layout
