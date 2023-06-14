@@ -22,11 +22,11 @@
 
   export let checkedAnnotation = "checked"
   const elementProperties = InterkitClient.getGlobalStore("elementProperties")
-  
+
   $: title = util.rowVal($element, titleColumn)
   $: subtitle = util.rowVal($element, subtitleColumn)
   $: imageRef = util.rowVal($element, imageColumn)
-
+  
   export let subtitleTag // special Tag to show before subtitle
 
   let showDummyData =  getShowDummyDataStore();

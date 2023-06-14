@@ -6,6 +6,8 @@
   import 'codemirror/mode/markdown/markdown.js';
   import 'codemirror/mode/handlebars/handlebars.js';
 
+  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
+
   const dispatch = createEventDispatcher();
 
   let textArea;
