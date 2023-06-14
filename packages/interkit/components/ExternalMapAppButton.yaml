@@ -1,6 +1,6 @@
 name: ExternalMapAppButton
 toolboxCategory: Controls
-color: 230
+colour: 300
 fields: 
   - type: extraProps
     props:

@@ -3,8 +3,10 @@
   import { InterkitClient } from '../'
   import { get } from "svelte/store"
 
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
+
   import MediaFileImage from "./MediaFileImage.svelte";
-import AspectRatio from './AspectRatio.svelte';
+  import AspectRatio from './AspectRatio.svelte';
 
   export let imageVar  
   export let topLeftLabel
@@ -16,43 +18,55 @@ import AspectRatio from './AspectRatio.svelte';
   export let bottomRightLabel
   export let bottomRightVar
 
+  const showDummyData = getShowDummyDataStore()
+
   const projectDataStore = InterkitClient.userProjectDataStore
-  $: imageKey = $projectDataStore?.userVars?.[imageVar]
-  $: topLeftValue = $projectDataStore?.userVars?.[topLeftVar]
-  $: topRightValue = $projectDataStore?.userVars?.[topRightVar]
-  $: bottomLeftValue = $projectDataStore?.userVars?.[bottomLeftVar]
-  $: bottomRightValue = $projectDataStore?.userVars?.[bottomRightVar]
+  $: imageKey = $showDummyData ? "key" : $projectDataStore?.userVars?.[imageVar]
+  $: topLeftValue = $showDummyData ? "topLeftValue" : $projectDataStore?.userVars?.[topLeftVar]
+  $: topRightValue = $showDummyData ? "topRightValue" : $projectDataStore?.userVars?.[topRightVar]
+  $: bottomLeftValue = $showDummyData ? "bottomLeftValue" : $projectDataStore?.userVars?.[bottomLeftVar]
+  $: bottomRightValue = $showDummyData ? "bottomRightValue" : $projectDataStore?.userVars?.[bottomRightVar]
+
+  if($showDummyData) {
+    topLeftLabel = "topLeftLabel" 
+    topRightLabel = "topRightLabel"
+    bottomLeftLabel = "bottomLeftLabel"
+    bottomRightLabel = "bottomRightLabel"
+  }
   
 </script>
 
 <div class="UserProfile frame">
-
-  <div class="profile-pic">
+  <div class="profile-pic">    
     {#if imageKey}
       <AspectRatio aspectRatioType="square">
         <MediaFileImage style="border-radius: var(--border-radius);" fitDimension="both" mediafileRef={{value: imageKey}}/>
       </AspectRatio>
-    {:else}
+      {:else}
       <div class="image-fallback"></div>
     {/if}
   </div>
 
-  <div class="one">
+  {#if topLeftLabel}<div class="one">
     <span class="label">{topLeftLabel}</span>
     <span class="value">{typeof topLeftValue != "undefined" ? topLeftValue : ""}</span>
   </div>
-  <div class="two">
+  {/if}
+  {#if topRightLabel}<div class="two">
     <span class="label">{topRightLabel}</span>
     <span class="value">{typeof topRightValue != "undefined" ? topRightValue : ""}</span>
   </div>
-  <div class="three">
+  {/if}
+  {#if bottomLeftLabel}<div class="three">
     <span class="label">{bottomLeftLabel}</span>
     <span class="value">{typeof bottomLeftValue != "undefined" ? bottomLeftValue : ""}</span>
   </div>
-  <div class="four">
+  {/if}
+  {#if bottomRightLabel}<div class="four">
     <span class="label">{bottomRightLabel}</span>
     <span class="value">{typeof bottomRightValue != "undefined" ? bottomRightValue : ""}</span>
   </div>
+  {/if}
   
 </div>
 

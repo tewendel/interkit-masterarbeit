@@ -1,0 +1,30 @@
+name: UserProfile
+title: UserProfile
+# green
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - name: imageVar
+      type: string
+      defaultValue: profilePicture
+      help: "The userVar the contains the key of the image. Set through actions.js or story api."
+    - name: topLeftLabel
+      type: string
+      help: "The label on the top left."
+    - name: topLeftVar
+      type: string
+      help: "The userVar that contains the value shown top left."
+    - name: topRightLabel
+      type: string
+    - name: topRightVar
+      type: string
+    - name: bottomLeftLabel
+      type: string
+    - name: bottomLeftVar
+      type: string
+    - name: bottomRightLabel
+      type: string
+    - name: bottomRightVar
+      type: string
+toolboxCategory: "User"
