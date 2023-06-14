@@ -27,7 +27,7 @@
     </Button>
   */
 
-  let elementsContext = getContext("elementsProvider");
+  let elementsContext = getContext("elements");
   if(!elementsContext) alert("MediaMosaic needs elementsContextProvider as parent");
   let elements = elementsContext?.elements;
 

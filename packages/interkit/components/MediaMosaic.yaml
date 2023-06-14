@@ -1,0 +1,21 @@
+name: MediaMosaic
+toolboxCategory: Data
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - name: selectTrigger
+      type: string
+    - name: imageColumn
+      type: sheetColumn
+    - name: secondaryImageColumn
+      type: sheetColumn
+      help: A second column to use on a case-by-case basis
+    - name: secondaryProperty
+      type: string
+      help: A data annotation that determines if the secondary image should be shown
+    - name: slider
+      type: checkbox
+  - type: "slot"
+    name: "emptyElement"
+  

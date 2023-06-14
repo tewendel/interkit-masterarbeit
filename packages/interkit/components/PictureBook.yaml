@@ -1,14 +1,16 @@
 name: PictureBook
 color: 230
 fields:
-  - type: sheetColumn
-    name: imageColumn 
-    columnType: mediaFile
-    defaultValue: elements/image
-  - type: sheetColumn
-    name: orderColumn 
-    columnType: number
-    defaultValue: elements/order
+  - type: extraProps
+    props:
+    - type: sheetColumn
+      name: imageColumn 
+      columnType: mediaFile
+      defaultValue: elements/image
+    - type: sheetColumn
+      name: orderColumn 
+      columnType: number
+      defaultValue: elements/order
   - type: slot
     name: contentElement
 toolboxCategory: Data
