@@ -11,7 +11,7 @@ fields:
     - name: format
       type: options
       options:
-        - richtText 
+        - richText 
         - string
       defaultValue: richText
     - name: inline
