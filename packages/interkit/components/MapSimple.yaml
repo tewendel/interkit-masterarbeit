@@ -57,6 +57,7 @@ fields:
       defaultValue: false
     - type: checkbox
       name: singleElementContext
+      help: "The map shows a single marker defined by a single element context."
       defaultValue: false
     - type: string
       name: tileLayer
