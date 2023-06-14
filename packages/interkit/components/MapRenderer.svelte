@@ -417,7 +417,9 @@
   $: {
     if(singleElement && map) {
       console.log("move map to single element")
-      map.setView(singleElement.markerPositionsColumn, 17)
+      if(singleElement.markerPositionsColumn) {
+        map.setView(singleElement.markerPositionsColumn, 17)
+      }
     }
   }
 

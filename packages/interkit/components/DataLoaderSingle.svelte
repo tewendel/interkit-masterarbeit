@@ -7,7 +7,7 @@
   export let sheet;
   export let rowKey; 
   export let customKeyColumn = null; // a column that we can optionally use as key to find the row
-
+  
   let rows; // row sub store for the whole sheet
   const rowStore = writable(null) // store to hold just the data for the row we want
   setContext("element", rowStore) // put that store in an element context
@@ -38,8 +38,9 @@
     }
   }
 
-  // update the store when data changes
+  // update the store when data or key changes
   $: {
+    rowKey;
     updateContent($rows)
   }
 

@@ -1,11 +1,9 @@
-name: MediaMosaic
+name: Mosaic
 toolboxCategory: Data
 color: 230
 fields:
   - type: extraProps
     props:
-    - name: selectTrigger
-      type: string
     - name: imageColumn
       type: sheetColumn
     - name: secondaryImageColumn
@@ -16,6 +14,10 @@ fields:
       help: A data annotation that determines if the secondary image should be shown
     - name: slider
       type: checkbox
+      help: "Show the images in a single horizontal row that is slidable"
+    - type: effect
+      name: effect
+      help: "Specify the effect of tapping/clicking one of the tiles"
   - type: "slot"
     name: "emptyElement"
   
