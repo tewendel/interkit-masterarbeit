@@ -1,5 +1,5 @@
 name: PopoutAudioButton
-toolboxCategory: Media
+toolboxCategory: Controls
 colour: 300
 fields: 
   - name: audioColumn

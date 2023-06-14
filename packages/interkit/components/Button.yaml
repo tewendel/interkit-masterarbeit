@@ -42,4 +42,4 @@ fields:
   - name: default
     type: slot
     help: "If text is not enough, you can place child components here, e.g. formatted text. Will override text."
-toolboxCategory: Buttons
+toolboxCategory: Controls
