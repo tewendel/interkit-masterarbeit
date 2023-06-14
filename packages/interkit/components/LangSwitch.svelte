@@ -12,7 +12,9 @@
   // $: if ($userProjectData.lang) lang = $userProjectData.lang
   userProjectData.subscribe(data => {
     console.log('i18n LangSwitch component, userProjectData sub, set lang?', data)
-    showLang = data.lang
+    if (data && data.lang) {
+      showLang = data.lang
+    }
   })
 
   const setLang = async (event) => {

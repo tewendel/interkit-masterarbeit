@@ -6,7 +6,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   /* helper functions */
 
   const escapeCurlyBrackets = (string) => {
-    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125")
+    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125;")
   }
 
   const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
@@ -30,19 +30,18 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       return "";
     }
 
+
     // only do I18n if the value is a plain string
     if(typeof value == "string") {
       // for "static-y string attributes" that start with a $
       if (value?.substr(0, 1) === '$') {
         // nasty nested ternary to avoid over-reliance on new-ish ?. because this is likely not babel-ed
-        return `${attributeName}={$lang ? ($t[$lang] && $t[$lang]["${value}"] ? $t[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
-        // return `${attributeName}={tf("${value}", $lang)}`
+        return `${attributeName}={$lang ? ($translations[$lang] && $translations[$lang]["${value}"] ? $translations[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
       }
       // is this a sheetColumn reference?
-      if (attributeName?.indexOf('Column') > -1 && value?.indexOf('/') > -1) {
-        if (value.indexOf('$lang') > -1) {
+      if (attributeName?.toLowerCase?.().indexOf('column') > -1 && value?.indexOf('/') > -1) {
+        if (/\$lang\b/.test(value)) {
           return `${attributeName}={$lang ? "${value}".replace("$lang", "$" + $lang) : "${value}"}`
-          // return `${attributeName}={$lang ? "${value}".replace("$lang", $lang) : "${value}"}`
         }
       }
     } else {
@@ -77,7 +76,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       value = jsonExtraProp?.defaultValue
     }
 
-    //console.log("extraProp", prop, value)
+    if (verbose) console.log('#CG# extraProp', { value, ...prop })
 
     if(prop.type == "effect") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
@@ -88,11 +87,18 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     }
 
     if(prop.type == "sheetColumn" && value) {
+      if (value.columnKey?.indexOf?.('$lang') > -1) {
+        return `${prop.name}={$lang ? "${value.sheetKey}/" + "${value.columnKey}".replace("$lang", "$" + $lang) : "${value.sheetKey}/${value.columnKey}"}`
+      }
       value = value.sheetKey + "/" + value.columnKey
     }
 
     if(prop.type == "sheetId" && value) {
       value = value.sheetKey
+    }
+
+    if (value?.substr?.(0, 1) === '$') {
+      return `${prop.name}={$lang ? ($translations[$lang] && $translations[$lang]["${value}"] ? $translations[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
     }
 
     return value ? `${prop.name}="${escapeCurlyBrackets(value)}"\n` : "";
@@ -165,7 +171,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
           code += "   " + attribute(block, field.name, field.name, field.type)
         }
         if(field.type == "extraProps") {
-          //console.log("extraProps", field.props, block)
+          if (verbose) console.log('#CG# extraProps', field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
             //console.log(extraProp(block, prop));
