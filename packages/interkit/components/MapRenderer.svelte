@@ -347,7 +347,7 @@
   onMount(async ()=>{
 
     /* basic map setup */
-
+    
     map = L.map(mapId, {
       zoomControl: false,
       maxZoom: 20,
@@ -355,7 +355,7 @@
     }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
      singleElement ? 17 : 13);  
 
-    if(singleElement) {
+    if(qrContext) {
       console.log("qrContext", qrContext)
       map.panBy(qrContext?.mapOffset, {animate: false});
     }
@@ -363,6 +363,7 @@
     if(disableControls) {
       map.dragging.disable();
       map.scrollWheelZoom.disable();
+      map.doubleClickZoom.disable(); 
     }
 
     if (tileLayer) {
@@ -410,6 +411,13 @@
       && map
     ) {
       autoPositionMap();
+    }
+  }
+
+  $: {
+    if(singleElement && map) {
+      console.log("move map to single element")
+      map.setView(singleElement.markerPositionsColumn, 17)
     }
   }
 

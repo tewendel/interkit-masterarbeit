@@ -70,4 +70,6 @@ fields:
       defaultValue: "Schließen"
   - type: "slot"
     name: "popup"  
+  - type: "slot"
+    name: "button"
 toolboxCategory: Map
