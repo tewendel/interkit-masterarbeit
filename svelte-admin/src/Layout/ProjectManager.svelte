@@ -522,12 +522,15 @@
                       {/if}
                     </p>
                   {:else if createProjectStep === 1 && createProjectVariant === 'Import'}
+                    <p>
+                      Make sure to use the URL that ends in <code>.git</code>!
+                    </p>
                     <Form>
                       <FormGroup>
                         <TextInput 
                           bind:value={createProjectGitRepo} 
                           label="Public Git Repository"
-                          placeholder="https://github.com/..."
+                          placeholder="https://gitlab.interkit.app/interkit-project-templates/hello-world.git"
                         />
                       </FormGroup>
                     </Form>
