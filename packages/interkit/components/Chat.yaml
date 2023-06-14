@@ -24,4 +24,6 @@ fields:
       name: typingHideTypes
       defaultValue: ""
       help: "Don't show the 'typing' dots for certain message types. Provide a comma seperated list of types."
+  - type: slot
+    name: Player
 toolboxCategory: Chat
