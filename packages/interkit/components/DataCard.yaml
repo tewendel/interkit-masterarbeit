@@ -1,0 +1,23 @@
+name: DataCard
+fields:
+  - type: extraProps  
+    props:
+      - name: variant
+        type: options
+        options:
+          - full
+          - large
+          - medium
+          - small
+        defaultValue: full
+      - name: rightArrow
+        type: checkbox
+        help: Display the right arrow next to the headline      
+      - name: headlineColumn
+        type: sheetColumn
+        defaultValue: elements/headline
+  - type: slot
+    name: widgets
+toolboxCategory: Data
+docsPath: Data
+

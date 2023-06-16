@@ -13,7 +13,7 @@
   setContext("element", rowStore) // put that store in an element context
 
   const showDummyData = InterkitClient.showDummyData;
-  const dummyData = [{key: "1", values: {}}]
+  const dummyData = {key: "1", values: {}}
   
   // subscribe to the rows in that sheet
   onMount(async () => {
