@@ -87,6 +87,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     }
 
     if(prop.type == "sheetColumn" && value) {
+      if(value.sheetKey == "empty") return "";
       if (value.columnKey?.indexOf?.('$lang') > -1) {
         return `${prop.name}={$lang ? "${value.sheetKey}/" + "${value.columnKey}".replace("$lang", "$" + $lang) : "${value.sheetKey}/${value.columnKey}"}`
       }

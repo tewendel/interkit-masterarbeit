@@ -13,7 +13,6 @@ fields:
     - name: customKeyColumn
       type: sheetColumn
       columnType: string
-      defaultValue: settings/contentKey    
       help: "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values." 
   - name: default
     type: slot
