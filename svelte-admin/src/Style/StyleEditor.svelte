@@ -9,4 +9,4 @@
   }
 </script>
 
-<StyleTokensForm on:update={update}/>
+<StyleTokensForm on:update={update} bind:value={currentStyleTokens}/>

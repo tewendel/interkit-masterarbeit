@@ -4,13 +4,22 @@
   import definitions from 'interkit/components/styleTokensConfig.json'
 
   export let value = {};
+  export let cloneInputObject = false
   
-  let _value = {...value}; // make a local copy to prevent weird side effects after block duplication
+  let _value = {}
+  
+  if (cloneInputObject) {
+    _value = {...value}; // make a local copy to prevent weird side effects after block duplication
+  }
+  
+  $: if (!cloneInputObject) _value = value || {} // use the input object directly
 
   // initialize with default values
-  for (let definition of definitions) {
-    if(typeof _value[definition.key] == "undefined") {
-      _value[definition.key] = definition.defaultValue
+  $: {
+    for (let definition of definitions) {
+      if(typeof _value[definition.key] == "undefined") {
+        _value[definition.key] = definition.defaultValue
+      }
     }
   }
 

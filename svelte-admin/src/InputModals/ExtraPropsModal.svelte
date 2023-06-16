@@ -109,7 +109,7 @@
               <EffectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
             {/if}
             {#if row.type == "styleTokens"}
-              <StyleTokensForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
+              <StyleTokensForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} cloneInputObject/>
             {/if}
             {#if row.type == "options" && row?.options?.length}
               <Select
