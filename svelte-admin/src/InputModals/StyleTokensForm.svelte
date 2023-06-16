@@ -4,12 +4,18 @@
   import definitions from 'interkit/components/styleTokensConfig.json'
 
   export let value = {};
+  
   let _value = {...value}; // make a local copy to prevent weird side effects after block duplication
 
+  // initialize with default values
+  for (let definition of definitions) {
+    if(typeof _value[definition.key] == "undefined") {
+      _value[definition.key] = definition.defaultValue
+    }
+  }
+
   const dispatch = createEventDispatcher();  
-  const update = () => {    
-    //_value.colorText = _value.colorText || "#000000";
-    
+  const update = (e) => {    
     console.log("StyleTokensForm dispatch", _value);
     dispatch("update", _value);
   }
@@ -36,9 +42,9 @@
   </script>
 
 <div style="margin-top: 8px">
-  {#each Object.entries(groupByCategory(definitions)) as [category, definitions]}
+  {#each Object.entries(groupByCategory(definitions)) as [category, defs]}
     <div class="category">{category.replace(/^./, function(str){ return str.toUpperCase(); })}</div>
-    {#each definitions as definition}
+    {#each defs as definition}
       <div class="field">
         <div class="label">
           <div class="title">
@@ -48,13 +54,13 @@
         </div>
         <div class="value">
           {#if definition.type === "color"}
-            <TextInput type="color" bind:value={_value[definition.defaultValue]} on:change={update}/>
+            <TextInput type="color" bind:value={_value[definition.key]} on:change={update}/>
           {:else if definition.type === "number"}
-            <TextInput type="number" bind:value={_value[definition.defaultValue]} on:change={update}/>
+            <TextInput type="number" bind:value={_value[definition.key]} on:change={update}/>
           {:else if definition.type === "size"}
-            <TextInput type="number" bind:value={_value[definition.defaultValue]} on:change={update}/>
+            <TextInput type="number" bind:value={_value[definition.key]} on:change={update}/>
           {:else}
-            <TextInput bind:value={_value[definition.defaultValue]} on:change={update}/>
+            <TextInput bind:value={_value[definition.key]} on:change={update}/>
           {/if}
         </div>
       </div>
