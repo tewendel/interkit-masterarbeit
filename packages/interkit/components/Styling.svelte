@@ -1,37 +1,10 @@
 <script>
+  import definitions from './styleTokensConfig.json'
   
   export let googleFont = "Inter:wght@400;500;600;700;900" // regular medium semi-bold bold bolder
   export let googleFont2 = "Inter:wght@400;500;600;700;900"
 
-  export let styleTokens = {
-    colorText: '#32332e',
-    colorTextHeadline: '#32332e',
-    colorTextButtonPrimary: 'white',
-    colorBackground: 'white',
-    colorBackgroundHighlight: '#E5E5E5',
-    colorBorder: 'black',
-    borderRadius: '16px',
-    borderRadiusButton: '16px',
-    borderWidth: '1px',
-    boxShadow: 'none',
-    distanceScaleFactor: '1.0',
-    fontSizeHeadline1: '30px',
-  }
-  
-  /*
-  export let colorText = '#32332e'
-  */
-  export let colorTextHeadline = '#32332e'
-  export let colorTextButtonPrimary = 'white'
-  export let colorBackground = 'white'
-  export let colorBackgroundHighlight = '#E5E5E5'
-  export let colorBorder = 'black'
-  export let borderRadius = '16px'
-  export let borderRadiusButton = '16px'
-  export let borderWidth = '1px'
-  export let boxShadow = 'none'
-  export let distanceScaleFactor = '1.0'
-  
+  export let styleTokens = {}
 
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
@@ -39,8 +12,22 @@
 
   import { onMount } from 'svelte'
 
+  let tokens = {}
+
   onMount(async () => {
   })
+
+  $: {
+    // initialize with default values
+    if (!styleTokens) styleTokens = {}
+    for (let definition of definitions) {
+      if(typeof styleTokens[definition.key] == "undefined") {
+        tokens[definition.key] = definition.defaultValue
+      } else {
+        tokens[definition.key] = styleTokens[definition.key]
+      }
+    }
+  }
 
   /*
   const setCssVar = (varName, value) => {
@@ -78,20 +65,20 @@
 
   /* from user */
 
-  --color-text: ${styleTokens.colorText};
-  --color-text-headline: ${colorTextHeadline};
-  --color-text-button-primary: ${colorTextButtonPrimary};
-  --color-background: ${colorBackground};
-  --color-background-highlight: ${colorBackgroundHighlight};
-  --color-border: ${colorBorder};
+  --color-text: ${tokens.colorText};
+  --color-text-headline: ${tokens.colorTextHeadline};
+  --color-text-button-primary: ${tokens.colorTextButtonPrimary};
+  --color-background: ${tokens.colorBackground};
+  --color-background-highlight: ${tokens.colorBackgroundHighlight};
+  --color-border: ${tokens.colorBorder};
   --font-family-text: ${fontFamilyText};
   --font-family-headline: ${fontFamilyHeadline};
-  --border-radius: ${borderRadius};
-  --border-radius-button: ${borderRadiusButton};
-  --border-width: ${borderWidth};
-  --box-shadow: ${boxShadow};
-  --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
-  --font-size-headline-1: ${fontSizeHeadline1};
+  --border-radius: ${tokens.borderRadius};
+  --border-radius-button: ${tokens.borderRadiusButton};
+  --border-width: ${tokens.borderWidth};
+  --box-shadow: ${tokens.boxShadow};
+  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+  --font-size-headline-1: ${tokens.fontSizeHeadline1};
   --distance-base: 8px;
 
   /* constant */

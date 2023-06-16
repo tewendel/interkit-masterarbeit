@@ -56,6 +56,13 @@
     "help": "The color used for dummy assets when no image is available"
   },
   {
+    "key": "distanceScaleFactor",
+    "type": "number",
+    "category": "general",
+    "defaultValue": 1.0,
+    "help": "A factor that is used to scale distances"
+  },
+  {
     "key": "colorTextButtonPressed",
     "type": "color",
     "category": "buttons",
