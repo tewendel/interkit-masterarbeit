@@ -352,7 +352,7 @@
       zoomControl: false,
       maxZoom: 20,
       attributionControl: false,
-    }).setView(singleElement ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
+    }).setView(singleElement?.markerPositionsColumn ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
      singleElement ? 17 : 13);  
 
     if(qrContext) {
