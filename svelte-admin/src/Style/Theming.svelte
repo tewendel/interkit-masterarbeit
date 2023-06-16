@@ -1,6 +1,10 @@
 <script>
   import MainColumns from '../Layout/MainColumns.svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
+  import StyleEditor from './StyleEditor.svelte'
+
+  let currentStyleTokens = null
+
 </script>
 
 <MainColumns
@@ -10,11 +14,12 @@
   <svelte:fragment slot="sidebarLeft">
     
   </svelte:fragment>
-   
+
   <svelte:fragment slot="contentMain">
     <div class="main">
-      
-      <ComponentsShowcase />
+
+      <StyleEditor bind:currentStyleTokens />
+      <ComponentsShowcase {currentStyleTokens} />
 
     </div>  
   </svelte:fragment>
