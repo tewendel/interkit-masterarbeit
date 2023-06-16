@@ -391,7 +391,7 @@
             <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
           </OverflowMenu>
         {:else if cell.key == 'key'}
-          <CopyButton style="display: inline;" text={row?.key} feedback="Copied rowKey to clipboard!"/>
+          <CopyButton style="display: inline;" text={row?.key} feedback="Copied Row Key to clipboard!"/>
           <span class="shorten">{row?.key}</span>
         {:else}
           <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
