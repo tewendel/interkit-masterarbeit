@@ -2,20 +2,39 @@
   
   export let googleFont = "Inter:wght@400;500;600;700;900" // regular medium semi-bold bold bolder
   export let googleFont2 = "Inter:wght@400;500;600;700;900"
+
+  export let styleTokens = {
+    colorText: '#32332e',
+    colorTextHeadline: '#32332e',
+    colorTextButtonPrimary: 'white',
+    colorBackground: 'white',
+    colorBackgroundHighlight: '#E5E5E5',
+    colorBorder: 'black',
+    borderRadius: '16px',
+    borderRadiusButton: '16px',
+    borderWidth: '1px',
+    boxShadow: 'none',
+    distanceScaleFactor: '1.0',
+    fontSizeHeadline1: '30px',
+  }
+  
+  /*
   export let colorText = '#32332e'
+  */
   export let colorTextHeadline = '#32332e'
   export let colorTextButtonPrimary = 'white'
   export let colorBackground = 'white'
   export let colorBackgroundHighlight = '#E5E5E5'
   export let colorBorder = 'black'
-  export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
-  export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let borderRadius = '16px'
   export let borderRadiusButton = '16px'
   export let borderWidth = '1px'
   export let boxShadow = 'none'
   export let distanceScaleFactor = '1.0'
+  
 
+  export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
+  export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontSizeHeadline1 = '30px';
 
   import { onMount } from 'svelte'
@@ -59,7 +78,7 @@
 
   /* from user */
 
-  --color-text: ${colorText};
+  --color-text: ${styleTokens.colorText};
   --color-text-headline: ${colorTextHeadline};
   --color-text-button-primary: ${colorTextButtonPrimary};
   --color-background: ${colorBackground};
