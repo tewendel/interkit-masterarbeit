@@ -275,7 +275,7 @@
         {
           key: "key",
           show: true,
-          value: "Key"
+          value: "Row Key"
         },
         { 
           key: "overflow", 

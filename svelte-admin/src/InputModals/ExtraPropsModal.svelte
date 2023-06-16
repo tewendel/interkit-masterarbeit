@@ -76,7 +76,7 @@
   on:submit={() => {updateValue(); submit();}}
   on:close={close}
 >
-  <ModalHeader label="" title="Component Settings" />
+  <ModalHeader label="" title={params.blockName} />
   <ModalBody>
     <DataTable {headers} rows={propRows}>
       <svelte:fragment slot="cell" let:row let:cell>

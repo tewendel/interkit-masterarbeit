@@ -103,9 +103,9 @@
   }
 
   // passed into ExtraPropsField, activated when user clicks on it -> showEditor_()
-  const updateExtraProps = (currentProps, notice) => {
+  const updateExtraProps = (currentProps, notice, blockName) => {
     inputModalValue = currentProps; // this is bound to inputModal
-    inputModalParams = { notice }
+    inputModalParams = { notice, blockName }
     openInputModal = "extraProps";
     //console.log("loading Modal for extraProps", inputModalValue)
 
