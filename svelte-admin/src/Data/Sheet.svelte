@@ -384,11 +384,11 @@
         {/if}
       </span>
       
-      <span slot="cell" let:row let:cell>
+      <span class="cell" slot="cell" let:row let:cell>
         {#if cell.key === 'overflow'}
           <OverflowMenu style="float: right" flipped>
             <!--OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" /-->
-            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
+            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="delete row" />
           </OverflowMenu>
         {:else if cell.key == 'key'}
           <CopyButton style="display: inline;" text={row?.key} feedback="Copied Row Key to clipboard!"/>
@@ -470,6 +470,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  span.cell {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
   }
 
 </style>
