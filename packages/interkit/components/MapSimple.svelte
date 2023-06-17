@@ -103,6 +103,18 @@
     console.log("singleElement", singleElement, columnMap)
   }
 
+  // check if we should show only a single element specified through context
+  const elementContext = getContext("element")
+  $: {
+    if(singleElementContext) {
+      if($elementContext) {
+        singleElement = util.rowToObject($elementContext, columnMap)
+        console.log("singleElement", singleElement)
+        updateMarkerData();
+      }
+    }
+  }
+
   if(!elements && !singleElement) console.warn("Warning: MapSimple needs elements or QRScanner context to show markers");
 
   // setup dummy data
@@ -160,8 +172,9 @@
     // start with the full set of data
     let selectedData = [...markerObjs];
 
-    // if singleElement is set, use only that
-    if(singleElement) {
+    // if singleElement mode is set, use only that
+    if(singleElementContext && singleElement) {
+      //console.log("updateMarkerData, using single Element", singleElement)
       selectedData = [singleElement]
     }
 
@@ -284,6 +297,11 @@
       {enableGeolocationHint}
     />
 
+    <div class="button-container">
+      <slot name="button"></slot>
+    </div>
+
+
   </div>
 
 <style>
@@ -353,7 +371,7 @@
     display: block; 
   }
 
-  .button-bar-container {
+  .button-container {
     position: absolute;
     z-index: 1000;
     bottom: 10px;

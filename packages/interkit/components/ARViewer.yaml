@@ -59,4 +59,4 @@ fields:
   - type: slot
     name: videoOnlyInfo
     help: "Optional: The text to show when AR is not supported and video is the only option (e.g.: <DataCell> or <StaticText>), defaults to standard text"
-toolboxCategory: "MediaPlayer"
+toolboxCategory: "Media"

@@ -1,0 +1,23 @@
+name: Mosaic
+toolboxCategory: Data
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - name: imageColumn
+      type: sheetColumn
+    - name: secondaryImageColumn
+      type: sheetColumn
+      help: A second column to use on a case-by-case basis
+    - name: secondaryProperty
+      type: string
+      help: A data annotation that determines if the secondary image should be shown
+    - name: slider
+      type: checkbox
+      help: "Show the images in a single horizontal row that is slidable"
+    - type: effect
+      name: effect
+      help: "Specify the effect of tapping/clicking one of the tiles"
+  - type: "slot"
+    name: "emptyElement"
+  

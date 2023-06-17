@@ -5,7 +5,7 @@ export default (Blockly, update) => {
   /* ExtraPropsField field */
 
   class ExtraPropsField extends Blockly.FieldImage {
-    constructor(props) {
+    constructor(props, blockName) {
       // call FieldImage constructor and pass in update as onClick function
       super("/images/sheet_icon_inv.png", 15, 15, "*")
 
@@ -13,6 +13,7 @@ export default (Blockly, update) => {
 
       console.log("extra props field constructor with props", props)
       this.props = props
+      this.blockName = blockName
       
       this.SERIALIZABLE = true;
     }
@@ -37,7 +38,7 @@ export default (Blockly, update) => {
     async showEditor_() {
       //console.log("showEditor_", this.props);
       try {
-        let newProps = await update(this.props, this.name);
+        let newProps = await update(this.props, this.name, this.blockName);
         console.log("got props", newProps);
         this.props = newProps;
       } catch(e) {

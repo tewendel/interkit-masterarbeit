@@ -37,4 +37,4 @@ fields:
       help: What schould happen when the scanner scans a code
   - type: slot
     name: map
-toolboxCategory: QR Scanner
+toolboxCategory: Media

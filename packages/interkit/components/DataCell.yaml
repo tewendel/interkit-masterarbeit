@@ -11,12 +11,12 @@ fields:
     - name: format
       type: options
       options:
-        - richtText 
+        - richText 
         - string
       defaultValue: richText
     - name: inline
       type: checkbox
-      defaultValue: false
+      defaultValue: true
     - name: centerContent
       type: checkbox
       defaultValue: false

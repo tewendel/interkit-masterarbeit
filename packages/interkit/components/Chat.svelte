@@ -8,7 +8,7 @@
   import ChatInput from './Chat/ChatInput.svelte'
   import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
-
+  
   import { Plugins } from '@capacitor/core';
   import { decimalToSexagesimal } from "geolib";
 
@@ -408,59 +408,60 @@
 
 </script>
 
-<div class="Chat root">
-  <div class="channel-info-overlay">
-    <!--span>channel {channel_key}</span-->
-    <ChatChannelImage channel_key={boardId}/>
-  </div>
-  <div
-    class="messages-container"
-    class:messages__empty={!messageStore || $messageStore.length === 0}
-    bind:this={messagesScrollContainer}
-    >
-    {#if messageStore}
-      <div class="messages">
-        {#each $messageStore as message, index}
-          {#if index < typingQueuePointer}
-            <Message 
-              {message} 
-              {submitChoice} 
-              {submitLocation}
-              isByUser={message?.sender === userId} 
-              lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
-              previousMessage={$messageStore[index-1]}
-              isReportable={message?.payload?.options?.reportable !== undefined
-                ? message?.payload?.options?.reportable
-                : (messagesReportableDefault === 'TRUE')
-              }
-              on:report={ event => sendReport(event.detail.message) }
-              on:mounted={() => { /*scrollDown()*/ }}
-              />
-          {/if}
-        {/each}
-        <MessageTyping show={typingShow} message={typingMessage} />
-        {#if $userStore?.[0]?.blocked}
-          <div class="blocked">
-            Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.
+    <div class="Chat root">
+      <div class="channel-info-overlay">
+        <!--span>channel {channel_key}</span-->
+        <ChatChannelImage channel_key={boardId}/>
+      </div>
+      <div
+        class="messages-container"
+        class:messages__empty={!messageStore || $messageStore.length === 0}
+        bind:this={messagesScrollContainer}
+        >
+        {#if messageStore}
+          <div class="messages">
+            {#each $messageStore as message, index}
+              {#if index < typingQueuePointer}
+                <Message 
+                  {message} 
+                  {submitChoice} 
+                  {submitLocation}
+                  isByUser={message?.sender === userId} 
+                  lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
+                  previousMessage={$messageStore[index-1]}
+                  isReportable={message?.payload?.options?.reportable !== undefined
+                    ? message?.payload?.options?.reportable
+                    : (messagesReportableDefault === 'TRUE')
+                  }
+                  on:report={ event => sendReport(event.detail.message) }
+                  on:mounted={() => { /*scrollDown()*/ }}
+                  />
+              {/if}
+            {/each}
+            <MessageTyping show={typingShow} message={typingMessage} />
+            {#if $userStore?.[0]?.blocked}
+              <div class="blocked">
+                Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.
+              </div>
+            {/if}
           </div>
         {/if}
       </div>
-    {/if}
-  </div>
-  <div
-    class="input"
-    class:hidden={!showInputField}
-    >
-    <ChatInput 
-      {chatInterface} 
-      userId={userId}
-      boardId={boardId}
-      nodeId={boardId ? $userProjectData?.boardState?.[boardId]?.nodeId : undefined}
-      on:submit={ event => sendMessage(event.detail.messageText)} 
-      on:imageSubmit={ event => sendImage(event.detail.imageKey) }
-    />
-  </div>
-</div>
+      <slot name="Player"></slot>
+      <div
+        class="input"
+        class:hidden={!showInputField}
+        >
+        <ChatInput 
+          {chatInterface} 
+          userId={userId}
+          boardId={boardId}
+          nodeId={boardId ? $userProjectData?.boardState?.[boardId]?.nodeId : undefined}
+          on:submit={ event => sendMessage(event.detail.messageText)} 
+          on:imageSubmit={ event => sendImage(event.detail.imageKey) }
+        />
+      </div>
+    </div>
 
 <style>
 

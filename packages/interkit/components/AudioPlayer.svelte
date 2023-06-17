@@ -1,5 +1,6 @@
 <script context="module">
   import { get } from "svelte/store"
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import { util } from "../"
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
@@ -11,7 +12,7 @@
         audioPlayerStatus.update( s => ({
           ...s, 
           paused: !get(audioPlayerStatus)?.paused,
-          currentTime: s.currentTime == s.duration ? 0 : s.currentTime
+          currentTime: s?.currentTime == s?.duration ? 0 : s.currentTime
         })) 
       } else {
         // new element, reset
@@ -156,10 +157,14 @@
     touching = false
   }
 
-    
+  let showDummyData =  getShowDummyDataStore();
+  if($showDummyData) {
+    audioPlayerStatus.set({...$audioPlayerStatus, active: true})
+  }
+
 </script>
 
-{#if $audioPlayerStatus}
+{#if $audioPlayerStatus || $showDummyData}
 
   <div class="minimised-container" class:active={$audioPlayerStatus.active}>
 

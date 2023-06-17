@@ -10,6 +10,7 @@
     OverflowMenu,
     OverflowMenuItem,
     Button,
+    CopyButton,
     ButtonSet,
     Toolbar,
     ToolbarContent,
@@ -270,11 +271,17 @@
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
           sort: (c.type == "number" || c.type == "string") ? 
             sortFunction : false
-        }}).concat({ 
+        }}).concat([
+        {
+          key: "key",
+          show: true,
+          value: "Row Key"
+        },
+        { 
           key: "overflow", 
           sort: false,
           //empty: true 
-        }) // add overflow column
+        }]) // add overflow column
   }
   //$: { console.log("rows update", $rows) }
 
@@ -366,21 +373,26 @@
                   <span style="opacity:0.5">(empty)</span>
                 {/if}
               </div>
-              <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
-              <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
-              <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
-              <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+              {#if header.key != "key"}
+                <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
+                <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
+                <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
+                <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+              {/if}
             </OverflowMenu>
           </div>
         {/if}
       </span>
       
-      <span slot="cell" let:row let:cell>
+      <span class="cell" slot="cell" let:row let:cell>
         {#if cell.key === 'overflow'}
           <OverflowMenu style="float: right" flipped>
-            <OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" />
-            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
+            <!--OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" /-->
+            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="delete row" />
           </OverflowMenu>
+        {:else if cell.key == 'key'}
+          <CopyButton style="display: inline;" text={row?.key} feedback="Copied Row Key to clipboard!"/>
+          <span class="shorten">{row?.key}</span>
         {:else}
           <span class="sheet-cell" on:click={()=>{updateValue(row, cell)}}>
             <SheetCell {cell} {refData} {projectId}/>
@@ -451,5 +463,20 @@
     font-size: 50%;
     font-family: monospace;
   } 
+
+  .shorten {
+    width: 4em;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  span.cell {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
 
 </style>

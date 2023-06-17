@@ -1,0 +1,31 @@
+name: ExternalMapAppButton
+toolboxCategory: Controls
+colour: 300
+fields: 
+  - type: extraProps
+    props:
+      - type: string
+        name: label
+        defaultValue: "Navigate"
+      - name: type
+        type: options
+        options:
+          - primary 
+          - secondary
+          - ghost 
+          - link 
+        help: "Appearance of the button."
+      - type: options
+        name: size
+        options: 
+          - medium
+          - small
+          - large
+        defaultValue: medium
+        help: "Large, medium or small."
+      - name: locationColumn
+        type: sheetColumn
+        columnType: string
+        defaultValue: elements/position
+  - type: slot
+    name: Icon

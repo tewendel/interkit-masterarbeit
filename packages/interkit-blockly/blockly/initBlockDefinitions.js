@@ -9,7 +9,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
     Blockly.Blocks[blockObject.name] = { 
       init: function() {
 
-        this.appendDummyInput().appendField("<"+blockObject.name+">");
+        this.appendDummyInput().appendField(blockObject.name);
 
         // setup fields  
         for(let field of blockObject.fields) {
@@ -60,7 +60,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
           } else if(field.type == "extraProps") {
 
             this.appendDummyInput()
-            .appendField(new customFields.ExtraPropsField(field.props), "extraProps");
+            .appendField(new customFields.ExtraPropsField(field.props, blockObject.name), "extraProps");
           
           } else {
             console.log("unsupported blockly field type", field.type);

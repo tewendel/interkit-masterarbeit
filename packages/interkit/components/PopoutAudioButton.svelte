@@ -35,11 +35,11 @@
 {#if loading && playing}
   <Loading/>
 {:else}
-  <Button on:click={play}>
+  <Button type="secondary" on:click={play}>
     {#if playing}
-      <Icon height="1em" type={ paused ? "play" : "pause"} />
+      <Icon type={ paused ? "Thin-Play" : "pause"} />
     {:else}
-      <Icon height="1em" type="play" />
+      <Icon type="Thin-Play" />
       &thinsp;
     {/if}
   </Button>

@@ -1,27 +1,17 @@
 <script>
 
   import { onMount, getContext, onDestroy } from 'svelte'
-  import { InterkitClient, util } from '../'
+  import { util } from '../'
   import MediaFileImage from './MediaFileImage.svelte';
-  import MarkdownContent from './MarkdownContent.svelte';
   import AspectRatio from './AspectRatio.svelte';
-  import Button from './Button.svelte';
-  import Icon from './Icon.svelte';
-  import InlineAudioButton from './InlineAudioButton.svelte';
-  import Overlay from './Overlay.svelte';
-  import TopNavBarCustom from './TopNavBarCustom.svelte';
-  import InlineVideoPlayer from './InlineVideoPlayer.svelte';
+  import ContextProvider from './ContextProvider.svelte'
   
   export let imageColumn;
-  export let audioColumn;
-  export let videoColumn;
-  export let titleColumn;
-  export let contentColumn;
   export let orderColumn;
 
-  let elementsContext = getContext("elementsProvider");
-  if(!elementsContext) alert("ImageSlildeshow needs elementsContextProvider as parent");
-  let elementsStore = elementsContext?.elements;
+  let elementsContext = getContext("elements");
+  if(!elementsContext) console.warn("PictureBook needs DataLoaderSingle or DataRouteMulti as parent");
+  let elements = elementsContext?.elements;
   
   let slides;
   let slideUnsubscribe;
@@ -30,13 +20,9 @@
       // setup the subscription to the tip rows
       const columnMap = {
         image: imageColumn,
-        audio: audioColumn,
-        video: videoColumn,
-        title: titleColumn,
-        content: contentColumn,
         order: orderColumn
       }
-      slideUnsubscribe = elementsStore.subscribe(data => {
+      slideUnsubscribe = elements.subscribe(data => {
         console.log("data", data);
         slides = data.map(e=> util.rowToObject(e.row, columnMap))
       })
@@ -69,7 +55,7 @@
     let newIndex = Math.round(carousel.scrollLeft / carousel.clientWidth);
     if(newIndex != slideIndex) slideIndex = newIndex; 
     setTimeout(()=>{
-      console.log("scroll " + carousel.scrollLeft / carousel.clientWidth)
+      //console.log("scroll " + carousel.scrollLeft / carousel.clientWidth)
       let newIndex = Math.round(carousel.scrollLeft / carousel.clientWidth);
       if(newIndex != slideIndex) slideIndex = newIndex; 
     }, 400);
@@ -109,6 +95,7 @@
   
   <div class="image-slider-container" bind:this={carousel} on:scroll={handleScroll}>
     {#each slides as slide}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="image-slide" on:click={handleImageClick}>
       {#if slide?.image}
         <AspectRatio aspectRatioType="element">
@@ -128,58 +115,18 @@
       </ul>
     {/if}
   </div>
-  
 
   {#key slideIndex}
-    {#if slides[slideIndex]?.title || slides[slideIndex]?.content}
-      <div class="slide-content">
-        <h1 class="title">{slides[slideIndex]?.title || ""}</h1>
-        <div class="markdown-container">
-          <MarkdownContent content={slides[slideIndex]?.content || ""}/>
-        </div>
-      </div>
-    {/if}
+    <ContextProvider 
+      name="element" 
+      value={$elements[slideIndex].row}
+    >
+      <slot name="contentElement"></slot>
+    </ContextProvider>
   {/key}
 
-  <div class="extras">
-
-    <div class="left">
-      {#key slideIndex}
-        {#if slides[slideIndex].audio}
-          <InlineAudioButton
-            audioKeyDirect={slides[slideIndex].audio?.value}
-            hideSkipControls={false}
-            bind:playbackControl={audioPlaybackControl}
-          />
-        {/if}
-      {/key}
-      
-      {#if slides[slideIndex]?.video?.value}
-        <Button size="medium" type="primary" onClick={()=>{showVideoOverlay = true}}>
-          <Icon type="Full-Play" inverse></Icon>
-            Play Video
-        </Button>
-      {/if}
-
-    </div>
-
-    
-
-  </div>
-
-  {#if showVideoOverlay}
-    <Overlay customStyle="background-color: black;">
-      <div class="video-close-button" on:click={()=>{showVideoOverlay=false}}>
-        <Button>
-          <Icon type="close"/>
-        </Button>
-      </div>
-      <InlineVideoPlayer autoplay mediafileKey={slides[slideIndex]?.video?.value}/>
-    </Overlay>
-  {/if}
 {/if}
   
-
 <style>
 
   .image-slider-container {

@@ -1,6 +1,6 @@
 <script>
 
-  import { InterkitClient } from '../'
+  
   
 </script>
 
@@ -11,9 +11,7 @@
     </div>
   {/if}
   <div class="content">
-    <div class="reset">
-      <slot name="Content"></slot>
-    </div>
+      <slot name="Content"></slot>    
   </div>
   {#if $$slots.Player}
     <div class="audio-player">
@@ -41,8 +39,7 @@
 
   .top-bar {
     height: 64px;
-    border-bottom: 1px solid gray;
-
+    
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -50,26 +47,24 @@
 
   .content {
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: hidden;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
   }
 
   .audio-player {    
-    height: 64px;
+    max-height: 64px;
   }
   
   .bottom-bar {
     height: 64px;
-    border-top: 1px solid gray;
-
+    
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
   }
 
-  .reset {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
+  
 </style>

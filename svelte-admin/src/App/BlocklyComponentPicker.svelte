@@ -18,7 +18,7 @@
   let subtrees = []
 
   // blocks that appear as quick nav links at the bottom
-  let quickNavTypes = ["Group", "AppBase", "Route", "DataRouteSingle", "DataRouteMulti"]
+  let quickNavTypes = ["Group", "AppBase", "Route", "DataRouteSingle", "DataRouteMulti", "ChatRoute"]
 
   // gets the title to show in quick nav from block
   const quickNavblockToString = (block) => {

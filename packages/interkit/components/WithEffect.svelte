@@ -1,9 +1,9 @@
 <script >
+  import InterkitClient from '../interkit-client';
   import { getContext, setContext, onMount } from 'svelte'
   import { useNavigate } from 'svelte-navigator';
   import { executeTrigger } from '../actions'
-  import InterkitClient from '../interkit-client';
-
+  
   export let effect;
   export let execOnMount = false;
 
@@ -18,7 +18,7 @@
 
   const handleClickEffect = (payload) => {
     
-    console.log("handling effect", effect, payload, $elementContext)
+    console.log("handling effect", {effect, payload, context: $elementContext})
     
     const effectType = effect?.effectType;
     if(!effectType || effectType == "none") return
@@ -34,11 +34,15 @@
 
     if(effectType == "dataRouteSingle" && effect.path && (payload?.elementKey || $elementContext?.key)) {
       // if a key is provided via the payload, use that (eg qr scanner)
-      if(payload?.elementKey)
+      if(payload?.elementKey) {
+        console.log("dataRouteSingle using key from payload")
         navigate(effect.path + "/" + payload?.elementKey)
+      }
       // otherwise, use the key from element context (eg button)
-      if($elementContext?.key)
+      else if($elementContext?.key) {
+        console.log("dataRouteSingle using key from context")
         navigate(effect.path + "/" + $elementContext?.key)
+      }
     }
 
     if(effectType == "link" && effect.url) {

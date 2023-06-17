@@ -127,6 +127,17 @@
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
   
+  /* cheat sheet for translation from figma 
+  2 -> tiny
+  4 -> xs  
+  8 -> s
+  16 -> m
+  24 -> s+m
+  32 -> l
+  48 -> xl
+  64 -> xxl
+  */
+
   /**************************************/
   /* Typography - Interface             */
   /**************************************/
@@ -186,6 +197,10 @@
   /* Content/Headline 1 */
   --font-content-headline-1: 900 48px/56px var(--font-family-headline);
   --letter-spacing-content-headline-1: -1px;
+
+  /* Content/Headline 2 */
+  --font-content-headline-2: 900 30px/36px var(--font-family-headline);
+  --letter-spacing-content-headline-2: -0.5px;
 
   /* Content/Headline 3 */
   --font-content-headline-3: 900 24px/28px var(--font-family-headline);
