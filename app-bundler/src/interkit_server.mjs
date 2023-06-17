@@ -3,6 +3,7 @@ import { ensureRepositories } from './filesystem.mjs'
 import { updateProjectServers } from './project_server.mjs'
 import { runUpdaters } from './updater.mjs'
 import { ensureViteServers } from './vite_server.mjs'
+import { runMigrationsOncePerProject } from "./migration.mjs";
 
 let projects = []
 let server = null
@@ -21,6 +22,7 @@ const setup = async (app, main_server) => {
     reactiveCollection.onChange( async (newData) => {
       projects = newData;
       await ensureRepositories(newData)
+      await runMigrationsOncePerProject(newData);
       updateProjectServers(newData)
       runUpdaters(newData)
       ensureViteServers(newData, app, main_server)
