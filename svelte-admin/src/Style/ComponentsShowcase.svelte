@@ -35,7 +35,12 @@
           <InlineLoading description="Loading &lt;{c.name}&gt;" />
         </p>
       {:then component}
-        <InterkitComponentFrame name={c.name} showDummyData={c.showDummyData} styleTokens={currentStyleTokens}>
+        <InterkitComponentFrame 
+          name={c.name} 
+          showDummyData={c.showDummyData} 
+          styleTokens={currentStyleTokens}
+          attributes={Object.entries(c.props || {}).filter(([key, value]) => key !== 'text').map(([key, value]) => value) }
+          >
           <svelte:component this={component.default} withDummyData {...c.props} />
         </InterkitComponentFrame>
       {:catch error}
