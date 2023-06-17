@@ -4,6 +4,8 @@
   import Router from '../../../packages/interkit/components/Router.svelte'
   import { InlineLoading } from "carbon-components-svelte";
 
+  export let currentStyleTokens = null
+
   const components = [
     {name: "DataCardSmall", showDummyData: true},
     {name: "DataCardLarge", showDummyData: true},
@@ -26,7 +28,7 @@
   ]
 </script>
 
-<Styling>
+<Styling styleTokens={currentStyleTokens} >
   <Router>
     {#each components as c}
       <div class="component">

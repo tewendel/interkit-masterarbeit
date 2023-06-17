@@ -1,27 +1,33 @@
 <script>
+  import definitions from './styleTokensConfig.json'
   
   export let googleFont = "Inter:wght@400;500;600;700;900" // regular medium semi-bold bold bolder
   export let googleFont2 = "Inter:wght@400;500;600;700;900"
-  export let colorText = '#32332e'
-  export let colorTextHeadline = '#32332e'
-  export let colorTextButtonPrimary = 'white'
-  export let colorBackground = 'white'
-  export let colorBackgroundHighlight = '#E5E5E5'
-  export let colorBorder = 'black'
+
+  export let styleTokens = {}
+
   export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
   export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
-  export let borderRadius = '16px'
-  export let borderRadiusButton = '16px'
-  export let borderWidth = '1px'
-  export let boxShadow = 'none'
-  export let distanceScaleFactor = '1.0'
-
   export let fontSizeHeadline1 = '30px';
 
   import { onMount } from 'svelte'
 
+  let tokens = {}
+
   onMount(async () => {
   })
+
+  $: {
+    // initialize with default values
+    if (!styleTokens) styleTokens = {}
+    for (let definition of definitions) {
+      if(typeof styleTokens[definition.key] == "undefined") {
+        tokens[definition.key] = definition.defaultValue
+      } else {
+        tokens[definition.key] = styleTokens[definition.key]
+      }
+    }
+  }
 
   /*
   const setCssVar = (varName, value) => {
@@ -57,26 +63,54 @@
 
 <div class="style" style={`
 
-  /* from user */
+  /* from tokens */
 
-  --color-text: ${colorText};
-  --color-text-headline: ${colorTextHeadline};
-  --color-text-button-primary: ${colorTextButtonPrimary};
-  --color-background: ${colorBackground};
-  --color-background-highlight: ${colorBackgroundHighlight};
-  --color-border: ${colorBorder};
+  --color-text: ${tokens.colorText};
+  --color-text-strong: ${tokens.colorTextStrong};
+  --color-text-soft: ${tokens.colorTextSoft};
+  --color-background: ${tokens.colorBackground};
+  --color-background-highlight: ${tokens.colorBackgroundHighlight};
+  --color-background-backdrop: ${tokens.colorBackgroundBackdrop};
+  --color-border: ${tokens.colorBorder};
+  --color-dummy-asset: ${tokens.colorDummyAsset};
+  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+
+  --color-text-button-pressed: ${tokens.colorTextButtonPressed};
+  --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
+  --color-text-button-danger: ${tokens.colorTextButtonDanger};
+  --color-background-button-danger: ${tokens.colorBackgroundButtonDanger};
+  --color-text-button-primary: ${tokens.colorTextButtonPrimary};
+  --color-text-button-primary-pressed: ${tokens.colorTextButtonPrimaryPressed};
+  --color-background-button-primary: ${tokens.colorBackgroundButtonPrimary};
+  --color-background-button-primary-pressed: ${tokens.colorBackgroundButtonPrimaryPressed};
+  --color-border-button-primary: ${tokens.colorBorderButtonPrimary};
+  --color-border-button-primary-pressed: ${tokens.colorBorderButtonPrimaryPressed};
+  
+  --color-text-label1: ${tokens.colorTextLabel1};
+  --color-background-label1: ${tokens.colorBackgroundLabel1};
+
+  --color-background-chat-me: ${tokens.colorBackgroundChatMe};
+  --color-background-chat-other: ${tokens.colorBackgroundChatOther};
+
+  --border-width: ${tokens.borderWidth};
+  --border-radius: ${tokens.borderRadius};
+  --border-radius-button: ${tokens.borderRadiusButton};
+  --border-radius-label: ${tokens.borderRadiusLabel};
+  --box-shadow: ${tokens.boxShadow};
+
+  /* deprecated ? */
+
+  --color-text-headline: ${tokens.colorTextHeadline};
+  --font-size-headline-1: ${tokens.fontSizeHeadline1};
+
+  /* other vars */
+
   --font-family-text: ${fontFamilyText};
   --font-family-headline: ${fontFamilyHeadline};
-  --border-radius: ${borderRadius};
-  --border-radius-button: ${borderRadiusButton};
-  --border-width: ${borderWidth};
-  --box-shadow: ${boxShadow};
-  --distance-scale-factor: ${parseFloat(distanceScaleFactor) || 1.0};
-  --font-size-headline-1: ${fontSizeHeadline1};
-  --distance-base: 8px;
 
   /* constant */
 
+  --distance-base: 8px;
   --distance-tiny: 2px;
 
   /* derived defaults */

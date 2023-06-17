@@ -1,0 +1,198 @@
+[
+  {
+    "key": "colorText",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#808080",
+    "help": "The default text color used in most places"
+  },
+  {
+    "key": "colorTextStrong",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#000000",
+    "help": "A more intense variant of the default text color used in headers for example"
+  },
+  {
+    "key": "colorTextSoft",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#4C4C4C",
+    "help": "A less intense variant of the default text color used for additional information"
+  },
+  {
+    "key": "colorBackground",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#FFFFFF",
+    "help": "The default background color used in most places"
+  },
+  {
+    "key": "colorBackgroundHighlight",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#E5E5E5",
+    "help": "Background color that is used in modals, selected <BottomMenu> states and the popout <AudioPlayer> and other places"
+  },
+  {
+    "key": "colorBackgroundBackdrop",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#F2F2F2",
+    "help": "Background color that is used in the backdrop of Sections and Chat background"
+  },
+  {
+    "key": "colorBorder",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#999999",
+    "help": "The default border color used in most places"
+  },
+  {
+    "key": "colorDummyAsset",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#FFDBD3",
+    "help": "The color used for dummy assets when no image is available"
+  },
+  {
+    "key": "distanceScaleFactor",
+    "type": "number",
+    "category": "general",
+    "defaultValue": 1.0,
+    "help": "A factor that is used to scale distances"
+  },
+  {
+    "key": "colorTextButtonPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the text of a button when it is pressed"
+  },
+  {
+    "key": "colorBackgroundButtonPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#B2B2B2",
+    "help": "The color used for the background of a button when it is pressed"
+  },
+  {
+    "key": "colorTextButtonDanger",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the text of a button when it is a danger button"
+  },
+  {
+    "key": "colorBackgroundButtonDanger",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#FF6A49",
+    "help": "The color used for the background of a button when it is a danger button"
+  },
+  {
+    "key": "colorTextButtonPrimary",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#FFFFFF",
+    "help": "The color used for the text of a button when it is a primary button"
+  },
+  {
+    "key": "colorTextButtonPrimaryPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#FFFFFF",
+    "help": "The color used for the text of a button when it is a primary button and pressed"
+  },
+  {
+    "key": "colorBackgroundButtonPrimary",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the background of a button when it is a primary button"
+  },
+  {
+    "key": "colorBackgroundButtonPrimaryPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the background of a button when it is a primary button and pressed"
+  },
+  {
+    "key": "colorBorderButtonPrimary",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the border of a button when it is a primary button"
+  },
+  {
+    "key": "colorBorderButtonPrimaryPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#000000",
+    "help": "The color used for the border of a button when it is a primary button and pressed"
+  },
+  {
+    "key": "colorBackgroundLabel1",
+    "type": "color",
+    "category": "cards",
+    "defaultValue": "#B2B2B2",
+    "help": "The color for the background of a label, used in cards for example"
+  },
+  {
+    "key": "colorTextLabel1",
+    "type": "color",
+    "category": "cards",
+    "defaultValue": "#000000",
+    "help": "The color for the text of a label, used in cards for example"
+  },
+  {
+    "key": "colorBackgroundChatMe",
+    "type": "color",
+    "category": "chat",
+    "defaultValue": "#E5E5E5",
+    "help": "The color for the background of a chat message sent by the current user"
+  },
+  {
+    "key": "colorBackgroundChatOther",
+    "type": "color",
+    "category": "chat",
+    "defaultValue": "#000000",
+    "help": "The color for the background of a chat message sent by another user"
+  },
+  {
+    "key": "borderWidth",
+    "type": "size",
+    "category": "general",
+    "defaultValue": "1px",
+    "help": "The default border width used in most places"
+  },
+  {
+    "key": "borderRadius",
+    "type": "size",
+    "category": "general",
+    "defaultValue": "24px",
+    "help": "The default border radius used in many containers"
+  },
+  {
+    "key": "borderRadiusButton",
+    "type": "size",
+    "category": "general",
+    "defaultValue": "16px",
+    "help": "The default border radius used in buttons and in elements inside a container"
+  },
+  {
+    "key": "borderRadiusLabel",
+    "type": "size",
+    "category": "cards",
+    "defaultValue": "8px",
+    "help": "A smaller border radius used in labels"
+  },
+  {
+    "key": "boxShadow",
+    "type": "shadow",
+    "category": "general",
+    "defaultValue": "0px 0px 1px rgba(0, 0, 0, 0.5)",
+    "help": "The default box shadow used in many containers. The default evaluates to a 1px border"
+  }
+]

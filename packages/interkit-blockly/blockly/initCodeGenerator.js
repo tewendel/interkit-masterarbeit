@@ -82,6 +82,10 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       return `${prop.name}={${JSON.stringify(value)}}\n`;
     }
 
+    if (prop.type == "styleTokens") {
+      return `${prop.name}={${JSON.stringify(value)}}\n`;
+    }
+
     if(typeof value == "boolean") {
       return `${prop.name}={${value}}\n`;
     }

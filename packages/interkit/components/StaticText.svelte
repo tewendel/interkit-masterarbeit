@@ -4,4 +4,11 @@
 
 </script>
 
-{text}
+<span>{text}</span>
+
+<style>
+  span {
+    display: contents;
+    color: var(--color-text);
+  }
+</style>

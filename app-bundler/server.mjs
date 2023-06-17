@@ -32,6 +32,11 @@ const app = express();
 
 const server = http.createServer(app);
 
+// handle error
+server.on('error', (e) => {
+  console.log("bundler http server error caught", e)
+})
+
 interkit_server.setup(app, server);
 
 const socket = new io.Server(server, {
