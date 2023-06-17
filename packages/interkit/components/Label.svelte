@@ -17,6 +17,7 @@
   .container {
     height: 20px;
     box-sizing: border-box;
+    white-space: nowrap;
   }
 
   .container.normal, .container.strong {

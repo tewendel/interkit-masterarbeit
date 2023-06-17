@@ -7,16 +7,24 @@
   export let variant = "full";
   export let rightArrow = false;
   
-  export let headline;  
-  export let imageRef;
+  export let imageRef
+  export let headline
+  export let label1
+  export let subtitle1
+  export let label2
+  export let subtitle2
+  export let label3
+  export let subtitle3
+  export let description  
+  
 
   let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
-    imageRef = {}
+    imageRef = {value: "123"}
   }
 
   const aspectRatioForVariant = {
-    full: "element",
+    full: "large_overlay",
     large: "element",
     medium: "square",
     small: "square"
@@ -33,23 +41,30 @@
 
 <div class="container {variant}">
   <div class="header-wrapper">
-    <div class="image">
-      {#if imageRef}
-        <AspectRatio aspectRatioType={aspectRatioForVariant?.[variant]}>
-          <MediaFileImage 
-            objectFit="cover" 
-            fitDimension="both" 
-            mediafileRef={imageRef} 
-            style={imageStyleForVariant?.[variant]}
-          />    
-        </AspectRatio>
-      {/if}
-    </div>
+    {#if imageRef?.value}
+      <div class="image">
+          <AspectRatio aspectRatioType={aspectRatioForVariant?.[variant]}>
+            <MediaFileImage 
+              objectFit="cover" 
+              fitDimension="both" 
+              mediafileRef={imageRef} 
+              style={imageStyleForVariant?.[variant]}
+            />    
+          </AspectRatio>
+      </div>
+    {/if}
     <div class="header">
       <CardHeader 
         {rightArrow} 
         {variant}
         {headline}
+        {label1}
+        {subtitle1}
+        {label2}
+        {subtitle2}
+        {label3}
+        {subtitle3}
+        {description}
       >
         <svelte:fragment slot="widgets">
           <slot name="widgets"/>
@@ -57,6 +72,9 @@
 
       </CardHeader>
     </div>
+  </div>
+  <div class="content-wrapper">
+    <slot name="content"/>
   </div>
 </div>
 
@@ -66,12 +84,21 @@
     background-color: #FFFFFF;
   }
 
+  .container.full {
+    padding-bottom: 8px;
+  }
+
   .container.full .header {
-    padding: 12px 8px 16px;
+    padding: 12px 8px 0px 8px;
+  }
+
+  .container.full .content-wrapper {
+    padding: 0px 16px 16px 16px;
   }
 
   .container.large, .container.medium, .container.small {
     padding: 8px;
+    padding-bottom: 16px;
     border-radius: 24px;
   }
 
@@ -101,6 +128,7 @@
   .container.medium .header {
     padding-left: 4px;
     flex: 1;
+    min-width: 0;
   }
 
   .container.small .image {
@@ -113,6 +141,7 @@
   .container.small .header {
     padding-left: 4px;
     flex: 1;
+    min-width: 0;
   }
 
 

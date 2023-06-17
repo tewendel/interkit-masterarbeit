@@ -13,11 +13,38 @@ fields:
       - name: rightArrow
         type: checkbox
         help: Display the right arrow next to the headline      
+      - name: imageColumn
+        type: sheetColumn
+        columnType: mediaFile
+        defaultValue: elements/image
       - name: headlineColumn
         type: sheetColumn
         defaultValue: elements/headline
+      - name: label1Column
+        type: sheetColumn
+        defaultValue: elements/label1
+      - name: subtitle1Column
+        type: sheetColumn
+        defaultValue: elements/subtitle1
+      - name: label2Column
+        type: sheetColumn
+        defaultValue: elements/label2
+      - name: subtitle2Column
+        type: sheetColumn
+        defaultValue: elements/subtitle2
+      - name: label3Column
+        type: sheetColumn
+        defaultValue: elements/label3
+      - name: subtitle3Column
+        type: sheetColumn
+        defaultValue: elements/subtitle3
+      - name: descriptionColumn
+        type: sheetColumn
+        defaultValue: elements/description
   - type: slot
     name: widgets
+  - type: slot
+    name: content
 toolboxCategory: Data
 docsPath: Data
 

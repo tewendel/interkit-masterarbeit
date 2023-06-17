@@ -16,7 +16,7 @@ fields:
       defaultValue: richText
     - name: inline
       type: checkbox
-      defaultValue: false
+      defaultValue: true
     - name: centerContent
       type: checkbox
       defaultValue: false

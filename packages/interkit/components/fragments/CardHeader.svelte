@@ -6,26 +6,26 @@
 
   export let variant = "full"; // full, large, medium, small
   export let active = false; 
-
-  export let label_1
-  export let subtitle_1
-  export let headline
-  export let label_2
-  export let subtitle_2
-  export let label_3
-  export let subtitle_3
-  export let description
   export let rightArrow = false;
 
+  export let label1
+  export let subtitle1
+  export let headline
+  export let label2
+  export let subtitle2
+  export let label3
+  export let subtitle3
+  export let description
+  
   let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
-    label_1 = "label_1"
-    subtitle_1 = "subtitle_1"
+    label1 = "label1"
+    subtitle1 = "subtitle1"
     headline = "headline"
-    label_2 = "label_2"
-    subtitle_2 = "subtitle_2"
-    label_3 = "label_3"
-    subtitle_3 = "subtitle_3"
+    label2 = "label2"
+    subtitle2 = "subtitle2"
+    label3 = "label3"
+    subtitle3 = "subtitle3"
     description = "description"
   }
   
@@ -33,9 +33,10 @@
 
 <div class="card-header {variant} {active}">
 
-  {#if label_1 || subtitle_1}
+  {#if label1 || subtitle1}
     <div class="row-1">
-      {#if label_1}<Label content={label_1} variant="normal"/>{/if}<span class="subtitle_1">{subtitle_1}</span>
+      {#if label1}<Label content={label1} variant="normal"/>{/if}
+      {#if subtitle1}<span class="subtitle1">{subtitle1}</span>{/if}
     </div>
   {/if}
 
@@ -53,15 +54,17 @@
     </div>
   {/if}
 
-  {#if label_2 || subtitle_2}
+  {#if label2 || subtitle2}
     <div class="row-3">
-      {#if label_2}<Label content={label_2} variant="strong"/>{/if}<span class="subtitle_2">{subtitle_2}</span>
+      {#if label2}<Label content={label2} variant="strong"/>{/if}
+      {#if subtitle2}<span class="subtitle2">{subtitle2}</span>{/if}
     </div>
   {/if}
 
-  {#if label_3 || subtitle_3}
+  {#if label3 || subtitle3}
     <div class="row-4">
-      {#if label_3}<Label content={label_3} variant="soft"/>{/if}<span class="subtitle_3">{subtitle_3}</span>
+      {#if label3}<Label content={label3} variant="soft"/>{/if}
+      {#if subtitle3}<span class="subtitle3">{subtitle3}</span>{/if}
     </div>
   {/if}
 
@@ -77,19 +80,26 @@
 
   .card-header {
     width: 100%;
+    box-sizing: border-box;
+  }
+
+  .card-header.full {
+    padding: 8px;
+  }
+
+  .row-1, .row-2, .row-3 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   .row-1 {
-    height: 20px;
+    padding: 0px 16px 0px 0px;
   }
 
-  .subtitle_1 {
+  .subtitle1 {
     font: var(--font-caption);
-  }
-
-  .row-2 {
-    display: flex;
-    flex-direction: row;
   }
 
   .card-header .headline {
@@ -120,6 +130,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .right-arrow {
@@ -133,15 +144,15 @@
     padding: 4px 16px 4px 0px;
   }
 
-  .subtitle_2 {
+  .subtitle2 {
     font: var(--font-caption);
   }
 
   .row-4 {
-    padding: 4px 16px 2px 0px;
+    padding: 2px 16px 0px 0px;
   }
 
-  .subtitle_3 {
+  .subtitle3 {
     font: var(--font-caption-bold);
   }
   
