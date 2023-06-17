@@ -42,7 +42,7 @@ fields:
         type: sheetColumn
         defaultValue: elements/description
   - type: slot
-    name: widgets
+    name: chips
   - type: slot
     name: content
 toolboxCategory: Data

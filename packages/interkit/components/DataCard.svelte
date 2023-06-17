@@ -53,12 +53,12 @@
   {subtitle3}
   {description}
 >
-  <svelte:fragment slot="widgets">
-    {#if $showDummyData && !$$slots.widgets}
+  <svelte:fragment slot="chips">
+    {#if $showDummyData && !$$slots.chips}
       <Label type="icon" variant="strong" icon="Full-Check"/>
       <MessageIndicator/>
     {:else}
-      <slot name="widgets"/>
+      <slot name="chips"/>
     {/if}
   </svelte:fragment>
   <svelte:fragment slot="content"><slot name="content"/></svelte:fragment>

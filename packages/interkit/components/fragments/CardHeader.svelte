@@ -43,8 +43,8 @@
   {#if headline}
     <div class="row-2">
       <span class="headline">{headline}</span>      
-      <div class="headline-widgets">
-        <slot name="widgets"></slot>
+      <div class="headline-chips">
+        <slot name="chips"></slot>
         {#if rightArrow}
           <span class="right-arrow">
             <Icon type="Thin-Arrow-Right"/>
@@ -126,7 +126,7 @@
     letter-spacing: var(--letter-spacing-content-headline-4);
   }
 
-  .headline-widgets {
+  .headline-chips {
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -66,10 +66,9 @@
         {subtitle3}
         {description}
       >
-        <svelte:fragment slot="widgets">
-          <slot name="widgets"/>
+        <svelte:fragment slot="chips">
+          <slot name="chips"/>
         </svelte:fragment>
-
       </CardHeader>
     </div>
   </div>
@@ -110,6 +109,12 @@
 
   .container.large .image {
     margin-bottom: 8px;
+  }
+
+  .container.large .header-wrapper,
+  .container.medium .header-wrapper,
+  .container.small .header-wrapper {
+    padding-bottom: 8px;
   }
 
   .container.medium .header-wrapper,
