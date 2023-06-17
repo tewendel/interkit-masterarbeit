@@ -1,8 +1,11 @@
 <script>
   import { setContext } from 'svelte';
+  import Styling from '../../../packages/interkit/components/Styling.svelte'
+  import Router from '../../../packages/interkit/components/Router.svelte'
 
   export let name
   export let showDummyData = true
+  export let styleTokens = null
 
   setContext('showDummyData', showDummyData)
 
@@ -11,7 +14,11 @@
 <div class="area">
   <h4>&lt;{name}&gt;</h4>
   <div class="content">
-    <slot></slot>
+    <Router>
+      <Styling styleTokens={styleTokens}>
+        <slot></slot>
+      </Styling>
+    </Router>
   </div>
 </div>
 
@@ -19,7 +26,7 @@
   @use '@carbon/type';
   
     h4 {
-      @include type.type-style('label-01');
+      @include type.type-style('code-01');
       padding-bottom: .22em;
     }
   

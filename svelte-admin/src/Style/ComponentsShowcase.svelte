@@ -1,7 +1,6 @@
 <script>
   import InterkitComponentFrame from './InterkitComponentFrame.svelte'
-  import Styling from '../../../packages/interkit/components/Styling.svelte'
-  import Router from '../../../packages/interkit/components/Router.svelte'
+  
   import { InlineLoading } from "carbon-components-svelte";
 
   export let currentStyleTokens = null
@@ -28,38 +27,34 @@
   ]
 </script>
 
-<Styling styleTokens={currentStyleTokens} >
-  <Router>
-    {#each components as c}
-      <div class="component">
-        
-          {#await import(`../../../packages/interkit/components/${c.name}.svelte`)}
-            <p class="Loading">
-              <InlineLoading description="Loading &lt;{c.name}&gt;" />
-            </p>
-          {:then component}
-            <InterkitComponentFrame name={c.name} showDummyData={c.showDummyData} >
-              <svelte:component this={component.default} withDummyData {...c.props} />
-            </InterkitComponentFrame>
-          {:catch error}
-            <p style="color: red">{error.message}</p>
-          {/await}
-        
-      </div>
-    {/each}
-  </Router>
-</Styling>
+{#each components as c}
+  <div class="component">
+    
+      {#await import(`../../../packages/interkit/components/${c.name}.svelte`)}
+        <p class="Loading">
+          <InlineLoading description="Loading &lt;{c.name}&gt;" />
+        </p>
+      {:then component}
+        <InterkitComponentFrame name={c.name} showDummyData={c.showDummyData} styleTokens={currentStyleTokens}>
+          <svelte:component this={component.default} withDummyData {...c.props} />
+        </InterkitComponentFrame>
+      {:catch error}
+        <p style="color: red">{error.message}</p>
+      {/await}
+    
+  </div>
+{/each}
 
 <style lang="scss">
   @use '@carbon/type';
 
   .component {
-    margin: 10px;
+    margin: .5rem 0 1rem 0;
   }
 
   .loading {
     @include type.type-style('label-01');
-    padding-bottom: .22em;
+    padding-bottom: 1rem;
   }
   
 </style>

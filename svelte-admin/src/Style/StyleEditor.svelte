@@ -106,6 +106,7 @@
     {/if}
 
     <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
+    <br>
     <ComponentsShowcase {currentStyleTokens} />
   </div>
 </div>
