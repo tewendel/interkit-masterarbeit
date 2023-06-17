@@ -63,26 +63,54 @@
 
 <div class="style" style={`
 
-  /* from user */
+  /* from tokens */
 
   --color-text: ${tokens.colorText};
-  --color-text-headline: ${tokens.colorTextHeadline};
-  --color-text-button-primary: ${tokens.colorTextButtonPrimary};
+  --color-text-strong: ${tokens.colorTextStrong};
+  --color-text-soft: ${tokens.colorTextSoft};
   --color-background: ${tokens.colorBackground};
   --color-background-highlight: ${tokens.colorBackgroundHighlight};
+  --color-background-backdrop: ${tokens.colorBackgroundBackdrop};
   --color-border: ${tokens.colorBorder};
-  --font-family-text: ${fontFamilyText};
-  --font-family-headline: ${fontFamilyHeadline};
+  --color-dummy-asset: ${tokens.colorDummyAsset};
+  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+
+  --color-text-button-pressed: ${tokens.colorTextButtonPressed};
+  --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
+  --color-text-button-danger: ${tokens.colorTextButtonDanger};
+  --color-background-button-danger: ${tokens.colorBackgroundButtonDanger};
+  --color-text-button-primary: ${tokens.colorTextButtonPrimary};
+  --color-text-button-primary-pressed: ${tokens.colorTextButtonPrimaryPressed};
+  --color-background-button-primary: ${tokens.colorBackgroundButtonPrimary};
+  --color-background-button-primary-pressed: ${tokens.colorBackgroundButtonPrimaryPressed};
+  --color-border-button-primary: ${tokens.colorBorderButtonPrimary};
+  --color-border-button-primary-pressed: ${tokens.colorBorderButtonPrimaryPressed};
+  
+  --color-text-label1: ${tokens.colorTextLabel1};
+  --color-background-label1: ${tokens.colorBackgroundLabel1};
+
+  --color-background-chat-me: ${tokens.colorBackgroundChatMe};
+  --color-background-chat-other: ${tokens.colorBackgroundChatOther};
+
+  --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
   --border-radius-button: ${tokens.borderRadiusButton};
-  --border-width: ${tokens.borderWidth};
+  --border-radius-label: ${tokens.borderRadiusLabel};
   --box-shadow: ${tokens.boxShadow};
-  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+
+  /* deprecated ? */
+
+  --color-text-headline: ${tokens.colorTextHeadline};
   --font-size-headline-1: ${tokens.fontSizeHeadline1};
-  --distance-base: 8px;
+
+  /* other vars */
+
+  --font-family-text: ${fontFamilyText};
+  --font-family-headline: ${fontFamilyHeadline};
 
   /* constant */
 
+  --distance-base: 8px;
   --distance-tiny: 2px;
 
   /* derived defaults */
