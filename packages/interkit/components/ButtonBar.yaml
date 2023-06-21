@@ -1,0 +1,19 @@
+name: ButtonBar
+colour: 300
+fields:
+  - type: extraProps
+    props:
+    - name: justify
+      type: options
+      options:
+        - left
+        - center
+        - right
+      defaultValue: left
+      help: Where the buttons in the bar are justified
+    - name: helpText
+      type: string
+      help: An explanation text below the buttonBar
+  - type: slot
+    name: default
+toolboxCategory: Buttons

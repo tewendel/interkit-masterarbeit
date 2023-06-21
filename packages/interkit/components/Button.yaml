@@ -1,5 +1,4 @@
 name: Button
-title: Button
 colour: 300
 fields:
   - type: string
@@ -14,32 +13,31 @@ fields:
         - secondary
         - ghost 
         - link 
-        - spacer
-        - list-item
-        - nav-tab
+        - danger
+      defaultValue: primary
       help: "Appearance of the button."
-    - type: options
-      name: size
+    - name: size
+      type: options
       options: 
-        - medium
         - small
+        - medium
         - large
       defaultValue: medium
       help: "Large, medium or small."
-    - type: options
-      name: flex
+    - name: flex
+      type: options
       options: 
         - normal
         - fill
       defaultValue: normal
       help: "If used in the slot of a flex-supported parent component, determines how the available space is used."
+    - name: disabled
+      type: checkbox
+      defaultValue: false
     - type: effect
       name: effect
       help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
-    - type: checkbox
-      name: execOnMount
-      help: "Runs the effect once when the button is rendered (for example to set a default value)"
   - name: default
     type: slot
     help: "If text is not enough, you can place child components here, e.g. formatted text. Will override text."
-toolboxCategory: Controls
+toolboxCategory: Buttons

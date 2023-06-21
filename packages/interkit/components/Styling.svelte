@@ -79,6 +79,7 @@
   --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
   --color-text-button-danger: ${tokens.colorTextButtonDanger};
   --color-background-button-danger: ${tokens.colorBackgroundButtonDanger};
+  --color-background-button-danger-pressed: ${tokens.colorBackgroundButtonDangerPressed};
   --color-text-button-primary: ${tokens.colorTextButtonPrimary};
   --color-text-button-primary-pressed: ${tokens.colorTextButtonPrimaryPressed};
   --color-background-button-primary: ${tokens.colorBackgroundButtonPrimary};
@@ -115,7 +116,7 @@
 
   /* derived defaults */
 
-  --border-color: var(--color-text);
+  /* --border-color: var(--color-text); deprecated? */
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
@@ -123,6 +124,7 @@
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
+  --distance-sm: calc(var(--distance-s) + var(--distance-m));
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
@@ -132,7 +134,7 @@
   4 -> xs  
   8 -> s
   16 -> m
-  24 -> s+m
+  24 -> sm
   32 -> l
   48 -> xl
   64 -> xxl

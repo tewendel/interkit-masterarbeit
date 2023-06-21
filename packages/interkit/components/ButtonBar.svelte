@@ -1,75 +1,42 @@
 <script>
 
-  import { onMount } from 'svelte';
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'  
+  let showDummyData = getShowDummyDataStore();
 
-  export let right = false;
+  export let justify = "center"
+  export let helpText;
 
-  let container
-
-  let isLeft = true
-  let isRight = true
-
-  const scrolled = function (e) {
-    isLeft = container.scrollLeft === 0
-    isRight = Math.abs(container.clientWidth + container.scrollLeft - container.scrollWidth) <= 1
-    console.log(container.clientWidth + container.scrollLeft - container.scrollWidth)
+  if($showDummyData) {
+    helpText = "helpText"
   }
-
-  onMount(() => {
-    scrolled()
-    window.setTimeout(scrolled, 100)
-  })
 
 </script>
 
-<div class="ButtonBar container"
-  bind:this={container}
-  on:scroll|passive={scrolled}
-  class:left={isLeft}
-  class:right={isRight}
-  >
-  <div class="wrap" class:right>
-    <slot/>
-  </div>
-</div>
 
+<div class="container" style={`justify-content: ${justify}`}>
+  <slot/>
+</div>
+{#if helpText}
+  <div class="help-text">{helpText}</div>
+{/if}
 
 <style>
 
-  .container {
+  .container, .help-text {
     width: 100%;
-    max-width: 100%;
-    scrollbar-width: none;
-    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
     box-sizing: border-box;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
-
-  .container.left {
-    border-left-color: transparent;
-  }
-
-  .container.right {
-    border-right-color: transparent;
-  }
-
-  .wrap {
-    box-sizing: border-box;
-    min-width: 100%;
-    white-space: nowrap;
+  
+  .help-text {
+    font: var(--font-subtitle-2);
+    color: var(--color-text-soft);
+    letter-spacing: var(--letter-spacing-subtitle-2);
+    justify-content: center;
     padding: var(--distance-s);
-    gap: var(--distance-s); /* not compatible with old browsers */
-    display: flex;
   }
 
-  .wrap > :global(*) { /* wow */
-    flex-shrink: 0;
-  }
-
-  .wrap.right {
-    display: flex;
-    justify-content: flex-end;
-  }
 
 </style>
