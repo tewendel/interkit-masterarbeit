@@ -1,3 +1,7 @@
+<script>
+  
+</script>
+
 <div class="TabBar container">
   <div class="slider">
     <slot></slot>
@@ -14,25 +18,26 @@
   .slider {
     white-space: nowrap;
     display: flex;
+    width: 100%;
   }
 
-  :global(.TabBar span) {
-    border-top: 1px solid var(--border-color) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    border-right: 1px solid var(--border-color) !important;
+  :global(.TabBar .slider .Tab) {
+    border-top: 1px solid var(--color-border) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    border-right: 1px solid var(--color-border) !important;
   }
 
-  :global(.TabBar div.click-effect:first-child span) {
-    border-left: 1px solid var(--border-color) !important;
+  :global(.TabBar .slider .Tab:first-child) {
+    border-left: 1px solid var(--color-border) !important;
   }
 
-  :global(.TabBar div.click-effect span.nav-tab-selected) {
+  :global(.TabBar .slider .Tab.active) {
     border-top: none !important;
     border-bottom: none !important;
     border-left: none !important;
   }
 
-  :global(.TabBar div.click-effect:last-child span.nav-tab-selected) {
+  :global(.TabBar .slider .Tab:last-child.active) {
     border-right: none !important;
   }
 </style>
