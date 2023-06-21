@@ -7,6 +7,7 @@
   
   export let variant = "full";
   export let rightArrow = false;
+  export let hoverPointer;
   
   export let imageRef
   export let headline
@@ -42,7 +43,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container {variant}" on:click>
+<div class="container {variant} {hoverPointer ? "hoverPointer" : ""}" on:click>
   <div class="header-wrapper">
     {#if imageRef?.value}
       <div class="image">
@@ -86,6 +87,10 @@
   
   .container {
     background-color: #FFFFFF;
+  }
+
+  .container.hoverPointer:hover {
+    cursor:pointer;
   }
 
   .container.full {

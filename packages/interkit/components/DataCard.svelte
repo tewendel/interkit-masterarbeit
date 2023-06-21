@@ -58,6 +58,7 @@
     {subtitle3}
     {description}
     on:click={execute}
+    hoverPointer={effect ? true : false}
   >
     <svelte:fragment slot="chips">
       {#if $showDummyData && !$$slots.chips}
