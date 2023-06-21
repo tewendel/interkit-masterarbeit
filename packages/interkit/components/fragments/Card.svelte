@@ -1,4 +1,5 @@
 <script>
+  import { getContext } from "svelte"
   import AspectRatio from '../AspectRatio.svelte'
   import MediaFileImage from '../MediaFileImage.svelte'
   import CardHeader from "./CardHeader.svelte"
@@ -17,7 +18,6 @@
   export let subtitle3
   export let description  
   
-
   let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
     imageRef = {value: "123"}
@@ -37,9 +37,12 @@
     small: "border-radius: var(--border-radius);",
   }
 
+  const DataCardContext = getContext("DataCard")
+
 </script>
 
-<div class="container {variant}">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="container {variant}" on:click>
   <div class="header-wrapper">
     {#if imageRef?.value}
       <div class="image">
@@ -72,9 +75,11 @@
       </CardHeader>
     </div>
   </div>
-  <div class="content-wrapper">
-    <slot name="content"/>
-  </div>
+  {#if DataCardContext?.slots?.content}
+    <div class="content-wrapper">
+      <slot name="content"/>
+    </div> 
+  {/if}
 </div>
 
 <style>

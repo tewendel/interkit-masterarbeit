@@ -40,9 +40,9 @@
     </div>
   {/if}
 
-  {#if headline}
+  {#if headline || rightArrow || $$slots.chips}
     <div class="row-2">
-      <span class="headline">{headline}</span>      
+      <span class="headline">{#if headline}{headline}{/if}</span>
       <div class="headline-chips">
         <slot name="chips"></slot>
         {#if rightArrow}

@@ -9,7 +9,7 @@
 <WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="container {effect ? "withEffect" : ""}" on:click={execute}>
-    <span class="text">{text}</span>
+    <span class="text">{#if text}{text}{/if}</span>
     <div class="icon-container">
       <slot/>
     </div>
@@ -34,6 +34,9 @@
     font: var(--font-subtitle-1);
     letter-spacing: var(--letter-spacing-subtitle-1);
     flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .icon-container {
