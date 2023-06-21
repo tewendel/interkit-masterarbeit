@@ -38,7 +38,7 @@
   }
 
   .top-bar {
-    height: 64px;
+    height: 56px;
     
     flex-direction: row;
     justify-content: space-around;

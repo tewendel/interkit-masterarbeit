@@ -89,6 +89,12 @@
     background-color: #FFFFFF;
   }
 
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
   .container.hoverPointer:hover {
     cursor:pointer;
   }
@@ -107,7 +113,6 @@
 
   .container.large, .container.medium, .container.small {
     padding: 8px;
-    padding-bottom: 16px;
     border-radius: 24px;
   }
 
@@ -119,12 +124,6 @@
 
   .container.large .image {
     margin-bottom: 8px;
-  }
-
-  .container.large .header-wrapper,
-  .container.medium .header-wrapper,
-  .container.small .header-wrapper {
-    padding-bottom: 8px;
   }
 
   .container.medium .header-wrapper,
