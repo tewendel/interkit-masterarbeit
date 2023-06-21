@@ -1,0 +1,12 @@
+name: ListItem
+colour: 300
+toolboxCategory: Buttons
+fields: 
+  - name: text
+    type: string
+  - type: extraProps
+    props:
+      - name: effect
+        type: effect
+  - name: default
+    type: slot
