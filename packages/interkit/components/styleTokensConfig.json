@@ -168,6 +168,13 @@
     "help": "The color for the background of a chat message sent by another user"
   },
   {
+    "key": "colorPagination",
+    "type": "color",
+    "category": "PictureBook",
+    "defaultValue": "#000000",
+    "help": "The color for the pagination indicator in PictureBook"
+  },
+  {
     "key": "borderWidth",
     "type": "size",
     "category": "general",

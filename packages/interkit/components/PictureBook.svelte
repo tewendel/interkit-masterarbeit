@@ -198,12 +198,12 @@
     height: calc(1.5 * var(--distance-xs));
     margin: 0 calc(0.5 * var(--distance-xs));
     padding: 0;
-    border: var(--border-width) solid var(--color-border);
+    border: var(--border-width) solid var(--color-border-button-primary);
     border-radius: 50%;
   }
 
   .pagination-item--active {
-    background-color: var(--color-border);
+    background-color: var(--color-pagination);
   }
 
   .video-close-button {

@@ -93,6 +93,8 @@
   --color-background-chat-me: ${tokens.colorBackgroundChatMe};
   --color-background-chat-other: ${tokens.colorBackgroundChatOther};
 
+  --color-pagination: ${tokens.colorPagination};
+
   --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
   --border-radius-button: ${tokens.borderRadiusButton};
