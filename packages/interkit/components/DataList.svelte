@@ -43,4 +43,10 @@
     position: relative;
   }
 
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--distance-s);
+  }
+
 </style>

@@ -37,6 +37,7 @@
     width: 100%;
     overflow: auto;
     scrollbar-width: none;
+    gap: var(--distance-s);
   }
 
   .slider[data-slides-amount="1"] .slide {
