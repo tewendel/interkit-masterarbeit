@@ -133,7 +133,7 @@
       const blockType = obj?.type;
       //console.log("checkSingleBlock", blockType, obj)
       if(!Object.keys(Blockly.Blocks).includes(blockType)) {
-        alert(`Component compatibilty issue: This project contains the component "${blockType}", which is not available in the current interkit version. Components of type "${blockType}" have been removed.`)
+        alert(`Component compatibilty issue: This project contains the component "${blockType}", which is not available in the current interkit version. Components of type "${blockType}", as well as children and attached blocks have been removed.`)
         return false;
       }
 

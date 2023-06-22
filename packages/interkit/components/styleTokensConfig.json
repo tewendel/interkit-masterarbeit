@@ -21,6 +21,13 @@
     "help": "A less intense variant of the default text color used for additional information"
   },
   {
+    "key": "colorTextLink",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#2D40A1",
+    "help": "The color used for links in richtext content."
+  },
+  {
     "key": "colorBackground",
     "type": "color",
     "category": "general",

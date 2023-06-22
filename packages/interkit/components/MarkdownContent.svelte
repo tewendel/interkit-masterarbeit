@@ -21,35 +21,48 @@
   }
 
   :global(.MarkdownContent h2) {
+    font: var(--font-content-headline-2);
+    letter-spacing: var(--letter-spacing-content-headline-2);
+    margin-bottom: var(--distance-m);
+  }
+
+  :global(.MarkdownContent h3) {
     font: var(--font-content-headline-3);
     letter-spacing: var(--letter-spacing-content-headline-3);
     margin-bottom: var(--distance-m);
   }
 
-  :global(.MarkdownContent h3, .MarkdownContent h4, .MarkdownContent h5) {
+  :global(.MarkdownContent h4) {
     font: var(--font-content-headline-4);
     letter-spacing: var(--letter-spacing-content-headline-4);
     margin-bottom: var(--distance-m);
   }
+
+  :global(.MarkdownContent h5) {
+    font: var(--font-content-headline-5);
+    letter-spacing: var(--letter-spacing-content-headline-5);
+    margin-bottom: var(--distance-m);
+  }
   
-  :global(.MarkdownContent p:not(:last-of-type)) {
-    margin-bottom: 1em;    
+  :global(.MarkdownContent p:not(:last-child)) {
+    font: var(--font-body-1);
+    letter-spacing: var(--letter-spacing-body-1);
+    line-height: 24px;
+    margin-bottom: 12px;    
   }
 
-  :global(.MarkdownContent h2 + p, .MarkdownContent h3 + p, .MarkdownContent h4 + p) {
-    margin-top: 1em;
-    margin-bottom: 1em;
-  }
   :global(.MarkdownContent li) {
     margin-bottom: 1em;
   }
   :global(.MarkdownContent ul) { 
-    list-style-type: '- '; 
+    list-style-type: disc; 
     list-style-position: inside; 
+    margin-left: var(--distance-s);
   }
   :global(.MarkdownContent ol) { 
     list-style-type: decimal; 
     list-style-position: inside; 
+    margin-left: var(--distance-s);
   }
   :global(.MarkdownContent ul ul, .MarkdownContent ol ul) { 
     list-style-type: circle; 
@@ -63,6 +76,8 @@
   }
 
   :global(.MarkdownContent a) {
+    text-decoration: none;
+    color: var(--color-text-link);
     word-break: break-all;
   }
 

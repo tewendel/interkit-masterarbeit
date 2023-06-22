@@ -78,6 +78,7 @@
   --color-text-button-pressed: ${tokens.colorTextButtonPressed};
   --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
   --color-text-button-danger: ${tokens.colorTextButtonDanger};
+  --color-text-link: ${tokens.colorTextLink};
   --color-background-button-danger: ${tokens.colorBackgroundButtonDanger};
   --color-background-button-danger-pressed: ${tokens.colorBackgroundButtonDangerPressed};
   --color-text-button-primary: ${tokens.colorTextButtonPrimary};
@@ -158,7 +159,7 @@
   --letter-spacing-headline-3: -0.25px;
   
   /* Interface/Headline 4 */
-  --font-headline-4: 700 20px/24px var(--font-family-headline);
+  --font-headline-4: 400 20px/24px var(--font-family-headline);
   --letter-spacing-headline-4: -0.25px;
   
   /* Interface/Headline 5 */
@@ -212,6 +213,10 @@
 
   /* Content/Headline 4 */
   --font-content-headline-4: 900 20px/24px var(--font-family-headline);
+
+  /* Content/Headline 5 */
+  --font-content-headline-5: 700 16px/24px var(--font-family-headline);
+  --letter-spacing-content-headline-5: -0.32px;
   
   /* Content/Body 1 */
   --font-content-body-1: 400 16px/24px var(--font-family-text);
