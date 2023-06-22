@@ -25,7 +25,7 @@
     $: {
       if($channelsStore) {
         currentChannel = $channelsStore.find(c => c.channel_key == channel_key)
-        //console.log("currentChannel ChatChannelImage", currentChannel)
+        //console.log("currentChannel", currentChannel)
         title = currentChannel?.title;
       }
     }

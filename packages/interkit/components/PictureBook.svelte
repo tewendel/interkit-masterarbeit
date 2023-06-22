@@ -178,7 +178,7 @@
   }
 
   .pagination-container {
-    padding-top: var(--distance-s);
+    padding: var(--distance-s);
     display: flex;
     flex-direction: row;
     justify-content: center;

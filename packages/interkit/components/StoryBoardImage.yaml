@@ -1,0 +1,13 @@
+name: StoryBoardImage
+colour: 100
+toolboxCategory: Chat
+fields: 
+  - type: extraProps
+    props:
+    - name: board
+      type: string
+      help: Specify the board you want to load the image from. Leave empty to get the current image in a ChatRoute.
+    - name: topBarImage
+      type: checkbox
+      defaultValue: true
+      help: Check this to scale the image to the right size for use in the TopBar

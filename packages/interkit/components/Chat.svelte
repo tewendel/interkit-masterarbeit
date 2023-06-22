@@ -6,7 +6,6 @@
   import Message from './Chat/Message.svelte'
   import MessageTyping from './Chat/MessageTyping.svelte'
   import ChatInput from './Chat/ChatInput.svelte'
-  import ChatChannelImage from "./Chat/ChatChannelImage.svelte"
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
   
   import { Plugins } from '@capacitor/core';
@@ -409,10 +408,6 @@
 </script>
 
     <div class="Chat root">
-      <div class="channel-info-overlay">
-        <!--span>channel {channel_key}</span-->
-        <ChatChannelImage channel_key={boardId}/>
-      </div>
       <div
         class="messages-container"
         class:messages__empty={!messageStore || $messageStore.length === 0}

@@ -40,6 +40,8 @@
 
   .left {
     flex: 1;
+    display: flex;
+    align-items: center;
   }
 
   :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {
@@ -65,6 +67,7 @@
 
   .right {
     text-align: right;
+
   }
 
 

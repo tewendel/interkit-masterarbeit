@@ -6,6 +6,8 @@
   import { InterkitClient } from ".."
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
+  import SectionShell from './SectionShell.svelte'
+
   export let path;
 
   let channelsStore;
@@ -84,7 +86,7 @@
 
 </script>
 
-<div class="sort-container">
+<SectionShell>
 {#if $channelsStore || $showDummyData}
   {#each ($showDummyData ? dummyData : $channelsStore) as channel}
       {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
@@ -97,7 +99,8 @@
       {/if}
   {/each}
 {/if}
-</div>
+</SectionShell>
+
 
 
 <style>

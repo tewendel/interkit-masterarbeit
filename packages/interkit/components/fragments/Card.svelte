@@ -35,7 +35,7 @@
     full: "",
     large: "border-radius: var(--border-radius);",
     medium: "border-radius: var(--border-radius);",
-    small: "border-radius: var(--border-radius);",
+    small: "border-radius: var(--border-radius-button)",
   }
 
   const DataCardContext = getContext("DataCard")
@@ -150,6 +150,7 @@
     height: 56px;
     margin-right: 4px;
     flex-shrink: 0;
+    border-radius: 16px;
   }
 
   .container.small .header {
