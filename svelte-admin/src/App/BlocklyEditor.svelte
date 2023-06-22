@@ -124,6 +124,52 @@
 
   let blockObjects; // the block definitions from the yaml files
 
+  // recursively traverses blockly json and writes fixed state to correctedBlocklyState
+  const checkBlocklyJson = (jsonObj) => {
+    console.log("checkBlocklyJson:", jsonObj)
+    let correctedBlocklyState = {...jsonObj, blocks: {...jsonObj.blocks, blocks:[]}}
+
+    const checkSingleBlock = (obj) => {
+      const blockType = obj?.type;
+      //console.log("checkSingleBlock", blockType, obj)
+      if(!Object.keys(Blockly.Blocks).includes(blockType)) {
+        alert(`Component compatibilty issue: This project contains the component "${blockType}", which is not available in the current interkit version. Components of type "${blockType}" have been removed.`)
+        return false;
+      }
+
+      // copy block with no next and no inputs
+      let correctedBlock = {...obj, next: {}, inputs: {}}
+
+      // check if there is a next block and add it if it passes the test
+      if(obj?.next?.block) {
+        let checkedBlock = checkSingleBlock(obj?.next?.block)
+        if(checkedBlock) {
+          correctedBlock.next.block = checkedBlock;
+        }
+      }
+      
+      // check if there are inputs, only add those that pass the test
+      if(obj?.inputs) {
+        for(let entry in obj?.inputs) {
+          let checkedBlock = checkSingleBlock(obj?.inputs?.[entry]?.block)
+          if(checkedBlock) {
+            correctedBlock.inputs[entry] = {block: checkedBlock};
+          }
+        }
+      }
+      return correctedBlock;
+    }
+    // starts by going over blocks array
+    for(let block of jsonObj?.blocks?.blocks) {
+      let checkedBlock = checkSingleBlock(block)
+      if(checkedBlock) {
+        correctedBlocklyState.blocks.blocks.push(checkedBlock)
+      }
+    }    
+    console.log("correctedBlocklyState", correctedBlocklyState)
+    return correctedBlocklyState;
+  }
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
@@ -148,7 +194,7 @@
 
     blocklyConfig.initBlockDefinitions(Blockly, blockObjects, customFields); // generates block definitions from yaml component files
     
-    console.log("Blocks", Blockly.Blocks)
+    console.log("Blocks", Object.keys(Blockly.Blocks))
 
     //console.log(blocklyConfig.toolbox)
 
@@ -186,7 +232,8 @@
       try {
         let stateToLoad = JSON.parse(blocklyJson.content)
         console.log("blockly stateToLoad", stateToLoad)
-        Blockly.serialization.workspaces.load(stateToLoad, workspace)
+        let correctedBlocklyState = checkBlocklyJson(stateToLoad);
+        Blockly.serialization.workspaces.load(correctedBlocklyState, workspace)
       } catch(e) {
         alert("error importing blockly json")
         console.log("json import error", e)
