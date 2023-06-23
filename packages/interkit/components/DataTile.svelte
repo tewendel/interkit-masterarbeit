@@ -11,9 +11,9 @@
   import WithEffect from "./WithEffect.svelte";
 
   export let variant = "rounded";
-  
   export let rightArrow = false;
   export let disabled = false;
+  export let flexibleSize;
   
   export let effect
   export let imageColumn;
@@ -49,8 +49,9 @@
     {subtitle1}
     {description}
     {disabled}
-    on:click={() => {if(!disabled) execute}}
-    hoverPointer={effect ? true : false}
+    {flexibleSize}
+    on:click={() => {if(!disabled) execute()}}
+    hoverPointer={effect && effect?.effectType != "none" ? true : false}
   >
     <svelte:fragment slot="chips">
       {#if $showDummyData && !$$slots.chips}

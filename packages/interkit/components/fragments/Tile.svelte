@@ -11,12 +11,14 @@
   export let variant = "rounded";
   export let rightArrow = false;
   export let hoverPointer;
+  export let flexibleSize = true;
   
   export let imageRef
   export let headline
   export let label1
   export let subtitle1
   export let description  
+  export let disabled
   
   let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
@@ -35,42 +37,44 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container {variant} {hoverPointer ? "hoverPointer" : ""}" on:click>
-  {#if imageRef?.value}
-    <div class="image">
-        <AspectRatio aspectRatioType="square">
-          <MediaFileImage 
-            objectFit="cover" 
-            fitDimension="both" 
-            mediafileRef={imageRef} 
-            style={imageStyle}
-          />    
-        </AspectRatio>
+<AspectRatio aspectRatioType="square" disabled={!flexibleSize}>
+  <div class="container {variant}" class:hoverPointer class:flexibleSize class:disabled on:click>
+    {#if imageRef?.value}
+      <div class="image">
+          <AspectRatio aspectRatioType="square">
+            <MediaFileImage 
+              objectFit="cover" 
+              fitDimension="both" 
+              mediafileRef={imageRef} 
+              style={imageStyle}
+            />    
+          </AspectRatio>
+      </div>
+    {/if}
+    <div class="header">
+        {#if label1}<Label content={label1} variant="normal"/>{/if}
+        {#if subtitle1}<span class="subtitle1">{subtitle1}</span>{/if}
+        {#if headline}<span class="headline">{headline}</span>{/if}
+        {#if DataTileContext?.slots?.chips || $showDummyData}
+          <slot name="chips"/>
+        {/if}
+        {#if rightArrow}
+          <span class="right-arrow">
+            <Icon type="Thin-Arrow-Right"/>
+          </span>
+        {/if}
+        {#if description}<span class="description">{description}</span>{/if}      
     </div>
-  {/if}
-  <div class="header">
-      {#if label1}<Label content={label1} variant="normal"/>{/if}
-      {#if subtitle1}<span class="subtitle1">{subtitle1}</span>{/if}
-      {#if headline}<span class="headline">{headline}</span>{/if}
-      {#if DataTileContext?.slots?.chips || $showDummyData}
-        <slot name="chips"/>
-      {/if}
-      {#if rightArrow}
-        <span class="right-arrow">
-          <Icon type="Thin-Arrow-Right"/>
-        </span>
-      {/if}
-      {#if description}<span class="description">{description}</span>{/if}      
-  </div>
 
-  {#if DataTileContext?.slots?.buttons || $showDummyData}
-    <div class="buttons-wrapper">
-      <ButtonBar hideHelpText>
-        <slot name="buttons"/>
-      </ButtonBar>
-    </div> 
-  {/if}
+    {#if DataTileContext?.slots?.buttons || $showDummyData}
+      <div class="buttons-wrapper">
+        <ButtonBar hideHelpText>
+          <slot name="buttons"/>
+        </ButtonBar>
+      </div> 
+    {/if}
 </div>
+</AspectRatio>
 
 <style>
 
@@ -83,6 +87,20 @@
     flex-direction: column;
     padding: var(--distance-s);
     box-shadow: var(--box-shadow);
+    box-sizing: border-box;
+  }
+
+  .container.disabled {
+    opacity: 0.5;
+  }
+
+  .container.hoverPointer:hover {
+    cursor: pointer;
+  }
+
+  .container.flexibleSize {
+    width: 100%;
+    height: 100%;
   }
 
   .container.rounded {

@@ -29,7 +29,6 @@
     flex: 1;
     flex-shrink: 1;
     min-width: 0;
-    overflow-x: hidden;
   }
 
 

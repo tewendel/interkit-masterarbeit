@@ -4,11 +4,6 @@ toolboxCategory: Data
 fields: 
   - type: extraProps
     props:
-      - name: variant
-        type: options
-        options:
-          - rounded
-          - square
       - name: imageColumn
         type: sheetColumn
         defaultValue: elements/image
@@ -25,11 +20,21 @@ fields:
         type: sheetColumn
         defaultValue: elements/description
       - name: rightArrow
-        type: checkBox
+        type: checkbox
         defaultValue: false
       - name: disabled
-        type: checkBox
+        type: checkbox
         defaultValue: false
+      - name: variant
+        type: options
+        options:
+          - rounded
+          - square
+        help: Rounded or pointy corners on the tile
+      - name: flexibleSize
+        type: checkbox
+        defaultValue: true
+        help: Check this so that the tile grows to fit the container.
       - name: effect
         type: effect
   - type: slot

@@ -17,15 +17,13 @@ fields:
       - name: background
         type: checkbox
         defaultValue: true
-        help: Show the background color around the items
+        help: Show the background color around the items and add padding
       - name: gaps
         type: checkbox
         defaultValue: true
         help: Leave a gap between the elements
   - name: contentElement
     type: slot
-    slotProps:
-      - "element"
   - name: emptyElement
     type: slot
 docsPath: Data#dataslider

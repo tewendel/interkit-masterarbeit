@@ -4,6 +4,7 @@
   export let aspectRatioType = "element" // choose from predefined interkit types
   export let aspectRatio = null // manual setting
   export let standalone = false // add border
+  export let disabled = false;
 
   if (typeof standalone == "string") standalone = standalone === "TRUE" // blockly conversion
 
@@ -20,16 +21,20 @@
 
 </script>
 
-<div class:standalone class="AspectRatio container" style={`--aspect-ratio: ${ aspectRatio * 100 }%`}>
-  <div class="inner-container">
-    <slot />
+{#if disabled}
+  <slot />
+{:else}
+  <div class:standalone class="AspectRatio container" style={`--aspect-ratio: ${ aspectRatio * 100 }%`}>
+    <div class="inner-container">
+      <slot />
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   .container {
     height: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding-top: var(--aspect-ratio);
     /*background: white; /* why? */
     position: relative;
