@@ -5,6 +5,7 @@
 
   export let justify = "center"
   export let helpText;
+  export let hideHelpText = false;
 
   if($showDummyData) {
     helpText = "helpText"
@@ -16,7 +17,7 @@
 <div class="container" style={`justify-content: ${justify}`}>
   <slot/>
 </div>
-{#if helpText}
+{#if helpText && !hideHelpText}
   <div class="help-text">{helpText}</div>
 {/if}
 

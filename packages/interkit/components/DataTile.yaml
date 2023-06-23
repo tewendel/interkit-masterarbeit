@@ -1,0 +1,38 @@
+name: DataTile
+color: 230
+toolboxCategory: Data
+fields: 
+  - type: extraProps
+    props:
+      - name: variant
+        type: options
+        options:
+          - rounded
+          - square
+      - name: imageColumn
+        type: sheetColumn
+        defaultValue: elements/image
+      - name: headlineColumn
+        type: sheetColumn
+        defaultValue: elements/title
+      - name: label1Column
+        type: sheetColumn
+        defaultValue: elements/label1
+      - name: subtitle1Column
+        type: sheetColumn
+        defaultValue: elements/subtitle1
+      - name: descriptionColumn
+        type: sheetColumn
+        defaultValue: elements/description
+      - name: rightArrow
+        type: checkBox
+        defaultValue: false
+      - name: disabled
+        type: checkBox
+        defaultValue: false
+      - name: effect
+        type: effect
+  - type: slot
+    name: chips
+  - type: slot
+    name: buttons
