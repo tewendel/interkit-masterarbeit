@@ -2,6 +2,26 @@ name: DataSlider
 toolboxCategory: "Data"
 color: 230
 fields:
+  - type: extraProps
+    props:
+      - name: mode
+        type: options
+        options:
+          - single
+          - continuous
+        help: Use single mode to size each element on 85% of full width, with 15% of the next element just showing on the edge. Use continuos to use the elements own width, for example DataTiles.
+      - name: roundedCorners
+        type: checkbox
+        defaultValue: false
+        help: Check this to round corners on the first and last slides
+      - name: background
+        type: checkbox
+        defaultValue: true
+        help: Show the background color around the items
+      - name: gaps
+        type: checkbox
+        defaultValue: true
+        help: Leave a gap between the elements
   - name: contentElement
     type: slot
     slotProps:
