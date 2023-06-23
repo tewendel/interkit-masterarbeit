@@ -67,7 +67,7 @@
           {:else if definition.type === "number"}
             <TextInput type="number" bind:value={_value[definition.key]} on:change={update}/>
           {:else if definition.type === "size"}
-            <TextInput type="number" bind:value={_value[definition.key]} on:change={update}/>
+            <TextInput type="text" bind:value={_value[definition.key]} on:change={update}/>
           {:else}
             <TextInput bind:value={_value[definition.key]} on:change={update}/>
           {/if}

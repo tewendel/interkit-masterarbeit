@@ -79,6 +79,7 @@
     padding: var(--distance-tiny) var(--distance-s);
     font: var(--font-button);
     border-radius: calc(var(--border-radius-button) * 0.75);
+    gap: 4px;
   }
 
   .button.small.height-fixed {
@@ -89,6 +90,7 @@
     min-height: 40px;
     padding: var(--distance-tiny) var(--distance-m);
     font: var(--font-button);
+    gap: 4px;
   }
 
   .button.medium.height-fixed {
@@ -100,6 +102,7 @@
     padding: var(--distance-m) var(--distance-sm);
     font: var(--font-headline-5);
     border-radius: calc(var(--border-radius-button) * 1.5);
+    gap: 8px;
   }
 
   .button.large.height-fixed {
