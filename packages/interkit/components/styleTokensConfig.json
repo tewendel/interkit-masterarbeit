@@ -3,7 +3,7 @@
     "key": "colorText",
     "type": "color",
     "category": "general",
-    "defaultValue": "#808080",
+    "defaultValue": "#000000",
     "help": "The default text color used in most places"
   },
   {
@@ -19,6 +19,13 @@
     "category": "general",
     "defaultValue": "#4C4C4C",
     "help": "A less intense variant of the default text color used for additional information"
+  },
+  {
+    "key": "colorTextLink",
+    "type": "color",
+    "category": "general",
+    "defaultValue": "#2D40A1",
+    "help": "The color used for links in richtext content."
   },
   {
     "key": "colorBackground",
@@ -91,6 +98,13 @@
     "help": "The color used for the background of a button when it is a danger button"
   },
   {
+    "key": "colorBackgroundButtonDangerPressed",
+    "type": "color",
+    "category": "buttons",
+    "defaultValue": "#FFA996",
+    "help": "The color used for the background of a button when it is a danger button and pressed"
+  },
+  {
     "key": "colorTextButtonPrimary",
     "type": "color",
     "category": "buttons",
@@ -115,7 +129,7 @@
     "key": "colorBackgroundButtonPrimaryPressed",
     "type": "color",
     "category": "buttons",
-    "defaultValue": "#000000",
+    "defaultValue": "#4C4C4C",
     "help": "The color used for the background of a button when it is a primary button and pressed"
   },
   {
@@ -159,6 +173,13 @@
     "category": "chat",
     "defaultValue": "#000000",
     "help": "The color for the background of a chat message sent by another user"
+  },
+  {
+    "key": "colorPagination",
+    "type": "color",
+    "category": "PictureBook",
+    "defaultValue": "#000000",
+    "help": "The color for the pagination indicator in PictureBook"
   },
   {
     "key": "borderWidth",

@@ -84,13 +84,5 @@
 
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="click-effect">
-  <slot {execute}></slot>
-</div>
+<slot {execute}></slot>
 
-<style>
-  .click-effect {
-    display: contents; /* the wrapper should not have an effect on styling */
-  }
-</style>

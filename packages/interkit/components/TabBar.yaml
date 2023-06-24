@@ -1,5 +1,5 @@
 name: TabBar
-toolboxCategory: Layout
+toolboxCategory: Buttons
 colour: 140
 fields:
   - name: default

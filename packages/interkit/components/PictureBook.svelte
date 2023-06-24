@@ -178,7 +178,7 @@
   }
 
   .pagination-container {
-    padding-top: var(--distance-s);
+    padding: var(--distance-s);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -198,12 +198,12 @@
     height: calc(1.5 * var(--distance-xs));
     margin: 0 calc(0.5 * var(--distance-xs));
     padding: 0;
-    border: var(--border-width) solid var(--border-color);
+    border: var(--border-width) solid var(--color-border-button-primary);
     border-radius: 50%;
   }
 
   .pagination-item--active {
-    background-color: var(--border-color);
+    background-color: var(--color-pagination);
   }
 
   .video-close-button {

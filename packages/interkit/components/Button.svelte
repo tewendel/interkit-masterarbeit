@@ -1,72 +1,47 @@
 <script>
-
-  import { getContext,setContext } from 'svelte';
-  import Icon from './Icon.svelte'
   import WithEffect from './WithEffect.svelte'
-  import { useLocation } from 'svelte-navigator';
-  import InterkitClient from '../interkit-client';
-
-  let location;
-  try {
-    location = useLocation();
-  } catch(e) {
-    console.log(e)
-  }
-
-  export let nopadding = false
-  export let type = "secondary" // primary | secondary | ghost | link | spacer
-  export let size =  "medium" // small | medium | large // TODO inherit from ButtonBar?
+  import { setContext } from 'svelte';
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'  
+  let showDummyData = getShowDummyDataStore();
+  
+  export let text = undefined;
+  export let type = "secondary" // primary | secondary | ghost | link
+  export let size =  "medium" // small | medium | large 
   export let flex = "normal" // normal | fill
   export let height = "fixed" // fixed | auto
-  export let text = undefined;
-  export let selected = false  
+  export let disabled = false;
   export let effect; // effect object used to decide what happens on click
 
-  // context for icons to know what path they are on
-  setContext("button", {
-    type,
-    path: effect?.path    
-  })
+  if($showDummyData) {
+    text = "Btn Text"
+  }
 
-  const uiKey = effect?.key ? InterkitClient.getUiKeyStore(effect?.key) : undefined;
-  $: tabSelected = 
-    (effect?.effectType == "route" && $location?.pathname == effect?.path) ||
-    (effect?.effectType == "setUIKey" && $uiKey == effect?.value)
-
-  export let execOnMount = false;
+  setContext("iconHeight", size == "large" ? "32px" : null)
 
 </script>
 
-<WithEffect {effect} {execOnMount} let:execute>
+<WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span
     on:click
-    on:click={execute} 
-    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height}`}
+    on:click={()=>{if(!disabled) execute()}} 
+    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
-    class:selected={selected}
-    class:Button--selected={selected}
-    class:nopadding 
-    class:nav-tab-selected={tabSelected}
+    class:Button--disabled={disabled}
   >
     <slot/>
     { text || "" }
-    {#if type == "list-item"}
-      <div class="button-extra-icon">
-        <Icon type="Thin-Arrow-Right"/> 
-      </div>
-    {/if}
   </span>
 </WithEffect>
 
 <style>
 
   .button {
-    border: var(--border-width) solid var(--border-color);
+    border: var(--border-width) solid var(--color-border);
     color: var(--color-text-button);
     border-radius: var(--border-radius-button);
     background-color: var(--color-background-button);
-    box-shadow: var(--box-shadow);
+    /*box-shadow: var(--box-shadow);*/
     display: inline-flex;
     gap: var(--distance-xs);
     overflow: hidden;
@@ -83,6 +58,12 @@
     box-sizing: border-box;
   }
 
+  span.button {
+    font-size: var(--font-size-buttons);
+  }
+
+  /* flex */
+
   .button.normal {
     flex-grow: 0;
   }
@@ -91,10 +72,13 @@
     flex-grow: 1;
   }
 
+  /* size */
+
   .button.small {
     min-height: 32px;
     padding: var(--distance-tiny) var(--distance-s);
     font: var(--font-button);
+    border-radius: calc(var(--border-radius-button) * 0.75);
   }
 
   .button.small.height-fixed {
@@ -113,79 +97,66 @@
 
   .button.large {
     min-height: 56px;
-    padding: var(--distance-tiny) var(--distance-s-m);
+    padding: var(--distance-m) var(--distance-sm);
     font: var(--font-headline-5);
+    border-radius: calc(var(--border-radius-button) * 1.5);
   }
 
   .button.large.height-fixed {
     height: 56px;
   }
 
-  .button.selected {
-    background-color: var(--color-background-highlight);
+  /* type */
+
+  .button.primary {
+    color: var(--color-text-button-primary);
+    background-color: var(--color-background-button-primary);
+    border-color: var(--color-border-button-primary);
+  }
+
+  .button.primary:active {
+    background-color: var(--color-background-button-primary-pressed);
+  }
+
+  
+  .button.secondary:active {
+    background-color: var(--color-background-button-pressed);
   }
 
   .button.ghost {
     background-color: transparent;
   }
 
+  .button.ghost:active {
+    background-color: var(--color-background-button-pressed);
+  }
+
   .button.link {
     border: none;
+    box-shadow: none;
     background-color: transparent;
     padding-left: var(--distance-xs);
     padding-right: var(--distance-xs);
   }
 
-  .button.spacer {
-    visibility: hidden;
-    pointer-events: none;
+  .button.link:active {
+    background-color: var(--color-background-button-pressed);
   }
 
-  .button.list-item {
-    width: 100%;
-    justify-content: left;
-    font: var(--font-headline-4);
+  .button.danger {
+    background-color: var(--color-background-button-danger);
     border: none;
-    border-bottom: var(--border-width) solid var(--border-color);
-    border-radius: 0%;
+    box-shadow: none;
   }
 
-  .button.list-item .button-extra-icon {
-    position: absolute;
-    right: var(--distance-s);
-    display: flex;
-    align-items: center;
+  .button.danger:active {
+    background-color: var(--color-background-button-danger-pressed);
   }
 
-  .button.nav-tab {
-    border: none;
-    border-radius: 0;
-    font: var(--font-headline-3);
-  }
-  
-  .button.nav-tab-selected {
-    font-weight: bold;
+  .button.disabled {
+    opacity: 0.5;
   }
 
-  .primary {
-    color: var(--color-text-button-primary);
-    background-color: var(--color-background-button-primary);
-  }
 
-  span.button {
-    font-size: var(--font-size-buttons);
-  }
-
-  .nopadding {
-    padding: 0;
-  }
-
-  .button:empty {
-    display: none;
-  }
-
-  .button.noborder {
-    border: none;
-  }
 
 </style>

@@ -14,8 +14,8 @@
 
 </script>
 
-<Label type="text" content={counter}/>
-<span class="time">{time}</span>
+{#if counter}<Label type="text" content={counter}/>{/if}
+{#if time}<span class="time">{time}</span>{/if}
 
 <style>
 

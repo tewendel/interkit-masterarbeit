@@ -1,0 +1,15 @@
+name: Tab
+colour: 300
+fields:
+  - type: string
+    name: text
+    help: "Text on the tab."
+  - type: extraProps
+    props:
+    - type: effect
+      name: effect
+      help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+    - type: checkbox
+      name: execOnMount
+      help: "Runs the effect once when the button is rendered (for example to set a default value)"
+toolboxCategory: Buttons

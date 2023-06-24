@@ -1,15 +1,18 @@
 <script>
 
+  import { setContext } from "svelte";
   import Card from "./fragments/Card.svelte"
   import Label from "./Label.svelte"
   import MessageIndicator from "./fragments/MessageIndicator.svelte";
   import { getShowDummyDataStore } from './dummyDataHelpers.js'  
   import { getContext } from 'svelte';
   import { util } from '..'
+  import WithEffect from "./WithEffect.svelte";
 
   export let variant = "full";
   export let rightArrow = false;
   
+  export let effect
   export let imageColumn;
   export let headlineColumn; 
   export let label1Column;
@@ -38,28 +41,33 @@
 
   let showDummyData = getShowDummyDataStore();
 
+  setContext("DataCard", {slots: $$slots})
 </script>
 
-<Card 
-  {variant} 
-  {rightArrow}
-  {imageRef}
-  {headline}
-  {label1}
-  {subtitle1}
-  {label2}
-  {subtitle2}
-  {label3}
-  {subtitle3}
-  {description}
->
-  <svelte:fragment slot="chips">
-    {#if $showDummyData && !$$slots.chips}
-      <Label type="icon" variant="strong" icon="Full-Check"/>
-      <MessageIndicator/>
-    {:else}
-      <slot name="chips"/>
-    {/if}
-  </svelte:fragment>
-  <svelte:fragment slot="content"><slot name="content"/></svelte:fragment>
-</Card>
+<WithEffect {effect} let:execute>
+  <Card 
+    {variant} 
+    {rightArrow}
+    {imageRef}
+    {headline}
+    {label1}
+    {subtitle1}
+    {label2}
+    {subtitle2}
+    {label3}
+    {subtitle3}
+    {description}
+    on:click={execute}
+    hoverPointer={effect ? true : false}
+  >
+    <svelte:fragment slot="chips">
+      {#if $showDummyData && !$$slots.chips}
+        <Label type="icon" variant="strong" icon="Full-Check"/>
+        <MessageIndicator/>
+      {:else}
+        <slot name="chips"/>
+      {/if}
+    </svelte:fragment>
+    <svelte:fragment slot="content"><slot name="content"/></svelte:fragment>
+  </Card>
+</WithEffect>

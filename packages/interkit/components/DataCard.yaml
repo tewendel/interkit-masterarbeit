@@ -13,6 +13,9 @@ fields:
       - name: rightArrow
         type: checkbox
         help: Display the right arrow next to the headline      
+      - name: effect
+        type: effect
+        help: What should happen when you tap on the card
       - name: imageColumn
         type: sheetColumn
         columnType: mediaFile

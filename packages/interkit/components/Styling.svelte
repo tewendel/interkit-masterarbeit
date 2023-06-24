@@ -97,7 +97,9 @@
   --color-text-button-pressed: ${tokens.colorTextButtonPressed};
   --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
   --color-text-button-danger: ${tokens.colorTextButtonDanger};
+  --color-text-link: ${tokens.colorTextLink};
   --color-background-button-danger: ${tokens.colorBackgroundButtonDanger};
+  --color-background-button-danger-pressed: ${tokens.colorBackgroundButtonDangerPressed};
   --color-text-button-primary: ${tokens.colorTextButtonPrimary};
   --color-text-button-primary-pressed: ${tokens.colorTextButtonPrimaryPressed};
   --color-background-button-primary: ${tokens.colorBackgroundButtonPrimary};
@@ -110,6 +112,8 @@
 
   --color-background-chat-me: ${tokens.colorBackgroundChatMe};
   --color-background-chat-other: ${tokens.colorBackgroundChatOther};
+
+  --color-pagination: ${tokens.colorPagination};
 
   --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
@@ -134,7 +138,7 @@
 
   /* derived defaults */
 
-  --border-color: var(--color-text);
+  /* --border-color: var(--color-text); deprecated? */
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
@@ -142,6 +146,7 @@
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
+  --distance-sm: calc(var(--distance-s) + var(--distance-m));
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
@@ -151,7 +156,7 @@
   4 -> xs  
   8 -> s
   16 -> m
-  24 -> s+m
+  24 -> sm
   32 -> l
   48 -> xl
   64 -> xxl
@@ -173,7 +178,7 @@
   --letter-spacing-headline-3: -0.25px;
   
   /* Interface/Headline 4 */
-  --font-headline-4: 700 20px/24px var(--font-family-headline);
+  --font-headline-4: 400 20px/24px var(--font-family-headline);
   --letter-spacing-headline-4: -0.25px;
   
   /* Interface/Headline 5 */
@@ -227,6 +232,10 @@
 
   /* Content/Headline 4 */
   --font-content-headline-4: 900 20px/24px var(--font-family-headline);
+
+  /* Content/Headline 5 */
+  --font-content-headline-5: 700 16px/24px var(--font-family-headline);
+  --letter-spacing-content-headline-5: -0.32px;
   
   /* Content/Body 1 */
   --font-content-body-1: 400 16px/24px var(--font-family-text);

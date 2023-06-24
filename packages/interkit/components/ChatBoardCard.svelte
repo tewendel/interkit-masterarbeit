@@ -3,24 +3,17 @@
   import { onMount } from "svelte"
   import { get } from "svelte/store"
   import { InterkitClient, util } from "../"
-  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
   
-  import MessagePreview from './Chat/MessagePreview.svelte';
-  import AspectRatio from "./AspectRatio.svelte";
-  import ChatChannelImage from "./Chat/ChatChannelImage.svelte";
+  import MessageIndicator from "./fragments/MessageIndicator.svelte";
+  import StoryBoardImage from "./StoryBoardImage.svelte";
   import LinkConditional from "./LinkConditional.svelte";
+
+  import Card from "./fragments/Card.svelte"
 
   export let board = "board1"
   let channel_key = board
   export let path
 
-  let showDummyData = getShowDummyDataStore()
-  const dummyData = {
-    title: "Title",
-    label: "Label",
-    numUnseen: 3
-  }
-  
   let real_channel_key = util.extractContextProp(channel_key);
   
   let channelsStore;
@@ -89,114 +82,38 @@
       }
     }
 
-  const onClick = (element) => {
-    if(path) {
-      alert("routing to " + path)
+  const messagePreviewString = (_message) => {
+    if(["text", "image", "video", "audio", "choice"].includes(_message?.payload?.type)) {
+      let previewString = "";
+      if(!_message.origin) previewString += "You:";
+      if(_message?.payload?.type == "text") previewString += _message?.payload?.text
+      if(_message?.payload?.type == "image") previewString += "[Image]";
+      if(_message?.payload?.type == "video") previewString += "[Video]";
+      if(_message?.payload?.type == "audio") previewString += "[Audio]";
+      if(_message?.payload?.type == "choice") {
+        for(let key in _message?.payload?.choice) {
+          previewString += _message.payload.choice[key] + " "
+        } 
+      }
+      return previewString;   
     }
   }
 
 </script>
 
 <LinkConditional to={path + "/" + real_channel_key}>
-  <div class="ChatBoardCard container">
-    <div class="ChatPreview__top top">
-      <span class="ChatPreview__title title">
-        {
-          $showDummyData ? dummyData.title : 
-          currentChannel?.title ? currentChannel?.title : "untitled (" + real_channel_key + ")"
-        }
-      </span>
-      {#if $showDummyData || numUnseen}
-        <span class="ChatPreview__unseen unseen">
-          {$showDummyData ? dummyData.numUnseen : numUnseen}
-        </span>
-      {/if}
-    </div>
-    <div class="ChatPreview__image image">
-      <AspectRatio aspectRatioType="square">
-        <ChatChannelImage channel_key={real_channel_key}/>
-      </AspectRatio>
-    </div>
-    <div class="ChatPreview__message message">
-      {#if currentChannel?.label || $showDummyData}
-        <span class="ChatPreview__message__label label">
-          {$showDummyData ? dummyData.label : currentChannel?.label}
-        </span>  
-      {/if}
-      {#if latestMessage || $showDummyData}
-        <span class="ChatPreview__message__text text">
-          <MessagePreview message={latestMessage} />
-        </span>
-      {/if}
-    </div>
-  </div>
+  <StoryBoardImage channel_key={real_channel_key} imageProvider let:imageRef={imageRef}>
+    <Card
+      variant="small"
+      rightArrow
+      headline={currentChannel?.title}
+      label2={currentChannel?.label}
+      subtitle2={messagePreviewString(latestMessage)}
+      imageRef={imageRef}
+      >
+        <svelte:fragment slot="chips">
+          {#if numUnseen}<MessageIndicator counter={numUnseen}/>{/if}
+        </svelte:fragment>
+    </Card>
+  </StoryBoardImage>
 </LinkConditional>
-  
-<style>
-  .container {
-    font: var(--font-headline-4);
-    letter-spacing: var(--letter-spacing-headline-4);
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: var(--distance-xxl) auto;
-    grid-template-rows: auto auto;
-    width: 100%;
-    height: var(--distance-xxl);
-    padding: 0 var(--distance-s);
-    box-sizing: border-box;
-  }
-
-  .image {
-    grid-row: 1 / span 2;
-    grid-column: 1;
-    padding: var(--distance-s);
-    align-self: stretch;
-  }
-
-  .top {
-    grid-row: 1;
-    grid-column: 2;
-    align-self: end;
-    display: flex;
-    overflow: hidden;
-  }
-
-  .title {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    flex: 1;
-    align-self: center;
-  }
-
-  .unseen {
-    font: var(--font-caption-bold);
-    color: var(--color-background);
-    background-color: var(--color-text);
-    padding: var(--distance-tiny) var(--distance-s);
-    align-self: center;
-  }
-
-  .message {
-    grid-row: 2;
-    grid-column: 2;
-    overflow: hidden;
-    align-self: start;
-  }
-
-  .message .label {
-    font: var(--font-caption-bold);
-    color: var(--color-background);
-    background-color: var(--color-text);
-    padding: var(--distance-tiny) var(--distance-s);
-    float:left;
-    margin-right: 0.5ex;
-  }
-
-  .message .text {
-    top: var(--distance-tiny);
-    position: relative;
-  }
-
-
-</style>

@@ -1,4 +1,5 @@
 <script>
+  import { getContext } from "svelte"
   import AspectRatio from '../AspectRatio.svelte'
   import MediaFileImage from '../MediaFileImage.svelte'
   import CardHeader from "./CardHeader.svelte"
@@ -6,6 +7,7 @@
   
   export let variant = "full";
   export let rightArrow = false;
+  export let hoverPointer;
   
   export let imageRef
   export let headline
@@ -17,7 +19,6 @@
   export let subtitle3
   export let description  
   
-
   let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
     imageRef = {value: "123"}
@@ -34,12 +35,15 @@
     full: "",
     large: "border-radius: var(--border-radius);",
     medium: "border-radius: var(--border-radius);",
-    small: "border-radius: var(--border-radius);",
+    small: "border-radius: var(--border-radius-button)",
   }
+
+  const DataCardContext = getContext("DataCard")
 
 </script>
 
-<div class="container {variant}">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="container {variant} {hoverPointer ? "hoverPointer" : ""}" on:click>
   <div class="header-wrapper">
     {#if imageRef?.value}
       <div class="image">
@@ -72,15 +76,27 @@
       </CardHeader>
     </div>
   </div>
-  <div class="content-wrapper">
-    <slot name="content"/>
-  </div>
+  {#if DataCardContext?.slots?.content}
+    <div class="content-wrapper">
+      <slot name="content"/>
+    </div> 
+  {/if}
 </div>
 
 <style>
   
   .container {
     background-color: #FFFFFF;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .container.hoverPointer:hover {
+    cursor:pointer;
   }
 
   .container.full {
@@ -97,7 +113,6 @@
 
   .container.large, .container.medium, .container.small {
     padding: 8px;
-    padding-bottom: 16px;
     border-radius: 24px;
   }
 
@@ -109,12 +124,6 @@
 
   .container.large .image {
     margin-bottom: 8px;
-  }
-
-  .container.large .header-wrapper,
-  .container.medium .header-wrapper,
-  .container.small .header-wrapper {
-    padding-bottom: 8px;
   }
 
   .container.medium .header-wrapper,
@@ -141,6 +150,7 @@
     height: 56px;
     margin-right: 4px;
     flex-shrink: 0;
+    border-radius: 16px;
   }
 
   .container.small .header {
