@@ -37,14 +37,12 @@
   
 </script>
 
-<div class="UserCard frame">
+<div class="UserCard frame" class:no-image={!imageKey ? true : false}>
   <div class="profile-pic">    
     {#if imageKey}
       <AspectRatio aspectRatioType="square">
         <MediaFileImage style="border-radius: var(--border-radius);" fitDimension="both" mediafileRef={{value: imageKey}}/>
       </AspectRatio>
-      {:else}
-      <div class="image-fallback"></div>
     {/if}
   </div>
 
@@ -90,13 +88,6 @@
     grid-row: 1 / 3;
   }
 
-  .image-fallback {
-    border-radius: var(--border-radius);
-    background-color: #FFDBD3;
-    width: 100%;
-    height: 100%;
-  }
-  
   .one {
     grid-column: 2;
     grid-row: 1;
@@ -115,6 +106,18 @@
   .four {
     grid-column: 3;
     grid-row: 2; 
+  }
+
+  .frame.no-image {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .frame.no-image .one, .frame.no-image .three {
+    grid-column: 1;
+  }
+
+  .frame.no-image .two, .frame.no-image .four {
+    grid-column: 2;
   }
 
 </style>
