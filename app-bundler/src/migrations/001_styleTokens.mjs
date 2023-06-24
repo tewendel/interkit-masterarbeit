@@ -10,6 +10,8 @@ export default async function(projectId) {
   try {
     await fs.exists(tokensFile);
   } catch (e) {
+    // create dir if it doesn't exist
+    await fs.mkdir(path.dirname(tokensFile), { recursive: true });
     await fs.writeFile(tokensFile, tokensFileContent);
     console.log(`Migration 001: Created ${tokensFile}`);
   }

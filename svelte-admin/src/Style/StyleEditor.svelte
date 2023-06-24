@@ -7,7 +7,7 @@
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject } from '../admin.js'
 
-  let originalStyleTokens = $currentProject.uiState.styleTokens
+  let originalStyleTokens = $currentProject?.uiState?.styleTokens || {}
   let modified = false
   let equalsDefaults = true
   let currentStyleTokens = {...originalStyleTokens}
@@ -38,7 +38,7 @@
   }
 
   // update style tokens from project if they differ
-  $: if (!equals($currentProject.uiState.styleTokens,originalStyleTokens)) originalStyleTokens = $currentProject.uiState.styleTokens
+  $: if (!equals($currentProject?.uiState?.styleTokens,originalStyleTokens)) originalStyleTokens = $currentProject?.uiState?.styleTokens
   // true when the project doesn't define it's own style tokens
   $: originalStyleIsEmpty = !originalStyleTokens || equals(originalStyleTokens,{})
   // true when there is something to save or to undo

@@ -4,6 +4,7 @@ import { updateProjectServers } from './project_server.mjs'
 import { runUpdaters } from './updater.mjs'
 import { ensureViteServers } from './vite_server.mjs'
 import { runMigrationsOncePerProject } from "./migration.mjs";
+import { avoidParallelExecution } from "./utils.mjs";
 
 let projects = []
 let server = null
@@ -19,14 +20,14 @@ const setup = async (app, main_server) => {
 
     let reactiveCollection = server.collection('projects').reactive();
 
-    reactiveCollection.onChange( async (newData) => {
+    reactiveCollection.onChange( avoidParallelExecution(async (newData) => {
       projects = newData;
       await ensureRepositories(newData)
       await runMigrationsOncePerProject(newData);
       updateProjectServers(newData)
       runUpdaters(newData)
       ensureViteServers(newData, app, main_server)
-    });
+    }));
 
     let projectsSub = server.subscribe("projects");
   })
