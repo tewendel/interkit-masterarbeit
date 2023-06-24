@@ -1,12 +1,13 @@
 <script>
 
-  import { InterkitClient } from '../'
+  import { InterkitClient } from '..'
   import { get } from "svelte/store"
 
   import { getShowDummyDataStore } from './dummyDataHelpers.js'
 
   import MediaFileImage from "./MediaFileImage.svelte";
   import AspectRatio from './AspectRatio.svelte';
+  import UserCardValue from './fragments/UserCardValue.svelte';
 
   export let imageVar  
   export let topLeftLabel
@@ -22,21 +23,21 @@
 
   const projectDataStore = InterkitClient.userProjectDataStore
   $: imageKey = $showDummyData ? "key" : $projectDataStore?.userVars?.[imageVar]
-  $: topLeftValue = $showDummyData ? "topLeftValue" : $projectDataStore?.userVars?.[topLeftVar]
-  $: topRightValue = $showDummyData ? "topRightValue" : $projectDataStore?.userVars?.[topRightVar]
-  $: bottomLeftValue = $showDummyData ? "bottomLeftValue" : $projectDataStore?.userVars?.[bottomLeftVar]
-  $: bottomRightValue = $showDummyData ? "bottomRightValue" : $projectDataStore?.userVars?.[bottomRightVar]
+  $: topLeftValue = $showDummyData ? "valuelong" : $projectDataStore?.userVars?.[topLeftVar]
+  $: topRightValue = $showDummyData ? "valuelonglong" : $projectDataStore?.userVars?.[topRightVar]
+  $: bottomLeftValue = $showDummyData ? 0.5 : $projectDataStore?.userVars?.[bottomLeftVar]
+  $: bottomRightValue = $showDummyData ? "value" : $projectDataStore?.userVars?.[bottomRightVar]
 
   if($showDummyData) {
-    topLeftLabel = "topLeftLabel" 
-    topRightLabel = "topRightLabel"
-    bottomLeftLabel = "bottomLeftLabel"
-    bottomRightLabel = "bottomRightLabel"
+    topLeftLabel = "Label" 
+    topRightLabel = "Label"
+    bottomLeftLabel = "Label"
+    bottomRightLabel = "Label"
   }
   
 </script>
 
-<div class="UserProfile frame">
+<div class="UserCard frame">
   <div class="profile-pic">    
     {#if imageKey}
       <AspectRatio aspectRatioType="square">
@@ -48,23 +49,19 @@
   </div>
 
   {#if topLeftLabel}<div class="one">
-    <span class="label">{topLeftLabel}</span>
-    <span class="value">{typeof topLeftValue != "undefined" ? topLeftValue : ""}</span>
+    <UserCardValue label={topLeftLabel} value={topLeftValue}/>
   </div>
   {/if}
   {#if topRightLabel}<div class="two">
-    <span class="label">{topRightLabel}</span>
-    <span class="value">{typeof topRightValue != "undefined" ? topRightValue : ""}</span>
+    <UserCardValue label={topRightLabel} value={topRightValue} justifyRight />
   </div>
   {/if}
   {#if bottomLeftLabel}<div class="three">
-    <span class="label">{bottomLeftLabel}</span>
-    <span class="value">{typeof bottomLeftValue != "undefined" ? bottomLeftValue : ""}</span>
+    <UserCardValue label={bottomLeftLabel} value={bottomLeftValue}/>
   </div>
   {/if}
   {#if bottomRightLabel}<div class="four">
-    <span class="label">{bottomRightLabel}</span>
-    <span class="value">{typeof bottomRightValue != "undefined" ? bottomRightValue : ""}</span>
+    <UserCardValue label={bottomRightLabel} value={bottomRightValue} justifyRight />
   </div>
   {/if}
   
@@ -74,10 +71,16 @@
 <style>
 
   .frame {
-    background-color: #F2F2F2;
-    padding: var(--distance-m);
+    background-color: var(--color-background);
+    padding: var(--distance-s);
+    padding-right: calc(2 * var(--distance-s));
     display: grid;
     grid-template-columns: 112px 1fr 1fr;
+    border-radius: var(--border-radius);
+  }
+  
+  .frame div {
+    min-width: 0;
   }
 
   .profile-pic {
@@ -102,7 +105,6 @@
   .two {
     grid-column: 3;
     grid-row: 1;
-    text-align: right;
   }
 
   .three {
@@ -112,22 +114,7 @@
 
   .four {
     grid-column: 3;
-    grid-row: 2;
-    text-align: right;
-  }
-
-  .frame .label {
-    text-transform: uppercase;
-    font: var(--font-overline);
-    letter-spacing: var(--letter-spacing-overline);
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .frame .value {
-    font: var(--font-content-headline-5);
-    letter-spacing: var(--letter-spacing-headline-5);  
-    font-weight: 700;
+    grid-row: 2; 
   }
 
 </style>
