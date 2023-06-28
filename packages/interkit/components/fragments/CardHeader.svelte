@@ -122,8 +122,8 @@
   }
 
   .card-header.small .headline {
-    font: var(--font-content-headline-4);
-    letter-spacing: var(--letter-spacing-content-headline-4);
+    font: var(--font-content-headline-5);
+    letter-spacing: var(--letter-spacing-content-headline-5);
   }
 
   .headline-chips {

@@ -666,7 +666,7 @@
     bottom: calc(50% - 64px);
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 1;
     padding: 8px;
   }
 

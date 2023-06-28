@@ -5,7 +5,8 @@
   import CardHeader from "./CardHeader.svelte"
   import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
   
-  export let variant = "full";
+  export let variant = "full"; // full | large | medium | small | extra-small (card is just like small but with small header)
+  export let state = "enabled"; // enabled | pressed | selected
   export let rightArrow = false;
   export let hoverPointer;
   
@@ -28,7 +29,8 @@
     full: "large_overlay",
     large: "element",
     medium: "square",
-    small: "square"
+    small: "square",
+    "extra-small": "square"
   }
 
   const imageStyleForVariant = {
@@ -36,6 +38,15 @@
     large: "border-radius: var(--border-radius);",
     medium: "border-radius: var(--border-radius);",
     small: "border-radius: var(--border-radius-button)",
+    "extra-small": "border-radius: var(--border-radius-button)"
+  }
+
+  const headerVariant = {
+    full: "full",
+    large: "large",
+    medium: "medium",
+    small: "medium",
+    "extra-small": "small"
   }
 
   const DataCardContext = getContext("DataCard")
@@ -43,7 +54,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container {variant} {hoverPointer ? "hoverPointer" : ""}" on:click>
+<div class="container {variant} {state} {hoverPointer ? "hoverPointer" : ""}" on:click>
   <div class="header-wrapper">
     {#if imageRef?.value}
       <div class="image">
@@ -60,7 +71,7 @@
     <div class="header">
       <CardHeader 
         {rightArrow} 
-        {variant}
+        variant = {headerVariant[variant]}
         {headline}
         {label1}
         {subtitle1}
@@ -87,6 +98,11 @@
   
   .container {
     background-color: #FFFFFF;
+    text-align: left;
+  }
+
+  .container.selected {
+    background-color: var(--color-background-highlight);
   }
 
   .header {
@@ -111,14 +127,15 @@
     padding: 0px 16px 16px 16px;
   }
 
-  .container.large, .container.medium, .container.small {
+  .container.large, .container.medium, .container.small, .container.extra-small {
     padding: 8px;
     border-radius: 24px;
   }
 
   .container.large:not(:last-child),
   .container.medium:not(:last-child),
-  .container.small:not(:last-child) {
+  .container.small:not(:last-child),
+  .container.extra-small:not(:last-child) {
     margin-bottom: 8px;
   }
 
@@ -127,7 +144,8 @@
   }
 
   .container.medium .header-wrapper,
-  .container.small .header-wrapper {
+  .container.small .header-wrapper,
+  .container.extra-small .header-wrapper {
     display: flex;
     flex-direction: row;
   }
@@ -145,7 +163,7 @@
     min-width: 0;
   }
 
-  .container.small .image {
+  .container.small .image, .container.extra-small .image {
     width: 56px;
     height: 56px;
     margin-right: 4px;
@@ -153,7 +171,7 @@
     border-radius: 16px;
   }
 
-  .container.small .header {
+  .container.small .header, .container.extra-small .header {
     padding-left: 4px;
     flex: 1;
     min-width: 0;

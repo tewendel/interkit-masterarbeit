@@ -1,0 +1,20 @@
+name: MapViewButton
+colour: 300
+toolboxCategory: Map
+fields:
+  - type: extraProps
+    props:
+    - name: type
+      type: options
+      options:
+        - filters
+        - layers
+      help: "Pick which type of interface to display"
+    - name: text 
+      type: string
+      help: "Text on the button."
+    - name: layerSelectPrompt
+      type: string
+      defaultValue: "Select a layer for the map."
+      help: "A short info text for the layer selector"
+      
