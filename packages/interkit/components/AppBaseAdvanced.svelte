@@ -376,6 +376,11 @@
 <svelte:head>
   <title>{$config?.project_slug}</title>
 
+  {#if $config?.INTERKIT_APP_LOAD_THEME}
+    <link rel='stylesheet' href="theme/global.css">
+    <script defer src="theme/global.js"></script>
+  {/if}
+
   <style>
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,

@@ -115,7 +115,7 @@ async function setupNewRepository(project, template="starter", gitRepository) {
         }
       } else {
         await git.init({ fs, dir: projectPath });
-        await fse.copySync(starterPath, projectPath)
+        fse.copySync(starterPath, projectPath)
       }
       
       await fs.promises.writeFile(

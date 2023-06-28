@@ -13,19 +13,26 @@
   import { onMount } from 'svelte'
 
   let tokens = {}
+  const globalTokens = {...globalThis?.styleTokens} || {}
 
   onMount(async () => {
   })
 
   $: {
-    // initialize with default values
-    if (!styleTokens) styleTokens = {}
+    // generate local tokens and init with defaults
     for (let definition of definitions) {
-      if(typeof styleTokens[definition.key] == "undefined") {
-        tokens[definition.key] = definition.defaultValue
-      } else {
+      // first choice: styleTokens from props
+      if(styleTokens && typeof styleTokens[definition.key] !== "undefined") {
         tokens[definition.key] = styleTokens[definition.key]
+        continue
       }
+      // second choice: global styleTokens
+      if(globalTokens && typeof globalTokens[definition.key] !== "undefined") {
+        tokens[definition.key] = globalTokens[definition.key]
+        continue
+      }
+      // third choice: default value
+      tokens[definition.key] = definition.defaultValue
     }
   }
 
@@ -60,6 +67,18 @@
 */
   
 </script>
+
+<!--div style="position: absolute; right:0; font-size: 60%;">
+  <div style="color: {globalThis?.styleTokens?.colorText}">
+    global: { globalThis?.styleTokens?.colorText}
+  </div>
+  <div style="color: { styleTokens?.colorText}">
+  props: { styleTokens?.colorText }
+  </div>
+  <div style="color: {tokens?.colorText}">
+    local: { tokens?.colorText}
+  </div>
+</div-->
 
 <div class="style" style={`
 

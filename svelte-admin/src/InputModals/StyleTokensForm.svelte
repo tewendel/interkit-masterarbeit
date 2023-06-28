@@ -7,6 +7,7 @@
   export let cloneInputObject = false
   
   let _value = {}
+  export let equalsDefaults = false
   
   if (cloneInputObject) {
     _value = {...value}; // make a local copy to prevent weird side effects after block duplication
@@ -16,9 +17,12 @@
 
   // initialize with default values
   $: {
+    equalsDefaults = true
     for (let definition of definitions) {
       if(typeof _value[definition.key] == "undefined") {
         _value[definition.key] = definition.defaultValue
+      } else {
+        if (_value[definition.key] !== definition.defaultValue) equalsDefaults = false
       }
     }
   }

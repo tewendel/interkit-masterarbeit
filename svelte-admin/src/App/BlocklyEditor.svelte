@@ -279,10 +279,8 @@
 
     let imports = "<script>\n";
     //imports += `import AppBase from "interkit/components/AppBase.svelte";\n`
-    imports += `import initActions from "./actions.js"; \ninitActions(); \n`
+    imports += `import initActions from "./actions.js";\n`
     imports += `import { t, translations, lang } from 'interkit/i18n.js';\n`
-    imports += `$: $translations, translations, t, $lang, lang, console.log('AppBase i18n $', { t, $translations, translations, $lang, lang });\n`
-    imports += `console.log('AppBase i18n', { t, $translations, translations, $lang, lang });\n`
     for(let block of allBlocksUnique.sort( (a,b) => a.type.localeCompare(b.type, 'en') )) {
       let origin = "interkit"
       try {
@@ -292,6 +290,12 @@
       if(!["Group", "GroupConnector", "RouteConnector"].includes(block.type))
         imports += `import ${block.type} from "${origin}/components/${block.type}.svelte";\n`
     }
+    imports += `import styleTokens from "./styleTokens.json";\n`
+    imports += `globalThis.styleTokens = styleTokens;\n`
+    imports += `console.log('AppBase styleTokens', styleTokens);\n`
+    imports += `initActions();\n`
+    imports += `$: $translations, translations, t, $lang, lang, console.log('AppBase i18n $', { t, $translations, translations, $lang, lang });\n`
+    imports += `console.log('AppBase i18n', { t, $translations, translations, $lang, lang });\n`
     imports += "</"+"script>\n\n" // writing this as two strings to escape svelte compiler
 
     // let codeWithAppBase = "<AppBase>\n" + code + "\n</AppBase>";

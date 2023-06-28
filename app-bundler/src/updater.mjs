@@ -12,6 +12,7 @@ import { updateLastBuildDate } from "./updaters/lastBuildDate.mjs";
 import { updateGit } from "./updaters/gitFiles.mjs";
 import { updateProjectMdFiles } from "./updaters/mdFiles.mjs";
 import { updateProjectDirFiles } from "./updaters/projectFiles.mjs";
+import { updateTheme } from "./updaters/themeFiles.mjs";
 
 const watchedProjectIds = []
 
@@ -46,6 +47,7 @@ const runUpdater = async function(projectId) {
     (wF) => updateLastBuildDate(projectId, wF),
     500
   );
+  const updateThemeDebounced = debounce( wF => updateTheme(projectId, wF), 50)
 
   // watch project path and trigger updaters
   const projectPath = getProjectPath(projectId)
@@ -73,6 +75,7 @@ const runUpdater = async function(projectId) {
     //updateProjectDirFilesDebounced(watchedFiles) // not used yet
     updateProjectMdFilesDebounced(watchedFiles)
     updateLastBuildDateDebounced(watchedFiles);
+    updateThemeDebounced(watchedFiles)
   });
 }
 
