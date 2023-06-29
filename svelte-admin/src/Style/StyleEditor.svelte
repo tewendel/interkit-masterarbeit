@@ -7,10 +7,11 @@
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject } from '../admin.js'
 
-  let originalStyleTokens = $currentProject?.uiState?.styleTokens || {}
+  let originalStyleTokens = $currentProject?.uiState?.styleTokens
+  let initialStyleTokens = $currentProject?.uiState?.styleTokens
   let modified = false
   let equalsDefaults = true
-  let currentStyleTokens = {...originalStyleTokens}
+  let currentStyleTokens = originalStyleTokens ? {...originalStyleTokens} : {}
 
   const save = async () => {
     console.log("save", currentStyleTokens)
@@ -37,6 +38,11 @@
     return JSON.stringify(a) === JSON.stringify(b)
   }
 
+  // update currentStyleTokens if they differ
+  $: if (!initialStyleTokens && $currentProject?.uiState?.styleTokens) {
+    currentStyleTokens = $currentProject?.uiState?.styleTokens
+    initialStyleTokens = $currentProject?.uiState?.styleTokens
+  }
   // update style tokens from project if they differ
   $: if (!equals($currentProject?.uiState?.styleTokens,originalStyleTokens)) originalStyleTokens = $currentProject?.uiState?.styleTokens
   // true when the project doesn't define it's own style tokens
@@ -79,7 +85,6 @@
     </ButtonSet>      
   </div>
   <div class="main-content">
-
     {#if originalStyleIsEmpty}
       <InlineNotification
         hideCloseButton
