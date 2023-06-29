@@ -8,12 +8,15 @@ export default async function(projectId) {
   const tokensFileContent = "{}";
   // create the file if it doesn't exist
   try {
-    await fs.exists(tokensFile);
+    const exists = await fs.exists(tokensFile);
+    if (!exists) {
+      // create dir if it doesn't exist
+      await fs.mkdir(path.dirname(tokensFile), { recursive: true });
+      await fs.writeFile(tokensFile, tokensFileContent);
+      console.log(`Migration 001: Created ${tokensFile}`);
+    }
   } catch (e) {
-    // create dir if it doesn't exist
-    await fs.mkdir(path.dirname(tokensFile), { recursive: true });
-    await fs.writeFile(tokensFile, tokensFileContent);
-    console.log(`Migration 001: Created ${tokensFile}`);
+    console.error(`Migration 001: Error`, e);
   }
   return true;
 }

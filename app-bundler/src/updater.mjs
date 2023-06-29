@@ -19,8 +19,8 @@ const watchignore = [
   "**/node_modules/**",
   "**/node_modules/.*",
   "**/public",
-  "**/.git",
-  "**/.git/**",
+  //"**/.git",
+  "**/.git/**", /* need to update git files */
   "**/ios",
   "**/ios/**",
   "**/android",
