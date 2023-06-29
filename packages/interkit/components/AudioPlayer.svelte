@@ -171,15 +171,16 @@
     <div class="minimised-controls">
 
       <div class="AudioPlayer__Close close">
-        <button class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
+        <Button size="small" type="link" class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
           <Icon type="close">
             Close
           </Icon>
-        </button>
+        </Button>
       </div>
 
       {#key title}
         {#if !playerExpanded}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <h4 
               class="AudioPlayer__Title title" 
               on:click={toggleExpanded}
@@ -193,16 +194,16 @@
         {#if $audioPlayerStatus.loading }
           <Loading inverse/>
         {:else}
-          <Button on:click={togglePlay}>
-            <Icon type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
+          <Button type="primary" on:click={togglePlay}>
+            <Icon inverse type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
           </Button>
         {/if}
       </div>
 
       <div class="AudioPlayer__ExpandCollapse expand-collapse">
-        <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
+        <Button type="link" size="small" class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
           <Icon type={"arrow-up"}/>
-        </button>
+        </Button>
       </div>
 
     </div>
@@ -234,55 +235,13 @@
 
       <div class="expanded-bottom-bar">
 
-        <div class="expanded-controls">
-
-          <div class="AudioPlayer__Close close">
-            <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={()=>{toggleExpanded(); closePlayer()}} title={playerExpanded ? "Collapse" : "Expand"}>
-              <Icon type="close"/>
-            </button>
-          </div>
-
-          <div class="AudioPlayer__PlayButton seekbutton">
-            <Button on:click={()=>{seek(-30)}}>
-              <Icon type="skip-backward" />
-            </Button>
-          </div>
-
-          <div class="AudioPlayer__PlayButton playbutton">
-            {#if $audioPlayerStatus.loading }
-              <Loading inverse/>
-            {:else}
-              <Button on:click={togglePlay}>
-                <Icon type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
-              </Button>
-            {/if}
-          </div>
-
-          <div class="AudioPlayer__PlayButton seekbutton">
-            <Button on:click={()=>{seek(10)}}>
-              <Icon type={"skip-forward"} />
-            </Button>
-          </div>
-
-          <div class="AudioPlayer__ExpandCollapse expand-collapse">
-            <button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
-              <Icon type={"arrow-down"}/>
-            </button>
-          </div>
-          
-        </div>
-
-        <div class="expanded-time" class:expanded={playerExpanded}>
-              <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
-              <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
-        </div>
-
         <div class="expanded-range-slider" class:expanded={playerExpanded}>
           <input 
             type="range" 
             class="seekPositionRangeSlider" 
             name="seekPosition"
             min="0" 
+            step="any"
             max={$audioPlayerStatus?.duration} 
             bind:value={rangeSliderValue}
             on:input={()=>{rangeSliderDragging = true;}}
@@ -291,6 +250,53 @@
               rangeSliderDragging = false;
             }}
           >
+        </div>
+
+        <div class="expanded-time" class:expanded={playerExpanded}>
+          <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
+          <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
+        </div>
+
+        <div class="expanded-controls">
+
+          <div class="AudioPlayer__Close close">
+            <!--button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={()=>{toggleExpanded(); closePlayer()}} title={playerExpanded ? "Collapse" : "Expand"}>
+              <Icon type="close"/>
+            </button-->
+          </div>
+
+          <div class="center-controls">
+
+            <div class="AudioPlayer__PlayButton seekbutton">
+              <Button size="small" type="link" on:click={()=>{seek(-30)}}>
+                <Icon type="skip-backward" />
+              </Button>
+            </div>
+
+            <div class="AudioPlayer__PlayButton playbutton">
+              {#if $audioPlayerStatus.loading }
+                <Loading inverse/>
+              {:else}
+                <Button size="large" type="primary" on:click={togglePlay}>
+                  <Icon inverse type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
+                </Button>
+              {/if}
+            </div>
+
+            <div class="AudioPlayer__PlayButton seekbutton">
+              <Button size="small" type="link" on:click={()=>{seek(10)}}>
+                <Icon type={"skip-forward"} />
+              </Button>
+            </div>
+
+          </div>
+
+          <div class="AudioPlayer__ExpandCollapse expand-collapse">
+            <Button type="link" size="small" class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={toggleExpanded} title={playerExpanded ? "Collapse" : "Expand"}>
+              <Icon type={"arrow-down"}/>
+            </Button>
+          </div>
+          
         </div>
 
       </div>      
@@ -308,13 +314,22 @@
     display: none;
     width: 100%;
     height: 64px;
-    background-color: #eee;
+    background-color: var(--color-background-highlight);
     position: relative;
   }
   
   .minimised-container.active {
     display: flex;
     flex-direction: column;
+  }
+
+  .minimised-container h4.title {
+    font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
   }
 
   .minimised-controls {
@@ -327,11 +342,12 @@
     font-size: 20px;
     line-height: 24px;
     font-weight: 500;
+    gap: var(--distance-s);
   }
 
   .minimsed-progress-container {
     width: 100%;
-    height: 4px;
+    height: var(--distance-xs);
     position: absolute;
     bottom: 0px;
   }
@@ -355,8 +371,9 @@
   }
 
   .expanded-bottom-bar {
-    height: 100px;
     background-color: #eee;
+    padding: 16px 8px;
+    box-sizing: border-box; 
   }
 
   .expanded-controls, .expanded-range-slider, .expanded-time {
@@ -366,15 +383,25 @@
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 0 8px 0 8px;
+    padding: 4px 8px 0 8px;
   }
 
-  .expanded-controls {
-    padding: 8px; 
+  .expanded-controls .center-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    
   }
 
   .expanded-time {
+    margin-top: 8px;
     margin-bottom: 8px;
+  }
+
+  .expanded-time span {
+    font: var(--font-caption);
   }
 
   :not(.expanded) .base-content .seekbutton {

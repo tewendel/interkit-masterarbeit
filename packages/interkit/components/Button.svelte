@@ -13,7 +13,7 @@
   export let effect; // effect object used to decide what happens on click
 
   if($showDummyData) {
-    text = "Btn Text"
+    //text = "Btn Text"
   }
 
   setContext("iconHeight", size == "large" ? "32px" : null)
