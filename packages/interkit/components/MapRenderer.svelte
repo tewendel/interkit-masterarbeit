@@ -111,8 +111,8 @@
   export let markerClick;
   export let mapClick;
 
-  import markerIconAsset from "./icons/Location.svg?url"; // default asset to use
-  import markerCheckedIconAsset from "./icons/Check-Thin.svg?url"; // checked asset
+  import markerIconAsset from "./icons/Thin/Location.svg?url"; // default asset to use
+  import markerCheckedIconAsset from "./icons/Thin/Check.svg?url"; // checked asset
 
   export let defaultLocation; // where to center the map by default [lat, lng]
   
