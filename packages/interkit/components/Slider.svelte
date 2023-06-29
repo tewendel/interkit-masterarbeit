@@ -3,9 +3,14 @@
   import ContextProvider from './ContextProvider.svelte'
   export let slides
 
+  export let continuous = true;
+  export let roundedCorners;
+  export let background;
+  export let gaps;
+  
 </script>
 
-<div class="Slider container">
+<div class="Slider container" class:continuous class:roundedCorners class:background class:gaps>
   {#if slides}
     <div class="Slider__Slider slider" data-slides-amount={slides.length}>
       {#if slides.length}
@@ -28,6 +33,15 @@
 
   .container {
     width: 100%;
+    
+  }
+
+  .container.background {
+    padding: var(--distance-s) 0;
+  }
+
+  .container.background {
+    background-color: var(--color-background-backdrop);
   }
 
   .slider {
@@ -37,10 +51,13 @@
     width: 100%;
     overflow: auto;
     scrollbar-width: none;
+  }
+
+  .container.gaps .slider {
     gap: var(--distance-s);
   }
 
-  .slider[data-slides-amount="1"] .slide {
+  .container:not(.continuous) .slider[data-slides-amount="1"] .slide {
     width:100%;
   }
 
@@ -50,19 +67,29 @@
     scroll-snap-align: center;
     /* important that they all are exactly the same width (only the first one has a border-left), otherwise it confuses AspectRatio */
     box-sizing: content-box;
-    overflow: hidden; /* so border-radius works, TODO check iOS */
     border: var(--border-width) solid var(--border-color);
+    padding: 1px 0px; /* otherwise box shadow is cut off */
   }
 
-  .slide:first-child {
+  .container.continuous .slide {
+    width: auto;
+  }
+
+  .container.roundedCorners .slide:first-child {
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
-    margin-left: var(--distance-s);
   }
 
-  .slide:last-child {
+  .container.roundedCorners .slide:last-child {
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
+  }
+
+  .container.background .slide:first-child {
+    margin-left: var(--distance-s);
+  }
+  
+  .container.background .slide:last-child {
     margin-right: var(--distance-s);
   }
 

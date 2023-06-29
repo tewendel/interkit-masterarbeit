@@ -1,6 +1,4 @@
-name: UserProfile
-title: UserProfile
-# green
+name: UserCard
 color: 230
 fields:
   - type: extraProps
@@ -14,7 +12,7 @@ fields:
       help: "The label on the top left."
     - name: topLeftVar
       type: string
-      help: "The userVar that contains the value shown top left."
+      help: "The userVar that contains the value shown top left. Numbers >= 0.0 and <= 1.0 are shown as a bar."
     - name: topRightLabel
       type: string
     - name: topRightVar

@@ -1,0 +1,43 @@
+name: DataTile
+color: 230
+toolboxCategory: Data
+fields: 
+  - type: extraProps
+    props:
+      - name: imageColumn
+        type: sheetColumn
+        defaultValue: elements/image
+      - name: headlineColumn
+        type: sheetColumn
+        defaultValue: elements/title
+      - name: label1Column
+        type: sheetColumn
+        defaultValue: elements/label1
+      - name: subtitle1Column
+        type: sheetColumn
+        defaultValue: elements/subtitle1
+      - name: descriptionColumn
+        type: sheetColumn
+        defaultValue: elements/description
+      - name: rightArrow
+        type: checkbox
+        defaultValue: false
+      - name: disabled
+        type: checkbox
+        defaultValue: false
+      - name: variant
+        type: options
+        options:
+          - rounded
+          - square
+        help: Rounded or pointy corners on the tile
+      - name: flexibleSize
+        type: checkbox
+        defaultValue: true
+        help: Check this so that the tile grows to fit the container.
+      - name: effect
+        type: effect
+  - type: slot
+    name: chips
+  - type: slot
+    name: buttons

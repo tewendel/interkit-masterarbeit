@@ -5,6 +5,11 @@
 
   import Slider from './Slider.svelte';
 
+  export let mode;
+  export let roundedCorners;
+  export let background;
+  export let gaps;
+
   let elementsContext = getContext("elements");
   if(!elementsContext) console.warn("DataSlider needs DataLoaderSingle or DataRouteMulti as parent");
   let elements = elementsContext?.elements;
@@ -16,7 +21,13 @@
 
 <div class="container">
   {#if $elements?.length || $showDummyData }
-    <Slider slides={$showDummyData ? dummyData : $elements?.map(e=>e.row)}>
+    <Slider 
+      continuous={mode == "continuous"} 
+      slides={$showDummyData ? dummyData : $elements?.map(e=>e.row)}
+      {roundedCorners}
+      {background}
+      {gaps}
+    >
       <slot name="contentElement"></slot>
     </Slider>
   {:else}

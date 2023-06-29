@@ -14,10 +14,19 @@
 
 </script>
 
-{#if counter}<Label type="text" content={counter}/>{/if}
-{#if time}<span class="time">{time}</span>{/if}
+{#if counter || time}
+<div class="container">
+  {#if counter}<Label type="text" content={counter}/>{/if}
+  {#if time}<span class="time">{time}</span>{/if}
+</div>
+{/if}
 
 <style>
+
+  .container {
+    display: flex;
+    align-items: center;
+  }
 
   .time {
     font: var(--font-caption-bold);

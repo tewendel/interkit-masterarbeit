@@ -1,45 +1,37 @@
 <script>
-  import { InterkitClient, util } from '..'
-  import { onMount, getContext, onDestroy } from 'svelte'
-  import WithEffect from './WithEffect.svelte'
+  import { getContext } from 'svelte'
+  import ContextProvider from './ContextProvider.svelte';
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'  
 
-  import MediaFileImage from './MediaFileImage.svelte';
-  import AspectRatio from './AspectRatio.svelte';
-
-  export let effect
-
-  export let imageColumn;
-  export let secondaryImageColumn;
-  export let secondaryProperty;
-
-  let elementProperties = InterkitClient.getGlobalStore("elementProperties");
-
-  export let slider = false // add border
-  if (typeof slider == "string") slider = slider === "TRUE" // blockly conversion
-
+  export let gap = true;
+  
   let elementsContext = getContext("elements");
-  if(!elementsContext) alert("MediaMosaic needs elementsContextProvider as parent");
+  if(!elementsContext) console.warn("MediaMosaic needs elementsContextProvider as parent");
   let elements = elementsContext?.elements;
+
+  $: console.log("Mosaic got data", $elements)
+
+  let showDummyData = getShowDummyDataStore();
+  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {}}}})
 
 </script>
 
-{#if $elements}
-  {#if $elements.length == 0}
+{#if $elements || $showDummyData}
+  {#if $elements?.length == 0 && $showDummyData}
     <slot name="emptyElement"></slot>
   {:else}
-    <div class="grid-wrapper" class:slider>
-      {#each $elements as element}
-        <WithEffect {effect} let:execute>
-          <div class="grid-item" on:click={()=>{execute({elementKey: element.key})}}>
-            <AspectRatio aspectRatio={0.74}>
-              {#if secondaryProperty && $elementProperties?.[element?.key]?.[secondaryProperty]}  
-                <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ util.rowVal(element.row, secondaryImageColumn) } /> 
-              {:else}
-                <MediaFileImage fitDimension="both" objectFit="cover" mediafileRef={ util.rowVal(element.row, imageColumn) } /> 
-              {/if}
-            </AspectRatio>
+    <div class="square-container" class:gap>
+      {#each ($showDummyData ? dummyData : $elements) as element}
+        <div class="square">
+          <div class="content">
+            <ContextProvider 
+              name="element" 
+              value={element.row}
+            >
+              <slot name="contentElement"></slot>
+            </ContextProvider>
           </div>
-        </WithEffect>
+        </div>
       {/each}
       </div>
   {/if}
@@ -49,24 +41,36 @@
 
 <style>
 
-  .grid-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+.square-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .grid-wrapper.slider {
-    display: flex;
-    flex-flow: row nowrap;
-    overflow: auto;
-    scrollbar-width: none;
-    width: 100%;
-    border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--border-color);
-  }
+.square {
+  position: relative;
+  flex-basis: calc(33.33333%);
+  box-sizing: border-box;
+}
 
-  .grid-wrapper.slider .grid-item {
-    width: 33%;
-    flex-shrink: 0;
-  }
+.square-container.gap {
+  gap: 8px;
+}
+
+.square-container.gap .square {
+  flex-basis: calc(33.33333% - (8px * 0.666));
+}
+
+.square::before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+.square .content {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 100%;
+}
   
 </style>

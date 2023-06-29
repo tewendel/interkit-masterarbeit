@@ -1,63 +1,56 @@
 <script>
 
   import { setContext } from "svelte";
-  import Card from "./fragments/Card.svelte"
+  import Tile from "./fragments/Tile.svelte"
   import Label from "./Label.svelte"
+  import Button from "./Button.svelte"
   import MessageIndicator from "./fragments/MessageIndicator.svelte";
   import { getShowDummyDataStore } from './dummyDataHelpers.js'  
   import { getContext } from 'svelte';
   import { util } from '..'
   import WithEffect from "./WithEffect.svelte";
 
-  export let variant = "full";
+  export let variant = "rounded";
   export let rightArrow = false;
+  export let disabled = false;
+  export let flexibleSize;
   
   export let effect
   export let imageColumn;
   export let headlineColumn; 
   export let label1Column;
   export let subtitle1Column;
-  export let label2Column;
-  export let subtitle2Column;
-  export let label3Column;
-  export let subtitle3Column;
   export let descriptionColumn;
 
   let element = getContext("element");
-  console.log("DataCard got element store from context", $element)
+  console.log("DataTile got element store from context", $element)
   if(!element) {
-    console.warn("DataCard needs an element context, for example from DataList")
+    console.warn("DataTile needs an element context, for example from DataList")
   }  
 
   $: imageRef = util.rowVal($element, imageColumn)
   $: headline = util.rowVal($element, headlineColumn)
   $: label1 = util.rowVal($element, label1Column)
   $: subtitle1 = util.rowVal($element, subtitle1Column)
-  $: label2 = util.rowVal($element, label2Column)
-  $: subtitle2 = util.rowVal($element, subtitle2Column)
-  $: label3 = util.rowVal($element, label3Column)
-  $: subtitle3 = util.rowVal($element, subtitle3Column)
   $: description = util.rowVal($element, descriptionColumn)
 
   let showDummyData = getShowDummyDataStore();
 
-  setContext("DataCard", {slots: $$slots})
+  setContext("DataTile", {slots: $$slots})
 </script>
 
 <WithEffect {effect} let:execute>
-  <Card 
+  <Tile 
     {variant} 
     {rightArrow}
     {imageRef}
     {headline}
     {label1}
     {subtitle1}
-    {label2}
-    {subtitle2}
-    {label3}
-    {subtitle3}
     {description}
-    on:click={execute}
+    {disabled}
+    {flexibleSize}
+    on:click={() => {if(!disabled) execute()}}
     hoverPointer={effect && effect?.effectType != "none" ? true : false}
   >
     <svelte:fragment slot="chips">
@@ -68,6 +61,12 @@
         <slot name="chips"/>
       {/if}
     </svelte:fragment>
-    <svelte:fragment slot="content"><slot name="content"/></svelte:fragment>
-  </Card>
+    <svelte:fragment slot="buttons">
+      {#if $showDummyData && !$$slots.buttons}
+        <Button variant="ghost">Open</Button>
+      {:else}
+        <slot name="buttons"/>
+      {/if}
+    </svelte:fragment>
+  </Tile>
 </WithEffect>

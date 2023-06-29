@@ -96,7 +96,7 @@
           <SelectItem value={column.key} text={column.name} />
         {/each}
     </Select>
-    {#if !columns.find(c => c.key == value.columnKey)}
+    {#if !columns.find(c => c.key == value.columnKey) && value.columnKey != 'empty'}
     <InlineNotification
       lowContrast
       hideCloseButton
