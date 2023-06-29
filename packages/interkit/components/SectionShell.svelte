@@ -4,7 +4,7 @@
 
 <style>
   .container {
-    background: #F2F2F2;
+    background-color: var(--color-background-backdrop);
     padding: 8px;
     gap: 8px;
     display: flex;
