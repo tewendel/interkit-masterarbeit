@@ -1,4 +1,7 @@
 import interkit_server from './interkit_server.mjs'
+import { promises as fs } from "fs";
+import path from "path";
+import match from "minimatch";
 
 const projectIdRegex = /[a-zA-Z0-9]+/
 const projectSlugRegex = /[a-zA-Z0-9\-_]+/
@@ -60,9 +63,43 @@ const avoidParallelExecution = (fn) => {
   return wrappedFn;
 };
 
+const getAllFilesRecursive = async (projectPath, ignorelist) => {
+
+  const getAllFilesRecursive = async (dirPath, ignorelist) => {
+    const allFiles = await fs.readdir(dirPath);
+    let allFilesRecursive = [];
+
+    mainloop: for (let file of allFiles) {
+      const fullPath = path.join(dirPath, file);
+
+      for (let pattern of ignorelist) {
+        if (match(file, pattern)) {
+          //console.log(`ignoring ${file} because of ${pattern}`);
+          continue mainloop;
+        }
+      }
+
+      const fileStats = await fs.stat(fullPath);
+      if (fileStats.isDirectory()) {
+        // If it's a directory, we recursively call getAllFilesRecursive
+        const subFiles = await getAllFilesRecursive(fullPath, ignorelist);
+        // Then we add each file in the sub directory to our final list, prepending the directory name
+        allFilesRecursive = allFilesRecursive.concat(subFiles);
+      } else {
+        allFilesRecursive.push(fullPath);
+      }
+    }
+
+    return allFilesRecursive;
+  };
+
+  return getAllFilesRecursive(projectPath, ignorelist);
+};
+
 export {
   validateProjectId,
   resolveProjectPath,
   projectSlugRegex,
   avoidParallelExecution,
+  getAllFilesRecursive,
 };
