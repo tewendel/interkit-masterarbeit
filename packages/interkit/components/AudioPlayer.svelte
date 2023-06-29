@@ -241,7 +241,7 @@
             class="seekPositionRangeSlider" 
             name="seekPosition"
             min="0" 
-            step="any"
+            step="0.05"
             max={$audioPlayerStatus?.duration} 
             bind:value={rangeSliderValue}
             on:input={()=>{rangeSliderDragging = true;}}
