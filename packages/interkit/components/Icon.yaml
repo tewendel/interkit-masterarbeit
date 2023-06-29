@@ -11,6 +11,8 @@ fields:
       - Thin-Camera      
       - Thin-Chat        
       - Thin-Check       
+      - Thin-Chevron-Down
+      - Thin-Chevron-Up
       - Thin-Close-Circle
       - Thin-Close       
       - Thin-Copy        
@@ -20,6 +22,7 @@ fields:
       - Thin-Filter      
       - Thin-Forward-15  
       - Thin-FullScreen  
+      - Thin-Help
       - Thin-Hint        
       - Thin-Layer       
       - Thin-Location    

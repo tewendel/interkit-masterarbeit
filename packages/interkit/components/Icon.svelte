@@ -105,6 +105,8 @@
   .icon-Thin-Camera       { background-image: url("./icons/Thin/Camera.svg"); }
   .icon-Thin-Chat         { background-image: url("./icons/Thin/Chat.svg"); }
   .icon-Thin-Check        { background-image: url("./icons/Thin/Check.svg"); }
+  .icon-Thin-Chevron-Down { background-image: url("./icons/Thin/Chevron-Down.svg"); }
+  .icon-Thin-Chevron-Up   { background-image: url("./icons/Thin/Chevron-Up.svg"); }  
   .icon-Thin-Close-Circle { background-image: url("./icons/Thin/Close-Circle.svg"); }
   .icon-Thin-Close        { background-image: url("./icons/Thin/Close.svg"); }
   .icon-Thin-Copy         { background-image: url("./icons/Thin/Copy.svg"); }
@@ -114,6 +116,7 @@
   .icon-Thin-Filter       { background-image: url("./icons/Thin/Filter.svg"); }
   .icon-Thin-Forward-15   { background-image: url("./icons/Thin/Forward-15.svg"); }
   .icon-Thin-FullScreen   { background-image: url("./icons/Thin/FullScreen.svg"); }
+  .icon-Thin-Help         { background-image: url("./icons/Thin/Help.svg"); }
   .icon-Thin-Hint         { background-image: url("./icons/Thin/Hint.svg"); }
   .icon-Thin-Layer        { background-image: url("./icons/Thin/Layer.svg"); }
   .icon-Thin-Location     { background-image: url("./icons/Thin/Location.svg"); }
@@ -179,6 +182,8 @@
   .theme.icon-Thin-Camera       { background-image: url("/theme/icons/Thin/Camera.svg"); }
   .theme.icon-Thin-Chat         { background-image: url("/theme/icons/Thin/Chat.svg"); }
   .theme.icon-Thin-Check        { background-image: url("/theme/icons/Thin/Check.svg"); }
+  .theme.icon-Thin-Chevron-Down { background-image: url("/theme/icons/Thin/Chevron-Down.svg"); }
+  .theme.icon-Thin-Chevron-Up   { background-image: url("/theme/icons/Thin/Chevron-Up.svg"); }
   .theme.icon-Thin-Close-Circle { background-image: url("/theme/icons/Thin/Close-Circle.svg"); }
   .theme.icon-Thin-Close        { background-image: url("/theme/icons/Thin/Close.svg"); }
   .theme.icon-Thin-Copy         { background-image: url("/theme/icons/Thin/Copy.svg"); }
@@ -188,6 +193,7 @@
   .theme.icon-Thin-Filter       { background-image: url("/theme/icons/Thin/Filter.svg"); }
   .theme.icon-Thin-Forward-15   { background-image: url("/theme/icons/Thin/Forward-15.svg"); }
   .theme.icon-Thin-FullScreen   { background-image: url("/theme/icons/Thin/FullScreen.svg"); }
+  .theme.icon-Thin-Help         { background-image: url("/theme/icons/Thin/Help.svg"); }
   .theme.icon-Thin-Hint         { background-image: url("/theme/icons/Thin/Hint.svg"); }
   .theme.icon-Thin-Layer        { background-image: url("/theme/icons/Thin/Layer.svg"); }
   .theme.icon-Thin-Location     { background-image: url("/theme/icons/Thin/Location.svg"); }
@@ -211,130 +217,20 @@
 
   
   .icon-arrow-up {
-    background-image: url("./icons/Arrow-Up.svg");
+    background-image: url("./icons/Thin/Chevron-Up.svg");
   }
 
   .icon-arrow-down {
-    background-image: url("./icons/Arrow-Down.svg");
+    background-image: url("./icons/Thin/Chevron-Down.svg");
   }
 
   .icon-arrow-left {
-    background-image: url("./icons/Arrow-Left.svg");
+    background-image: url("./icons/Thin/Arrow-Left.svg");
   }
 
   .icon-arrow-right {
-    background-image: url("./icons/Arrow-Right.svg");
+    background-image: url("./icons/Thin/Arrow-Right.svg");
   }
 
-  .icon-close {
-    background-image: url("./icons/Close.svg");
-  }
-
-  .icon-play {
-    background-image: url("./icons/Play.svg");
-  }
-
-  .icon-pause {
-    background-image: url("./icons/Pause.svg");
-  }
-
-  .icon-settings {
-    background-image: url("./icons/Settings.svg");
-  }
-
-  .icon-plus {
-    background-image: url("./icons/Plus.svg");
-  }
-  .icon-minus {
-    background-image: url("./icons/Minus.svg");
-  }
-
-  .icon-position {
-    background-image: url("./icons/Position.svg");
-  }
-
-  .icon-location {
-    background-image: url("./icons/Location.svg");
-  }
-
-  .icon-layer {
-    background-image: url("./icons/Layer.svg");
-  }
-
-  .icon-filter {
-    background-image: url("./icons/Filter.svg");
-  }
-
-  .icon-skip-forward {
-    background-image: url("./icons/forward_10.svg");
-  }
-
-  .icon-skip-backward {
-    background-image: url("./icons/replay_30.svg");
-  }
-
-  .icon-qr-scan {
-    background-image: url("./icons/QR-Scan.svg");
-  }
-
-  .icon-qr-scan-thin {
-    background-image: url("./icons/QR-Scan-Thin.svg");
-  }
-
-  .icon-hint {
-    background-image: url("./icons/Hint.svg");
-  }
-
-  .icon-help {
-    background-image: url("./icons/Help.svg");
-  }
-
-  .icon-archive {
-    background-image: url("./icons/Archiv.svg");
-  }
-
-  .icon-archive-full {
-    background-image: url("./icons/full/Archiv.svg");
-  }
-
-  .icon-dashboard {
-    background-image: url("./icons/Dashboard.svg"); 
-  }
-
-  .icon-dashboard-full {
-    background-image: url("./icons/full/Dashboard.svg");  
-  }
-
-  .icon-map {
-    background-image: url("./icons/Map.svg"); 
-  }
-
-  .icon-map-full {
-    background-image: url("./icons/full/Map.svg"); 
-  }
-
-  .icon-ar {
-    background-image: url("./icons/AR.svg"); 
-  }
-
-  .icon-check {
-    background-image: url("./icons/Check-Thin.svg"); 
-  }
-
-  .icon-copy {
-    background-image: url("./icons/full/Copy.svg"); 
-  }
-
-  .icon-hamburger-full {
-    background-image: url("./icons/full/Menu.svg"); 
-  }
-
-  .icon-full-screen-thin {
-    background-image: url("./icons/Full-Screen-Thin.svg");
-  }
-
-  .icon-full-screen-full {
-    background-image: url("./icons/Full-Screen-Full.svg");
-  }
 
 </style>

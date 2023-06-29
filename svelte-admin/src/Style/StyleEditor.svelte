@@ -7,10 +7,11 @@
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject } from '../admin.js'
 
-  let originalStyleTokens = $currentProject?.uiState?.styleTokens || {}
+  let originalStyleTokens = $currentProject?.uiState?.styleTokens
+  let initialStyleTokens = $currentProject?.uiState?.styleTokens
   let modified = false
   let equalsDefaults = true
-  let currentStyleTokens = {...originalStyleTokens}
+  let currentStyleTokens = originalStyleTokens ? {...originalStyleTokens} : {}
 
   const save = async () => {
     console.log("save", currentStyleTokens)
@@ -37,6 +38,11 @@
     return JSON.stringify(a) === JSON.stringify(b)
   }
 
+  // update currentStyleTokens if they differ
+  $: if (!initialStyleTokens && $currentProject?.uiState?.styleTokens) {
+    currentStyleTokens = $currentProject?.uiState?.styleTokens
+    initialStyleTokens = $currentProject?.uiState?.styleTokens
+  }
   // update style tokens from project if they differ
   $: if (!equals($currentProject?.uiState?.styleTokens,originalStyleTokens)) originalStyleTokens = $currentProject?.uiState?.styleTokens
   // true when the project doesn't define it's own style tokens
@@ -79,35 +85,43 @@
     </ButtonSet>      
   </div>
   <div class="main-content">
+    <div class="split-container">
+      <div class="split-top">
 
-    {#if originalStyleIsEmpty}
-      <InlineNotification
-        hideCloseButton
-        kind="info-square"
-        title="Default Style"
-        subtitle="This project uses the default interkit style"
-      />
-    {:else}
-      {#if equalsDefaults}
-        <InlineNotification
-          hideCloseButton
-          kind="info-square"
-          title="Default Style"
-          subtitle="This project uses it's own styles, but they are equal to the interkit defaults"
-        />
-      {:else}
-        <InlineNotification
-          hideCloseButton
-          kind="success"
-          title="Custom Style"
-          subtitle="This project uses styles that differ from the interkit defaults"
-        />
-      {/if}
-    {/if}
+        {#if originalStyleIsEmpty}
+          <InlineNotification
+            hideCloseButton
+            kind="info-square"
+            title="Default Style"
+            subtitle="This project uses the default interkit style"
+          />
+        {:else}
+          {#if equalsDefaults}
+            <InlineNotification
+              hideCloseButton
+              kind="info-square"
+              title="Default Style"
+              subtitle="This project uses it's own styles, but they are equal to the interkit defaults"
+            />
+          {:else}
+            <InlineNotification
+              hideCloseButton
+              kind="success"
+              title="Custom Style"
+              subtitle="This project uses styles that differ from the interkit defaults"
+            />
+          {/if}
+        {/if}
 
-    <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
-    <br>
-    <ComponentsShowcase {currentStyleTokens} />
+        <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
+      </div>
+      <div class="split-bottom">
+        <h4 class="split-bottom-header">
+          Component Preview
+        </h4>
+        <ComponentsShowcase {currentStyleTokens} />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -126,5 +140,24 @@
     padding: 0 .5rem;
     height: 100%;
     overflow: auto;
+  }
+  .split-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .split-top {
+    flex: 1;
+    overflow: auto;
+  }
+  .split-bottom {
+    height:40%;
+    overflow: auto;
+    border-top: 1px solid black;
+  }
+  .split-bottom-header {
+    margin: 0;
+    padding: 0;
+    padding-top: .5rem;
   }
 </style>
