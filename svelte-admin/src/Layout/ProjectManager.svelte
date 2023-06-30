@@ -125,7 +125,7 @@
         createProjectInitializing = false
         push('/' + newProjectId)
         createProjectStep = false
-      }, 2000)
+      }, 6000)
     }
   }
 

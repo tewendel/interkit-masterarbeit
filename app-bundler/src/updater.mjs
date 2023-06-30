@@ -4,9 +4,9 @@ import path from 'path'
 import match from 'minimatch'
 import watch from 'node-watch'
 import debounce from 'debounce'
-import { promises as fs } from 'fs'
 
 import { getProjectPath } from './filesystem.mjs'
+import { getAllFilesRecursive } from './utils.mjs'
 
 import { updateLastBuildDate } from "./updaters/lastBuildDate.mjs";
 import { updateGit } from "./updaters/gitFiles.mjs";
@@ -14,22 +14,36 @@ import { updateProjectMdFiles } from "./updaters/mdFiles.mjs";
 import { updateProjectDirFiles } from "./updaters/projectFiles.mjs";
 import { updateTheme } from "./updaters/themeFiles.mjs";
 
-const watchedProjectIds = []
-
-const processAllProjectFiles = async projectId => {
-  const projectPath = getProjectPath(projectId)
-  fs.readdir(projectPath)
-    .then(allFiles => updateProjectMdFiles(projectId, allFiles))
-}
-
 const watchignore = [
+  "**/node_modules",
   "**/node_modules/**",
   "**/node_modules/.*",
-  "**/.git/**",
+  "**/public",
+  //"**/.git",
+  "**/.git/**", /* need to update git files */
+  "**/ios",
   "**/ios/**",
+  "**/android",
   "**/android/**",
   "**/vite.config.js.timestamp-*",
 ];
+
+const watchedProjectIds = []
+
+const processAllProjectFiles = async projectId => {
+  const projectPath = getProjectPath(projectId);
+  const allFilesRecursive = await getAllFilesRecursive(projectPath, watchignore);
+  const filesRelative = allFilesRecursive.map(f => path.relative(projectPath, f))
+  console.log(
+    `processing ${allFilesRecursive.length} files of project ${projectId}`
+  );
+  const wF = {}
+  for (let file of filesRelative) {
+    wF[file] = null
+  }
+  updateProjectMdFiles(projectId, filesRelative);
+  updateTheme(projectId, wF)
+}
 
 const runUpdater = async function(projectId) {
   // make sure the project is watched only once
@@ -60,6 +74,7 @@ const runUpdater = async function(projectId) {
     filter(f, skip) {
       for (let pattern of watchignore) {
         if (match(f, pattern)) {
+          //console.log(`ignoring ${f} because of ${pattern}`)
           return skip
         }
       }
@@ -67,7 +82,7 @@ const runUpdater = async function(projectId) {
     }
   }, function(event, filename) {
     const file = path.relative(projectPath, filename)
-    // console.log('file %s of project %s changed.', file, projectId)
+    console.log('file %s of project %s changed.', file, projectId)
     // collecting files as this functions runs for each file
     watchedFiles[file] = Date.now()
     // trigger debounced updaters

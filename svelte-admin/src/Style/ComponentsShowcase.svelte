@@ -6,8 +6,6 @@
   export let currentStyleTokens = null
 
   const components = [
-    {name: "DataCardSmall", showDummyData: true},
-    {name: "DataCardLarge", showDummyData: true},
     {name: "Button", showDummyData: true, props: {size: "large", type: "primary", text: "Button primary"}},
     {name: "Button", showDummyData: true, props: {size: "large", type: "secondary", text: "Button secondary"}},
     {name: "Button", showDummyData: true, props: {size: "large", type: "link", text: "Button link"}},
@@ -17,7 +15,9 @@
     {name: "Button", showDummyData: true, props: {size: "small", type: "primary", text: "Button primary"}},
     {name: "Button", showDummyData: true, props: {size: "small", type: "secondary", text: "Button secondary"}},
     {name: "Button", showDummyData: true, props: {size: "small", type: "link", text: "Button link"}},
+    {name: "DataCard", showDummyData: true},
     {name: "StaticText"},
+    {name: "Chat", showDummyData: true},
     //{name: "Icon", showDummyData: true},
     {name: "MapSimple", showDummyData: true, props: {
         tileLayer: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -27,8 +27,10 @@
   ]
 </script>
 
+Components: {[...new Set(components.map(c => c.name))].join(", ")}
+
 {#each components as c}
-  <div class="component">
+  <div class="component" id="component-{c.name}">
     
       {#await import(`../../../packages/interkit/components/${c.name}.svelte`)}
         <p class="Loading">

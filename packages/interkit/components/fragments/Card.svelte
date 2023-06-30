@@ -54,10 +54,10 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container {variant} {state} {hoverPointer ? "hoverPointer" : ""}" on:click>
+<div class="container {variant} {state} {hoverPointer ? "hoverPointer" : ""} Card" on:click>
   <div class="header-wrapper">
     {#if imageRef?.value}
-      <div class="image">
+      <div class="image Card__image">
           <AspectRatio aspectRatioType={aspectRatioForVariant?.[variant]}>
             <MediaFileImage 
               objectFit="cover" 
@@ -68,7 +68,7 @@
           </AspectRatio>
       </div>
     {/if}
-    <div class="header">
+    <div class="header Card__header">
       <CardHeader 
         {rightArrow} 
         variant = {headerVariant[variant]}
@@ -88,7 +88,7 @@
     </div>
   </div>
   {#if DataCardContext?.slots?.content}
-    <div class="content-wrapper">
+    <div class="content-wrapper Card__content">
       <slot name="content"/>
     </div> 
   {/if}

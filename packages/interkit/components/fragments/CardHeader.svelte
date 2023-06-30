@@ -100,10 +100,15 @@
 
   .subtitle1 {
     font: var(--font-caption);
+    color: var(--color-text);
   }
 
   .card-header .headline {
     flex-grow: 1;
+  }
+
+  .headline {
+    color: var(--color-text-strong);
   }
   
   .card-header.full .headline {
@@ -146,6 +151,7 @@
 
   .subtitle2 {
     font: var(--font-caption);
+    color: var(--color-text);
   }
 
   .row-4 {
@@ -154,11 +160,13 @@
 
   .subtitle3 {
     font: var(--font-caption-bold);
+    color: var(--color-text-strong);
   }
   
   .description {
     font: var(--font-subtitle-2);
     letter-spacing: var(--letter-spacing-subtitle-2);
+    color: var(--color-text);
     padding: 4px 16px 2px 0px;
   }
 

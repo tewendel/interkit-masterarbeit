@@ -136,6 +136,10 @@ export const items = [
         path: '/guides/i18n'
       },
       {
+        title: 'Style your app',
+        path: '/guides/styling'
+      },
+      {
         title: 'How to setup your own interkit server',
         path: '/guides/server_setup'
       },
