@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import fs from "fs";
 import path from "path";
 import { getProjectPath } from "../filesystem.mjs";
 
@@ -8,11 +8,11 @@ export default async function(projectId) {
   const tokensFileContent = "{}";
   // create the file if it doesn't exist
   try {
-    const exists = await fs.exists(tokensFile);
+    const exists = fs.existsSync(tokensFile);
     if (!exists) {
       // create dir if it doesn't exist
-      await fs.mkdir(path.dirname(tokensFile), { recursive: true });
-      await fs.writeFile(tokensFile, tokensFileContent);
+      await fs.promises.mkdir(path.dirname(tokensFile), { recursive: true });
+      await fs.promises.writeFile(tokensFile, tokensFileContent);
       console.log(`Migration 001: Created ${tokensFile}`);
     }
   } catch (e) {
