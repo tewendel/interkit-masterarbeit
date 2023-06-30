@@ -12,10 +12,7 @@
   export let disabled = false;
   export let effect; // effect object used to decide what happens on click
   export let selected = false // used by Chat choice
-
-  if($showDummyData) {
-    text = "Btn Text"
-  }
+  export let dummyNoText = false
 
   setContext("iconHeight", size == "large" ? "32px" : null)
 
@@ -32,7 +29,11 @@
     class:Button--selected={selected}
   >
     <slot/>
-    { text || "" }
+    {#if $showDummyData && !dummyNoText}
+      Btn Text
+    {:else}
+      { text || "" }
+    {/if}
   </span>
 </WithEffect>
 
