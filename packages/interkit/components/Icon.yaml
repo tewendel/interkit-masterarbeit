@@ -48,6 +48,7 @@ fields:
       - Full-Camera      
       - Full-Chat        
       - Full-Check       
+      - Full-Close
       - Full-Close-Circle
       - Full-Copy        
       - Full-Dashboard   

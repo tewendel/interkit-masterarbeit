@@ -67,6 +67,7 @@
   .icon-Full-Camera       { background-image: url("./icons/Full/Camera.svg"); }
   .icon-Full-Chat         { background-image: url("./icons/Full/Chat.svg"); }
   .icon-Full-Check        { background-image: url("./icons/Full/Check.svg"); }
+  .icon-Full-Close        { background-image: url("./icons/Full/Close.svg"); }
   .icon-Full-Close-Circle { background-image: url("./icons/Full/Close-Circle.svg"); }
   .icon-Full-Copy         { background-image: url("./icons/Full/Copy.svg"); }
   .icon-Full-Dashboard    { background-image: url("./icons/Full/Dashboard.svg"); }
