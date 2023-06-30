@@ -1,0 +1,7 @@
+name: AccordeonShell
+toolboxCategory: Layout
+fields:
+  - type: slot
+    name: label
+  - type: slot
+    name: content

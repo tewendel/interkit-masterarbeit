@@ -99,6 +99,7 @@
   .container {
     background-color: #FFFFFF;
     text-align: left;
+    box-shadow: var(--box-shadow);
   }
 
   .container.selected {

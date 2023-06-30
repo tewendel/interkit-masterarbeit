@@ -53,6 +53,7 @@
     -ms-user-select: none;    
     user-select: none;        
     display: inline-flex;
+    flex-shrink: 0;
   }
 
   /* helpers */
