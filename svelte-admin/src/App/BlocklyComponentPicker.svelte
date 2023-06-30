@@ -183,6 +183,11 @@
     padding-right: 1rem;
   }
 
+  :global(.bx--accordion__title) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   .navigation-accordion {
     margin-top: 1rem;
   }

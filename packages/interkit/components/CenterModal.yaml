@@ -1,0 +1,25 @@
+name: CenterModal
+toolboxCategory: Modals
+fields:
+  - type: extraProps
+    props:
+      - name: size
+        type: options
+        options: 
+          - large
+          - medium
+          - small
+      - name: imageKey
+        type: string
+        help: Add the key of an image directly. You can find it from the media section.
+      - name: label
+        type: string
+      - name: headline
+        type: string
+      - name: prompt
+        type: string
+      - name: description
+        type: string
+  - type: slot
+    name: buttons
+

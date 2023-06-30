@@ -1,0 +1,23 @@
+name: Snackbar
+toolboxCategory: Modals
+fields:
+  - type: extraProps
+    props:
+      - name: variant
+        type: options
+        options: 
+          - oneline
+          - informative
+          - responseNeeded
+        help: Oneline variant only shows the prompt.
+      - name: label
+        type: string
+      - name: headline
+        type: string
+      - name: prompt
+        type: string
+      - name: effect
+        type: effect
+  - type: slot
+    name: buttons
+

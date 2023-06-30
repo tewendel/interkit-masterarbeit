@@ -1,0 +1,16 @@
+name: SlideInModal
+toolboxCategory: Modals
+fields:
+  - type: extraProps
+    props:
+      - name: label
+        type: string
+      - name: headline
+        type: string
+      - name: prompt
+        type: string
+      - name: description
+        type: string
+  - type: slot
+    name: buttons
+
