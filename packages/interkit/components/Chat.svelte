@@ -56,16 +56,17 @@
 
   const dummyMessages = [
     { id: 'm10', sender: 's', payload: { type: 'text', text: 'dummy text message from other' } },
-    { id: 'm20', sender: 'u', payload: { type: 'text', text: 'dummy text message from user. It wouldn\'t have a date usually, but we would like to demonstrate how a longer date looks like. Also, let\'s stretch out the message box: lorem ipsum sit dolores something something.' }, _lastFromSender: true },
+    { id: 'm20', sender: 'u', payload: { type: 'text', text: 'dummy text message from user.' } },
+    { id: 'm21', sender: 'u', payload: { type: 'text', text: 'another dummy text message from user. It wouldn\'t have a date usually, but we would like to demonstrate how a longer date looks like. Also, let\'s stretch out the message box: lorem ipsum sit dolores something something.' }, _lastFromSender: true },
     { id: 'm30', sender: 's', payload: { type: 'system', text: 'dummy system message' } },
     { id: 'm40', sender: 'u', payload: { type: 'text', text: 'another dummy text message from user, followed by an image, an audio file and a video \u{1f63a}' } },
     { id: 'm50', sender: 'u', payload: { type: 'image' } },
     { id: 'm60', sender: 'u', payload: { type: 'audio' } },
     { id: 'm70', sender: 'u', payload: { type: 'video' } },
     { id: 'm80', sender: 'u', payload: { type: 'link', url: 'https://interkit.app/', text: 'dummy link message' } },
-    { id: 'm90', sender: 's', payload: { type: 'requestLocation', prompt: 'Dummy location request prompt', cancel: 'Cancel' } },
+    { id: 'm90', sender: 's', payload: { type: 'requestLocation', prompt: 'Dummy location request prompt', cancel: 'Cancel', options: { label: 'Dummy label for location request' } } },
     { id: 'm100', sender: 'u', payload: { type: 'choice', choice: { a: 'dummy choice A', b: 'dummy choice B', c: 'C' } }, selectedChoiceKey: 'b', _lastFromSender: true },
-    { id: 'm110', sender: 's', payload: { type: 'text', text: 'dummy text message from other two xo' }, _lastFromSender: true },
+    { id: 'm110', sender: 's', payload: { type: 'text', text: 'dummy text message from other, with a label', options: { label: 'Dummy label for message' } }, _lastFromSender: true },
   ]
   dummyMessages.forEach((_, idx) => {
     _.createdAt = new Date(new Date() - (dummyMessages.length - idx) * 1e7)

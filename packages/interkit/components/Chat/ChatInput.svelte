@@ -8,6 +8,9 @@
 
   import MediaRecorder from '../MediaRecorder.svelte';
 
+  import { getShowDummyDataStore } from '../dummyDataHelpers.js' 
+  let showDummyData = getShowDummyDataStore()
+
   let messageText = ""
 
   export let chatInterface
@@ -15,7 +18,7 @@
   export let boardId
   export let nodeId
 
-  $: emptyInterface = !chatInterface.text && !chatInterface.image
+  $: emptyInterface = !chatInterface.text && !chatInterface.image && !$showDummyData
 
   const dispatch = createEventDispatcher();
 
@@ -52,16 +55,16 @@
 </script>
 
 <div class="ChatInput container" class:emptyInterface>
-  {#if chatInterface?.photo }
+  {#if chatInterface?.photo || $showDummyData}
     <div class="left-button">
-      <Button on:click={openCamera} type="ghost">
+      <Button on:click={openCamera} type="link" dummyNoText>
         <Icon type="Full-Camera"></Icon>
       </Button>
     </div>
   {/if}
-  {#if chatInterface?.text}
+  {#if chatInterface?.text || $showDummyData}
     <input class="ChatInput__input input" type="text" bind:value={messageText} on:keydown={handleKeydown}/>
-    <Button on:click={submit} type="ghost">
+    <Button on:click={submit} type="link" dummyNoText>
       <Icon type="Full-Send"></Icon>
     </Button>
   {/if}
