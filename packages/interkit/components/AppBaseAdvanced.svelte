@@ -295,6 +295,10 @@
 </div>
 
 <style>
+
+  /* default font */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
   .AppBase {
     height: 100%;
     pointer-events: all;
@@ -318,8 +322,6 @@
     touch-action: none;
   }
 
-  /* default font */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
   :global(body) {
     font-family: 'Inter', sans-serif;
   }
