@@ -129,7 +129,7 @@
           {/if}
           <div class="button" on:click={mainToggleClick} disabled={loading}>
             {#if autoplay}<abbr title="autoplay"><small>A</small></abbr>{/if}
-            <Icon type={ paused ? 'play' : 'pause' } />
+            <Icon type={ paused ? 'Thin-Play' : 'Thin-Pause' } />
           </div>
           <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
             {util.formatDuration((open ? currentTime : duration) * 1000)}
@@ -140,7 +140,7 @@
             </div>
           {/if}
           <div class="button close" on:click={closeClick}>
-            <Icon type="close" />
+            <Icon type="Full-Close" />
           </div>
         {:else}
           <Icon type="error" />
