@@ -172,7 +172,7 @@
 
       <div class="AudioPlayer__Close close">
         <Button size="small" type="link" class="AudioPlayer__Close__Button" on:click={closePlayer} title="Close">
-          <Icon type="close">
+          <Icon type="Thin-Close">
             Close
           </Icon>
         </Button>
@@ -195,7 +195,7 @@
           <Loading inverse/>
         {:else}
           <Button type="primary" on:click={togglePlay}>
-            <Icon inverse type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
+            <Icon inverse type={ $audioPlayerStatus.paused ? "Full-Play" : "Full-Pause"} />
           </Button>
         {/if}
       </div>
@@ -269,7 +269,7 @@
 
             <div class="AudioPlayer__PlayButton seekbutton">
               <Button size="small" type="link" on:click={()=>{seek(-30)}}>
-                <Icon type="skip-backward" />
+                <Icon type="Thin-Replay-30" />
               </Button>
             </div>
 
@@ -278,14 +278,14 @@
                 <Loading inverse/>
               {:else}
                 <Button size="large" type="primary" on:click={togglePlay}>
-                  <Icon inverse type={ $audioPlayerStatus.paused ? "Thin-Play" : "pause"} />
+                  <Icon inverse type={ $audioPlayerStatus.paused ? "Full-Play" : "Full-Pause"} />
                 </Button>
               {/if}
             </div>
 
             <div class="AudioPlayer__PlayButton seekbutton">
-              <Button size="small" type="link" on:click={()=>{seek(10)}}>
-                <Icon type={"skip-forward"} />
+              <Button size="small" type="link" on:click={()=>{seek(15)}}>
+                <Icon type={"Thin-Forward-15"} />
               </Button>
             </div>
 
