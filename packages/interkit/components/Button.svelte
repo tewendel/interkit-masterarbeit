@@ -11,6 +11,7 @@
   export let height = "fixed" // fixed | auto
   export let disabled = false;
   export let effect; // effect object used to decide what happens on click
+  export let selected = false // used by Chat choice
 
   if($showDummyData) {
     //text = "Btn Text"
@@ -28,6 +29,7 @@
     class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
     class:Button--disabled={disabled}
+    class:Button--selected={selected}
   >
     <slot/>
     { text || "" }
@@ -117,11 +119,13 @@
     border-color: var(--color-border-button-primary);
   }
 
+  .Button--selected.primary,
   .button.primary:active {
     background-color: var(--color-background-button-primary-pressed);
   }
 
   
+  .Button--selected.secondary,
   .button.secondary:active {
     background-color: var(--color-background-button-pressed);
   }
@@ -130,6 +134,7 @@
     background-color: transparent;
   }
 
+  .Button--selected.ghost,
   .button.ghost:active {
     background-color: var(--color-background-button-pressed);
   }

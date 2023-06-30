@@ -52,10 +52,25 @@
   let typingQueuePointer
 
   let showDummyData = getShowDummyDataStore()
-  const dummyData = {
-    
-  }
+  // system systemImage text link choice image audio video requestLocation
 
+  const dummyMessages = [
+    { id: 'm10', sender: 's', payload: { type: 'text', text: 'dummy text message from other' } },
+    { id: 'm20', sender: 'u', payload: { type: 'text', text: 'dummy text message from user. It wouldn\'t have a date usually, but we would like to demonstrate how a longer date looks like. Also, let\'s stretch out the message box: lorem ipsum sit dolores something something.' }, _lastFromSender: true },
+    { id: 'm30', sender: 's', payload: { type: 'system', text: 'dummy system message' } },
+    { id: 'm40', sender: 'u', payload: { type: 'text', text: 'another dummy text message from user, followed by an image, an audio file and a video \u{1f63a}' } },
+    { id: 'm50', sender: 'u', payload: { type: 'image' } },
+    { id: 'm60', sender: 'u', payload: { type: 'audio' } },
+    { id: 'm70', sender: 'u', payload: { type: 'video' } },
+    { id: 'm80', sender: 'u', payload: { type: 'link', url: 'https://interkit.app/', text: 'dummy link message' } },
+    { id: 'm90', sender: 's', payload: { type: 'requestLocation', prompt: 'Dummy location request prompt', cancel: 'Cancel' } },
+    { id: 'm100', sender: 'u', payload: { type: 'choice', choice: { a: 'dummy choice A', b: 'dummy choice B', c: 'C' } }, selectedChoiceKey: 'b', _lastFromSender: true },
+    { id: 'm110', sender: 's', payload: { type: 'text', text: 'dummy text message from other two xo' }, _lastFromSender: true },
+  ]
+  dummyMessages.forEach((_, idx) => {
+    _.createdAt = new Date(new Date() - (dummyMessages.length - idx) * 1e7)
+    _._isByUser = _.sender === 'u'
+  })
 
   onMount(async () => {
 
@@ -174,7 +189,7 @@
     }
   }
 
-  $: showInputField = (chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked
+  $: showInputField = ((chatInterface?.text || chatInterface?.photo) && !$userStore?.[0]?.blocked) || $showDummyData
 
   /* fastforwardOptionSetInterfaces has to run once the two async subs/stores
    * for interface AND messages have updated at least once.
@@ -433,7 +448,18 @@
                   />
               {/if}
             {/each}
-            <MessageTyping show={typingShow} message={typingMessage} />
+            {#if $showDummyData}
+              {#each dummyMessages as message, index}
+                <Message
+                  {message} 
+                  isByUser={message._isByUser}
+                  lastFromSender={message._lastFromSender}
+                  previousMessage={dummyMessages[index-1]}
+                  isReportable={message._isReportable}
+                  />
+              {/each}
+            {/if}
+            <MessageTyping show={typingShow || $showDummyData} message={typingMessage} />
             {#if $userStore?.[0]?.blocked}
               <div class="blocked">
                 Du bist geblockt, vielleicht weil du gegen die Community-Richtlinien verstoßen hast. Klicke oben auf das Fragezeichen um die Richtlinien einzusehen. Dort findest du auch Kontaktdaten.
