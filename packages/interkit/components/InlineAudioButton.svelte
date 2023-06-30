@@ -3,6 +3,8 @@
   import { InterkitClient, util } from '..'
   import { getContext } from 'svelte'
 
+  import { getShowDummyDataStore, dummyAudioSrc } from './dummyDataHelpers.js'
+
   import Icon from './Icon.svelte'
 
   export let audioColumn // specify a column to use for extracting the mediaFileKey from the buttonBar context
@@ -12,6 +14,8 @@
   export let autoplay = false
 
   export let playbackControl = "stopped"; // use to start/stop playback through prop
+
+  const showDummyData = getShowDummyDataStore()
   
   const elementContext = getContext("element")
   if(!elementContext && !audioKeyDirect) {
@@ -101,13 +105,13 @@
 </script>
 
 {#key mediafile}
-  {#if mediafile}
+  {#if mediafile || $showDummyData}
     <span
       class="container InlineAudioButton"
       class:open={open}
       on:click|capture={containerClick}
       >
-        {#if mediafile}
+        {#if mediafile || $showDummyData}
           <audio controls="controls"
             {autoplay}
             bind:this={audioElement}
@@ -116,7 +120,7 @@
             bind:duration
             on:playing={() => { playing = true; loading = false }}
             >
-            <source src={encodeURI(mediafile.link)} type="audio/mpeg">
+            <source src={$showDummyData ? dummyAudioSrc : encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
           {#if !hideSkipControls}
             <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
