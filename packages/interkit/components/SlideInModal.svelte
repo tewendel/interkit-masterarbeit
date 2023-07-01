@@ -3,8 +3,7 @@
   import ModalHeader from "./fragments/ModalHeader.svelte"
   import ButtonBar from "./ButtonBar.svelte"
   import { getShowDummyDataStore } from './dummyDataHelpers.js'
-  import { slide } from 'svelte/transition';
-
+  
   export let label
   export let headline
   export let prompt
@@ -18,7 +17,7 @@
 </script>
 
 
-<div class="SlideInModal container" transition:slide>
+<div class="SlideInModal container">
   <div class="header">
     <ModalHeader
       size="full"
