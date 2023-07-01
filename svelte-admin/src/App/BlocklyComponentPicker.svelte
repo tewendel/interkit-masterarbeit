@@ -43,7 +43,7 @@
     }
   }
 
-  $: {
+  const buildCategories = (toolbox) => {
     if(toolbox) {
       // build categories
       children = toolbox?.contents.filter(c => c.kind == "category").map(c => { return {
@@ -69,6 +69,10 @@
       console.log("toolbox children", children)
 
     }
+  }
+
+  $: {
+    buildCategories(toolbox);
   }
 
   const selectComponent = (blockName) => {
@@ -104,6 +108,14 @@
 
   let activeBlockPreview;
 
+  let openCategory = null;
+  const manageAccordeonOpen = (category) => {
+    // without timeout, AccordeonItem snaps back
+    setTimeout(()=> {
+      openCategory = category.text
+    }, 10)
+  }
+  
 </script>
 
 
@@ -113,7 +125,11 @@
     
     <Accordion size="sm">
     {#each children as category}
-      <AccordionItem title={category.text}>
+      <AccordionItem 
+        title={category.text} 
+        open={category.text == openCategory} 
+        on:click={()=>{manageAccordeonOpen(category)}}
+      >
         {#each category.children as block}
           <BlocklyComponentPreview 
             blockName={block.text} 
