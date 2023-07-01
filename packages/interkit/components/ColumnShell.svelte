@@ -23,6 +23,7 @@
   .container {
     display: flex;
     flex-direction: row;
+    gap: var(--distance-s);
   }
 
   .col1, .col2, .col3 {
