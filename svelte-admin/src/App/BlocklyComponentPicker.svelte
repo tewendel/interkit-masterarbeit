@@ -3,8 +3,9 @@
   import { Accordion, AccordionItem, Button } from "carbon-components-svelte"; 
   import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
   import Help from "carbon-icons-svelte/lib/Help.svelte";
-  import Move from "carbon-icons-svelte/lib/Move.svelte";
   import { docsGo } from '../docs.js'
+
+  import CenterIcon from "carbon-icons-svelte/lib/CenterToFit.svelte";
 
   export let workspace;
   export let toolbox;
@@ -110,6 +111,7 @@
 
   let openCategory = null;
   const manageAccordeonOpen = (category) => {
+    activeBlockPreview = null;
     // without timeout, AccordeonItem snaps back
     setTimeout(()=> {
       openCategory = category.text
@@ -149,19 +151,13 @@
           {#if subtrees.length}
             <ul>
             {#each subtrees as subtree} 
-              <li>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <li class="subtree" on:click={() => {panToSubtree(subtree)}}>
                 <span title={quickNavblockToString(subtree)}>
                   {quickNavblockToString(subtree)}
                 </span>
                 <div class="move-button">
-                  <Button
-                    kind="ghost"
-                    size="small"
-                    tooltipPosition="top"
-                    icon={Move}
-                    on:click={() => {panToSubtree(subtree)}}
-                    iconDescription="center"
-                  />  
+                  <CenterIcon/>
                 </div>
               </li>
             {/each}
@@ -228,6 +224,19 @@
 
   .navigation-accordion li .move-button {
     flex: 0.1;
+  }
+
+  .move-button {
+    padding: 4px;
+  }
+
+  .subtree {
+    padding: 2px;
+  }
+
+  .subtree:hover {
+    cursor: pointer;
+    background-color: lightgray;
   }
 
 
