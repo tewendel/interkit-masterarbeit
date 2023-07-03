@@ -9,6 +9,7 @@
   import { getShowDummyDataStore } from './dummyDataHelpers.js'
 
   import Button from './Button.svelte'
+  import ButtonBar from './ButtonBar.svelte';
   import Icon from './Icon.svelte'
   import MapRenderer from './MapRenderer.svelte'
   import ContextProvider from './ContextProvider.svelte';
@@ -128,15 +129,18 @@
       lat: getRandomInRange(-90, 90, 3),
       lng: getRandomInRange(-180, 180, 3)
     },
-    markerTitle: "markerTitle",
-    markerLabel: `${k}`
+    markerTitle: "markerTitle"
   }}}})
   const dummyDataStore = writable(dummyData)
   if($showDummyData) {
     elements = dummyDataStore
     console.log("set elements to dummyData")
   }
-  if($showDummyData) columnMap.markerPositionsColumn = "elements/position"
+  if($showDummyData) {
+    columnMap.markerPositionsColumn = "elements/position"
+    columnMap.markerTitleColumn = "elements/markerTitle"
+  }
+  // more dummy Data set in MapRenderer/createIconDivHTML
 
   // set up subscription
   const initDataSubs = async () => {
@@ -260,8 +264,8 @@
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
         <div class="marker_popup_close">
-          <Button type="secondary" on:click={mapClick}>
-            <Icon type="close" />
+          <Button type="secondary" on:click={mapClick} dummyNoText>
+            <Icon type="Thin-Close"/>
             <span>{closeButtonLabel}</span>
           </Button>
         </div>
@@ -297,9 +301,13 @@
       {enableGeolocationHint}
     />
 
-    <div class="button-container">
-      <slot name="button"></slot>
-    </div>
+    {#if $$slots.button}
+      <div class="button-container">
+        <ButtonBar hideHelpText>
+          <slot name="button"></slot>
+        </ButtonBar>
+      </div>
+    {/if}
 
 
   </div>
@@ -313,7 +321,6 @@
 
   .map-component-container.inline {
     position: relative;
-    border: 1px solid black;
     overflow: hidden;
     height: auto;
     display: flex;
@@ -327,6 +334,7 @@
   .map-component-container.inline :global(.Map__Container),
   .map-component-container.inline :global(.map) {
     border-radius: var(--border-radius-button);
+    box-shadow: var(--box-shadow);
   }
 
   :global(.marker-content-label) {
@@ -374,9 +382,9 @@
   .button-container {
     position: absolute;
     z-index: 1000;
-    bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    bottom: var(--distance-s);
+    left: var(--distance-s);
+    right: var(--distance-s);
   }
 
   :global(.Map__Button__Bar .Button) {

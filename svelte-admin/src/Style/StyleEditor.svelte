@@ -19,7 +19,7 @@
       projectId: $projectId,
       file: {
         filename: 'styleTokens.json',
-        content: JSON.stringify(currentStyleTokens)
+        content: JSON.stringify(currentStyleTokens,null,2)
       }
     })
     originalStyleTokens = {...currentStyleTokens}

@@ -1,14 +1,7 @@
 <script>
   import definitions from './styleTokensConfig.json'
   
-  export let googleFont = "Inter:wght@400;500;600;700;900" // regular medium semi-bold bold bolder
-  export let googleFont2 = "Inter:wght@400;500;600;700;900"
-
   export let styleTokens = {}
-
-  export let fontFamilyText = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
-  export let fontFamilyHeadline = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
-  export let fontSizeHeadline1 = '30px';
 
   import { onMount } from 'svelte'
 
@@ -45,40 +38,25 @@
     setCssVar('borderRadius', borderRadius)
   }
   */
-
-  const baseFontStack = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif'
-
   
 /*
   // detecting google fonts, but lacks precise definition
 
-  const googleFont = /[\+:@]/.test(fontFamilyText) ? fontFamilyText : false
+  const googleFont = /[\+:@]/.test(fontFamilyContent) ? fontFamilyContent : false
   if (googleFont) {
     // strip off weights and such
-    fontFamilyText = fontFamilyText.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
+    fontFamilyContent = fontFamilyContent.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
   }
-  if (fontFamilyText !== 'inherit') fontFamilyText += ', ' + baseFontStack
+  if (fontFamilyContent !== 'inherit') fontFamilyContent += ', ' + baseFontStack
 
   const googleFontHeadline = /[\+:@]/.test(fontFamilyHeadline) ? fontFamilyHeadline : false
   if (googleFontHeadline) {
     fontFamilyHeadline = fontFamilyHeadline.match(/^[\w\+]+/)?.[0]?.replace('+', ' ')
   }
-  if (fontFamilyHeadline !== 'inherit') fontFamilyText += ', ' + baseFontStack
+  if (fontFamilyHeadline !== 'inherit') fontFamilyContent += ', ' + baseFontStack
 */
   
 </script>
-
-<!--div style="position: absolute; right:0; font-size: 60%;">
-  <div style="color: {globalThis?.styleTokens?.colorText}">
-    global: { globalThis?.styleTokens?.colorText}
-  </div>
-  <div style="color: { styleTokens?.colorText}">
-  props: { styleTokens?.colorText }
-  </div>
-  <div style="color: {tokens?.colorText}">
-    local: { tokens?.colorText}
-  </div>
-</div-->
 
 <div class="style" style={`
 
@@ -121,15 +99,11 @@
   --border-radius-label: ${tokens.borderRadiusLabel};
   --box-shadow: ${tokens.boxShadow};
 
-  /* deprecated ? */
-
-  --color-text-headline: ${tokens.colorTextHeadline};
-  --font-size-headline-1: ${tokens.fontSizeHeadline1};
 
   /* other vars */
 
-  --font-family-text: ${fontFamilyText};
-  --font-family-headline: ${fontFamilyHeadline};
+  --font-family-interface: ${tokens.fontFamilyInterface};
+  --font-family-content: ${tokens.fontFamilyContent};
 
   /* constant */
 
@@ -166,90 +140,95 @@
   /* Typography - Interface             */
   /**************************************/
 
-  /* Interface/Headline 1 */
-  --font-headline-1: 400 48px/56px var(--font-family-headline);
+ /* Interface/Headline 1 */
+  --font-headline-1: ${tokens.fontHeadline1};
+  --letter-spacing-headline-1: ${tokens.letterSpacingHeadline1}
   
   /* Interface/Headline 2 */
-  --font-headline-2: 400 30px/36px var(--font-family-headline);
-  --letter-spacing-headline-2: -0.5px;
+  --font-headline-2: ${tokens.fontHeadline2};
+  --letter-spacing-headline-2: ${tokens.letterSpacingHeadline2}
 
   /* Interface/Headline 3 */
-  --font-headline-3: 400 24px/28px var(--font-family-headline);
-  --letter-spacing-headline-3: -0.25px;
+  --font-headline-3: ${tokens.fontHeadline3};
+  --letter-spacing-headline-3: ${tokens.letterSpacingHeadline3}
   
   /* Interface/Headline 4 */
-  --font-headline-4: 400 20px/24px var(--font-family-headline);
-  --letter-spacing-headline-4: -0.25px;
+  --font-headline-4: ${tokens.fontHeadline4};
+  --letter-spacing-headline-4: ${tokens.letterSpacingHeadline4}
   
   /* Interface/Headline 5 */
-  --font-headline-5: 700 16px/24px var(--font-family-headline);
-  --letter-spacing-headline-5: -0.02em;
+  --font-headline-5: ${tokens.fontHeadline4};
+  --letter-spacing-headline-5: ${tokens.letterSpacingHeadline5}
   
   /* Interface/Body 1 */
-  --font-body-1: 400 16px/24px var(--font-family-text);
-  --letter-spacing-body-1: 0.25px;
-  
+  --font-body-1: ${tokens.fontBody1};
+  --letter-spacing-body-1: ${tokens.letterSpacingBody1}
+
   /* Interface/Body 2 */
-  --font-body-2: 400 14px/21px var(--font-family-text);
-  --letter-spacing-body-2: 0.25px;
+  --font-body-2: ${tokens.fontBody2};
+  --letter-spacing-body-2: ${tokens.letterSpacingBody2}
   
   /* Interface/Subtitle 1 */
-  --font-subtitle-1: 400 16px/21px var(--font-family-text);
-  --letter-spacing-subtitle-1: 0.15px;
+  --font-subtitle-1: ${tokens.fontSubtitle1};
+  --letter-spacing-subtitle-1: ${tokens.letterSpacingSubtitle1}
   
   /* Interface/Subtitle 2 */
-  --font-subtitle-2: 500 14px/18px var(--font-family-text);
-  --letter-spacing-subtitle-2: 0.1px;
+  --font-subtitle-2: ${tokens.fontSubtitle2};
+  --letter-spacing-subtitle-2: ${tokens.letterSpacingSubtitle2}
 
   /* Interface/Button */
-  --font-button: 600 12px/16px var(--font-family-text);
+  --font-button: ${tokens.fontButton};
+  --letter-spacing-button: ${tokens.letterSpacingButton}
 
   /* Interface/Caption */
-  --font-caption: 400 12px/16px var(--font-family-text);
+  --font-caption: ${tokens.fontCaption};
+  --letter-spacing-caption: ${tokens.letterSpacingCaption}
 
   /* Interface/Caption - Bold */
-  --font-caption-bold: 700 12px/16px var(--font-family-text);
+  --font-caption-bold: ${tokens.fontCaptionBold};
+  --letter-spacing-caption-bold: ${tokens.letterSpacingCaptionBold}
 
   /* Interface/Overline */
-  --font-overline: 500 10px/12px var(--font-family-text);
-  --letter-spacing-overline: 1.5px;
+  --font-overline: ${tokens.fontOverline};
+  --letter-spacing-overline: ${tokens.letterSpacingOverline}
 
   /**************************************/
   /* Typography - Content               */
   /**************************************/
   
   /* Content/Headline 1 */
-  --font-content-headline-1: 900 48px/56px var(--font-family-headline);
-  --letter-spacing-content-headline-1: -1px;
+  --font-content-headline-1: ${tokens.fontContentHeadline1};
+  --letter-spacing-content-headline-1: ${tokens.letterSpacingContentHeadline1}
 
   /* Content/Headline 2 */
-  --font-content-headline-2: 900 30px/36px var(--font-family-headline);
-  --letter-spacing-content-headline-2: -0.5px;
+  --font-content-headline-2: ${tokens.fontContentHeadline2};
+  --letter-spacing-content-headline-2: ${tokens.letterSpacingContentHeadline2}
 
   /* Content/Headline 3 */
-  --font-content-headline-3: 900 24px/28px var(--font-family-headline);
-  --letter-spacing-content-headline-3: -0.5px;
+  --font-content-headline-3: ${tokens.fontContentHeadline3};
+  --letter-spacing-content-headline-3: ${tokens.letterSpacingContentHeadline3}
 
   /* Content/Headline 4 */
-  --font-content-headline-4: 900 20px/24px var(--font-family-headline);
+  --font-content-headline-4: ${tokens.fontContentHeadline4};
+  --letter-spacing-content-headline-4: ${tokens.letterSpacingContentHeadline4}
 
   /* Content/Headline 5 */
-  --font-content-headline-5: 700 16px/24px var(--font-family-headline);
-  --letter-spacing-content-headline-5: -0.32px;
+  --font-content-headline-5: ${tokens.fontContentHeadline5};
+  --letter-spacing-content-headline-5: ${tokens.letterSpacingContentHeadline5}
   
   /* Content/Body 1 */
-  --font-content-body-1: 400 16px/24px var(--font-family-text);
-  --letter-spacing-content-body-1: 0.25px;
+  --font-content-body-1: ${tokens.fontContentBody1};
+  --letter-spacing-content-body-1: ${tokens.letterSpacingContentBody1}
 
   /* Content/Body 2 */
-  --font-content-body-2: 400 14px/24px var(--font-family-text);
-  --letter-spacing-content-body-2: 0px;
+  --font-content-body-2: ${tokens.fontContentBody2};
+  --letter-spacing-content-body-2: ${tokens.letterSpacingContentBody2}
 
   
 
   /* to inherit */
 
-  font-family: var(--font-family-text);
+  font-family: var(--font-family-interface);
   color: var(--color-text);
 
   `} >
@@ -257,13 +236,13 @@
 </div>
 
 <svelte:head>
-  {#if googleFont}
+  {#if tokens.googleFont}
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href={`https://fonts.googleapis.com/css2?family=${googleFont}&display=swap`} rel="stylesheet">
+    <link href={`https://fonts.googleapis.com/css2?family=${tokens.googleFont}&display=swap`} rel="stylesheet">
   {/if}
-  {#if googleFont2}
+  {#if tokens.googleFont2}
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href={`https://fonts.googleapis.com/css2?family=${googleFont2}&display=swap`} rel="stylesheet">
+    <link href={`https://fonts.googleapis.com/css2?family=${tokens.googleFont2}&display=swap`} rel="stylesheet">
   {/if}
 </svelte:head>
 
