@@ -43,7 +43,7 @@
   
   export const createIconDivHTML = async (element, options) => {
 
-    console.log("createIconDivHTML", element, options)
+    //console.log("createIconDivHTML", element, options)
 
     let title = element?.markerTitleColumn;
     let label = element?.markerLabelColumn;
@@ -662,6 +662,10 @@
     gap: 2px;
     min-width: 32px;
     box-sizing: border-box;
+  }
+
+  :global(.marker-container:not(.no-frame) div.marker-content.selected) {
+    background-color: var(--color-background-highlight);
   }
 
   :global(.marker-container.no-frame .marker-content) {
