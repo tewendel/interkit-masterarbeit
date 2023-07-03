@@ -220,6 +220,7 @@
     overflow: hidden;
     padding: 2px;
     text-overflow: "...";
+    white-space: nowrap;
   }
 
   .navigation-accordion li .move-button {
