@@ -1,4 +1,4 @@
-<script >
+<script>
   import InterkitClient from '../interkit-client';
   import { getContext, setContext, onMount } from 'svelte'
   import { useNavigate } from 'svelte-navigator';
@@ -6,7 +6,7 @@
   
   export let effect;
   export let execOnMount = false;
-
+  
   const elementContext = getContext("element");
 
   let navigate;
@@ -72,7 +72,7 @@
     }
   }
 
-  const execute = (payload) => {
+  export const execute = (payload) => {
     console.log("received effect", payload)
     handleClickEffect(payload);
   }

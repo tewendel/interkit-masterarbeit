@@ -6,7 +6,7 @@
   import ButtonBar from '../components/ButtonBar.svelte'
   import Button from '../components/Button.svelte'
   import AspectRatio from '../components/AspectRatio.svelte'
-  import Flex2 from '../components/Flex2.svelte'
+  import Icon from './Icon.svelte'
 
   import { addElement } from './Upload.svelte'
 
@@ -236,7 +236,7 @@
 <div class="MediaRecorder container">
 
   <div class="MediaRecorder__Media media">
-    <AspectRatio aspectRatio={1} standalone>
+    <AspectRatio aspectRatio={1}>
 
       <div class="MediaRecorder__MediaContainer MediaRecorder__MediaContainer-{mode} mediacontainer mode-{mode}">
         {#if loading}
@@ -285,7 +285,7 @@
   </div>
 
   <div class="MediaRecorder__Controls controls">
-    <ButtonBar>
+    <ButtonBar hideHelpText>
       {#if mode != "image"}
         {#if !recording && !videoURL}
           <Button on:click={startRecording}>
@@ -293,8 +293,8 @@
           </Button>
         {/if}
       {:else if !imageBlob}
-          <Button on:click={takePicture}>
-            Take picture
+          <Button type="primary" on:click={takePicture} dummyNoText>
+            <Icon type="Full-Camera" inverse/>
           </Button>
       {/if}
       {#if recording}
@@ -303,11 +303,12 @@
         </Button>
       {/if}
       {#if videoURL || imageBlob}
-        <Button on:click={uploadRecording}>
-          Upload
-        </Button>
-        <Button on:click={discardRecording}>
+        <Button on:click={discardRecording} dummyNoText>
           Retry
+        </Button>
+        <Button type="primary" on:click={uploadRecording} dummyNoText>
+          Upload
+          <Icon type="Full-Send" inverse/>
         </Button>
         <br style="clear: both" />
       {/if}
@@ -325,10 +326,14 @@
     width: 100%;
     height: 100%;
     flex: 1;
+    background-color: var(--color-background-backdrop);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .media {
-    padding: 0 var(--distance-s) 0 var(--distance-s);
+    
   }
 
   .mediacontainer {
@@ -339,6 +344,7 @@
     justify-content: center;
     align-items: center;
     background: black;
+    border-radius: 0;
   }
 
   video {
@@ -349,7 +355,20 @@
   }
 
   video, canvas {
-    border-radius: var(--border-radius);
+    border-radius: 0; 
+  }
+
+  .camera {
+    border-radius: 0 !important; 
+  }
+
+  .controls {
+    padding: var(--distance-l);
+    background-color: var(--color-background-backdrop);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .audioMeter {
