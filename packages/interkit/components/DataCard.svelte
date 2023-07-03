@@ -46,6 +46,7 @@
 
 <WithEffect {effect} let:execute>
   <Card 
+    mainClass="DataCard"
     {variant} 
     {rightArrow}
     {imageRef}

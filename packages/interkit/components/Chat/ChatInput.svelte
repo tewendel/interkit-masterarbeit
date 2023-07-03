@@ -57,14 +57,14 @@
 
 <div class="ChatInput container" class:emptyInterface>
   {#if chatInterface?.photo || $showDummyData}
-    <div class="left-button">
+    <div class="ChatInput__ButtonsLeft left-button">
       <Button on:click={openCamera} type="link" dummyNoText>
         <Icon type="Full-Camera"></Icon>
       </Button>
     </div>
   {/if}
   {#if chatInterface?.text || $showDummyData}
-    <input class="ChatInput__input input" type="text" bind:value={messageText} on:keydown={handleKeydown}/>
+    <input class="ChatInput__Input input" type="text" bind:value={messageText} on:keydown={handleKeydown}/>
     <Button on:click={submit} type="link" dummyNoText>
       <Icon type="Full-Send"></Icon>
     </Button>
@@ -73,7 +73,7 @@
 
 {#if showCamera}
   <OverlayFull closeMethod={closeCamera}>
-    <div class="camera-container">
+    <div class="ChatInput__Camera camera-container">
       <MediaRecorder
         mode="image"
         meta={{ userGenerated: "yes", userId, boardId, nodeId }}

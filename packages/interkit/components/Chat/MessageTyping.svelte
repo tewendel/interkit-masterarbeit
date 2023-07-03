@@ -7,7 +7,7 @@
 </script>
 
 {#if message?.payload?.options?.label && show}
-  <span class="message-label">{message?.payload?.options?.label}</span> 
+  <span class="Message__Label message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
 <div
@@ -20,8 +20,8 @@
   showHandle={true}
   transparent
   >
-    <div class="inner">
-      <div class="dots"/>
+    <div class="MessageTyping__inner inner">
+      <div class="MessageTyping__Dots dots"/>
     </div>
   </Bubble>
 </div>

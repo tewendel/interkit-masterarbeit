@@ -58,7 +58,7 @@
   
 </script>
 
-<div class="style" style={`
+<div class="style Styling" style={`
 
   /* from tokens */
 

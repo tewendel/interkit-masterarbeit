@@ -1,14 +1,14 @@
-
-<nav class="TopNavBarCustom__Top">
-  <div class="left TopNavBarCustom__Top__Left" >
+<!-- TODO refactor/cleanup _TopNavBar classes -->
+<nav class="HorizontalSpacer _TopNavBarCustom__Top">
+  <div class="HorizontalSpacer__Left left _TopNavBarCustom__Top__Left" >
     <slot name="left"/>
   </div>
   {#if $$slots.center}
-    <div class="center TopNavBarCustom__Top__Center" >
+    <div class="HorizontalSpacer__Center center _TopNavBarCustom__Top__Center" >
       <slot name="center"/>
     </div>
   {/if}
-  <div class="right TopNavBarCustom__Top__Right" >
+  <div class="HorizontalSpacer__Right right _TopNavBarCustom__Top__Right" >
     <slot name="right"/>
   </div>
 </nav>
@@ -30,9 +30,9 @@
     padding-bottom: var(--distance-s);
   }
   
-  .TopNavBarCustom__Top__Left,
-  .TopNavBarCustom__Top__Center,
-  .TopNavBarCustom__Top__Right {
+  ._TopNavBarCustom__Top__Left,
+  ._TopNavBarCustom__Top__Center,
+  ._TopNavBarCustom__Top__Right {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: clip;
@@ -44,15 +44,15 @@
     align-items: center;
   }
 
-  :global(.TopNavBarCustom__Top__Left > *:not(:first-child)) {
+  :global(._TopNavBarCustom__Top__Left > *:not(:first-child)) {
     margin-left: 8px;
   }
 
-  :global(.TopNavBarCustom__Top__Right > *:not(:first-child)) {
+  :global(._TopNavBarCustom__Top__Right > *:not(:first-child)) {
     margin-left: 8px;
   }
 
-  :global(.TopNavBarCustom__Top__Left span, .TopNavBarCustom__Top__Center span, .TopNavBarCustom__Top__Right span) {
+  :global(._TopNavBarCustom__Top__Left span, ._TopNavBarCustom__Top__Center span, ._TopNavBarCustom__Top__Right span) {
     font-size: var(--font-size-headline-1);
   }
   

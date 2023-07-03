@@ -4,6 +4,8 @@
   import MediaFileImage from '../MediaFileImage.svelte'
   import CardHeader from "./CardHeader.svelte"
   import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
+
+  export let mainClass = ''
   
   export let variant = "full"; // full | large | medium | small | extra-small (card is just like small but with small header)
   export let state = "enabled"; // enabled | pressed | selected
@@ -54,7 +56,15 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container {variant} {state} {hoverPointer ? "hoverPointer" : ""} Card" on:click>
+<div
+  class="container {variant} {state} {hoverPointer ? "hoverPointer" : ""} Card
+    {mainClass}
+    {mainClass}--variant{variant}
+    {mainClass}--state{state}
+    {mainClass}--hoverpointer{hoverPointer}
+  "
+  on:click
+  >
   <div class="header-wrapper">
     {#if imageRef?.value}
       <div class="image Card__image">

@@ -156,13 +156,13 @@
   </script>
   
   <WithEffect effect={scanEffect} bind:execute={executeScanEffect}>
-    <OverlayFull {closeEffect}>    
-      <div id="scanner-container">
-        <canvas id="canvas"></canvas>
+    <OverlayFull {closeEffect} classes="QRScanner">   
+      <div id="scanner-container QRScanner__Container">
+        <canvas id="canvas" class="QRScanner__Canvas"></canvas>
         {#if loading}
-          <div class="loadingMessage" hidden="">Waiting for camera...</div>
+          <div class="loadingMessage QRScanner__LoadingMessage" hidden="">Waiting for camera...</div>
         {:else}
-          <div class="qr-frame"></div>
+          <div class="qr-frame QRScanner__Frame"></div>
         {/if}
       </div>
     </OverlayFull>

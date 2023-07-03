@@ -428,12 +428,12 @@
 
     <div class="Chat root">
       <div
-        class="messages-container"
+        class="Chat__MessagesContainer messages-container"
         class:messages__empty={!messageStore || $messageStore.length === 0}
         bind:this={messagesScrollContainer}
         >
         {#if messageStore}
-          <div class="messages">
+          <div class="Chat__Messages messages">
             {#each $messageStore as message, index}
               {#if index < typingQueuePointer}
                 <Message 
@@ -474,7 +474,7 @@
       </div>
       <slot name="Player"></slot>
       <div
-        class="input"
+        class="Chat__Input input"
         class:hidden={!showInputField}
         >
         <ChatInput 
@@ -489,6 +489,8 @@
     </div>
 
 <style>
+
+  ._workaround_ {}
 
   .root {
     display: flex;

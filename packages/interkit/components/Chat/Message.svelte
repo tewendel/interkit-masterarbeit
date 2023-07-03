@@ -82,18 +82,21 @@
 
 </script>
 
+{@html `<!-- id ${message.id} -->`}
+
 {#if message?.payload?.options?.label}
-  <span class="message-label">{message?.payload?.options?.label}</span> 
+  <span class="Message__Label message-label">{message?.payload?.options?.label}</span> 
 {/if}
 
 {#if message?.payload?.type === 'empty'}
   {@html '<!-- empty message -->'}
 {:else if message?.payload?.type == "system" }
-  <div class="system">
+  <div class="Message Message--system system">
     {message?.payload?.text}
   </div>
 {:else if message?.payload?.type == "systemImage" }
-  <div class="system system-image {message?.payload?.options?.placement ? `placement-${message?.payload?.options?.placement}` : ""}">
+  <div class="Message Message--SystemImage Message--SystemImage--placement{message?.payload?.options?.placement}
+    system system-image {message?.payload?.options?.placement ? `placement-${message?.payload?.options?.placement}` : ""}">
     <MediaFileImage
       mediafileRef={{
         type: 'mediafile',
@@ -107,9 +110,11 @@
   </div>  
 {:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}
   <div 
-    class="message message--{message.payload.type}"
+    class="Message Message--{message.payload?.type} message message--{message.payload.type}"
     class:message__user="{isByUser}"
+    class:Message--user="{isByUser}"
     class:message__lastFromSender={lastFromSender}
+    class:Message--lastFromSender={lastFromSender}
     class:contain={message?.payload?.options?.objectFit === "contain"}
   >
     <Bubble
@@ -125,13 +130,14 @@
         }
       }}
       >
-      <div class="message__contents {message?.payload?.options?.customClass}">
+      <div class="Message__Contents message__contents {message?.payload?.options?.customClass}">
         <!--<time datetime={message?.createdAt}>{message?.createdAt}</time>-->
         {#if message?.payload?.type == "text"}  
           {message?.payload?.text}
         {:else if message?.payload?.type === 'link'}
           {#if message?.payload?.url}
             <a
+              class="Message__Link"
               href={message?.payload?.url}
               target="_blank"
               on:click={capacitorLinkClickHandler(message)}
@@ -143,6 +149,7 @@
           {#if message?.payload?.options?.url}
             <!-- add a link around image -->
             <a
+              class="Message__ImageLink"
               href={message?.payload?.options?.url}
               target="_blank"
               on:click={capacitorLinkClickHandler(message)}
@@ -164,12 +171,12 @@
         {:else if message?.payload?.type == "choice"}
           {#if message?.payload?.choice}
             <ul
-              class="message__choices"
+              class="Message__Choices message__choices"
               class:selected={message?.selectedChoiceKey}
             >  
               {#each Object.keys(message?.payload?.choice) as key}
                 <li 
-                  class="choice-option" 
+                  class="Message__Choice choice-option" 
                 >
                   <Button
                     on:click={()=>{submitChoiceLocal(message, key)}}
@@ -185,10 +192,10 @@
           {/if}
         {:else if message?.payload?.type == "requestLocation"}
           <ul
-            class="message__choices"
+            class="Message__Choices message__choices"
           >  
             <li 
-              class="choice-option" 
+              class="Message__Choice choice-option" 
             >
               <Button
                 on:click={()=>{if(!message?.submitted) submitLocationLocal(message)}}
@@ -201,7 +208,7 @@
             </li>
             {#if message.payload.cancel}
               <li 
-                class="choice-option" 
+                class="Message__ChoiceCancel choice-option" 
               >
                 <Button
                   on:click={()=>{if(!message?.submitted) submitLocationLocal(message, true)}}
@@ -221,7 +228,7 @@
     {#if showOptions}
       {#if isReportable}
         <div
-          class="message__options"
+          class="Message__Options message__options"
           on:click={() => { startMessageOptionDialog() }}
           >
           <Icon type="Full-Warning" height="1.2em" />
@@ -233,6 +240,8 @@
 {/if}
 
 <style>
+
+  ._workaround_ {}
 
   .message {
     width: auto;

@@ -19,7 +19,7 @@
 
 </script>
 
-<div class="container">
+<div class="DataCarousel container">
   {#if $elements?.length || $showDummyData }
     <Slider 
       continuous={mode == "continuous"} 
@@ -31,7 +31,7 @@
       <slot name="contentElement"></slot>
     </Slider>
   {:else}
-    <div class="empty"><slot name="emptyElement"></slot></div>
+    <div class="DataCarousel__Empty empty"><slot name="emptyElement"></slot></div>
   {/if}
 </div>
 

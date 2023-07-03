@@ -6,14 +6,20 @@
   let showVideoOverlay = false;
 </script>
 
-<Button size="medium" type="primary" on:click={()=>{showVideoOverlay = true}}>
+<Button
+  size="medium"
+  type="primary"
+  on:click={()=>{showVideoOverlay = true}}
+  class="InlineVideoButton__Button"
+  >
+
   <Icon type="Full-Play" inverse></Icon>
     Play Video
 </Button>
 
 {#if showVideoOverlay}
-<Overlay customStyle="background-color: black;">
-  <div class="video-close-button" on:click={()=>{showVideoOverlay=false}}>
+<Overlay customStyle="background-color: black;" classes="InlineVideoButton">
+  <div class="InlineVideoButton__Close video-close-button" on:click={()=>{showVideoOverlay=false}}>
     <Button>
       <Icon type="close"/>
     </Button>

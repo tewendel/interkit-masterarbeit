@@ -35,7 +35,7 @@
 </script>
 
 {#if showDate(message, previousMessage, lastFromSender) } 
-  <div class="message__date">
+  <div class="MessageDate message__date">
     {date.toLocaleTimeString(locale, dateOptions(date))}
   </div>
 {/if}

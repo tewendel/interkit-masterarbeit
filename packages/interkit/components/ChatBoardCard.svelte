@@ -101,7 +101,7 @@
 
 </script>
 
-<LinkConditional to={path + "/" + real_channel_key}>
+<LinkConditional to={path + "/" + real_channel_key} classes="ChatBoardCard">
   <StoryBoardImage channel_key={real_channel_key} imageProvider let:imageRef={imageRef}>
     <Card
       variant="small"

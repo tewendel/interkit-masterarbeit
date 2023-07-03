@@ -10,16 +10,22 @@
 
 </script>
 
-<div style={`
+<div
+  class="Absolute"
+  style={`
     ${attr("top", top)}
     ${attr("bottom", bottom)}
     ${attr("left", left)}
     ${attr("right", right)}
-`}>
+  `}
+  >
   <slot></slot>
 </div>
 
 <style>
+
+  ._workaround_ {}
+
   div {
     position: absolute;
   }

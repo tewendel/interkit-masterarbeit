@@ -15,9 +15,9 @@
 </script>
 
 {#if counter || time}
-<div class="container">
+<div class="MessageIndicator container">
   {#if counter}<Label type="text" content={counter}/>{/if}
-  {#if time}<span class="time">{time}</span>{/if}
+  {#if time}<span class="MessageIndicator__Time time">{time}</span>{/if}
 </div>
 {/if}
 

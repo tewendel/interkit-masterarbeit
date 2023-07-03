@@ -18,7 +18,7 @@
 
 {#if ["text", "image", "video", "audio", "choice"].includes(_message?.payload?.type) }   
   <div 
-    class="MessagePreview message message--{_message.payload.type}"
+    class="MessagePreview MessagePreview--type{_message.payload.type} message message--{_message.payload.type}"
   >
 
     {(preview && !_message.origin) ? "You:" : ""}

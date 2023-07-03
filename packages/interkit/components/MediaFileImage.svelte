@@ -6,7 +6,8 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   import OverlayFull from './OverlayFull.svelte';
-  
+
+  export let mainClass = ''
   export let fitDimension = "width"; // "width", "height" or "both" is 100%
   export let objectFit = "cover"; // contain or cover
   export let mediafileRef; // {type: "mediafile", value: id}
@@ -59,7 +60,14 @@
   <img
     on:click={() => { zoomed = true }}
     {style}
-    class={`fitDimension-${fitDimension} objectFit-${objectFit}`}
+    class={`
+      ${mainClass}
+      MediaFileImage
+      fitDimension-${fitDimension}
+      MediaFileImage--fitdimension${fitDimension}
+      objectFit-${objectFit}
+      MediaFileImage--objectfit${objectFit}
+    `}
     alt="mediafile"
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
@@ -72,7 +80,7 @@
     </OverlayFull>
   {/if}
 {:else if doFallback}
-  <div class="fallback">image not found</div>
+  <div class="MediaFileImage__Fallback {mainClass}__Fallback fallback">image not found</div>
 {/if}
 
 <style>

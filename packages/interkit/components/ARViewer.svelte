@@ -1,14 +1,13 @@
 <script>
 
-  import { InterkitClient, util } from '../'
+  import { util } from '../'
   import { onMount, getContext } from 'svelte';
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
   import MediaFileResolver from './MediaFileResolver.svelte'
-  import MediaFileImage from './MediaFileImage.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
-  import AspectRatio from './AspectRatio.svelte'
+
   import { executeTrigger } from '../actions'
 
   import CenterModal from "./CenterModal.svelte";
@@ -33,6 +32,7 @@
 
   let ARElement = getContext("element");
 
+  // TODO
   let showDummyData = getShowDummyDataStore()
   const dummyData = {
     
@@ -165,12 +165,10 @@
 
           {#if capability === "ios"}
 
-            <div class="buttonContainer">
-              <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
-                {startButtonText}
-              </Button>
-            </div>
-
+            <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
+              {startButtonText}
+            </Button>
+            
             <div style="position: absolute; z-index:-1; visibility: hidden">
               <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
                 <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
@@ -183,11 +181,10 @@
 
           {/if}
 
-          <div class="buttonContainer">
-            <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
-              {videoButtonText}
-            </Button>
-          </div>
+          <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
+            {videoButtonText}
+          </Button>
+          
 
         </svelte:fragment>
       </CenterModal>

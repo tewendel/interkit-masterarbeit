@@ -6,7 +6,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span on:click class="{state}">{text}{#if state == "selected"}<Icon type="Thin-Close" height="16px"/>{/if}</span>
+<span on:click class="FilterSegment Filtersegment--state{state} {state}">{text}{#if state == "selected"}<Icon type="Thin-Close" height="16px"/>{/if}</span>
 
 <style>
 

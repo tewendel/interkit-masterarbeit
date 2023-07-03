@@ -6,7 +6,7 @@
 </script>
 
 <div
-  class="message__bubble message__bubble--{type}"
+  class="Bubble Bubble--type{type} message__bubble message__bubble--{type}"
   class:showHandle
   class:showSide
   class:transparent

@@ -4,15 +4,15 @@
 
 </script>
 
-<div class="container columns-{columns}">
-  <div class="col1">
+<div class="ColumnShell container columns-{columns} ColumnShell--columns{columns}">
+  <div class="ColumnShell__Col1 col1">
     <slot name="col1"/>
   </div>
-  <div class="col2">
+  <div class="ColumnShell__Col2 col2">
     <slot name="col2"/>
   </div>
   {#if columns == "3"}
-    <div class="col3">
+    <div class="ColumnShell__Col3 col3">
       <slot name="col3"/>
     </div>
   {/if}

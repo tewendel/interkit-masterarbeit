@@ -5,7 +5,14 @@
 
 </script>
 
-<span class="interface-{interfaceFormat} content-{contentFormat}"><slot></slot></span>
+<span
+  class="
+    TextFormat
+    interface-{interfaceFormat}
+    TextFormat--interface{interfaceFormat}
+    content-{contentFormat}
+    TextFormat--content{contentFormat}
+  "><slot></slot></span>
 
 <style>
 

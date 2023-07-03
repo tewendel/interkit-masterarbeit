@@ -8,9 +8,13 @@
 
 <WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="container {effect ? "withEffect" : ""}" on:click={execute}>
-    <span class="text">{#if text}{text}{/if}</span>
-    <div class="icon-container">
+  <div
+    class="ListItem container {effect ? "withEffect" : ""}"
+    class:ListItem--witheffect={!!effect}
+    on:click={execute}
+    >
+    <span class="ListItem__Text text">{#if text}{text}{/if}</span>
+    <div class="ListItem__Icon icon-container">
       <slot/>
     </div>
   </div>

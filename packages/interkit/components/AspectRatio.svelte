@@ -6,6 +6,8 @@
   export let standalone = false // add border
   export let disabled = false;
 
+  export let mainClass = ''
+
   if (typeof standalone == "string") standalone = standalone === "TRUE" // blockly conversion
 
   const aspectRatioTypes = {
@@ -24,7 +26,7 @@
 {#if disabled}
   <slot />
 {:else}
-  <div class:standalone class="AspectRatio container" style={`--aspect-ratio: ${ aspectRatio * 100 }%`}>
+  <div class:standalone class="AspectRatio container {mainClass}" style={`--aspect-ratio: ${ aspectRatio * 100 }%`}>
     <div class="inner-container">
       <slot />
     </div>

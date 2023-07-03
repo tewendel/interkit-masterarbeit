@@ -235,37 +235,56 @@
 
 <div class="MediaRecorder container">
 
-  <div class="media">
+  <div class="MediaRecorder__Media media">
     <AspectRatio aspectRatio={1}>
 
-      <div class="mediacontainer mode-{mode}">
+      <div class="MediaRecorder__MediaContainer MediaRecorder__MediaContainer-{mode} mediacontainer mode-{mode}">
         {#if loading}
           Please allow access to camera and microphone
         {/if}
 
-        <video playsinline class="camera" bind:clientWidth={videoWidth} bind:clientHeight={videoHeight} bind:this={videoSource} paused={videoURL} class:hidden={!!videoURL || loading || !!imageBlob} muted />
+        <video
+          playsinline
+          class="MediaRecorder__Camera camera"
+          class:MediaRecorder__Camera--hidden={!!videoURL || loading || !!imageBlob}
+          class:hidden={!!videoURL || loading || !!imageBlob}
+          bind:clientWidth={videoWidth}
+          bind:clientHeight={videoHeight}
+          bind:this={videoSource}
+          paused={videoURL}
+          muted
+          />
 
         {#if !videoURL && streamOptions.audio && !loading}
-          <div class="audioMeter" style="--levelPerc: {Math.round(audioLevel*100)}%">
+          <div class="MediaRecorder__AudioMeter audioMeter" style="--levelPerc: {Math.round(audioLevel*100)}%">
           </div>
         {/if}
 
         {#if mode == "image"}
-          <canvas bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} bind:this={canvas} width="480" height="480" class:hidden={!imageBlob}></canvas>
+          <canvas
+            class="MediaRecorder__Canvas"
+            class:MediaRecorder__Canvas--hidden={!imageBlob}
+            class:hidden={!imageBlob}
+            bind:clientWidth={canvasWidth}
+            bind:clientHeight={canvasHeight}
+            bind:this={canvas}
+            width="480"
+            height="480"
+            ></canvas>
         {/if}
 
         {#if videoURL}
           {#if mode == "audio"}
-            <audio class="recordedVideo" controls src={videoURL} />
+            <audio class="MediaRecorder__RecordedAudio recordedAudio" controls src={videoURL} />
           {:else if mode == "video"}
-            <video class="recordedVideo" controls src={videoURL} />
+            <video class="MediaRecorder__RecordedVideo recordedVideo" controls src={videoURL} />
           {/if}
         {/if}
       </div>
     </AspectRatio>
   </div>
 
-  <div class="controls">
+  <div class="MediaRecorder__Controls controls">
     <ButtonBar hideHelpText>
       {#if mode != "image"}
         {#if !recording && !videoURL}

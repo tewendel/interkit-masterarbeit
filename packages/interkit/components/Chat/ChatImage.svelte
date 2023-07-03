@@ -24,6 +24,7 @@
   }}
   fitDimension={settings.fitDimension}
   objectFit={settings.objectFit}
+  mainClass="ChatImage"
   style={settings.height && `height: ${settings.height}`}
   doFallback={true}
   zoomable={message?.payload?.options?.zoom !== false && !message?.payload?.options?.url}

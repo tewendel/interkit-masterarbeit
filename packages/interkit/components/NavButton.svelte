@@ -35,13 +35,19 @@
 
   <WithEffect {effect} let:execute>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="container {withIcon} {active} {disabled ? "disabled" : ""}" on:click={()=>{if(!disabled) execute()}}>
+    <div
+      class="NavButton container {withIcon} {active} {disabled ? "disabled" : ""}"
+      class:NavButton--withicon={withIcon}
+      class:NavButton--active={active}
+      class:NavButton--disabled={disabled}
+      on:click={()=>{if(!disabled) execute()}}
+      >
       {#if withIcon}
-        <div class="icon-container">
+        <div class="NavButton__Icon icon-container">
           <slot/>
         </div>
       {/if}
-      <span>{text}</span>
+      <span class="NavButton__Text">{text}</span>
     </div>
   </WithEffect>
 

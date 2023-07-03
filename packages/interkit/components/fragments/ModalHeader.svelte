@@ -18,9 +18,9 @@
 
 <div class="ModalHeader container {size}">
 
-  {#if label || $showDummyData}<div class="label">{label}</div>{/if}
-  {#if headline || $showDummyData}<div class="headline">{headline}</div>{/if}
-  {#if prompt || $showDummyData}<div class="prompt">{prompt}</div>{/if}
+  {#if label || $showDummyData}<div class="Modalheader__Label label">{label}</div>{/if}
+  {#if headline || $showDummyData}<div class="ModalHeader__Headline headline">{headline}</div>{/if}
+  {#if prompt || $showDummyData}<div class="ModalHeader__Prompt prompt">{prompt}</div>{/if}
 
 </div>
 

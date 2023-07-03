@@ -112,7 +112,9 @@
       on:click|capture={containerClick}
       >
         {#if mediafile || $showDummyData}
-          <audio controls="controls"
+          <audio
+            class="InlineAudioButton__Audio"
+            controls="controls"
             {autoplay}
             bind:this={audioElement}
             bind:currentTime
@@ -123,23 +125,31 @@
             <source src={$showDummyData ? dummyAudioSrc : encodeURI(mediafile.link)} type="audio/mpeg">
           </audio>
           {#if !hideSkipControls}
-            <div class="button skip" on:click={skipBackClick} disabled="!(currentTime > 0)">
+            <div
+              class="button skip InlineAudioButton__Back"
+              on:click={skipBackClick}
+              disabled="!(currentTime > 0)"
+              >
               <Icon type="Thin-Replay-30" />
             </div>
           {/if}
-          <div class="button" on:click={mainToggleClick} disabled={loading}>
+          <div class="button InlineAudioButton__Play" on:click={mainToggleClick} disabled={loading}>
             {#if autoplay}<abbr title="autoplay"><small>A</small></abbr>{/if}
             <Icon type={ paused ? 'Thin-Play' : 'Thin-Pause' } />
           </div>
-          <div class="time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
+          <div class="time InlineAudioButton__Time" style={`min-width: ${util.formatDuration(duration)?.length}ch`}>
             {util.formatDuration((open ? currentTime : duration) * 1000)}
           </div>
           {#if !hideSkipControls}
-            <div class="button skip" on:click={skipForwardClick} disabled="!(currentTime > 0)">
+            <div
+              class="button skip InlineAudioButton__Forward"
+              on:click={skipForwardClick}
+              disabled="!(currentTime > 0)"
+              >
               <Icon type="Thin-Forward-15" />
             </div>
           {/if}
-          <div class="button close" on:click={closeClick}>
+          <div class="button close InlineAudioButton__Close" on:click={closeClick}>
             <Icon type="Full-Close" />
           </div>
         {:else}

@@ -1,25 +1,26 @@
-<script>
+<script>  
 
-  
+  // TODO: make this component properly abstract to match its usage
+  export let mainClass = 'LayoutShellAudio' 
   
 </script>
 
-<div class="container">
+<div class={`${mainClass} container`}>
   {#if $$slots.TopBar}
-    <div class="top-bar">
+    <div class={`${mainClass}__TopBar top-bar`}>
       <slot name="TopBar"></slot>
     </div>
   {/if}
-  <div class="content">
+  <div class={`${mainClass}__Content content`}>
       <slot name="Content"></slot>    
   </div>
   {#if $$slots.Player}
-    <div class="audio-player">
+    <div class={`${mainClass}__AudioPlayer audio-player`}>
       <slot name="Player"></slot>
     </div>
   {/if}
   {#if $$slots.BottomBar}
-    <div class="bottom-bar">
+    <div class={`${mainClass}__BottomBar bottom-bar`}>
       <slot name="BottomBar"></slot>
     </div>
   {/if}

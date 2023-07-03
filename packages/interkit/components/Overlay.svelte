@@ -1,11 +1,12 @@
 <script>
   export let zIndex = 1
   export let customStyle;
+  export let classes = ''
 </script>
 
 <div
-    class="Overlay"
-    style={`z-index: ${zIndex};` + customStyle}
+  class={`Overlay ${classes}`}
+  style={`z-index: ${zIndex};` + customStyle}
   >
   <slot></slot>
 </div>

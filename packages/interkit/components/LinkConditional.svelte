@@ -4,6 +4,8 @@
   export let condition = true;
   export let to;
 
+  export let classes = ''
+
 	const navigate = useNavigate();
   
   const click = () => {
@@ -14,7 +16,7 @@
 
 {#if condition}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="link" on:click={click}>
+  <div class={`${classes} link LinkConditional`} on:click={click}>
     <slot/>
   </div>
 {:else}

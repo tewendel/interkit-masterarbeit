@@ -4,6 +4,7 @@
   import { getShowDummyDataStore } from './dummyDataHelpers.js'  
   let showDummyData = getShowDummyDataStore();
   
+  export let mainClass = ''
   export let text = undefined;
   export let type = "secondary" // primary | secondary | ghost | link
   export let size =  "medium" // small | medium | large 
@@ -23,7 +24,7 @@
   <span
     on:click
     on:click={()=>{if(!disabled) execute()}} 
-    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
+    class={`${mainClass} Button Button--${type} Button--${size} Button--flex${flex} Button--height${height} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
     class:Button--disabled={disabled}
     class:Button--selected={selected}
@@ -38,6 +39,8 @@
 </WithEffect>
 
 <style>
+
+  ._workaround_ {}
 
   .button {
     border: var(--border-width) solid var(--color-border);
