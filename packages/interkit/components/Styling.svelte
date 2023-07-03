@@ -142,55 +142,55 @@
 
  /* Interface/Headline 1 */
   --font-headline-1: ${tokens.fontHeadline1};
-  --letter-spacing-headline-1: ${tokens.letterSpacingHeadline1}
+  --letter-spacing-headline-1: ${tokens.letterSpacingHeadline1};
   
   /* Interface/Headline 2 */
   --font-headline-2: ${tokens.fontHeadline2};
-  --letter-spacing-headline-2: ${tokens.letterSpacingHeadline2}
+  --letter-spacing-headline-2: ${tokens.letterSpacingHeadline2};
 
   /* Interface/Headline 3 */
   --font-headline-3: ${tokens.fontHeadline3};
-  --letter-spacing-headline-3: ${tokens.letterSpacingHeadline3}
+  --letter-spacing-headline-3: ${tokens.letterSpacingHeadline3};
   
   /* Interface/Headline 4 */
   --font-headline-4: ${tokens.fontHeadline4};
-  --letter-spacing-headline-4: ${tokens.letterSpacingHeadline4}
+  --letter-spacing-headline-4: ${tokens.letterSpacingHeadline4};
   
   /* Interface/Headline 5 */
   --font-headline-5: ${tokens.fontHeadline4};
-  --letter-spacing-headline-5: ${tokens.letterSpacingHeadline5}
+  --letter-spacing-headline-5: ${tokens.letterSpacingHeadline5};
   
   /* Interface/Body 1 */
   --font-body-1: ${tokens.fontBody1};
-  --letter-spacing-body-1: ${tokens.letterSpacingBody1}
+  --letter-spacing-body-1: ${tokens.letterSpacingBody1};
 
   /* Interface/Body 2 */
   --font-body-2: ${tokens.fontBody2};
-  --letter-spacing-body-2: ${tokens.letterSpacingBody2}
+  --letter-spacing-body-2: ${tokens.letterSpacingBody2};
   
   /* Interface/Subtitle 1 */
   --font-subtitle-1: ${tokens.fontSubtitle1};
-  --letter-spacing-subtitle-1: ${tokens.letterSpacingSubtitle1}
+  --letter-spacing-subtitle-1: ${tokens.letterSpacingSubtitle1};
   
   /* Interface/Subtitle 2 */
   --font-subtitle-2: ${tokens.fontSubtitle2};
-  --letter-spacing-subtitle-2: ${tokens.letterSpacingSubtitle2}
+  --letter-spacing-subtitle-2: ${tokens.letterSpacingSubtitle2};
 
   /* Interface/Button */
   --font-button: ${tokens.fontButton};
-  --letter-spacing-button: ${tokens.letterSpacingButton}
+  --letter-spacing-button: ${tokens.letterSpacingButton};
 
   /* Interface/Caption */
   --font-caption: ${tokens.fontCaption};
-  --letter-spacing-caption: ${tokens.letterSpacingCaption}
+  --letter-spacing-caption: ${tokens.letterSpacingCaption};
 
   /* Interface/Caption - Bold */
   --font-caption-bold: ${tokens.fontCaptionBold};
-  --letter-spacing-caption-bold: ${tokens.letterSpacingCaptionBold}
+  --letter-spacing-caption-bold: ${tokens.letterSpacingCaptionBold};
 
   /* Interface/Overline */
   --font-overline: ${tokens.fontOverline};
-  --letter-spacing-overline: ${tokens.letterSpacingOverline}
+  --letter-spacing-overline: ${tokens.letterSpacingOverline};
 
   /**************************************/
   /* Typography - Content               */
@@ -198,31 +198,31 @@
   
   /* Content/Headline 1 */
   --font-content-headline-1: ${tokens.fontContentHeadline1};
-  --letter-spacing-content-headline-1: ${tokens.letterSpacingContentHeadline1}
+  --letter-spacing-content-headline-1: ${tokens.letterSpacingContentHeadline1};
 
   /* Content/Headline 2 */
   --font-content-headline-2: ${tokens.fontContentHeadline2};
-  --letter-spacing-content-headline-2: ${tokens.letterSpacingContentHeadline2}
+  --letter-spacing-content-headline-2: ${tokens.letterSpacingContentHeadline2};
 
   /* Content/Headline 3 */
   --font-content-headline-3: ${tokens.fontContentHeadline3};
-  --letter-spacing-content-headline-3: ${tokens.letterSpacingContentHeadline3}
+  --letter-spacing-content-headline-3: ${tokens.letterSpacingContentHeadline3};
 
   /* Content/Headline 4 */
   --font-content-headline-4: ${tokens.fontContentHeadline4};
-  --letter-spacing-content-headline-4: ${tokens.letterSpacingContentHeadline4}
+  --letter-spacing-content-headline-4: ${tokens.letterSpacingContentHeadline4};
 
   /* Content/Headline 5 */
   --font-content-headline-5: ${tokens.fontContentHeadline5};
-  --letter-spacing-content-headline-5: ${tokens.letterSpacingContentHeadline5}
+  --letter-spacing-content-headline-5: ${tokens.letterSpacingContentHeadline5};
   
   /* Content/Body 1 */
   --font-content-body-1: ${tokens.fontContentBody1};
-  --letter-spacing-content-body-1: ${tokens.letterSpacingContentBody1}
+  --letter-spacing-content-body-1: ${tokens.letterSpacingContentBody1};
 
   /* Content/Body 2 */
   --font-content-body-2: ${tokens.fontContentBody2};
-  --letter-spacing-content-body-2: ${tokens.letterSpacingContentBody2}
+  --letter-spacing-content-body-2: ${tokens.letterSpacingContentBody2};
 
   
 
