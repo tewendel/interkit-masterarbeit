@@ -11,6 +11,8 @@
   import AspectRatio from './AspectRatio.svelte'
   import { executeTrigger } from '../actions'
 
+  import CenterModal from "./CenterModal.svelte";
+
   // slots:
   // - iosInfo
   // - androidInfo
@@ -103,14 +105,23 @@
 
   })
 
+  let headline = "Augmented Reality (AR)"
+  let prompt;
+  
+  if(capability === "android" || capability === "ios") {
+    prompt = 'Press "Start AR" to start the AR mode and place the object in the space!'
+  } else {
+    prompt = 'This device does not support AR. We have prepared a video that shows you the object in the space.'
+  }
+
 </script>
 
 <div class="ARViewer container">
-  {#if element}
 
+  {#if element}
     <div class="ARViewer__Close close">
-      <Button effect={{effectType:"back"}}>
-        <Icon type="close" on:click={() => executeTrigger(closeTrigger)} />
+      <Button size="small" effect={{effectType:"back"}}>
+        <Icon type="Full-Close" on:click={() => executeTrigger(closeTrigger)} />
       </Button>
     </div>
 
@@ -125,133 +136,62 @@
     
     {:else}
 
-      <div class="inner-container">
+      <CenterModal 
+        {headline}
+        {prompt}
+        imageKey={element?.imageFileRef?.value}
+      >
+        <svelte:fragment slot="buttons">
 
-        <div class="box">
-
-          <AspectRatio>
-            <MediaFileImage 
-              mediafileRef={element.imageFileRef} 
-              fitDimension="both"
-              objectFit="contain"
-            />
-          </AspectRatio>
-
-          <div class="content">
-
-            <h1 class="headline">
-              Augmented Reality
-            </h1>
-
-              {#if capability === "android"}
-
-                <div class="block">
-
-                  <div class="buttonContainer">
-                    <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
-                      <a 
-                        class="ARViewer__Link-android link-android"
-                        bind:this={androidLinkRef} 
-                        rel="external" 
-                        title={element.title} 
-                        href={generateAndroidHref(url)}
-                      >
-                        <Button flex="fill" size="large">
-                          {startButtonText}
-                        </Button>
-                      </a>
-                    </MediaFileResolver>
-                  </div>
-
-                  <div class="buttonInfo">
-                    {#if $$slots.androidInfo}
-                      <slot name="androidInfo"></slot>
-                    {:else}
-                      <p>
-                        Press "Start AR" to start the Augmented Reality mode and place the object in the space!
-                      </p>
-                    {/if}
-                  </div>
-
-                </div>
-
-              {/if}
-
-              {#if capability === "ios"}
-
-                <div class="block">
-
-                  <div class="buttonContainer">
-                    <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
-                      {startButtonText}
-                    </Button>
-                  </div>
-
-                  <div class="buttonInfo">
-                    {#if $$slots.iosInfo}
-                      <slot name="iosInfo"></slot>
-                    {:else}
-                      <p>
-                        Press "Start AR" to start the Augmented Reality mode and place the object in the space!
-                      </p>
-                    {/if}
-                  </div>
-
-                  <div style="position: absolute; z-index:-1; visibility: hidden">
-                    <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
-                      <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
-                        <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
-                          <img src={imgUrl} alt={element.title}/>
-                        </MediaFileResolver>
-                      </a>
-                    </MediaFileResolver>
-                  </div>
-
-                </div>
-
-              {/if}
-
-              <div class="block">
-
-                <div class="buttonContainer">
-                  <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
-                    {videoButtonText}
+          {#if capability === "android"}
+          
+            <div class="buttonContainer">
+              <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
+                <a 
+                  class="ARViewer__Link-android link-android"
+                  bind:this={androidLinkRef} 
+                  rel="external" 
+                  title={element.title} 
+                  href={generateAndroidHref(url)}
+                >
+                  <Button flex="fill" size="large">
+                    {startButtonText}
                   </Button>
-                </div>
+                </a>
+              </MediaFileResolver>
+            </div>
 
-                <div class="buttonInfo">
-                  {#if capability === "video"}
+          {/if}
 
-                    {#if $$slots.videoOnlyInfo}
-                      <slot name="videoOnlyInfo"></slot>
-                    {:else}
-                      <p>
-                        This device does not support Augmented Reality. We have prepared a video that shows you the object in the space.
-                      </p>
-                    {/if}
+          {#if capability === "ios"}
 
-                  {:else}
+            <div class="buttonContainer">
+              <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
+                {startButtonText}
+              </Button>
+            </div>
 
-                    {#if $$slots.videoFallbackInfo}
-                      <slot name="videoFallbackInfo"></slot>
-                    {:else}
-                      <p>
-                        If Augmented Reality does not work, you can alternatively see a video here that shows the object in the space.
-                      </p>
-                    {/if}
+            <div style="position: absolute; z-index:-1; visibility: hidden">
+              <MediaFileResolver let:url mediafileRef={element.usdzFileRef} >
+                <a class="ARViewer__Link-ios link-ios" bind:this={iosLinkRef} rel="ar" title={element.title} href={url} >
+                  <MediaFileResolver let:url={imgUrl} mediafileRef={element.imageFileRef} >
+                    <img src={imgUrl} alt={element.title}/>
+                  </MediaFileResolver>
+                </a>
+              </MediaFileResolver>
+            </div>
 
-                  {/if}
-                </div>
-              </div>
+          {/if}
 
+          <div class="buttonContainer">
+            <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
+              {videoButtonText}
+            </Button>
           </div>
 
-        </div>
-
-      </div>
-
-    {/if} 
-
+        </svelte:fragment>
+      </CenterModal>
+    {/if}
   {/if}
 </div>
 
@@ -260,61 +200,10 @@
     width: 100%;
     height: 100%;
     flex:1;
-    background-color: var(--color-background-highlight);
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
-    text-align: center;
+    background-color: #000;
   }
-
-  .inner-container {
-    padding: var(--distance-m);
-  }
-
-  .box {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius);
-    border-width: var(--border-width);
-    border-color: var(--border-color);
-    border-style: solid;
-    overflow: hidden;
-    overflow-y: auto;
-  }
-  .content {
-    padding: var(--distance-s);
-  }
-
-  .buttonContainer {
-    padding: 0 var(--distance-xl);
-    display: flex;
-  }
-
-  .headline, .block {
-    padding: var(--distance-s);
-  }
-
-  .block:not(:first-child) {
-    margin-top: var(--distance-s);
-  }
-
-  .headline {
-    font: var(--font-headline-3);
-  }
-
-  .buttonInfo {
-    padding-top: var(--distance-s);
-    font: var(--font-body-2);
-  }
-
-  a img {
-    height: 20vmin;
-    width: 60vmin;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-  }
-
 
   video {
     height: 100%;
@@ -325,10 +214,9 @@
   .close {
     position: absolute;
     z-index: 1;
-    top: var(--distance-m);
-    right: var(--distance-m);
+    top: var(--distance-s);
+    left: var(--distance-s);
   }
-
 
   .link-android {
     text-decoration: none;

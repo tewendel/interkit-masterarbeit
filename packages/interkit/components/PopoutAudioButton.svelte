@@ -37,7 +37,7 @@
 {:else}
   <Button type="secondary" on:click={play}>
     {#if playing}
-      <Icon type={ paused ? "Thin-Play" : "pause"} />
+      <Icon type={ paused ? "Thin-Play" : "Thin-Pause"} />
     {:else}
       <Icon type="Thin-Play" />
       &thinsp;
