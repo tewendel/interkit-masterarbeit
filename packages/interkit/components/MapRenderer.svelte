@@ -82,27 +82,27 @@
     if(options.selected)
       markerSelected = true; 
 
-    const labelSpan = label ? `<span class="marker-content-label">${label}</span>`: "";
+    const labelSpan = label ? `<span class="MapRenderer__MarkerLabel marker-content-label">${label}</span>`: "";
 
     const titleDiv = title
-      ? `<div class="marker-title ${markerSelected ? 'selected' : ''}">${title}</div>`
+      ? `<div class="MapRenderer__MarkerTitle marker-title ${markerSelected ? 'selected' : ''}">${title}</div>`
       : ''
     
-    const checkMark = options.checked ? `<span class="check-mark"></span>`: "";
+    const checkMark = options.checked ? `<span class="MapRenderer__Checkmark check-mark"></span>`: "";
 
     // only hide the image if there's no mediaFile but a marker
-    const image = !mediafile?.link && label ? "" : `<img src="${iconSrc}"/>`;
+    const image = !mediafile?.link && label ? "" : `<img class="MapRenderer__Image" src="${iconSrc}"/>`;
 
     let html = `
-    <div class="marker-container 
-      ${options.noPointer ? 'no-pointer' : ''}
-      ${!label ? 'no-label' : ''}
-      ${noFrame ? 'no-frame' : ''}
-      ${options.checked ? 'checked' : ''}
+    <div class="marker-container MapRenderer__Markers
+      ${options.noPointer ? 'MapRenderer__Markers--nopointer no-pointer' : ''}
+      ${!label ? 'MapRenderer__Markers--nolabel no-label' : ''}
+      ${noFrame ? 'MapRenderer__Markers--noframe no-frame' : ''}
+      ${options.checked ? 'MapRenderer__Markers--checked checked' : ''}
     ">
       ${titleDiv}
-      <div class="marker-content
-        ${markerSelected ? 'selected' : ''}
+      <div class="marker-content MapRenderer__MarkersContent
+        ${markerSelected ? 'MapRenderer__MarkersContent--selected selected' : ''}
         ">
         ${checkMark}
         ${labelSpan} 
@@ -541,9 +541,11 @@
 
 </script>
 
+<!-- TODO cleanup old Map__* classes+styles -->
 <div 
-    class="Map__Container container" 
+    class="MapRenderer Map__Container container" 
     class:hasHeading={combinedHeading !== false}
+    class:MapRenderer--hasheading={combinedHeading !== false}
     style={`--map-heading: ${combinedHeading || 0}deg; height: ${height};`}
   >
   {#if debugGeo}
@@ -564,21 +566,21 @@
   {/if}
 
   {#if showControls}
-    <div class="Map__Controls controls">
+    <div class="MapRenderer__Controls Map__Controls controls">
 
-      <button class="Map__Controls__ZoomIn zoomIn">
+      <button class="MapRenderer__ZoomIn Map__Controls__ZoomIn zoomIn">
         <Button on:click={zoomIn} dummyNoText>
           <Icon type="Thin-Plus" />
         </Button>
       </button>
 
-      <button class="Map__Controls__ZoomOut zoomOut">
+      <button class="MapRenderer__ZoomOut Map__Controls__ZoomOut zoomOut">
         <Button on:click={zoomOut} dummyNoText>
           <Icon type="Thin-Minus" />
         </Button>
       </button>
 
-      <button class="Map__Controls__Locate locate" id="locateButton">
+      <button class="MapRenderer__Locate Map__Controls__Locate locate" id="locateButton">
         <Button on:click={panToUserPosition} dummyNoText>
           <Icon type="Thin-Position" />
         </Button>
@@ -588,7 +590,7 @@
   {/if}
   
   
-  <div class="map" id={mapId} bind:this={mapElement}></div>
+  <div class="map MapRenderer__Map" id={mapId} bind:this={mapElement}></div>
 
 </div>
 

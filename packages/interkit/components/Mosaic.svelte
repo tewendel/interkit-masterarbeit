@@ -20,10 +20,10 @@
   {#if $elements?.length == 0 && $showDummyData}
     <slot name="emptyElement"></slot>
   {:else}
-    <div class="square-container" class:gap>
+    <div class="Mosaic {gap ? 'Mosaic--gap' : ''} square-container" class:gap>
       {#each ($showDummyData ? dummyData : $elements) as element}
-        <div class="square">
-          <div class="content">
+        <div class="Mosaic__Square square">
+          <div class="Mosaic__Content content">
             <ContextProvider 
               name="element" 
               value={element.row}

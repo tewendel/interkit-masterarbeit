@@ -41,6 +41,7 @@
 
 <WithEffect {effect} let:execute>
   <Tile 
+    mainClass="DataTile"
     {variant} 
     {rightArrow}
     {imageRef}

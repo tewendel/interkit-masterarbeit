@@ -7,6 +7,8 @@
   import ButtonBar from '../ButtonBar.svelte'
   
   import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
+
+  export let mainClass = ''
   
   export let variant = "rounded";
   export let rightArrow = false;
@@ -37,10 +39,19 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<AspectRatio aspectRatioType="square" disabled={!flexibleSize}>
-  <div class="container {variant}" class:hoverPointer class:flexibleSize class:disabled on:click>
+<AspectRatio aspectRatioType="square" disabled={!flexibleSize} mainClass="Tile">
+  <div
+    class="container {variant}
+      Tile__Container--hoverpointer{hoverPointer}
+      Tile__Container--flexiblesize{flexibleSize}
+      Tile__Container--disable{disabled}
+    "
+    class:hoverPointer
+    class:flexibleSize
+    class:disabled
+    on:click>
     {#if imageRef?.value}
-      <div class="image">
+      <div class="Tile__Image image">
           <AspectRatio aspectRatioType="square">
             <MediaFileImage 
               objectFit="cover" 
@@ -51,23 +62,23 @@
           </AspectRatio>
       </div>
     {/if}
-    <div class="header">
+    <div class="Tile__Header header">
         {#if label1}<Label content={label1} variant="normal"/>{/if}
-        {#if subtitle1}<span class="subtitle1">{subtitle1}</span>{/if}
-        {#if headline}<span class="headline">{headline}</span>{/if}
+        {#if subtitle1}<span class="Tile__Subtitle1 subtitle1">{subtitle1}</span>{/if}
+        {#if headline}<span class="Tile__Headline headline">{headline}</span>{/if}
         {#if DataTileContext?.slots?.chips || $showDummyData}
           <slot name="chips"/>
         {/if}
         {#if rightArrow}
-          <span class="right-arrow">
+          <span class="Tile__RightArrow right-arrow">
             <Icon type="Thin-Arrow-Right"/>
           </span>
         {/if}
-        {#if description}<span class="description">{description}</span>{/if}      
+        {#if description}<span class="Tile__Description description">{description}</span>{/if}      
     </div>
 
     {#if DataTileContext?.slots?.buttons || $showDummyData}
-      <div class="buttons-wrapper">
+      <div class="Tile__Buttons buttons-wrapper">
         <ButtonBar hideHelpText>
           <slot name="buttons"/>
         </ButtonBar>

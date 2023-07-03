@@ -18,7 +18,7 @@
 
 
 <div class="SlideInModal container">
-  <div class="header">
+  <div class="SlideInModal__Header header">
     <ModalHeader
       size="full"
       {label}
@@ -26,8 +26,8 @@
       {prompt}
     />
   </div>
-  {#if description}<div class="description">{description}</div>{/if}
-  <div class="buttons">
+  {#if description}<div class="description SlideInModal__Description">{description}</div>{/if}
+  <div class="buttons SlideInModal__Buttons">
     <ButtonBar hideHelpText>
       <slot name ="buttons"/>
     </ButtonBar>

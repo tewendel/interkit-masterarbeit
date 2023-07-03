@@ -33,7 +33,14 @@
 
 
 
-<span on:click class:inverse class={`icon icon-${activeType}`} class:theme={$config?.INTERKIT_APP_LOAD_THEME} style={`--height: ${height};`}>
+<span
+  on:click
+  class={`Icon icon icon-${activeType}`}
+  class:inverse
+  class:Icon--inverse={inverse}
+  class:theme={$config?.INTERKIT_APP_LOAD_THEME}
+  style={`--height: ${height};`}
+  >
   <slot />
 </span>
 

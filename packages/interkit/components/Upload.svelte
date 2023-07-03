@@ -149,11 +149,12 @@
 
 </script>
 
+<!-- TODO specify class here somehow -->
 <Dropzone on:drop={handleFilesSelect} multiple={true} />
 
-<ol>
+<ol class="Upload__Files">
   {#each filesStatus as item}
-    <li style={`color: ${item.color}`}>
+    <li class="Upload__FileItem" style={`color: ${item.color}`}>
       {item.file.name}
       ({item.file.size} bytes)
       :

@@ -5,6 +5,8 @@
   import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
   let showDummyData = getShowDummyDataStore();
 
+  export let mainClass = ''
+
   export let layerSelectPrompt = "Choose a layer to display on the map."
 
   let layers = [];
@@ -49,14 +51,14 @@
 
 
 
-<div class="container">
+<div class="MapLayerOverlay container {mainClass}">
 
-  <div class="info">
+  <div class="MapLayerOverlay__Info info">
     <Icon type="Thin-Layer"/>
     <span>{layerSelectPrompt}</span>
   </div>
 
-  <div class="cards">
+  <div class="MapLayerOverlay__Cards cards">
     {#each layers as layer}
       <Card
         variant="extra-small"

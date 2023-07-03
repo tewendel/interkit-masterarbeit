@@ -31,22 +31,22 @@
   
 </script>
 
-<div class="card-header {variant} {active}">
+<div class="CardHeader CardHeader--variant{variant} CardHeader--active{active} card-header {variant} {active}">
 
   {#if label1 || subtitle1}
-    <div class="row-1">
+    <div class="row-1 CardHeader__Row1">
       {#if label1}<Label content={label1} variant="normal"/>{/if}
-      {#if subtitle1}<span class="subtitle1">{subtitle1}</span>{/if}
+      {#if subtitle1}<span class="CardHeader__Subtitle1 subtitle1">{subtitle1}</span>{/if}
     </div>
   {/if}
 
   {#if headline || rightArrow || $$slots.chips}
-    <div class="row-2">
-      <span class="headline">{#if headline}{headline}{/if}</span>
-      <div class="headline-chips">
+    <div class="row-2 CardHeader__Row2">
+      <span class="headline CardHeader__Headline">{#if headline}{headline}{/if}</span>
+      <div class="headline-chips CardHeader__HeadlineChips">
         <slot name="chips"></slot>
         {#if rightArrow}
-          <span class="right-arrow">
+          <span class="right-arrow CardHeader__RightArrow">
             <Icon type="Thin-Arrow-Right"/>
           </span>
         {/if}
@@ -55,21 +55,21 @@
   {/if}
 
   {#if label2 || subtitle2}
-    <div class="row-3">
+    <div class="row-3 CardHeader__Row2">
       {#if label2}<Label content={label2} variant="strong"/>{/if}
-      {#if subtitle2}<span class="subtitle2">{subtitle2}</span>{/if}
+      {#if subtitle2}<span class="subtitle2 CardHeader__Subtitle2">{subtitle2}</span>{/if}
     </div>
   {/if}
 
   {#if label3 || subtitle3}
-    <div class="row-4">
+    <div class="row-4 CardHeader__Row3">
       {#if label3}<Label content={label3} variant="soft"/>{/if}
-      {#if subtitle3}<span class="subtitle3">{subtitle3}</span>{/if}
+      {#if subtitle3}<span class="subtitle3 Cardheader__Subtitle3">{subtitle3}</span>{/if}
     </div>
   {/if}
 
   {#if description}
-    <div class="description">
+    <div class="description CardHeader__Description">
       {description}
     </div>
   {/if}

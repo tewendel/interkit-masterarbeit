@@ -37,8 +37,12 @@
   
 </script>
 
-<div class="UserCard frame" class:no-image={!imageKey ? true : false}>
-  <div class="profile-pic">    
+<div
+  class="UserCard frame"
+  class:UserCard--noimage={!imageKey ? true : false}
+  class:no-image={!imageKey ? true : false}
+  >
+  <div class="UserCard__ProfilePic profile-pic">    
     {#if imageKey}
       <AspectRatio aspectRatioType="square">
         <MediaFileImage style="border-radius: var(--border-radius);" fitDimension="both" mediafileRef={{value: imageKey}}/>
@@ -46,19 +50,19 @@
     {/if}
   </div>
 
-  {#if topLeftLabel}<div class="one">
+  {#if topLeftLabel}<div class="one UserCard__One">
     <UserCardValue label={topLeftLabel} value={topLeftValue}/>
   </div>
   {/if}
-  {#if topRightLabel}<div class="two">
+  {#if topRightLabel}<div class="two UserCard__Two">
     <UserCardValue label={topRightLabel} value={topRightValue} justifyRight />
   </div>
   {/if}
-  {#if bottomLeftLabel}<div class="three">
+  {#if bottomLeftLabel}<div class="three UserCard__Three">
     <UserCardValue label={bottomLeftLabel} value={bottomLeftValue}/>
   </div>
   {/if}
-  {#if bottomRightLabel}<div class="four">
+  {#if bottomRightLabel}<div class="four UserCard__Four">
     <UserCardValue label={bottomRightLabel} value={bottomRightValue} justifyRight />
   </div>
   {/if}

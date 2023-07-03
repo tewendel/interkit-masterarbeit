@@ -1,8 +1,15 @@
 <script>
+
   export let inverse = false;
+  export let mainClass = ''
+
 </script>
 
-<div class:inverse class="Loading_Indicator loading">
+<div
+  class="Loading loading {mainClass}"
+  class:inverse
+  class:Loading--inverse={inverse}
+  >
   <span></span>
 </div>
 

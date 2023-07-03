@@ -1,5 +1,6 @@
 <script>  
 
+  // TODO: make this component properly abstract to match its usage
   export let mainClass = 'LayoutShellAudio' 
   
 </script>

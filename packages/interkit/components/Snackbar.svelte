@@ -15,9 +15,9 @@
 
 <WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="Snackbar container {variant}" class:effect on:click={execute}>
+  <div class="Snackbar Snackbar--variant{variant} container {variant}" class:effect on:click={execute}>
 
-    <div class="header">
+    <div class="header Snackbar__Header">
       <ModalHeader 
         size="medium"
         label={variant != "oneline" ? label : undefined}
@@ -27,13 +27,13 @@
     </div>
 
     {#if variant == "oneline" || variant == "informative"}
-      <div class="close">
+      <div class="close Snackbar__Close">
         <Icon type="Full-Close"/>
       </div>
     {/if}
 
     {#if variant == "responseNeeded"}
-      <div class="buttons">
+      <div class="buttons Snackbar__Buttons">
         <ButtonBar hideHelpText>
           <slot name ="buttons"/>
         </ButtonBar>

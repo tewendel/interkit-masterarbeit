@@ -7,7 +7,7 @@
 </script>
 
 <div 
-  class="container" 
+  class="container Spacing" 
   style="--distance-none: 0; padding: var(--distance-{top}) var(--distance-{right}) var(--distance-{bottom}) var(--distance-{left})"
   >
   <slot />

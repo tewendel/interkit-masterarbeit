@@ -33,9 +33,9 @@
 </script>
 
 {#if loading && playing}
-  <Loading/>
+  <Loading mainClass="PopoutAudioButton" />
 {:else}
-  <Button type="secondary" on:click={play}>
+  <Button type="secondary" on:click={play} mainClass="PopoutAudioButton">
     {#if playing}
       <Icon type={ paused ? "Thin-Play" : "pause"} />
     {:else}

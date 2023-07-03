@@ -14,6 +14,8 @@ import TopNavBarCustom from './TopNavBarCustom.svelte'
 import Icon from './Icon.svelte'
 import MultiStepContent from './MultiStepContent.svelte'
 
+export let mainClass
+
 let video;
 let mediaStream;
 let loading = true;
@@ -207,15 +209,15 @@ const closeTips = () => {
 
 </script>
 
-<div id="scanner-container">
-  <canvas id="canvas"></canvas>
+<div class="QRScannerInternal {mainClass}" id="scanner-container">
+  <canvas id="canvas" class="QRScannerInternal__Canvas"></canvas>
   {#if loading}
-    <div class="loadingMessage" hidden="">Waiting for camera...</div>
+    <div class="loadingMessage QRScannerInternal__LoadingMessage" hidden="">Waiting for camera...</div>
   {:else}
-    <div class="qr-frame"></div>
+    <div class="qr-frame QRScannerInternal__QrFrame"></div>
   {/if}
   {#if $targetElementStore && tips?.length}
-    <div class="tip-button-container">
+    <div class="tip-button-container QRScannerInternal__TipButton">
       <Button text="Such-Hinweise zeigen" on:click={()=>showTips = true}/>
     </div>
   {/if}
@@ -224,6 +226,7 @@ const closeTips = () => {
 {#if showTips && tips.length}
   <Overlay 
     zIndex=3
+    classes="QRScannerInternal {mainClass}"
   >
     <TopNavBarCustom
       headline="QR-Code Scannen"
@@ -234,7 +237,7 @@ const closeTips = () => {
         </Button><span>QR-Code Scannen</span>
       </svelte:fragment>
       <svelte:fragment slot="content">
-        <div class="center-box">
+        <div class="center-box QRScannerInternal__Center">
           <MultiStepContent
             slides = {tips}
             onClose = {closeTips}
@@ -244,7 +247,7 @@ const closeTips = () => {
             {finalButtonText}
           />
         </div>
-        <div class="map">
+        <div class="map QRScannerInternal__Map">
           <slot name="map"/>
         </div>
       </svelte:fragment>

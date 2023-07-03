@@ -93,10 +93,10 @@
   
 {#if slides?.length}
   
-  <div class="image-slider-container" bind:this={carousel} on:scroll={handleScroll}>
+  <div class="PictureBook image-slider-container" bind:this={carousel} on:scroll={handleScroll}>
     {#each slides as slide}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="image-slide" on:click={handleImageClick}>
+    <div class="PictureBook__Slide image-slide" on:click={handleImageClick}>
       {#if slide?.image}
         <AspectRatio aspectRatioType="element">
           <MediaFileImage fitDimension="both" mediafileRef={slide?.image}/>
@@ -106,11 +106,15 @@
     {/each}
   </div>
 
-  <div class="pagination-container">
+  <div class="PictureBook__Pagination pagination-container">
     {#if slides.length > 1}
-      <ul class="pagination">
+      <ul class="PictureBook__PaginationList pagination">
         {#each slides as slide, index}
-          <li class="pagination-item" class:pagination-item--active={index === slideIndex}></li>
+          <li
+            class="PictureBook__PaginationItem pagination-item"
+            class:PictureBook__PaginationItem--active={index === slideIndex}
+            class:pagination-item--active={index === slideIndex}
+            ></li>
         {/each}
       </ul>
     {/if}

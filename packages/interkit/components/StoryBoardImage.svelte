@@ -39,7 +39,10 @@
 </script>
     
 {#if !imageProvider && (channelImage || $showDummyData)}
-  <div class="ChatChannelImage container {topBarImage ? "topBarImage" : ""}">
+  <div
+    class="StoryBoardImage _ChatChannelImage container {topBarImage ? "topBarImage" : ""}"
+    class:StoryBoardImage--topbarimage={topBarImage}
+    >
     <AspectRatio aspectRatioType="square">
       <MediaFileImage fitDimension="both" mediafileRef={channelImage} style="border-radius: 16px;"/>
     </AspectRatio>

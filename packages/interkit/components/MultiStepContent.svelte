@@ -50,10 +50,10 @@
 
   </div>
 
-  <div class="container">
+  <div class="MultiStepContent container">
     
       {#if slides[slideIndex]?.image}
-        <div class="image">
+        <div class="MultiStepContent__Image image">
           <AspectRatio standalone>
             <MediaFileImage mediafileRef={slides[slideIndex].image}/>
           </AspectRatio>
@@ -61,14 +61,14 @@
       {/if}
       
       {#key slideIndex}
-        <div class="content">
-          <span>{slides[slideIndex]?.supertitle || ""}</span>
-          <h1>{slides[slideIndex]?.title || ""}</h1>
+        <div class="MultiStepContent__Content content">
+          <span class="MultiStepContent__SuperTitle">{slides[slideIndex]?.supertitle || ""}</span>
+          <h1 class="MultiStepContent__Title">{slides[slideIndex]?.title || ""}</h1>
           <MarkdownContent content={slides[slideIndex]?.content || ""}/>
         </div>
       {/key}
 
-      <div class="Button__Bar button-bar">
+      <div class="MultiStepContent__ButtonBar Button__Bar button-bar">
         {#if slideIndex > 0 && backButtonText}<Button text={backButtonText} onClick={()=>{slideIndex -= 1}} flex="fill" />{/if}
         {#if slideIndex < slides.length - 1}
           <Button text={nextButtonText} on:click={incrIndex} flex="fill" type="primary" />
@@ -86,9 +86,9 @@
       
   </div>
 
-  <ul class="pagination">
+  <ul class="pagination MultiStepContent__Pagination">
     {#each slides as slide, index}
-      <li class="pagination-item" class:pagination-item--active={index === slideIndex}></li>
+      <li class="pagination-item MultiStepContent__PaginationItem" class:pagination-item--active={index === slideIndex}></li>
     {/each}
   </ul>
 

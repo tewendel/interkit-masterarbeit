@@ -4,6 +4,8 @@
 
   import FilterSegment from "./FilterSegment.svelte"
 
+  export let mainClass = ''
+
   let filters = [];
   if($showDummyData) {
     filters = [
@@ -26,15 +28,15 @@
 
 </script>
 
-<div class="container">
-  <div class="filter-segments">
+<div class="container FilterControls {mainClass}">
+  <div class="filter-segments FilterControls__Segments">
     {#each filters as filter}
       {#if filter.state == "enabled"}
         <FilterSegment text={filter.text} on:click={()=>{setFilterState(filter, "selected")}}/>
       {/if}
     {/each}
   </div>
-  <div class="filter-segments">
+  <div class="filter-segments FilterControls__Segments">
     {#each filters as filter}
       {#if filter.state == "selected"}
         <FilterSegment state="selected" text={filter.text} on:click={()=>{setFilterState(filter, "enabled")}}/>

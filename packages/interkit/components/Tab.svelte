@@ -22,7 +22,11 @@
 
 <WithEffect {effect} {execOnMount} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div on:click={execute} class="Tab container {active ? "active" : ""}">{text}</div>
+  <div
+    on:click={execute}
+    class="Tab container {active ? "active" : ""}"
+    class:Tab--active={active}
+    >{text}</div>
 </WithEffect>
 
 <style>

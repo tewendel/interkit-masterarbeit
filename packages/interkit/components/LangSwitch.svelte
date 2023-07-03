@@ -32,12 +32,12 @@
 
 <label class="LangSwitch">
   {#if label}
-    <span class="LangSwitch_label">
+    <span class="LangSwitch__Label">
       {label}
     </span>
   {/if}
   <select
-    class="LangSwitch_select"
+    class="LangSwitch__Select"
     on:input={setLang}
     value={showLang}>
     {#if !showLang}
@@ -57,13 +57,13 @@
     display: flex;
   }
 
-  .LangSwitch_label {
+  .LangSwitch__Label {
     margin-right: 0.5em;
     align-self: center;
   }
 
   /* https://github.com/filamentgroup/select-css/blob/master/src/select-css.css */
-  .LangSwitch_select {
+  .LangSwitch__Select {
     display: block;
     font: var(--font-button);
     font-weight: normal;
@@ -91,7 +91,7 @@
       %3c/svg%3e");
   }
 
-  .LangSwitch_select:focus {
+  .LangSwitch__Select:focus {
     box-shadow: none;
     outline: none;
     background-color: rgba(0, 0, 0, 0.2);

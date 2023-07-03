@@ -20,18 +20,18 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span class={state} on:click={toggle}>
+<span class="{state} MapViewButton MapViewButton--state{state}"  on:click={toggle}>
   <Icon type={type == "filters" ? "Thin-Filter" : "Thin-Layer"}/>
   {text ? text : ""}
   <Icon type={state == "enabled" ? "Thin-Dropdown" : "Thin-Dropdown-Up"}/>
 </span>
 
 {#if type == "filters" && state == "selected"}
-  <FilterControls/>
+  <FilterControls mainClass="MapViewButton" />
 {/if}
 
 {#if type == "layers" && state == "selected"}
-  <MapLayerOverlay {layerSelectPrompt}/>
+  <MapLayerOverlay {layerSelectPrompt} mainClass="MapViewButton"/>
 {/if}
 
 <style>

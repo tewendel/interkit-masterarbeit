@@ -4,7 +4,7 @@
 
 </script>
 
-<span>{text}</span>
+<span class="StaticText">{text}</span>
 
 <style>
   span {

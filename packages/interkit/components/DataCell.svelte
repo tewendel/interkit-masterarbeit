@@ -40,7 +40,14 @@
 
 </script>
 
-<div class="DynamicContent container" class:richText={format == "richText"} class:inline style={`--text-align: ${centerContent ? "center" : "left"}`}>
+<div
+  class="DataCell DynamicContent container
+    DataCell--format{format} {inline ? "DataCell--inline" : ""} DataCell--aligncontent{centerContent}
+  "
+  class:richText={format == "richText"}
+  class:inline
+  style={`--text-align: ${centerContent ? "center" : "left"}`}
+  >
   {#if $element}
     {#if format == "richText"}
       {#if content}

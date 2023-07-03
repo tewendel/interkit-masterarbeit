@@ -37,7 +37,7 @@ const openExternalMap = (arg) => {
 </script>
 
 
-<Button {type} {size} on:click={openExternalMap}>
+<Button {type} {size} on:click={openExternalMap} class="ExternalMapAppButton">
   <slot name="Icon"></slot>
   {#if label}<span>{label}</span>{/if}
 </Button>

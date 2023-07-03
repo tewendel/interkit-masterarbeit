@@ -3,7 +3,7 @@
 </script>
 
 <div class="TabBar container">
-  <div class="slider">
+  <div class="TabBar__Slider slider">
     <slot></slot>
   </div>
   

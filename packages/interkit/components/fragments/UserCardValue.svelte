@@ -8,11 +8,15 @@
 
 </script>
 
-<div class="container" class:justifyRight>
-  <span class="label">{label ? label : ""}</span>
-  <span class="value" class:bar>
+<div
+  class="UserCardValue container"
+  class:justifyRight
+  class:UserCardValue--justifyright={justifyRight}
+  >
+  <span class="UserCardValue__Label label">{label ? label : ""}</span>
+  <span class="UserCardValue__Value value" class:bar>
     {#if bar}
-      <div class="bar" style="--value: {value}"/>
+      <div class="UserCardValue__Bar bar" style="--value: {value}"/>
     {:else}
       {value ? value : ""}
     {/if}

@@ -256,20 +256,26 @@
 </script>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="map-component-container" on:click={containerClick} class:inline="{inline}">
+  <div
+    class="MapSimple map-component-container"
+    on:click={containerClick}
+    class:inline="{inline}"
+    class:MapSimple--inline="{inline}"
+    >
 
     {#if selectedElement && $$slots.popup}
-      <div class="marker_popup" 
+      <div class="MapSimple__MarkerPopup marker_popup" 
         class:active={selectedElement ? true : false}
+        class:MapSimple__MarkerPopup--active={selectedElement ? true : false}
         in:fly="{{ y: 300, duration: 100, opacity: 1 }}"
       >
-        <div class="marker_popup_close">
+        <div class="MapSimple__MarkerPopupClose marker_popup_close">
           <Button type="secondary" on:click={mapClick} dummyNoText>
             <Icon type="Thin-Close"/>
             <span>{closeButtonLabel}</span>
           </Button>
         </div>
-        <div class="marker_popup_background">
+        <div class="MapSimple__MarkerPopupBackground marker_popup_background">
           {#if selectedElement}
             <ContextProvider 
               name="element" 
@@ -302,7 +308,7 @@
     />
 
     {#if $$slots.button}
-      <div class="button-container">
+      <div class="MapSimple__Buttons button-container">
         <ButtonBar hideHelpText>
           <slot name="button"></slot>
         </ButtonBar>

@@ -7,7 +7,11 @@
   export let content;
 </script>
 
-<span class="container {variant} {type}">
+<span
+  class="container {variant} {type}
+    Label Label--variant{variant} Label--type{type}
+  "
+  >
   {#if type == "icon"}<Icon type={icon} inverse height="16px"/>{/if}
   {#if type == "text"}{content}{/if}
 </span>

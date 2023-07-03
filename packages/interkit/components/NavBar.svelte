@@ -1,9 +1,4 @@
-<script>
-
-  
-</script>
-
-<div class="container">
+<div class="NavBar container">
   <slot/>
 </div>
 

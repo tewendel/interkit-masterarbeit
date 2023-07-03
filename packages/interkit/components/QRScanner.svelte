@@ -18,6 +18,7 @@ export let onScanEffect;
 
 <WithEffect effect={onScanEffect}>
   <QRScannerInternal
+    mainClass="QRScanner"
     {elementKeyColumn}
     {tipQrKeyColumn}
     {tipImageColumn}

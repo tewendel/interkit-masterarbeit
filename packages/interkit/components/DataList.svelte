@@ -20,10 +20,10 @@
 </script>
 
   {#if $elements?.length || $showDummyData}
-    <ul>
+    <ul class="DataList">
       {#each ($showDummyData ? dummyData : $elements) as element}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li class="item">
+        <li class="DataList__Item item">
           <ContextProvider 
             name="element" 
             value={element.row}

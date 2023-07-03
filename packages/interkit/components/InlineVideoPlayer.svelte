@@ -11,11 +11,24 @@
 </script>
 
 {#if $showDummyData}
-  <video playsinline {autoplay} controls src={dummyVideoSrc} loop />
+  <video
+    class="InlineVideoPlayer__Video"
+    playsinline
+    {autoplay}
+    controls
+    src={dummyVideoSrc}
+    loop 
+    />
 {:else}
   <MediaFileResolver mediafileRef={{value: mediafileKey}} let:url>
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video playsinline {autoplay} controls src={$showDummyData ? dummyVideoSrc : url} />
+    <video
+      class="InlineVideoPlayer__Video"
+      playsinline
+      {autoplay}
+      controls
+      src={$showDummyData ? dummyVideoSrc : url}
+      />
   </MediaFileResolver>
 {/if}
 

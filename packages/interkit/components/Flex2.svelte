@@ -6,18 +6,18 @@
 </script>
 
 <div 
-  class="Flex2 container"
+  class="Flex2 container Flex2--size1{size1} Flex2--size2{min}"
   data-direction={direction}
   {style}
   >
   <div 
-    class="first" 
+    class="Flex2__first first" 
     data-size={size1}
     >
     <slot name="first"></slot>
   </div>
   <div 
-    class="slot"
+    class="Flex2__slot slot"
     data-size={size2}
     >
     <slot name="second"></slot>
