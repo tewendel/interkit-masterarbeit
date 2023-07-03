@@ -54,6 +54,7 @@ fields:
       - Full-Dashboard   
       - Full-Date        
       - Full-Drag        
+      - Full-Filter
       - Full-FullScreen  
       - Full-GroupChat   
       - Full-Help        
