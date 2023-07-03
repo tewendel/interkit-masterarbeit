@@ -28,21 +28,26 @@
   import { InterkitClient, util } from '../'
   
   // assembles html to pass to leaflet for a custom marker div - also used in ProgressChecklist
+  // please note we cannot use Svelte components here, as it is rendered by leaflet
+  
   /* options:
-          checked,
-          selected,
-          markerCheckedIconAsset,
-          markerIconAsset
-          noPointer // show the little pointer
+      markerIconAsset // the icon to use for a regular marker
+      selected // change the color when you press it
+      checked // show a check mark on the marker
+      markerCheckedIconAsset // the icon to use when checked
+      noPointer // hide the little pointer at the bottom
+
+      from the element we get the title, label and custom icon
+
   */
   
   export const createIconDivHTML = async (element, options) => {
 
+    console.log("createIconDivHTML", element, options)
+
     let title = element?.markerTitleColumn;
     let label = element?.markerLabelColumn;
-
-    let labelSpan = label ? `<span class="marker-content-label">${label}</span>`: "";
-    
+     
     // get custom marker icon if available
     let mediafileRef = element?.customIconColumn;
     let mediafile;
@@ -50,9 +55,26 @@
       mediafile = await InterkitClient.getMediaFile(mediafileRef.value); // this should probably be cashed locally on the client
     let iconSrc = mediafile?.link || options.markerIconAsset;
 
-    // use checkmark if element is checked
-    if(options.checked) {
-      iconSrc = options.markerCheckedIconAsset;
+    // hide the frame if we don't have a label or an image to show
+    let noFrame = !label && !mediafile?.link;
+
+    // when dummyData is set, mix different variants
+    if(options.showDummyData) {
+      // add labels on some markers
+      if(Math.random() < 0.5) {
+        label = "1"
+        noFrame = false
+      }
+      // add images on some markers
+      if(Math.random() < 0.5) {
+        mediafile = {link: "123"}
+        iconSrc = "data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='208' fill='none'%3E%3Cpath fill='%23FFDBD3' d='M0 0h380v208H0z'/%3E%3C/svg%3E"  
+        noFrame = false
+      }
+      if(noFrame && !mediafile?.link && label) {
+        iconSrc = null;
+      }
+      options.checked = true;
     }
 
     // change style when marker is tapped
@@ -60,18 +82,32 @@
     if(options.selected)
       markerSelected = true; 
 
+    const labelSpan = label ? `<span class="marker-content-label">${label}</span>`: "";
+
     const titleDiv = title
       ? `<div class="marker-title ${markerSelected ? 'selected' : ''}">${title}</div>`
       : ''
+    
+    const checkMark = options.checked ? `<span class="check-mark"></span>`: "";
+
+    // only hide the image if there's no mediaFile but a marker
+    const image = !mediafile?.link && label ? "" : `<img src="${iconSrc}"/>`;
 
     let html = `
-    <div class="marker-container ${options.noPointer ? 'no-pointer' : ''}">
+    <div class="marker-container 
+      ${options.noPointer ? 'no-pointer' : ''}
+      ${!label ? 'no-label' : ''}
+      ${noFrame ? 'no-frame' : ''}
+      ${options.checked ? 'checked' : ''}
+    ">
       ${titleDiv}
       <div class="marker-content
-        ${!label ? 'marker-content__no-label' : ''}
         ${markerSelected ? 'selected' : ''}
-        ${options.checked ? 'checked' : ''}
-        ">${labelSpan} <img src="${iconSrc}"/></div>
+        ">
+        ${checkMark}
+        ${labelSpan} 
+        ${image}
+      </div>
     </div>
     `;
     
@@ -83,6 +119,9 @@
 <script>
 
   import { onMount, getContext, setContext, onDestroy } from 'svelte'
+
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
+  const showDummyData = getShowDummyDataStore()
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
@@ -111,7 +150,7 @@
   export let markerClick;
   export let mapClick;
 
-  import markerIconAsset from "./icons/Thin/Location.svg?url"; // default asset to use
+  import markerIconAsset from "./icons/Full/Location.svg?url"; // default asset to use
   import markerCheckedIconAsset from "./icons/Thin/Check.svg?url"; // checked asset
 
   export let defaultLocation; // where to center the map by default [lat, lng]
@@ -258,7 +297,8 @@
           checked: markerValue.checked,
           selected: markerValue.selected,
           markerCheckedIconAsset,
-          markerIconAsset
+          markerIconAsset,
+          showDummyData: $showDummyData
         });
         let icon = L.divIcon({
           html: iconHTML,
@@ -527,19 +567,19 @@
     <div class="Map__Controls controls">
 
       <button class="Map__Controls__ZoomIn zoomIn">
-        <Button on:click={zoomIn}>
+        <Button on:click={zoomIn} dummyNoText>
           <Icon type="Thin-Plus" />
         </Button>
       </button>
 
       <button class="Map__Controls__ZoomOut zoomOut">
-        <Button on:click={zoomOut}>
+        <Button on:click={zoomOut} dummyNoText>
           <Icon type="Thin-Minus" />
         </Button>
       </button>
 
       <button class="Map__Controls__Locate locate" id="locateButton">
-        <Button on:click={panToUserPosition}>
+        <Button on:click={panToUserPosition} dummyNoText>
           <Icon type="Thin-Position" />
         </Button>
       </button>
@@ -567,41 +607,115 @@
     z-index: 0;
   }
 
-  #locateButton {
-  }
-
   #locateButton:hover {
     cursor: pointer;
   }
+
+  /* marker container */
 
   :global(div.marker-container) {
     background-image: url("../icons/map_marker_tip.svg");
     background-repeat: no-repeat;
     background-position: bottom center;
-    width: 49px;
-    height: 42px;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 48px;
+    height: 32px;
+  }
+
+  :global(div.marker-container.no-frame) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
   }
 
   :global(div.marker-container.no-pointer) {
     background-image: none;
   }
 
-  :global(div.marker-content) {
+  :global(.marker-container.no-frame:not(.no-label)) {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+
+  :global(.marker-content.selected) {
+    background-color: lightgrey;
+  }
+
+  /* marker content - the body of the marker */
+
+  :global(.marker-container:not(.no-frame) div.marker-content) {
     position: relative;
-    width: 49px;
-    height: 32px;
+    padding: 4px;
     background-color: #fff;
     border: 1px solid black;
     border-radius: 12px;
-    font-size: var(--font-size-regular);
+    font: var(--font-caption-bold);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    gap: 2px;
+    min-width: 32px;
+    box-sizing: border-box;
   }
 
-  :global(div.marker-content::after) {
+  :global(.marker-container.no-frame .marker-content) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* check mark */
+
+  :global(div.marker-container .check-mark) {
+    background-color: #fff;
+    background-image: url("./icons/Full/Check.svg");
+    filter: invert(1);
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 12px;
+    display: inline-block;
+    position: absolute;
+    z-index: 1000;
+    right: -6px;
+    top: -6px;
+  }
+
+  :global(div.marker-container.no-frame .check-mark) {
+    right: 8px;
+    top: 6px;  
+  }
+
+  :global(div.marker-container.no-label div.marker-content) {
+    width: 32px;
+    padding: 4px;
+  }
+
+  /* image */
+
+  :global(div.marker-content img) {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  :global(.marker-content.selected img) {
+    filter: grayscale(1);
+  }
+
+
+  /* little tip at the bottom */
+
+  :global(.marker-container:not(.no-frame) div.marker-content::after) {
     content: "";
     box-sizing: border-box;
     display: block;
@@ -611,28 +725,13 @@
     left: calc(50% - 7px);
     width: 15px;
     height: 10px;
-    border-top: 10px solid var(--color-border);
+    border-top: 10px solid #000;
     /* note: the tip is not perfectly rounded, but at 1px this shouldn't matter */
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
   }
 
-  :global(div.marker-content img) {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-  }
-
-  :global(div.marker-content.marker-content__no-label img) {
-    width: 32px;
-    height: 32px;
-  }
-
-  :global(div.marker-content.checked img) {
-    width: 24px;
-    height: 24px;
-  }
-
+  /* title above the body */
 
   :global(div.marker-title) {
     position: absolute;
@@ -646,15 +745,10 @@
     /* TODO this is not to spec, which is not blurry + un-hardcode color. */
     text-shadow: 0 0 1px #e5e5e5;
   }
-
-  :global(.marker-content.selected) {
-    background-color: lightgrey;
+  
+  :global(.marker-container.no-frame .marker-title) {
+    top: -0.9em;
   }
-
-  :global(.marker-content.selected img) {
-    filter: grayscale(1);
-  }
-
 
   :global(.leaflet-control) { /* hide default leaflet controls */
     display: none;
