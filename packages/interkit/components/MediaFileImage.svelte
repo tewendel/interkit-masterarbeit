@@ -55,15 +55,24 @@
 </script>
 
 {#if mediafile || $showDummyData}
-  <img on:click={ () => zoomed = true } {style} class={`fitDimension-${fitDimension} objectFit-${objectFit}`} alt="mediafile" src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}/>
+  <img
+    on:click={() => { zoomed = true }}
+    {style}
+    class={`fitDimension-${fitDimension} objectFit-${objectFit}`}
+    alt="mediafile"
+    src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
+    />
   {#if zoomable && zoomed}
-    <div class="fullscreen-overlay" on:click={ () => zoomed = false } >
+    <div class="fullscreen-overlay" on:click={() => { zoomed = false }}>
       <div class="zoom-close-icon">
         <Button>
           <Icon type="close" />
         </Button>
       </div>
-      <Zoom src={encodeURI(mediafile.link)} alt="mediafile" />
+      <Zoom
+        src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
+        alt="mediafile"
+        />
     </div>
   {/if}
 {:else if doFallback}
