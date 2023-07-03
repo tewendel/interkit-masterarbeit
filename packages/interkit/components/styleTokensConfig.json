@@ -215,5 +215,33 @@
     "category": "general",
     "defaultValue": "0px 0px 1px rgba(0, 0, 0, 0.5)",
     "help": "The default box shadow used in many containers. The default evaluates to a 1px border"
+  },
+  {
+    "key": "googleFont",
+    "type": "googleFont",
+    "category": "fonts",
+    "defaultValue": "Inter:wght@400;500;600;700;900",
+    "help": "url fragment for first font to load from google fonts"
+  },
+  {
+    "key": "googleFont2",
+    "type": "googleFont",
+    "category": "fonts",
+    "defaultValue": "Inter:wght@400;500;600;700;900",
+    "help": "url fragment for second font to load from google fonts"
+  },
+  {
+    "key": "fontFamilyInterface",
+    "type": "fontStack",
+    "category": "fonts",
+    "defaultValue": "Inter, sans-serif",
+    "help": "font stack for interface font"
+  },
+  {
+    "key": "fontFamilyContent",
+    "type": "fontStack",
+    "category": "fonts",
+    "defaultValue": "Inter, sans-serif",
+    "help": "font stack for content font"
   }
 ]
