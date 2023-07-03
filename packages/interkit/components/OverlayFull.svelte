@@ -6,6 +6,7 @@ import Absolute from "./Absolute.svelte";
 import Icon from './Icon.svelte'
 import WithEffect from './WithEffect.svelte';
 
+export let classes = ''
 export let closeEffect;
 export let closeMethod;
 export let customStyle;
@@ -23,6 +24,7 @@ const close = () => {
   <Overlay 
     zIndex=2
     {customStyle}
+    {classes}
   >
     <slot/>
   </Overlay>
