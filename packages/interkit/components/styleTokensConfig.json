@@ -219,29 +219,317 @@
   {
     "key": "googleFont",
     "type": "googleFont",
-    "category": "fonts",
+    "category": "google fonts",
     "defaultValue": "Inter:wght@400;500;600;700;900",
     "help": "url fragment for first font to load from google fonts"
   },
   {
     "key": "googleFont2",
     "type": "googleFont",
-    "category": "fonts",
+    "category": "google fonts",
     "defaultValue": "Inter:wght@400;500;600;700;900",
     "help": "url fragment for second font to load from google fonts"
   },
   {
     "key": "fontFamilyInterface",
     "type": "fontStack",
-    "category": "fonts",
+    "category": "font stacks",
     "defaultValue": "Inter, sans-serif",
-    "help": "font stack for interface font"
+    "help": "font stack for interface font (--font-family-interface)"
   },
   {
     "key": "fontFamilyContent",
     "type": "fontStack",
-    "category": "fonts",
+    "category": "font stacks",
     "defaultValue": "Inter, sans-serif",
-    "help": "font stack for content font"
+    "help": "font stack for content font (--font-family-content)"
+  },
+  {
+    "key": "fontHeadline1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 48px/56px var(--font-family-interface)",
+    "help": "text style for interface headlines 1"
+  },
+  {
+    "key": "fontHeadline2",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 30px/36px var(--font-family-interface)",
+    "help": "text style for interface headlines 2"
+  },
+  {
+    "key": "fontHeadline3",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 24px/28px var(--font-family-interface)",
+    "help": "text style for interface headlines 3"
+  },
+  {
+    "key": "fontHeadline4",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 20px/24px var(--font-family-interface)",
+    "help": "text style for interface headlines 4"
+  },
+  {
+    "key": "fontHeadline5",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "700 16px/24px var(--font-family-interface)",
+    "help": "text style for interface headlines 5"
+  },
+  {
+    "key": "fontBody1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 16px/24px var(--font-family-interface)",
+    "help": "text style for interface body 1"
+  },
+  {
+    "key": "fontBody2",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 14px/21px var(--font-family-interface)",
+    "help": "text style for interface body 2"
+  },
+  {
+    "key": "fontSubtitle1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 16px/21px var(--font-family-interface)",
+    "help": "text style for interface body 2"
+  },
+  {
+    "key": "fontSubtitle1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "500 14px/18px var(--font-family-interface)",
+    "help": "text style for interface Subtitle 1"
+  },
+  {
+    "key": "fontSubtitle1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "500 14px/18px var(--font-family-interface)",
+    "help": "text style for interface Subtitle 2"
+  },
+  {
+    "key": "fontButton",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "600 12px/16px var(--font-family-interface)",
+    "help": "text style for interface buttons"
+  },
+  {
+    "key": "fontCaption",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 12px/16px var(--font-family-interface)",
+    "help": "text style for interface captions"
+  },
+  {
+    "key": "fontCaptionBold",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "700 12px/16px var(--font-family-interface)",
+    "help": "text style for interface captions (bold)"
+  },
+  {
+    "key": "fontOverline",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "500 10px/12px var(--font-family-interface)",
+    "help": "text style for interface 'overline' style"
+  },
+  {
+    "key": "fontContentHeadline1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "900 48px/56px var(--font-family-content)",
+    "help": "text style for content headline 1"
+  },
+  {
+    "key": "fontContentHeadline2",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "900 30px/36px var(--font-family-content)",
+    "help": "text style for content headline 2"
+  },
+  {
+    "key": "fontContentHeadline3",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "900 24px/28px var(--font-family-content)",
+    "help": "text style for content headline 3"
+  },
+  {
+    "key": "fontContentHeadline4",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "900 20px/24px var(--font-family-content)",
+    "help": "text style for content headline 4"
+  },
+  {
+    "key": "fontContentHeadline5",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "700 16px/24px var(--font-family-content)",
+    "help": "text style for content headline 5"
+  },
+  {
+    "key": "fontContentBody1",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 16px/24px var(--font-family-content)",
+    "help": "text style for content body 1"
+  },
+  {
+    "key": "fontContentBody2",
+    "type": "font",
+    "category": "text styles",
+    "defaultValue": "400 14px/24px var(--font-family-content)",
+    "help": "text style for content body 2"
+  },
+
+  {
+    "key": "letterSpacingHeadline1",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface headlines 1"
+  },
+  {
+    "key": "letterSpacingHeadline2",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.5px",
+    "help": "letter spacing for interface headlines 2"
+  },
+  {
+    "key": "letterSpacingHeadline3",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.25px",
+    "help": "letter spacing for interface headlines 3"
+  },
+  {
+    "key": "letterSpacingHeadline4",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.25px",
+    "help": "letter spacing for interface headlines 4"
+  },
+  {
+    "key": "letterSpacingHeadline5",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface headlines 5"
+  },
+  {
+    "key": "letterSpacingBody1",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": ".25px",
+    "help": "letter spacing for interface body 1"
+  },
+  {
+    "key": "letterSpacingBody2",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": ".25px",
+    "help": "letter spacing for interface body 2"
+  },
+  {
+    "key": "letterSpacingSubtitle1",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": ".15px",
+    "help": "letter spacing for interface Subtitle 1"
+  },
+  {
+    "key": "letterSpacingSubtitle2",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": ".1px",
+    "help": "letter spacing for interface Subtitle 2"
+  },
+  {
+    "key": "letterSpacingButton",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface buttons"
+  },
+  {
+    "key": "letterSpacingCaption",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface captions"
+  },
+  {
+    "key": "letterSpacingCaptionBold",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface captions (bold)"
+  },
+  {
+    "key": "letterSpacingOverline",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for interface 'overline' style"
+  },
+  {
+    "key": "letterSpacingContentHeadline1",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-1px",
+    "help": "letter spacing for content headline 1"
+  },
+  {
+    "key": "letterSpacingContentHeadline2",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.5px",
+    "help": "letter spacing for content headline 2"
+  },
+  {
+    "key": "letterSpacingContentHeadline3",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.5px",
+    "help": "letter spacing for content headline 3"
+  },
+  {
+    "key": "letterSpacingContentHeadline4",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for content headline 4"
+  },
+  {
+    "key": "letterSpacingContentHeadline5",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.32px",
+    "help": "letter spacing for content headline 5"
+  },
+  {
+    "key": "letterSpacingContentBody1",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "-.25px",
+    "help": "letter spacing for content body 1"
+  },
+  {
+    "key": "letterSpacingContentBody2",
+    "type": "size",
+    "category": "text styles",
+    "defaultValue": "0px",
+    "help": "letter spacing for content body 2"
   }
 ]
