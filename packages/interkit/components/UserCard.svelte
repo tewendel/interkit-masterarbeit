@@ -75,6 +75,7 @@
     display: grid;
     grid-template-columns: 112px 1fr 1fr;
     border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
   }
   
   .frame div {

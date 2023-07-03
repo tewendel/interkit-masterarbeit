@@ -1,6 +1,5 @@
 <script>
 
-  import { Button } from "carbon-components-svelte";
   import AddFilled from "carbon-icons-svelte/lib/AddFilled.svelte";
   import Help from "carbon-icons-svelte/lib/Help.svelte";
 
@@ -33,22 +32,12 @@
     <div class="previewImage" style="background-image: url({imageSrc})"></div>
     {#if active}
       <div class="buttons" on:click|stopPropagation={()=>{}}>
-        <Button
-          kind="ghost"
-          size="small"
-          tooltipPosition="top"
-          icon={AddFilled}
-          on:click={add}
-          iconDescription="add"
-        />
-        <Button
-          kind="ghost"
-          size="small"
-          tooltipPosition="top"
-          icon={Help}
-          on:click={help}
-          iconDescription="docs"
-        />
+        <div class="tiny-icon-button" on:click={add}>
+          <AddFilled/>
+        </div>
+        <div class="tiny-icon-button" on:click={help}>
+          <Help/>
+        </div>
       </div>
     {/if}
   </div>
@@ -82,6 +71,13 @@
   .buttons {
     flex-direction: column;
     flex: 0.25;
+  }
+  .tiny-icon-button {
+    padding: 8px;
+  }
+  .tiny-icon-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
   }
   .previewImage {
     width: 100%;

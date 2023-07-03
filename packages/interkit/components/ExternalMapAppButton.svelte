@@ -5,7 +5,7 @@ import Button from './Button.svelte'
 import Icon from './Icon.svelte'
 import { Capacitor } from '@capacitor/core';
 
-export let label = "Open Map App"
+export let label;
 export let type;
 export let size;
 export let locationColumn;
@@ -39,5 +39,5 @@ const openExternalMap = (arg) => {
 
 <Button {type} {size} on:click={openExternalMap}>
   <slot name="Icon"></slot>
-  <span>{label}</span>
+  {#if label}<span>{label}</span>{/if}
 </Button>

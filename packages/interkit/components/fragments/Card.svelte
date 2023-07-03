@@ -101,6 +101,10 @@
     text-align: left;
   }
 
+  .container:not(.full) {
+    box-shadow: var(--box-shadow);
+  }
+
   .container.selected {
     background-color: var(--color-background-highlight);
   }
@@ -130,13 +134,6 @@
   .container.large, .container.medium, .container.small, .container.extra-small {
     padding: 8px;
     border-radius: 24px;
-  }
-
-  .container.large:not(:last-child),
-  .container.medium:not(:last-child),
-  .container.small:not(:last-child),
-  .container.extra-small:not(:last-child) {
-    margin-bottom: 8px;
   }
 
   .container.large .image {
