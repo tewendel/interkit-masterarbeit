@@ -1,0 +1,9 @@
+name: OverlayFull
+toolboxCategory: Layout
+fields:
+  - type: extraProps
+    props:
+      - name: closeEffect
+        type: effect
+  - type: slot
+    name: default

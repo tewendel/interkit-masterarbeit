@@ -5,7 +5,7 @@
   export let right
 
   const attr = (name, value) => {
-    return value ? name + ":" + value + "px;" : ""
+    return value ? name + ":" + value + ";" : ""
   }
 
 </script>

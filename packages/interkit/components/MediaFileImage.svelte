@@ -5,6 +5,7 @@
   import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import OverlayFull from './OverlayFull.svelte';
   
   export let fitDimension = "width"; // "width", "height" or "both" is 100%
   export let objectFit = "cover"; // contain or cover
@@ -63,17 +64,12 @@
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
   {#if zoomable && zoomed}
-    <div class="fullscreen-overlay" on:click={() => { zoomed = false }}>
-      <div class="zoom-close-icon">
-        <Button>
-          <Icon type="close" />
-        </Button>
-      </div>
+    <OverlayFull closeMethod={()=>{zoomed = false}} customStyle="background-color: #000;">
       <Zoom
         src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
         alt="mediafile"
-        />
-    </div>
+      />
+    </OverlayFull>
   {/if}
 {:else if doFallback}
   <div class="fallback">image not found</div>
@@ -109,16 +105,7 @@
     font-style: italic;
   }
 
-  .fullscreen-overlay {
-    position: fixed;
-    z-index: 1;
-    left:0;
-    top:0;
-    right:0;
-    bottom:0;
-    background-color: black;
-  }
-
+  /* left for reference in case we need the safe-area-inset 
   .zoom-close-icon {
     position: absolute;
     z-index: 1;
@@ -126,6 +113,7 @@
     top: var(--distance-m);
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
   }
+  */
 
 </style>
 

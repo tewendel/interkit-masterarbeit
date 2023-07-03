@@ -5,6 +5,7 @@
 
   import Overlay from '../Overlay.svelte';
   import TopNavBarCustom from '../TopNavBarCustom.svelte';
+  import OverlayFull from '../OverlayFull.svelte'
 
   import MediaRecorder from '../MediaRecorder.svelte';
 
@@ -71,25 +72,16 @@
 </div>
 
 {#if showCamera}
-<Overlay>
-  <TopNavBarCustom>
-    <svelte:fragment slot="left">
-        <Button type="link" on:click={closeCamera}>
-          <Icon type="arrow-left" />
-        </Button>
-    </svelte:fragment>
-    <svelte:fragment slot="content">
-      <div style="padding-top: var(--distance-s)">
-        <MediaRecorder
-          mode="image"
-          meta={{ userGenerated: "yes", userId, boardId, nodeId }}
-          onUploadSuccess={onCameraSuccess}
-          cameraFacingMode={chatInterface?.cameraFacingMode}
-        />
-      </div>
-    </svelte:fragment>
-  </TopNavBarCustom>
-</Overlay>
+  <OverlayFull closeMethod={closeCamera}>
+    <div class="camera-container">
+      <MediaRecorder
+        mode="image"
+        meta={{ userGenerated: "yes", userId, boardId, nodeId }}
+        onUploadSuccess={onCameraSuccess}
+        cameraFacingMode={chatInterface?.cameraFacingMode}
+      />
+    </div>
+  </OverlayFull>
 {/if}
 
 <style>
@@ -114,5 +106,10 @@
   }
   .left-button {
     margin-right: var(--distance-s);
+  }
+  .camera-container {
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-background);
   }
 </style>
