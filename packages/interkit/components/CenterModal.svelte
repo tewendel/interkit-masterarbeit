@@ -36,10 +36,10 @@
 
 
   <div class="CenterModal container {size}">
-    <div class="modal-card">
-      <div class="image-header">
+    <div class="CenterModal__Card modal-card">
+      <div class="CenterModal__ImageHeader image-header">
         {#if imageKey}
-          <div class="image">
+          <div class="CenterModal__Image image">
             <AspectRatio aspectRatioType={aspectRatioType[size]}>
               <MediaFileImage 
                 objectFit="cover" 
@@ -51,7 +51,7 @@
           </div>
         {/if}
 
-        <div class="header">
+        <div class="CenterModal__Header header">
           <ModalHeader
             size={modalHeaderSize[size]}
             {label}
@@ -61,7 +61,7 @@
         </div>
       </div>
       {#if description}<div class="description">{description}</div>{/if}
-      <div class="buttons">
+      <div class="CenterModal__Buttons buttons">
         <ButtonBar hideHelpText>
           <slot name ="buttons"/>
         </ButtonBar>

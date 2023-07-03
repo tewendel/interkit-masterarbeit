@@ -5,7 +5,8 @@
   import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
-  
+
+  export let mainClass = ''
   export let fitDimension = "width"; // "width", "height" or "both" is 100%
   export let objectFit = "cover"; // contain or cover
   export let mediafileRef; // {type: "mediafile", value: id}
@@ -58,13 +59,20 @@
   <img
     on:click={() => { zoomed = true }}
     {style}
-    class={`fitDimension-${fitDimension} objectFit-${objectFit}`}
+    class={`
+      ${mainClass}
+      MediaFileImage
+      fitDimension-${fitDimension}
+      MediaFileImage--fitdimension${fitDimension}
+      objectFit-${objectFit}
+      MediaFileImage--objectfit${objectFit}
+    `}
     alt="mediafile"
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
   {#if zoomable && zoomed}
-    <div class="fullscreen-overlay" on:click={() => { zoomed = false }}>
-      <div class="zoom-close-icon">
+    <div class="MediaFileImage__FullscreenOverlay {mainClass}__FullscreenOverlay fullscreen-overlay" on:click={() => { zoomed = false }}>
+      <div class="zoom-close-icon MediaFileImage__ZoomClose {mainClass}__ZoomClose">
         <Button>
           <Icon type="close" />
         </Button>
@@ -76,10 +84,13 @@
     </div>
   {/if}
 {:else if doFallback}
-  <div class="fallback">image not found</div>
+  <div class="MediaFileImage__Fallback {mainClass}__Fallback fallback">image not found</div>
 {/if}
 
 <style>
+
+  ._workaround_ {}
+
   img.objectFit-cover {
     object-fit: cover;
   }

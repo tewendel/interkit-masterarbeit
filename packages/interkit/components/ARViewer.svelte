@@ -137,7 +137,7 @@
             />
           </AspectRatio>
 
-          <div class="content">
+          <div class="ARViewer__content content">
 
             <h1 class="headline">
               Augmented Reality
@@ -147,7 +147,7 @@
 
                 <div class="block">
 
-                  <div class="buttonContainer">
+                  <div class="ARViewer__buttoncontainer buttonContainer">
                     <MediaFileResolver let:url mediafileRef={element.glbFileRef} >
                       <a 
                         class="ARViewer__Link-android link-android"
@@ -163,7 +163,7 @@
                     </MediaFileResolver>
                   </div>
 
-                  <div class="buttonInfo">
+                  <div class="ARViewer__buttoninfo buttonInfo">
                     {#if $$slots.androidInfo}
                       <slot name="androidInfo"></slot>
                     {:else}
@@ -181,13 +181,13 @@
 
                 <div class="block">
 
-                  <div class="buttonContainer">
+                  <div class="ARViewer__buttoncontainer buttonContainer">
                     <Button flex="fill" size="large" on:click={() => iosLinkRef.click()}>
                       {startButtonText}
                     </Button>
                   </div>
 
-                  <div class="buttonInfo">
+                  <div class="ARViewer__buttoninfo buttonInfo">
                     {#if $$slots.iosInfo}
                       <slot name="iosInfo"></slot>
                     {:else}
@@ -213,13 +213,13 @@
 
               <div class="block">
 
-                <div class="buttonContainer">
+                <div class="ARViewer__buttoncontainer buttonContainer">
                   <Button flex="fill" type="secondary" size="large" on:click={() => mode = "video"}>
                     {videoButtonText}
                   </Button>
                 </div>
 
-                <div class="buttonInfo">
+                <div class="ARViewer__buttoninfo buttonInfo">
                   {#if capability === "video"}
 
                     {#if $$slots.videoOnlyInfo}

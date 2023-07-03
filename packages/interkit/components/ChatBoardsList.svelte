@@ -86,11 +86,11 @@
 
 </script>
 
-<SectionShell>
+<SectionShell classes="ChatBoardsList">
 {#if $channelsStore || $showDummyData}
   {#each ($showDummyData ? dummyData : $channelsStore) as channel}
       {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
-      <div class="sort-item" style="order: {channelOrder[channel.channel_key]}">
+      <div class="ChatBoardsList__SortItem sort-item" style="order: {channelOrder[channel.channel_key]}">
         <ChatBoardCard
           board={channel.channel_key}
           {path}

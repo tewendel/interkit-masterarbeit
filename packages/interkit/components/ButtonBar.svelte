@@ -14,11 +14,14 @@
 </script>
 
 
-<div class="container" style={`justify-content: ${justify}`}>
+<div
+  class={`ButtonBar ButtonBar__justify${justify} container`}
+  style={`justify-content: ${justify}`}
+  >
   <slot/>
 </div>
 {#if helpText && !hideHelpText}
-  <div class="help-text">{helpText}</div>
+  <div class="ButtonBar__HelpText help-text">{helpText}</div>
 {/if}
 
 <style>

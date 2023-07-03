@@ -20,6 +20,8 @@
 {/if}
 
 <style>
+  ._workaround_ {}
+
   video {
       width: 100%;
       height: 100%;

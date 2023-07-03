@@ -1,4 +1,10 @@
-<div class="container">
+<script>
+
+  export let classes = ''
+
+</script>
+
+<div class={`${classes} SectionShell container`}>
   <slot/>
 </div>
 

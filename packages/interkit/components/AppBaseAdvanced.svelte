@@ -217,7 +217,7 @@
 
 <svelte:window on:popstate={popState} on:message={receiveMessage} />
 
-<div class="AppBase Theming" id="Theming">
+<div class="AppBase AppBaseAdvanced Theming" id="Theming">
   <Router>
     <Styling>
       <Overlay
@@ -271,7 +271,7 @@
 
   {#key mediafileAudio}
     {#if mediafileAudio}
-      <span class="audio-player">
+      <span class="AppBase__audioplayer audio-player">
         <audio 
           id="audio"
           controls

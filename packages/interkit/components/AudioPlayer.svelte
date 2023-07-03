@@ -166,7 +166,7 @@
 
 {#if $audioPlayerStatus || $showDummyData}
 
-  <div class="minimised-container" class:active={$audioPlayerStatus.active}>
+  <div class="AudioPlayer AudioPlayer--minimised minimised-container" class:active={$audioPlayerStatus.active}>
 
     <div class="minimised-controls">
 
@@ -225,20 +225,20 @@
 
 {#if $audioPlayerStatus && playerExpanded}
 
-  <Overlay>
+  <Overlay classes="AudioPlayer AudioPlayer--expanded">
 
     <div class="expanded-container">
 
-      <div class="expanded-content">
+      <div class="expanded-content AudioPlayer__Content">
         <slot></slot>
       </div>
 
-      <div class="expanded-bottom-bar">
+      <div class="expanded-bottom-bar AudioPlayer__BottomBar">
 
-        <div class="expanded-range-slider" class:expanded={playerExpanded}>
+        <div class="expanded-range-slider AudioPlayer__Range" class:expanded={playerExpanded}>
           <input 
             type="range" 
-            class="seekPositionRangeSlider" 
+            class="seekPositionRangeSlider AudioPlayer__Range__Input" 
             name="seekPosition"
             min="0" 
             step="0.05"
@@ -252,12 +252,12 @@
           >
         </div>
 
-        <div class="expanded-time" class:expanded={playerExpanded}>
+        <div class="expanded-time AudioPlayer__Time" class:expanded={playerExpanded}>
           <span class="currentTime">{format($audioPlayerStatus?.currentTime)}</span>
           <span class="duration">{format($audioPlayerStatus?.duration)}</span> 
         </div>
 
-        <div class="expanded-controls">
+        <div class="expanded-controls AudioPlayer__Controls">
 
           <div class="AudioPlayer__Close close">
             <!--button class="AudioPlayer__Expand__Button icon-expand-collapse" on:click={()=>{toggleExpanded(); closePlayer()}} title={playerExpanded ? "Collapse" : "Expand"}>
@@ -265,7 +265,7 @@
             </button-->
           </div>
 
-          <div class="center-controls">
+          <div class="center-controls AudioPlayer__CenterControls">
 
             <div class="AudioPlayer__PlayButton seekbutton">
               <Button size="small" type="link" on:click={()=>{seek(-30)}}>

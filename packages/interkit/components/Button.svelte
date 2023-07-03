@@ -23,7 +23,7 @@
   <span
     on:click
     on:click={()=>{if(!disabled) execute()}} 
-    class={`Button Button--${type} Button--${size} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
+    class={`Button Button--${type} Button--${size} Button--flex${flex} Button--height${height} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
     class:Button--disabled={disabled}
     class:Button--selected={selected}
@@ -38,6 +38,8 @@
 </WithEffect>
 
 <style>
+
+  ._workaround_ {}
 
   .button {
     border: var(--border-width) solid var(--color-border);

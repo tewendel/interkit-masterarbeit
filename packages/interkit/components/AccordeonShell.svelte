@@ -16,16 +16,16 @@
 <div class="AccordeonShell container {state}">
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="header" on:click={toggelState}>
-    <div class="label">
+  <div class="AccordeonShell__header header" on:click={toggelState}>
+    <div class="AccordeonShell__label label">
       <slot name="label"/>
     </div>
-    <div class="toggle">
+    <div class="AccordeonShell__toggle toggle">
       <Icon type={state == "closed" ? "Thin-Chevron-Down" : "Thin-Chevron-Up"}/>
     </div>
   </div>
 
-  <div class="content">
+  <div class="AccordeonShell__content content">
     <slot name="content"/>
   </div>
 
