@@ -156,8 +156,8 @@
   </script>
   
   <WithEffect effect={scanEffect} bind:execute={executeScanEffect}>
-    <OverlayFull {closeEffect} classes="QRScanner">   
-      <div id="scanner-container QRScanner__Container">
+    <OverlayFull {closeEffect} class="QRScanner">   
+      <div id="scanner-container" class="QRScanner__Container">
         <canvas id="canvas" class="QRScanner__Canvas"></canvas>
         {#if loading}
           <div class="loadingMessage QRScanner__LoadingMessage" hidden="">Waiting for camera...</div>

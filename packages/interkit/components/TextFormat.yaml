@@ -2,38 +2,40 @@ name: TextFormat
 color: 230
 toolboxCategory: Basics
 fields:
-  - type: options
-    name: interfaceFormat
-    options:
-      - none
-      - headline-1
-      - headline-2
-      - headline-3
-      - headline-4
-      - headline-5
-      - body-1
-      - body-2
-      - subtitle-1
-      - subtitle-2
-      - button
-      - caption
-      - caption-bold
-      - overline
-    defaultValue: none
-    help: "Use these formats to select typography for parts of the interface."
-  - type: options
-    name: contentFormat
-    options:
-      - none
-      - headline-1
-      - headline-2
-      - headline-3
-      - headline-4
-      - headline-5
-      - body-1
-      - body-2
-    defaultValue: none
-    help: "Use these formats to select typography for additional content."
+  - type: extraProps
+    props:
+    - type: options
+      name: interfaceFormat
+      options:
+        - none
+        - headline-1
+        - headline-2
+        - headline-3
+        - headline-4
+        - headline-5
+        - body-1
+        - body-2
+        - subtitle-1
+        - subtitle-2
+        - button
+        - caption
+        - caption-bold
+        - overline
+      defaultValue: none
+      help: "Use these formats to select typography for parts of the interface."
+    - type: options
+      name: contentFormat
+      options:
+        - none
+        - headline-1
+        - headline-2
+        - headline-3
+        - headline-4
+        - headline-5
+        - body-1
+        - body-2
+      defaultValue: none
+      help: "Use these formats to select typography for additional content. Use either interface or content formats, not both."
   - type: slot
     name: default
     help: "The content you want to format. Should be a string; other components might work."

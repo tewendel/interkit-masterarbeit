@@ -47,7 +47,7 @@
           <slot/>
         </div>
       {/if}
-      <span class="NavButton__Text">{text}</span>
+      {#if text}<span class="NavButton__Text">{text}</span>{/if}
     </div>
   </WithEffect>
 
