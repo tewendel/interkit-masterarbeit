@@ -30,7 +30,7 @@
 
 @keyframes typingdot {
   0% { background: var(--color-text); }
-  40% { background: var(  --color-background-highlight); }
+  40% { background: var(--color-background-highlight); }
   80% { background: var(--color-text); }
 }
 
@@ -46,7 +46,7 @@
 }
 
 .inner::after {
-  content: "\200D" /* trick to make the element's min-height equal to line height */
+  content: "\200D"; /* trick to make the element's min-height equal to line height */
 }
 
 .dots {

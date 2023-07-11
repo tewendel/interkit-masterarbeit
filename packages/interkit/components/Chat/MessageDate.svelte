@@ -2,6 +2,7 @@
   export let message
   export let previousMessage
   export let lastFromSender
+  export let isByUser
 
   const locale = 'de'
 
@@ -35,14 +36,21 @@
 </script>
 
 {#if showDate(message, previousMessage, lastFromSender) } 
-  <div class="MessageDate message__date">
+  <div class="MessageDate message__date message__date--{isByUser ? 'me' : 'other'} MessageDate--user{isByUser ? 'me' : 'other'}">
     {date.toLocaleTimeString(locale, dateOptions(date))}
   </div>
 {/if}
 
 <style>
+
   .message__date {
     font: var(--font-caption);
-    padding: 0 var(--distance-s) var(--distance-s) var(--distance-s);
+    padding: 0 var(--distance-s);
+    margin: var(--distance-s) 0;
   }
+
+  .message__date--me {
+    text-align: right;
+  }
+
 </style>
