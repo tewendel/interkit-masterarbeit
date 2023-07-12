@@ -253,7 +253,7 @@
     font: var(--font-body-1);
     position: relative;
     margin-bottom: var(--distance-s);
-    --chat-image-height: 200px;
+    --chat-image-height: calc(var(--distance-base) * 25); /* 200 px */
     display: flex;
     flex-direction: column;
   }

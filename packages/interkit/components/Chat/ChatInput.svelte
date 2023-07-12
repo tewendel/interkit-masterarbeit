@@ -96,7 +96,7 @@
     flex: 1;
     padding: var(--distance-s);
     border-radius: var(--border-radius);
-    border: 1px solid var(--color-border);
+    border: var(--border-width) solid var(--color-border);
     background-color: var(--color-background);
     margin-right: var(--distance-m);
     min-width: 0; /* makes flex-shrink work for <input> https://stackoverflow.com/a/42421490/629238 */
