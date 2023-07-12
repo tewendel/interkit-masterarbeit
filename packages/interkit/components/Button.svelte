@@ -105,7 +105,7 @@
 
   .button.large {
     min-height: 56px;
-    padding: var(--distance-m) var(--distance-sm);
+    padding: var(--distance-m) var(--distance-m-l);
     font: var(--font-headline-5);
     border-radius: calc(var(--border-radius-button) * 1.5);
     gap: 8px;

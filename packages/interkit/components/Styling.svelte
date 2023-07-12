@@ -119,8 +119,9 @@
 
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
+  --distance-s-m: calc(var(--distance-base) * var(--distance-scale-factor) * 1.5);
   --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
-  --distance-sm: calc(var(--distance-s) + var(--distance-m));
+  --distance-m-l: calc(var(--distance-base) * var(--distance-scale-factor) * 3);
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
@@ -129,8 +130,9 @@
   2 -> tiny
   4 -> xs  
   8 -> s
+  12 -> s-m
   16 -> m
-  24 -> sm
+  24 -> m-l
   32 -> l
   48 -> xl
   64 -> xxl
