@@ -275,6 +275,7 @@
     text-align: center;
     font: var(--font-caption-bold);
     padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
+    text-transform: uppercase;
   }
 
   .system-image {

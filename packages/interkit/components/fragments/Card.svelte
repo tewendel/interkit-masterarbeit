@@ -3,7 +3,7 @@
   import AspectRatio from '../AspectRatio.svelte'
   import MediaFileImage from '../MediaFileImage.svelte'
   import CardHeader from "./CardHeader.svelte"
-  import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
+  import { getShowDummyDataStore, dummyLorem1Sentence } from '../dummyDataHelpers.js'  
 
   export let mainClass = ''
   
@@ -102,6 +102,11 @@
       <slot name="content"/>
     </div> 
   {/if}
+  {#if !DataCardContext?.slots?.content && $showDummyData}
+    <div class="content-wrapper Card__content">
+      Content: {dummyLorem1Sentence}
+    </div> 
+  {/if}
 </div>
 
 <style>
@@ -184,8 +189,10 @@
     min-width: 0;
   }
 
-
-  
-
+  .content-wrapper {
+    font: var(--font-content-body-2);
+    margin: var(--distance-s) 0 0 0;
+    padding: 0 var(--distance-s) var(--distance-s) var(--distance-s);
+  }
 
 </style>

@@ -94,6 +94,7 @@
   }
   .input {
     flex: 1;
+    font: var(--font-body-1);
     padding: var(--distance-s);
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--color-border);
