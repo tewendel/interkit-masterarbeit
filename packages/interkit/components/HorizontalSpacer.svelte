@@ -33,11 +33,11 @@
   ._TopNavBarCustom__Top__Left,
   ._TopNavBarCustom__Top__Center,
   ._TopNavBarCustom__Top__Right {
-    /*
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow-x: clip;
-    */
+    /* TODO: this used to be white-space:nowrap+ellipsis.
+     * This breaks a lot of child (and grand-child) components because they inherit white-space.
+     * You'll have to wrap the contents in a Component that does that.
+     */
+    display: flex;
   }
 
   .left {
