@@ -16,11 +16,12 @@
     justify-content: center;
     align-items: center;
     gap: 10px; 
-    border-radius: 16px;
-    border: 1px solid #999;
+    border-radius: var(--border-radius-button);
+    border: var(--border-width) solid var(--color-border);
     background-color: var(--color-background-button);
     font: var(--font-subtitle-2);
     letter-spacing: var(--letter-spacing-subtitle-2);
+    white-space: nowrap;
   }
 
   span.selected {

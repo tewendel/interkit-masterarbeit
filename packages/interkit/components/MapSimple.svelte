@@ -344,7 +344,7 @@
   }
 
   :global(.marker-content-label) {
-    font-weight: bold;
+    font: var(--font-caption-bold);
   }
 
   :global(div.marker-container.selected) {

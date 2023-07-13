@@ -41,7 +41,7 @@
 
   */
   
-  export const createIconDivHTML = async (element, options) => {
+  export const createIconDivHTML = async (element, options, index) => {
 
     //console.log("createIconDivHTML", element, options)
 
@@ -54,27 +54,30 @@
     if(mediafileRef)
       mediafile = await InterkitClient.getMediaFile(mediafileRef.value); // this should probably be cashed locally on the client
     let iconSrc = mediafile?.link || options.markerIconAsset;
+    let hasMediafileIcon = !!mediafile?.link
 
     // hide the frame if we don't have a label or an image to show
     let noFrame = !label && !mediafile?.link;
 
     // when dummyData is set, mix different variants
-    if(options.showDummyData) {
+    if (options.showDummyData) {
       // add labels on some markers
-      if(Math.random() < 0.5) {
-        label = "1"
+      if (index % 4 < 2) {
+        label = index
         noFrame = false
       }
       // add images on some markers
-      if(Math.random() < 0.5) {
+      if (index % 2 === 0) {
         mediafile = {link: "123"}
         iconSrc = "data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='208' fill='none'%3E%3Cpath fill='%23FFDBD3' d='M0 0h380v208H0z'/%3E%3C/svg%3E"  
         noFrame = false
+        hasMediafileIcon = true
       }
-      if(noFrame && !mediafile?.link && label) {
+      if (noFrame && !mediafile?.link && label) {
         iconSrc = null;
+        hasMediafileIcon = false
       }
-      options.checked = true;
+      options.checked = index % 3 !== 0;
     }
 
     // change style when marker is tapped
@@ -95,6 +98,7 @@
 
     let html = `
     <div class="marker-container MapRenderer__Markers
+      ${hasMediafileIcon ? 'Maprederer__Markers--hasmediaicon has-mediafileicon' : ''}
       ${options.noPointer ? 'MapRenderer__Markers--nopointer no-pointer' : ''}
       ${!label ? 'MapRenderer__Markers--nolabel no-label' : ''}
       ${noFrame ? 'MapRenderer__Markers--noframe no-frame' : ''}
@@ -286,6 +290,9 @@
 
     if(!markerData) return;
 
+    // for showDummyData
+    let markerIndex = 0;
+
     // setup new markers
     for(let markerValue of markerData) {
 
@@ -299,7 +306,10 @@
           markerCheckedIconAsset,
           markerIconAsset,
           showDummyData: $showDummyData
-        });
+        }, markerIndex);
+
+        markerIndex++;
+
         let icon = L.divIcon({
           html: iconHTML,
           className: 'map-marker',
@@ -541,7 +551,7 @@
 
 </script>
 
-<!-- TODO cleanup old Map__* classes+styles -->
+<!-- TODO cleanup old Map__* classes+s tyles -->
 <div 
     class="MapRenderer Map__Container container" 
     class:hasHeading={combinedHeading !== false}
@@ -644,16 +654,12 @@
     justify-content: end;
   }
 
-  :global(.marker-content.selected) {
-    background-color: lightgrey;
-  }
-
   /* marker content - the body of the marker */
 
   :global(.marker-container:not(.no-frame) div.marker-content) {
     position: relative;
-    padding: 4px;
-    background-color: #fff;
+    padding: 2px;
+    background-color: var(--color-background);
     border: 1px solid black;
     border-radius: 12px;
     font: var(--font-caption-bold);
@@ -667,7 +673,7 @@
   }
 
   :global(.marker-container:not(.no-frame) div.marker-content.selected) {
-    background-color: var(--color-background-highlight);
+    background-color: var(--color-background-button-pressed);
   }
 
   :global(.marker-container.no-frame .marker-content) {
@@ -702,20 +708,25 @@
 
   :global(div.marker-container.no-label div.marker-content) {
     width: 32px;
-    padding: 4px;
+    padding: 2px;
   }
 
   /* image */
 
   :global(div.marker-content img) {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     object-fit: cover;
     border-radius: 8px;
   }
 
-  :global(.marker-content.selected img) {
-    filter: grayscale(1);
+  :global(.marker-container:not(.has-mediafileicon) .marker-content.selected img) {
+    filter: grayscale(1) brightness(0.5);
+  }
+
+  :global(.marker-content.selected img[src$='Location.svg']) {
+    /* this only works for a black img... */
+    filter: grayscale(1) invert(1) brightness(0.5);
   }
 
 

@@ -116,6 +116,10 @@
     text-align: left;
   }
 
+  .container:not(:last-child) {
+    margin-bottom: var(--distance-s);
+  }
+
   .container:not(.full) {
     box-shadow: var(--box-shadow);
   }

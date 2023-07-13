@@ -56,7 +56,7 @@
     display: flex;
     flex-direction: column;
     padding: var(--distance-s) 0px;
-    gap: var(--distance-s);
+    gap: var(--distance-xs);
   }
   
   .filter-segments {
@@ -64,8 +64,9 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
+    /* FIXME: when scrollbar is visible, the buttons appear very thin */
     gap: var(--distance-s);
-    padding: 0px var(--distance-s);
+    padding: 0 var(--distance-s) var(--distance-xs) var(--distance-s);
   }
 
 
