@@ -10,6 +10,7 @@
 
   import Maximize from 'carbon-icons-svelte/lib/Maximize.svelte'
   import Minimize from 'carbon-icons-svelte/lib/Minimize.svelte'
+  import FitToWidth from 'carbon-icons-svelte/lib/FitToWidth.svelte'
   // import PageFirst from 'carbon-icons-svelte/lib/PageFirst.svelte'
   // import PageLast from 'carbon-icons-svelte/lib/PageLast.svelte'
   import ChevronLeft from 'carbon-icons-svelte/lib/ChevronLeft.svelte'
@@ -21,7 +22,9 @@
     secondaryTabsMinimized,
     secondaryTabIndex,
     secondaryTabSpecialDoc,
-    secondaryTabPreviewProjectId
+    secondaryTabPreviewProjectId,
+    secondaryTabsSize,
+    secondaryTabsSizes
   } from '../admin.js'
 
   import Preview from './Preview.svelte'
@@ -62,6 +65,12 @@
         {/if}
       {/if}
     <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
+    <Button
+      kind="ghost"
+      iconDescription="cycle size"
+      on:click={() => { secondaryTabsSize.set(($secondaryTabsSize + 1) % secondaryTabsSizes.length) }}
+      icon={FitToWidth}
+      />
     <Button
       kind="ghost"
       iconDescription={$secondaryTabsMinimized ? "maxi\u00admize" : "minimize"}
@@ -130,7 +139,7 @@
   .right-pane {
     flex-grow: 1;
     flex-shrink: 0;
-    width: 33.3%;
+    width: var(--right-pane-size);
     max-width: 640px;
     display: flex;
     flex-direction: column;

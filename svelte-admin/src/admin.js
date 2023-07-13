@@ -12,6 +12,9 @@ export const secondaryTabsMinimized = writable(false)
 
 export const secondaryTabsPreviewSize = writable(0)
 
+export const secondaryTabsSize = writable(0)
+export const secondaryTabsSizes = [1/3, 1/2, 2/3]
+
 let currentProjectSub = null
 export const currentProject = derived(
   projectId,
