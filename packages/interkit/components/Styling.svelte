@@ -159,7 +159,7 @@
   --letter-spacing-headline-4: ${tokens.letterSpacingHeadline4};
   
   /* Interface/Headline 5 */
-  --font-headline-5: ${tokens.fontHeadline4};
+  --font-headline-5: ${tokens.fontHeadline5};
   --letter-spacing-headline-5: ${tokens.letterSpacingHeadline5};
   
   /* Interface/Body 1 */
