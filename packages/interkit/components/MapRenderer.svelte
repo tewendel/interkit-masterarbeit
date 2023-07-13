@@ -663,6 +663,7 @@
     border: 1px solid black;
     border-radius: 12px;
     font: var(--font-caption-bold);
+    letter-spacing: var(--letter-spacing-caption-bold);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

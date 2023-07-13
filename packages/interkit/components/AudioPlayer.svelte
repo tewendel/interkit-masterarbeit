@@ -403,6 +403,7 @@
 
   .expanded-time span {
     font: var(--font-caption);
+    letter-spacing: var(--letter-spacing-caption);
   }
 
   :not(.expanded) .base-content .seekbutton {

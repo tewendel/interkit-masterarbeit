@@ -347,6 +347,7 @@
 
   :global(.marker-content-label) {
     font: var(--font-caption-bold);
+    letter-spacing: var(--letter-spacing-caption-bold);
   }
 
   :global(div.marker-container.selected) {
