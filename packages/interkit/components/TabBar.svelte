@@ -21,14 +21,15 @@
     width: 100%;
   }
 
+  /* FIXME get rid of those !importants */
   :global(.TabBar .slider .Tab) {
-    border-top: 1px solid var(--color-border) !important;
-    border-bottom: 1px solid var(--color-border) !important;
-    border-right: 1px solid var(--color-border) !important;
+    border-top: var(--border-width) solid var(--color-border-button-primary) !important;
+    border-bottom: var(--border-width) solid var(--color-border-button-primary) !important;
+    border-right: var(--border-width) solid var(--color-border-button-primary) !important;
   }
 
   :global(.TabBar .slider .Tab:first-child) {
-    border-left: 1px solid var(--color-border) !important;
+    border-left: var(--border-width) solid var(--color-border-button-primary) !important;
   }
 
   :global(.TabBar .slider .Tab.active) {

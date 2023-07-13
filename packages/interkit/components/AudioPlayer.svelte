@@ -185,7 +185,7 @@
               class="AudioPlayer__Title title" 
               on:click={toggleExpanded}
             >
-            {title}
+            {title || ($showDummyData ? 'Title dummy for audio player' : '')}
           </h4>
         {/if}
       {/key}
@@ -316,6 +316,7 @@
     height: 64px;
     background-color: var(--color-background-highlight);
     position: relative;
+    box-shadow: var(--box-shadow);
   }
   
   .minimised-container.active {
@@ -371,7 +372,7 @@
   }
 
   .expanded-bottom-bar {
-    background-color: #eee;
+    background-color: var(--color-background-highlight);
     padding: 16px 8px;
     box-sizing: border-box; 
   }
@@ -411,7 +412,7 @@
   .seekPositionRangeSlider {
     width: 100%;
     -webkit-appearance: none;
-    background-color: #000; 
+    background-color: var(--color-border-button-primary);
     height: 1px;
     margin: 0;
     /* this is to have a larger target to tap */
@@ -423,7 +424,7 @@
     -webkit-appearance: none;
     height: 14px;
     width: 14px;
-    background: #000;
+    background: var(--color-border-button-primary);
     margin-top: -5px;
     border-radius: 50%;
     border: none;
@@ -433,7 +434,7 @@
     -webkit-appearance: none;
     height: 14px;
     width: 14px;
-    background: #000;
+    background: var(--color-border-button-primary);
     border-radius: 50%;
     border: none;
   }
