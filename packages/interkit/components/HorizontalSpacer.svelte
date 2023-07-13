@@ -55,8 +55,7 @@
   }
 
   :global(._TopNavBarCustom__Top__Left span, ._TopNavBarCustom__Top__Center span, ._TopNavBarCustom__Top__Right span) {
-    font-size: var(--font-size-headline-1);
-    font-size: var(--font-size-headline-1);
+    font: var(--font-headline-1);
   }
   
   .center {

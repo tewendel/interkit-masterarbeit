@@ -65,7 +65,9 @@
   }
 
   span.button {
+    /* FIXME? doesn't exist any more
     font-size: var(--font-size-buttons);
+    */
   }
 
   /* flex */

@@ -332,7 +332,9 @@
     display: flex;
     flex-direction: row;
     min-width: 40px;
+    /* FIXME? doesn't exist any more
     font-size: var(--font-size-regular);
+    */
   }
 
   /* need to be very cautious for iOS */
