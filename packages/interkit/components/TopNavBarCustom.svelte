@@ -47,9 +47,11 @@
   .TopNavBarCustom__Top__Left,
   .TopNavBarCustom__Top__Center,
   .TopNavBarCustom__Top__Right {
+    /*
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: clip;
+    */
   }
 
   .left {

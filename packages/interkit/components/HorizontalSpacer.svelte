@@ -33,9 +33,11 @@
   ._TopNavBarCustom__Top__Left,
   ._TopNavBarCustom__Top__Center,
   ._TopNavBarCustom__Top__Right {
+    /*
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: clip;
+    */
   }
 
   .left {
@@ -53,6 +55,7 @@
   }
 
   :global(._TopNavBarCustom__Top__Left span, ._TopNavBarCustom__Top__Center span, ._TopNavBarCustom__Top__Right span) {
+    font-size: var(--font-size-headline-1);
     font-size: var(--font-size-headline-1);
   }
   
