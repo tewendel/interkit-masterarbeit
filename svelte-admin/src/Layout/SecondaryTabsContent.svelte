@@ -140,7 +140,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     width: var(--right-pane-size);
-    max-width: 640px;
+    /* max-width: 640px; */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
