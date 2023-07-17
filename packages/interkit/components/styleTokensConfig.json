@@ -301,14 +301,7 @@
     "help": "text style for interface body 2"
   },
   {
-    "key": "fontSubtitle1",
-    "type": "font",
-    "category": "text styles",
-    "defaultValue": "500 14px/18px var(--font-family-interface)",
-    "help": "text style for interface Subtitle 1"
-  },
-  {
-    "key": "fontSubtitle1",
+    "key": "fontSubtitle2",
     "type": "font",
     "category": "text styles",
     "defaultValue": "500 14px/18px var(--font-family-interface)",
