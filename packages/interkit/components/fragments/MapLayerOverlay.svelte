@@ -77,25 +77,34 @@
 <style>
 
   .container {
+    --mapoverlay-top: calc(var(--outset-y) * 1rem + var(--inset-y) * 0.5rem + 2rem);
     position: fixed;
-    top: 56px;
+    top: var(--mapoverlay-top);
     left: 0;
     right: 0;
     z-index: 3;
     margin: 0;
-    padding: var(--distance-s);
     background-color: var(--color-background-backdrop);
-    border-radius: 0px 0px 32px 32px; 
-    max-height: calc(100% - 56px); /* 56px == LayoutShell .top-bar height */
-    overflow-y: auto;
+    /* FIXME: this looks weird when there is enough cards to scroll.
+     * would be very complicated to fix properly. */
+    border-radius:
+      0
+      0
+      calc(var(--border-radius) + var(--inset) * 0.5rem)
+      calc(var(--border-radius) + var(--inset) * 0.5rem);
+    box-sizing: border-box;
+    max-height: calc(100% - var(--mapoverlay-top) - 1rem);
+    display: flex;
+    flex-direction: column;
   }
 
   .info {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: var(--distance-s);
-    padding: 0 var(--distance-s);
+    gap: calc(var(--inset-x) * 1rem);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 1rem);
   }
 
   .info span {
@@ -104,6 +113,11 @@
   }
 
   .cards {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
     /*
     display: flex;
     flex-direction: column;

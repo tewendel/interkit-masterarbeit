@@ -42,7 +42,9 @@
 .inner {
   display: inline-flex;
   align-items: center;
-  padding: var(--distance-s);
+  padding:
+    calc(var(--inset-y) * 0.5rem)
+    calc(var(--inset-x) * 0.5rem);
 }
 
 .inner::after {
@@ -94,7 +96,7 @@
 
 .message-label {
     font: var(--font-caption-bold);
-    margin-bottom: var(--distance-xs);
+    margin-bottom: calc(var(--outset-y) * 0.125rem);
 }
 
 </style>

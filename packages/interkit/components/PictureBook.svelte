@@ -147,42 +147,12 @@
 		scroll-snap-align: start;
   }
 
-  .slide-content {
-    padding: var(--distance-m);
-    padding-top: var(--distance-s);
-    padding-bottom: 0px;
-  }
-
-  .title {
-    font: var(--font-content-headline-3);
-    letter-spacing: var(--letter-spacing-content-headline-3);
-    margin-bottom: var(--distance-s);
-  }
-
-  .markdown-container { 
-    max-height: 50px;
-  }
-
-  .extras {
-    display: flex;
-    flex-direction: row;
-    padding: var(--distance-m);
-    
-  }
-
-  .extras .left {
-    width: 100%;  
-  }
-
-  .extras .left {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-  }
+  /* TODO this pagination setup is copied almost 1:1 from MultiStepContent,
+   *   if MultiStepContent is needed, it should be a shared component */
 
   .pagination-container {
-    padding: var(--distance-s);
+    margin-top: calc(var(--outset-y) * 0.5rem);
+    margin-bottom: calc(var(--outset-y) * 0.5rem);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -192,15 +162,16 @@
   .pagination {
     z-index: 1;
     list-style-type: none;
+    margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
   }
 
   .pagination-item {
-    /* TODO find better measurements */
-    width: calc(1.5 * var(--distance-xs));
-    height: calc(1.5 * var(--distance-xs));
-    margin: 0 calc(0.5 * var(--distance-xs));
+    width: 0.375rem;
+    height: 0.375rem;
+    margin: 0 calc(var(--outset-x) * 0.1875rem);
     padding: 0;
     border: var(--border-width) solid var(--color-border-button-primary);
     border-radius: 50%;
@@ -214,8 +185,8 @@
     position: fixed;
     z-index: 1000;
     pointer-events: all;
-    top: var(--distance-m);
-    right: var(--distance-m);
+    top: calc(var(--outset-y) * 1rem);
+    right: calc(var(--outset-x) * 1rem);
   }
 
 </style>

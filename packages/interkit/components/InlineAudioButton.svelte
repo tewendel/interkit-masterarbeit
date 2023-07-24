@@ -172,7 +172,7 @@
     display: inline-flex;
     overflow: hidden;
     align-items: center;
-    height: 34px;
+    min-height: 32px;
   }
 
   .container:not(.open) {

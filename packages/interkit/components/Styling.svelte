@@ -60,6 +60,13 @@
 
 <div class="style Styling" style={`
 
+  --inset: 1.0;
+  --inset-x: 1.0;
+  --inset-y: 1.0;
+  --outset-x: 1.0;
+  --outset-y: 1.0;
+  --border-radius-inner: 1rem;
+
   /* from tokens */
 
   --color-text: ${tokens.colorText};
@@ -113,9 +120,15 @@
   /* derived defaults */
 
   /* --border-color: var(--color-text); deprecated? */
+
+  --color-background-arviewer-modal: var(--color-background-button-primary);
+  --color-background-mediafileimage-overlay: var(--color-background-button-primary);
+  --color-background-usercardvalue-bar: var(--color-background-highlight);
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
+  --color-text-label2: var(--color-background);
+  --color-background-label2: var(--color-text-button-pressed);
 
   --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
   --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
@@ -125,6 +138,18 @@
   --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
   --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
   --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
+
+  /* these are used in the Spacing component */
+  /* TODO if they are used only there, they could be also defined there */
+  --distance-tiny: 0.125rem;
+  --distance-xs:   0.25rem;
+  --distance-s:    0.5rem;
+  --distance-s-m:  0.75rem;
+  --distance-m:    1rem;
+  --distance-m-l:  1.5rem;
+  --distance-l:    2rem;
+  --distance-xl:   3rem;
+  --distance-xxl:  4rem;
   
   /* cheat sheet for translation from figma 
   2 -> tiny

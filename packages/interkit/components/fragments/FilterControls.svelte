@@ -48,25 +48,31 @@
 <style>
   .container {
     position: fixed;
-    top: 56px;
+    top: calc(var(--outset-y) * 1rem + var(--inset-y) * 0.5rem + 2rem);
     left: 0;
     right: 0;
     z-index: 2;
     margin: 0;
     display: flex;
     flex-direction: column;
-    padding: var(--distance-s) 0px;
-    gap: var(--distance-xs);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      0;
+    gap: calc(var(--outset-x) * 0.25rem);
   }
   
   .filter-segments {
-    height: 44px;
+    /* height: 44px; */
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     /* FIXME: when scrollbar is visible, the buttons appear very thin */
-    gap: var(--distance-s);
-    padding: 0 var(--distance-s) var(--distance-xs) var(--distance-s);
+    gap: calc(var(--outset-x) * 0.5rem);
+    padding:
+      0
+      calc(var(--outset-x) * 0.5rem)
+      calc(var(--outset-y) * 0.25rem)
+      calc(var(--outset-x) * 0.5rem);
   }
 
 

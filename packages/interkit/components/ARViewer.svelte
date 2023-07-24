@@ -196,10 +196,10 @@
   .container {
     width: 100%;
     height: 100%;
-    flex:1;
+    flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: #000;
+    background-color: var(--color-background-arviewer-modal);
   }
 
   video {
@@ -211,8 +211,8 @@
   .close {
     position: absolute;
     z-index: 1;
-    top: var(--distance-s);
-    left: var(--distance-s);
+    top: calc(var(--outset-y) * 0.5rem);
+    left: calc(var(--outset-x) * 0.5rem);
   }
 
   .link-android {

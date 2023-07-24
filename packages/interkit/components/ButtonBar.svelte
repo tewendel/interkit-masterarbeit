@@ -26,20 +26,23 @@
 
 <style>
 
-  .container, .help-text {
+  .container,
+  .help-text {
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 6px;
+    gap: calc(var(--outset-x) * 0.375rem);
     box-sizing: border-box;
   }
   
   .help-text {
     font: var(--font-subtitle-2);
-    color: var(--color-text-soft);
     letter-spacing: var(--letter-spacing-subtitle-2);
+    color: var(--color-text-soft);
     justify-content: center;
-    padding: var(--distance-s);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--inset-x) * 0.5rem);
   }
 
 

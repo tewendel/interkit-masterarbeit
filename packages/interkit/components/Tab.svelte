@@ -32,10 +32,13 @@
 <style>
 
 .container {
-  height: 56px;  
+  height: calc(2rem + 1.5rem * var(--inset-y));
   font: var(--font-subtitle-1);
   letter-spacing: var(--letter-spacing-subtitle-1);
-  padding: 12px 24px;
+  /* padding-x was 1.5rem, but this is a lot and would make most 3-tab bars scroll.. */
+  padding:
+    calc(var(--inset-y) * 0.75rem)
+    calc(var(--inset-x) * 0.75rem);
   display: flex;
   flex: 1;
   justify-content: center;
@@ -51,6 +54,5 @@
   font: var(--font-headline-5);
   letter-spacing: var(--letter-spacing-headline-5);
 }
-
 
 </style>

@@ -11,6 +11,7 @@
     export let channel_key = "DEFAULT"
     export let imageProvider = false // set this to true to use this just as a provider, passing the image into the slot
     export let topBarImage = false;
+    export let classes;
 
     const boardContext = getContext("board")
     if(boardContext && !board) channel_key = $boardContext
@@ -40,11 +41,15 @@
     
 {#if !imageProvider && (channelImage || $showDummyData)}
   <div
-    class="StoryBoardImage _ChatChannelImage container {topBarImage ? "topBarImage" : ""}"
+    class="StoryBoardImage _ChatChannelImage container {topBarImage ? "topBarImage" : ""} {classes}"
     class:StoryBoardImage--topbarimage={topBarImage}
     >
     <AspectRatio aspectRatioType="square">
-      <MediaFileImage fitDimension="both" mediafileRef={channelImage} style="border-radius: 16px;"/>
+      <MediaFileImage
+        fitDimension="both"
+        mediafileRef={channelImage}
+        style="border-radius: var(--border-radius-button);"
+        />
     </AspectRatio>
   </div>
 {/if}
@@ -53,7 +58,7 @@
 
 <style>
   .container.topBarImage {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 </style>

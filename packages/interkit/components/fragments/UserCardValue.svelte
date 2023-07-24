@@ -42,6 +42,7 @@ span.label, span.value {
 
 .label {
   font: var(--font-caption);
+  letter-spacing: var(--letter-spacing-caption);
 }
 
 .value {
@@ -52,17 +53,17 @@ span.label, span.value {
 
 span.bar {
   width: 100%;
-  max-width: 87px;
+  max-width: 5.5rem;
 }
 
 div.bar {
   display: inline-block;
-  background-color: #999999;
+  background-color: var(--color-background-usercardvalue-bar);
   width: 100%;
-  height: 6px;
+  height: 0.375rem;;
   position: relative;
-  border-radius: 2px;
-  margin-top: 11px;
+  border-radius: 0.125rem;
+  margin-top: 0.625rem;
 }
 
 div.bar::before {
@@ -70,10 +71,10 @@ div.bar::before {
   position:absolute;
   top: 0;
   left: 0;
-  background-color: #000;
-  height: 6px;
+  background-color: var(--color-text);
+  height: 0.375rem;;
   width: calc(var(--value) * 100%);
-  border-radius: 2px;
+  border-radius: 0.125rem;
 }
 
 </style>

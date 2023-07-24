@@ -6,6 +6,7 @@
   import MediaFileImage from './MediaFileImage.svelte';
   import AspectRatio from './AspectRatio.svelte'
   import MarkdownContent from './MarkdownContent.svelte'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
 
   export let slides;
   /* array of objects with
@@ -23,6 +24,15 @@
   export let backButtonText = "Zurück"
   export let skipButtonText = null
   export let finalButtonText = null
+
+  const showDummyData = getShowDummyDataStore()
+  if ($showDummyData) {
+    slides = [
+      { bgimage: true, fgimage: true, image: true, superTitle: 'superTitle 1', title: 'title 1', content: 'content 1' },
+      { bgimage: true, fgimage: true, image: true, superTitle: 'superTitle 2', title: 'title 2', content: 'content 2' },
+      { bgimage: true, fgimage: true, image: true, superTitle: 'superTitle 3', title: 'title 3', content: 'content 3' }
+    ]
+  }
 
   let slideIndex = 0;
 
@@ -100,7 +110,7 @@
   .MultiStepContent__Image__Container {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 12.5rem;
   }
 
   :global(.MultiStepContent__Image__Container img) {
@@ -110,15 +120,15 @@
   }
 
   .container {
-    margin-left: 16px;
-    margin-right: 16px;
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
-    padding: 8px;
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: var(--color-background);
     z-index: 1;
     pointer-events: all;
     display: flex;
@@ -129,40 +139,42 @@
 
   .container .image {
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: calc(var(--outset-y) * 1rem);
   }
 
   .container .content {
     max-height: 32vh;
     overflow-y: auto;
-    padding-bottom: var(--distance-xs)
+    padding-bottom: calc(var(--outset-y) * 0.25rem);
   }
 
   .pagination {
     z-index: 1;
     list-style-type: none;
-    margin: var(--distance-s) auto;
+    margin:
+      calc(var(--outset-y) * 0.5rem)
+      auto;
     padding: 0;
     display: flex;
+    justify-content: center;
   }
 
   :global(.TutorialSlideshow) .pagination {
-    margin-top: var(--distance-l);
-    margin-bottom: var(--distance-l);
+    margin-top: calc(var(--outset-y) * 2rem);
+    margin-bottom: calc(var(--outset-y) * 2rem);
   }
 
   .pagination-item {
-    /* TODO find better measurements */
-    width: calc(1.5 * var(--distance-xs));
-    height: calc(1.5 * var(--distance-xs));
-    margin: 0 calc(0.5 * var(--distance-xs));
+    width: 0.375rem;
+    height: 0.375rem;
+    margin: 0 calc(var(--outset-x) * 0.375rem);
     padding: 0;
-    border: var(--border-width) solid var(--border-color);
+    border: var(--border-width) solid var(--color-border-button-primary);
     border-radius: 50%;
   }
 
   .pagination-item--active {
-    background-color: var(--border-color);
+    background-color: var(--color-pagination);
   }
 
   h1, p {
@@ -171,27 +183,29 @@
 
   h1 {
     font: var(--font-headline-1);
-    margin-bottom: 16px;
+    letter-spacing: var(--letter-spacing-headline-1);
+    margin-bottom: calc(var(--outset-y) * 2rem);
   }
 
   p {
     font: var(--font-regular);
+    letter-spacing: var(--letter-spacing-regular);
     line-height: var(--line-height-regular);
-    margin-bottom: 16px;
-    padding-left: 8px;
-    padding-right: 8px;
+    margin-bottom: calc(var(--outset-y) * 2rem);
+    padding-left: calc(var(--outset-x) * 0.5rem);
+    padding-right: calc(var(--outset-x) * 0.5rem);
   }
 
   .button-bar {
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding-top: var(--distance-s);
-    gap: var(--distance-s);
+    padding-top: calc(var(--outset-y) * 0.5rem);
+    gap: calc(var(--outset-x) * 0.5rem);
   }
 
   :global(.QRTips__Button__Bar span:not(:first-child)) {
-    margin-left: 8px;
+    margin-left: calc(var(--outset-x) * 0.5rem);
   }
 
   :global(.TutorialSlideshow) .MultiStepContent__Image__Container {

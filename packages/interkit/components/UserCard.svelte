@@ -38,7 +38,7 @@
 </script>
 
 <div
-  class="UserCard frame"
+  class="UserCard frame root"
   class:UserCard--noimage={!imageKey ? true : false}
   class:no-image={!imageKey ? true : false}
   >
@@ -72,12 +72,20 @@
 
 <style>
 
+  .root {
+    --usercard-gap: calc(var(--inset-x) * 1rem);
+    --usercard-image-size: 6rem;
+  }
+
   .frame {
     background-color: var(--color-background);
-    padding: var(--distance-s);
-    padding-right: calc(2 * var(--distance-s));
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem)
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 0.5rem);
     display: grid;
-    grid-template-columns: 112px 1fr 1fr;
+    grid-template-columns: calc(var(--usercard-image-size) + var(--usercard-gap)) 1fr 1fr;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
   }
@@ -87,8 +95,8 @@
   }
 
   .profile-pic {
-    width: 96px;
-    height: 96px;
+    width: var(--usercard-image-size);
+    height: var(--usercard-image-size);
     grid-column: 1;
     grid-row: 1 / 3;
   }
