@@ -63,13 +63,6 @@
     "help": "The color used for dummy assets when no image is available"
   },
   {
-    "key": "distanceScaleFactor",
-    "type": "number",
-    "category": "general",
-    "defaultValue": 1.0,
-    "help": "A factor that is used to scale distances"
-  },
-  {
     "key": "colorTextButtonPressed",
     "type": "color",
     "category": "buttons",
@@ -524,5 +517,54 @@
     "category": "text styles",
     "defaultValue": "0px",
     "help": "letter spacing for content body 2"
+  },
+  {
+    "key": "scale",
+    "type": "number",
+    "category": "spacing",
+    "defaultValue": 1.0,
+    "help": "A factor that scales the whole theme (anything that is defined in em or rem, and not in px)"
+  },
+  {
+    "key": "distanceScaleFactor",
+    "type": "number",
+    "category": "spacing",
+    "defaultValue": 1.0,
+    "help": "A factor that is used to scale distances, serves only as the default value for inset/outset"
+  },
+  {
+    "key": "inset",
+    "type": "varOrNumber",
+    "category": "spacing",
+    "defaultValue": "var(--distance-scale-factor)",
+    "help": "A factor that is used to scale inner distances within elements (like paddings)"
+  },
+  {
+    "key": "insetX",
+    "type": "varOrNumber",
+    "category": "spacing",
+    "defaultValue": "var(--inset)",
+    "help": "A factor that is used to scale inner, horizontal distances within elements (like paddings)"
+  },
+  {
+    "key": "insetY",
+    "type": "varOrNumber",
+    "category": "spacing",
+    "defaultValue": "var(--inset)",
+    "help": "A factor that is used to scale inner, vertical distances within elements (like paddings)"
+  },
+  {
+    "key": "outsetX",
+    "type": "varOrNumber",
+    "category": "spacing",
+    "defaultValue": "var(--distance-scale-factor)",
+    "help": "A factor that is used to scale outer, horizontal distances between elements (like margins)"
+  },
+  {
+    "key": "outsetY",
+    "type": "varOrNumber",
+    "category": "spacing",
+    "defaultValue": "var(--distance-scale-factor)",
+    "help": "A factor that is used to scale outer, vertical distances between elements (like margins)"
   }
 ]

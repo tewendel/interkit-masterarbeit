@@ -2,6 +2,7 @@
   import definitions from './styleTokensConfig.json'
   
   export let styleTokens = {}
+  export let isRootStyling = false
 
   import { onMount } from 'svelte'
 
@@ -10,6 +11,21 @@
 
   onMount(async () => {
   })
+
+  /* this is like <html style="--foo: bar">
+  const setDocumentCssVar = (varName, value) => {
+    document.documentElement.style.setProperty('--' + varName, value)
+  }
+  */
+
+  const setRem = scalarFactor => {
+    const f = parseFloat(scalarFactor)
+    if (!scalarFactor) {
+      console.warn('Styling: styleToken scale is not a float', scalarFactor, '=>', f)
+      return
+    }
+    document.documentElement.style.fontSize = `calc(100% * ${f})`
+  }
 
   $: {
     // generate local tokens and init with defaults
@@ -27,17 +43,8 @@
       // third choice: default value
       tokens[definition.key] = definition.defaultValue
     }
+    if (isRootStyling && tokens.scale) setRem(tokens.scale)
   }
-
-  /*
-  const setCssVar = (varName, value) => {
-    document.documentElement.style.setProperty('--' + varName, value)
-  }
-
-  $: {
-    setCssVar('borderRadius', borderRadius)
-  }
-  */
   
 /*
   // detecting google fonts, but lacks precise definition
@@ -60,13 +67,6 @@
 
 <div class="style Styling" style={`
 
-  --inset: 1.0;
-  --inset-x: 1.0;
-  --inset-y: 1.0;
-  --outset-x: 1.0;
-  --outset-y: 1.0;
-  --border-radius-inner: 1rem;
-
   /* from tokens */
 
   --color-text: ${tokens.colorText};
@@ -77,7 +77,6 @@
   --color-background-backdrop: ${tokens.colorBackgroundBackdrop};
   --color-border: ${tokens.colorBorder};
   --color-dummy-asset: ${tokens.colorDummyAsset};
-  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
 
   --color-text-button-pressed: ${tokens.colorTextButtonPressed};
   --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
@@ -100,6 +99,15 @@
 
   --color-pagination: ${tokens.colorPagination};
 
+  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+  --inset: ${tokens.inset};
+  --inset-x: ${tokens.insetX};
+  --inset-y: ${tokens.insetY};
+  --outset-x: ${tokens.outsetX};
+  --outset-y: ${tokens.outsetY};
+
+  --border-radius-inner: 1rem;
+
   --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
   --border-radius-button: ${tokens.borderRadiusButton};
@@ -112,10 +120,6 @@
   --font-family-interface: ${tokens.fontFamilyInterface};
   --font-family-content: ${tokens.fontFamilyContent};
 
-  /* constant */
-
-  --distance-base: 8px;
-  --distance-tiny: 2px;
 
   /* derived defaults */
 
@@ -129,15 +133,6 @@
   --color-background-button: var(--color-background);
   --color-text-label2: var(--color-background);
   --color-background-label2: var(--color-text-button-pressed);
-
-  --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
-  --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
-  --distance-s-m: calc(var(--distance-base) * var(--distance-scale-factor) * 1.5);
-  --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
-  --distance-m-l: calc(var(--distance-base) * var(--distance-scale-factor) * 3);
-  --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
-  --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
-  --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
 
   /* these are used in the Spacing component */
   /* TODO if they are used only there, they could be also defined there */

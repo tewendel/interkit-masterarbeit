@@ -219,7 +219,9 @@
 
 <div class="AppBase AppBaseAdvanced Theming" id="Theming">
   <Router>
-    <Styling>
+    <Styling
+      isRootStyling
+      >
       <Overlay
         zIndex={0}
         customStyle={
