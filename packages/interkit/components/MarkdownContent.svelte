@@ -11,7 +11,7 @@
 </script>
 
 <div class="MarkdownContent">
-  {@html marked(content)}
+  {@html marked(content || '')}
 </div>
 
 <style>

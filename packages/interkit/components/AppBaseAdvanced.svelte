@@ -16,7 +16,7 @@
   
   export let languages
   export let projectIdOverride
-  languages = languages ? languages.split(',') : false
+  languages = languages && languages.split ? languages.split(',') : false
   setupFrontend(languages)
 
   // langT is a overly fail-safe reactive array to the translations
