@@ -44,3 +44,4 @@ export const currentProject = derived(
 
 export const secondaryTabPreviewProjectId = writable()
 
+export const previewOverrideStyleTokens = writable('')

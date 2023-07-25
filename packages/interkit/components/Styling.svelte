@@ -3,6 +3,7 @@
   
   export let styleTokens = {}
   export let isRootStyling = false
+  export let overrideStyleTokens = {}
 
   import { onMount } from 'svelte'
 
@@ -30,17 +31,22 @@
   $: {
     // generate local tokens and init with defaults
     for (let definition of definitions) {
-      // first choice: styleTokens from props
+      // first choice: overridden styleTokens
+      if(overrideStyleTokens && typeof overrideStyleTokens[definition.key] !== "undefined") {
+        tokens[definition.key] = overrideStyleTokens[definition.key]
+        continue
+      }
+      // second choice: styleTokens from props
       if(styleTokens && typeof styleTokens[definition.key] !== "undefined") {
         tokens[definition.key] = styleTokens[definition.key]
         continue
       }
-      // second choice: global styleTokens
+      // third choice: global styleTokens
       if(globalTokens && typeof globalTokens[definition.key] !== "undefined") {
         tokens[definition.key] = globalTokens[definition.key]
         continue
       }
-      // third choice: default value
+      // fourth choice: default value
       tokens[definition.key] = definition.defaultValue
     }
     if (isRootStyling && tokens.scale) setRem(tokens.scale)

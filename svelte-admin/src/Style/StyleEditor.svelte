@@ -5,13 +5,17 @@
   import StyleTokensForm from '../InputModals/StyleTokensForm.svelte'
   import { docsGo } from '../docs.js'
   import { BundleServer } from '../BundleServer.js'
-  import { projectId, currentProject } from '../admin.js'
+  import { projectId, currentProject, previewOverrideStyleTokens } from '../admin.js'
 
   let originalStyleTokens = $currentProject?.uiState?.styleTokens
   let initialStyleTokens = $currentProject?.uiState?.styleTokens
   let modified = false
   let equalsDefaults = true
   let currentStyleTokens = originalStyleTokens ? {...originalStyleTokens} : {}
+
+  $: {
+    previewOverrideStyleTokens.set(currentStyleTokens)
+  }
 
   const save = async () => {
     console.log("save", currentStyleTokens)
@@ -119,6 +123,7 @@
         <h4 class="split-bottom-header">
           Component Preview
         </h4>
+        Note that <code>scale</code> will have no effect on this preview.<br/>
         <ComponentsShowcase {currentStyleTokens} />
       </div>
     </div>

@@ -38,6 +38,8 @@
   const isDesktop = writable(!bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches);
   setContext('isDesktop', isDesktop)
 
+  let overrideStyleTokens
+
   let retryCountdownCounter = 20
 
   const retryCountdown = () => {
@@ -181,6 +183,7 @@
 
 
   function receiveMessage(event) {
+    console.log('AppBaseAdvanced in iframe, receiveMessage', event?.data?.command, event?.data?.payload, event)
     switch (event.data?.command) {
       /* This doesn't work in an iframe because the history is mixed/merged with the parent's
        * it only happens to work if the last navigation took place within the iframe
@@ -191,6 +194,9 @@
       */
       case "clear_localStorage": localStorage.clear(); break;
       case "set_userAuth": if(event.data?.payload) { changeUser(event.data?.payload) }; break; // admin requests preview for a user
+      case "set_overrideStyleTokens":
+        overrideStyleTokens = event.data?.payload
+        break
     }
   }
 
@@ -221,6 +227,7 @@
   <Router>
     <Styling
       isRootStyling
+      {overrideStyleTokens}
       >
       <Overlay
         zIndex={0}

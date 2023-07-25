@@ -4,7 +4,7 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
   import { onMount } from 'svelte'
-  import { currentProject, secondaryTabsPreviewSize } from '../admin.js'
+  import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens } from '../admin.js'
 
   import { get } from 'svelte/store'
 
@@ -129,12 +129,23 @@
   }
 
   const ifrMsgCmd = commandOrObj => {
+    if (!iframeRef) {
+      console.warn('ifrMsgCmd issued, but no iframeRef', commandOrObj)
+      return
+    }
     if (typeof commandOrObj === 'string') {
       iframeRef.contentWindow.postMessage({ command: commandOrObj }, '*') 
     } else {
       iframeRef.contentWindow.postMessage(commandOrObj, '*') 
     }
   }
+
+  previewOverrideStyleTokens.subscribe(value => {
+    ifrMsgCmd({
+      command: 'set_overrideStyleTokens',
+      payload: value
+    })
+  })
 
   const reload = withReset => {
     if (withReset) {
