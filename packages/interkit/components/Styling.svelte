@@ -112,8 +112,6 @@
   --outset-x: ${tokens.outsetX};
   --outset-y: ${tokens.outsetY};
 
-  --border-radius-inner: 1rem;
-
   --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
   --border-radius-button: ${tokens.borderRadiusButton};
@@ -130,6 +128,13 @@
   /* derived defaults */
 
   /* --border-color: var(--color-text); deprecated? */
+
+  --border-radius-button-big: calc(var(--border-radius-button) * 1.5);
+  --border-radius-button-small: calc(var(--border-radius-button) * 0.75);
+  --border-radius-bar: calc(var(--border-radius) / 8);
+  --border-radius-navbutton: calc(var(--border-radius-button) / 2);
+  --border-radius-outer: calc(var(--border-radius) + 0.5rem);
+  --border-radius-mapmarker-inner: calc(var(--border-radius) / 3);
 
   --color-background-arviewer-modal: var(--color-background-button-primary);
   --color-background-mediafileimage-overlay: var(--color-background-button-primary);

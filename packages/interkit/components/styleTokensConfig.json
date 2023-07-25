@@ -185,7 +185,7 @@
     "key": "borderRadius",
     "type": "size",
     "category": "general",
-    "defaultValue": "24px",
+    "defaultValue": "16px",
     "help": "The default border radius used in many containers"
   },
   {
@@ -193,7 +193,7 @@
     "type": "size",
     "category": "general",
     "defaultValue": "16px",
-    "help": "The default border radius used in buttons and in elements inside a container"
+    "help": "The default border radius used in buttons and in elements inside a container. Should be equal to borderRadius for best fit."
   },
   {
     "key": "borderRadiusLabel",

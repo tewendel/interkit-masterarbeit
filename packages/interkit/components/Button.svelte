@@ -88,7 +88,7 @@
     padding: calc(var(--inset-y) * 0.125rem) calc(var(--inset-x) * 0.5rem);
     font: var(--font-button);
     letter-spacing: var(--letter-spacing-button);
-    border-radius: calc(var(--border-radius-button) * 0.75);
+    border-radius: var(--border-radius-button-small);
     gap: calc(var(--outset-x) * 0.25rem);
   }
 
@@ -113,7 +113,7 @@
     padding: calc(var(--inset-y) * 1rem) calc(var(--inset-x) * 1.5rem);
     font: var(--font-headline-5);
     letter-spacing: var(--letter-spacing-headline-5);
-    border-radius: calc(var(--border-radius-button) * 1.5);
+    border-radius: var(--border-radius-button-big);
     gap: calc(var(--outset-x) * 0.5rem);
   }
 

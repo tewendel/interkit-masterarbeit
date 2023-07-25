@@ -134,7 +134,6 @@
 <style>
 
   .image-slider-container {
-
     scroll-snap-type: x mandatory;	
 		display: flex;
 		-webkit-overflow-scrolling: touch;

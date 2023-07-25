@@ -84,7 +84,7 @@
   .icon-container {
     display: flex;
     justify-content: center;
-    border-radius: calc(var(--border-radius) / 2);
+    border-radius: var(--border-radius-navbutton);
     padding:
       calc(var(--inset-y) * 0.25rem)
       calc(var(--inset-x) * 1rem);

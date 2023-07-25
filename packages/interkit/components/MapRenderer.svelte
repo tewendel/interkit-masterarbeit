@@ -622,7 +622,6 @@
     width: 100%;
     height: 100%;
     flex: 1;
-    --border-radius-marker-inner: calc(var(--border-radius) / 3);
   }
 
   .map { 
@@ -674,8 +673,8 @@
     padding: 0.125rem;
     background-color: var(--color-background);
     border: var(--border-width) solid var(--color-border);
-    /* add padding here                                     v */
-    border-radius: calc(var(--border-radius-marker-inner) + 0.125rem);
+    /* add padding here                                        v */
+    border-radius: calc(var(--border-radius-mapmarker-inner) + 0.125rem);
     font: var(--font-caption-bold);
     letter-spacing: var(--letter-spacing-caption-bold);
     display: flex;
@@ -732,7 +731,7 @@
     width: 1.5rem;
     height: 1.5rem;
     object-fit: cover;
-    border-radius: var(--border-radius-marker-inner);
+    border-radius: var(--border-radius-mapmarker-inner);
   }
 
   :global(.marker-container:not(.has-mediafileicon) .marker-content.selected img) {

@@ -62,19 +62,19 @@ div.bar {
   width: 100%;
   height: 0.375rem;;
   position: relative;
-  border-radius: 0.125rem;
+  border-radius: var(--border-radius-bar);
   margin-top: 0.625rem;
 }
 
 div.bar::before {
   content: "";
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
   background-color: var(--color-text);
   height: 0.375rem;;
   width: calc(var(--value) * 100%);
-  border-radius: 0.125rem;
+  border-radius: var(--border-radius-bar);
 }
 
 </style>

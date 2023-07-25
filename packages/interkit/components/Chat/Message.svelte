@@ -166,6 +166,7 @@
             <ChatImage {message} />
           {/if}
         {:else if message?.payload?.type == "audio"}
+            <!-- TODO border-radiuses don't match -->
             <InlineAudioButton
               audioKeyDirect={message?.payload?.mediafileKey}
               autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}

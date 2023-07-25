@@ -78,6 +78,9 @@
 
   .container {
     --mapoverlay-top: calc(var(--outset-y) * 1rem + var(--inset-y) * 0.5rem + 2rem);
+    --mapoverlay-inset: calc(var(--inset) * 0.5rem);
+    /* will contain cards... */
+    --mapoverlay-border-radius: calc(var(--border-radius-outer) + var(--mapoverlay-inset));
     position: fixed;
     top: var(--mapoverlay-top);
     left: 0;
@@ -90,8 +93,8 @@
     border-radius:
       0
       0
-      calc(var(--border-radius) + var(--inset) * 0.5rem)
-      calc(var(--border-radius) + var(--inset) * 0.5rem);
+      var(--mapoverlay-border-radius)
+      var(--mapoverlay-border-radius);
     box-sizing: border-box;
     max-height: calc(100% - var(--mapoverlay-top) - 1rem);
     display: flex;
@@ -115,9 +118,7 @@
   .cards {
     flex-grow: 1;
     overflow-y: auto;
-    padding:
-      calc(var(--outset-y) * 0.5rem)
-      calc(var(--outset-x) * 0.5rem);
+    padding: var(--mapoverlay-inset);
     /*
     display: flex;
     flex-direction: column;

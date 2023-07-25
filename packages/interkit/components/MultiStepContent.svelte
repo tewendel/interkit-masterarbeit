@@ -120,11 +120,10 @@
   }
 
   .container {
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding:
-      calc(var(--outset-y) * 0.5rem)
-      calc(var(--outset-x) * 0.5rem);
+    --multistep-inset: calc(var(--inset) * 0.5rem);
+    border: var(--border-width) solid var(--color-border);
+    padding: var(--multistep-inset);
+    border-radius: calc(var(--border-radius) + var(--multistep-inset));
     display: flex;
     flex-direction: column;
     align-items: center;

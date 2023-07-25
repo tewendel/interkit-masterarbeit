@@ -14,6 +14,8 @@
 
   export let size
 
+  export let style
+
   const aspectRatioType = {
     large: "element",
     medium: "square",
@@ -35,7 +37,7 @@
 </script>
 
 
-  <div class="CenterModal container {size}">
+  <div class="CenterModal container {size}" {style}>
     <div class="CenterModal__Card modal-card">
       <div class="CenterModal__ImageHeader image-header">
         {#if imageKey}
@@ -45,7 +47,7 @@
                 objectFit="cover" 
                 fitDimension="both"   
                 mediafileRef={{type: "mediafile", value: imageKey}} 
-                style="border-radius: calc(var(--border-radius) - 8px);"
+                style="border-radius: var(--centermodal-border-radius-inner);"
               />
             </AspectRatio>
           </div>
@@ -63,7 +65,7 @@
       {#if description}<div class="description">{description}</div>{/if}
       <div class="CenterModal__Buttons buttons">
         <ButtonBar hideHelpText>
-          <slot name ="buttons"/>
+          <slot name="buttons"/>
         </ButtonBar>
       </div>
     </div>
@@ -73,6 +75,8 @@
 <style>
 
   .container {
+    --centermodal-border-radius-inner: var(--border-radius);
+    --centermodal-border-radius: calc(var(--centermodal-border-radius-inner) + var(--inset) * 0.5rem);
     height: 100%;
     width: 100%;
     display: flex;
@@ -88,7 +92,7 @@
     width: 100%;
     background-color: var(--color-background-highlight);
     padding: calc(var(--inset) * 0.5rem);
-    border-radius: var(--border-radius);
+    border-radius: var(--centermodal-border-radius);
     box-shadow: var(--box-shadow);
   }
 

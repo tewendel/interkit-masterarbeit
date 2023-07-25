@@ -33,11 +33,12 @@
 
   .container {
     width: 100%;
-    
   }
 
   .container.background {
-    padding: var(--distance-s) 0;
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      0;
   }
 
   .container.background {
@@ -54,7 +55,7 @@
   }
 
   .container.gaps .slider {
-    gap: var(--distance-s);
+    gap: calc(var(--outset-x) * 0.5rem)
   }
 
   .container:not(.continuous) .slider[data-slides-amount="1"] .slide {
@@ -86,11 +87,11 @@
   }
 
   .container.background .slide:first-child {
-    margin-left: var(--distance-s);
+    margin-left: calc(var(--outset-x) * 0.5rem)
   }
   
   .container.background .slide:last-child {
-    margin-right: var(--distance-s);
+    margin-right: calc(var(--outset-x) * 0.5rem)
   }
 
   .slide + .slide {

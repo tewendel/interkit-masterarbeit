@@ -26,8 +26,9 @@
     margin-right: calc(var(--outset-x) * 0.5rem);
   }
 
-  .container.normal, .container.strong {
-    border-radius: 0.5rem;
+  .container.normal,
+  .container.strong {
+    border-radius: var(--border-radius-label);
   }
 
   .container.normal {

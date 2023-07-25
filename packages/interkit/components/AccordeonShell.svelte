@@ -34,7 +34,7 @@
 <style>
 
   .root {
-    --border-radius-accordeonshell: calc(var(--border-radius) - 0.5rem);
+    --border-radius-accordeonshell: var(--border-radius);
   }
 
   .header {

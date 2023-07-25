@@ -48,7 +48,7 @@
       <MediaFileImage
         fitDimension="both"
         mediafileRef={channelImage}
-        style="border-radius: var(--border-radius-button);"
+        style="border-radius: var(--border-radius); /*foo*/"
         />
     </AspectRatio>
   </div>

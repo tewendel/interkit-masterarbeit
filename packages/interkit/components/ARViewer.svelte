@@ -140,6 +140,7 @@
         {headline}
         {prompt}
         imageKey={element?.imageFileRef?.value}
+        style="--centermodal-border-radius-inner: var(--border-radius-button-big);"
       >
         <svelte:fragment slot="buttons">
 

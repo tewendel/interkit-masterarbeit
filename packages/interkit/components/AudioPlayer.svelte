@@ -166,7 +166,7 @@
 
 {#if $audioPlayerStatus || $showDummyData}
 
-  <div class="AudioPlayer AudioPlayer--minimised minimised-container" class:active={$audioPlayerStatus.active}>
+  <div class="root AudioPlayer AudioPlayer--minimised minimised-container" class:active={$audioPlayerStatus.active}>
 
     <div class="minimised-controls">
 
@@ -225,7 +225,7 @@
 
 {#if $audioPlayerStatus && playerExpanded}
 
-  <Overlay classes="AudioPlayer AudioPlayer--expanded">
+  <Overlay classes="root AudioPlayer AudioPlayer--expanded">
 
     <div class="expanded-container">
 
@@ -310,6 +310,10 @@
 
 <style>
 
+  .root {
+    --audioplayer-progressbar-height: 0.25rem;
+  }
+
   .minimised-container {
     display: none;
     width: 100%;
@@ -341,6 +345,8 @@
     box-sizing: border-box;
     padding:
       calc(var(--outset-y) * 0.75rem)
+      calc(var(--outset-x) * 0.75rem)
+      calc(var(--outset-y) * 0.75rem + var(--audioplayer-progressbar-height))
       calc(var(--outset-x) * 0.75rem);
     font-size: 1.25rem;
     line-height: 1.5rem;
@@ -350,14 +356,14 @@
 
   .minimised-progress-container {
     width: 100%;
-    height: 0.25rem;
+    height: var(--audioplayer-progressbar-height);
     position: absolute;
     bottom: 0;
   }
 
   .minimised-progress-bar {
     background-color: var(--color-border-button-primary);
-    height: 0.25rem;
+    height: var(--audioplayer-progressbar-height);
   }
 
   .expanded-container {
@@ -445,6 +451,10 @@
     background: var(--color-border-button-primary);
     border-radius: 50%;
     border: none;
+  }
+
+  .close {
+    display: flex;
   }
 
 </style>

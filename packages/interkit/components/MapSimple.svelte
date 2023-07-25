@@ -361,7 +361,7 @@
   .map-component-container.inline,
   .map-component-container.inline :global(.Map__Container),
   .map-component-container.inline :global(.map) {
-    border-radius: var(--border-radius-button);
+    border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
   }
 
@@ -396,11 +396,10 @@
   }
 
   .marker_popup_background {
-    background-color: var(--color-background);
     position: relative;
+    /*background-color: var(--color-background);
     border-radius: var(--border-radius);
-    /* border: var(--border-width) solid var(--color-border); */
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);*/
     overflow: hidden;
   }
 

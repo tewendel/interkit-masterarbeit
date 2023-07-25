@@ -75,18 +75,19 @@
   .root {
     --usercard-gap: calc(var(--inset-x) * 1rem);
     --usercard-image-size: 6rem;
+    --usercard-inset: calc(var(--inset) * 0.5rem);
   }
 
   .frame {
     background-color: var(--color-background);
     padding:
-      calc(var(--inset-y) * 0.5rem)
+      var(--usercard-inset)
       calc(var(--inset-x) * 1rem)
-      calc(var(--inset-y) * 0.5rem)
-      calc(var(--inset-x) * 0.5rem);
+      var(--usercard-inset)
+      var(--usercard-inset);
     display: grid;
     grid-template-columns: calc(var(--usercard-image-size) + var(--usercard-gap)) 1fr 1fr;
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) + var(--usercard-inset));
     box-shadow: var(--box-shadow);
   }
   

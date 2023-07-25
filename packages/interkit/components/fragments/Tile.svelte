@@ -92,13 +92,15 @@
 <style>
 
   .container {
+    --tile-inset: calc(var(--inset) * 0.5rem);
+    --tile-border-radius: calc(var(--tile-inset) + var(--border-radius));
     width: 7.875rem;
     height: 7.875rem;
     position: relative;
     background-color: var(--color-background);
     display: flex;
     flex-direction: column;
-    padding: calc(var(--inset) * 0.5rem);
+    padding: var(--tile-inset);
     box-shadow: var(--box-shadow);
     box-sizing: border-box;
   }
@@ -117,7 +119,7 @@
   }
 
   .container.rounded {
-    border-radius: var(--border-radius);
+    border-radius: var(--tile-border-radius);
   }
 
   .image {

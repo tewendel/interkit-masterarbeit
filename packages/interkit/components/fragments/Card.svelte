@@ -39,8 +39,8 @@
     full: "",
     large: "border-radius: calc(var(--border-radius) * 1.5);",
     medium: "border-radius: calc(var(--border-radius) * 1.5);",
-    small: "border-radius: var(--border-radius-inner)",
-    "extra-small": "border-radius: var(--border-radius-inner)"
+    small: "border-radius: var(--border-radius)",
+    "extra-small": "border-radius: var(--border-radius)"
   }
 
   const headerVariant = {
@@ -158,17 +158,20 @@
   .container.medium,
   .container.small,
   .container.extra-small {
-    padding: calc(var(--inset) * 0.5rem);
+    --card-inset: calc(var(--inset) * 0.5rem);
+    padding: var(--card-inset);
   }
 
   .container.large,
   .container.medium {
-    border-radius: calc(var(--border-radius-inner) * 1.5 + var(--inset) * 0.5rem);
+    /* parallels imageStyleForVariant */
+    border-radius: calc(var(--border-radius) * 1.5 + var(--card-inset));
   }
 
   .container.small,
   .container.extra-small {
-    border-radius: calc(var(--border-radius-inner) * 1.0 + var(--inset) * 0.5rem);
+    /* parallels imageStyleForVariant */
+    border-radius: calc(var(--border-radius) + var(--card-inset));
   }
 
   .container.large .image {
@@ -201,7 +204,6 @@
     height: 3.5rem;
     margin-right: calc(var(--inset-x) * 0.25rem);
     flex-shrink: 0;
-    border-radius: var(--border-radius-inner);
   }
 
   .container.small .header,

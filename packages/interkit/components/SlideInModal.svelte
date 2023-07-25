@@ -38,6 +38,7 @@
 <style>
 
   .container {    
+    --border-radius-slideinmodal: var(--border-radius-outer);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,7 +48,7 @@
       calc(var(--outset-x) * 0.5rem);
     box-sizing: border-box;
     background-color: var(--color-background-highlight);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-radius: 0 0 var(--border-radius-slideinmodal) var(--border-radius-slideinmodal);
     box-shadow: var(--box-shadow);
   }
 
