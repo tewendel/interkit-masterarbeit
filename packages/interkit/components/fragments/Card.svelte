@@ -208,7 +208,7 @@
 
   .container.small .header,
   .container.extra-small .header {
-    padding-left: var(--distance-xs);
+    padding-left: calc(var(--inset-x) * 0.125rem);
     flex: 1;
     min-width: 0;
   }

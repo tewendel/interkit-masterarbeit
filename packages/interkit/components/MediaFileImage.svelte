@@ -109,7 +109,9 @@
   .fallback {
     background: var(--color-background-backdrop);
     color: var(--color-text);
-    padding: var(--distance-xl) var(--distance-m);
+    padding:
+      calc(var(--inset-y) * 3rem)
+      calc(var(--inset-x) * 1rem);
     font-style: italic;
   }
 

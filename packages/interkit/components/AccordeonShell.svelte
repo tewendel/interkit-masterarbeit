@@ -62,7 +62,7 @@
   }
 
   .toggle {
-    padding: var(--distance-xs);
+    padding: calc(var(--inset) * 0.125rem);
     border-radius: 0 var(--border-radius-accordeonshell) 0 0; 
   }
 

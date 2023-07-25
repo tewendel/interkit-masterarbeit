@@ -189,7 +189,7 @@
   }
 
   .button {
-    padding: var(--distance-s);
+    padding: calc(var(--inset) * 0.5rem);
     cursor: pointer;
     display: inline-flex;
   }
