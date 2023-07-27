@@ -129,7 +129,7 @@ but can also be influenced by more fine-grained factors:
    (Like the gap between items in a list.)
 
 The code usually follows this pattern:  
-(more on the amount of `rem`s below)
+(more on the values of `rem`s below)
 
 ```css
 .item {
@@ -153,7 +153,7 @@ The code usually follows this pattern:
 }
 ```
 
-### `rem` amounts, visual rhythm
+### `rem` values, visual rhythm
 
 To keep a harmonious visual appearance that is also easily extensible,
 we limit the distances to simple fractions and multiples of our base unit, the `rem`.
