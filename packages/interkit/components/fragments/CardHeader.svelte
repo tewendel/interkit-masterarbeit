@@ -55,7 +55,7 @@
   {/if}
 
   {#if label2 || subtitle2}
-    <div class="row-3 CardHeader__Row2">
+    <div class="row-3 CardHeader__Row3">
       {#if label2}<Label content={label2} variant="strong"/>{/if}
       {#if subtitle2}<span class="subtitle2 CardHeader__Subtitle2">{subtitle2}</span>{/if}
     </div>
