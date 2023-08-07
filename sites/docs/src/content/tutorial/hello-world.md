@@ -14,19 +14,23 @@ This template was created entirely using basic components in the **App** section
 
 - The **Spacing** component helps you add whitespace around content.
 
+- The **TextFormat** component allows you to select predefined text formats for your text.
+
 - Use **StaticText** to show text on the screen. Static means that the text should not change frequently.
 
 #### Next Steps
 
-- Modify the content by changing it in the StaticText blocks.
+- Modify the content by changing it in the StaticText block.
 
 - Change the spacing around the content by playing with the settings on the Spacing block.
 
-- Change the order of components by dragging.
+- Change the text format by playing with the settings in the TextFormat block.
 
 - Add new StaticText components from the component sidebar. 
 
 - Right click to duplicate and delete component blocks.
+
+- Change the order of components by dragging.
 
 - Remove the Spacing block and see what happens. Put it back.
 

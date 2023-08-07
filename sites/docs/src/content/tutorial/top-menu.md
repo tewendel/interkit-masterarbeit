@@ -12,8 +12,6 @@ The template was created entirely using components in the **App** section. You c
 
 - The **TopBarShell** lets you divide the screen into a main content part and a bar at the top.
 
-- The **Styling** component is used here to remove the border line that is normally shown by the TopBarShell.
-
 - The **HorizontalSpacer** allows you to divide the top bar into a central area and space for buttons on the left and right.
 
 - The **Route** and **RouteConnector** components allow you to define parts of the app that are shown depening on the user. Each route has a unique path that we use to identify which route should be shown. "/" is always the starting path of the app.
@@ -26,8 +24,9 @@ The template was created entirely using components in the **App** section. You c
 
 - Change the icon of the button used for opening the menu.
 
-- Change the content of the about and privacy sections.
-
 - Change the order in which the sections appear in the menu.
 
 - Add a new section by duplicating an existing RouteConnector, Route, and Button. You'll need to set a path for your route, and modify your new button to use that path. 
+
+- Add content to the about and privacy sections, for example by loading rich text from a database sheet using a DataCell
+

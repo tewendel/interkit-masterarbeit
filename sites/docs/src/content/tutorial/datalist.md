@@ -20,7 +20,7 @@ The template was created by using components in the **App** section, setting up 
 
 - The **DataList** component takes this data and displays it as a list. We can use **StaticText** to display a message when there is no data.
 
-- The **DataCardSmall** component determines how each entry in the list should be displayed.
+- The **DataCard** component determines how each entry in the list should be displayed.
 
 #### Next Steps
 
@@ -28,8 +28,9 @@ The template was created by using components in the **App** section, setting up 
 
 - Add a new cat by uploading a new image in the Media section, and creating a new row in the cats Sheet.
 
-- Change the subtitleTag "Cat" on the DataCardSmall component to something else.
+- Play with the different size options in the DataCard component
 
-- Hook up different columns in the DataCardSmall component to switch where the name and comment are displayed.
+- Try out the DummyData mode (options below the preview) to see the capabilities of the DataCard component.
 
-- Replace the **DataCardSmall** component in the list with **DataCardLarge** and configure it. You can use **Dummy Data** switch in the Preview settings below the preview window to show how the components displays data.
+- Hook up different columns in the DataCard component to switch where the name and comment are displayed.
+

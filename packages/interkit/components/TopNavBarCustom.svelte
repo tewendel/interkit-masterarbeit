@@ -65,12 +65,7 @@
   :global(.TopNavBarCustom__Top__Right > *:not(:first-child)) {
     margin-left: 8px;
   }
-
-  :global(.TopNavBarCustom__Top__Left span, .TopNavBarCustom__Top__Center span, .TopNavBarCustom__Top__Right span) {
-    font: var(--font-headline-1);
-    letter-spacing: var(--letter-spacing-headline-1);
-  }
-  
+ 
   .center {
     flex: 1;
     text-align: center;
