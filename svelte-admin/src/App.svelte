@@ -72,6 +72,12 @@
   // get commit hash from current image tag
   const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
   const commitHash = matches ? matches[0] : null
+
+  const rebuildProjectTemplates = () => { 
+    if(confirm("Build all project templates from source? (If projects of the same name exist, they will be skipped.)")) {
+      InterkitClient.call("project.rebuildTemplates")
+    } 
+  }
   
 </script>
 
@@ -111,9 +117,19 @@
         <HeaderPanelLinks>
           <HeaderPanelDivider>User {$userId}</HeaderPanelDivider>
           <div class="status">
-            {#if $userIsRole?.admin}<UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>{/if}
+            {#if $userIsRole?.admin}
+              <UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>
+            {/if}
           </div>
+          
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
+
+          {#if $userIsRole?.admin}
+            <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
+            <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
+          {/if}
+
+
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
           <div class="status">
             {#if $userId}
@@ -130,6 +146,7 @@
               </a>
             {/if}
           </div>
+
               
           
         </HeaderPanelLinks>

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "386570420185",
+    "project_id": "interkit-chat-test",
+    "storage_bucket": "interkit-chat-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386570420185:android:7623e901d589b1559f63c8",
+        "android_client_info": {
+          "package_name": "interkit.app.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386570420185-q1lim14imb41edv5miu22upvasb2c00c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6aLmzA6Vt_HJhWMLK-DnAWh2Hnc6icnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386570420185-q1lim14imb41edv5miu22upvasb2c00c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "386570420185-28fhuh2cvmillcpalb80hnhour6no4vi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "interkit.app.cs3"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
