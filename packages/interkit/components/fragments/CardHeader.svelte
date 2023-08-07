@@ -84,7 +84,7 @@
   }
 
   .card-header.full {
-    padding: 8px;
+    padding: var(--distance-s);
   }
 
   .row-1, .row-2, .row-3 {
@@ -95,12 +95,12 @@
   }
 
   .row-1 {
-    padding: 0px 16px 0px 0px;
+    padding: 0 var(--distance-m) 0 0;
   }
 
   .subtitle1 {
     font: var(--font-caption);
-    color: var(--color-text);
+    color: var(--color-text-soft);
   }
 
   .card-header .headline {
@@ -142,20 +142,20 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-left: 8px;
+    margin-left: var(--distance-s);
   }
 
   .row-3 {
-    padding: 4px 16px 4px 0px;
+    padding: var(--distance-xs) var(--distance-m) var(--distance-xs) 0;
   }
 
   .subtitle2 {
     font: var(--font-caption);
-    color: var(--color-text);
+    color: var(--color-text-soft);
   }
 
   .row-4 {
-    padding: 2px 16px 0px 0px;
+    padding: var(--distance-tiny) var(--distance-m) 0 0;
   }
 
   .subtitle3 {
@@ -166,8 +166,8 @@
   .description {
     font: var(--font-subtitle-2);
     letter-spacing: var(--letter-spacing-subtitle-2);
-    color: var(--color-text);
-    padding: 4px 16px 2px 0px;
+    color: var(--color-text-soft);
+    padding: var(--distance-xs) var(--distance-m) var(--distance-tiny) 0;
   }
 
   

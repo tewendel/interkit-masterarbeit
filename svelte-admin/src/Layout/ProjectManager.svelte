@@ -53,7 +53,9 @@
     currentProject,
     secondaryTabIndex,
     secondaryTabSpecialDoc,
-    secondaryTabPreviewProjectId
+    secondaryTabPreviewProjectId,
+    secondaryTabsSizes,
+    secondaryTabsSize
   } from '../admin.js'
 
   import { docsGo } from '../docs.js'
@@ -233,7 +235,14 @@
 <Grid style="padding:0; height:100%; overflow-x: hidden; overflow-y: auto; max-width: none;">
   <Row>
     <Column lg="{16}">
-      <div class="__ProjectWorkspace panes">
+      <div
+        class="__ProjectWorkspace panes"
+        style={
+          `--left-pane-size: ${(1 - secondaryTabsSizes[$secondaryTabsSize]) * 100}%;` +
+          `--right-pane-size: ${secondaryTabsSizes[$secondaryTabsSize] * 100}%;`
+        }
+        data-foo={JSON.stringify(secondaryTabsSizes)}
+        >
         <div class={`left-pane`} class:left-pane--has-current-project={!!currentProjectId}>
           {#if currentProjectId}
             {#if $currentProject}
@@ -671,7 +680,7 @@
   .left-pane {
     flex-grow: 1;
     flex-shrink: 0;
-    width: 66.6%;
+    width: var(--left-pane-size);
     height: 100%;
     /*overflow-x: auto;*/
     overflow-y: hidden; /* avoid stray vertical scrollbar */

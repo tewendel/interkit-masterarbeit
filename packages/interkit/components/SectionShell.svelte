@@ -11,8 +11,8 @@
 <style>
   .container {
     background-color: var(--color-background-backdrop);
-    padding: 8px;
-    gap: 8px;
+    padding: var(--distance-s);
+    gap: var(--distance-s);
     display: flex;
     flex-direction: column;
   }

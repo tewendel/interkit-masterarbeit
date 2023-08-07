@@ -65,7 +65,9 @@
   }
 
   span.button {
+    /* FIXME? doesn't exist any more
     font-size: var(--font-size-buttons);
+    */
   }
 
   /* flex */
@@ -84,6 +86,7 @@
     min-height: 32px;
     padding: var(--distance-tiny) var(--distance-s);
     font: var(--font-button);
+    letter-spacing: var(--letter-spacing-button);
     border-radius: calc(var(--border-radius-button) * 0.75);
     gap: 4px;
   }
@@ -96,6 +99,7 @@
     min-height: 40px;
     padding: var(--distance-tiny) var(--distance-m);
     font: var(--font-button);
+    letter-spacing: var(--letter-spacing-button);
     gap: 4px;
   }
 
@@ -105,8 +109,9 @@
 
   .button.large {
     min-height: 56px;
-    padding: var(--distance-m) var(--distance-sm);
+    padding: var(--distance-m) var(--distance-m-l);
     font: var(--font-headline-5);
+    letter-spacing: var(--letter-spacing-headline-5);
     border-radius: calc(var(--border-radius-button) * 1.5);
     gap: 8px;
   }

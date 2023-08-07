@@ -112,12 +112,15 @@
   <div 
     class="Message Message--{message.payload?.type} message message--{message.payload.type}"
     class:message__user="{isByUser}"
+    class:message__other="{!isByUser}"
     class:Message--user="{isByUser}"
+    class:Message--other="{!isByUser}"
     class:message__lastFromSender={lastFromSender}
     class:Message--lastFromSender={lastFromSender}
     class:contain={message?.payload?.options?.objectFit === "contain"}
   >
     <Bubble
+      messageType={message.payload?.type}
       type = { isByUser ? "me" : "other" }
       showHandle = { lastFromSender && !["choice", "requestLocation"].includes(message?.payload?.type) }
       showSide = { !["choice", "requestLocation", "audio", "video", "image"].includes(message?.payload?.type) }
@@ -224,7 +227,7 @@
         {/if}
       </div>
     </Bubble>
-    <MessageDate {message} {previousMessage} {lastFromSender} />
+    <MessageDate {message} {previousMessage} {lastFromSender} {isByUser} />
     {#if showOptions}
       {#if isReportable}
         <div
@@ -250,18 +253,29 @@
     font: var(--font-body-1);
     position: relative;
     margin-bottom: var(--distance-s);
-    --chat-image-height: 200px;
+    --chat-image-height: calc(var(--distance-base) * 25); /* 200 px */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message__other {
+    align-items: flex-start;
+  }
+
+  .message__user {
+    align-items: flex-end;
   }
 
   .message-label {
     font: var(--font-caption-bold);
-    margin-bottom: var(--distance-xs);
+    margin-bottom: var(--distance-s);
   }
 
   .system {
     text-align: center;
     font: var(--font-caption-bold);
     padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
+    text-transform: uppercase;
   }
 
   .system-image {
@@ -287,10 +301,21 @@
     height: 34px;
   }
 
-  .message:not(.message--image):not(.message--video) .message__contents {
+  .message .message__contents {
+    padding: calc(var(--distance-xs) + var(--distance-s)) var(--distance-m);
+  }
+
+  .message--image .message__contents,
+  .message--video .message__contents {
+    padding: 0;
+  }
+
+  .message--choice .message__contents,
+  .message--requestLocation .message__contents {
     padding: var(--distance-s);
   }
 
+  /* FIXME classes look wrong */
   .message--choice, .message__user,
   .message--requestLocation, .message__user {
     text-align: left;

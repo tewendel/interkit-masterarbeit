@@ -3,7 +3,7 @@
   import AspectRatio from '../AspectRatio.svelte'
   import MediaFileImage from '../MediaFileImage.svelte'
   import CardHeader from "./CardHeader.svelte"
-  import { getShowDummyDataStore } from '../dummyDataHelpers.js'  
+  import { getShowDummyDataStore, dummyLorem1Sentence } from '../dummyDataHelpers.js'  
 
   export let mainClass = ''
   
@@ -102,13 +102,22 @@
       <slot name="content"/>
     </div> 
   {/if}
+  {#if !DataCardContext?.slots?.content && $showDummyData}
+    <div class="content-wrapper Card__content">
+      Content: {dummyLorem1Sentence}
+    </div> 
+  {/if}
 </div>
 
 <style>
   
   .container {
-    background-color: #FFFFFF;
+    background-color: var(--color-background);
     text-align: left;
+  }
+
+  .container:not(:last-child) {
+    margin-bottom: var(--distance-s);
   }
 
   .container:not(.full) {
@@ -126,28 +135,28 @@
   }
   
   .container.hoverPointer:hover {
-    cursor:pointer;
+    cursor: pointer;
   }
 
   .container.full {
-    padding-bottom: 8px;
+    padding-bottom: var(--distance-s);
   }
 
   .container.full .header {
-    padding: 12px 8px 0px 8px;
+    padding: var(--distance-s-m) var(--distance-s) 0 var(--distance-s);
   }
 
   .container.full .content-wrapper {
-    padding: 0px 16px 16px 16px;
+    padding: 0 var(--distance-m) var(--distance-m) var(--distance-m);
   }
 
   .container.large, .container.medium, .container.small, .container.extra-small {
-    padding: 8px;
-    border-radius: 24px;
+    padding: var(--distance-s);
+    border-radius: var(--distance-m-l);
   }
 
   .container.large .image {
-    margin-bottom: 8px;
+    margin-bottom: var(--distance-s);
   }
 
   .container.medium .header-wrapper,
@@ -158,34 +167,36 @@
   }
 
   .container.medium .image {
-    width: 96px;
-    height: 96px;
-    margin-right: 4px;
+    width: calc(var(--distance-base) * 12);
+    height: calc(var(--distance-base) * 12);
+    margin-right: var(--distance-xs);
     flex-shrink: 0;
   }
 
   .container.medium .header {
-    padding-left: 4px;
+    padding-left: var(--distance-xs);
     flex: 1;
     min-width: 0;
   }
 
   .container.small .image, .container.extra-small .image {
-    width: 56px;
-    height: 56px;
-    margin-right: 4px;
+    width: calc(var(--distance-base) * 7);
+    height: calc(var(--distance-base) * 7);
+    margin-right: var(--distance-xs);
     flex-shrink: 0;
-    border-radius: 16px;
+    border-radius: var(--distance-m);
   }
 
   .container.small .header, .container.extra-small .header {
-    padding-left: 4px;
+    padding-left: var(--distance-xs);
     flex: 1;
     min-width: 0;
   }
 
-
-  
-
+  .content-wrapper {
+    font: var(--font-content-body-2);
+    margin: var(--distance-s) 0 0 0;
+    padding: 0 var(--distance-s) var(--distance-s) var(--distance-s);
+  }
 
 </style>

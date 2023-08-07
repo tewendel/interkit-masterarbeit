@@ -54,7 +54,7 @@
 <div class="MapLayerOverlay container {mainClass}">
 
   <div class="MapLayerOverlay__Info info">
-    <Icon type="Thin-Layer"/>
+    <Icon type="Full-Layer"/>
     <span>{layerSelectPrompt}</span>
   </div>
 
@@ -86,6 +86,8 @@
     padding: var(--distance-s);
     background-color: var(--color-background-backdrop);
     border-radius: 0px 0px 32px 32px; 
+    max-height: calc(100% - 56px); /* 56px == LayoutShell .top-bar height */
+    overflow-y: auto;
   }
 
   .info {
@@ -93,11 +95,20 @@
     align-items: center;
     gap: 16px;
     margin-bottom: var(--distance-s);
+    padding: 0 var(--distance-s);
   }
 
   .info span {
     font: var(--font-subtitle-1);
     letter-spacing: var(--letter-spacing-subtitle-1);
+  }
+
+  .cards {
+    /*
+    display: flex;
+    flex-direction: column;
+    gap: var(--distance-s);
+    */
   }
     
 </style>

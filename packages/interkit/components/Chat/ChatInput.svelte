@@ -72,7 +72,7 @@
 </div>
 
 {#if showCamera}
-  <OverlayFull closeMethod={closeCamera}>
+  <OverlayFull closeMethod={closeCamera} classes="ChatInput__OverlayFull">
     <div class="ChatInput__Camera camera-container">
       <MediaRecorder
         mode="image"
@@ -94,18 +94,19 @@
   }
   .input {
     flex: 1;
+    font: var(--font-body-1);
     padding: var(--distance-s);
     border-radius: var(--border-radius);
-    border: 1px solid var(--color-border);
+    border: var(--border-width) solid var(--color-border);
     background-color: var(--color-background);
-    margin-right: var(--distance-s);
+    margin-right: var(--distance-m);
     min-width: 0; /* makes flex-shrink work for <input> https://stackoverflow.com/a/42421490/629238 */
   }
   .input:focus {
     border-color: var(--color-text);
   }
   .left-button {
-    margin-right: var(--distance-s);
+    margin-right: var(--distance-m);
   }
   .camera-container {
     height: 100%;

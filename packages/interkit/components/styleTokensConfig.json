@@ -164,14 +164,14 @@
     "key": "colorBackgroundChatMe",
     "type": "color",
     "category": "chat",
-    "defaultValue": "#E5E5E5",
+    "defaultValue": "#FFFFFF",
     "help": "The color for the background of a chat message sent by the current user"
   },
   {
     "key": "colorBackgroundChatOther",
     "type": "color",
     "category": "chat",
-    "defaultValue": "#000000",
+    "defaultValue": "#F2F2F2",
     "help": "The color for the background of a chat message sent by another user"
   },
   {
@@ -301,14 +301,7 @@
     "help": "text style for interface body 2"
   },
   {
-    "key": "fontSubtitle1",
-    "type": "font",
-    "category": "text styles",
-    "defaultValue": "500 14px/18px var(--font-family-interface)",
-    "help": "text style for interface Subtitle 1"
-  },
-  {
-    "key": "fontSubtitle1",
+    "key": "fontSubtitle2",
     "type": "font",
     "category": "text styles",
     "defaultValue": "500 14px/18px var(--font-family-interface)",

@@ -170,12 +170,12 @@
   }
 
   h1 {
-    font-size: var(--font-size-headline-1);
+    font: var(--font-headline-1);
     margin-bottom: 16px;
   }
 
   p {
-    font-size: var(--font-size-regular);
+    font: var(--font-regular);
     line-height: var(--line-height-regular);
     margin-bottom: 16px;
     padding-left: 8px;

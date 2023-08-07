@@ -332,7 +332,9 @@
     display: flex;
     flex-direction: row;
     min-width: 40px;
+    /* FIXME? doesn't exist any more
     font-size: var(--font-size-regular);
+    */
   }
 
   /* need to be very cautious for iOS */
@@ -344,7 +346,8 @@
   }
 
   :global(.marker-content-label) {
-    font-weight: bold;
+    font: var(--font-caption-bold);
+    letter-spacing: var(--letter-spacing-caption-bold);
   }
 
   :global(div.marker-container.selected) {
