@@ -1,0 +1,15 @@
+{
+  "background_color": "black",
+  "description": "Interkit",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Interkit",
+  "short_name": "Interkit",
+  "start_url": "."
+}

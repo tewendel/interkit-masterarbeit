@@ -1,0 +1,14 @@
+name: ProjectComponentExample
+title: ProjectComponentExample
+colour: 100
+fields:
+  - type: string
+    name: text
+  - type: options
+    name: options
+    options:
+      - yellow
+      - red
+  - type: slot
+    name: default
+toolboxCategory: Project
