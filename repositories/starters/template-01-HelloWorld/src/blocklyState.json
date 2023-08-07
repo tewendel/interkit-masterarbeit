@@ -1,0 +1,164 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 162,
+        "y": 104,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "|%`~:qAzRqH+;hqhp(e3",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "m"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "m"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "m"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "m"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "TextFormat",
+                    "id": "ug!9(d%:#%diym]K,ymo",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "options",
+                            "name": "interfaceFormat",
+                            "options": [
+                              "none",
+                              "headline-1",
+                              "headline-2",
+                              "headline-3",
+                              "headline-4",
+                              "headline-5",
+                              "body-1",
+                              "body-2",
+                              "subtitle-1",
+                              "subtitle-2",
+                              "button",
+                              "caption",
+                              "caption-bold",
+                              "overline"
+                            ],
+                            "defaultValue": "none",
+                            "help": "Use these formats to select typography for parts of the interface.",
+                            "id": "interfaceFormat"
+                          },
+                          {
+                            "type": "options",
+                            "name": "contentFormat",
+                            "options": [
+                              "none",
+                              "headline-1",
+                              "headline-2",
+                              "headline-3",
+                              "headline-4",
+                              "headline-5",
+                              "body-1",
+                              "body-2"
+                            ],
+                            "defaultValue": "none",
+                            "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                            "id": "contentFormat",
+                            "value": "headline-1"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "@4W.$?xEjcU(4#wPM7)z",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "Hello, world!"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
