@@ -44,3 +44,6 @@ export const currentProject = derived(
 
 export const secondaryTabPreviewProjectId = writable()
 
+export const projectManagerSortKey = writable('createdAt')
+export const projectManagerSortDirection = writable('descending')
+export const projectManagerPage = writable(1)
