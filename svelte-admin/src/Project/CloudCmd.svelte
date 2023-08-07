@@ -13,7 +13,7 @@
   })
 
   const localCd = `cd ../repositories/projects/${projectId}`
-  const dockerCd = `/var/repositories/projects/${projectId}`
+  const dockerCd = `cd /var/repositories/projects/${projectId}`
 
 </script>
 
