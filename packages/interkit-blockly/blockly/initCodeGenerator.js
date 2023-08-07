@@ -6,7 +6,8 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   /* helper functions */
 
   const escapeCurlyBrackets = (string) => {
-    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125;")
+    if(typeof string != "string") return "";
+    return string?.replaceAll("{", "&#123;")?.replaceAll("}", "&#125;")
   }
 
   const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
