@@ -1,0 +1,51 @@
+name: VideoButton
+fields:
+  - type: extraProps
+    props:
+    - name: videoColumn
+      type: sheetColumn
+      columnType: mediaFile
+      defaultValue: "elements/video"
+      help: "The column on the element context (for example DataLoaderSingle) containing the video file"
+    - name: mediafileKey
+      type: string
+      help: "Optionally use the key of a media file directly"
+    - name: controls
+      type: options
+      options:
+        - interkit
+        - native
+        - none
+    - name: loop
+      type: checkbox
+      defaultValue: false
+    - name: buttonText
+      type: string
+    - name: buttonType
+      type: options
+      options:
+        - primary 
+        - secondary
+        - ghost 
+        - link 
+        - danger
+      defaultValue: primary
+      help: "Appearance of the button."
+    - name: buttonSize
+      type: options
+      options: 
+        - small
+        - medium
+        - large
+      defaultValue: medium
+      help: "Large, medium or small."
+    - name: buttonFlex
+      type: options
+      options: 
+        - normal
+        - fill
+      defaultValue: normal
+      help: "If used in the slot of a flex-supported parent component, determines how the available space is used."
+  - type: slot
+    name: buttonIcon
+toolboxCategory: Buttons
