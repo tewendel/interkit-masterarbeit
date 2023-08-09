@@ -57,6 +57,7 @@
   .center {
     flex: 1;
     text-align: center;
+    justify-content: center;
   }
 
   .center + .right {
@@ -65,7 +66,7 @@
 
   .right {
     text-align: right;
-
+    justify-content: flex-end;
   }
 
 
