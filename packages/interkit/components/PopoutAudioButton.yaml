@@ -2,8 +2,13 @@ name: PopoutAudioButton
 toolboxCategory: Buttons
 colour: 300
 fields: 
-  - name: audioColumn
-    type: sheetColumn
-    defaultValue: "elements/audio"
+  - type: extraProps
+    props:
+    - name: audioColumn
+      type: sheetColumn
+      defaultValue: "elements/audio"
+    - name: buttonOptions
+      type: buttonOptions
+
   
   

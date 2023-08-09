@@ -14,11 +14,7 @@
   export let mediafileKey
   export let controls = "none" // interkit | native | none
   export let loop = false
-
-  export let buttonText
-  export let buttonType
-  export let buttonSize
-  export let buttonFlex
+  export let buttonOptions
   
   const elementContext = getContext("element")
   if(!elementContext) {
@@ -73,6 +69,13 @@
   onDestroy(()=>{
     clearTimeout(hideControlsTimeout)
   })
+
+  // currentTime binding is buggy in svelte, using dom is more reliable
+  // see https://svelte.dev/repl/3470317362744bf296ae78b688445448?version=3.9.2
+  const setTimeDom = (seconds) => {
+		let element = document.getElementById('videoButtonVideoId')
+		element.currentTime = seconds
+	}
   
   const toggleControls = () => {
     if(controls == "interkit")
@@ -81,11 +84,13 @@
   }
   
   const seek = (seconds) => {
-    videoPlayerCurrentTime += seconds
+    //videoPlayerCurrentTime += seconds
+    setTimeDom(videoPlayerCurrentTime += seconds)
     resetControlsTimeout()
   }
   const seekTo = (seconds) => {
-    videoPlayerCurrentTime = seconds
+    //videoPlayerCurrentTime = seconds
+    setTimeDom(seconds)
     resetControlsTimeout()
   }
   const togglePlay = () => {    
@@ -107,13 +112,14 @@
   <Overlay classes="VideoPlayer" customStyle="background-color: #000;">
 
     <div class="VideoPlayer__Close close">
-      <Button size="small" on:click={closePlayer}>
+      <Button size="small" type="secondary" on:click={closePlayer}>
         <Icon type="Full-Close"/>
       </Button>
     </div>
 
     <!-- svelte-ignore a11y-media-has-caption -->
     <video 
+      id="videoButtonVideoId"
       autoplay 
       controls={controls == "native"} 
       {loop} 
@@ -191,8 +197,8 @@
 
 {:else}
 
-  <Button text={buttonText} type={buttonType} size={buttonSize} flex={buttonFlex} on:click={openPlayer} mainClass="PopoutAudioButton">
-      <slot name="buttonIcon"/>
+  <Button {buttonOptions} on:click={openPlayer} mainClass="VideoButton">
+      <slot name="Icon"/>
   </Button>
 
 {/if}

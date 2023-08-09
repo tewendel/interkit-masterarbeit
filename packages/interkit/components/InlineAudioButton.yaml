@@ -1,4 +1,5 @@
 name: InlineAudioButton
+colour: 300
 fields:
   - name: audioColumn
     type: sheetColumn

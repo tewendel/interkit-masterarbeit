@@ -79,9 +79,8 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     }
 
     if (verbose) console.log('#CG# extraProp', { value, ...prop })
-    console.log(prop, value)
-
-    if(prop.type == "effect") {
+    
+    if(prop.type == "effect" || prop.type == "buttonOptions") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
     }
 
@@ -182,7 +181,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
           if (verbose) console.log('#CG# extraProps', field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
-            console.log("extraProp", extraProp(block, prop));
+            //console.log("extraProp", extraProp(block, prop));
           }
 
         }

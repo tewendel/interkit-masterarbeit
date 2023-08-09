@@ -1,4 +1,5 @@
 name: VideoButton
+colour: 300
 fields:
   - type: extraProps
     props:
@@ -16,36 +17,12 @@ fields:
         - interkit
         - native
         - none
+      defaultValue: interkit
     - name: loop
       type: checkbox
       defaultValue: false
-    - name: buttonText
-      type: string
-    - name: buttonType
-      type: options
-      options:
-        - primary 
-        - secondary
-        - ghost 
-        - link 
-        - danger
-      defaultValue: primary
-      help: "Appearance of the button."
-    - name: buttonSize
-      type: options
-      options: 
-        - small
-        - medium
-        - large
-      defaultValue: medium
-      help: "Large, medium or small."
-    - name: buttonFlex
-      type: options
-      options: 
-        - normal
-        - fill
-      defaultValue: normal
-      help: "If used in the slot of a flex-supported parent component, determines how the available space is used."
+    - name: buttonOptions
+      type: buttonOptions
   - type: slot
-    name: buttonIcon
+    name: Icon
 toolboxCategory: Buttons

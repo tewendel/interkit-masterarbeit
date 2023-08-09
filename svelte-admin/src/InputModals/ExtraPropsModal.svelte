@@ -15,6 +15,7 @@
   import SheetColumnSelectForm from './SheetColumnSelectForm.svelte'
   import SheetIdSelectForm from './SheetIdSelectForm.svelte'
   import EffectForm from './EffectForm.svelte';
+  import ButtonOptionsForm from './ButtonOptionsForm.svelte';
   import StyleTokensForm from './StyleTokensForm.svelte';
 
   export let value = [] // array of objects with name, type, defaultValue, value, help
@@ -107,6 +108,9 @@
             {/if}
             {#if row.type == "effect"}
               <EffectForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
+            {/if}
+            {#if row.type == "buttonOptions"}
+              <ButtonOptionsForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)}/>
             {/if}
             {#if row.type == "styleTokens"}
               <StyleTokensForm value={getValue(row)} on:update={(e)=>updateCell(row, e.detail)} cloneInputObject/>

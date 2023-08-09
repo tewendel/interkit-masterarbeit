@@ -9,12 +9,12 @@ fields:
     - name: type
       type: options
       options:
-        - primary 
         - secondary
+        - primary 
         - ghost 
         - link 
         - danger
-      defaultValue: primary
+      defaultValue: secondary
       help: "Appearance of the button."
     - name: size
       type: options
@@ -22,7 +22,7 @@ fields:
         - small
         - medium
         - large
-      defaultValue: medium
+      defaultValue: small
       help: "Large, medium or small."
     - name: flex
       type: options
