@@ -38,9 +38,9 @@
 {:else}
   <Button {buttonOptions} on:click={play} mainClass="PopoutAudioButton">
     {#if playing}
-      <Icon inverse={!buttonOptions || buttonOptions?.type == "primary"} type={ paused ? "Thin-Play" : "Thin-Pause"} />
+      <Icon inverse={buttonOptions?.type == "primary"} type={ paused ? "Thin-Play" : "Thin-Pause"} />
     {:else}
-      <Icon inverse={!buttonOptions || buttonOptions?.type == "primary"} type="Thin-Play" />
+      <Icon inverse={buttonOptions?.type == "primary"} type="Thin-Play" />
       &thinsp;
     {/if}
   </Button>
