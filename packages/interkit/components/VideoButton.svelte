@@ -1,6 +1,6 @@
 <script>
 
-  import { getContext, onMount, onDestroy } from 'svelte'
+  import { getContext, onMount, onDestroy, tick } from 'svelte'
   import { fly } from 'svelte/transition'
   import Button from "./Button.svelte"
   import Icon from './Icon.svelte';
@@ -35,20 +35,20 @@
 
   let playerOpen = false
   let showControls = true
+  let rangeSliderValue
+  let rangeSliderDragging
+  let videoPlayerDuration
+  let videoPlayerCurrentTime = 0
+  let videoPlayerLoading
+  let videoPlayerPaused
 
   const openPlayer = () => {
     playerOpen = true
     showControls = true
+    videoPlayerCurrentTime = 0
   }
   const closePlayer = () => playerOpen = false
-
-  let rangeSliderValue;
-  let rangeSliderDragging;
-  let videoPlayerDuration;
-  let videoPlayerCurrentTime;
-  let videoPlayerLoading;
-  let videoPlayerPaused;
-
+  
   const format = (seconds) => {
     if (isNaN(seconds)) return '...';
     const minutes = Math.floor(seconds / 60);
@@ -129,12 +129,12 @@
 
     {#if controls == "interkit" && showControls}
 
-    <div class="expanded-bottom-bar AudioPlayer__BottomBar" out:fly|local={{ y: 200, duration: 500 }}>
+    <div class="expanded-bottom-bar VideoPlayer__BottomBar" out:fly|local={{ y: 200, duration: 500 }}>
 
-      <div class="expanded-range-slider AudioPlayer__Range expanded">
+      <div class="expanded-range-slider VideoPlayer__Range expanded">
         <input 
           type="range" 
-          class="seekPositionRangeSlider AudioPlayer__Range__Input" 
+          class="seekPositionRangeSlider VideoPlayer__Range__Input" 
           name="seekPosition"
           min="0" 
           step="0.05"
@@ -148,22 +148,22 @@
         >
       </div>
 
-      <div class="expanded-time AudioPlayer__Time expanded">
+      <div class="expanded-time VideoPlayer__Time expanded">
         <span class="currentTime">{format(videoPlayerCurrentTime)}</span>
         <span class="duration">{format(videoPlayerDuration)}</span> 
       </div>
 
-      <div class="expanded-controls AudioPlayer__Controls">
+      <div class="expanded-controls VideoPlayer__Controls">
 
-        <div class="center-controls AudioPlayer__CenterControls">
+        <div class="center-controls VideoPlayer__CenterControls">
 
-          <div class="AudioPlayer__PlayButton seekbutton">
+          <div class="VideoPlayer__PlayButton seekbutton">
             <Button dummyNoText size="small" type="link" on:click={()=>{seek(-30)}}>
               <Icon type="Thin-Replay-30" />
             </Button>
           </div>
 
-          <div class="AudioPlayer__PlayButton playbutton">
+          <div class="VideoPlayer__PlayButton playbutton">
             {#if videoPlayerLoading }
               <Loading inverse/>
             {:else}
@@ -173,7 +173,7 @@
             {/if}
           </div>
 
-          <div class="AudioPlayer__PlayButton seekbutton">
+          <div class="VideoPlayer__PlayButton seekbutton">
             <Button dummyNoText size="small" type="link" on:click={()=>{seek(15)}}>
               <Icon type={"Thin-Forward-15"} />
             </Button>
