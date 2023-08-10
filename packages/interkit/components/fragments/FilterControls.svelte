@@ -34,10 +34,6 @@
       {#if filter.state == "enabled"}
         <FilterSegment text={filter.text} on:click={()=>{setFilterState(filter, "selected")}}/>
       {/if}
-    {/each}
-  </div>
-  <div class="filter-segments FilterControls__Segments">
-    {#each filters as filter}
       {#if filter.state == "selected"}
         <FilterSegment state="selected" text={filter.text} on:click={()=>{setFilterState(filter, "enabled")}}/>
       {/if}
