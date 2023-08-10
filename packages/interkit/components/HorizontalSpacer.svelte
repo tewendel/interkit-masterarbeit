@@ -55,7 +55,7 @@
   }
   
   .center {
-    flex: 1;
+    flex: 2;
     text-align: center;
     justify-content: center;
   }

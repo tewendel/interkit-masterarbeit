@@ -333,6 +333,10 @@
 
   }
 
+  h4:focus {
+    outline: none;
+  }
+
   .minimised-controls {
     display: flex;
     flex-direction: row;
