@@ -37,10 +37,10 @@
 
   const imageStyleForVariant = {
     full: "",
-    large: "border-radius: var(--border-radius);",
-    medium: "border-radius: var(--border-radius);",
-    small: "border-radius: var(--border-radius-button)",
-    "extra-small": "border-radius: var(--border-radius-button)"
+    large: "border-radius: calc(var(--border-radius) * 1.5);",
+    medium: "border-radius: calc(var(--border-radius) * 1.5);",
+    small: "border-radius: var(--border-radius)",
+    "extra-small": "border-radius: var(--border-radius)"
   }
 
   const headerVariant = {
@@ -117,7 +117,7 @@
   }
 
   .container:not(:last-child) {
-    margin-bottom: var(--distance-s);
+    margin-bottom: calc(var(--outset-y) * 0.5rem);
   }
 
   .container:not(.full) {
@@ -139,24 +139,43 @@
   }
 
   .container.full {
-    padding-bottom: var(--distance-s);
+    padding-bottom: calc(var(--inset-y) * 0.5rem);
   }
 
   .container.full .header {
-    padding: var(--distance-s-m) var(--distance-s) 0 var(--distance-s);
+    padding: calc(var(--inset-y) * 0.75rem) calc(var(--inset-x) * 0.5rem) 0 calc(var(--inset-x) * 0.5rem);
   }
 
   .container.full .content-wrapper {
-    padding: 0 var(--distance-m) var(--distance-m) var(--distance-m);
+    padding:
+      0
+      calc(var(--inset-x) * 1rem)
+      calc(var(--inset-y) * 1rem)
+      calc(var(--inset-x) * 1rem);
   }
 
-  .container.large, .container.medium, .container.small, .container.extra-small {
-    padding: var(--distance-s);
-    border-radius: var(--distance-m-l);
+  .container.large,
+  .container.medium,
+  .container.small,
+  .container.extra-small {
+    --card-inset: calc(var(--inset) * 0.5rem);
+    padding: var(--card-inset);
+  }
+
+  .container.large,
+  .container.medium {
+    /* parallels imageStyleForVariant */
+    border-radius: calc(var(--border-radius) * 1.5 + var(--card-inset));
+  }
+
+  .container.small,
+  .container.extra-small {
+    /* parallels imageStyleForVariant */
+    border-radius: calc(var(--border-radius) + var(--card-inset));
   }
 
   .container.large .image {
-    margin-bottom: var(--distance-s);
+    margin-bottom: calc(var(--inset-y) * 0.5rem);
   }
 
   .container.medium .header-wrapper,
@@ -167,36 +186,41 @@
   }
 
   .container.medium .image {
-    width: calc(var(--distance-base) * 12);
-    height: calc(var(--distance-base) * 12);
-    margin-right: var(--distance-xs);
+    width: 6rem;
+    height: 6rem;
+    margin-right: calc(var(--inset-x) * 0.25rem);
     flex-shrink: 0;
   }
 
   .container.medium .header {
-    padding-left: var(--distance-xs);
+    padding-right: calc(var(--inset-x) * 0.25rem);
     flex: 1;
     min-width: 0;
   }
 
-  .container.small .image, .container.extra-small .image {
-    width: calc(var(--distance-base) * 7);
-    height: calc(var(--distance-base) * 7);
-    margin-right: var(--distance-xs);
+  .container.small .image,
+  .container.extra-small .image {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: calc(var(--inset-x) * 0.25rem);
     flex-shrink: 0;
-    border-radius: var(--distance-m);
   }
 
-  .container.small .header, .container.extra-small .header {
-    padding-left: var(--distance-xs);
+  .container.small .header,
+  .container.extra-small .header {
+    padding-left: calc(var(--inset-x) * 0.125rem);
     flex: 1;
     min-width: 0;
   }
 
   .content-wrapper {
     font: var(--font-content-body-2);
-    margin: var(--distance-s) 0 0 0;
-    padding: 0 var(--distance-s) var(--distance-s) var(--distance-s);
+    margin: calc(var(--inset-y) * 0.5rem) 0 0 0;
+    padding:
+      0
+      calc(var(--inset-x) * 0.5rem)
+      calc(var(--inset-y) * 0.25rem)
+      calc(var(--inset-x) * 0.5rem);
   }
 
 </style>

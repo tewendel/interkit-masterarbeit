@@ -1,5 +1,5 @@
 <script>
-  import { Select, SelectItem, TextInput } from "carbon-components-svelte";
+  import { Select, SelectItem, TextInput, NumberInput } from "carbon-components-svelte";
   import { createEventDispatcher } from 'svelte'
   import definitions from 'interkit/components/styleTokensConfig.json'
 
@@ -60,7 +60,7 @@
     {#each defs as definition}
       <div class="field">
         <div class="label">
-          <div class="title">
+          <div class="title" title={definition.key}>
             {camelToTitle(definition.key)}
           </div>
           <div class="help">{definition.help}</div>
@@ -69,7 +69,7 @@
           {#if definition.type === "color"}
             <TextInput type="color" bind:value={_value[definition.key]} on:change={update}/>
           {:else if definition.type === "number"}
-            <TextInput type="number" bind:value={_value[definition.key]} on:change={update}/>
+            <NumberInput step={0.05} bind:value={_value[definition.key]} on:change={update}/>
           {:else if definition.type === "size"}
             <TextInput type="text" bind:value={_value[definition.key]} on:change={update}/>
           {:else}

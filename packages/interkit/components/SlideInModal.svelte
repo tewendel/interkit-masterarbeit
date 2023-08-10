@@ -9,7 +9,7 @@
   export let prompt
   export let description
 
-  let showDummyData =  getShowDummyDataStore();
+  let showDummyData = getShowDummyDataStore();
   if($showDummyData) {
     description = "Description lorem ipsum..."
   }
@@ -29,7 +29,7 @@
   {#if description}<div class="description SlideInModal__Description">{description}</div>{/if}
   <div class="buttons SlideInModal__Buttons">
     <ButtonBar hideHelpText>
-      <slot name ="buttons"/>
+      <slot name="buttons"/>
     </ButtonBar>
   </div>
 </div>
@@ -38,28 +38,35 @@
 <style>
 
   .container {    
+    --border-radius-slideinmodal: var(--border-radius-outer);
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: var(--distance-s);
+    gap: calc(var(--inset-y) * 0.5rem);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
     box-sizing: border-box;
     background-color: var(--color-background-highlight);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-radius: 0 0 var(--border-radius-slideinmodal) var(--border-radius-slideinmodal);
     box-shadow: var(--box-shadow);
   }
 
   .header {
-    padding: 16px;
+    padding:
+      calc(var(--outset-y) * 1rem)
+      calc(var(--outset-x) * 1rem);
   }
 
   .description {
-    padding: 0px 16px 16px 16px; 
+    padding:
+      0
+      calc(var(--outset-x) * 1rem)
+      calc(var(--outset-y) * 1rem)
+      calc(var(--outset-x) * 1rem);
     font: var(--font-content-body-2);
     letter-spacing: var(--letter-spacing-content-body-2);
     color: var(--color-text-soft);
   }
-
-
 
 </style>

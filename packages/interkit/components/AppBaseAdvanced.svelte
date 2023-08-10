@@ -16,7 +16,7 @@
   
   export let languages
   export let projectIdOverride
-  languages = languages ? languages.split(',') : false
+  languages = languages && languages.split ? languages.split(',') : false
   setupFrontend(languages)
 
   // langT is a overly fail-safe reactive array to the translations
@@ -37,6 +37,8 @@
   const desktopMQ = '(min-width: 600px)';
   const isDesktop = writable(!bypassDesktopFallback && window.matchMedia?.(desktopMQ)?.matches);
   setContext('isDesktop', isDesktop)
+
+  let overrideStyleTokens
 
   let retryCountdownCounter = 20
 
@@ -181,6 +183,7 @@
 
 
   function receiveMessage(event) {
+    console.log('AppBaseAdvanced in iframe, receiveMessage', event?.data?.command, event?.data?.payload, event)
     switch (event.data?.command) {
       /* This doesn't work in an iframe because the history is mixed/merged with the parent's
        * it only happens to work if the last navigation took place within the iframe
@@ -191,6 +194,9 @@
       */
       case "clear_localStorage": localStorage.clear(); break;
       case "set_userAuth": if(event.data?.payload) { changeUser(event.data?.payload) }; break; // admin requests preview for a user
+      case "set_overrideStyleTokens":
+        overrideStyleTokens = event.data?.payload
+        break
     }
   }
 
@@ -219,7 +225,10 @@
 
 <div class="AppBase AppBaseAdvanced Theming" id="Theming">
   <Router>
-    <Styling>
+    <Styling
+      isRootStyling
+      {overrideStyleTokens}
+      >
       <Overlay
         zIndex={0}
         customStyle={
@@ -299,13 +308,15 @@
   /* default font */
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
+  /* following styles outside of Styling, so no vars */
+
   .AppBase {
     height: 100%;
     pointer-events: all;
     touch-action: auto;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
     box-sizing: border-box;
-    --network-hint-height: 2em;
+    --network-hint-height: 2rem;
   }
 
   :global(html) {
@@ -327,21 +338,21 @@
   }
 
   :global(h2) {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 1.5rem;
+    line-height: 2rem;
     font-weight: 400;
   }
 
   :global(h3) {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
     font-weight: 500;
   }
 
   .network-reload {
     border: 1px solid black;
-    padding: 1em;
-    margin: 1em 0;
+    padding: 1rem;
+    margin: 1rem 0;
   }
 
   .network-hint--default {
@@ -460,13 +471,15 @@
       }
     }
 
-    /* Styling for loading indikator */
+    /* Styling for loading indicator */
+
     .Loading {
-      padding: 20px;
+      padding: 1.25rem;
     }
+
     .Loading button {
-      padding: 5px;
-      margin-top: 5px;
+      padding: 0.25rem;
+      margin-top: 0.25rem;
     }
 
   </style>

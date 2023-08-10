@@ -22,8 +22,8 @@
   export let effect; // effect object used to decide what happens on click
   export let selected = false // used by Chat choice
   export let dummyNoText = false
-  
-  setContext("iconHeight", size == "large" ? "32px" : null)
+
+  setContext("iconHeight", size == "large" ? "2rem" : null)
 
 </script>
 
@@ -39,7 +39,7 @@
   >
     <slot/>
     {#if $showDummyData && !dummyNoText}
-      Btn Text
+      Btn{text ? ' ' + text : ''}
     {:else}
       { text || "" }
     {/if}
@@ -57,7 +57,7 @@
     background-color: var(--color-background-button);
     /*box-shadow: var(--box-shadow);*/
     display: inline-flex;
-    gap: var(--distance-xs);
+    gap: calc(var(--inset-x) * 0.125rem);
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -92,40 +92,41 @@
 
   .button.small {
     min-height: 32px;
-    padding: var(--distance-tiny) var(--distance-s);
+    height: 2rem;
+    padding: calc(var(--inset-y) * 0.125rem) calc(var(--inset-x) * 0.5rem);
     font: var(--font-button);
     letter-spacing: var(--letter-spacing-button);
-    border-radius: calc(var(--border-radius-button) * 0.75);
-    gap: 4px;
+    border-radius: var(--border-radius-button-small);
+    gap: calc(var(--outset-x) * 0.25rem);
   }
 
   .button.small.height-fixed {
-    height: 32px;
+    min-height: 32px;
+    height: 2rem;
   }
 
   .button.medium {
-    min-height: 40px;
-    padding: var(--distance-tiny) var(--distance-m);
+    padding: calc(var(--inset-y) * 0.25rem) calc(var(--inset-x) * 1rem);
     font: var(--font-button);
     letter-spacing: var(--letter-spacing-button);
-    gap: 4px;
+    gap: calc(var(--outset-x) * 0.25rem);
   }
 
   .button.medium.height-fixed {
-    height: 40px;
+    height: 2.5rem;
   }
 
   .button.large {
-    min-height: 56px;
-    padding: var(--distance-m) var(--distance-m-l);
+    min-height: 32px;
+    padding: calc(var(--inset-y) * 1rem) calc(var(--inset-x) * 1.5rem);
     font: var(--font-headline-5);
     letter-spacing: var(--letter-spacing-headline-5);
-    border-radius: calc(var(--border-radius-button) * 1.5);
-    gap: 8px;
+    border-radius: var(--border-radius-button-big);
+    gap: calc(var(--outset-x) * 0.5rem);
   }
 
   .button.large.height-fixed {
-    height: 56px;
+    height: 3.5rem;
   }
 
   /* type */
@@ -160,8 +161,8 @@
     border: none;
     box-shadow: none;
     background-color: transparent;
-    padding-left: var(--distance-xs);
-    padding-right: var(--distance-xs);
+    padding-left: calc(var(--inset-x) * 0.25rem);
+    padding-right: calc(var(--inset-x) * 0.25rem);
   }
 
   .button.link:active {

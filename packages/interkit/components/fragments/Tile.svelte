@@ -63,6 +63,8 @@
       </div>
     {/if}
     <div class="Tile__Header header">
+        <!-- TODO this looks really weird when there are multiple values here.
+          the flex column doesn't really make sense? -->
         {#if label1}<Label content={label1} variant="normal"/>{/if}
         {#if subtitle1}<span class="Tile__Subtitle1 subtitle1">{subtitle1}</span>{/if}
         {#if headline}<span class="Tile__Headline headline">{headline}</span>{/if}
@@ -90,13 +92,15 @@
 <style>
 
   .container {
-    width: 126px;
-    height: 126px;
+    --tile-inset: calc(var(--inset) * 0.5rem);
+    --tile-border-radius: calc(var(--tile-inset) + var(--border-radius));
+    width: 7.875rem;
+    height: 7.875rem;
     position: relative;
     background-color: var(--color-background);
     display: flex;
     flex-direction: column;
-    padding: var(--distance-s);
+    padding: var(--tile-inset);
     box-shadow: var(--box-shadow);
     box-sizing: border-box;
   }
@@ -115,7 +119,7 @@
   }
 
   .container.rounded {
-    border-radius: var(--border-radius);
+    border-radius: var(--tile-border-radius);
   }
 
   .image {
@@ -134,7 +138,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .buttons-wrapper {

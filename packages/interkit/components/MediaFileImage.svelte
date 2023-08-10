@@ -72,7 +72,7 @@
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
   {#if zoomable && zoomed}
-    <OverlayFull closeMethod={()=>{zoomed = false}} customStyle="background-color: #000;">
+    <OverlayFull closeMethod={()=>{zoomed = false}} customStyle="background-color: var(--color-background-mediafileimage-overlay);">
       <Zoom
         src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
         alt="mediafile"
@@ -107,9 +107,11 @@
   }
 
   .fallback {
-    background: #808080;
-    color: white;
-    padding: var(--distance-xl) var(--distance-m);
+    background: var(--color-background-backdrop);
+    color: var(--color-text);
+    padding:
+      calc(var(--inset-y) * 3rem)
+      calc(var(--inset-x) * 1rem);
     font-style: italic;
   }
 

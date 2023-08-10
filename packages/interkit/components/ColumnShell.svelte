@@ -23,7 +23,7 @@
   .container {
     display: flex;
     flex-direction: row;
-    gap: var(--distance-s);
+    gap: calc(var(--outset-x) * 0.5rem);
   }
 
   .col1, .col2, .col3 {

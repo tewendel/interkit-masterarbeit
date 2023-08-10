@@ -111,19 +111,22 @@
 {:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}
   <div 
     class="Message Message--{message.payload?.type} message message--{message.payload.type}"
-    class:message__user="{isByUser}"
-    class:message__other="{!isByUser}"
-    class:Message--user="{isByUser}"
-    class:Message--other="{!isByUser}"
+    class:message__user={isByUser}
+    class:message__other={!isByUser}
+    class:Message--user={isByUser}
+    class:Message--other={!isByUser}
     class:message__lastFromSender={lastFromSender}
     class:Message--lastFromSender={lastFromSender}
-    class:contain={message?.payload?.options?.objectFit === "contain"}
+    class:contain={message.payload?.options?.objectFit === "contain"}
+    class:Message--hasbuttons={['requestLocation', 'choice'].includes(message.payload?.type)}
+    class:message__hasButtons={['requestLocation', 'choice'].includes(message.payload?.type)}
   >
     <Bubble
       messageType={message.payload?.type}
       type = { isByUser ? "me" : "other" }
       showHandle = { lastFromSender && !["choice", "requestLocation"].includes(message?.payload?.type) }
       showSide = { !["choice", "requestLocation", "audio", "video", "image"].includes(message?.payload?.type) }
+      hasButtons={['requestLocation', 'choice'].includes(message.payload?.type)}
       on:click={() => { 
         if (['text', 'image'].includes(message?.payload?.type) && !message?.payload?.options?.action) {
           showOptions = true 
@@ -163,6 +166,7 @@
             <ChatImage {message} />
           {/if}
         {:else if message?.payload?.type == "audio"}
+            <!-- TODO border-radiuses don't match -->
             <InlineAudioButton
               audioKeyDirect={message?.payload?.mediafileKey}
               autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}
@@ -252,8 +256,8 @@
     align-self: flex-start;
     font: var(--font-body-1);
     position: relative;
-    margin-bottom: var(--distance-s);
-    --chat-image-height: calc(var(--distance-base) * 25); /* 200 px */
+    margin-bottom: calc(var(--outset-y) * 0.5rem);
+    --chat-image-height: 12.5rem;
     display: flex;
     flex-direction: column;
   }
@@ -268,18 +272,26 @@
 
   .message-label {
     font: var(--font-caption-bold);
-    margin-bottom: var(--distance-s);
+    margin-bottom: calc(var(--outset-y) * 0.5rem);
   }
 
   .system {
     text-align: center;
     font: var(--font-caption-bold);
-    padding: var(--distance-s) var(--distance-m) var(--distance-m) var(--distance-m);
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem)
+      calc(var(--inset-y) * 1rem)
+      calc(var(--inset-x) * 1rem);
     text-transform: uppercase;
   }
 
   .system-image {
-    padding: var(--distance-s) 0 var(--distance-m) 0;
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      0
+      calc(var(--inset-y) * 1rem)
+      0;
     display: flex;
     justify-content: center;
   }
@@ -297,12 +309,8 @@
     height: var(--chat-image-height); /* this is especially important for ios safari */
   }
 
-  .message--audio .message__contents {
-    height: 34px;
-  }
-
   .message .message__contents {
-    padding: calc(var(--distance-xs) + var(--distance-s)) var(--distance-m);
+    padding: calc(var(--inset) * 1rem);
   }
 
   .message--image .message__contents,
@@ -310,9 +318,8 @@
     padding: 0;
   }
 
-  .message--choice .message__contents,
-  .message--requestLocation .message__contents {
-    padding: var(--distance-s);
+  .message__hasButtons .message__contents {
+    padding: calc(var(--inset) * 0.5rem);
   }
 
   /* FIXME classes look wrong */
@@ -332,7 +339,7 @@
   }
 
   .message.message__lastFromSender  {
-    margin-bottom: var(--distance-m);
+    margin-bottom: calc(var(--outset-y) * 1rem);
   }
 
   .message--choice, .message--requestLocation {
@@ -341,7 +348,7 @@
 
   .message__options {
     font: var(--font-caption);
-    padding: var(--distance-s);
+    padding: calc(var(--inset) * 0.5rem);
     cursor: pointer;
     text-align: center;
   }
@@ -356,7 +363,7 @@
   }
 
   li.choice-option:not(:last-child) {
-    margin-bottom: var(--distance-s);
+    margin-bottom: calc(var(--inset-y) * 0.5rem);
   }
 
   ul:not(.selected) .choice-option:hover {

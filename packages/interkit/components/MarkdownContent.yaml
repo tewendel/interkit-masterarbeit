@@ -1,0 +1,10 @@
+name: MarkdownContent
+toolboxCategory: Data
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - type: string
+      name: content
+      help: "The main content"
+

@@ -4,6 +4,7 @@
   import { getContext } from 'svelte';
   import { get } from 'svelte/store';
   import MarkdownContent from './MarkdownContent.svelte'
+  import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
   export let column; // the column for the content
   export let format; // the format to use to display it
@@ -11,6 +12,8 @@
   export let inline = false // add spacings or not
   export let centerContent = false // center content
   
+  let showDummyData = getShowDummyDataStore()
+
   let element = getContext("element");
   console.log("DataCell got element store from context", $element)
   if(!element) {
@@ -19,7 +22,7 @@
 
   let userProjectData = InterkitClient.userProjectDataStore  
 
-  let content;
+  let content
 
   const addSpecialElements = (c) => {
     let result = c?.replace("[config]", JSON.stringify(get(InterkitClient.config)))
@@ -48,6 +51,9 @@
   class:inline
   style={`--text-align: ${centerContent ? "center" : "left"}`}
   >
+  {#if $showDummyData}
+    dummy DataCell
+  {/if}
   {#if $element}
     {#if format == "richText"}
       {#if content}
@@ -68,8 +74,7 @@
 <style>
   .container {
     font-size: inherit;
-    line-height: 1.43;
-    padding: var(--distance-s) var(--distance-m);
+    line-height: inherit;
   }
 
   .inline {

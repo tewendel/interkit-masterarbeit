@@ -166,7 +166,7 @@
 
 {#if $audioPlayerStatus || $showDummyData}
 
-  <div class="AudioPlayer AudioPlayer--minimised minimised-container" class:active={$audioPlayerStatus.active}>
+  <div class="root AudioPlayer AudioPlayer--minimised minimised-container" class:active={$audioPlayerStatus.active}>
 
     <div class="minimised-controls">
 
@@ -208,13 +208,13 @@
 
     </div>
 
-    <div class="minimsed-progress-container">
+    <div class="minimised-progress-container">
       <div class="minimised-progress-bar"
         style={
           ($audioPlayerStatus?.currentTime ? 
           "width: calc(" 
           + ($audioPlayerStatus?.currentTime / $audioPlayerStatus?.duration * 100) 
-          + "% + 14px)" : "")
+          + "% + 0.875rem)" : "")
         }
       ></div>
     </div>
@@ -225,7 +225,7 @@
 
 {#if $audioPlayerStatus && playerExpanded}
 
-  <Overlay classes="AudioPlayer AudioPlayer--expanded">
+  <Overlay classes="root AudioPlayer AudioPlayer--expanded">
 
     <div class="expanded-container">
 
@@ -310,10 +310,14 @@
 
 <style>
 
+  .root {
+    --audioplayer-progressbar-height: 0.25rem;
+  }
+
   .minimised-container {
     display: none;
     width: 100%;
-    height: 64px;
+    /* height: 4rem; */
     background-color: var(--color-background-highlight);
     position: relative;
     box-shadow: var(--box-shadow);
@@ -339,27 +343,31 @@
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 12px;
-    font-size: 20px;
-    line-height: 24px;
+    padding:
+      calc(var(--outset-y) * 0.75rem)
+      calc(var(--outset-x) * 0.75rem)
+      calc(var(--outset-y) * 0.75rem + var(--audioplayer-progressbar-height))
+      calc(var(--outset-x) * 0.75rem);
+    font-size: 1.25rem;
+    line-height: 1.5rem;
     font-weight: 500;
-    gap: var(--distance-s);
+    gap: calc(var(--outset-x) * 0.5rem);
   }
 
-  .minimsed-progress-container {
+  .minimised-progress-container {
     width: 100%;
-    height: var(--distance-xs);
+    height: var(--audioplayer-progressbar-height);
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
   }
 
   .minimised-progress-bar {
-    background-color: black;
-    height: 4px;
+    background-color: var(--color-border-button-primary);
+    height: var(--audioplayer-progressbar-height);
   }
 
   .expanded-container {
-    background-color: white;
+    background-color: var(--color-background);
     height: 100%;
     width: 100%;
     display: flex;
@@ -373,7 +381,9 @@
 
   .expanded-bottom-bar {
     background-color: var(--color-background-highlight);
-    padding: 16px 8px;
+    padding:
+      calc(var(--outset-y) * 1rem)
+      calc(var(--outset-x) * 0.5rem);
     box-sizing: border-box; 
   }
 
@@ -384,7 +394,11 @@
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 4px 8px 0 8px;
+    padding:
+      calc(var(--outset-y) * 0.25rem)
+      calc(var(--outset-x) * 0.5rem)
+      0
+      calc(var(--outset-x) * 0.5rem);
   }
 
   .expanded-controls .center-controls {
@@ -392,13 +406,12 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 25px;
-    
+    gap: calc(var(--inset-x) * 1.5rem);
   }
 
   .expanded-time {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: calc(var(--inset-y) * 0.5rem);
+    margin-bottom: calc(var(--inset-y) * 0.5rem);
   }
 
   .expanded-time span {
@@ -414,30 +427,34 @@
     width: 100%;
     -webkit-appearance: none;
     background-color: var(--color-border-button-primary);
-    height: 1px;
+    height: var(--border-width);
     margin: 0;
     /* this is to have a larger target to tap */
-    /* border-top: 10px solid #000; 
-    border-bottom: 10px solid #000; */
+    /* border-top: 0.5rem solid var(--color-border); 
+       border-bottom: 0.5rem solid var(--color-border); */
   }
 
   .seekPositionRangeSlider::-moz-range-thumb {
     -webkit-appearance: none;
-    height: 14px;
-    width: 14px;
+    height: 0.875rem;
+    width: 0.875rem;
     background: var(--color-border-button-primary);
-    margin-top: -5px;
+    margin-top: -0.3125rem;
     border-radius: 50%;
     border: none;
   }
   
   .seekPositionRangeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 14px;
-    width: 14px;
+    height: 0.875rem;
+    width: 0.875rem;
     background: var(--color-border-button-primary);
     border-radius: 50%;
     border: none;
+  }
+
+  .close {
+    display: flex;
   }
 
 </style>

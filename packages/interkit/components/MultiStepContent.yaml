@@ -1,0 +1,21 @@
+name: MultiStepContent
+toolboxCategory: Data
+color: 230
+fields:
+  - type: extraProps
+    props:
+    - type: checkbox
+      name: gap
+      help: "Show a gap between the items"
+    - type: string
+      name: nextButtonText
+      defaultValue: "Next"
+    - type: string
+      name: backButtonText
+      defaultValue: "Back"
+    - type: string
+      name: finalButtonText
+      defaultValue: ""
+    - type: string
+      name: skipButtonText
+      defaultValue: ""
