@@ -53,6 +53,6 @@
 
 </script>
 
-<Router history={memoryHistory}>
+<Router history={memoryHistory} primary={false}>
   <slot />
 </Router>
