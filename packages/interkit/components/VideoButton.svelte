@@ -1,6 +1,6 @@
 <script>
 
-  import { getContext, onMount, onDestroy, tick } from 'svelte'
+  import { getContext, onMount, onDestroy } from 'svelte'
   import { fly } from 'svelte/transition'
   import Button from "./Button.svelte"
   import Icon from './Icon.svelte';
@@ -17,7 +17,7 @@
   export let buttonOptions
   
   const elementContext = getContext("element")
-  if(!elementContext) {
+  if(!elementContext && !mediafileKey) {
     console.warn("VideoButton needs an element context, for example from DataLoaderSingle")
   }
 

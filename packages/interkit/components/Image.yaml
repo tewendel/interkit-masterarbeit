@@ -1,0 +1,28 @@
+name: Image
+fields:
+  - type: extraProps
+    props:
+    - name: mediafileKey
+      type: string
+      help: "Use the key of a media file directly"
+    - name: altText
+      type: string
+      help: "alt text"
+    - name: imageColumn
+      type: sheetColumn
+      columnType: mediaFile
+      help: "The column on the element context (for example DataLoaderSingle) containing the image file"
+    - name: altColumn
+      type: sheetColumn
+      columnType: string
+      help: "The column on the element context (for example DataLoaderSingle) containing the alt text"
+    - name: width
+      type: string
+      defaultValue: 100%
+    - name: height
+      type: string
+    - name: customStyle
+      type: string
+    - name: classes
+      type: string
+toolboxCategory: Basics
