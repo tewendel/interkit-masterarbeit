@@ -1,8 +1,8 @@
-## DataSlider
+## DataCarousel
 
 #### What the template does
 
-This template loads a list of structured content from a database sheet and displays it as a slider on the screen.
+This template loads a list of structured content from a database sheet and displays it as a carousel on the screen that you can slide left and right.
 
 #### Which parts of the system were used
 
@@ -16,9 +16,9 @@ The template was created by using components in the **App** section, setting up 
 
 - We load the data using the **DataLoaderMulti** component.
 
-- The **DataSlider** component takes this data and displays it as a list. We can use **StaticText** to display a message when there is no data.
+- The **DataCarousel** component takes this data and displays it as a carousel. We can use **StaticText** to display a message when there is no data.
 
-- The **DataCardLarge** component determines how each entry in the list should be displayed.
+- The **DataCard** component determines how each entry in the carousel should be displayed.
 
 #### Next Steps
 
@@ -26,6 +26,6 @@ The template was created by using components in the **App** section, setting up 
 
 - Add a new cat by uploading a new image in the Media section, and creating a new row in the cats Sheet.
 
-- Hook up different columns in the DataCardSmall component to switch where the name and comment are displayed.
+- Hook up different columns in the DataCard component to switch where the name and comment are displayed (turn on the DummyData mode in the preview settings to see what is available on DataCard)
 
 - Add a description column in the database and use **DataCell** to show the description under each cat.

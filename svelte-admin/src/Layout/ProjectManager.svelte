@@ -208,11 +208,18 @@
     return (project?.history || []).find(h => h.event == "create_project")?.date
   }
 
-  let sortKey = 'createdAt'
-  let sortDirection = 'descending'
-  let pageSize = 10
-  let page = 1
+  import { projectManagerSortKey, projectManagerSortDirection, projectManagerPage } from '../admin.js'
+  let sortKey = $projectManagerSortKey
+  $: projectManagerSortKey.set(sortKey)
 
+  let sortDirection = $projectManagerSortDirection
+  $: projectManagerSortDirection.set(sortDirection)
+
+  let page = 1
+  $: projectManagerPage.set(page)
+
+  let pageSize = 10
+  
   const dataTableOverheadHeight = 0 +
     48 + // header of outer UI
     68 + // DataTable title
@@ -264,10 +271,10 @@
               `}
               title="Projects on this server"
               sortable
-              {sortKey}
-              {sortDirection}
+              bind:sortKey
+              bind:sortDirection
               {pageSize}
-              {page}
+              bind:page
               {headers}
               rows={projectRows}
               batchExpansion

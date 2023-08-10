@@ -44,8 +44,8 @@ export const items = [
         path: '/tutorial/datalist'
       },
       {
-        title: '4: DataSlider',
-        path: '/tutorial/dataslider'
+        title: '4: DataCarousel',
+        path: '/tutorial/datacarousel'
       },
       {
         title: '5: Map basics',

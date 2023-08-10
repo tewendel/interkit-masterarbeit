@@ -5,10 +5,18 @@
   let showDummyData = getShowDummyDataStore();
   
   export let mainClass = ''
-  export let text = undefined;
+  
+  export let text = undefined
   export let type = "secondary" // primary | secondary | ghost | link
   export let size =  "medium" // small | medium | large 
   export let flex = "normal" // normal | fill
+  
+  export let buttonOptions = {} // options obejct (used by derived button components)  
+  if(buttonOptions?.text) text = buttonOptions?.text
+  if(buttonOptions?.type) type = buttonOptions?.type
+  if(buttonOptions?.size) size = buttonOptions?.size
+  if(buttonOptions?.flex) flex = buttonOptions?.flex
+  
   export let height = "fixed" // fixed | auto
   export let disabled = false;
   export let effect; // effect object used to decide what happens on click

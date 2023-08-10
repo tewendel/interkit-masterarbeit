@@ -6,7 +6,8 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
   /* helper functions */
 
   const escapeCurlyBrackets = (string) => {
-    return string.replaceAll("{", "&#123;").replaceAll("}", "&#125;")
+    if(typeof string != "string") return "";
+    return string?.replaceAll("{", "&#123;")?.replaceAll("}", "&#125;")
   }
 
   const attribute = (block, attributeName, blocklyAttributeName, fieldType) => {
@@ -72,13 +73,14 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
     let jsonExtraProp = blockJson?.fields?.extraProps?.props?.find(p => p.name == prop.name)
 
     let value = jsonExtraProp?.value;
+
     if(typeof value == "undefined" && typeof prop?.defaultValue != "undefined") {
       value = jsonExtraProp?.defaultValue
     }
 
     if (verbose) console.log('#CG# extraProp', { value, ...prop })
-
-    if(prop.type == "effect") {
+    
+    if(prop.type == "effect" || prop.type == "buttonOptions") {
       return `${prop.name}={${JSON.stringify(value)}}\n`;
     }
 
@@ -90,12 +92,12 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       return `${prop.name}={${value}}\n`;
     }
 
-    if(prop.type == "sheetColumn" && value) {
+    if(prop.type == "sheetColumn" && typeof value == "object") {
       if(value.sheetKey == "empty") return "";
       if (value.columnKey?.indexOf?.('$lang') > -1) {
         return `${prop.name}={$lang ? "${value.sheetKey}/" + "${value.columnKey}".replace("$lang", "$" + $lang) : "${value.sheetKey}/${value.columnKey}"}`
       }
-      value = value.sheetKey + "/" + value.columnKey
+      value = value.sheetKey + "/" + value.columnKey  
     }
 
     if(prop.type == "sheetId" && value) {
@@ -179,7 +181,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
           if (verbose) console.log('#CG# extraProps', field.props, block)
           for(let prop of field.props) {
             code += "   " + extraProp(block, prop);
-            //console.log(extraProp(block, prop));
+            //console.log("extraProp", extraProp(block, prop));
           }
 
         }

@@ -54,15 +54,11 @@
   :global(._TopNavBarCustom__Top__Right > *:not(:first-child)) {
     margin-left: calc(var(--outset-x) * 0.5rem);
   }
-
-  :global(._TopNavBarCustom__Top__Left span, ._TopNavBarCustom__Top__Center span, ._TopNavBarCustom__Top__Right span) {
-    font: var(--font-headline-1);
-    letter-spacing: var(--letter-spacing-headline-1);
-  }
   
   .center {
     flex: 1;
     text-align: center;
+    justify-content: center;
   }
 
   .center + .right {
@@ -71,7 +67,7 @@
 
   .right {
     text-align: right;
-
+    justify-content: flex-end;
   }
 
 

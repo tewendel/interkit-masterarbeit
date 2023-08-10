@@ -12,7 +12,7 @@ The template was created entirely using components in the **App** section. You c
 
 - The **TabBar** lets you add buttons that will be rendered into a tab bar.
 
-- The **Button** component allows the user to interact with the app. In this case, we use the Button to select an active route.
+- The **Tab** component allows the user to select an active route via the effect property.
 
 - The **Route** and **RouteConnector** components allow you to define parts of the app that are shown depening on the user. Each route has a unique path that we use to identify which route should be shown. 
 

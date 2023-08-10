@@ -14,7 +14,7 @@ The template was created entirely using components in the **App** section. You c
 
 - The **Route** and **RouteConnector** components allow you to define parts of the app that are shown depening on the user. Each route has a unique path that we use to identify which route should be shown. 
 
-- The **Button** component allows the user to interact with the app. In this case, we use the Button to select an active route and show the different parts of the app. We can add **Icon** components to buttons.
+- **NavBar** and **NavButton** components allow you to build a horizontal menu. We configure each **NavButton** to select an active route and show the different parts of the app. We can add **Icon** components to buttons.
 
 - The **Group** and **GroupConnector** components allow you to structue you component composition to keep an overview.
 
@@ -31,8 +31,3 @@ The template was created entirely using components in the **App** section. You c
 - Change which button opens which route by modifying the clickTrigger setting of a button to refer to a different route.
 
 - Add a new route and a corresponding button.
-
-
-#### Advanced
-
-You can change the content of this help screen for your project by editing the **project.md** file in the project repository. Use the more/project and the cloudcmd tab.

@@ -1,0 +1,28 @@
+name: VideoButton
+colour: 300
+fields:
+  - type: extraProps
+    props:
+    - name: videoColumn
+      type: sheetColumn
+      columnType: mediaFile
+      defaultValue: "elements/video"
+      help: "The column on the element context (for example DataLoaderSingle) containing the video file"
+    - name: mediafileKey
+      type: string
+      help: "Optionally use the key of a media file directly"
+    - name: controls
+      type: options
+      options:
+        - interkit
+        - native
+        - none
+      defaultValue: interkit
+    - name: loop
+      type: checkbox
+      defaultValue: false
+    - name: buttonOptions
+      type: buttonOptions
+  - type: slot
+    name: Icon
+toolboxCategory: Buttons

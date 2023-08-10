@@ -13,6 +13,8 @@
   
   export let autoplay = false
 
+  export let buttonOptions
+
   export let playbackControl = "stopped"; // use to start/stop playback through prop
 
   const showDummyData = getShowDummyDataStore()

@@ -5,9 +5,7 @@ import Button from './Button.svelte'
 import Icon from './Icon.svelte'
 import { Capacitor } from '@capacitor/core';
 
-export let label;
-export let type;
-export let size;
+export let buttonOptions;
 export let locationColumn;
 export let secondaryPositionProperty; // an optional elementProperty that gives an element a user specific position
 
@@ -37,7 +35,6 @@ const openExternalMap = (arg) => {
 </script>
 
 
-<Button {type} {size} on:click={openExternalMap} class="ExternalMapAppButton">
+<Button {buttonOptions} on:click={openExternalMap} class="ExternalMapAppButton">
   <slot name="Icon"></slot>
-  {#if label}<span>{label}</span>{/if}
 </Button>

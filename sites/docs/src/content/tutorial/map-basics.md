@@ -14,7 +14,7 @@ The template was created by using components in the **App** section, setting up 
 
 - The **MapSimple** component takes the data and displays it on the map.
 
-- The **DataCardSmall** component has been added to the popup slot of the MapSimple component and determines how the data should be shown in the popup.
+- The **DataCard** component has been added to the popup slot of the MapSimple component and determines how the data should be shown in the popup.
 
 #### Next Steps
 
@@ -22,6 +22,4 @@ The template was created by using components in the **App** section, setting up 
 
 - Add a new cat by uploading a new image in the Media section, and creating a new row in the cats Sheet.
 
-- Change how the MapSimple and DataCardSmall components display the data, for example by disabling the customIconColumn setting in MapSimple to show standard markers instead of the cat images.
-
-- Replace the **DataCardSmall** component in the popup slot with **DataCardLarge** and configure it. You can use the **Dummy Data** switch in the Preview settings below the preview window to show how the components displays data.
+- Change how the MapSimple and DataCard components display the data, for example by disabling the customIconColumn setting in MapSimple to show standard markers instead of the cat images.
