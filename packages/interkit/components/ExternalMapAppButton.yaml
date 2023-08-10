@@ -1,5 +1,5 @@
 name: ExternalMapAppButton
-toolboxCategory: Buttons
+toolboxCategory: Map
 colour: 300
 fields: 
   - type: extraProps

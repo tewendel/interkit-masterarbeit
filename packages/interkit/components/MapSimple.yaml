@@ -17,10 +17,12 @@ fields:
       name: "markerLabelColumn"
       columnType: "string"
       defaultValue: "elements/markerLabel"
+      help: "A number or letter to put in the marker"
     - type: "sheetColumn"
       name: "markerTitleColumn"
       columnType: "string"
       defaultValue: "elements/markerTitle"
+      help: "A title to show on the map above the marker"
     - type: string
       name: checkedProperty
       defaultValue: "checked"

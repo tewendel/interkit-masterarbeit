@@ -25,4 +25,4 @@ fields:
       type: buttonOptions
   - type: slot
     name: Icon
-toolboxCategory: Buttons
+toolboxCategory: Media

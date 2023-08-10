@@ -1,5 +1,5 @@
 name: PopoutAudioButton
-toolboxCategory: Buttons
+toolboxCategory: Media
 colour: 300
 fields: 
   - type: extraProps
