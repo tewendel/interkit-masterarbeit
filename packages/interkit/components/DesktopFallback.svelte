@@ -19,7 +19,7 @@
 </script>
 
 <div
-  class="wrap"
+  class="wrap DesktopFallback"
   style={`
     --preview-width: ${iframeWidth}px;
     --preview-height: ${iframeHeight}px;
@@ -28,16 +28,16 @@
   <div class="container">
     <div class="text">
       <slot name="content">
-        <h1 class="text-headline DesktopFallback__Text__Headline">{title}</h1>
-        <p class="text-text DesktopFallback__Text__Text">{text}</p>
+        <h1 class="text-headline DesktopFallback__TextHeadline">{title}</h1>
+        <p class="text-text DesktopFallback__Text">{text}</p>
       </slot>
     </div>
     <figure class="qr DesktopFallback__QR">
       <img class="qr-img" alt="QR" src={qrImageSrc} />
       <caption class="qr-caption">Scanne den QR-Code mit deinem Smartphone um die Webapp zu öffnen</caption>
     </figure>
-    <nav class="buttons">
-      <div class="buttons-fullscreen">
+    <nav class="buttons DesktopFallback__Buttons">
+      <div class="buttons-fullscreen DesktopFallback__ButtonsFullscreen">
         <Button
           text="Ganzer Bildschirm"
           on:click={() => { isDesktop.set(false) }}
@@ -47,18 +47,18 @@
           >
           <Icon type="full-screen-full" />
         </Button>
-        <div class="buttons-fullscreen-caption">
+        <div class="buttons-fullscreen-caption DesktopFallback__ButtonsFullscreenCaption">
           Wenn Du ein Tablet verwendest, kannst Du hier in die Vollansicht wechseln
         </div>
       </div>
       {#if $$slots.buttons}
-        <div class="buttons-slot">
+        <div class="buttons-slot DesktopFallback__Buttons">
           <slot name="buttons"></slot>
         </div>
       {/if}
     </nav>
-    <div class="preview">
-      <iframe class="preview-iframe DesktopFallback__Preview__Iframe" src={iframeSrc}></iframe>
+    <div class="preview DesktopFallback__Preview">
+      <iframe class="preview-iframe DesktopFallback__PreviewIframe" src={iframeSrc}></iframe>
     </div>
   </div>
 </div>
@@ -78,13 +78,17 @@
     "txt txt txt txt"
     "qr  qr  n   ifr"
     "btn btn n   ifr";
-  grid-gap: var(--distance-m);
-  padding: var(--distance-xl);
-  max-width: 1200px;
+  grid-gap:
+    calc(var(--outset-y) * 1rem)
+    calc(var(--outset-x) * 1rem);
+  padding:
+    calc(var(--outset-y) * 3rem)
+    calc(var(--outset-x) * 3rem);
+  max-width: 75rem;
   margin: 0 auto;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 62.5rem) {
   .container {
     grid-template-areas:
       "txt txt n ifr"
@@ -95,20 +99,20 @@
 .text {
   grid-area: txt;
   text-align: center;
-  margin-bottom: var(--distance-xl);
+  margin-bottom: calc(var(--outset-y) * 3rem);
 }
 
 .qr {
   grid-area: qr;
   align-self: end;
   text-align: center;
-  margin-bottom: var(--distance-xl);
+  margin-bottom: calc(var(--outset-y) * 3rem);
 }
 .qr-img {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: var(--distance-m);
-  max-width: 12em;
+  margin-bottom: calc(var(--outset-y) * 1rem);
+  max-width: 12rem;
 }
 
 caption {
@@ -118,7 +122,7 @@ caption {
 
 .buttons {
   grid-area: btn;
-  margin-bottom: var(--distance-xl);
+  margin-bottom: calc(var(--outset-y) * 3rem);
 }
 
 @media (min-width: 1000px) {
@@ -139,7 +143,7 @@ caption {
 }
 
 .buttons-slot {
-  margin-top: var(--distance-xl);
+  margin-top: calc(var(--outset-y) * 3rem);
 }
 
 .preview {
@@ -149,14 +153,16 @@ caption {
 .preview-iframe {
   width: var(--preview-width);
   height: var(--preview-height);
-  border: 12px solid black;
-  border-radius: 48px;
+  border: 0.75rem solid black;
+  border-radius: 3rem;
   overflow: hidden;
 }
 
 .qr-caption,
 .buttons-fullscreen-caption {
-  margin: var(--distance-s) 0;
+  margin:
+    calc(var(--outset-y) * 0.5rem)
+    0;
 }
 
 </style>
