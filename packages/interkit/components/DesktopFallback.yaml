@@ -12,4 +12,4 @@ fields:
     name: content
   - type: slot
     name: buttons
-toolboxCategory: Basics
+toolboxCategory: AppBase
