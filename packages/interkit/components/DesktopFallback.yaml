@@ -4,12 +4,40 @@ colour: 130
 fields:
   - type: string
     name: title
+    help: Heading above the text
   - type: string
     name: text
+    help: A medium length text meant as introduction.
   - type: string
     name: qrImageSrc
+    help: Provide a URL as image source. Intended for the QR code that links to the web app. (You can upload an image under Media and copy the URL from there.)
   - type: slot
     name: content
+    help: If you need a more complex introduction than title+text, this will override them.
   - type: slot
     name: buttons
+    help: Multi purpose buttons, like links to contact or privacy policy.
+  - type: extraProps
+    props:
+      - type: string
+        name: iframeWidth
+        defaultValue: "340px"
+        help: Width of the preview iframe, CSS length. Might break layout.
+      - type: string
+        name: iframeHeight
+        defaultValue: "720px"
+        help: Height of the preview iframe, CSS length. Might break layout.
+      - type: string
+        name: fullscreenButtonText
+        defaultValue: "$desktopfallback_fullscreen" # from packages/interkit/i18n_messages.js
+        help: Text on the fullscreen button
+      - type: string
+        name: fullscreenHint
+        defaultValue: "$desktopfallback_fullscreenhint"
+        help: Hint text for the fullscreen button
+      - type: string
+        name: qrHint
+        defaultValue: "$desktopfallback_qrhint"
+        help: Hint text for the QR code
+docsPath: AppBase#desktopfallback-component
 toolboxCategory: AppBase

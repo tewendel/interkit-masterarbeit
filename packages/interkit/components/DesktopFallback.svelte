@@ -1,59 +1,83 @@
 <script>
 
-  import { setContext, getContext } from 'svelte';
+  import { setContext, getContext } from 'svelte'
+
+  import { t, translations } from '../i18n.js'
+
+  import {
+    getShowDummyDataStore,
+    dummyLorem1Paragraph,
+    dummyQrSrc
+  } from './dummyDataHelpers.js'
 
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
 
-  export let title;
-  export let text;
-  export let qrImageSrc;
+  export let title
+  export let text
+  export let qrImageSrc
+  export let iframeWidth = '340px'
+  export let iframeHeight = '720px'
+  /* default values *must* come from the yaml, store-nature of lang creates really tricky race condition */
+  export let fullscreenButtonText // = '$desktopfallback_fullscreen' // won't work!
+  export let fullscreenHint // = null ... and checking "later" won't work either!
+  export let qrHint
+
+  let showDummyData = getShowDummyDataStore()
 
   const iframeSrc = `//${document.location.host}${document.location.pathname}${document.location.search?document.location.search:'?'}&desktop=1${document.location.hash}`
 
-  const iframeWidth = 340;
-  const iframeHeight = 720;
-
-  const isDesktop = getContext('isDesktop');
+  const isDesktop = getContext('isDesktop')
 
 </script>
 
 <div
   class="wrap DesktopFallback"
   style={`
-    --preview-width: ${iframeWidth}px;
-    --preview-height: ${iframeHeight}px;
-    `}
+    --preview-width: ${iframeWidth};
+    --preview-height: ${iframeHeight};
+  `}
   >
   <div class="container">
     <div class="text">
+      {#if $$slots.content && $showDummyData}
+        dummy content (slot)
+      {/if}
       <slot name="content">
-        <h1 class="text-headline DesktopFallback__TextHeadline">{title}</h1>
-        <p class="text-text DesktopFallback__Text">{text}</p>
+        <h1 class="text-headline DesktopFallback__TextHeadline">{$showDummyData ? 'dummy title' : title}</h1>
+        <p class="text-text DesktopFallback__Text">{$showDummyData ? dummyLorem1Paragraph : text}</p>
       </slot>
     </div>
     <figure class="qr DesktopFallback__QR">
-      <img class="qr-img" alt="QR" src={qrImageSrc} />
-      <caption class="qr-caption">Scanne den QR-Code mit deinem Smartphone um die Webapp zu öffnen</caption>
+      <img class="qr-img" alt="QR" src={$showDummyData ? dummyQrSrc : qrImageSrc} />
+      <caption class="qr-caption">
+        {#if $showDummyData}dummy qrHint{/if}
+        {qrHint}
+      </caption>
     </figure>
     <nav class="buttons DesktopFallback__Buttons">
       <div class="buttons-fullscreen DesktopFallback__ButtonsFullscreen">
         <Button
-          text="Ganzer Bildschirm"
+          dummyNoText={true}
+          text={($showDummyData ? 'fullscreenButtonText ' : '') + fullscreenButtonText}
           on:click={() => { isDesktop.set(false) }}
           size="large"
           type="secondary"
           flex="normal"
           >
-          <Icon type="full-screen-full" />
+          <Icon type="Full-FullScreen" />
         </Button>
         <div class="buttons-fullscreen-caption DesktopFallback__ButtonsFullscreenCaption">
-          Wenn Du ein Tablet verwendest, kannst Du hier in die Vollansicht wechseln
+          {#if $showDummyData}Dummy fullscreenHint{/if}
+          {fullscreenHint}
         </div>
       </div>
-      {#if $$slots.buttons}
+      {#if $$slots.buttons || $showDummyData}
         <div class="buttons-slot DesktopFallback__Buttons">
           <slot name="buttons"></slot>
+          {#if $showDummyData}
+            <Button text="dummy Button small" size="small" />
+          {/if}
         </div>
       {/if}
     </nav>
@@ -102,6 +126,17 @@
   margin-bottom: calc(var(--outset-y) * 3rem);
 }
 
+.text-headline {
+  font: var(--font-content-headline-1);
+  letter-spacing: var(--letter-spacing-content-headline-1);
+  margin-bottom: calc(var(--outset-y) * 1rem);
+}
+
+.text-text {
+  font: var(--font-content-body-1);
+  letter-spacing: var(--letter-spacing-content-body-1);
+}
+
 .qr {
   grid-area: qr;
   align-self: end;
@@ -135,15 +170,12 @@ caption {
   text-align: center;
 }
 
-/* FIXME pbly not the smartest way to do this */
-.buttons-fullscreen :global(.Button) {
-  padding-left: var(--distance-m);
-  padding-right: var(--distance-m);
-  margin-bottom: var(--distance-m);
-}
-
 .buttons-slot {
-  margin-top: calc(var(--outset-y) * 3rem);
+  margin:
+    calc(var(--outset-y) * 3rem)
+    0
+    calc(var(--outset-y) * 1rem)
+    0;
 }
 
 .preview {
@@ -158,10 +190,21 @@ caption {
   overflow: hidden;
 }
 
-.qr-caption,
-.buttons-fullscreen-caption {
+.qr-caption {
+  font: var(--font-caption);
+  letter-spacing: var(--letter-spacing-caption);
   margin:
-    calc(var(--outset-y) * 0.5rem)
+    calc(var(--outset-y) * 1rem)
+    0;
+}
+
+.buttons-fullscreen-caption {
+  font: var(--font-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  margin:
+    calc(var(--outset-y) * 1rem)
+    0
+    calc(var(--outset-y) * 1rem)
     0;
 }
 
