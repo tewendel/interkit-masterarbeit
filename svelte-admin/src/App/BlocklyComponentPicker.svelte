@@ -85,10 +85,14 @@
     //}
   }
 
-  const openBlocklyHelp = (blockName) => {
-    const blockDef = blockDefinitionsYaml.find(b => b.name == blockName)
-    const docsPath = blockDef?.docsPath || blockName // use either explicit docsPath or block name
+  const openBlocklyHelp = blockName => {
+    const docsPath = getBlocklyHelpHref(blockName)
     docsGo(`/components/${docsPath}`)
+  }
+
+  const getBlocklyHelpHref = blockName => {
+    const blockDef = blockDefinitionsYaml.find(b => b.name == blockName)
+    return blockDef?.docsPath || blockName // use either explicit docsPath or block name
   }
 
   const referenceHelp = () => {
@@ -137,6 +141,7 @@
             blockName={block.text} 
             add={()=>{selectComponent(block.text)}}
             help={()=>{openBlocklyHelp(block.text)}}
+            helpHref={getBlocklyHelpHref(block.text)}
             bind:activeBlockPreview
           />
         {/each}

@@ -10,6 +10,7 @@
   
   export let add;
   export let help;
+  export let helpHref;
 
   export let activeBlockPreview; // the blockName that is currently active
 
@@ -35,9 +36,14 @@
         <div class="tiny-icon-button" on:click={add}>
           <AddFilled/>
         </div>
-        <div class="tiny-icon-button" on:click={help}>
+        <a
+          href={helpHref}
+          target="_blank"
+          class="tiny-icon-button"
+          on:click|preventDefault={help}
+          >
           <Help/>
-        </div>
+        </a>
       </div>
     {/if}
   </div>
@@ -74,6 +80,9 @@
   }
   .tiny-icon-button {
     padding: 8px;
+  }
+  a.tiny-icon-button {
+    color: inherit;
   }
   .tiny-icon-button:hover {
     background-color: lightgray;
