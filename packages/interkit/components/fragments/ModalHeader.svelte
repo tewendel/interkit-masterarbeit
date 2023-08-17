@@ -30,7 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: calc(var(--inset-y) * 0.125rem); 
+    gap: calc(var(--inset-y) * 0.25rem); 
   }
 
   .label {

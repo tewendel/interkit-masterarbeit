@@ -50,8 +50,8 @@
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding:
-      calc(var(--inset-y) * 1rem)
-      calc(var(--inset-x) * 1rem);
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 0.5rem);
     position: relative;
     display: flex;
     flex-direction: column;
