@@ -93,11 +93,29 @@
     checkRetryCountdown()
   });
 
-  // tell frame parent (=admin) the userId
-  // TODO check if we're not leaking a secret, if so, take special precautions
-  // like adding an extra (querystring) param to signal that app is running within iframe
-  // esp. the '*' targetOrigin is not very safe (would replacing the port be OK?)
-  $: window.parent.postMessage({ userId: $userId }, '*')
+  /* Tried to be clever here, and check for port 4000, but construction
+   * the parent's origin, with port 5000, and against 127.0.0.1 vs. localhost
+   * proved to error-prone.
+   */
+  let postMessageOrigin
+  if (document.location.port) {
+    console.warn('assuming dev mode, allowing unsafe inter-frame communication')
+    postMessageOrigin = '*'
+  } else {
+    postMessageOrigin = document.location.origin
+  }
+
+  $: {
+    // if we're in an iframe...
+    if (window.parent !== window) {
+      // ...tell frame parent (=admin) the userId
+      try {
+        window.parent.postMessage({ userId: $userId }, postMessageOrigin)
+      } catch (e) {
+        console.error('Inter-frame communication failed. Are you running interkit on non-standard ports? Check your script blockers?')
+      }
+    }
+  }
 
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;

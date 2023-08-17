@@ -128,15 +128,31 @@
     }
   }
 
+  let didAlertPostMessage = false
+  let postMessageOrigin
+  if (document.location.port) {
+    console.warn('assuming dev mode, allowing unsafe inter-frame communication')
+    postMessageOrigin = '*'
+    // we also silence the alert, due to false positives during HMR
+    didAlertPostMessage = true
+  } else {
+    postMessageOrigin = document.location.origin
+  }
+
   const ifrMsgCmd = commandOrObj => {
     if (!iframeRef) {
-      console.warn('ifrMsgCmd issued, but no iframeRef', commandOrObj)
+      console.warn('ifrMsgCmd issued, but no iframeRef', iframeRef, commandOrObj)
       return
     }
-    if (typeof commandOrObj === 'string') {
-      iframeRef.contentWindow.postMessage({ command: commandOrObj }, '*') 
-    } else {
-      iframeRef.contentWindow.postMessage(commandOrObj, '*') 
+    try {
+      if (typeof commandOrObj === 'string') {
+        iframeRef.contentWindow.postMessage({ command: commandOrObj }, postMessageOrigin) 
+      } else {
+        iframeRef.contentWindow.postMessage(commandOrObj, postMessageOrigin) 
+      }
+    } catch (e) {
+      (didAlertPostMessage ? console.warn : window.alert)(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Troubleshooting`)
+      didAlertPostMessage = true
     }
   }
 
