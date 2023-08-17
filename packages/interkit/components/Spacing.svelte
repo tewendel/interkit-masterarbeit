@@ -1,8 +1,8 @@
 <script>
-  export let top = "s"
-  export let left = "s"
-  export let bottom = "s"
-  export let right = "s"
+  export let top = "none"
+  export let left = "none"
+  export let bottom = "none"
+  export let right = "none"
   // TODO could be scaled by inset/outset, but we don't know whether it is used inset or outset!
   //   would probably need new components, or another param like "absolute|scaled as inset|scaled as outset"
 </script>
