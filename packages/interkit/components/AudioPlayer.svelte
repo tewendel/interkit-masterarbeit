@@ -344,10 +344,10 @@
     justify-content: space-between;
     box-sizing: border-box;
     padding:
-      calc(var(--outset-y) * 0.75rem)
-      calc(var(--outset-x) * 0.75rem)
-      calc(var(--outset-y) * 0.75rem + var(--audioplayer-progressbar-height))
-      calc(var(--outset-x) * 0.75rem);
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem)
+      calc(var(--outset-y) * 0.5rem + var(--audioplayer-progressbar-height))
+      calc(var(--outset-x) * 0.5rem);
     font-size: 1.25rem;
     line-height: 1.5rem;
     font-weight: 500;
