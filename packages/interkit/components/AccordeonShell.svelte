@@ -62,7 +62,10 @@
   }
 
   .toggle {
-    padding: calc(var(--inset) * 0.125rem);
+    box-sizing: border-box;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    padding: calc(var(--inset) * 0.5rem);
     border-radius: 0 var(--border-radius-accordeonshell) 0 0; 
   }
 
