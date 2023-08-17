@@ -134,7 +134,7 @@
   --border-radius-bar: calc(var(--border-radius) / 8);
   --border-radius-navbutton: calc(var(--border-radius-button) / 2);
   --border-radius-outer: calc(var(--border-radius) + 0.5rem);
-  --border-radius-mapmarker-inner: calc(var(--border-radius) / 3);
+  --border-radius-mapmarker-inner: calc(var(--border-radius) / 2);
 
   --color-background-arviewer-modal: var(--color-background-button-primary);
   --color-background-mediafileimage-overlay: var(--color-background-button-primary);
@@ -144,6 +144,7 @@
   --color-background-button: var(--color-background);
   --color-text-label2: var(--color-background);
   --color-background-label2: var(--color-text-button-pressed);
+  --color-border-mapmarker: var(--color-border-button-primary);
 
   /* these are used in the Spacing component */
   /* TODO if they are used only there, they could be also defined there */

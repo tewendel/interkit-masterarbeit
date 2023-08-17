@@ -85,7 +85,7 @@
     top: var(--mapoverlay-top);
     left: 0;
     right: 0;
-    z-index: 3;
+    z-index: 2003; /* must be above map marker popup */
     margin: 0;
     background-color: var(--color-background-backdrop);
     /* FIXME: this looks weird when there is enough cards to scroll.
@@ -96,7 +96,7 @@
       var(--mapoverlay-border-radius)
       var(--mapoverlay-border-radius);
     box-sizing: border-box;
-    max-height: calc(100% - var(--mapoverlay-top) - 1rem);
+    max-height: calc(100% - var(--mapoverlay-top));
     display: flex;
     flex-direction: column;
   }

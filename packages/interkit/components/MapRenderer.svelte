@@ -672,7 +672,7 @@
     position: relative;
     padding: 0.125rem;
     background-color: var(--color-background);
-    border: var(--border-width) solid var(--color-border);
+    border: var(--border-width) solid var(--color-border-mapmarker);
     /* add padding here                                        v */
     border-radius: calc(var(--border-radius-mapmarker-inner) + 0.125rem);
     font: var(--font-caption-bold);
@@ -756,7 +756,7 @@
     left: calc(50% - 0.4375rem);
     width: 0.9375rem;
     height: 0.625rem;
-    border-top: 0.625rem solid var(--color-border);
+    border-top: 0.625rem solid var(--color-border-mapmarker);
     /* note: the tip is not perfectly rounded, but at 1px this shouldn't matter */
     border-left: 0.4375rem solid transparent;
     border-right: 0.4375rem solid transparent;
@@ -801,12 +801,7 @@
   }
 
   .controls > * {
-    /*margin:
-      calc(var(--outset-y) * 0.5rem)
-      calc(var(--outset-x) * 0.5rem);*/
-    margin:
-      0.5rem
-      calc(var(--outset-x) * 0.5rem);
+    margin: 0.5rem 0;
   }
   .controls .locate {
     /*margin-top: calc(var(--outset-y) * 1rem + 1.5rem)*/
