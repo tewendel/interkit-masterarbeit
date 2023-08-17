@@ -158,7 +158,7 @@
         iframeRef.contentWindow.postMessage(commandOrObj, postMessageOrigin) 
       }
     } catch (e) {
-      (didAlertPostMessage ? console.warn : window.alert)(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Troubleshooting`)
+      (didAlertPostMessage ? console.warn : window.alert)(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Interface Overview, Troubleshooting`)
       didAlertPostMessage = true
     }
   }

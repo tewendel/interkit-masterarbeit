@@ -68,3 +68,13 @@ Activate the Twine-ish tab, to enter code in **Twine-ish** mode.
 Use the help button to see some example syntax.
 
 TODO Continue with the tutorial.
+
+## Troubleshooting
+
+### Preview Iframe does not work
+
+We rely on inter-frame communication.
+Some script/ad blockers intercept this;
+switch yours off or add an exception.
+Also check the DevTools console for mentions of `window` and `iframe`.
+
