@@ -3,7 +3,7 @@
   import { InterkitClient } from 'interkit'
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
-  import { onMount } from 'svelte'
+  import { tick, onMount } from 'svelte'
   import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens } from '../admin.js'
 
   import { get } from 'svelte/store'
@@ -49,13 +49,20 @@
   
   let iframeRef = null
 
-  $: window.__ifr = iframeRef
-
   let showSettingsModal = false
   let showShareModal = false
 
   let iframeWidth, iframeHeight
   let containerWidth, containerHeight
+
+  // <iframe bind:clientWidth> didn't work, or stopped working for some reason at some point
+  const updateIframeSize = async () => {
+    await tick()
+    if (!iframeRef) return
+    iframeWidth = iframeRef.clientWidth
+    iframeHeight = iframeRef.clientHeight
+  }
+  $: containerWidth, containerHeight, iframeRef, size, updateIframeSize()
 
   let size
   const sizes = [
@@ -236,8 +243,6 @@
       <iframe 
         class="preview-iframe"
         style={iframeStyle}
-        bind:clientWidth={iframeWidth}
-        bind:clientHeight={iframeHeight}
         title="embedded app preview" 
         src={ appVariant == "dev" ? previewURL : buildURL }
         allow="camera;microphone;geolocation;autoplay;accelerometer"
