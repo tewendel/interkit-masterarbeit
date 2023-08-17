@@ -19,6 +19,10 @@
   languages = languages && languages.split ? languages.split(',') : false
   setupFrontend(languages)
 
+  const setHtmlLang = langCode => {
+    document.documentElement.setAttribute('lang', langCode)
+  }
+
   // langT is a overly fail-safe reactive array to the translations
   // we try to make it available as soon as possible, but since it
   // depends on a server connection, it is likely not there yet
@@ -26,8 +30,12 @@
   // in a less critical context, we would use the simpler t function
   let langT
   lang.subscribe(activeLang => {
-    langT = get(translations)?.[activeLang || languages?.[0] || 'en']
+    const derivedLang = activeLang || languages?.[0] || 'en'
+    langT = get(translations)?.[derivedLang]
+    setHtmlLang(derivedLang)
   })
+
+  if (get(lang)) setHtmlLang(get(lang))
 
   let initComplete = false;
 
