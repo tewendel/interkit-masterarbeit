@@ -36,7 +36,7 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject } from './admin.js'
+  import { projectId, currentProject, currentUser } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -109,7 +109,7 @@
         closeIcon={UserAvatarFilledAlt}
       >
         <HeaderPanelLinks>
-          <HeaderPanelDivider>User {$userId}</HeaderPanelDivider>
+          <HeaderPanelDivider>User {$currentUser?.username}</HeaderPanelDivider>
           <div class="status">
             {#if $userIsRole?.admin}<UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>{/if}
           </div>

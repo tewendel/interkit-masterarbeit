@@ -16,6 +16,7 @@ export const secondaryTabsSize = writable(0)
 export const secondaryTabsSizes = [1/3, 1/2, 2/3]
 
 let currentProjectSub = null
+// a derived store that subscribes to the current project according to $projectId
 export const currentProject = derived(
   projectId,
   async ($projectId, set) => {
@@ -41,6 +42,34 @@ export const currentProject = derived(
 
   }
 );
+
+const userId = InterkitClient.userId;
+let currentUserSub = null
+// a derived store that subscribes to the current user according to interkit userId
+export const currentUser = derived(
+  userId, 
+  async ($userId, set) => {
+
+    if (!$userId && currentUserSub?.stop) {
+      currentUserSub.stop();
+      set(null);
+    }
+
+    if ($userId) {
+      currentUserSub = await InterkitClient.getSub("users", "user", $userId, (u) => u.id == $userId, true, null, "adminCurrentUser");
+      currentUserSub.data?.subscribe((u) => {
+        set(u);
+      });
+    }
+
+    return async () => {
+      if (currentUserSub?.stop) {
+        await currentUserSub.stop();
+      }
+    };
+  }
+);
+
 
 export const secondaryTabPreviewProjectId = writable()
 
