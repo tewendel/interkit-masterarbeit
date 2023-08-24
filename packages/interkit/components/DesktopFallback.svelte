@@ -91,12 +91,12 @@
 
 .wrap {
   max-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 2.5fr 2.5fr 1fr var(--preview-width);
+  grid-template-columns: 2.5fr 2.5fr 1fr calc(var(--preview-width) / 2);
   grid-template-rows: auto auto auto;
   grid-template-areas:
     "txt txt txt txt"
@@ -114,6 +114,7 @@
 
 @media (min-width: 62.5rem) {
   .container {
+    grid-template-columns: 2.5fr 2.5fr 1fr var(--preview-width);
     grid-template-areas:
       "txt txt n ifr"
       "qr  btn n ifr";
@@ -180,14 +181,31 @@ caption {
 
 .preview {
   grid-area: ifr;
+  overflow: hidden;
+  width: calc(var(--preview-width) / 2);
+  height: calc(var(--preview-height) / 2);
 }
 
 .preview-iframe {
+  box-sizing: border-box;
   width: var(--preview-width);
   height: var(--preview-height);
   border: 0.75rem solid black;
   border-radius: 3rem;
   overflow: hidden;
+  transform: scale(0.5);
+  transform-origin: top left;
+}
+
+@media (min-width: 62.5rem) {
+  .preview {
+    width: var(--preview-width);
+    height: var(--preview-height);
+  }
+
+  .preview-iframe {
+    transform: scale(1);
+  }
 }
 
 .qr-caption {

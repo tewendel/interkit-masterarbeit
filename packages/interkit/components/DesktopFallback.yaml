@@ -22,11 +22,11 @@ fields:
       - type: string
         name: iframeWidth
         defaultValue: "340px"
-        help: Width of the preview iframe, CSS length. Might break layout.
+        help: Width of the preview iframe, CSS length. Might break layout. Will be transformed to half on viewports smaller than 1000px.
       - type: string
         name: iframeHeight
         defaultValue: "720px"
-        help: Height of the preview iframe, CSS length. Might break layout.
+        help: Height of the preview iframe, CSS length. Might break layout. Will be transformed to half on viewports smaller than 1000px.
       - type: string
         name: fullscreenButtonText
         defaultValue: "$desktopfallback_fullscreen" # from packages/interkit/i18n_messages.js
