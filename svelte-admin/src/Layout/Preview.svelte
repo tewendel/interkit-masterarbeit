@@ -135,27 +135,36 @@
     }
   }
 
-  let postMessageOrigin
-  if (document.location.port) {
-    console.warn('assuming dev mode, allowing unsafe inter-frame communication')
-    postMessageOrigin = '*'
-  } else {
-    postMessageOrigin = document.location.origin
-  }
-
   const ifrMsgCmd = commandOrObj => {
     if (!iframeRef) {
       console.warn('ifrMsgCmd issued, but no iframeRef', iframeRef, commandOrObj)
       return
     }
+    let postMessageOrigin = '*'
+    if (document.location.port && false) {
+      console.warn('assuming dev mode, allowing unsafe inter-frame communication')
+    } else {
+      if (!bundleServerURL) {
+        console.warn('ifrMsgCmd issued, but no bundleServerURL', bundleServerURL, commandOrObj)
+        return
+      }
+      postMessageOrigin = bundleServerURL.match(/^((?:https?:)?\/\/(.*?))(?:\/|$)/)
+      if (!postMessageOrigin) {
+        console.warn('ifrMsgCmd issued, but could not parse host from bundleServerURL', bundleServerURL, commandOrObj)
+        return
+      }
+      postMessageOrigin = postMessageOrigin[1]
+    }
+    console.log('ifrMsgCmd issued can still fail if iframe hasn\'t loaded yet')
+    console.log('ifrMsgCmd ', commandOrObj, postMessageOrigin, iframeRef?.contentWindow)
     try {
       if (typeof commandOrObj === 'string') {
         iframeRef.contentWindow.postMessage({ command: commandOrObj }, postMessageOrigin) 
       } else {
         iframeRef.contentWindow.postMessage(commandOrObj, postMessageOrigin) 
       }
-    } catch (e) {
-      console.warn(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Interface Overview, Troubleshooting`)
+    } catch (err) {
+      console.warn(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Interface Overview, Troubleshooting`, commandOrObj, err)
     }
   }
 

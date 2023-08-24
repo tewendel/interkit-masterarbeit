@@ -101,22 +101,20 @@
     checkRetryCountdown()
   });
 
-  /* Tried to be clever here, and check for port 4000, but construction
-   * the parent's origin, with port 5000, and against 127.0.0.1 vs. localhost
-   * proved to error-prone.
-   */
-  let postMessageOrigin
-  if (document.location.port) {
-    console.warn('assuming dev mode, allowing unsafe inter-frame communication')
-    postMessageOrigin = '*'
-  } else {
-    postMessageOrigin = document.location.origin
-  }
-
   $: {
     // if we're in an iframe...
     if (window.parent !== window) {
       // ...tell frame parent (=admin) the userId
+      let postMessageOrigin = '*'
+      if (false && document.location.port) {
+        console.warn('assuming dev mode, allowing unsafe inter-frame communication')
+      } else {
+        postMessageOrigin = $config?.INTERKIT_ADMIN_URL
+      }
+      if (!postMessageOrigin) {
+        console.warn('no admin url, preventing unsafe inter-frame communication')
+      }
+      // console.log('inter-frame', postMessageOrigin, $userId)
       try {
         window.parent.postMessage({ userId: $userId }, postMessageOrigin)
       } catch (e) {
