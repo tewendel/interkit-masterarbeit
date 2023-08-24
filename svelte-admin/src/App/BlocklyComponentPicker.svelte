@@ -1,5 +1,7 @@
 <script>
 
+  import { createEventDispatcher } from 'svelte'
+
   import { Accordion, AccordionItem, Button } from "carbon-components-svelte"; 
   import BlocklyComponentPreview from "./BlocklyComponentPreview.svelte";
   import Help from "carbon-icons-svelte/lib/Help.svelte";
@@ -11,6 +13,8 @@
   export let toolbox;
   export let topBlocks;
   export let blockDefinitionsYaml; // unprocessed block definitions loaded from yaml
+
+  const dispatch = createEventDispatcher()
 
   let activeId = "";
   let selectedIds = [];
@@ -76,15 +80,6 @@
     buildCategories(toolbox);
   }
 
-  const selectComponent = (blockName) => {
-    //if(confirm("add " + blockName + " to workspace?")) {
-      let newBlock = workspace.newBlock(blockName);
-      newBlock.initSvg();
-      newBlock.moveBy((workspace.getMetrics().viewLeft + 20) / workspace.scale, (workspace.getMetrics().viewTop + 20) / workspace.scale);
-      newBlock.render();
-    //}
-  }
-
   const openBlocklyHelp = blockName => {
     const docsPath = getBlocklyHelpHref(blockName)
     docsGo(`/components/${docsPath}`)
@@ -139,10 +134,11 @@
         {#each category.children as block}
           <BlocklyComponentPreview 
             blockName={block.text} 
-            add={()=>{selectComponent(block.text)}}
+            add={() => dispatch('addcomponent', block.text)}
             help={()=>{openBlocklyHelp(block.text)}}
             helpHref={getBlocklyHelpHref(block.text)}
             bind:activeBlockPreview
+            on:startdrag={evt => dispatch('startdrag', evt.detail)}
           />
         {/each}
       </AccordionItem>    
