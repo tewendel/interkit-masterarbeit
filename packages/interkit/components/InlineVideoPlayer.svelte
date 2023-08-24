@@ -33,7 +33,7 @@
 {/if}
 
 <style>
-  ._workaround_ {}
+  ._workaround_ { /* vite sometimes strips the very first rule when HMR */ }
 
   video {
       width: 100%;

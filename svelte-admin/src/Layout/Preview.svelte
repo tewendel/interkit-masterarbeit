@@ -398,6 +398,8 @@
 <style lang="scss">
 
   @use '@carbon/type';
+
+  ._workaround_ { /* vite sometimes strips the very first rule when HMR */ }
   
   .preview-container {
     /* ...- .pane-controls - top ButtonSet - bottom ButtonSet - bottom padding */

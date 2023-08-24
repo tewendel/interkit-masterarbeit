@@ -248,7 +248,7 @@
 
 <style>
 
-  ._workaround_ {}
+  ._workaround_ { /* vite sometimes strips the very first rule when HMR */ }
 
   .message {
     width: auto;
