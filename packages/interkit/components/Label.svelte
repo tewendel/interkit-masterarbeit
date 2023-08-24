@@ -41,7 +41,8 @@
   }
   
   .container.normal.text,
-  .container.strong.text {
+  .container.strong.text,
+  .container.icon {
     padding:
       calc(var(--inset-y) * 0.125rem)
       calc(var(--inset-x) * 0.5rem);

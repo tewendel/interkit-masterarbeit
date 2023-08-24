@@ -45,7 +45,7 @@
       <span class="headline CardHeader__Headline">{#if headline}{headline}{/if}</span>
       <div class="headline-chips CardHeader__HeadlineChips">
         <slot name="chips"></slot>
-        {#if rightArrow}
+        {#if rightArrow || $showDummyData}
           <span class="right-arrow CardHeader__RightArrow">
             <Icon type="Thin-Arrow-Right"/>
           </span>
@@ -83,8 +83,12 @@
     box-sizing: border-box;
   }
 
-  .card-header.full {
+  .card-header.large {
     padding: calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 0.5rem);
+  }
+
+  .card-header.full {
+    padding: calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 1rem);
   }
 
   .row-1, .row-2, .row-3 {

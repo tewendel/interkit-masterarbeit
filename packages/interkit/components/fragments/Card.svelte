@@ -188,12 +188,17 @@
   .container.medium .image {
     width: 6rem;
     height: 6rem;
-    margin-right: calc(var(--inset-x) * 0.25rem);
+    margin-right: calc(var(--inset-x) * 0.5rem);
     flex-shrink: 0;
   }
 
+  .container.small .header,
   .container.medium .header {
-    padding-right: calc(var(--inset-x) * 0.25rem);
+    padding:
+      calc(var(--inset-x) * 0.5rem)
+      calc(var(--inset-x) * 0.25rem)
+      calc(var(--inset-x) * 0.25rem)
+      0;
     flex: 1;
     min-width: 0;
   }
@@ -221,6 +226,31 @@
       calc(var(--inset-x) * 0.5rem)
       calc(var(--inset-y) * 0.25rem)
       calc(var(--inset-x) * 0.5rem);
+  }
+
+  .container.full .content-wrapper {
+    padding-left: calc(var(--inset-x) * 1.5rem);
+    padding-right: calc(var(--inset-x) * 1.5rem);
+  }
+
+  .container.small  .content-wrapper :global(.ButtonBar),
+  .container.medium .content-wrapper :global(.ButtonBar),
+  .container.large  .content-wrapper :global(.ButtonBar) {
+    margin:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * -0.5rem);
+    width: calc(100% + var(--inset-y) * 1rem);
+  }
+
+  .container.full .content-wrapper :global(.ButtonBar) {
+    margin:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * -1rem);
+    width: calc(100% + var(--inset-y) * 2rem);
+  }
+
+  .container .content-wrapper :global(.ButtonBar + .ButtonBar__HelpText) {
+    margin-top: calc(var(--inset-y) * -0.5rem);
   }
 
 </style>
