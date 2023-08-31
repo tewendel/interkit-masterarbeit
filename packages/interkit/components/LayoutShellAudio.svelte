@@ -39,7 +39,7 @@
   }
 
   .top-bar {
-    /* min-height: 3.5rem; */
+    min-height: 3.5rem;
     flex-shrink: 1;
     flex-direction: row;
     justify-content: space-around;
