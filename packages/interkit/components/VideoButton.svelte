@@ -12,6 +12,7 @@
   import { util } from '../'
 
   export let videoColumn
+  export let vimeoColumn
   export let mediafileKey
   export let vimeoUrl
   
@@ -21,19 +22,29 @@
 
   let vimeoElem = null;
   let vimeoPlayer = null;
-  const vimeoOptions = {
-    url: vimeoUrl,
-    responsive: true,
-    controls: false,
-    title: false,
-  };
-  console.log("vimeo", vimeoOptions)
+  let vimeoOptions;
+  const initVimeoOptions = (url) => {
+    if(url) {
+      vimeoOptions = {
+        url,
+        responsive: true,
+        controls: false,
+        title: false,
+      }
+      console.log("setting up vimeo options", vimeoOptions)
+    }    
+  }
+  if(vimeoUrl) initVimeoOptions(vimeoUrl)
 
   const elementContext = getContext("element")
-  if(!elementContext && !mediafileKey) {
-    console.warn("VideoButton needs an element context, for example from DataLoaderSingle")
+  console.log("elementContext video", $elementContext)
+  if(!elementContext && !mediafileKey && !vimeoUrl) {
+    console.warn("VideoButton needs either an element context, for example from DataLoaderSingle, or a static mediafileKey or a static vimeoUrl")
   }
 
+  $: {
+    if(vimeoColumn) initVimeoOptions(util.rowVal($elementContext, vimeoColumn))  
+  }
   let videoFileRef;
   $: {
     if(mediafileKey) videoFileRef = {value: mediafileKey}
@@ -41,7 +52,6 @@
     //console.log("videoFileRef", videoFileRef)
   }
   
-
   let playerOpen = false
   let showControls = true
   let rangeSliderValue
@@ -108,7 +118,7 @@
   }
 
   $: {
-    if(playerOpen && vimeoUrl) {
+    if(playerOpen && vimeoOptions) {
       initVimeo();
     }
   }
@@ -175,7 +185,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="container">
 
-      {#if vimeoUrl}
+      {#if vimeoOptions}
         <div class="vimeo" 
           bind:this={vimeoElem}
         ></div>
