@@ -6,11 +6,13 @@ fields:
     - name: videoColumn
       type: sheetColumn
       columnType: mediaFile
-      defaultValue: "elements/video"
       help: "The column on the element context (for example DataLoaderSingle) containing the video file"
     - name: mediafileKey
       type: string
       help: "Optionally use the key of a media file directly"
+    - name: vimeoUrl
+      type: string
+      help: "Optionally provide the url of a video hosted on vimeo for embedding"
     - name: controls
       type: options
       options:

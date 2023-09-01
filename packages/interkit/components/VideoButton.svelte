@@ -7,15 +7,28 @@
   import MediaFileResolver from './MediaFileResolver.svelte';
   import Overlay from './Overlay.svelte';
   import Loading from './Loading.svelte'
+  import Player from "@vimeo/player";
   
   import { util } from '../'
 
   export let videoColumn
   export let mediafileKey
+  export let vimeoUrl
+  
   export let controls = "none" // interkit | native | none
   export let loop = false
   export let buttonOptions
-  
+
+  let vimeoElem = null;
+  let vimeoPlayer = null;
+  const vimeoOptions = {
+    url: vimeoUrl,
+    responsive: true,
+    controls: false,
+    title: false,
+  };
+  console.log("vimeo", vimeoOptions)
+
   const elementContext = getContext("element")
   if(!elementContext && !mediafileKey) {
     console.warn("VideoButton needs an element context, for example from DataLoaderSingle")
@@ -66,15 +79,53 @@
   onMount(()=>{
     resetControlsTimeout()
   })
+
+  const initVimeo = () => {
+    setTimeout(()=>{
+      vimeoPlayer = new Player(vimeoElem, vimeoOptions);
+      vimeoPlayer.on("timeupdate", function (arg) {
+        videoPlayerCurrentTime = arg.seconds;
+      });
+      vimeoPlayer.on("loaded", function (arg) {
+        vimeoPlayer
+          .getDuration()
+          .then(function (d) {
+            videoPlayerDuration = d;
+          })
+          .catch(function (error) {
+            console.log("vimeo error", error)
+            // an error occurred
+          });
+      });
+      vimeoPlayer.on("ended", function () {
+        videoPlayerPaused = true;
+        videoPlayerCurrentTime = 0;
+        vimeoPlayer.setCurrentTime(0);
+      });
+      vimeoPlayer.play()
+      videoPlayerPaused = false
+    }, 500)
+  }
+
+  $: {
+    if(playerOpen && vimeoUrl) {
+      initVimeo();
+    }
+  }
+
   onDestroy(()=>{
     clearTimeout(hideControlsTimeout)
   })
 
-  // currentTime binding is buggy in svelte, using dom is more reliable
-  // see https://svelte.dev/repl/3470317362744bf296ae78b688445448?version=3.9.2
   const setTimeDom = (seconds) => {
-		let element = document.getElementById('videoButtonVideoId')
-		element.currentTime = seconds
+    if(vimeoPlayer) {
+      vimeoPlayer.setCurrentTime(seconds)
+    } else {  
+      // currentTime binding is buggy in svelte, using dom is more reliable
+      // see https://svelte.dev/repl/3470317362744bf296ae78b688445448?version=3.9.2
+		  let element = document.getElementById('videoButtonVideoId')
+      element.currentTime = seconds
+    }
 	}
   
   const toggleControls = () => {
@@ -84,16 +135,21 @@
   }
   
   const seek = (seconds) => {
-    //videoPlayerCurrentTime += seconds
     setTimeDom(videoPlayerCurrentTime += seconds)
     resetControlsTimeout()
   }
   const seekTo = (seconds) => {
-    //videoPlayerCurrentTime = seconds
     setTimeDom(seconds)
     resetControlsTimeout()
   }
   const togglePlay = () => {    
+    if(vimeoPlayer) {
+      if(videoPlayerPaused) {
+        vimeoPlayer.play()
+      } else {
+        vimeoPlayer.pause()
+      }
+    }
     videoPlayerPaused = !videoPlayerPaused;
     videoPlayerCurrentTime = videoPlayerCurrentTime == videoPlayerDuration ? 0 : videoPlayerCurrentTime
     resetControlsTimeout()
@@ -111,27 +167,41 @@
 
   <Overlay classes="VideoPlayer" customStyle="background-color: #000;">
 
-    <div class="VideoPlayer__Close close">
-      <Button size="small" type="secondary" on:click={closePlayer}>
-        <Icon type="Full-Close"/>
-      </Button>
-    </div>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="container">
 
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <video 
-      id="videoButtonVideoId"
-      autoplay 
-      controls={controls == "native"} 
-      {loop} 
-      on:click={toggleControls}
-      bind:currentTime={videoPlayerCurrentTime}
-      bind:duration={videoPlayerDuration}
-      bind:paused={videoPlayerPaused}
-    >
-      <MediaFileResolver let:url mediafileRef={videoFileRef} >
-        <source src={url} >
-      </MediaFileResolver>
-    </video>
+      {#if vimeoUrl}
+        <div class="vimeo" 
+          bind:this={vimeoElem}
+        ></div>
+      {:else}
+        
+        <!-- svelte-ignore a11y-media-has-caption -->
+        <video 
+          id="videoButtonVideoId"
+          autoplay 
+          controls={controls == "native"} 
+          {loop} 
+          bind:currentTime={videoPlayerCurrentTime}
+          bind:duration={videoPlayerDuration}
+          bind:paused={videoPlayerPaused}
+        >
+          <MediaFileResolver let:url mediafileRef={videoFileRef} >
+            <source src={url} >
+          </MediaFileResolver>
+        </video>
+
+      {/if}
+
+      <div class="click-catcher" on:click={toggleControls}></div>
+
+      <div class="VideoPlayer__Close close">
+        <Button size="small" type="secondary" on:click={closePlayer}>
+          <Icon type="Full-Close"/>
+        </Button>
+      </div>
+
+    </div>
 
     {#if controls == "interkit" && showControls}
 
@@ -205,6 +275,13 @@
 
 <style>
 
+  .container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
   .close {
     position: absolute;
     top: var(--distance-s);
@@ -212,6 +289,16 @@
   }
 
   video {
+    width: 100%;
+    height: 100%;
+  }
+
+  .vimeo {
+    flex: 1;
+  }
+
+  .click-catcher {
+    position: absolute;
     width: 100%;
     height: 100%;
   }
