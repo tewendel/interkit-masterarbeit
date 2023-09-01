@@ -363,7 +363,9 @@
   }
 
   .controls {
-    padding: var(--distance-l);
+    padding:
+      calc(var(--outset-y) * 2rem)
+      calc(var(--outset-x) * 2rem);
     background-color: var(--color-background-backdrop);
     position: absolute;
     bottom: 0;
@@ -372,13 +374,13 @@
   }
 
   .audioMeter {
-    border: 1px solid black;
+    border: var(--border-width) solid var(--color-border);
     background: linear-gradient(0deg, rgba(0,255,0,1) 0%, rgba(0,255,0,1) var(--levelPerc), rgba(205,205,205,1) var(--levelPerc), rgba(255,255,255,1) 100%);
   }
 
   .mode-video .audioMeter {
     position: absolute;
-    width: 20px;
+    width: 1.25rem;
     height: 96%;
     right: 2%;
     top: 2%;

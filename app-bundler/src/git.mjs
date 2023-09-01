@@ -34,12 +34,20 @@ async function gitAdd(projectPath, filepath) {
   git.add({ ...repo, filepath })
 }
 
+async function gitRemove(projectPath, filepath) {
+  const repo = {
+    fs,
+    dir: projectPath,
+  };
+  git.remove({ ...repo, filepath });
+}
+
 async function gitStatus(projectPath, filepath) {
   const repo = {
     fs,
     dir: projectPath
   }
-  git.status({ ...repo, filepath })
+  return git.status({ ...repo, filepath })
 }
 
 
@@ -61,13 +69,17 @@ async function gitCommitAll(projectPath, message = "some commit") {
   console.log("git commitAll:", files)
   for (let file of files) {
     const status = await gitStatus(projectPath, file);
+    //console.log("git status:", status)
     if (status === '*deleted') {
-      // TODO: fix staging of removed file
+      //console.log("git remove:", file)
+      // Note how staging of removed files work:
       // https://github.com/isomorphic-git/isomorphic-git/issues/1042
       // https://github.com/isomorphic-git/isomorphic-git/issues/1099
-        return git.remove({dir, file});
+        await gitRemove(projectPath, file);
+    } else {
+      //console.log("git add:", file)
+      await gitAdd(projectPath, file)
     }
-    await gitAdd(projectPath, file)
   }
   return await gitCommit(projectPath, message)
 }

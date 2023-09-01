@@ -41,8 +41,11 @@
 
   .switch {
     background-image: url("./icons/SwitchOff.svg");
-    width: 36px;
-    height: 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    width: 2.25rem;
+    height: 1.375rem;
   }
   .switch:hover {
     cursor: pointer;

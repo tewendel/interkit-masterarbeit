@@ -2,6 +2,8 @@
   import definitions from './styleTokensConfig.json'
   
   export let styleTokens = {}
+  export let isRootStyling = false
+  export let overrideStyleTokens = {}
 
   import { onMount } from 'svelte'
 
@@ -11,33 +13,44 @@
   onMount(async () => {
   })
 
+  /* this is like <html style="--foo: bar">
+  const setDocumentCssVar = (varName, value) => {
+    document.documentElement.style.setProperty('--' + varName, value)
+  }
+  */
+
+  const setRem = scalarFactor => {
+    const f = parseFloat(scalarFactor)
+    if (!scalarFactor) {
+      console.warn('Styling: styleToken scale is not a float', scalarFactor, '=>', f)
+      return
+    }
+    document.documentElement.style.fontSize = `calc(100% * ${f})`
+  }
+
   $: {
     // generate local tokens and init with defaults
     for (let definition of definitions) {
-      // first choice: styleTokens from props
+      // first choice: overridden styleTokens
+      if(overrideStyleTokens && typeof overrideStyleTokens[definition.key] !== "undefined") {
+        tokens[definition.key] = overrideStyleTokens[definition.key]
+        continue
+      }
+      // second choice: styleTokens from props
       if(styleTokens && typeof styleTokens[definition.key] !== "undefined") {
         tokens[definition.key] = styleTokens[definition.key]
         continue
       }
-      // second choice: global styleTokens
+      // third choice: global styleTokens
       if(globalTokens && typeof globalTokens[definition.key] !== "undefined") {
         tokens[definition.key] = globalTokens[definition.key]
         continue
       }
-      // third choice: default value
+      // fourth choice: default value
       tokens[definition.key] = definition.defaultValue
     }
+    if (isRootStyling && tokens.scale) setRem(tokens.scale)
   }
-
-  /*
-  const setCssVar = (varName, value) => {
-    document.documentElement.style.setProperty('--' + varName, value)
-  }
-
-  $: {
-    setCssVar('borderRadius', borderRadius)
-  }
-  */
   
 /*
   // detecting google fonts, but lacks precise definition
@@ -70,7 +83,6 @@
   --color-background-backdrop: ${tokens.colorBackgroundBackdrop};
   --color-border: ${tokens.colorBorder};
   --color-dummy-asset: ${tokens.colorDummyAsset};
-  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
 
   --color-text-button-pressed: ${tokens.colorTextButtonPressed};
   --color-background-button-pressed: ${tokens.colorBackgroundButtonPressed};
@@ -93,6 +105,13 @@
 
   --color-pagination: ${tokens.colorPagination};
 
+  --distance-scale-factor: ${parseFloat(tokens.distanceScaleFactor) || 1.0};
+  --inset: ${tokens.inset};
+  --inset-x: ${tokens.insetX};
+  --inset-y: ${tokens.insetY};
+  --outset-x: ${tokens.outsetX};
+  --outset-y: ${tokens.outsetY};
+
   --border-width: ${tokens.borderWidth};
   --border-radius: ${tokens.borderRadius};
   --border-radius-button: ${tokens.borderRadiusButton};
@@ -105,26 +124,39 @@
   --font-family-interface: ${tokens.fontFamilyInterface};
   --font-family-content: ${tokens.fontFamilyContent};
 
-  /* constant */
-
-  --distance-base: 8px;
-  --distance-tiny: 2px;
 
   /* derived defaults */
 
   /* --border-color: var(--color-text); deprecated? */
+
+  --border-radius-button-big: calc(var(--border-radius-button) * 1.5);
+  --border-radius-button-small: calc(var(--border-radius-button) * 0.75);
+  --border-radius-bar: calc(var(--border-radius) / 8);
+  --border-radius-navbutton: calc(var(--border-radius-button) / 2);
+  --border-radius-outer: calc(var(--border-radius) + 0.5rem);
+  --border-radius-mapmarker-inner: calc(var(--border-radius) / 2);
+
+  --color-background-arviewer-modal: var(--color-background-button-primary);
+  --color-background-mediafileimage-overlay: var(--color-background-button-primary);
+  --color-background-usercardvalue-bar: var(--color-background-highlight);
   --color-background-button-primary: var(--color-text);
   --color-text-button: var(--color-text);
   --color-background-button: var(--color-background);
+  --color-text-label2: var(--color-background);
+  --color-background-label2: var(--color-text-button-pressed);
+  --color-border-mapmarker: var(--color-border-button-primary);
 
-  --distance-xs: calc(var(--distance-base) * var(--distance-scale-factor) / 2.0);
-  --distance-s: calc(var(--distance-base) * var(--distance-scale-factor) / 1);
-  --distance-s-m: calc(var(--distance-base) * var(--distance-scale-factor) * 1.5);
-  --distance-m: calc(var(--distance-base) * var(--distance-scale-factor) * 2);
-  --distance-m-l: calc(var(--distance-base) * var(--distance-scale-factor) * 3);
-  --distance-l: calc(var(--distance-base) * var(--distance-scale-factor) * 4);
-  --distance-xl: calc(var(--distance-base) * var(--distance-scale-factor) * 6);
-  --distance-xxl: calc(var(--distance-base) * var(--distance-scale-factor) * 8);
+  /* these are used in the Spacing component */
+  /* TODO if they are used only there, they could be also defined there */
+  --distance-tiny: 0.125rem;
+  --distance-xs:   0.25rem;
+  --distance-s:    0.5rem;
+  --distance-s-m:  0.75rem;
+  --distance-m:    1rem;
+  --distance-m-l:  1.5rem;
+  --distance-l:    2rem;
+  --distance-xl:   3rem;
+  --distance-xxl:  4rem;
   
   /* cheat sheet for translation from figma 
   2 -> tiny

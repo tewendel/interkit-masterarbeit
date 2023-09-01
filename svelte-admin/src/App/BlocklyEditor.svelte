@@ -304,9 +304,15 @@
     topBlocks = workspace.getTopBlocks();
   }
 
+  let blocklyDragTarget
+  let blocklyDragHelperEl
+
   onMount(async () => {
     console.log("blockly onMount")
-      initBlockly();
+    initBlockly();
+    blocklyDragHelperEl = document.getElementById('blocklyDragHelper') || document.createElement('div')
+    blocklyDragHelperEl.id = 'blocklyDragHelper'
+    document.body.appendChild(blocklyDragHelperEl)
   });
 
   onDestroy(() => {
@@ -373,6 +379,61 @@
     }
   }
 
+  let dragging = false
+
+  const getBlocklyMouse2WorkspaceCoords = evt => {
+    const rect = evt.target.getBoundingClientRect()
+    const relMouseX = evt.clientX - rect.left
+    const relMouseY = evt.clientY - rect.top
+    const normX = relMouseX / rect.width
+    const normY = relMouseY / rect.height
+    const metrics = workspace.getMetrics()
+    const x = metrics.viewLeft / workspace.scale + normX * metrics.viewWidth / workspace.scale
+    const y = metrics.viewTop / workspace.scale + normY * metrics.viewHeight / workspace.scale
+    return { x, y }
+  }
+
+  const addComponent = (blockName, workspacePosition) => {
+    console.log('addComponent', blockName)
+    if (!workspacePosition) {
+      workspacePosition = {
+        x: (workspace.getMetrics().viewLeft + 20) / workspace.scale,
+        y: (workspace.getMetrics().viewTop + 20) / workspace.scale
+      }
+    }
+    let newBlock = workspace.newBlock(blockName)
+    newBlock.initSvg()
+    newBlock.moveBy(workspacePosition.x, workspacePosition.y)
+    newBlock.render()
+  }
+
+  let dragDroppable = false
+
+  const dragMove = evt => {
+    blocklyDragHelperEl.style.left = (evt.clientX + 10) + 'px'
+    blocklyDragHelperEl.style.top = (evt.clientY + 10) + 'px'
+  }
+
+  const startDrag = evt1 => {
+    dragging = evt1.detail
+    dragMove(evt1) // updates position
+    document.body.classList.toggle('blockly--dragging', true)
+    blocklyDragHelperEl.textContent = dragging
+    evt1.preventDefault()
+    evt1.stopPropagation()
+    document.addEventListener('mousemove', dragMove, { passive: true })
+    document.addEventListener('mouseup', evt2 => {
+      document.removeEventListener('mousemove', dragMove, { passive: true })
+      blocklyDragHelperEl.style.left = '0'
+      blocklyDragHelperEl.style.top = '0'
+      if (dragDroppable) {
+        addComponent(dragging, getBlocklyMouse2WorkspaceCoords(evt2))
+      }
+      dragging = false
+      document.body.classList.toggle('blockly--dragging', false)
+    }, { once: true })
+  }
+
 </script>
 
   <svelte:window on:keydown={onKeyDown} />
@@ -382,7 +443,14 @@
     >
 
     <svelte:fragment slot="sidebarLeft">
-      <BlocklyComponentPicker {workspace} {toolbox} {topBlocks} blockDefinitionsYaml={blockObjects}/>
+      <BlocklyComponentPicker
+        {workspace}
+        {toolbox}
+        {topBlocks}
+        blockDefinitionsYaml={blockObjects}
+        on:startdrag={startDrag}
+        on:addcomponent={evt => addComponent(evt.detail)}
+        />
     </svelte:fragment>
    
     <svelte:fragment slot="contentMain">
@@ -416,7 +484,19 @@
                     <Button on:click={()=>saveAndCompile(true)}>save</Button>            
                   </div>          
                   <div class="blocklyTabContent">
-                    <div id="blocklyDiv" use:watchResize={resizeBlockly}></div>
+                    <div class="blocklyWrapper">
+                      <div
+                        id="blocklyDiv"
+                        use:watchResize={resizeBlockly}
+                        ></div>
+                      <div
+                        style={`visibility: ${dragging ? 'visible' : 'hidden'}`}
+                        class="blocklyDragTarget"
+                        bind:this={blocklyDragTarget}
+                        on:mouseenter={() => { dragDroppable = true; document.body.classList.toggle('blockly--droppable', true) }}
+                        on:mouseleave={() => { dragDroppable = false; document.body.classList.toggle('blockly--droppable', false) }}
+                        ></div>
+                    </div>
                   </div>
                 </TabContent>
                 <TabContent>
@@ -467,9 +547,27 @@
     z-index: 1;
   }
 
-  #blocklyDiv {
+  .blocklyWrapper {
+    position: relative;
     width: 100%;
     height: 100%;
+  }
+
+  .blocklyDragTarget,
+  #blocklyDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .blocklyDragTarget {
+    border: 2px dashed #888;
+  }
+
+  :global(body.blockly--droppable) .blocklyDragTarget {
+    border-color: #0f62fe;
   }
 
   .scroll {

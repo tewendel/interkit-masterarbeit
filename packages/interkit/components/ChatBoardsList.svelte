@@ -89,26 +89,23 @@
 <SectionShell classes="ChatBoardsList">
 {#if $channelsStore || $showDummyData}
   {#each ($showDummyData ? dummyData : $channelsStore) as channel}
-      {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
+    {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="ChatBoardsList__SortItem sort-item" style="order: {channelOrder[channel.channel_key]}">
         <ChatBoardCard
           board={channel.channel_key}
           {path}
         />
       </div>
-      {/if}
+    {/if}
   {/each}
 {/if}
 </SectionShell>
 
-
-
 <style>
+
   .sort-container {
     display: flex;
     flex-direction: column; 
   }
-
-
 
 </style>

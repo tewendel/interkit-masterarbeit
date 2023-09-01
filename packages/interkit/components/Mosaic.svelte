@@ -17,10 +17,10 @@
 </script>
 
 {#if $elements || $showDummyData}
-  {#if $elements?.length == 0 && $showDummyData}
+  {#if $elements?.length === 0}
     <slot name="emptyElement"></slot>
   {:else}
-    <div class="Mosaic {gap ? 'Mosaic--gap' : ''} square-container" class:gap>
+    <div class="root Mosaic {gap ? 'Mosaic--gap' : ''} square-container" class:gap class:showDummy={$showDummyData}>
       {#each ($showDummyData ? dummyData : $elements) as element}
         <div class="Mosaic__Square square">
           <div class="Mosaic__Content content">
@@ -41,9 +41,14 @@
 
 <style>
 
+.root {
+  --mosaic-gap: calc(var(--outset-x) * 0.5rem);
+}
+
 .square-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .square {
@@ -53,11 +58,12 @@
 }
 
 .square-container.gap {
-  gap: 8px;
+  gap: var(--mosaic-gap);
 }
 
 .square-container.gap .square {
-  flex-basis: calc(33.33333% - (8px * 0.666));
+  /* final tiny value subtracted avoids eager wrap due to rounding */
+  flex-basis: calc(33.33333% - var(--mosaic-gap) * 0.666 - 0.0625rem);
 }
 
 .square::before {
@@ -71,6 +77,10 @@
   top: 0; left: 0;
   height: 100%;
   width: 100%;
+}
+
+.showDummy .content {
+  background: var(--color-dummy-asset);
 }
   
 </style>

@@ -6,6 +6,7 @@
   import Message from './Chat/Message.svelte'
   import MessageTyping from './Chat/MessageTyping.svelte'
   import ChatInput from './Chat/ChatInput.svelte'
+  /* import StoryBoardImage from "./StoryBoardImage.svelte"; */
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
   
   import { Plugins } from '@capacitor/core';
@@ -427,6 +428,11 @@
 </script>
 
     <div class="Chat root">
+      <!-- approach abandoned in favor of image in top bar
+      <div class="storyboardimage Chat__StoryBoardImage">
+        <StoryBoardImage classes="" />
+      </div>
+      -->
       <div
         class="Chat__MessagesContainer messages-container"
         class:messages__empty={!messageStore || $messageStore.length === 0}
@@ -490,7 +496,7 @@
 
 <style>
 
-  ._workaround_ {}
+  ._workaround_ { /* vite sometimes strips the very first rule when HMR */ }
 
   .root {
     display: flex;
@@ -500,14 +506,16 @@
     position: relative;
   }
 
-  .channel-info-overlay {
+  /*
+  .storyboardimage {
     position: absolute;
-    width: 96px;
-    height: 96px;
-    top: var(--distance-m);
-    left: var(--distance-s);
+    width: 6rem;
+    height: 6rem;
+    top: calc(var(--outset-y) * 1rem);
+    left: calc(var(--outset-y) * 0.5rem);
     z-index: 1;
   }
+  */
 
   .messages-container {
     flex-grow: 1;
@@ -519,13 +527,16 @@
   .messages {
     display: flex;
     flex-direction: column;
-    padding: calc(96px + var(--distance-l) ) var(--distance-m) var(--distance-m) var(--distance-m);
+    /* padding would include the floaty .storyboardimage
+    padding: calc(var(--outset-y) * 1rem * 2 + 6rem) calc(var(--outset-x) * 1rem) calc(var(--outset-y) * 1rem) calc(var(--outset-x) * 1rem);
+    */
+    padding: calc(var(--outset-y) * 1rem) calc(var(--outset-x) * 1rem);
   }
 
   .input {
     flex-grow: 0;
     flex-shrink: 1;
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-width) solid var(--color-border);
   }
 
   .input.hidden {

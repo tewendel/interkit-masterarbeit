@@ -33,11 +33,12 @@
 
   .container {
     width: 100%;
-    
   }
 
   .container.background {
-    padding: var(--distance-s) 0;
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      0;
   }
 
   .container.background {
@@ -54,7 +55,7 @@
   }
 
   .container.gaps .slider {
-    gap: var(--distance-s);
+    gap: calc(var(--outset-x) * 0.5rem)
   }
 
   .container:not(.continuous) .slider[data-slides-amount="1"] .slide {
@@ -68,7 +69,7 @@
     /* important that they all are exactly the same width (only the first one has a border-left), otherwise it confuses AspectRatio */
     box-sizing: content-box;
     border: var(--border-width) solid var(--border-color);
-    padding: 1px 0px; /* otherwise box shadow is cut off */
+    padding: 0.0625rem 0; /* otherwise box shadow is cut off */
   }
 
   .container.continuous .slide {
@@ -86,11 +87,11 @@
   }
 
   .container.background .slide:first-child {
-    margin-left: var(--distance-s);
+    margin-left: calc(var(--outset-x) * 0.5rem)
   }
   
   .container.background .slide:last-child {
-    margin-right: var(--distance-s);
+    margin-right: calc(var(--outset-x) * 0.5rem)
   }
 
   .slide + .slide {

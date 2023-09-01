@@ -49,11 +49,13 @@
     background-color: var(--color-background-highlight);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: var(--distance-s);
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 0.5rem);
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--distance-s);
+    gap: calc(var(--inset-y) * 0.5rem);
   }
 
   .container.effect:hover {

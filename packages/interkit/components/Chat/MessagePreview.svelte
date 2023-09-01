@@ -47,6 +47,7 @@
 
   .message {
     font: var(--font-caption);
+    letter-spacing: var(--letter-spacing-caption);
     height: auto;
     text-overflow: ellipsis;
     overflow: hidden;

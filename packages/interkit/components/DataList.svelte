@@ -46,7 +46,7 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: var(--distance-s);
+    gap: calc(var(--outset-y) * 0.5rem);
   }
 
 </style>

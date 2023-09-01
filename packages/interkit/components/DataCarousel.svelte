@@ -38,6 +38,6 @@
 <style>
 
   .empty {
-    margin-left: var(--distance-s);
+    margin-left: calc(var(--outset-x) * 0.5rem);
   }
 </style>

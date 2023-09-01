@@ -20,7 +20,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span class="{state} MapViewButton MapViewButton--state{state}"  on:click={toggle}>
+<span class="root {state} MapViewButton MapViewButton--state{state}"  on:click={toggle}>
   <Icon type={type == "filters" ? "Thin-Filter" : "Thin-Layer"}/>
   {text ? text : ""}
   <Icon type={state == "enabled" ? "Thin-Dropdown" : "Thin-Dropdown-Up"}/>
@@ -36,15 +36,18 @@
 
 <style>
 
-  span {
+  .root {
     font: var(--font-button);
+    letter-spacing: var(--letter-spacing-button);
     border: var(--border-width) solid var(--color-border);
     color: var(--color-text-button);
     border-radius: var(--border-radius-button);
     background-color: var(--color-background-button);
     display: inline-flex;
-    padding: var(--distance-xs) var(--distance-s); 
-    gap: var(--distance-xs);
+    padding:
+      calc(var(--inset-y) * 0.25rem)
+      calc(var(--inset-x) * 0.5rem);
+    gap: calc(var(--outset-x) * 0.25rem);
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -59,11 +62,11 @@
     box-sizing: border-box;
   }
 
-  span.selected {
+  .root.selected {
     background-color: var(--color-background-backdrop);
   }
 
-  span:active {
+  .root:active {
     background-color: var(--color-background-button-pressed);
   }
 
