@@ -18,19 +18,15 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
 - ssh into the server `ssh root@my-interkit-server.de`
 - update `apt-get update && apt-get upgrade`
 - set timezone `timedatectl set-timezone Europe/Berlin`
-- install docker, see https://docs.docker.com/get-docker/
-- hint: you might also need to install docker-engine https://docs.docker.com/engine/install/ubuntu/
-- install docker-compose
-  - either see https://docs.docker.com/compose/install/ and use command `docker compose` later
-  - or try `apt-get install docker-compose` and use command `docker-compose` later
+- install docker engine, for ubuntu see https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
 ## download .env and docker compose files
 
 - create an empty directory on your server, for example `mkdir my-interkit-server && cd my-interkit-server`
 - download these three files from the interkit gitlab repository:
-  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v03/docker-compose.env.live.example`
-  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v03/docker-compose.yml`
-  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v03/docker-compose-proxy-live.yml`
+  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose.env.live.example`
+  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose.yml`
+  - `wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose-proxy-live.yml`
 
 ## configure .env
 
