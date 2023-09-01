@@ -1,4 +1,5 @@
 <script>
+  import { InterkitClient } from "../";
   import Icon from "./Icon.svelte"
   import FilterControls from "./fragments/FilterControls.svelte";
   import MapLayerOverlay from "./fragments/MapLayerOverlay.svelte";
@@ -6,17 +7,23 @@
   export let text;
   export let layerSelectPrompt;
   export let type = "filters" // filters | layers  
-  
+
   let state = "enabled" // enabled | selected
+
+  let mapViewStore = InterkitClient.getGlobalStore("mapViewState");
 
   const toggle = () => {
     if(state == "enabled") {
       state = "selected"
+      mapViewStore.set(type)
     } else {
       state = "enabled"
     }
-    
   }
+
+  // if another view is open, close this one
+  $: if($mapViewStore != type) state = "enabled"
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
