@@ -104,7 +104,7 @@
       });
       vimeoPlayer.play()
       videoPlayerPaused = false
-    }, 500)
+    }, 50)
   }
 
   $: {
@@ -118,6 +118,10 @@
   })
 
   const setTimeDom = (seconds) => {
+    console.log(seconds)
+    if(seconds < 0) seconds = 0
+    if(seconds > videoPlayerDuration) seconds = videoPlayerDuration
+    console.log(seconds)
     if(vimeoPlayer) {
       vimeoPlayer.setCurrentTime(seconds)
     } else {  
@@ -126,6 +130,7 @@
 		  let element = document.getElementById('videoButtonVideoId')
       element.currentTime = seconds
     }
+    videoPlayerCurrentTime = seconds
 	}
   
   const toggleControls = () => {
@@ -135,7 +140,7 @@
   }
   
   const seek = (seconds) => {
-    setTimeDom(videoPlayerCurrentTime += seconds)
+    setTimeDom(videoPlayerCurrentTime + seconds)
     resetControlsTimeout()
   }
   const seekTo = (seconds) => {
