@@ -8,42 +8,48 @@
   export let mainClass = ''
 
   export let layerSelectPrompt = "Choose a layer to display on the map."
+  export  let layers = [];
+  export let updateActiveViews  
 
-  let layers = [];
+  const update = () => {
+    updateActiveViews(layers.filter(f => f.state == "selected"), "activeLayers")
+  }
+
   if($showDummyData) {
     layers = [
       {
         key: 1,
-        headline: "Headline 5",
-        description: "This is a special layer.",
+        titleColumn: "Headline 5",
+        descriptionColumn: "This is a special layer.",
         state: "selected"
       },
       {
         key: 2,
-        headline: "Headline 5",
-        description: "This is a special layer.",
+        heatitleColumndline: "Headline 5",
+        descriptionColumn: "This is a special layer.",
         state: "enabled"
       },
       {
         key: 3,
-        headline: "Headline 5",
-        description: "This is a special layer.",
+        titleColumn: "Headline 5",
+        descriptionColumn: "This is a special layer.",
         state: "enabled"
       }
     ]
+    update()
   }
 
   const selectLayer = (layer) => {
-    console.log("selectLayer", layer, layers)
+    //console.log("selectLayer", layer, layers)
     for(let l of layers) {
-      if(l.key == layer.key) {
+      if(l.key == layer.key && l.state != "selected") {
         l.state = "selected"
       } else {
         l.state = "enabled"
       }
     }
     layers = layers;
-
+    update()
   }
 
 
@@ -63,8 +69,11 @@
       <Card
         variant="extra-small"
         state={layer.state}
-        headline={layer.headline}
-        description={layer.description}
+        headline={layer.titleColumn}
+        description={layer.descriptionColumn}
+        label3={layer.labelColumn}
+        subtitle3={layer.subtitleColumn}
+        imageRef={layer.imageColumn}
         on:click={()=>{selectLayer(layer)}}
         hoverPointer
       />

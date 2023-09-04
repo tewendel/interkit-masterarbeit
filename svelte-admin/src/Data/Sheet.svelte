@@ -473,10 +473,7 @@
   }
 
   span.cell {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+    white-space: nowrap;
   }
 
 </style>
