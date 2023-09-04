@@ -132,7 +132,7 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   
-  import L from 'leaflet';
+  import L, { TileLayer } from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
   // leak mapligreGL (the FOSS implementation of L.mapboxGL) into the window scope...
@@ -463,6 +463,7 @@
 
   $: {
     if(map) {
+      console.log(mapBoxGLStyle, tileLayer)
       if(mapBoxGLStyle) {    
         console.log("MapRenderer update mapBoxGLStyle", mapBoxGLStyle)
         const newTileLayer = createGLLayer(mapBoxGLStyle)

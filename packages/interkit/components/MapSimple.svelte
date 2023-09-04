@@ -187,33 +187,17 @@
   // a store for active map views changed in MapViewButton
   const mapViewState = InterkitClient.getGlobalStore("mapViewState-" + mapId)
 
-  // update activeTileLayer if map layer changed
-  $: {
-    if($mapViewState?.activeLayers?.length) {
-      const newLayer = $mapViewState?.activeLayers?.[0]?.tilesUrlColumn
-      if(newLayer && newLayer != activeTileLayer) {
-        activeTileLayer = $mapViewState?.activeLayers?.[0].tilesUrlColumn
-      } else {
-        activeTileLayer = tileLayer
-      }
+  // update activeTileLayer and activeGLStyle if map layer changed
+  const updateTileLayer = (layer) => {
+    if(layer) {
+      activeTileLayer = layer?.tilesUrlColumn
+      activeGLStyle = layer?.mapBoxGLStyleColumn
     } else {
       activeTileLayer = tileLayer
-    }    
-  }
-
-  // update activeGLStyle if map layer changed
-  $: {
-    if($mapViewState?.activeLayers?.length) {
-      const newLayer = $mapViewState?.activeLayers?.[0]?.mapBoxGLStyleColumn
-      if(newLayer && newLayer != activeGLStyle) {
-        activeGLStyle = $mapViewState?.activeLayers?.[0].mapBoxGLStyleColumn
-      } else {
-        activeGLStyle = mapBoxGLStyle
-      }
-    } else {
       activeGLStyle = mapBoxGLStyle
-    }    
+    }
   }
+  $: updateTileLayer($mapViewState?.activeLayers?.[0])
   
   $: {
     selectedElement;
