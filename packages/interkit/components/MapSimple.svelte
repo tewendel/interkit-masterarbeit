@@ -35,8 +35,13 @@
   export let inline = false;
   export let disableControls = false;
   export let singleElementContext = false; // mode to retrieve element from context and show just that
-  export let tileLayer // simple tilelyer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  
+  export let tileLayer // simple tileLayer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  let activeTileLayer = tileLayer // this can be changed through MapViewButton
+  
   export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
+  let activeGLStyle = mapBoxGLStyle // this can be changed through MapViewButton
+  
   export let closeButtonLabel = "Schließen"
   export let clickTrigger;
 
@@ -178,10 +183,42 @@
   const distanceSort = (a, b) => {
     return util.getDistance(a.markerPositionsColumn, $userPositionStore) - util.getDistance(b.markerPositionsColumn, $userPositionStore)
   }
+
+  // a store for active map views changed in MapViewButton
+  const mapViewState = InterkitClient.getGlobalStore("mapViewState-" + mapId)
+
+  // update activeTileLayer if map layer changed
+  $: {
+    if($mapViewState?.activeLayers?.length) {
+      const newLayer = $mapViewState?.activeLayers?.[0]?.tilesUrlColumn
+      if(newLayer && newLayer != activeTileLayer) {
+        activeTileLayer = $mapViewState?.activeLayers?.[0].tilesUrlColumn
+      } else {
+        activeTileLayer = tileLayer
+      }
+    } else {
+      activeTileLayer = tileLayer
+    }    
+  }
+
+  // update activeGLStyle if map layer changed
+  $: {
+    if($mapViewState?.activeLayers?.length) {
+      const newLayer = $mapViewState?.activeLayers?.[0]?.mapBoxGLStyleColumn
+      if(newLayer && newLayer != activeGLStyle) {
+        activeGLStyle = $mapViewState?.activeLayers?.[0].mapBoxGLStyleColumn
+      } else {
+        activeGLStyle = mapBoxGLStyle
+      }
+    } else {
+      activeGLStyle = mapBoxGLStyle
+    }    
+  }
   
   $: {
     selectedElement;
     $userPositionStore;
+    $mapViewState;
     updateMarkerData();
   }
   
@@ -195,6 +232,32 @@
 
     // start with the full set of data
     let selectedData = [...markerObjs];
+
+    // filter data according to active map views
+    const filterViews = $mapViewState?.activeFilters || []
+    const layerViews = $mapViewState?.activeLayers?.filter(v => v.typeColumn == "layer+filter") || []
+    const activeViews = filterViews.concat(layerViews) 
+
+    if(activeViews.length && $mapViewState?.markerCategoryColumn) {
+      
+      // get the category column on the data row
+      const markerCategoryColumn = $mapViewState?.markerCategoryColumn
+
+      // get the keys of the active views
+      const activeViewKeys = activeViews?.map(e => e.key)
+
+      let filteredData = []
+      // iterate over data and check if it references an active view
+      for(let e of selectedData) {
+        const referencedViewKeys = e?.row?.values?.[util.colKey(markerCategoryColumn)]?.rowKeys
+        if(referencedViewKeys) {
+          if(referencedViewKeys.some(k => activeViewKeys.includes(k))) {
+            filteredData.push(e)
+          }
+        }
+      }
+      selectedData = filteredData      
+    }
 
     // if singleElement mode is set, use only that
     if(singleElementContext && singleElement) {
@@ -320,8 +383,8 @@
       {nearestElement}
       {singleElement}
       {disableControls}
-      {tileLayer}
-      {mapBoxGLStyle}
+      tileLayer={activeTileLayer}
+      mapBoxGLStyle={activeGLStyle}
       mapFocus={mapFocusProcessed}
       {permissionNotification}
       {enableGeolocationHint}

@@ -2,7 +2,7 @@
   import Icon from "../Icon.svelte"
 
   export let text
-  export let state // enabled | selected
+  export let state = "enabled"// enabled | selected
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

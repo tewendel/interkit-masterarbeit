@@ -57,6 +57,7 @@ fields:
     - type: checkbox
       name: disableControls
       defaultValue: false
+      help: "prevent user from zooming and panning"
     - type: checkbox
       name: singleElementContext
       help: "The map shows a single marker defined by a single element context."
@@ -64,6 +65,7 @@ fields:
     - type: string
       name: tileLayer
       defaultValue: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+      help: "A tile url, for example https://tile.openstreetmap.org/{z}/{x}/{y}.png"
     - type: string
       name: mapBoxGLStyle
     - type: string

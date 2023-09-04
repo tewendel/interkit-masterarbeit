@@ -400,6 +400,19 @@
     })
   }
 
+  let activeTileLayer;
+  const createTileLayer = (tileLayerUrl) => {
+    return L.tileLayer(tileLayerUrl, {
+      maxZoom: 20
+    })
+  }
+  const createGLLayer = (mapBoxGLStyle) => {
+    return L.maplibreGL({
+      // attribution: 'TODO',
+      style: mapBoxGLStyle,
+    })
+  }
+
   onMount(async ()=>{
 
     /* basic map setup */
@@ -422,17 +435,13 @@
       map.doubleClickZoom.disable(); 
     }
 
-    if (tileLayer) {
-      // default interkit map style
-      console.log("using tileLayer", tileLayer)
-      L.tileLayer(tileLayer, {
-        maxZoom: 20
-      }).addTo(map);
+    if (mapBoxGLStyle) {
+      activeTileLayer = createGLLayer(mapBoxGLStyle);
+      activeTileLayer.addTo(map);      
     } else {
-      L.maplibreGL({
-        // attribution: 'TODO',
-        style: mapBoxGLStyle,
-      }).addTo(map);
+      // default interkit map style
+      activeTileLayer = createTileLayer(tileLayer)
+      activeTileLayer.addTo(map);
     }
 
     map.on("click", mapClick);
@@ -451,6 +460,24 @@
       manualPosition = true;
     })
   })
+
+  $: {
+    if(map) {
+      if(mapBoxGLStyle) {    
+        console.log("MapRenderer update mapBoxGLStyle", mapBoxGLStyle)
+        const newTileLayer = createGLLayer(mapBoxGLStyle)
+        map.removeLayer(activeTileLayer)
+        map.addLayer(newTileLayer)
+        activeTileLayer = newTileLayer;
+      } else if(tileLayer) {
+        console.log("MapRenderer update tileLayer", tileLayer)
+        const newTileLayer = createTileLayer(tileLayer)
+        map.removeLayer(activeTileLayer)
+        map.addLayer(newTileLayer)
+        activeTileLayer = newTileLayer;
+      }
+    }    
+  }
 
   const autoPositionMap = () => {
     if(defaultLocation) return;

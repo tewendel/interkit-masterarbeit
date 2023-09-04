@@ -99,7 +99,10 @@ You can find this example for a custom project component in
 
 ### additional attributes for field type: sheetColumn
 
-- `columnType`
+A sheetColumn field offers the user a helper for the automatic creation of the column in the database if not found. To use this, you need to specify the type of the column to create in the database. 
+
+- `columnType` - "string" | "location" | "sheetRef" | "date" | "mediaFile" | "number" | "optionSelect" | "richText"
+- `options` - for columns of type "optionSelect" specify available options with a string like "option1, option2, option3"
 
 ### using extraProps
 
