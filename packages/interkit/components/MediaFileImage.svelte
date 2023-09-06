@@ -59,16 +59,19 @@
 {#if mediafile || $showDummyData}
   <img
     on:click={() => { zoomed = true }}
-    {style}
+    style={
+      style +
+      mediafile?.meta?.objectFitBackgroundColor ? `;background-color: ${mediafile.meta.objectFitBackgroundColor}` : ''
+    }
     class={`
       ${mainClass}
       MediaFileImage
       fitDimension-${fitDimension}
       MediaFileImage--fitdimension${fitDimension}
-      objectFit-${objectFit}
+      objectFit-${mediafile?.meta?.objectFit || objectFit}
       MediaFileImage--objectfit${objectFit}
     `}
-    alt="mediafile"
+    alt={mediafile?.meta?.alt || null}
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
   {#if zoomable && zoomed}
@@ -90,6 +93,13 @@
 
   img.objectFit-contain {
     object-fit: contain;
+  }
+
+  img.objectFit-passepartout {
+    object-fit: contain;
+    box-sizing: border-box;
+    background-color: var(--color-background-backdrop);
+    border: var(--border-radius) solid var(--color-background-backdrop);
   }
 
   img.fitDimension-width {

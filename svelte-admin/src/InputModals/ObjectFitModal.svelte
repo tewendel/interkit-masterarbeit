@@ -6,13 +6,11 @@
     ModalBody,
     ModalFooter,
     Select, SelectItem, FormGroup
-  } from "carbon-components-svelte";
+  } from "carbon-components-svelte"
 
-  export let value = {};
-  export let submit;
-  export let close;
-  export let projectId;
-  export let params;
+  export let value = {}
+  export let submit
+  export let close
 
   let options = ['contain', 'cover', 'none', 'passepartout']
 
@@ -25,7 +23,7 @@
   on:submit={submit}
   on:close={close}
 >
-  <ModalHeader label="{value.key}" title="Object Fit" />
+  <ModalHeader title="Object Fit" />
   <ModalBody hasForm>
     <FormGroup>
       <Select labelText="Option" bind:selected={value}>

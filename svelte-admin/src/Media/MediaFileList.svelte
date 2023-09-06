@@ -81,6 +81,13 @@
       width: "6em"
     },
     {
+      key: "alt",
+      show: !radio,
+      value: "Alt",
+      sort: false,
+      width: "6em"
+    },
+    {
       key: "objectFit",
       show: !radio,
       value: "Fit",
@@ -131,6 +138,7 @@
           createdAt: mediafile.meta.createdAt,
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
+          alt: mediafile.meta.alt,
           objectFit: mediafile.meta.objectFit,
           userId: mediafile.meta.userId,
           boardId: mediafile.meta.boardId,
@@ -230,15 +238,19 @@
     inputModalColumnKey = cell.key
     inputModalValue = cell.value
     switch (inputModalColumnKey) {
+      case 'alt':
+        inputModalOpen = 'text'
+        break
       case 'objectFit':
         inputModalOpen = inputModalColumnKey
-        break;
+        break
     }
   }
 
   const inputModalSubmitValue = value => {
     console.log("MediaFileList submitting", inputModalRowId, inputModalColumnKey, value)
     switch (inputModalColumnKey) {
+      case 'alt':
       case 'objectFit':
         console.log("MediaFileList submitting to media.updateMeta")
         InterkitClient.call('media.updateMeta', {
@@ -331,9 +343,9 @@
             {:else}
               <Document title={row.type} />
             {/if}
-        {:else if cell.key === 'objectFit'}
+        {:else if cell.key === 'objectFit' || cell.key === 'alt'}
           <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
-            <SheetCell {cell} {projectId} />
+            <SheetCell {cell} />
           </span>
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>

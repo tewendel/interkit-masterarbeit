@@ -10,6 +10,7 @@
   import DateModal from './DateModal.svelte';
   import ExtraPropsModal from './ExtraPropsModal.svelte';
   import ObjectFitModal from './ObjectFitModal.svelte'
+  import TextModal from './TextModal.svelte'
   
   export let type = null
   export let value = {}
@@ -30,6 +31,7 @@
     "sheetId": SheetIdSelect,
     "mediaFile": MediaFileSelect,
     "optionSelect": OptionSelect,
+    "text": TextModal,
     "richText": RichtTextModal,
     "date": DateModal,
     "extraProps": ExtraPropsModal,
