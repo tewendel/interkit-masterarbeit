@@ -345,7 +345,11 @@
             {/if}
         {:else if cell.key === 'alt'}
           <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
-            <SheetCell {cell} />
+            {#if row.isImage}
+              <SheetCell {cell} />
+            {:else}
+              <!-- not supported yet -->
+            {/if}
           </span>
         {:else if cell.key === 'fit'}
           <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
