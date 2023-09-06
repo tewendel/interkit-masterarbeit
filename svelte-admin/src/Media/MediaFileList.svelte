@@ -31,6 +31,8 @@
 
   import DataTablePaginationAutofit from '../Data/DataTablePaginationAutofit.svelte'
   import MediaFilePreview from '../Media/MediaFilePreview.svelte'
+  import SheetCell from '../Data/SheetCell.svelte'
+  import InputModal from '../InputModals/InputModal.svelte'
   import { InterkitClient, util } from 'interkit'
 
   export let mediafiles // this should be an array, not a store
@@ -79,6 +81,13 @@
       width: "6em"
     },
     {
+      key: "objectFit",
+      show: !radio,
+      value: "Fit",
+      sort: false,
+      width: "6em"
+    },
+    {
       key: "duration",
       /* we assume that we don't need all info in "radio mode" and try to save space */
       show: !radio,
@@ -122,6 +131,7 @@
           createdAt: mediafile.meta.createdAt,
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
+          objectFit: mediafile.meta.objectFit,
           userId: mediafile.meta.userId,
           boardId: mediafile.meta.boardId,
           nodeId: mediafile.meta.nodeId
@@ -209,6 +219,37 @@
   let dataTableToolbarBatchActionsActive = false
   let openShowHideColumns = false
 
+  // input modal logic adapted from Data/Sheet (which needs to be more flexible and complicated)
+  let inputModalOpen = null
+  let inputModalRowId
+  let inputModalColumnKey
+  let inputModalValue
+
+  const inputModalUpdateValue = (row, cell) => {
+    inputModalRowId = row._id
+    inputModalColumnKey = cell.key
+    inputModalValue = cell.value
+    switch (inputModalColumnKey) {
+      case 'objectFit':
+        inputModalOpen = inputModalColumnKey
+        break;
+    }
+  }
+
+  const inputModalSubmitValue = value => {
+    console.log("MediaFileList submitting", inputModalRowId, inputModalColumnKey, value)
+    switch (inputModalColumnKey) {
+      case 'objectFit':
+        console.log("MediaFileList submitting to media.updateMeta")
+        InterkitClient.call('media.updateMeta', {
+          id: inputModalRowId,
+          metaKey: inputModalColumnKey,
+          value
+        })
+        break
+    }
+  }
+
 </script>
 
 {#if rows}
@@ -290,6 +331,10 @@
             {:else}
               <Document title={row.type} />
             {/if}
+        {:else if cell.key === 'objectFit'}
+          <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
+            <SheetCell {cell} {projectId} />
+          </span>
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>
         {:else if cell.key === 'link' && cell.value}
@@ -342,6 +387,14 @@
     <Checkbox bind:checked={h.show} labelText={h.value} />
   {/each}
 </Modal>
+
+<InputModal
+  type={inputModalOpen}
+  bind:value={inputModalValue}
+  submit={() => inputModalSubmitValue(inputModalValue)}
+  close={() => { inputModalOpen = null }}
+  {projectId}
+/>
 
 <style>
 
