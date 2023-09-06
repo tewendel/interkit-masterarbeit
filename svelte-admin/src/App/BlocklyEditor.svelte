@@ -192,7 +192,7 @@
       origin: e.origin 
     }));
 
-    blocklyConfig.initBlockDefinitions(Blockly, blockObjects, customFields); // generates block definitions from yaml component files
+    blocklyConfig.initBlockDefinitions(Blockly, blockObjects, customFields, docsGo); // generates block definitions from yaml component files
     
     console.log("Blocks", Object.keys(Blockly.Blocks))
 
@@ -223,10 +223,9 @@
     });
 
     //console.log(workspace)
-
+    
     workspace.addChangeListener(myUpdateFunction);
 
-    
     let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
     if(blocklyJson?.content) {
       try {

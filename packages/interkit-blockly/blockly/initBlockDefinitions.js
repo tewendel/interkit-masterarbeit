@@ -1,6 +1,6 @@
 //import { getBlockObjects } from './getBlockObjects.js'
 
-export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
+export const initBlockDefinitions = (Blockly, blockObjects, customFields, docsGo) => {
 
   const defaultBlockColour = 220;
 
@@ -75,8 +75,20 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields) => {
         this.setColour(blockObject.colour ? blockObject.colour : defaultBlockColour);
 
       },
-      data: JSON.stringify({ origin: blockObject.origin }) // TODO escape characters or use a more appropriate format https://stackoverflow.com/questions/7918868/how-to-escape-xml-entities-in-javascript
+      data: JSON.stringify({ origin: blockObject.origin }), // TODO escape characters or use a more appropriate format https://stackoverflow.com/questions/7918868/how-to-escape-xml-entities-in-javascript
+      customContextMenu: function(options) {
+        console.log("customContextMenu", options)
+        options.unshift({
+          text: "Help", 
+          enabled: true,
+          callback: function() { 
+            console.log ("help for block " + blockObject.name, blockObject)
+            docsGo(`/components/${blockObject.docsPath || blockObject.name}`)
+          }
+        })
+      }
     }
+
   }
 
 }
