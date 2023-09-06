@@ -11,4 +11,5 @@ fields:
     name: "contentElement"
   - type: "slot"
     name: "emptyElement"
+docsPath: DataList#mosaic
   

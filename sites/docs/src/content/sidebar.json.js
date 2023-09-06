@@ -170,15 +170,148 @@ export const items = [
     path: 'components',
     open: false,
     items: [
-      /* AppBase */
+      /* this is sorted alphabetically by title in Submenu.svelte */
       {
         title: 'AppBase',
         path: '/components/AppBase'
       },
-      /* Basics */
+      {
+        title: 'DesktopFallback',
+        path: '/components/AppBase#desktopfallback-component'
+      },
+      {
+        title: 'AppBaseAdvanced',
+        path: '/components/AppBase#appbaseadvanced'
+      },
+      {
+        title: 'Button',
+        path: '/components/Button'
+      },
+      {
+        title: 'ButtonBar',
+        path: '/components/Button#buttonbar'
+      },
+      {
+        title: 'Chat',
+        path: '/components/Chat'
+      },
+      {
+        title: 'StoryBoardImage',
+        path: '/components/Chat#storyboardimage'
+      },
+      {
+        title: 'ScrollContainer',
+        path: '/components/ScrollContainer'
+      },
+      {
+        title: 'Overlay',
+        path: '/components/Overlay'
+      },
+      {
+        title: 'AspectRatio',
+        path: '/components/AspectRatio'
+      },
+      {
+        title: 'ContextDebugger',
+        path: '/components/ContextDebugger'
+      },
+      {
+        title: 'DataLoaderSingle',
+        path: '/components/DataLoader#dataloadersingle'
+      },
+      {
+        title: 'DataLoaderMulti',
+        path: '/components/DataLoader#dataloadermulti'
+      },
+      {
+        title: 'DataTile',
+        path: '/components/DataTile'
+      },
+      {
+        title: 'DataCell',
+        path: '/components/DataCell'
+      },
+      {
+        title: 'DataCard',
+        path: '/components/DataCard'
+      },      
+      {
+        title: 'DataList',
+        path: '/components/DataList'
+      },      
+      {
+        title: 'DataCarousel',
+        path: '/components/DataList#datacarousel'
+      },      
+      {
+        title: 'PictureBook',
+        path: '/components/DataList#picturebook'
+      },      
+      {
+        title: 'Mosaic',
+        path: '/components/DataList#mosaic'
+      },      
+      {
+        title: 'Group',
+        path: '/components/Group'
+      },
+      {
+        title: 'IfDataAnnotation',
+        path: '/components/If'
+      },
+      {
+        title: 'IfUIKey',
+        path: '/components/If'
+      },
+      {
+        title: 'IfUserVar',
+        path: '/components/If'
+      },
+      {
+        title: 'Label',
+        path: '/components/Label'
+      },
+      {
+        title: 'LangSwitch',
+        path: '/components/LangSwitch'
+      },
+      {
+        title: 'ListItem',
+        path: '/components/ListItem'
+      },
+      
+      
       {
         title: 'Icon',
         path: '/components/Icon'
+      },
+      {
+        title: 'Image',
+        path: '/components/Image'
+      },
+      {
+        title: 'MapSimple',
+        path: '/components/MapSimple'
+      },    
+      {
+        title: 'NavBar',
+        path: '/components/NavBar'
+      },
+      {
+        title: 'NavButton',
+        path: '/components/NavBar#navbutton'
+      },
+      {
+        title: 'MarkdownContent',
+        path: '/components/MarkdownContent'
+      },
+      {
+        title: 'StoryBoardCard',
+        path: '/components/StoryBoard'
+      },
+      {
+        title: 'StoryBoardsList',
+        path: '/components/StoryBoard#storyboardslist'
       },
       {
         title: 'QRScanner',
@@ -189,65 +322,28 @@ export const items = [
         path: '/components/StaticText'
       },
       {
-        title: 'Tag',
-        path: '/components/Tag'
-      },
-      /* Buttons */
-      {
-        title: 'Button',
-        path: '/components/Button'
-      },
-      /* Chat */
-      {
-        title: 'Chat',
-        path: '/components/Chat'
-      },
-      {
-        title: 'ChatBoard…',
-        path: '/components/ChatBoard'
-      },
-      /* Conditionals */
-      {
-        title: 'If…',
-        path: '/components/If'
-      },
-      /* Data */
-      {
-        title: 'Data…',
-        path: '/components/Data'
-      },
-      /* Debug */
-      {
-        title: 'ContextDebugger',
-        path: '/components/ContextDebugger'
-      },
-      /* Groups */
-      {
-        title: 'Group…',
-        path: '/components/Group'
-      },
-      /* Layout */
-      {
-        title: 'Shell (LayoutShell, LayoutShellAudio, TopBarShell, BottomBarShell)',
+        title: 'Shells',
         path: '/components/Shell'
       },
+      {
+        title: 'TextFormat',
+        path: '/components/TextFormat'
+      },
+      
       {
         title: 'Spacing',
         path: '/components/Spacing'
       },
       {
-        title: 'Containers (Overlay, AspectRatio, ScrollContainer)',
-        path: '/components/Containers'
-      },
-      {
         title: 'TabBar',
         path: '/components/TabBar'
       },
-      /* Map */
       {
-        title: 'MapSimple',
-        path: '/components/MapSimple'
-      }
+        title: 'Tab',
+        path: '/components/TabBar#tab'
+      },
+      
+      
     ]
   },
   {

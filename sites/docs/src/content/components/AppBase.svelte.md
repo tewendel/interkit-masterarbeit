@@ -12,12 +12,9 @@ If you are creating a multilanguage project, see [the internationalisation guide
 
 ## AppBaseAdvanced
 
+AppBaseAdvanced provides additional options to AppBase.
+
 <ComponentInfoYaml component="AppBaseAdvanced" />
-
-Use this instead of `AppBase` to use advanced features:
-
-
-`AppBaseAdvanced` comes with extra slots. The default slot is named `viewport`.
 
 ### `desktopFallback` slot
 
@@ -28,11 +25,13 @@ Desktop devices means "large viewports" here.
 We use a media query to identify them *on page load*;
 you can override the default `min-width: 600px` using the `desktopFallbackMinWidth` prop.
 
-The slot takes anything, but we have a special component.
+The slot takes anything, but we have a special component called `DesktopFallback`
+
+![A DesktopFallback example](/images/component_previews/DesktopFallback.png)
 
 ### `DesktopFallback` component
 
-A splash page with rich content, arranged in a grid intended for wider viewports.
+A splash page with rich content, arranged in a grid intended for wider viewports. 
 
 - Title + intro text
 - QR code with a link to the web app —

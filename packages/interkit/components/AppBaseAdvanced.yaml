@@ -7,7 +7,7 @@ fields:
     help: List available language codes, for example "en,de". The first is the default language.
   - type: string
     name: projectIdOverride
-    help: For very specific setups. If you need it, you'll know, otherwise, leave blank.
+    help: For very specific setups, where you want to target a different interkit project with your app. Normally leave blank.
   - type: slot
     name: viewport
     help: The app's contents.

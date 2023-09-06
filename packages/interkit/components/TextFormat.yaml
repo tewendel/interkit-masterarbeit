@@ -38,5 +38,5 @@ fields:
       help: "Use these formats to select typography for additional content. Use either interface or content formats, not both."
   - type: slot
     name: default
-    help: "The content you want to format. Should be a string; other components might work."
+    help: "The content you want to format. Usually used with StaticText; other components might work."
 
