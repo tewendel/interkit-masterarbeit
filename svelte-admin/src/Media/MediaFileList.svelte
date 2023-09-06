@@ -31,6 +31,8 @@
 
   import DataTablePaginationAutofit from '../Data/DataTablePaginationAutofit.svelte'
   import MediaFilePreview from '../Media/MediaFilePreview.svelte'
+  import SheetCell from '../Data/SheetCell.svelte'
+  import InputModal from '../InputModals/InputModal.svelte'
   import { InterkitClient, util } from 'interkit'
 
   export let mediafiles // this should be an array, not a store
@@ -79,6 +81,20 @@
       width: "6em"
     },
     {
+      key: "alt",
+      show: !radio,
+      value: "Alt",
+      sort: false,
+      width: "6em"
+    },
+    {
+      key: "fit",
+      show: !radio,
+      value: "Fit",
+      sort: false,
+      width: "6em"
+    },
+    {
       key: "duration",
       /* we assume that we don't need all info in "radio mode" and try to save space */
       show: !radio,
@@ -122,6 +138,8 @@
           createdAt: mediafile.meta.createdAt,
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
+          alt: mediafile.meta.alt,
+          fit: mediafile.meta.fit,
           userId: mediafile.meta.userId,
           boardId: mediafile.meta.boardId,
           nodeId: mediafile.meta.nodeId
@@ -209,6 +227,41 @@
   let dataTableToolbarBatchActionsActive = false
   let openShowHideColumns = false
 
+  // input modal logic adapted from Data/Sheet (which needs to be more flexible and complicated)
+  let inputModalOpen = null
+  let inputModalRowId
+  let inputModalColumnKey
+  let inputModalValue
+
+  const inputModalUpdateValue = (row, cell) => {
+    inputModalRowId = row._id
+    inputModalColumnKey = cell.key
+    inputModalValue = cell.value
+    switch (inputModalColumnKey) {
+      case 'alt':
+        inputModalOpen = 'text'
+        break
+      case 'fit':
+        inputModalOpen = 'objectFit'
+        break
+    }
+  }
+
+  const inputModalSubmitValue = value => {
+    console.log("MediaFileList submitting", inputModalRowId, inputModalColumnKey, value)
+    switch (inputModalColumnKey) {
+      case 'alt':
+      case 'fit':
+        console.log("MediaFileList submitting to media.updateMeta")
+        InterkitClient.call('media.updateMeta', {
+          id: inputModalRowId,
+          metaKey: inputModalColumnKey,
+          value
+        })
+        break
+    }
+  }
+
 </script>
 
 {#if rows}
@@ -290,6 +343,22 @@
             {:else}
               <Document title={row.type} />
             {/if}
+        {:else if cell.key === 'alt'}
+          <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
+            {#if row.isImage}
+              <SheetCell {cell} />
+            {:else}
+              <!-- not supported yet -->
+            {/if}
+          </span>
+        {:else if cell.key === 'fit'}
+          <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
+            <SheetCell>
+              <span class="sheet-cell-fit" style={`border-bottom: 0.2em solid ${cell.value?.backgroundColor || 'transparent'}`}>
+                {cell.value?.objectFit || '--'}
+              </span>
+            </SheetCell>
+          </span>
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>
         {:else if cell.key === 'link' && cell.value}
@@ -343,6 +412,14 @@
   {/each}
 </Modal>
 
+<InputModal
+  type={inputModalOpen}
+  bind:value={inputModalValue}
+  submit={() => inputModalSubmitValue(inputModalValue)}
+  close={() => { inputModalOpen = null }}
+  {projectId}
+/>
+
 <style>
 
   .MediaFileListTableContainer :global(table) {
@@ -355,6 +432,11 @@
 
   .MediaFileListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
+  }
+
+  .sheet-cell-fit {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 </style>

@@ -9,8 +9,12 @@
 </script>
 
 
-  <span class="cell">
-  {#if cell.value?.lat}
+<span class="cell">
+  {#if $$slots.default}
+
+    <slot />
+
+  {:else if cell.value?.lat}
 
     <img class="marker-icon" src="leaflet/marker-icon.png"/>
 
@@ -33,13 +37,14 @@
   {:else}
 
     {#if cell.value}
+
       <span class="truncate">
         {cell.value}
       </span>
 
     {:else}
       
-        <NotAvailable/>
+      <NotAvailable/>
       
     {/if}
 
