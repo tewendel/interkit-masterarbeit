@@ -37,10 +37,10 @@
 
   const imageStyleForVariant = {
     full: "",
-    large: "border-radius: calc(var(--border-radius) * 1.5);",
-    medium: "border-radius: calc(var(--border-radius) * 1.5);",
-    small: "border-radius: var(--border-radius)",
-    "extra-small": "border-radius: var(--border-radius)"
+    large: "border-radius: calc(var(--border-radius) * 1.5); --card-border-radius: calc(var(--border-radius) * 1.5);",
+    medium: "border-radius: calc(var(--border-radius) * 1.5); --card-border-radius: calc(var(--border-radius) * 1.5);",
+    small: "border-radius: var(--border-radius); --card-border-radius: var(--border-radius);",
+    "extra-small": "border-radius: var(--border-radius); --card-border-radius: var(--border-radius);"
   }
 
   const headerVariant = {
