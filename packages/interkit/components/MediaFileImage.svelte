@@ -61,15 +61,17 @@
     on:click={() => { zoomed = true }}
     style={
       style +
-      mediafile?.meta?.objectFitBackgroundColor ? `;background-color: ${mediafile.meta.objectFitBackgroundColor}` : ''
+      (mediafile?.meta?.fit?.backgroundColor
+        ? `; background-color: ${mediafile.meta.fit.backgroundColor}; border-color: ${mediafile.meta.fit.backgroundColor}`
+        : '')
     }
     class={`
       ${mainClass}
       MediaFileImage
       fitDimension-${fitDimension}
       MediaFileImage--fitdimension${fitDimension}
-      objectFit-${mediafile?.meta?.objectFit || objectFit}
-      MediaFileImage--objectfit${objectFit}
+      objectFit-${mediafile?.meta?.fit?.objectFit || objectFit}
+      MediaFileImage--objectfit${mediafile?.meta?.fit?.objectFit || objectFit}
     `}
     alt={mediafile?.meta?.alt || null}
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
@@ -99,7 +101,7 @@
     object-fit: contain;
     box-sizing: border-box;
     background-color: var(--color-background-backdrop);
-    border: var(--border-radius) solid var(--color-background-backdrop);
+    border: var(--card-border-radius, var(--border-radius)) solid var(--color-background-backdrop);
   }
 
   img.fitDimension-width {

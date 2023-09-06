@@ -88,7 +88,7 @@
       width: "6em"
     },
     {
-      key: "objectFit",
+      key: "fit",
       show: !radio,
       value: "Fit",
       sort: false,
@@ -139,7 +139,7 @@
           duration: util.formatDuration(mediafile.meta.duration),          
           link: INTERKIT_SERVER_URL + mediafile._downloadRoute + "/mediafiles/" + mediafile._id + "/original/" + mediafile._id + mediafile.extensionWithDot,
           alt: mediafile.meta.alt,
-          objectFit: mediafile.meta.objectFit,
+          fit: mediafile.meta.fit,
           userId: mediafile.meta.userId,
           boardId: mediafile.meta.boardId,
           nodeId: mediafile.meta.nodeId
@@ -241,8 +241,8 @@
       case 'alt':
         inputModalOpen = 'text'
         break
-      case 'objectFit':
-        inputModalOpen = inputModalColumnKey
+      case 'fit':
+        inputModalOpen = 'objectFit'
         break
     }
   }
@@ -251,7 +251,7 @@
     console.log("MediaFileList submitting", inputModalRowId, inputModalColumnKey, value)
     switch (inputModalColumnKey) {
       case 'alt':
-      case 'objectFit':
+      case 'fit':
         console.log("MediaFileList submitting to media.updateMeta")
         InterkitClient.call('media.updateMeta', {
           id: inputModalRowId,
@@ -343,9 +343,17 @@
             {:else}
               <Document title={row.type} />
             {/if}
-        {:else if cell.key === 'objectFit' || cell.key === 'alt'}
+        {:else if cell.key === 'alt'}
           <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
             <SheetCell {cell} />
+          </span>
+        {:else if cell.key === 'fit'}
+          <span class="sheet-cell" on:click={() => inputModalUpdateValue(row, cell)}>
+            <SheetCell>
+              <span class="sheet-cell-fit" style={`border-bottom: 0.2em solid ${cell.value?.backgroundColor || 'transparent'}`}>
+                {cell.value?.objectFit || '--'}
+              </span>
+            </SheetCell>
           </span>
         {:else if cell.key === 'preview'}
           <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>
@@ -420,6 +428,11 @@
 
   .MediaFileListTableContainer :global(.bx--table-header-label) {
     max-width: 100%;
+  }
+
+  .sheet-cell-fit {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 </style>
