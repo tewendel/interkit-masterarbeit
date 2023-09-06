@@ -14,7 +14,7 @@ In order for them to display data, they need to be children of a [DataLoaderMult
 
 ![A DataList example](/images/component_previews/DataList.png)
 
-Show data elements as a list. Use [ScrollContainer](/components/Scrollcontainer) to add scrolling. Commonly used in conjunction with a [DataCard](/components/DataCard).
+Show data elements as a list. Use [ScrollContainer](/components/ScrollContainer) to add scrolling. Commonly used in conjunction with a [DataCard](/components/DataCard).
 
 <ComponentInfoYaml component="DataList" />
 

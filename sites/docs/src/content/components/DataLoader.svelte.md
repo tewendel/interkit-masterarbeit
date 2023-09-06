@@ -27,7 +27,7 @@ Common child components are [DataCell](/components/DataCell) or [DataCard](/comp
 
 User DataLoaderMulti to load multiple rows from a sheet. 
 
-Common child components are [DataList](/components/DataList) or [DataCarousel](/components/DataCarousel)
+Common child components are [DataList](/components/DataList) or [DataCarousel](/components/DataList#datacarousel)
 
 <ComponentInfoYaml component="DataLoaderMulti" />
 
