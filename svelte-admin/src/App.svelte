@@ -51,6 +51,7 @@
     //console.log("routeLoaded", event)
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
+    //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
   }
 
   onMount(async ()=>{
@@ -62,6 +63,7 @@
 
   let userId = InterkitClient.userId;
   InterkitClient.initAuth()
+  InterkitClient.userEnableActivityTracking()
 
   let isUserOpen = false;
 

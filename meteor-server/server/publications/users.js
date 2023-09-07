@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import {userIsInRoles} from '../../imports/userRoles.js';
 import { publishVirtualWithMeta } from '../../imports/publicationUtils.js';
+import { urlEditingProjectRegex } from '../../imports/userActivity.js';
 
 // used by project server
 Meteor.publish("projectUsers", ({projectId}) => {
@@ -96,4 +97,19 @@ Meteor.publish("roleAssignment", function () {
   } else {
     this.ready()
   }
+})
+
+Meteor.publish("user.editingProject", function ({ projectId }) {
+  if (this.userId) {
+    if (userIsInRoles(this.userId, ['admin', 'author'])) {
+      // find user that have entries in connection urls that match "/#/[projectId]"
+      // connections: [{url: "/#/projectId", ...}]
+      const cursor = Meteor.users.find(
+        { "connections.url": { $regex: urlEditingProjectRegex } },
+        { fields: { services: false } }
+      );
+      return cursor
+    }
+  } 
+  this.ready()
 })
