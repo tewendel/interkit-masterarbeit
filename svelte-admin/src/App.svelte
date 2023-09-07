@@ -38,7 +38,7 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject, currentUser, currentProjectEditingUsers } from './admin.js'
+  import { projectId, currentProject, currentUser, currentProjectEditingUsers, secondaryTabPreviewProjectId } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -50,10 +50,17 @@
   }
 
   const routeLoaded = event => {
-    //console.log("routeLoaded", event)
+    console.log("routeLoaded", event)
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
+
     //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
+
+    // reset preview when leaving project
+    if(event?.detail?.location == "/") {
+      secondaryTabPreviewProjectId.set(null)
+    }
+
   }
 
   onMount(async ()=>{
