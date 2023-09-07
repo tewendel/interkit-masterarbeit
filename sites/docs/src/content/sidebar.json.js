@@ -261,15 +261,15 @@ export const items = [
       },
       {
         title: 'IfDataAnnotation',
-        path: '/components/If'
+        path: '/components/If#ifdataannotation'
       },
       {
         title: 'IfUIKey',
-        path: '/components/If'
+        path: '/components/If#ifuikey'
       },
       {
         title: 'IfUserVar',
-        path: '/components/If'
+        path: '/components/If#ifuservar'
       },
       {
         title: 'Label',

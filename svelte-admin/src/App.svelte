@@ -12,6 +12,8 @@
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
 
+  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft.svelte";
+  
   import { onMount } from 'svelte'
 
   import { 
@@ -72,14 +74,22 @@
   // get commit hash from current image tag
   const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
   const commitHash = matches ? matches[0] : null
+
   
 </script>
 
 <Header 
-  company="interkit" 
-  platformName={$currentProject?.name || "Authoring System"} 
   href="/#/"
   >
+
+  <span slot="company">
+    {#if $currentProject}
+      <span class="exit-arrow"><ArrowLeft /></span>
+      {$currentProject?.name}
+    {:else}
+      interkit
+    {/if}
+  </span>
   
   <!--HeaderNav>
     <HeaderNavItem text="Projekt" />
@@ -136,8 +146,13 @@
       </HeaderAction>
     {/if}
   </HeaderUtilities>
+
+  
   
 </Header>
+
+
+
 
 {#if $userId}
   <Content style="padding:0;width:100%;height:var(--content-height);overflow:hidden;">
@@ -161,6 +176,12 @@
 <style lang="scss">
 
   @use '@carbon/styles/scss/theme';
+
+  .exit-arrow {
+    position: relative;
+    top: 3px;
+    margin-right: 3px;
+  }
 
   .status {
     padding: 0.5em 1em 0.5em 1em;

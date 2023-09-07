@@ -307,7 +307,7 @@
                       src={`${$bundleServerURL}/app/${row.id}/favicon.png`}
                       alt="Favicon"
                       fadeIn
-                      style="width: 2em"
+                      style="max-width: 2em"
                       >
                       <svelte:fragment slot="error">
                       </svelte:fragment>
