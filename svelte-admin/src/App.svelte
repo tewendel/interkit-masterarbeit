@@ -38,7 +38,7 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject, currentUser } from './admin.js'
+  import { projectId, currentProject, currentUser, secondaryTabPreviewProjectId } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -50,9 +50,14 @@
   }
 
   const routeLoaded = event => {
-    //console.log("routeLoaded", event)
+    console.log("routeLoaded", event)
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
+
+    // reset preview when leaving project
+    if(event?.detail?.location == "/") {
+      secondaryTabPreviewProjectId.set(null)
+    }
   }
 
   onMount(async ()=>{
