@@ -185,7 +185,7 @@
   }
 
   .tabs-preview {
-    width: calc(33.3333333vw - 45px);
+    width: calc(33.3333333vw - 48px);
     height: 100%;
     visibility: hidden;
   }
