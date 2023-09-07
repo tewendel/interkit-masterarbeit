@@ -7,8 +7,9 @@ fields:
   - type: options
     name: options
     options:
-      - yellow
+      # first option should match the preset value in svelte
       - red
+      - yellow
   - type: slot
     name: default
 toolboxCategory: Project

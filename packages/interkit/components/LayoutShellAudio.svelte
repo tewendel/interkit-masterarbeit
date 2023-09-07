@@ -39,15 +39,14 @@
   }
 
   .top-bar {
-    height: 56px;
-    
+    min-height: 3.5rem;
+    flex-shrink: 1;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
   }
 
   .content {
-    flex: 1;
     overflow-y: hidden;
     display: block;
     width: 100%;
@@ -56,11 +55,12 @@
   }
 
   .audio-player {    
-    max-height: 64px;
+    /* max-height: 4rem; */
+    flex-shrink: 1;
   }
   
   .bottom-bar {
-    height: 64px;
+    /* min-height: 4rem; */
     
     flex-direction: row;
     justify-content: space-around;

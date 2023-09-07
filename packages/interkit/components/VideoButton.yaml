@@ -1,0 +1,34 @@
+name: VideoButton
+colour: 300
+fields:
+  - type: extraProps
+    props:
+    - name: videoColumn
+      type: sheetColumn
+      columnType: mediaFile
+      help: "A column on the element context (for example DataLoaderSingle) containing a video file"
+    - name: mediafileKey
+      type: string
+      help: "A static key of a media file (optional)"
+    - name: vimeoColumn
+      type: sheetColumn
+      columnType: string
+      help: "A column on the element context (for example DataLoaderSingle) containing a vimeo url"
+    - name: vimeoUrl
+      type: string
+      help: "A static url of a video hosted on Vimeo for embedding (optional)"
+    - name: controls
+      type: options
+      options:
+        - interkit
+        - native
+        - none
+      defaultValue: interkit
+    - name: loop
+      type: checkbox
+      defaultValue: false
+    - name: buttonOptions
+      type: buttonOptions
+  - type: slot
+    name: Icon
+toolboxCategory: Media

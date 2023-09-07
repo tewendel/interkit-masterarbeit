@@ -172,7 +172,7 @@
     #scanner-container {
       height: 100%;
       width: 100%;
-      background-color: white;
+      background-color: var(--color-background);
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -193,8 +193,8 @@
     }
   
     .qr-frame {
-      width: 200px;
-      height: 200px;
+      width: 40vw;
+      height: 40vw;
       background-image: url("./icons/QR_frame.svg");
       background-size: contain;
       z-index: 2;

@@ -59,20 +59,25 @@
 {#if mediafile || $showDummyData}
   <img
     on:click={() => { zoomed = true }}
-    {style}
+    style={
+      style +
+      (mediafile?.meta?.fit?.backgroundColor
+        ? `; background-color: ${mediafile.meta.fit.backgroundColor}; border-color: ${mediafile.meta.fit.backgroundColor}`
+        : '')
+    }
     class={`
       ${mainClass}
       MediaFileImage
       fitDimension-${fitDimension}
       MediaFileImage--fitdimension${fitDimension}
-      objectFit-${objectFit}
-      MediaFileImage--objectfit${objectFit}
+      objectFit-${mediafile?.meta?.fit?.objectFit || objectFit}
+      MediaFileImage--objectfit${mediafile?.meta?.fit?.objectFit || objectFit}
     `}
-    alt="mediafile"
+    alt={mediafile?.meta?.alt || null}
     src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
     />
   {#if zoomable && zoomed}
-    <OverlayFull closeMethod={()=>{zoomed = false}} customStyle="background-color: #000;">
+    <OverlayFull closeMethod={()=>{zoomed = false}} customStyle="background-color: var(--color-background-mediafileimage-overlay);">
       <Zoom
         src={$showDummyData ? dummyDataImgURL : encodeURI(mediafile.link)}
         alt="mediafile"
@@ -92,6 +97,13 @@
     object-fit: contain;
   }
 
+  img.objectFit-passepartout {
+    object-fit: contain;
+    box-sizing: border-box;
+    background-color: var(--color-background-backdrop);
+    border: var(--card-border-radius, var(--border-radius)) solid var(--color-background-backdrop);
+  }
+
   img.fitDimension-width {
     width: 100%;
     max-height: 60vh;
@@ -107,9 +119,11 @@
   }
 
   .fallback {
-    background: #808080;
-    color: white;
-    padding: var(--distance-xl) var(--distance-m);
+    background: var(--color-background-backdrop);
+    color: var(--color-text);
+    padding:
+      calc(var(--inset-y) * 3rem)
+      calc(var(--inset-x) * 1rem);
     font-style: italic;
   }
 

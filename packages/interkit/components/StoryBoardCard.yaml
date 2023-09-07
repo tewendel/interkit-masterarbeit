@@ -1,13 +1,13 @@
-name: ChatBoardCard
-title: ChatBoardCard
+name: StoryBoardCard
+title: StoryBoardCard
 colour: 100
 fields:
   - type: string
     name: board
     defaultValue: board1
-    help: "Show a summary of a chat/Story board."
+    help: "Show a summary of a story board."
   - type: string
     name: path
     help: "Path for routing. TODO"
-docsPath: ChatBoard#chatboardcard
+docsPath: StoryBoard#storyboardcard
 toolboxCategory: Chat

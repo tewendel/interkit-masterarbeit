@@ -14,6 +14,8 @@
 
   export let size
 
+  export let style
+
   const aspectRatioType = {
     large: "element",
     medium: "square",
@@ -35,7 +37,7 @@
 </script>
 
 
-  <div class="CenterModal container {size}">
+  <div class="CenterModal container {size}" {style}>
     <div class="CenterModal__Card modal-card">
       <div class="CenterModal__ImageHeader image-header">
         {#if imageKey}
@@ -45,7 +47,7 @@
                 objectFit="cover" 
                 fitDimension="both"   
                 mediafileRef={{type: "mediafile", value: imageKey}} 
-                style="border-radius: calc(var(--border-radius) - 8px);"
+                style="border-radius: var(--centermodal-border-radius-inner);"
               />
             </AspectRatio>
           </div>
@@ -63,7 +65,7 @@
       {#if description}<div class="description">{description}</div>{/if}
       <div class="CenterModal__Buttons buttons">
         <ButtonBar hideHelpText>
-          <slot name ="buttons"/>
+          <slot name="buttons"/>
         </ButtonBar>
       </div>
     </div>
@@ -73,35 +75,38 @@
 <style>
 
   .container {
-    
+    --centermodal-border-radius-inner: var(--border-radius);
+    --centermodal-border-radius: calc(var(--centermodal-border-radius-inner) + var(--inset) * 0.5rem);
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--distance-s);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
     box-sizing: border-box;
   }
 
   .modal-card {
     width: 100%;
     background-color: var(--color-background-highlight);
-    padding: var(--distance-s);
-    border-radius: var(--border-radius);
+    padding: calc(var(--inset) * 0.5rem);
+    border-radius: var(--centermodal-border-radius);
     box-shadow: var(--box-shadow);
   }
 
   .container.medium .image {
-    width: 96px;
+    width: 6rem;
   }
 
   .container.small .image {
-    width: 56px;
+    width: 3.5rem;
   }
 
   .container.medium .image-header, .container.small .image-header {
     display: flex;
-    gap: var(--distance-s);
+    gap: calc(var(--outset-y) * 0.5rem);
   }
 
   .container.medium .image-header :nth-child(1), .container.small .image-header :nth-child(1) {
@@ -113,15 +118,27 @@
   }
 
   .header {
-    padding: 16px 0px 8px 16px; 
+    padding:
+      calc(var(--inset-y) * 1rem)
+      0
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem);
   }
 
   .container.medium .header, .container.small .header {
-    padding: 16px 8px 8px 16px; 
+    padding:
+      calc(var(--inset-y) * 1rem)
+      calc(var(--inset-x) * 0.5rem)
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem);
   }
 
   .description {
-    padding: 8px 16px 24px 16px; 
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem)
+      calc(var(--inset-y) * 1.5rem)
+      calc(var(--inset-x) * 1rem);
     font: var(--font-content-body-2);
     letter-spacing: var(--letter-spacing-content-body-2);
     color: var(--color-text-soft);

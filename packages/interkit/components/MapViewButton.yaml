@@ -4,12 +4,16 @@ toolboxCategory: Map
 fields:
   - type: extraProps
     props:
+    - name: mapId
+      type: string
+      defaultValue: "map"
+      help: "Select which map to use (leave as is if you only have one map)"
     - name: type
       type: options
       options:
         - filters
         - layers
-      help: "Pick which type of interface to display"
+      help: "Pick which type of interface to display, filters or layers"
     - name: text 
       type: string
       help: "Text on the button."
@@ -17,4 +21,51 @@ fields:
       type: string
       defaultValue: "Select a layer for the map."
       help: "A short info text for the layer selector"
-      
+    - name: typeColumn
+      type: sheetColumn
+      columnType: "optionSelect"
+      options: "filter, layer, layer+filter"
+      defaultValue: "mapViews/type"
+      help: "A column on the sheet containing the map views, specifying the type (filter or layer)"
+    - name: titleColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/title"
+      help: "A column on the sheet containing the map views, specifying the title"
+    - name: imageColumn
+      type: sheetColumn
+      columnType: "mediaFile"
+      defaultValue: "mapViews/image"
+    - name: labelColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/label"
+    - name: subtitleColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/subtitle"
+    - name: descriptionColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/description"
+    - name: tilesUrlColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/tilesUrl"
+      help: "A column on the sheet containing the map views, specifying a custom tile url"
+    - name: mapBoxGLStyleColumn
+      type: sheetColumn
+      columnType: "string"
+      defaultValue: "mapViews/mapBoxGLStyle"
+      help: "A column on the sheet containing the map views, specifying a mapBoxGLStyle"
+    - name: orderColumn
+      type: sheetColumn
+      columnType: "number"
+      defaultValue: "mapViews/order"
+      help: "A column on the sheet containing the map views, specifying the order"
+    - name: markerCategoryColumn
+      type: sheetColumn
+      columnType: "sheetRef"
+      defaultValue: "elements/mapView"
+      refKey: "mapViews"
+      help: "A column on the sheet containing the markers assigning them to a specific map view"

@@ -45,8 +45,9 @@
 
   .message__date {
     font: var(--font-caption);
-    padding: 0 var(--distance-s);
-    margin: var(--distance-s) 0;
+    letter-spacing: var(--letter-spacing-caption);
+    padding: 0 calc(var(--inset-x) * 0.5rem);
+    margin: calc(var(--outset-x) * 0.5rem) 0;
   }
 
   .message__date--me {

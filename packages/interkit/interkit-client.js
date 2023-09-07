@@ -13,6 +13,7 @@ const { Storage } = Plugins;
 import util from './util.js';
 
 import { enableHeartbeat as userEnableHeartbeat } from './pushnotifications.js'
+import { userEnableActivityTracking, trackUserUrlPath } from './user-activity-tracking.js' 
 
 // this store holds the basic data from interkit.config.json
 let config = writable(null); 
@@ -986,6 +987,9 @@ const callGlobalMethod = (key, options) => {
 projectId.subscribe(subscribeUserProjectDataStore)
 userId.subscribe((data)=>{
   console.log("userId update", data)  
+  if (data) { 
+    trackUserUrlPath() 
+  }
   subscribeUserProjectDataStore()
 })
 
@@ -1019,6 +1023,7 @@ const InterkitClient = {
   saveUserPushnotificationRegistrationToken,
   userEnableHeartbeat,
   userHeartbeat,
+  userEnableActivityTracking,
   loginAnon: createProjectTokenUserAndLogin,
   login,
   logout,
@@ -1047,7 +1052,7 @@ const InterkitClient = {
   setUiKey,
   getUiKey,
   registerGlobalMethod,
-  callGlobalMethod
-}
+  callGlobalMethod,
+};
 
 export default InterkitClient;

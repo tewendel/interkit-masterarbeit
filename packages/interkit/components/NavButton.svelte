@@ -25,7 +25,7 @@
   $: active = (effect?.effectType == "route" && $location?.pathname == effect?.path) ? "active" : ""    
   
   let withIcon = $$slots.default ? "withIcon" : ""
-  setContext("iconHeight", "24px")
+  setContext("iconHeight", "1.5rem")
 
   const iconFullStore = writable(active)
   $: iconFullStore.set(active)
@@ -54,13 +54,13 @@
 <style>
 
   .container {
-    height: var(--distance-xxl);
+    /* height: var(--distance-xxl); */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: var(--distance-tiny)
+    gap: calc(var(--outset-x) * 0.125rem)
   }
 
   .container:hover {
@@ -69,6 +69,7 @@
 
   .container span {
     font: var(--font-caption-bold);
+    letter-spacing: var(--letter-spacing-caption-bold);
   }
 
   .container.active:not(.withIcon) span {
@@ -83,8 +84,10 @@
   .icon-container {
     display: flex;
     justify-content: center;
-    border-radius: calc(var(--border-radius) / 2);
-    padding: var(--distance-xs) var(--distance-m);
+    border-radius: var(--border-radius-navbutton);
+    padding:
+      calc(var(--inset-y) * 0.25rem)
+      calc(var(--inset-x) * 1rem);
     box-sizing: border-box;
   }
 

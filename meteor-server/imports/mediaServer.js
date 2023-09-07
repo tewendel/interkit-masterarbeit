@@ -208,4 +208,16 @@ for(let audio of audios) {
   MediaFiles.update({_id: audio._id}, {$set: {meta: { ...audio.meta, duration }}});
 }
 
+Meteor.methods({
+  'media.updateMeta': async ({ id, metaKey, value }) => {
+    const result = await MediaFiles.update({_id: id}, {
+      $set: {
+        ['meta.' + metaKey]: value
+      }
+    })
+    return true
+    // can't return promise or value here, causes some sort of stack overflow, weird
+    // return result
+  }
+})
 

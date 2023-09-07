@@ -4,16 +4,13 @@
 
 # Chat
 
+![A Chat example](/images/component_previews/Chat.png)
+
 ## Usage
 
-Displays a chat interface for a given channel. 
+Displays a chat interface for a given story board. The board is set either manually or through a [ChatRoute](/components/Route#chatroute)
 
-The channel key can be set in two ways:
-
-* using the `board` prop
-* using the globalStore "chatChannelKey"
-
-If the globalStore is set, it takes priority.
+Requires the [AnonmymousLogin](/components/AnonymousLogin) component to be present inside AppBase.
 
 <ComponentInfoYaml component="Chat" />
 
@@ -25,3 +22,12 @@ If the globalStore is set, it takes priority.
 ```
 
 </details>
+
+
+## StoryBoardImage
+
+![A StoryBoardImage example](/images/component_previews/StoryBoardImage.png)
+
+Display the image associated with a given story board. Use this together with [HorizontalSpacer](/components/HorizontalSpacer) and [Layout Shells](/components/Shell) to indicate which story board is open.
+
+<ComponentInfoYaml component="StoryBoardImage" />

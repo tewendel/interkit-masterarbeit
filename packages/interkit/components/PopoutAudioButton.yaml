@@ -1,9 +1,15 @@
 name: PopoutAudioButton
-toolboxCategory: Buttons
+toolboxCategory: Media
 colour: 300
 fields: 
-  - name: audioColumn
-    type: sheetColumn
-    defaultValue: "elements/audio"
+  - type: extraProps
+    props:
+    - name: audioColumn
+      type: sheetColumn
+      defaultValue: "elements/audio"
+      help: The column containing the audio file to play
+    - name: buttonOptions
+      type: buttonOptions
+docsPath: AudioPlayer#popoutaudiobutton
   
   

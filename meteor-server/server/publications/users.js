@@ -97,3 +97,28 @@ Meteor.publish("roleAssignment", function () {
     this.ready()
   }
 })
+
+Meteor.publish("user.editingProject", function ({ projectId }) {
+  if (this.userId && projectId) {
+    if (userIsInRoles(this.userId, ['admin', 'author'])) {
+      // find user that have entries in connection urls that match "/#/[projectId]"
+      // connections: [{url: "/#/projectId", ...}]
+      const regex = `\/#\/${projectId}`;
+
+      const cursor = Meteor.users.find({
+        connections: {
+          $elemMatch: {
+          url: { $regex: regex },
+          },
+        },
+      })
+        
+      return cursor
+    } else {
+      // console.log("user.editingProject: not authorized", this.userId)
+    }
+  } else {
+    // console.log("user.editingProject: missing userId or projectId", this.userId, projectId)
+  }
+  this.ready()
+})

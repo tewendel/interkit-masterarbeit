@@ -8,38 +8,46 @@ fields:
       type: options
       options:
         - none
+        - tiny
         - xs
         - s
         - m
         - l
         - xl
+        - xxl
     - name: right
       type: options
       options:
         - none
+        - tiny
         - xs
         - s
         - m
         - l
         - xl
+        - xxl
     - name: bottom
       type: options
       options:
         - none
+        - tiny
         - xs
         - s
         - m
         - l
         - xl
+        - xxl
     - name: left
       type: options
       options:
         - none
+        - tiny
         - xs
         - s
         - m
         - l
         - xl     
+        - xxl
   - name: default
     type: slot     
 docsPath: Spacing#spacing

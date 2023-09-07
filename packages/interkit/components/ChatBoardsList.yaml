@@ -6,5 +6,5 @@ fields:
     name: path
     defaultValue: "/chat"
     help: "Path for routing. TODO"
-docsPath: ChatBoard#chatboardslist
+docsPath: StoryBoard#storyboardslist
 toolboxCategory: Chat

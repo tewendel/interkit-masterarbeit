@@ -8,18 +8,20 @@
 
 ## Scope
 
-There are  ...
+There are...
 
-- Included interkit components that come with interkit
-- Project components that you can custom build for your project
+- components that come included with interkit
+- custom components you build for your project
 
 ## Blockly
 
-Components are arranged via Blockly. The `blocklyState.json` gets translated into an `App.svelte`. Both files are equivalent to the blockly representation you see in the component editor.
+Components are arranged via Blockly.
+The `blocklyState.json` gets translated into an `App.svelte`.
+Both files are equivalent to the blockly representation you see in the component editor.
 
 ## Component Files
 
-Eeach component consists of two files:
+Each component consists of two files:
 
 - `ComponentName.svelte` - a svelte component
 - `ComponentName.yaml` - definitions for the component editor
@@ -27,13 +29,18 @@ Eeach component consists of two files:
 ## Documentation
 
 - add a doc entry at `content/components/ComponentName.md`
-- add a preview image (shown in the component picker inside the authoring system) to the docs repository at `static/images/component_previews/ComponentName.png`
+- add a preview image
+  (shown in the component picker inside the authoring system)
+  to the docs repository at `static/images/component_previews/ComponentName.png`
 
 ## Dummy Data
 
-For components that use data from sheets, it is useful to define some dummy data to make it easier to see how the component looks even without data. In the preview pane you can toggle Dummy Data on and off.
+For components that use data from sheets,
+it is useful to define some dummy data to make it easier to see how the component looks even without data.
+In the preview pane you can toggle Dummy Data on and off.
 
-In your component code, the following to get a reactive store containing the value of this toggle.
+In your component code, add the following to get a reactive store
+with the boolean representation of the toggle.
 
 ```svelte
 import { getShowDummyDataStore } from './dummyDataHelpers.js'
@@ -42,7 +49,8 @@ const showDummyData = getShowDummyDataStore()
 
 ## Example
 
-You can find this example for a custom project component in `src/components/ProjectComponentExample.svelte`
+You can find this example for a custom project component in
+`src/components/ProjectComponentExample.svelte`
 
 ### ProjectComponentExample.svelte
 <ComponentInfo noheader code={example_svelte} />
@@ -58,14 +66,17 @@ You can find this example for a custom project component in `src/components/Proj
 
 - `name` name of the file
 - `title` title for the editor
-- `colour` a number, see [Blockly colour picker](https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#block_colours)
+- `colour` a number, see
+  [Blockly colour picker](https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#block_colours)
 - `toolboxCategory` category for the editor
-- `slotCategory` (optional) name that corresponds to allowedChildren (it will only fit when mentioned there)
+- `slotCategory` (optional) name that corresponds to allowedChildren
+  (it will only fit when mentioned there)
 - `fields` (optional) array of fields
   - `name` name of the field
   - `defaultValue` (optional) default value for the field
   - `type` type of the field (type see below)
-- `docsPath` (optional) a path to the documentation for this block, if not set, will use the name of the component
+- `docsPath` (optional) a path to the documentation for this block,
+  if not set, will use the name of the component
 
 ### field types
 
@@ -88,15 +99,20 @@ You can find this example for a custom project component in `src/components/Proj
 
 ### additional attributes for field type: sheetColumn
 
-- `columnType`
+A sheetColumn field offers the user a helper for the automatic creation of the column in the database if not found. To use this, you need to specify the type of the column to create in the database. 
+
+- `columnType` - "string" | "location" | "sheetRef" | "date" | "mediaFile" | "number" | "optionSelect" | "richText"
+- `options` - for columns of type "optionSelect" specify available options with a string like "option1, option2, option3"
 
 ### using extraProps
 
-Add a field with type `extraProps` to move component settings into a modal. List the fields (inlucding type, name, defaultValue) in the `props` attribute.
+Add a field with type `extraProps` to move component settings into a modal.
+List the fields (including type, name, defaultValue) in the `props` attribute.
 
 ### Documentation
 
-You can add a `help` attribute to fields and extraProps fields. The extraProps help is displayed in the modal. All help is displayed when you use the `ComponentInfoYaml` component on a documentation page for the component.
+You can add a `help` attribute to fields and extraProps fields.
+The extraProps help is displayed in the modal.
+All help is displayed when you use the `ComponentInfoYaml` component
+on a documentation page for the component.
 
-
- 

@@ -16,4 +16,5 @@ fields:
       help: An explanation text below the buttonBar
   - type: slot
     name: default
+docsPath: Button#buttonbar
 toolboxCategory: Buttons

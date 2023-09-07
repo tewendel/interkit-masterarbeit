@@ -7,6 +7,7 @@ require('dotenv').config( {
 
 
 import '../imports/collections.js';
+import "../imports/userActivity.js";
 import './publications';
 import './userRolesSetup.js';
 

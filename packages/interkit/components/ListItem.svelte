@@ -25,7 +25,9 @@
   .container {
     width: 100%;
     border-bottom: var(--border-width) solid var(--color-border);
-    padding: 12px 16px 12px 16px;
+    padding:
+      calc(var(--inset-y) * 0.75rem)
+      calc(var(--inset-x) * 1rem);
     display: flex;
     box-sizing: border-box;
   }

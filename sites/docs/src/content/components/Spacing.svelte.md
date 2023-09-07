@@ -4,12 +4,11 @@
 
 # Spacing
 
-# Spacing
-
-TODO
+Add spacing around content using the predefined spacings set in the theme.
 
 <ComponentInfoYaml component="Spacing" />
 
+<br>
 <details>
 <summary>Developer docs</summary>
 
@@ -18,19 +17,3 @@ TODO
 ```
 
 </details>
-
-# HorizontalSpacer
-
-TODO
-
-<ComponentInfoYaml component="HorizontalSpacer" />
-
-<details>
-<summary>Developer docs</summary>
-
-```docs
-../../../../../packages/interkit/components/HorizontalSpacer.svelte
-```
-
-</details>
-

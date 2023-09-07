@@ -20,4 +20,4 @@ fields:
         type: effect
   - type: slot
     name: buttons
-
+docsPath: Modal#snackbar

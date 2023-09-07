@@ -46,8 +46,10 @@ fields:
         defaultValue: elements/description
   - type: slot
     name: chips
+    help: "Use this slot to place dynamic labels, for example for bookmarks. These are diplayed to the right of the headline."
   - type: slot
     name: content
+    help: "Use this slot to place further content inside the card, for example a ButtonBar or a DataCell."
 toolboxCategory: Data
-docsPath: Data
+docsPath: DataCard
 

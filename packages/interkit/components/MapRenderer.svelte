@@ -40,6 +40,8 @@
       from the element we get the title, label and custom icon
 
   */
+
+  const getRemPx = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
   
   export const createIconDivHTML = async (element, options, index) => {
 
@@ -130,7 +132,7 @@
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
   
-  import L from 'leaflet';
+  import L, { TileLayer } from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
   // leak mapligreGL (the FOSS implementation of L.mapboxGL) into the window scope...
@@ -285,6 +287,8 @@
   // goes over data and recreates markers
   const updateMarkers = async () => {
 
+    const remPx = getRemPx()
+
     // clear old markers
     removeMarkers();
 
@@ -313,7 +317,7 @@
         let icon = L.divIcon({
           html: iconHTML,
           className: 'map-marker',
-          iconAnchor: [24.5, 42]
+          iconAnchor: [(24.5 / 16) * remPx, (42 / 16) * remPx]
         });
 
         //console.log("adding marker to map", markerValue, icon)
@@ -367,13 +371,15 @@
 
         positionStore.set(currentPosition);
 
-        if(!userIcon)
+        if(!userIcon) {
+          const remPx = getRemPx()
           userIcon = L.divIcon({
             html: "<div class='user_pos_marker'><img class='user_pos' src='leaflet/user_pos.svg'></div>",
             iconUrl: "leaflet/user_pos.svg",
-            iconSize:     [60, 60], 
-            iconAnchor:   [30, 30], 
+            iconSize:     [(60 / 16) * remPx, (60 / 16) * remPx], 
+            iconAnchor:   [(30 / 16) * remPx, (30 / 16) * remPx], 
           });
+        }
 
         if(!userPositionMarker) {
           userPositionMarker = L.marker(currentPosition, {
@@ -391,6 +397,19 @@
         }
       }
 
+    })
+  }
+
+  let activeTileLayer;
+  const createTileLayer = (tileLayerUrl) => {
+    return L.tileLayer(tileLayerUrl, {
+      maxZoom: 20
+    })
+  }
+  const createGLLayer = (mapBoxGLStyle) => {
+    return L.maplibreGL({
+      // attribution: 'TODO',
+      style: mapBoxGLStyle,
     })
   }
 
@@ -416,17 +435,13 @@
       map.doubleClickZoom.disable(); 
     }
 
-    if (tileLayer) {
-      // default interkit map style
-      console.log("using tileLayer", tileLayer)
-      L.tileLayer(tileLayer, {
-        maxZoom: 20
-      }).addTo(map);
+    if (mapBoxGLStyle) {
+      activeTileLayer = createGLLayer(mapBoxGLStyle);
+      activeTileLayer.addTo(map);      
     } else {
-      L.maplibreGL({
-        // attribution: 'TODO',
-        style: mapBoxGLStyle,
-      }).addTo(map);
+      // default interkit map style
+      activeTileLayer = createTileLayer(tileLayer)
+      activeTileLayer.addTo(map);
     }
 
     map.on("click", mapClick);
@@ -445,6 +460,25 @@
       manualPosition = true;
     })
   })
+
+  $: {
+    if(map) {
+      console.log(mapBoxGLStyle, tileLayer)
+      if(mapBoxGLStyle) {    
+        console.log("MapRenderer update mapBoxGLStyle", mapBoxGLStyle)
+        const newTileLayer = createGLLayer(mapBoxGLStyle)
+        map.removeLayer(activeTileLayer)
+        map.addLayer(newTileLayer)
+        activeTileLayer = newTileLayer;
+      } else if(tileLayer) {
+        console.log("MapRenderer update tileLayer", tileLayer)
+        const newTileLayer = createTileLayer(tileLayer)
+        map.removeLayer(activeTileLayer)
+        map.addLayer(newTileLayer)
+        activeTileLayer = newTileLayer;
+      }
+    }    
+  }
 
   const autoPositionMap = () => {
     if(defaultLocation) return;
@@ -605,11 +639,17 @@
 </div>
 
 <style>
+  
+  /* We can't use --inset vars here because the markers are placed
+   * pixel-perfectly to their JS-set anchor (see above).
+   * inset would affect the height (or the image would have to shrink significantly).
+   * The markers barely support rem anyway...
+   */
 
   .container {
     width: 100%;
     height: 100%;
-    flex:1;
+    flex: 1;
   }
 
   .map { 
@@ -633,8 +673,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 48px;
-    height: 32px;
+    width: 3rem;
+    height: 2rem;
   }
 
   :global(div.marker-container.no-frame) {
@@ -658,18 +698,19 @@
 
   :global(.marker-container:not(.no-frame) div.marker-content) {
     position: relative;
-    padding: 2px;
+    padding: 0.125rem;
     background-color: var(--color-background);
-    border: 1px solid black;
-    border-radius: 12px;
+    border: var(--border-width) solid var(--color-border-mapmarker);
+    /* add padding here                                        v */
+    border-radius: calc(var(--border-radius-mapmarker-inner) + 0.125rem);
     font: var(--font-caption-bold);
     letter-spacing: var(--letter-spacing-caption-bold);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    gap: 2px;
-    min-width: 32px;
+    gap: 0.125rem;
+    min-width: 2rem;
     box-sizing: border-box;
   }
 
@@ -686,39 +727,39 @@
   /* check mark */
 
   :global(div.marker-container .check-mark) {
-    background-color: #fff;
+    background-color: var(--color-background);
     background-image: url("./icons/Full/Check.svg");
     filter: invert(1);
     background-repeat: no-repeat;
-    background-size: 12px;
+    background-size: 0.75rem;
     background-position: center;
-    width: 14px;
-    height: 14px;
-    border-radius: 12px;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 100%;
     display: inline-block;
     position: absolute;
     z-index: 1000;
-    right: -6px;
-    top: -6px;
+    right: -0.375rem;
+    top: -0.375rem;
   }
 
   :global(div.marker-container.no-frame .check-mark) {
-    right: 8px;
-    top: 6px;  
+    right: 0.5rem;
+    top: 0.1rem;
   }
 
   :global(div.marker-container.no-label div.marker-content) {
-    width: 32px;
-    padding: 2px;
+    width: 2rem;
+    padding: 0.125rem;
   }
 
   /* image */
 
   :global(div.marker-content img) {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--border-radius-mapmarker-inner);
   }
 
   :global(.marker-container:not(.has-mediafileicon) .marker-content.selected img) {
@@ -740,32 +781,32 @@
     position: absolute;
     z-index: -1;
     top: 100%;
-    left: calc(50% - 7px);
-    width: 15px;
-    height: 10px;
-    border-top: 10px solid #000;
+    left: calc(50% - 0.4375rem);
+    width: 0.9375rem;
+    height: 0.625rem;
+    border-top: 0.625rem solid var(--color-border-mapmarker);
     /* note: the tip is not perfectly rounded, but at 1px this shouldn't matter */
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
+    border-left: 0.4375rem solid transparent;
+    border-right: 0.4375rem solid transparent;
   }
 
   /* title above the body */
 
   :global(div.marker-title) {
     position: absolute;
-    top: -1.8em;
+    top: -1.4rem;
     left: 50%;
     white-space: nowrap;
     transform: translateX(-50%);
-    max-width: 12em;
+    max-width: 10rem;
     overflow: hidden;
     text-overflow: ellipsis;
     /* TODO this is not to spec, which is not blurry + un-hardcode color. */
-    text-shadow: 0 0 1px #e5e5e5;
+    text-shadow: 0 0 0.0625em var(--color-background);
   }
   
   :global(.marker-container.no-frame .marker-title) {
-    top: -0.9em;
+    top: -0.9rem;
   }
 
   :global(.leaflet-control) { /* hide default leaflet controls */
@@ -775,18 +816,24 @@
   .controls {
     position: absolute;
     right: 0;
-    bottom: calc(50% - 64px);
+    /*bottom: calc(50% - 3rem - var(--outset-y) * 1rem);*/
+    bottom: calc(50% - 4rem);
     display: flex;
     flex-direction: column;
     z-index: 1;
-    padding: 8px;
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem)
+      0.5rem
+      calc(var(--outset-x) * 0.5rem);
   }
 
   .controls > * {
-    margin: 8px;
+    margin: 0.5rem 0;
   }
   .controls .locate {
-    margin-top: 40px;
+    /*margin-top: calc(var(--outset-y) * 1rem + 1.5rem)*/
+    margin-top: 2.5rem;
   }
 
   :global(.leaflet-div-icon) {
@@ -795,8 +842,8 @@
   }
 
   :global(.user_pos_marker) {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -813,8 +860,8 @@
   }
 
   :global(.user_pos) {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     animation: pulsate 5s;
     animation-iteration-count: infinite; 
   }
@@ -824,6 +871,5 @@
     20% {transform: scale(1.3);}
     40% {transform: scale(1);}
   }
-
   
 </style>

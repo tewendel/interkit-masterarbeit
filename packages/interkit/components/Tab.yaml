@@ -8,8 +8,9 @@ fields:
     props:
     - type: effect
       name: effect
-      help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+      help: "The type of effect (or action) the tab should trigger when pressed. Usually used with Route."
     - type: checkbox
       name: execOnMount
       help: "Runs the effect once when the button is rendered (for example to set a default value)"
+docsPath: TabBar#tab
 toolboxCategory: Buttons

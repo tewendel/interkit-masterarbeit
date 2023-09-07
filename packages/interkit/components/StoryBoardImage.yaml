@@ -11,3 +11,4 @@ fields:
       type: checkbox
       defaultValue: true
       help: Check this to scale the image to the right size for use in the TopBar
+docsPath: Chat#storyboardimage

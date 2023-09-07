@@ -29,6 +29,11 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.server-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_SERVER_HOST}`)"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
     networks:
       - frontproxy
       - default
@@ -48,6 +53,11 @@ services:
       #MONGODB_ROOT_PASSWORD: password123
       #MONGODB_REPLICA_SET_KEY: replicasetkey123
       ALLOW_EMPTY_PASSWORD: "yes"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"      
       
   admin:
     image: interkit/admin:${INTERKIT_IMAGE_TAG}
@@ -67,6 +77,11 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.admin-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_ADMIN_HOST}`)"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"      
     networks:
       - frontproxy
       - default
@@ -91,11 +106,17 @@ services:
       INTERKIT_SERVER_WEBSOCKETS_URL: $INTERKIT_SERVER_WEBSOCKETS_URL
       INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL: $INTERKIT_SERVER_SERVERSIDE_WEBSOCKETS_URL
       INTERKIT_SERVER_URL: $INTERKIT_SERVER_URL
+      INTERKIT_ADMIN_URL: $INTERKIT_ADMIN_URL
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontproxy"
       - "traefik.http.routers.bundler-${INTERKIT_IMAGE_TAG}.rule=Host(`${INTERKIT_BUNDLER_HOST}`)"
       - "traefik.http.middlewares.bundler-${INTERKIT_IMAGE_TAG}.headers.accesscontrolalloworiginlist=*"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"      
     networks:
       - frontproxy
       - default

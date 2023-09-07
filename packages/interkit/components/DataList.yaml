@@ -4,7 +4,9 @@ color: 230
 fields:
   - type: slot
     name: dataElement
+    help: Decide how each element in the list should be displayed, for example using a DataCard
   - type: slot
     name: emptyElement
-docsPath: Data#datalist
+    help: This is shown when there is no data in the list
+docsPath: DataList#datalist
 

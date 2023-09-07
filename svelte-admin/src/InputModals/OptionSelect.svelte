@@ -1,17 +1,12 @@
 <script>
 
-  import { InterkitClient } from 'interkit'
-
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-    TextInput,
     Select, SelectItem, FormGroup
   } from "carbon-components-svelte";
-
-  import { onMount } from 'svelte'
 
   export let value = {};
   export let submit;
@@ -20,6 +15,9 @@
   export let params;
 
   let options = params.currentColumn.options.split(",").map(o => o.trim())
+
+  // if value was just instantiated set it to first option
+  if(typeof value == "object" && options.length) value = options[0]
 
 </script>
 

@@ -8,6 +8,7 @@
   import { playAudio } from './AudioPlayer.svelte';
 
   export let audioColumn // the column that holds the audio we want to play
+  export let buttonOptions
 
   // get the data row from the element context
   let element = getContext("element");
@@ -35,11 +36,11 @@
 {#if loading && playing}
   <Loading mainClass="PopoutAudioButton" />
 {:else}
-  <Button type="secondary" on:click={play} mainClass="PopoutAudioButton">
+  <Button {buttonOptions} on:click={play} mainClass="PopoutAudioButton">
     {#if playing}
-      <Icon type={ paused ? "Thin-Play" : "Thin-Pause"} />
+      <Icon inverse={buttonOptions?.type == "primary"} type={ paused ? "Thin-Play" : "Thin-Pause"} />
     {:else}
-      <Icon type="Thin-Play" />
+      <Icon inverse={buttonOptions?.type == "primary"} type="Thin-Play" />
       &thinsp;
     {/if}
   </Button>

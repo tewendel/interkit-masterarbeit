@@ -4,7 +4,6 @@
   import Icon from '../Icon.svelte'
 
   import Overlay from '../Overlay.svelte';
-  import TopNavBarCustom from '../TopNavBarCustom.svelte';
   import OverlayFull from '../OverlayFull.svelte'
 
   import MediaRecorder from '../MediaRecorder.svelte';
@@ -88,25 +87,31 @@
   .container {
     background-color: var(--color-background-backdrop);
     display: flex;
+    align-items: center;
   }
   .container:not(.emptyInterface) {
-    padding: var(--distance-s);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
   }
   .input {
     flex: 1;
     font: var(--font-body-1);
-    padding: var(--distance-s);
+    letter-spacing: var(--letter-spacing-body-1);
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 0.5rem);
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--color-border);
     background-color: var(--color-background);
-    margin-right: var(--distance-m);
+    margin-right: 1rem; /* calc(var(--outset-x) * 1rem); */
     min-width: 0; /* makes flex-shrink work for <input> https://stackoverflow.com/a/42421490/629238 */
   }
   .input:focus {
     border-color: var(--color-text);
   }
   .left-button {
-    margin-right: var(--distance-m);
+    margin-right: 1rem; /* calc(var(--outset-x) * 1rem); */
   }
   .camera-container {
     height: 100%;

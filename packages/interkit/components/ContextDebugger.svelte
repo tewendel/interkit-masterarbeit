@@ -68,9 +68,9 @@
 
 <style>
   div {
-    border: 1px solid #ccc;
-    padding: 1em;
-    border-radius: 0.5em;
-    background-color: #eee;
+    border: var(--border-width) solid var(--color-border);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-background-backdrop);
   }
 </style>

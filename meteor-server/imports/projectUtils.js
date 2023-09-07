@@ -123,6 +123,7 @@ const getAllOfProject = async function (projectId)  {
   const channels = Channels.find({ projectId }).fetch()
 
   delete project.projectServer
+  delete project.devServer
   delete project.uiState
 
   return {

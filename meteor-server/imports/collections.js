@@ -22,7 +22,11 @@ export const Projects = new Mongo.Collection('projects');
       date: <datetime>
     }]
   }
-- uiState
+- devServer {
+    status: <string>, // running, stopped, ...
+    actionRequested: <string> // start, stop, null
+  }
+- uiState // volatile states for UI
 */
 
 export const Sheets = new Mongo.Collection('sheets');

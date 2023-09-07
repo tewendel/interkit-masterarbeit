@@ -4,13 +4,24 @@ colour: 130
 fields:
   - type: string
     name: languages
+    help: List available language codes, for example "en,de". The first is the default language.
   - type: string
     name: projectIdOverride
+    help: For very specific setups, where you want to target a different interkit project with your app. Normally leave blank.
   - type: slot
     name: viewport
+    help: The app's contents.
   - type: slot
     name: desktopFallback
+    help: Show this slot instead of the app for "desktop" devices (wider viewports). Leave blank to disable this behavior and show the app for every device.
   - type: slot
     name: networkHint
+    help: Override the default message to be displayed when the user's device is offline, or can't connect to the server.
+  - type: extraProps
+    props:
+      - type: string
+        name: desktopFallbackMinWidth
+        help: The minimum device width that should see the desktop fallback slot, presumably something larger than the typical mobile device. Expects a CSS distance value, including unit, e.g. 600px or 48em.
+        defaultValue: "600px"
 docsPath: AppBase#appbaseadvanced
 toolboxCategory: AppBase

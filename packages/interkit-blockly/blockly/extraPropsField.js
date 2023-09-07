@@ -9,9 +9,8 @@ export default (Blockly, update) => {
       // call FieldImage constructor and pass in update as onClick function
       super("/images/sheet_icon_inv.png", 15, 15, "*")
 
-      console.log("setup FieldImage with this", this)
-
-      console.log("extra props field constructor with props", props)
+      //console.log("setup ExtraPropsField with this", this)
+      //console.log("extra props field constructor with props", props)
       this.props = props
       this.blockName = blockName
       

@@ -12,6 +12,8 @@
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
 
+  import Exit from "carbon-icons-svelte/lib/Exit.svelte";
+  
   import { onMount } from 'svelte'
 
   import { 
@@ -36,7 +38,7 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject } from './admin.js'
+  import { projectId, currentProject, currentUser, currentProjectEditingUsers } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -51,6 +53,7 @@
     //console.log("routeLoaded", event)
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
+    //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
   }
 
   onMount(async ()=>{
@@ -62,6 +65,7 @@
 
   let userId = InterkitClient.userId;
   InterkitClient.initAuth()
+  InterkitClient.userEnableActivityTracking()
 
   let isUserOpen = false;
 
@@ -82,10 +86,17 @@
 </script>
 
 <Header 
-  company="interkit" 
-  platformName={$currentProject?.name || "Authoring System"} 
   href="/#/"
   >
+
+  <span slot="company">
+    {#if $currentProject}
+      <span class="exit-arrow"><Exit /></span>
+      <span class="project-name">{$currentProject?.name}</span>
+    {:else}
+      interkit
+    {/if}
+  </span>
   
   <!--HeaderNav>
     <HeaderNavItem text="Projekt" />
@@ -115,7 +126,7 @@
         closeIcon={UserAvatarFilledAlt}
       >
         <HeaderPanelLinks>
-          <HeaderPanelDivider>User {$userId}</HeaderPanelDivider>
+          <HeaderPanelDivider>User {$currentUser?.username}</HeaderPanelDivider>
           <div class="status">
             {#if $userIsRole?.admin}
               <UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>
@@ -124,9 +135,25 @@
           
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
 
+
           {#if $userIsRole?.admin}
             <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
             <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
+          {/if}
+
+
+
+          {#if $currentProjectEditingUsers}
+            <HeaderPanelDivider>Other Users (now active)</HeaderPanelDivider>
+            <div class="status">
+              {#each $currentProjectEditingUsers as user}
+                {#if user.id != $currentUser.id}
+                  <div>
+                    {user.username}
+                  </div>
+                {/if}
+              {/each}
+            </div>  
           {/if}
 
 
@@ -153,8 +180,13 @@
       </HeaderAction>
     {/if}
   </HeaderUtilities>
+
+  
   
 </Header>
+
+
+
 
 {#if $userId}
   <Content style="padding:0;width:100%;height:var(--content-height);overflow:hidden;">
@@ -178,6 +210,16 @@
 <style lang="scss">
 
   @use '@carbon/styles/scss/theme';
+  @use '@carbon/type';
+
+  .exit-arrow {
+    position: relative;
+    top: 2px;
+    margin-right: 3px;
+  }
+  .project-name {
+    @include type.type-style("heading-compact-02")
+  }
 
   .status {
     padding: 0.5em 1em 0.5em 1em;

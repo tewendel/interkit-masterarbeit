@@ -13,6 +13,8 @@
   
   export let autoplay = false
 
+  export let buttonOptions
+
   export let playbackControl = "stopped"; // use to start/stop playback through prop
 
   const showDummyData = getShowDummyDataStore()
@@ -172,7 +174,7 @@
     display: inline-flex;
     overflow: hidden;
     align-items: center;
-    height: 34px;
+    min-height: 32px;
   }
 
   .container:not(.open) {
@@ -189,7 +191,7 @@
   }
 
   .button {
-    padding: var(--distance-s);
+    padding: calc(var(--inset) * 0.5rem);
     cursor: pointer;
     display: inline-flex;
   }

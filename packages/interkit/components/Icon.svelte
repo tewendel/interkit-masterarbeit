@@ -9,7 +9,7 @@
 	const location = useLocation();
 	
   export let type
-  export let height = "25px"
+  export let height = "1.5rem"
   export let inverse = false
 
   const iconHeightOverride = getContext("iconHeight")

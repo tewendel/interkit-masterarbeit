@@ -1,5 +1,5 @@
 <!-- TODO refactor/cleanup _TopNavBar classes -->
-<nav class="HorizontalSpacer _TopNavBarCustom__Top">
+<div class="root HorizontalSpacer _TopNavBarCustom__Top">
   <div class="HorizontalSpacer__Left left _TopNavBarCustom__Top__Left" >
     <slot name="left"/>
   </div>
@@ -11,23 +11,23 @@
   <div class="HorizontalSpacer__Right right _TopNavBarCustom__Top__Right" >
     <slot name="right"/>
   </div>
-</nav>
+</div>
 
 
 <style>
 
-  nav {
-    min-height: 55px;
+  .root {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items:center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding-left: var(--distance-m);
-    padding-right: var(--distance-m);
-    padding-top: var(--distance-s);
-    padding-bottom: var(--distance-s);
+    padding:
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem)
+      calc(var(--outset-y) * 0.5rem)
+      calc(var(--outset-x) * 0.5rem);
   }
   
   ._TopNavBarCustom__Top__Left,
@@ -47,16 +47,17 @@
   }
 
   :global(._TopNavBarCustom__Top__Left > *:not(:first-child)) {
-    margin-left: 8px;
+    margin-left: calc(var(--outset-x) * 0.5rem);
   }
 
   :global(._TopNavBarCustom__Top__Right > *:not(:first-child)) {
-    margin-left: 8px;
+    margin-left: calc(var(--outset-x) * 0.5rem);
   }
   
   .center {
-    flex: 1;
+    flex: 2;
     text-align: center;
+    justify-content: center;
   }
 
   .center + .right {
@@ -65,7 +66,7 @@
 
   .right {
     text-align: right;
-
+    justify-content: flex-end;
   }
 
 

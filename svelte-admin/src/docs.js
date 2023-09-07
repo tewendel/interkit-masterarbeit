@@ -22,13 +22,14 @@ export const docsGo = async (route) => {
   await tick()
   if (!iframe?.contentWindow?.postMessage) {
     console.warn('docsGo called, but no iframe', { iframe, contentWindow: iframe?.contentWindow, postMessage: iframe?.contentWindow?.postMessage })
+    return
   }
   iframe.contentWindow.postMessage(
     {
       method: 'docsGo',
       route
     },
-    '*'
+    '*' // not security-critical
   )
 }
 

@@ -2,20 +2,22 @@
   import Icon from "../Icon.svelte"
 
   export let text
-  export let state // enabled | selected
+  export let state = "enabled"// enabled | selected
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span on:click class="FilterSegment Filtersegment--state{state} {state}">{text}{#if state == "selected"}<Icon type="Thin-Close" height="16px"/>{/if}</span>
+<span on:click class="FilterSegment Filtersegment--state{state} {state}">{text}{#if state == "selected"}<Icon type="Thin-Close" height="1rem"/>{/if}</span>
 
 <style>
 
   span {
     display: inline-flex;
-    padding: 12px 16px;
+    padding:
+      calc(var(--inset-y) * 0.5rem)
+      calc(var(--inset-x) * 1rem);
     justify-content: center;
     align-items: center;
-    gap: 10px; 
+    gap: calc(var(--outset-x) * 0.625rem);
     border-radius: var(--border-radius-button);
     border: var(--border-width) solid var(--color-border);
     background-color: var(--color-background-button);

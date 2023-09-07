@@ -41,3 +41,25 @@ $header-height: 3rem;
   --content-height: calc(100vh - #{$header-height});
   --sidebarCollapsedWidth: 3rem;
 }
+
+#blocklyDragHelper {
+  background: rgba(224, 224, 224, 0.5);
+  padding: 0.4rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  pointer-events: none;
+
+  body.blockly--dragging & {
+    display: block;
+  }
+}
+
+body.blockly--dragging {
+  cursor: grabbing !important;
+  /* safari 15 needed this :( */
+  -webkit-user-select: none;
+  user-select: none;
+}
+

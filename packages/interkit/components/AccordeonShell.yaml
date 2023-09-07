@@ -3,5 +3,7 @@ toolboxCategory: Layout
 fields:
   - type: slot
     name: label
+    help: Shown when accordeon is closed and open. Add an Icon and text here as needed.
   - type: slot
     name: content
+    help: Shown only when accordeon is open 

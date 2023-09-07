@@ -35,8 +35,13 @@
   export let inline = false;
   export let disableControls = false;
   export let singleElementContext = false; // mode to retrieve element from context and show just that
-  export let tileLayer // simple tilelyer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  
+  export let tileLayer // simple tileLayer, "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  let activeTileLayer = tileLayer // this can be changed through MapViewButton
+  
   export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
+  let activeGLStyle = mapBoxGLStyle // this can be changed through MapViewButton
+  
   export let closeButtonLabel = "Schließen"
   export let clickTrigger;
 
@@ -124,13 +129,33 @@
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
   }
   const showDummyData = getShowDummyDataStore()
-  const dummyData = [...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
-    position: {
-      lat: getRandomInRange(-90, 90, 3),
-      lng: getRandomInRange(-180, 180, 3)
-    },
-    markerTitle: "markerTitle"
-  }}}})
+  const dummyLocations = [
+    ...Array(10).fill(null).map(_ => [getRandomInRange(-90, 90, 3), getRandomInRange(-180, 180, 3)]),
+    [52.52083594391814, 13.409404500259926]
+  ]
+  const dummyData = dummyLocations
+    .map(([lat, lng], k) => ({
+      key: `${k}`,
+      row: {
+        key: `${k}`,
+        values: {
+          position: { lat, lng },
+          markerTitle: `markerTitle ${k}`
+        }
+      }
+    }))
+
+  /*
+  const dummyData = [
+    ...Array(10).keys()].map((k) => {return {key: `${k}`, row: {key: `${k}`, values: {
+      position: {
+        lat: getRandomInRange(-90, 90, 3),
+        lng: getRandomInRange(-180, 180, 3)
+      },
+      markerTitle: "markerTitle"
+    }
+  }}})
+  */
   const dummyDataStore = writable(dummyData)
   if($showDummyData) {
     elements = dummyDataStore
@@ -158,10 +183,26 @@
   const distanceSort = (a, b) => {
     return util.getDistance(a.markerPositionsColumn, $userPositionStore) - util.getDistance(b.markerPositionsColumn, $userPositionStore)
   }
+
+  // a store for active map views changed in MapViewButton
+  const mapViewState = InterkitClient.getGlobalStore("mapViewState-" + mapId)
+
+  // update activeTileLayer and activeGLStyle if map layer changed
+  const updateTileLayer = (layer) => {
+    if(layer) {
+      activeTileLayer = layer?.tilesUrlColumn
+      activeGLStyle = layer?.mapBoxGLStyleColumn
+    } else {
+      activeTileLayer = tileLayer
+      activeGLStyle = mapBoxGLStyle
+    }
+  }
+  $: updateTileLayer($mapViewState?.activeLayers?.[0])
   
   $: {
     selectedElement;
     $userPositionStore;
+    $mapViewState;
     updateMarkerData();
   }
   
@@ -175,6 +216,32 @@
 
     // start with the full set of data
     let selectedData = [...markerObjs];
+
+    // filter data according to active map views
+    const filterViews = $mapViewState?.activeFilters || []
+    const layerViews = $mapViewState?.activeLayers?.filter(v => v.typeColumn == "layer+filter") || []
+    const activeViews = filterViews.concat(layerViews) 
+
+    if(activeViews.length && $mapViewState?.markerCategoryColumn) {
+      
+      // get the category column on the data row
+      const markerCategoryColumn = $mapViewState?.markerCategoryColumn
+
+      // get the keys of the active views
+      const activeViewKeys = activeViews?.map(e => e.key)
+
+      let filteredData = []
+      // iterate over data and check if it references an active view
+      for(let e of selectedData) {
+        const referencedViewKeys = e?.row?.values?.[util.colKey(markerCategoryColumn)]?.rowKeys
+        if(referencedViewKeys) {
+          if(referencedViewKeys.some(k => activeViewKeys.includes(k))) {
+            filteredData.push(e)
+          }
+        }
+      }
+      selectedData = filteredData      
+    }
 
     // if singleElement mode is set, use only that
     if(singleElementContext && singleElement) {
@@ -300,8 +367,8 @@
       {nearestElement}
       {singleElement}
       {disableControls}
-      {tileLayer}
-      {mapBoxGLStyle}
+      tileLayer={activeTileLayer}
+      mapBoxGLStyle={activeGLStyle}
       mapFocus={mapFocusProcessed}
       {permissionNotification}
       {enableGeolocationHint}
@@ -331,7 +398,7 @@
     height: auto;
     display: flex;
     flex-direction: row;
-    min-width: 40px;
+    min-width: 2.5rem;
     /* FIXME? doesn't exist any more
     font-size: var(--font-size-regular);
     */
@@ -341,7 +408,7 @@
   .map-component-container.inline,
   .map-component-container.inline :global(.Map__Container),
   .map-component-container.inline :global(.map) {
-    border-radius: var(--border-radius-button);
+    border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
   }
 
@@ -351,7 +418,7 @@
   }
 
   :global(div.marker-container.selected) {
-    background-color: lightgrey;
+    background-color: var(--color-background-highlight);
   }
 
   :global(div.marker-container.selected img) {
@@ -360,27 +427,26 @@
 
   .marker_popup {
     position: absolute;
-    bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    bottom: calc(var(--outset-y) * 0.5rem);
+    padding-left: calc(var(--outset-x) * 0.5rem);
+    padding-right: calc(var(--outset-x) * 0.5rem);
     z-index: 2000;
     display: none;
     width: 100%;
     box-sizing: border-box;
-
   }
 
   .marker_popup_close {
     position: absolute;
-    top: calc(-40px - var(--distance-s));
+    top: calc(-2.5rem - var(--outset-y) * 0.5rem);
     z-index: 10;
   }
 
   .marker_popup_background {
-    background-color: #fff;
     position: relative;
+    /*background-color: var(--color-background);
     border-radius: var(--border-radius);
-    border: 1px solid lightgray;
+    box-shadow: var(--box-shadow);*/
     overflow: hidden;
   }
 
@@ -391,13 +457,13 @@
   .button-container {
     position: absolute;
     z-index: 1000;
-    bottom: var(--distance-s);
-    left: var(--distance-s);
-    right: var(--distance-s);
+    bottom: calc(var(--outset-y) * 0.5rem);
+    left: calc(var(--outset-x) * 0.5rem);
+    right: calc(var(--outset-x) * 0.5rem);
   }
 
   :global(.Map__Button__Bar .Button) {
-    margin-right: 8px;
+    margin-right: calc(var(--outset-x) * 0.5rem);
   }
   
 </style>

@@ -29,7 +29,7 @@
 </script>
 
 {#if mediafile}
-  <slot {mediafile} url={encodeURI(mediafile.link)}/>
+  <slot {mediafile} url={encodeURI(mediafile.link)} meta={mediafile.meta} />
 {:else}
   file not found {JSON.stringify(mediafileRef)}
 {/if}

@@ -10,6 +10,7 @@ const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
 const INTERKIT_BUNDLER_URL = process.env.INTERKIT_BUNDLER_URL
 const INTERKIT_SERVER_WEBSOCKETS_URL = process.env.INTERKIT_SERVER_WEBSOCKETS_URL
 const INTERKIT_SERVER_URL = process.env.INTERKIT_SERVER_URL
+const INTERKIT_ADMIN_URL = process.env.INTERKIT_ADMIN_URL
 
 function getProjectPath(projectId) {
   const projectPath = path.join(REPOSITORIES_PATH, "projects", projectId)
@@ -46,6 +47,7 @@ function generateInterkitConfig(project) {
     INTERKIT_BUNDLER_URL,
     INTERKIT_SERVER_WEBSOCKETS_URL,
     INTERKIT_SERVER_URL,
+    INTERKIT_ADMIN_URL,
   }
 }
 

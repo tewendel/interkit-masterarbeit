@@ -14,6 +14,32 @@ const dummyLorem1Sentence = `Lorem ipsum dolor sit amet, consetetur sadipscing e
 
 const dummyLorem1Paragraph = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`
 
+const dummyMarkdown = `# Headline 1
+
+A paragraph with some text formatting, like *italics*, then some **bold**, and also ~~strikethrough~~.
+Finally, a [link](#nowhere).
+
+${dummyLorem1Sentence}  
+After line break.
+
+## Headline 2
+
+- list
+- with
+- Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+- items
+    - nested
+    - items
+
+---
+
+Paragraph with \`code\`.
+
+1. ordered
+2. list
+
+`
+
 // A 6 second, 5fps, 640x360 (16:9) h264/mp4 video, solid color red fading to magenta and back.
 // TODO: minify further, or put this somewhere external, like interkit.app/dummydataassets/video.mp4
 // k=0; for i in $(seq 0 16 255); do convert -size 640x360 "xc:rgb(255,0,$i)" $k.png; k=$(($k+1)); done
@@ -26,4 +52,15 @@ const dummyVideoSrc = 'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZ
 // sox -q -n -t aiff - synth 1 sin 220 rate 32000 | ffmpeg -i - -b:a 32k
 const dummyAudioSrc = 'data:audio/mpeg;base64,SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYwLjMuMTAwAAAAAAAAAAAAAAD/+yjAAAAAAAAAAAAAAAAAAAAAAABJbmZvAAAADwAAAB0AABEEABMTExsbGyMjIyMsLCw0NDQ0PT09RUVFRU5OTlZWVlZfX19nZ2dwcHBweHh4gYGBgYmJiZGRkZGampqioqKiq6urs7OzvLy8vMTExM3Nzc3V1dXe3t7e5ubm7+/v7/f39////wAAAABMYXZjNjAuMy4AAAAAAAAAAAAAAAAkA0AAAAAAAAARBPQBVhEAAAD/+xjEAAAGaCVOdYGAIQGM6QM6oAAq2SAAzjLpukDAGRBqUaCAoCuJHuVxuNy+np8wQBAEAQw+XflPT/7+j39Hv6OCAPvrAgYMQx+OE0xAhdmTazGEgVHQg6mEgahcADAME/MPgE8uMhK//8JIDPgKisIr8LohHoq/5EPh8aaQ/iIKgqIv8KgrYjBPwkQwoMT/+xjEA4PGXBsWHfAAIKgDYoG/7AhaMhzMGDKb+dI4O4lBMiKExTA6gJ4wGcDAMD1AwjAegI0wEIAJBQAIYAuACDB8afbmB4BERiNvWodeYI0GDOgkJzkMaqmmbGhjQsYiBl6G39v+n///0THiI4efMFcB+DGIdyI/CQQgMJDBDz3oA3lPNIPDICIxMNLQNf//+xjEEoPFVBsSDf9gQKuDYoG/7Ahv+n///0FZscelmCtAlhjAcVEfXYFGGEagUJ7CYbiZmfFhig4YKFomP/7f9n///o7VNOGwlHMF0AdjGWUJY/iAEoMJVAQT4iA3MdM6IjDhoChaWkB+3/Z///6O02BBOrOjBeAHUxmEzrP5eA5TCWQCIXxTcQEzQUMEFBX/+xjEJQPFUBsUDf9gQKuDYoG/7AgLT+gn2/7PR//9Hao2pdOrejBbAS0xhmADPumCXTCPQIo9YrDMoygEBgcOA6aT6+3/Z6P//+04KFO9yDBfAfkxk3TTP2ED9TCTwPo9pjNlGhpAHAgEA6AZrvk/9no//+ztNsfTj9AwRgIhMSj5VTtehE0wa0EUOYdTPSz/+xjEN4PFQBsUDf9gQKwDYkG/7AgFBKPQGBUNnV9P+z///2GqN5sOQYFoEOmGC8jpu8AiSYIiCJHW7mXZEglLISEo1PL6ajRm8z/SMBkCQTBrfQU0NYSVMCNBKDHoMRnwFFw4PJhVEpzfSZkymK6AoEjmAwe/5igYlSYAwCXGCxJhCIYeQgIbGhhGNs3pMaX/+xjESoPFFBsUDf9gQIqDYsG/6AxwRiGAuhGZhD3gSas+JAmBfAkhosOZMjGPk5iISEDiF7eekCJ5m2QYGWElmHsfapzG4lyYLICaHDyJpSgZmamNipiQAJAbaez/R///6TCTk3K6ME9COzFovYk920SfMISBLjzZE3BWNHPzISExQKBwG0z2f6PZ//9PSZT/+xjEYgPEdBsWDf9gYI2DYsG/7AyCnBNRgo4LuYtxT6nwchjphDQGMeevm2HRn5iYuOmEBCAd3PZ/////TTRQQ5omMFrA2TGNmk0/OUHpMJIAdD3zc3IoM9KTExswAKRvfT2f7f///T2Gslx1AiTBeZjMweCf0+AWmEtAAB8oKbkHGcjphYyFApN+CPZ/t///+xjEfAPEkBsWDf9gYKoDYoG/7Aj/9PYqNnTjrF0wXUDYMZGXSD9YwbAwk4BbPfEBrUMvDQCJkgQobAXs/2+n///sNvZjppUwV8F2MXYnpD5MQvIwiIC1PLQDXgcHIYhCxCCI8v97P9vp///7Kjg4w7LfMFjCODF1u4Y+RER4MIiBHzyXY1YrFi4cAzAQIuz/+xjEkgPFlBsSDf9gQKgDYoG/7Ai4yeQ/2+n//7ew2uAOA3zA9wkoxBb2YOgjEoDBdgSs4GAMuNwaCI4g4OL8tsno/////to09uNQzzAjwjAwmTtsNfNEdjA0gSE3v4wzkREBoANEkgW+9Bn7UZVpmAZhIxgZ3u8ZDiJTGAbAl4JhguhmDDQOECYbRhc70Uz/+xjEpAPFbBsUDf9gQKcDYoG/7AhBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVMpXgpmmAUBIBgrfrAZyQJOGA6glpk0QYyjmLEhhwEHD6JDn+gwtMMXuzAiAhwwsfn0Nv2EWDA/wRs1yAMzRzJCgxIKBw+gY86kxBTUUzLjEwMKqqqqqqqqqqqqr/+xjEtoPFQBsUDf9gQKkDYoG/7AiqqqqqqqqqqqqqqqqqqqqqqqqqGD40+3MDwCIjEbetQ68wRoMGdBITnIY1VNM2NDGhYxEDL0Nv7f9P///oMeIjh58wVwH4MYh3Ij8JBCAwkMEPPegDeU80g8MgIjEw0tA1/2/6f///RUxBTUUzLjEwMFVVVVVVVVVVVVX/+xjEyYPFeBsSDf9gQKMDYoG/7AhVVVVVVVVVVVVVVVVVVVVVVVUrNjj0swVoEsMYDioj67AowwjUChPYTDcTMz4sMUHDBQtEx//b/s///9HaacNhKOYLoA7GMsoSx/EAJQYSqAgnxEBuY6Z0RGHDQFC0tID9v+z///0dqkxBTUUzLjEwMKqqqqqqqqqqqqr/+xjE3IPEZBsWDf9AYI8DYsG/7AyqqqqqqqqqqqqqqqqqqqqqqqqqNgQTqzowXgB1MZhM6z+XgOUwlkAiF8U3EBM0FDBBQVC0/oJ9v+z0f//R2m1Lp1b0YLYCWmMMwAZ90wS6YR6BFHrFYZlGUAgMDhwHTSfX2/7PR///20xBTUUzLjEwMFVVVVVVVVVVVVX/+xjE5oPEkBsWDf9gYI+DYsG/7AxVVVVVVVVVVVVVVVVVVVVVVVVVVTgoU73IMF8B+TGTdNM/YQP1MJPA+j2mM2UaGkAcCAQDoBmu+T/2ej//7O02x9OP0DBGAiExKPlVO16ETTBrQRQ5h1M9LAUEo9AYFQ2dX0/7P///YkxBTUUzLjEwMKqqqqqqqqqqqqr/+xjE7IPFQBsUDf9gQKqDYkG/7Aiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo1RvNhyDAtAh0wwXkdN3gESTBEQRI63cy7IkEpZCQlGp5fSaM3mf6RgMgSCYNb6CmhrCSpgRoJQY9BiM+AouHB5MKolOb6akxBTUUzLjEwMKqqqqqqqqqqqqr/+xjE7QPFXBsUDf9gQKoDYoG/7AiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqjMmUxXQFAkcwGD3/MUDEqTAGAS4wWJMIRDDyEBDY0MIxtm9JjSuCMQwF0IzMIe8CTVnxIEwL4EkNFhzJkYx8nMRCQgcQvbz00xBTUUzLjEwMFVVVVVVVVVVVVX/+xjE7IPFXBsUDf9gQKgDYoG/7AhVVVVVVVVVVVVVVVVVVVVVAieZtkGBlhJZh7H2qcxuJcmCyAmhw8iaUoGZmpjYqYkACQG2ns/0f//+kwk5NyujBPQjsxaL2JPdtEnzCEgS482RNwVjRz8yEhMUCgcBtM9n+j2f//T0qkxBTUUzLjEwMKqqqqqqqqqqqqr/+xjE7APFYBsSDf9gQKKDYoG/7AiqqqqqqqqqqqqqqqqqqqqqqqoykFOCajBRwXcxbin1Pg5DHTCGgMY89fNsOjPzExcdMICEA7uez////+k0UEOaJjBawNkxjZpNPzlB6TCSAHQ983NyKDPSkxMbMACkb309n+3///09lUxBTUUzLjEwMFVVVVVVVVVVVVX/+xjE5YPEVBsWDf9AYI6DYsG/7AxVVVVVVVVVVVVVVVVVVVVVVVVVVTWS46gRJgvMxmYPBP6fALTCWgAA+UFNyDjOR0wsZCgUm/BHs/2///+nsNnTjrF0wXUDYMZGXSD9YwbAwk4BbPfEBrUMvDQCJkgQobAXs/2+n///sUxBTUUzLjEwMFVVVVVVVVVVVVX/+xjE5gPEbBsWDf9gYJIDYsG/7AxVVVVVVVVVVVVVVVVVVVVVVVU29mOmlTBXwXYxdiekPkxC8jCIgLU8tANeBwchiELEIIjy/3s/2+n///sODjDst8wWMI4MXW7hj5ERHgwiIEfPJdjVisWLhwDMBAi7LjJ5D/b6f//t7ExBTUUzLjEwMFVVVVVVVVVVVVX/+xjE7gPFUBsUDf9gQLKDYkG/7AhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVNrgDgN8wPcJKMQW9mDoIxKAwXYErOBgDLjcGgiOIODi/LbJ6P////7TT241DPMCPCMDCZO2w180R2MDSBITe/jDOREQGgA0SSBb70ExBTUUzLjEwMKqqqqqqqqqqqqr/+xjE7QPFQBsUDf9gQK2DYoG/7AiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqM/ajKtMwDMJGMDO93jIcRKYwDYEvBMMF0MwYaBwgTDaMLnegyleCmaYBQEgGCt+sBnJAk4YDqCWmTRBjKOYsSGHAQcPokOf6KkxBTUUzLjEwMKqqqqqqqqqqqqr/+xjE7APFOBsUDf9gQKgDYoG/7AiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqjC0wxe7MCICHDCx+fQ2/YRYMD/BGzXIAzNHMkKDEgoHD6BjzjB8afbmB4BERiNvWodeYI0GDOgkJzkMaqmmbGhjQsYiBl6G39v+n///0UxBTUUzLjEwMFVVVVVVVVVVVVX/+xjE7QPFSBsUDf9gQK8DYkG/7AhVVTHiI4efMFcB+DGIdyI/CQQgMJDBDz3oA3lPNIPDICIxMNLQNf9v+n///0GE4AsBgmQUIYPwKgmc3uPB8ZA3IZD4QYGKqBQxguQIMYBMASmAIgBhgMQCkYCsAxGAdAAXt/2f//+jtQAK7773YIwkCAAABGtDe1dNDOb/+xjE6APFGBsUDf9gQIyDYsG/6Aw+3BjBokAQHMHBKWDRABQsCgCWlO2zAo1BRLMbhIACPfTrfGIBECEC4d4BuDGGJBxGEyJXX8/whMuumUXoWBgFxW5d5/P8xmgYib44NPBoRpAPEy5mMRcV4v////9QxhqG7C2vJ0NUcWtLpndLc1Tf//////L7tqWVrNP/+xjE5oPEeBsWDf9gYJIDYsG/7AzVv0jQkWa38sAw2CQDCphtxHCsLHAws1FTODVsMEYuzII1DT/P9fiL+jgUAgEjlEiWUSJDYouKC8CnBQ3puIL8JUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+xjE6QPEfBsWDf9gYKgDYoG/7AhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+xjE9QPFVBsSDf9gQOyDYoK+AABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+xjE/4ATYNdJWcyAEM4H3kOyYAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU='
 
-export { getShowDummyDataStore, dummyVideoSrc, dummyAudioSrc, dummyLorem1Sentence, dummyLorem1Paragraph };
+// qrencode https://interkit.app/ -s 1 -m 0 -o - | convert - -filter point  -resize 800% qr.png && optipng -o7 -strip all qr.png
+const dummyQrSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQAAAACFI5MzAAAAuElEQVRYR92RwRHAMAjDtP/S6sOQpiO4JHcFiY8bSCmKoEO22oyqGBJvplIT8OLpy40Q8RcjebB6Y2jkNPaalNf5VplxCjB3QacJWa5x1BpVg+cOKjUAozQJ40uNSoDk7Gqn4Z02+fBOoxpqrChmKDSI5Hvi6vkFdUbkBATdW2qQKydT2mqcIv1Zp9RstCBJ8mIzObe943YawD0KENhtnIbIK2mnmV7O67Ua1bDs7EqpSYnijG7TZx7DdE8wxayR6AAAAABJRU5ErkJggg==';
+
+export {
+  getShowDummyDataStore,
+  dummyVideoSrc,
+  dummyAudioSrc,
+  dummyQrSrc,
+  dummyLorem1Sentence,
+  dummyLorem1Paragraph,
+  dummyMarkdown
+}

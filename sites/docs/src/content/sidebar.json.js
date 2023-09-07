@@ -170,15 +170,154 @@ export const items = [
     path: 'components',
     open: false,
     items: [
-      /* AppBase */
+      /* this is sorted alphabetically by title in Submenu.svelte */
       {
         title: 'AppBase',
         path: '/components/AppBase'
       },
-      /* Basics */
+      {
+        title: 'DesktopFallback',
+        path: '/components/AppBase#desktopfallback-component'
+      },
+      {
+        title: 'AppBaseAdvanced',
+        path: '/components/AppBase#appbaseadvanced'
+      },
+      {
+        title: 'Button',
+        path: '/components/Button'
+      },
+      {
+        title: 'ButtonBar',
+        path: '/components/Button#buttonbar'
+      },
+      {
+        title: 'Chat',
+        path: '/components/Chat'
+      },
+      {
+        title: 'StoryBoardImage',
+        path: '/components/Chat#storyboardimage'
+      },
+      {
+        title: 'ScrollContainer',
+        path: '/components/ScrollContainer'
+      },
+      {
+        title: 'Overlay',
+        path: '/components/Overlay'
+      },
+      {
+        title: 'AspectRatio',
+        path: '/components/AspectRatio'
+      },
+      {
+        title: 'ContextDebugger',
+        path: '/components/ContextDebugger'
+      },
+      {
+        title: 'DataLoaderSingle',
+        path: '/components/DataLoader#dataloadersingle'
+      },
+      {
+        title: 'DataLoaderMulti',
+        path: '/components/DataLoader#dataloadermulti'
+      },
+      {
+        title: 'DataTile',
+        path: '/components/DataTile'
+      },
+      {
+        title: 'DataCell',
+        path: '/components/DataCell'
+      },
+      {
+        title: 'DataCard',
+        path: '/components/DataCard'
+      },      
+      {
+        title: 'DataList',
+        path: '/components/DataList'
+      },      
+      {
+        title: 'DataCarousel',
+        path: '/components/DataList#datacarousel'
+      },      
+      {
+        title: 'PictureBook',
+        path: '/components/DataList#picturebook'
+      },      
+      {
+        title: 'Mosaic',
+        path: '/components/DataList#mosaic'
+      },      
+      {
+        title: 'Group',
+        path: '/components/Group'
+      },
+      {
+        title: 'GroupConnector',
+        path: '/components/Group#groupconnector'
+      },
+      {
+        title: 'IfDataAnnotation',
+        path: '/components/If#ifdataannotation'
+      },
+      {
+        title: 'IfUIKey',
+        path: '/components/If#ifuikey'
+      },
+      {
+        title: 'IfUserVar',
+        path: '/components/If#ifuservar'
+      },
+      {
+        title: 'Label',
+        path: '/components/Label'
+      },
+      {
+        title: 'LangSwitch',
+        path: '/components/LangSwitch'
+      },
+      {
+        title: 'ListItem',
+        path: '/components/ListItem'
+      },
       {
         title: 'Icon',
         path: '/components/Icon'
+      },
+      {
+        title: 'Image',
+        path: '/components/Image'
+      },
+      {
+        title: 'MapSimple',
+        path: '/components/MapSimple'
+      },    
+      {
+        title: 'NavBar',
+        path: '/components/NavBar'
+      },
+      {
+        title: 'NavButton',
+        path: '/components/NavBar#navbutton'
+      },
+      {
+        title: 'MarkdownContent',
+        path: '/components/MarkdownContent'
+      },
+      {
+        title: 'StoryBoardCard',
+        path: '/components/StoryBoard'
+      },
+      {
+        title: 'StoryBoardsList',
+        path: '/components/StoryBoard#storyboardslist'
+      },
+      {
+        title: 'ChatBoardsList',
+        path: '/components/StoryBoard#storyboardslist'
       },
       {
         title: 'QRScanner',
@@ -189,65 +328,148 @@ export const items = [
         path: '/components/StaticText'
       },
       {
-        title: 'Tag',
-        path: '/components/Tag'
+        title: 'TextFormat',
+        path: '/components/TextFormat'
       },
-      /* Buttons */
-      {
-        title: 'Button',
-        path: '/components/Button'
-      },
-      /* Chat */
-      {
-        title: 'Chat',
-        path: '/components/Chat'
-      },
-      {
-        title: 'ChatBoard…',
-        path: '/components/ChatBoard'
-      },
-      /* Conditionals */
-      {
-        title: 'If…',
-        path: '/components/If'
-      },
-      /* Data */
-      {
-        title: 'Data…',
-        path: '/components/Data'
-      },
-      /* Debug */
-      {
-        title: 'ContextDebugger',
-        path: '/components/ContextDebugger'
-      },
-      /* Groups */
-      {
-        title: 'Group…',
-        path: '/components/Group'
-      },
-      /* Layout */
-      {
-        title: 'Shell (LayoutShell, LayoutShellAudio, TopBarShell, BottomBarShell)',
-        path: '/components/Shell'
-      },
+      
       {
         title: 'Spacing',
         path: '/components/Spacing'
       },
       {
-        title: 'Containers (Overlay, AspectRatio, ScrollContainer)',
-        path: '/components/Containers'
-      },
-      {
         title: 'TabBar',
         path: '/components/TabBar'
       },
-      /* Map */
+      {
+        title: 'Tab',
+        path: '/components/TabBar#tab'
+      },
+      {
+        title: 'AccordeonShell',
+        path: '/components/AccordeonShell'
+      },
+      {
+        title: 'Absolute',
+        path: '/components/Absolute'
+      },
+      {
+        title: 'BottomBarShell',
+        path: '/components/Shell#bottombarshell'
+      },
+      {
+        title: 'ColumnShell',
+        path: '/components/HorizontalSpacer#columnshell'
+      },
+      {
+        title: 'HorizontalSpacer',
+        path: '/components/HorizontalSpacer'
+      },
+      {
+        title: 'LayoutShell',
+        path: '/components/Shell#layoutshell'
+      },
+      {
+        title: 'LayoutShellAudio',
+        path: '/components/Shell#layoutshellaudio'
+      },
+      {
+        title: 'TopBarShell',
+        path: '/components/Shell#topbarshell'
+      },
+      {
+        title: 'Overlay',
+        path: '/components/Overlay'
+      },
+      {
+        title: 'OverlayFull',
+        path: '/components/Overlay#overlayfull'
+      },
+      {
+        title: 'SectionShell',
+        path: '/components/SectionShell'
+      },
+      {
+        title: 'ExternalMapAppButton',
+        path: '/components/ExternalMapAppButton'
+      },
       {
         title: 'MapSimple',
         path: '/components/MapSimple'
-      }
+      },
+      {
+        title: 'MapViewButton',
+        path: '/components/MapViewButton'
+      },
+      {
+        title: 'ARViewer',
+        path: '/components/ARViewer'
+      },
+      {
+        title: 'AudioPlayer',
+        path: '/components/AudioPlayer'
+      },
+      {
+        title: 'InlineAudioButton',
+        path: '/components/AudioPlayer#inlineaudiobutton'
+      },
+      {
+        title: 'PopoutAudioButton',
+        path: '/components/AudioPlayer#popoutaudiobutton'
+      },
+      {
+        title: 'VideoButton',
+        path: '/components/VideoButton'
+      },
+      {
+        title: 'CenterModal',
+        path: '/components/Modal#centermodal'
+      },
+      {
+        title: 'SlideInModal',
+        path: '/components/Modal#slideinmodal'
+      },
+      {
+        title: 'Snackbar',
+        path: '/components/Modal#snackbar'
+      },
+      {
+        title: 'ChatRoute',
+        path: '/components/Route#chatroute'
+      },
+      {
+        title: 'DataRouteMulti',
+        path: '/components/Route#dataroutemulti'
+      },
+      {
+        title: 'DataRouteSingle',
+        path: '/components/Route#dataroutesingle'
+      },
+      {
+        title: 'Route',
+        path: '/components/Route#route'
+      },
+      {
+        title: 'RouteConnector',
+        path: '/components/Route#routeconnector'
+      },
+      {
+        title: 'Styling',
+        path: '/components/Styling'
+      },
+      {
+        title: 'AnonymousLogin',
+        path: '/components/AnonymousLogin'
+      },
+      {
+        title: 'UserCard',
+        path: '/components/UserCard'
+      },
+      {
+        title: 'UserVarSwitch',
+        path: '/components/UserVarSwitch'
+      },
+      
+      
     ]
   },
   {

@@ -45,7 +45,7 @@
       <span class="headline CardHeader__Headline">{#if headline}{headline}{/if}</span>
       <div class="headline-chips CardHeader__HeadlineChips">
         <slot name="chips"></slot>
-        {#if rightArrow}
+        {#if rightArrow || $showDummyData}
           <span class="right-arrow CardHeader__RightArrow">
             <Icon type="Thin-Arrow-Right"/>
           </span>
@@ -55,7 +55,7 @@
   {/if}
 
   {#if label2 || subtitle2}
-    <div class="row-3 CardHeader__Row2">
+    <div class="row-3 CardHeader__Row3">
       {#if label2}<Label content={label2} variant="strong"/>{/if}
       {#if subtitle2}<span class="subtitle2 CardHeader__Subtitle2">{subtitle2}</span>{/if}
     </div>
@@ -83,8 +83,12 @@
     box-sizing: border-box;
   }
 
+  .card-header.large {
+    padding: calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 0.5rem);
+  }
+
   .card-header.full {
-    padding: var(--distance-s);
+    padding: calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 1rem);
   }
 
   .row-1, .row-2, .row-3 {
@@ -92,10 +96,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-  }
-
-  .row-1 {
-    padding: 0 var(--distance-m) 0 0;
   }
 
   .subtitle1 {
@@ -142,20 +142,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-left: var(--distance-s);
-  }
-
-  .row-3 {
-    padding: var(--distance-xs) var(--distance-m) var(--distance-xs) 0;
+    margin-left: 0.5rem;
   }
 
   .subtitle2 {
     font: var(--font-caption);
     color: var(--color-text-soft);
-  }
-
-  .row-4 {
-    padding: var(--distance-tiny) var(--distance-m) 0 0;
   }
 
   .subtitle3 {
@@ -167,7 +159,21 @@
     font: var(--font-subtitle-2);
     letter-spacing: var(--letter-spacing-subtitle-2);
     color: var(--color-text-soft);
-    padding: var(--distance-xs) var(--distance-m) var(--distance-tiny) 0;
+  }
+
+  .row-1,
+  .row-3,
+  .row-4,
+  .description {
+    padding-right: calc(var(--inset-x) * 1rem);
+  }
+
+  .row-1,
+  .headline,
+  .row-3,
+  .row-4,
+  .description {
+    padding-bottom: calc(var(--inset-y) * 0.125rem);
   }
 
   

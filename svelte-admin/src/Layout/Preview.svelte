@@ -3,8 +3,8 @@
   import { InterkitClient } from 'interkit'
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
-  import { onMount } from 'svelte'
-  import { currentProject, secondaryTabsPreviewSize } from '../admin.js'
+  import { tick, onMount } from 'svelte'
+  import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens } from '../admin.js'
 
   import { get } from 'svelte/store'
 
@@ -49,13 +49,20 @@
   
   let iframeRef = null
 
-  $: window.__ifr = iframeRef
-
   let showSettingsModal = false
   let showShareModal = false
 
   let iframeWidth, iframeHeight
   let containerWidth, containerHeight
+
+  // <iframe bind:clientWidth> didn't work, or stopped working for some reason at some point
+  const updateIframeSize = async () => {
+    await tick()
+    if (!iframeRef) return
+    iframeWidth = iframeRef.clientWidth
+    iframeHeight = iframeRef.clientHeight
+  }
+  $: containerWidth, containerHeight, iframeRef, size, updateIframeSize()
 
   let size
   const sizes = [
@@ -129,12 +136,44 @@
   }
 
   const ifrMsgCmd = commandOrObj => {
-    if (typeof commandOrObj === 'string') {
-      iframeRef.contentWindow.postMessage({ command: commandOrObj }, '*') 
+    if (!iframeRef) {
+      console.warn('ifrMsgCmd issued, but no iframeRef', iframeRef, commandOrObj)
+      return
+    }
+    let postMessageOrigin = '*'
+    if (document.location.port && false) {
+      console.warn('assuming dev mode, allowing unsafe inter-frame communication')
     } else {
-      iframeRef.contentWindow.postMessage(commandOrObj, '*') 
+      if (!bundleServerURL) {
+        console.warn('ifrMsgCmd issued, but no bundleServerURL', bundleServerURL, commandOrObj)
+        return
+      }
+      postMessageOrigin = bundleServerURL.match(/^((?:https?:)?\/\/(.*?))(?:\/|$)/)
+      if (!postMessageOrigin) {
+        console.warn('ifrMsgCmd issued, but could not parse host from bundleServerURL', bundleServerURL, commandOrObj)
+        return
+      }
+      postMessageOrigin = postMessageOrigin[1]
+    }
+    console.log('ifrMsgCmd issued can still fail if iframe hasn\'t loaded yet')
+    console.log('ifrMsgCmd ', commandOrObj, postMessageOrigin, iframeRef?.contentWindow)
+    try {
+      if (typeof commandOrObj === 'string') {
+        iframeRef.contentWindow.postMessage({ command: commandOrObj }, postMessageOrigin) 
+      } else {
+        iframeRef.contentWindow.postMessage(commandOrObj, postMessageOrigin) 
+      }
+    } catch (err) {
+      console.warn(`Inter-frame communication with the preview failed. Check your script blockers and see docs: Basics/Interface Overview, Troubleshooting`, commandOrObj, err)
     }
   }
+
+  previewOverrideStyleTokens.subscribe(value => {
+    ifrMsgCmd({
+      command: 'set_overrideStyleTokens',
+      payload: value
+    })
+  })
 
   const reload = withReset => {
     if (withReset) {
@@ -209,8 +248,6 @@
       <iframe 
         class="preview-iframe"
         style={iframeStyle}
-        bind:clientWidth={iframeWidth}
-        bind:clientHeight={iframeHeight}
         title="embedded app preview" 
         src={ appVariant == "dev" ? previewURL : buildURL }
         allow="camera;microphone;geolocation;autoplay;accelerometer"
@@ -370,6 +407,8 @@
 <style lang="scss">
 
   @use '@carbon/type';
+
+  ._workaround_ { /* vite sometimes strips the very first rule when HMR */ }
   
   .preview-container {
     /* ...- .pane-controls - top ButtonSet - bottom ButtonSet - bottom padding */

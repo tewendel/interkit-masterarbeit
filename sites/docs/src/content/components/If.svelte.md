@@ -2,7 +2,7 @@
   import ComponentInfoYaml from "../../components/ComponentInfoYaml.svelte";
 </script>
 
-# If…
+# Conditionals
 
 Conditionals provide each
 
@@ -11,7 +11,7 @@ Conditionals provide each
 
 They differ on which kind of variable they check for a value.
 
-# IfDataAnnotation
+## IfDataAnnotation
 
 Checks whether a Data element (a sheet row) has a certain annotation (set from e.g. Buttons or code; annotations are run-time and don't persist over reloads).
 
@@ -26,7 +26,7 @@ Checks whether a Data element (a sheet row) has a certain annotation (set from e
 
 </details>
 
-# IfUIKey
+## IfUIKey
 
 Checks a `UIKey` or `globalStore` (which can be set from Buttons or actions.js code).
 
@@ -41,7 +41,7 @@ Checks a `UIKey` or `globalStore` (which can be set from Buttons or actions.js c
 
 </details>
 
-# IfUserVar
+## IfUserVar
 
 Checks a `UserVar` (which can be set e.g. from Story/chat code or other code).
 
