@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Projects } from "./collections.js";
 
-const pruneTimeout = 1000 * 30// 30 seconds
+const pruneTimeout = 1000 * 60 // 1 minute
 
 const urlEditingProjectRegex = /\/#\/([a-zA-Z0-9]+)/; // matches /#/projectid => a project being edited
 
@@ -63,10 +63,13 @@ const processUserActivity = async ({userId, connectionId, url}) => {
   // (optimization) start vite server if a project is being edited by this user
   if (url.match(urlEditingProjectRegex)) {
     const projectId = url.match(urlEditingProjectRegex)[1];
-    Projects.update(
-      { _id: projectId, ["viteServer.actionRequested"]: { $ne: "start" } },
-      { $set: { ["viteServer.actionRequested"]: "start" } }
+    const started = Projects.update(
+      { _id: projectId, ["devServer.actionRequested"]: { $ne: "start" } },
+      { $set: { ["devServer.actionRequested"]: "start" } }
     );
+    if (started > 0) {
+      console.log(`processUserActivity requested start of vite server for project ${projectId}`,)
+    }
   }
 }
 
@@ -103,18 +106,28 @@ const updateAllViteServerStatus = async () => {
   //console.log("updateAllViteServerStatus", projectIds)
   
   // request to start vite server for all projects being edited
-  Projects.update(
-    { _id: { $in: projectIds } },
+  const started = Projects.update(
+    {
+      _id: { $in: projectIds },
+      ["devServer.actionRequested"]: { $ne: "start" },
+    },
     { $set: { ["devServer.actionRequested"]: "start" } },
     { multi: true }
   );
   
   // request to stop vite server for all projects not being edited
-  Projects.update(
-    { _id: { $nin: projectIds } },
+  const stopped = Projects.update(
+    {
+      _id: { $nin: projectIds },
+      ["devServer.actionRequested"]: { $ne: "stop" },
+    },
     { $set: { ["devServer.actionRequested"]: "stop" } },
     { multi: true }
   );
+
+  if (started > 0 || stopped > 0) {
+    console.log(`updateAllViteServerStatus requested ${started} starts and ${stopped} stops`)
+  }
 };
 
 await resetUsers();
