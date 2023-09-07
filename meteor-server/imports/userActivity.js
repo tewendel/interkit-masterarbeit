@@ -93,8 +93,6 @@ const updateAllViteServerStatus = async () => {
     { fields: { connections: 1 } }
   ).fetch();
 
-  console.log("updateAllViteServerStatus", users)
-
   // find all projectIds of projects being edited
   const projectIds = users.reduce((acc, user) => {
     const projectIds = user.connections

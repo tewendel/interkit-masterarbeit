@@ -490,11 +490,11 @@ Meteor.methods({
       console.warn("user.trackActivity missing userId or connectionId");
       return;
     }
-    console.log(
-      "user.trackActivity",
-      userId,
-      url, connectionId
-    );
+    // console.log(
+    //   "user.trackActivity",
+    //   userId,
+    //   url, connectionId
+    // );
     processUserActivity({ userId, connectionId, url });
     return true;
   },

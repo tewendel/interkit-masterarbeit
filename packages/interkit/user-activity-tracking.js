@@ -8,7 +8,7 @@ const trackUserUrlPath = () => {
 };
 
 window.addEventListener("popstate", (event) => {
-  console.log("popstate", event);
+  //console.log("popstate", event);
   trackUserUrlPath();
 });
 
