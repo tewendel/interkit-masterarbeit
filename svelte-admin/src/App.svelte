@@ -12,7 +12,7 @@
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
 
-  import ArrowLeft from "carbon-icons-svelte/lib/ArrowLeft.svelte";
+  import Exit from "carbon-icons-svelte/lib/Exit.svelte";
   
   import { onMount } from 'svelte'
 
@@ -84,8 +84,8 @@
 
   <span slot="company">
     {#if $currentProject}
-      <span class="exit-arrow"><ArrowLeft /></span>
-      {$currentProject?.name}
+      <span class="exit-arrow"><Exit /></span>
+      <span class="project-name">{$currentProject?.name}</span>
     {:else}
       interkit
     {/if}
@@ -176,11 +176,15 @@
 <style lang="scss">
 
   @use '@carbon/styles/scss/theme';
+  @use '@carbon/type';
 
   .exit-arrow {
     position: relative;
-    top: 3px;
+    top: 2px;
     margin-right: 3px;
+  }
+  .project-name {
+    @include type.type-style("heading-compact-02")
   }
 
   .status {
