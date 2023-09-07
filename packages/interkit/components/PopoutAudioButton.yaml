@@ -7,8 +7,9 @@ fields:
     - name: audioColumn
       type: sheetColumn
       defaultValue: "elements/audio"
+      help: The column containing the audio file to play
     - name: buttonOptions
       type: buttonOptions
-
+docsPath: AudioPlayer#popoutaudiobutton
   
   

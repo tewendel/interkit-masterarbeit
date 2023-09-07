@@ -4,10 +4,11 @@
 
 # AspectRatio
 
-TODO
+Forces content to resize to a specific aspect ration, eg square. 
 
 <ComponentInfoYaml component="AspectRatio" />
 
+<br>
 <details>
 <summary>Developer docs</summary>
 

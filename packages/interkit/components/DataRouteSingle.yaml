@@ -4,9 +4,11 @@ fields:
   - type: string
     name: path
     defaultValue: elements
+    help: The name of the route
   - type: sheetId
     name: sheet
     defaultValue: elements
+    help: The sheet from which to load the element
   - type: slot
     name: default
 toolboxCategory: Routing

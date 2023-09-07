@@ -11,6 +11,8 @@ A formatted card to display structured data, an image and buttons. See the embed
 
 Data must be previously loaded for example with [DataLoaderMulti](/components/DataLoader) and [DataList](/components/DataList) or individually using [DataLoaderSingle](/components/DataLoader). 
 
+We recommended wrapping layouts with Cards in [SectionShell](/components/SectionShell) for background color and spacing.
+
 <ComponentInfoYaml component="DataCard" />
 
 ## Figma

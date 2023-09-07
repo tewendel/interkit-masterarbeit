@@ -5,5 +5,5 @@ fields:
   - type: slot
     name: default
 toolboxCategory: Layout
-docsPath: Containers#scrollcontainer
+docsPath: ScrollContainer
 

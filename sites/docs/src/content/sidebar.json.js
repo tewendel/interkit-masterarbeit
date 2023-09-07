@@ -256,6 +256,10 @@ export const items = [
         path: '/components/Group'
       },
       {
+        title: 'GroupConnector',
+        path: '/components/Group#groupconnector'
+      },
+      {
         title: 'IfDataAnnotation',
         path: '/components/If'
       },
@@ -279,8 +283,6 @@ export const items = [
         title: 'ListItem',
         path: '/components/ListItem'
       },
-      
-      
       {
         title: 'Icon',
         path: '/components/Icon'
@@ -314,16 +316,16 @@ export const items = [
         path: '/components/StoryBoard#storyboardslist'
       },
       {
+        title: 'ChatBoardsList',
+        path: '/components/StoryBoard#storyboardslist'
+      },
+      {
         title: 'QRScanner',
         path: '/components/QRScanner'
       },
       {
         title: 'StaticText',
         path: '/components/StaticText'
-      },
-      {
-        title: 'Shells',
-        path: '/components/Shell'
       },
       {
         title: 'TextFormat',
@@ -341,6 +343,130 @@ export const items = [
       {
         title: 'Tab',
         path: '/components/TabBar#tab'
+      },
+      {
+        title: 'AccordeonShell',
+        path: '/components/AccordeonShell'
+      },
+      {
+        title: 'Absolute',
+        path: '/components/Absolute'
+      },
+      {
+        title: 'BottomBarShell',
+        path: '/components/Shell#bottombarshell'
+      },
+      {
+        title: 'ColumnShell',
+        path: '/components/HorizontalSpacer#columnshell'
+      },
+      {
+        title: 'HorizontalSpacer',
+        path: '/components/HorizontalSpacer'
+      },
+      {
+        title: 'LayoutShell',
+        path: '/components/Shell#layoutshell'
+      },
+      {
+        title: 'LayoutShellAudio',
+        path: '/components/Shell#layoutshellaudio'
+      },
+      {
+        title: 'TopBarShell',
+        path: '/components/Shell#topbarshell'
+      },
+      {
+        title: 'Overlay',
+        path: '/components/Overlay'
+      },
+      {
+        title: 'OverlayFull',
+        path: '/components/Overlay#overlayfull'
+      },
+      {
+        title: 'SectionShell',
+        path: '/components/SectionShell'
+      },
+      {
+        title: 'ExternalMapAppButton',
+        path: '/components/ExternalMapAppButton'
+      },
+      {
+        title: 'MapSimple',
+        path: '/components/MapSimple'
+      },
+      {
+        title: 'MapViewButton',
+        path: '/components/MapViewButton'
+      },
+      {
+        title: 'ARViewer',
+        path: '/components/ARViewer'
+      },
+      {
+        title: 'AudioPlayer',
+        path: '/components/AudioPlayer'
+      },
+      {
+        title: 'InlineAudioButton',
+        path: '/components/AudioPlayer#inlineaudiobutton'
+      },
+      {
+        title: 'PopoutAudioButton',
+        path: '/components/AudioPlayer#popoutaudiobutton'
+      },
+      {
+        title: 'VideoButton',
+        path: '/components/VideoButton'
+      },
+      {
+        title: 'CenterModal',
+        path: '/components/Modal#centermodal'
+      },
+      {
+        title: 'SlideInModal',
+        path: '/components/Modal#slideinmodal'
+      },
+      {
+        title: 'Snackbar',
+        path: '/components/Modal#snackbar'
+      },
+      {
+        title: 'ChatRoute',
+        path: '/components/Route#chatroute'
+      },
+      {
+        title: 'DataRouteMulti',
+        path: '/components/Route#dataroutemulti'
+      },
+      {
+        title: 'DataRouteSingle',
+        path: '/components/Route#dataroutesingle'
+      },
+      {
+        title: 'Route',
+        path: '/components/Route#route'
+      },
+      {
+        title: 'RouteConnector',
+        path: '/components/Route#routeconnector'
+      },
+      {
+        title: 'Styling',
+        path: '/components/Styling'
+      },
+      {
+        title: 'AnonymousLogin',
+        path: '/components/AnonymousLogin'
+      },
+      {
+        title: 'UserCard',
+        path: '/components/UserCard'
+      },
+      {
+        title: 'UserVarSwitch',
+        path: '/components/UserVarSwitch'
       },
       
       

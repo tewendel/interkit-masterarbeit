@@ -4,16 +4,16 @@ colour: 100
 fields:
   - type: string
     name: top
-    help: Distance from top of container in pixel
+    help: Distance from top of container, eg 10px for 10 pixels
   - type: string
     name: left
-    help: Distance from left side of container in pixel
+    help: Distance from left side of container
   - type: string
     name: right
-    help: Distance from right side of container in pixel
+    help: Distance from right side of container
   - type: string
     name: bottom
-    help: Distance from bottom of container in pixel
+    help: Distance from bottom of container
   - type: slot
     name: default
 toolboxCategory: Layout

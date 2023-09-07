@@ -13,4 +13,4 @@ fields:
         type: string
   - type: slot
     name: buttons
-
+docsPath: Modal#slideinmodal

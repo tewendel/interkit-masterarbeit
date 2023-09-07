@@ -16,7 +16,7 @@ fields:
       help: "A column on the element context (for example DataLoaderSingle) containing a vimeo url"
     - name: vimeoUrl
       type: string
-      help: "A static url of a video hosted on vimeo for embedding (optional)"
+      help: "A static url of a video hosted on Vimeo for embedding (optional)"
     - name: controls
       type: options
       options:

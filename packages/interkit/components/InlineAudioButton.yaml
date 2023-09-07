@@ -9,3 +9,4 @@ fields:
     type: checkbox
     defaultValue: "TRUE"
 toolboxCategory: Media
+docsPath: AudioPlayer#inlineaudiobutton

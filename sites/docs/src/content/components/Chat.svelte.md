@@ -10,6 +10,8 @@
 
 Displays a chat interface for a given story board. The board is set either manually or through a [ChatRoute](/components/Route#chatroute)
 
+Requires the [AnonmymousLogin](/components/AnonymousLogin) component to be present inside AppBase.
+
 <ComponentInfoYaml component="Chat" />
 
 <details>

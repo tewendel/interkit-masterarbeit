@@ -4,8 +4,11 @@ colour: 140
 fields:
   - name: left
     type: slot
+    help: left aligned
   - name: center
     type: slot
+    help: centered
   - name: right
     type: slot
-docsPath: Spacing#HorizontalSpacer
+    help: right aligned
+docsPath: HorizontalSpacer

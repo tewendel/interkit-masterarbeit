@@ -11,7 +11,9 @@
 
 ![A Button example](/images/component_previews/Button.png)
 
-Basic button to allow user input. You can respond to a button presse in several different ways by setting it's effect. 
+Basic button to allow user input. 
+
+Your app can respond to a button press in several different ways by setting it's effect, for example activating a specific [Route](/components/Route). 
 
 <ComponentInfoYaml component="Button" />
 

@@ -6,7 +6,7 @@
 
 These components allow you to display multiple rows from the database in different ways. 
 
-In order for them to display data, they need to be children of a [DataLoaderMulti](/components/DataLoaderMulti) oder a [DataRouteMulti](/components/DataRouteMulti).
+In order for them to display data, they need to be children of a [DataLoaderMulti](/components/DataLoaderMulti) oder a [DataRouteMulti](/components/Route#dataroutemulti).
 
 
 

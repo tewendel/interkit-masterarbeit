@@ -5,5 +5,10 @@ fields:
     props:
       - name: closeEffect
         type: effect
+        help: What should happen when close button is tapped
+      - type: string
+        name: customStyle
+        help: "A css style, eg 'background-color: white;'"
   - type: slot
     name: default
+docsPath: Overlay#overlayfull
