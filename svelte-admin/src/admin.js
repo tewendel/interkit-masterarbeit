@@ -43,6 +43,53 @@ export const currentProject = derived(
   }
 );
 
+let currentProjectEditingUsersSub = null;
+// a derived store that subscribes to the users that are currently editing the same project according to $projectId
+export const currentProjectEditingUsers = derived(
+  projectId,
+  async ($projectId, set) => {
+
+    if (!$projectId && currentProjectEditingUsersSub?.stop) {
+      currentProjectEditingUsersSub.stop();
+      set([]);
+    }
+
+    if ($projectId) {
+      currentProjectEditingUsersSub = await InterkitClient.getSub(
+        "users",
+        "user.editingProject",
+        {projectId: $projectId, userId: InterkitClient.userId},
+        (u) => (u?.connections || []).some((c) => c?.url?.includes($projectId)),
+        false,
+        null,
+        "adminCurrentProjectUsers"
+      );
+      currentProjectEditingUsersSub.data?.subscribe((p) => {
+        if (p.length > 0) {
+          set(p.map((u) => {
+            const url = u.connections.find((c) => c.url.includes($projectId)).url
+            let tab = null
+            if (url) {
+              const URLobject = new URL(url)
+              tab = URLobject.hash.split("/")[2]
+            }
+            return { ...u, tab }
+          }));
+        } else {
+          set([]);
+        };
+      })
+    }
+
+    return async () => {
+      if (currentProjectEditingUsersSub?.stop) {
+        await currentProjectEditingUsersSub.stop();
+      }
+    };
+
+  }
+);
+
 const userId = InterkitClient.userId;
 let currentUserSub = null
 // a derived store that subscribes to the current user according to interkit userId

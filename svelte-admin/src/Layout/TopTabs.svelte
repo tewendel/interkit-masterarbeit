@@ -5,6 +5,7 @@
   import NotificationBadge from "../Atoms/NotificationBadge.svelte";
   import ReportsNotificationBadge from "../Messages/ReportsNotificationBadge.svelte";
   import RepositoryNotificationBadge from "../Project/RepositoryNotificationBadge.svelte";
+  import TopTabLabel from "./TopTabLabel.svelte";
   import { compileError, runtimeError, bundleProcessing } from '../BundleServer.js'
 
   import { secondaryTabIndex, secondaryTabsHidden } from "../admin.js"
@@ -72,16 +73,36 @@
       <!--a use:link href="/components" >Appa</a>
       <a use:link href="/sheets" >Daten</a-->
       <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+
         <Tab>
           Start
         </Tab>
+
         <Tab>
-          App
-          <NotificationBadge count={0} />
+          <TopTabLabel path={mainTabPaths[1]}>
+            App 
+            <NotificationBadge count={0} />
+          </TopTabLabel>
         </Tab>
-        <Tab label="Data" />
-        <Tab label="Media" />
-        <Tab label="Story" />
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[2]}>
+            Data
+          </TopTabLabel>
+        </Tab>
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[3]}>
+            Media
+          </TopTabLabel>
+        </Tab>
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[4]}>
+            Story
+          </TopTabLabel>
+        </Tab>
+
         <!-- disabled tab for when dropdown is active -->
         <Tab label="" disabled />
         

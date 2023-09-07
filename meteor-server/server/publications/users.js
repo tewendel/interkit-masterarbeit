@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import {userIsInRoles} from '../../imports/userRoles.js';
 import { publishVirtualWithMeta } from '../../imports/publicationUtils.js';
-import { urlEditingProjectRegex } from '../../imports/userActivity.js';
 
 // used by project server
 Meteor.publish("projectUsers", ({projectId}) => {
@@ -100,16 +99,26 @@ Meteor.publish("roleAssignment", function () {
 })
 
 Meteor.publish("user.editingProject", function ({ projectId }) {
-  if (this.userId) {
+  if (this.userId && projectId) {
     if (userIsInRoles(this.userId, ['admin', 'author'])) {
       // find user that have entries in connection urls that match "/#/[projectId]"
       // connections: [{url: "/#/projectId", ...}]
-      const cursor = Meteor.users.find(
-        { "connections.url": { $regex: urlEditingProjectRegex } },
-        { fields: { services: false } }
-      );
+      const regex = `\/#\/${projectId}`;
+
+      const cursor = Meteor.users.find({
+        connections: {
+          $elemMatch: {
+          url: { $regex: regex },
+          },
+        },
+      })
+        
       return cursor
+    } else {
+      // console.log("user.editingProject: not authorized", this.userId)
     }
-  } 
+  } else {
+    // console.log("user.editingProject: missing userId or projectId", this.userId, projectId)
+  }
   this.ready()
 })
