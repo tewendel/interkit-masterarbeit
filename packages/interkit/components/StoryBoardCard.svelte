@@ -2,7 +2,7 @@
 
   import { onMount } from "svelte"
   import { get } from "svelte/store"
-  import { InterkitClient, util } from "../"
+  import { InterkitClient, util } from ".."
   
   import MessageIndicator from "./fragments/MessageIndicator.svelte";
   import StoryBoardImage from "./StoryBoardImage.svelte";
@@ -31,9 +31,9 @@
   onMount(async () => {
 
     userId = get(InterkitClient.userId);
-    console.log("ChatBoardCard onMount found userId", userId)
+    console.log("StoryBoardCard onMount found userId", userId)
 
-    console.log("onMount ChatBoardCard")
+    console.log("onMount StoryBoardCard")
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
 

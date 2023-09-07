@@ -2,7 +2,7 @@
 
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
-  import ChatBoardCard from './ChatBoardCard.svelte'
+  import StoryBoardCard from './StoryBoardCard.svelte'
   import { InterkitClient } from ".."
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
 
@@ -24,7 +24,7 @@
   onMount(async () => {
     userId = get(InterkitClient.userId);
     // find out what chat channels exist
-    console.log("onMount ChatBoardsList")
+    console.log("onMount StoryBoardsList")
     let channelsSubHandle = await InterkitClient.getSub("channels", "channels")
     channelsStore = channelsSubHandle.data;
   })
@@ -86,12 +86,12 @@
 
 </script>
 
-<SectionShell classes="ChatBoardsList">
+<SectionShell classes="StoryBoardsList">
 {#if $channelsStore || $showDummyData}
   {#each ($showDummyData ? dummyData : $channelsStore) as channel}
     {#if $showDummyData || $userProjectData?.channelProperties?.[channel.channel_key]?.unlisted != true}
       <div class="ChatBoardsList__SortItem sort-item" style="order: {channelOrder[channel.channel_key]}">
-        <ChatBoardCard
+        <StoryBoardCard
           board={channel.channel_key}
           {path}
         />

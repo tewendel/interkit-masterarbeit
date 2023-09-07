@@ -24,7 +24,9 @@ fields:
         help: Leave a gap between the elements
   - name: contentElement
     type: slot
+    help: Define how each element in the carousel is displayed, for example with DataCard
   - name: emptyElement
     type: slot
-docsPath: Data#dataslider
+    help: This is displayed if there are no elements to show.
+docsPath: DataList#datacarousel
 

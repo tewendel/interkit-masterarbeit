@@ -4,9 +4,11 @@
     - type: string
       name: path
       defaultValue: /
+      help: Use '/' for the home screen rendered when users first open the app 
     - type: checkbox
       name: keepAlive
       defaultValue: FALSE
+      help: Check this to only hide content with visiblity:hidden when inactive - useful for avoiding rerenders of Map
     - type: slot
       name: default
   toolboxCategory: Routing

@@ -5,10 +5,13 @@ fields:
   - name: audioColumn
     type: sheetColumn
     defaultValue: "elements/audio"
+    help: The column containing the audio file
   - name: titleColumn
     type: sheetColumn
     defaultValue: "elements/audio"
+    help: The column containgin the title to show
   - name: default
     type: slot
+    help: Content to show when the player is expanded
 
   

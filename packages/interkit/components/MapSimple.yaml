@@ -5,14 +5,17 @@ fields:
     props:
     - type: "string"
       name: "defaultLocation"
+      help: "Where to center the map if a user's location cannot be found. Format: [lat, lng]"
     - type: "sheetColumn"
       name: "markerPositionsColumn"
       columnType: "location"
       defaultValue: "elements/position"
+      help: The column with the location info
     - type: "sheetColumn"
       name: "customIconColumn"
       columnType: "mediaFile"
       defaultValue: "elements/mapMarkerIcon"
+      help: Optionally show images on the markers from this column
     - type: "sheetColumn"
       name: "markerLabelColumn"
       columnType: "string"
@@ -26,12 +29,7 @@ fields:
     - type: string
       name: checkedProperty
       defaultValue: "checked"
-    - type: "string"
-      name: "secondaryPositionProperty"
-    - type: "sheetColumn"
-      name: "hideOnMapColumn"
-      columnType: "string"
-      defaultValue: "elements/hideOnMap"
+      help: A DataAnnotation to use for displaying a check mark in the marker
     - type: "string"
       name: "permissionNotification"
     - type: "string"
@@ -39,6 +37,7 @@ fields:
     - type: string
       name: mapId
       defaultValue: map
+      help: An individual identifier, change only if you have multiple maps open at the same time
     - type: string
       name: height
       defaultValue: 100%
@@ -51,9 +50,11 @@ fields:
     - type: checkbox
       name: inline
       defaultValue: false
+      help: Show a map with rounded corners
     - type: checkbox
       name: nearestElementMode
       defaultValue: false
+      help: Show only the marker closest to the user's position
     - type: checkbox
       name: disableControls
       defaultValue: false
@@ -68,6 +69,7 @@ fields:
       help: "A tile url, for example https://tile.openstreetmap.org/{z}/{x}/{y}.png"
     - type: string
       name: mapBoxGLStyle
+      help: The url to a a vector map style json, for example from MapTiler (takes precedece over tileLayer if set)
     - type: string
       name: clickTrigger
     - type: string
@@ -75,6 +77,8 @@ fields:
       defaultValue: "Schließen"
   - type: "slot"
     name: "popup"  
+    help: Contents of a popup that opens when a marker is tapped
   - type: "slot"
     name: "button"
+    help: Buttons or a ButtonBar displayed on top of the map
 toolboxCategory: Map

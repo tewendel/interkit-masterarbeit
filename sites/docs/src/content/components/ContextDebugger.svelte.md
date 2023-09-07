@@ -4,7 +4,7 @@
 
 # ContextDebugger
 
-TODO
+Shows information about a Svelte context currently available, for example "element" or "elements".
 
 <ComponentInfoYaml component="ContextDebugger" />
 

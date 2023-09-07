@@ -10,5 +10,6 @@ fields:
         type: sheetColumn
         columnType: string
         defaultValue: elements/position
+        help: The column containing the location info that the external app should navigate to
   - type: slot
     name: Icon

@@ -17,5 +17,5 @@ fields:
   - name: default
     type: slot
 toolboxCategory: "Data"
-docsPath: Data#dataloadersingle
+docsPath: DataLoader#dataloadersingle
 

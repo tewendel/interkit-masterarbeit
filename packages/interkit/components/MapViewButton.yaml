@@ -13,7 +13,7 @@ fields:
       options:
         - filters
         - layers
-      help: "Pick which type of interface to display"
+      help: "Pick which type of interface to display, filters or layers"
     - name: text 
       type: string
       help: "Text on the button."

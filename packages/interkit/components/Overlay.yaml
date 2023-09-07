@@ -6,9 +6,11 @@ fields:
     props:
     - type: string
       name: zIndex
+      help: A number that determines the rendering priority, higher numbers are rendered on top of lower numbers.
     - type: string
       name: customStyle
+      help: "A css style, eg 'background-color: white;'"
   - type: slot
     name: default
 toolboxCategory: Layout
-docsPath: Containers#overlay
+docsPath: Overlay

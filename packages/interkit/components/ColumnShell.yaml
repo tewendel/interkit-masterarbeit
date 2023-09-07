@@ -14,3 +14,4 @@ fields:
     name: col2
   - type: slot
     name: col3
+docsPath: HorizontalSpacer#columnshell
