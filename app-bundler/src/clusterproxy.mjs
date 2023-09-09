@@ -116,8 +116,11 @@ function initCluster({ settings, portrange, app, server }) {
 }
 
 function selectWorker(req, workers) {
-  const selectedWorker = Object.values(workers).find((worker) =>
-    req.url.startsWith("/" + worker.pathPrefix) && worker.isConnected()
+  const selectedWorker = Object.values(workers).find(
+    (worker) =>
+      req.url.startsWith("/" + worker.pathPrefix) &&
+      worker.isConnected() &&
+      !worker.isDead()
   );
 
   if (selectedWorker) {
@@ -161,7 +164,9 @@ function addWorker({ pathPrefix, env, id }) {
     "started on port",
     workerPort,
     "with path prefix",
-    pathPrefix
+    pathPrefix,
+    "pid",
+    worker.process.pid
   );
 
     worker.on("exit", (code, signal) => {
@@ -191,7 +196,7 @@ function addWorker({ pathPrefix, env, id }) {
 
 function removeWorker(workerId) {
   for (let worker of Object.values(cluster.workers)) {
-    if (worker.id === workerId && worker.isConnected() && !worker.beingKilled)
+    if (worker.id === workerId && worker.isConnected() && !worker.isDead() && !worker.beingKilled)
     {
       worker.kill();
       worker.beingKilled = true;
