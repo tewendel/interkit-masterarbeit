@@ -67,13 +67,12 @@ export const currentProjectEditingUsers = derived(
       currentProjectEditingUsersSub.data?.subscribe((p) => {
         if (p.length > 0) {
           set(p.map((u) => {
-            const url = u.connections.find((c) => c.url.includes($projectId)).url
-            let tab = null
-            if (url) {
+            const urls = u.connections.filter((c) => c.url.includes($projectId)).map((c) => c.url)
+            let tabs = urls.map((url) => {
               const URLobject = new URL(url)
-              tab = URLobject.hash.split("/")[2]
-            }
-            return { ...u, tab }
+              return URLobject.hash.split("/")[2]
+            })
+            return { ...u, tabs }
           }));
         } else {
           set([]);

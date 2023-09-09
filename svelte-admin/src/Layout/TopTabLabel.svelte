@@ -3,17 +3,31 @@
   import { Tooltip } from "carbon-components-svelte";
   import { projectId, currentProject, currentUser, currentProjectEditingUsers } from '../admin.js'
 
-  export let path
+  export let path // the path of this tab
+  export let tab // path of currently selected tab
 
-  $: users = ($currentProjectEditingUsers || []).filter(u => u.id != $currentUser.id && u.tab == path) || []
+  $: users = ($currentProjectEditingUsers || []).filter( u => {
+    const howManyOnThistab = u.tabs.filter(t => t == path).length
+    if (u.id == $currentUser.id) {
+      if ( tab == path ) {
+        // same user, different connection on same tab
+        return howManyOnThistab > 1
+      } else {
+        // same user, different connection on different tab
+        return howManyOnThistab > 0
+      }
+    } else {
+      // different user
+      return howManyOnThistab > 0
+    }
+  })
+
 </script>
 
 <span>
-  {#if users.length > 0}
-    <span class="user">
-      <UserAvatarFilled title="This tab is currently being edited by {users.map(u => u.username).join("&")}" />
+    <span class="user" class:active={users.length > 0}>
+      <UserAvatarFilled title="This tab is currently being visited by {users.map(u => u.username).join(" & ")}" />
     </span>
-  {/if}
   <slot />
 </span>
 
@@ -23,9 +37,13 @@
   }
   .user {
     position: absolute;
-    top:-10px;
+    top:-30px;
     left: 50%;
     transform: translateX(-50%);
+    transition: top 0.2s 2s ease-in-out; /* delay is required because of network latency - the client does not know which connection it has, so the tab seems occupied for a while, until the server responds */
+  }
+  .user.active {
+    top: -10px;
   }
 </style>
 

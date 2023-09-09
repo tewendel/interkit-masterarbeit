@@ -79,26 +79,26 @@
         </Tab>
 
         <Tab>
-          <TopTabLabel path={mainTabPaths[1]}>
+          <TopTabLabel path={mainTabPaths[1]} {tab}>
             App 
             <NotificationBadge count={0} />
           </TopTabLabel>
         </Tab>
 
         <Tab>
-          <TopTabLabel path={mainTabPaths[2]}>
+          <TopTabLabel path={mainTabPaths[2]} {tab}>
             Data
           </TopTabLabel>
         </Tab>
 
         <Tab>
-          <TopTabLabel path={mainTabPaths[3]}>
+          <TopTabLabel path={mainTabPaths[3]} {tab}>
             Media
           </TopTabLabel>
         </Tab>
 
         <Tab>
-          <TopTabLabel path={mainTabPaths[4]}>
+          <TopTabLabel path={mainTabPaths[4]} {tab}>
             Story
           </TopTabLabel>
         </Tab>
