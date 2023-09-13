@@ -28,7 +28,7 @@ async function ensureViteServers(projects, app, server) {
     initialized = true;
   }
 
-  const activeProjects = projects.filter((project) => project?.devServer?.actionRequested == "start")
+  const activeProjects = projects // projects.filter((project) => project?.devServer?.actionRequested == "start")
   
   // add new servers
   for (const project of activeProjects) {
