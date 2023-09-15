@@ -18,6 +18,10 @@
   let mainSelected; // this is a numeric index
   let selectedDropdownId = "more"; // this is a string
 
+  /* Hack to avoid active blockly input etc. hovering above other tabs.
+   * See root App.svelte style and App/BlocklyEditor */
+  $: document.body.classList.toggle('appTabActive', (mainSelected === 1) || (tab === 'components'))
+
   const mainTabPaths = [
     '',
     'components', 

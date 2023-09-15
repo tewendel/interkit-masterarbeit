@@ -262,4 +262,12 @@
 
   /* END DataTable Hack */
 
+  /* Hack to avoid active blockly input etc. hovering above other tabs.
+   * The two classes are toggled in App/BlocklyEditor and Layout/TopTabs. */
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyWidgetDiv[style]),
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyDropDownDiv[style]),
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyTooltipDiv[style]) {
+    display: none !important;
+  }
+
 </style>

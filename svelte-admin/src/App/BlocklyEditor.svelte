@@ -370,6 +370,10 @@
 
   let selectedTab;
 
+  /* Hack to avoid active blockly input etc. hovering above other tabs.
+   * See root App.svelte style and Layout/TopTabs */
+  $: document.body.classList.toggle('appBlocklyTabActive', selectedTab === 0)
+
   function onKeyDown(e) {
     if (!open) return
     if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
