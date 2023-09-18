@@ -94,7 +94,9 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
 
     if(prop.type == "sheetColumn" && typeof value == "object") {
       if(value.sheetKey == "empty") return "";
-      if (value.columnKey?.indexOf?.('$lang') > -1) {
+      // if the columnKey contains $lang, we inject a dynamic string replacement to localize,
+      // but not for customKeyColumns - with these, we want to select by a fixed (non-localized) column always
+      if ((value.columnKey?.indexOf?.('$lang') > -1) && (prop.name !== 'customKeyColumn')) {
         return `${prop.name}={$lang ? "${value.sheetKey}/" + "${value.columnKey}".replace("$lang", "$" + $lang) : "${value.sheetKey}/${value.columnKey}"}`
       }
       value = value.sheetKey + "/" + value.columnKey  
