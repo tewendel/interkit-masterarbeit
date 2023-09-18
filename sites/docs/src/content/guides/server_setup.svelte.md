@@ -13,6 +13,8 @@ Note: Also see the main [main readme](https://gitlab.interkit.app/interkit/inter
   - using an A record pointing to your server instance ip address
   - also set up a wildcard A record from `*.my-interkit-server.de` pointing to your server instance ip address
 
+For more detailed information on working with custom domains, see [Custom Domains](/guides/custom_domain)
+
 ## update and install prerequisites
 
 - ssh into the server `ssh root@my-interkit-server.de`

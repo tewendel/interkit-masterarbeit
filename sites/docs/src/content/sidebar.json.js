@@ -144,6 +144,10 @@ export const items = [
         path: '/guides/server_setup'
       },
       {
+        title: 'Setting up a custom domain',
+        path: '/guides/custom_domain'
+      },
+      {
         title: 'Build for native app and deploy to app stores',
         path: '/guides/native'
       },
