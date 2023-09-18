@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as pushnotifications from '../imports/pushnotifications.js'
 import { addUsersToRoles, userIsInRoles } from '../imports/userRoles.js';
 import { seedUser } from '../imports/userUtils.js';
+import { processUserActivity } from '../imports/userActivity.js';
 
 let projectServerPasswords = {}
 
@@ -119,114 +120,104 @@ const getBoardState = (projectId, userId, boardId) => {
 }
 
 Meteor.methods({
-
   // create a front end user for a project
-  'createProjectUser': async function ({
+  createProjectUser: async function ({
     projectId,
     username,
     email,
     password,
-    projectData
+    projectData,
   }) {
     if (!projectId) {
-      console.warn("createProjectUser: missing projectId")
-      return false
+      console.warn("createProjectUser: missing projectId");
+      return false;
     }
     const userId = Accounts.createUser({
       username,
       email,
       password,
-    })
+    });
 
     const projectUserData = {
-      [projectId]: projectData
-    }
+      [projectId]: projectData,
+    };
 
-    Meteor.users.update(userId, { $set: { projectUserData } })
+    Meteor.users.update(userId, { $set: { projectUserData } });
 
-    console.log("createProjectUser", userId)
+    console.log("createProjectUser", userId);
   },
 
-  'users.delete': async function (ids) {
-    console.log('deleteProjectUsers', ids)
-    const result = await Meteor.users.remove({ _id: { $in: ids } })
-    return result
+  "users.delete": async function (ids) {
+    console.log("deleteProjectUsers", ids);
+    const result = await Meteor.users.remove({ _id: { $in: ids } });
+    return result;
   },
 
   // create a front end user for a project, identified by a user token
-  'createProjectTokenUser': async function (params) {
-    console.log("createProjectTokenUser", params)
-    let {
-      projectId,
-        userToken,
-        projectData
-    } = params
-    if (!projectId) return false
+  createProjectTokenUser: async function (params) {
+    console.log("createProjectTokenUser", params);
+    let { projectId, userToken, projectData } = params;
+    if (!projectId) return false;
     if (!userToken) {
-      userToken = ""
+      userToken = "";
       while (userToken.length < 6) {
         userToken += Math.random().toString(36).slice(2);
       }
     }
-    const username = uuidv4()
+    const username = uuidv4();
     const userId = Accounts.createUser({
       username,
-    })
+    });
 
-    addUsersToRoles(userId, ['projectuser'])
+    addUsersToRoles(userId, ["projectuser"]);
 
     const projectUserData = {
       [projectId]: {
         ...projectData,
-        userToken
-      }
-    }
+        userToken,
+      },
+    };
 
-    Meteor.users.update(userId,{$set: { projectUserData }})
+    Meteor.users.update(userId, { $set: { projectUserData } });
 
-    const user = Meteor.users.findOne(userId)
-    console.log("created token user", user)
+    const user = Meteor.users.findOne(userId);
+    console.log("created token user", user);
 
-    return userToken
+    return userToken;
   },
 
-  'generateLoginCredentialsForTokenUser': async function({
+  generateLoginCredentialsForTokenUser: async function ({
     projectId,
-    userToken
-  } = {}){
-    if (!projectId || !userToken) return false
-    console.log("generateLoginCredentialsForTokenUser", projectId, userToken)
+    userToken,
+  } = {}) {
+    if (!projectId || !userToken) return false;
+    console.log("generateLoginCredentialsForTokenUser", projectId, userToken);
     const user = Meteor.users.findOne({
-      [`projectUserData.${projectId}.userToken`] : userToken
-    })
-    console.log("generateLoginCredentialsForTokenUser userId", user?._id)
-    if (!user) { 
+      [`projectUserData.${projectId}.userToken`]: userToken,
+    });
+    console.log("generateLoginCredentialsForTokenUser userId", user?._id);
+    if (!user) {
       return {
-        error: user
-      }
+        error: user,
+      };
     } else {
       // set a random password to be able to log in
-      const randomPassword = uuidv4()
-      Accounts.setPassword(
-        user._id,
-        randomPassword,
-        {logout:false}
-      )
+      const randomPassword = uuidv4();
+      Accounts.setPassword(user._id, randomPassword, { logout: false });
       return {
         username: user.username,
-        password: randomPassword
-      }
+        password: randomPassword,
+      };
     }
   },
 
-  'resumeUserSession': async function (userAuth) {
-     
-    if(userAuth?.token) {
-      let hashedToken = Accounts._hashLoginToken(userAuth?.token)
-      let query = { 'services.resume.loginTokens.hashedToken': hashedToken }    
+  resumeUserSession: async function (userAuth) {
+    if (userAuth?.token) {
+      let hashedToken = Accounts._hashLoginToken(userAuth?.token);
+      let query = { "services.resume.loginTokens.hashedToken": hashedToken };
       let user = Meteor.users.findOne(query);
 
-      if(user) {
+      if (user) {
         // user found by token, logging user in on server
         this.setUserId(user._id);
         return true;
@@ -237,181 +228,274 @@ Meteor.methods({
   },
 
   // save project data to user
-  'user.saveElementProperties': async function ({projectId, elementProperties}) {
+  "user.saveElementProperties": async function ({
+    projectId,
+    elementProperties,
+  }) {
     const result = Meteor.users.update(Meteor.userId(), {
       $set: {
-        [`projectUserData.${projectId}.elementProperties`] : elementProperties
-      }
-    })
-    return result
+        [`projectUserData.${projectId}.elementProperties`]: elementProperties,
+      },
+    });
+    return result;
   },
 
-  'user.savePushnotificationRegistrationToken': async function ({projectId, token}) {
+  "user.savePushnotificationRegistrationToken": async function ({
+    projectId,
+    token,
+  }) {
     /* if user was reset manually we have to take away their/our token, to prevent receiving multiple push notifications */
-    if (token !== '(web)') {
+    if (token !== "(web)") {
       Meteor.users.update(
-        { [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: token },
-        { $set: { [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: '(userreset)' } }
-      )
+        {
+          [`projectUserData.${projectId}.pushnotificationRegistrationToken`]:
+            token,
+        },
+        {
+          $set: {
+            [`projectUserData.${projectId}.pushnotificationRegistrationToken`]:
+              "(userreset)",
+          },
+        }
+      );
     }
     const result = Meteor.users.update(Meteor.userId(), {
       $set: {
-        [`projectUserData.${projectId}.lastHeartbeat`] : new Date(),
-        [`projectUserData.${projectId}.pushnotificationRegistrationToken`] : token
-      }
-    })
-    return result
+        [`projectUserData.${projectId}.lastHeartbeat`]: new Date(),
+        [`projectUserData.${projectId}.pushnotificationRegistrationToken`]:
+          token,
+      },
+    });
+    return result;
   },
 
-  'user.heartbeat': async function ({ projectId, userId, isAwake }) {
+  "user.heartbeat": async function ({ projectId, userId, isAwake }) {
     // Meteor.userId() is not super reliable?
-    userId = userId || Meteor.userId()
+    userId = userId || Meteor.userId();
     // console.log('heartbeat', projectId, userId, isAwake)
     if (!userId) {
-      console.log('heartbeat w/o userId, skipping')
-      return
+      console.log("heartbeat w/o userId, skipping");
+      return;
     }
     const result = Meteor.users.update(userId, {
       $set: {
         // isAwake===false forces "asleep" by setting into the past, slightly over threshold
         // (we could use start of epoch (and lose some stats), or a dedicated bool to be cleaner)
-        [`projectUserData.${projectId}.lastHeartbeat`] : isAwake === false
-          ? new Date(+(new Date()) - pushnotifications.heartbeatOldMinAge - 1000)
-          : new Date()
-      }
-    })
-    return result
+        [`projectUserData.${projectId}.lastHeartbeat`]:
+          isAwake === false
+            ? new Date(
+                +new Date() - pushnotifications.heartbeatOldMinAge - 1000
+              )
+            : new Date(),
+      },
+    });
+    return result;
   },
 
-  'user.get': ({userId}) => {
-    const user = Meteor.users.findOne(userId)
+  "user.get": ({ userId }) => {
+    const user = Meteor.users.findOne(userId);
     return user;
   },
 
-  'user.getProjectUserData': ({userId, projectId}) => {
-    return getUserProjectData(userId, projectId)
+  "user.getProjectUserData": ({ userId, projectId }) => {
+    return getUserProjectData(userId, projectId);
   },
 
-  'user.updateUserProjectData': async ({userId, projectId, key, value}) => {
+  "user.updateUserProjectData": async ({ userId, projectId, key, value }) => {
     await updateUserProjectData(userId, projectId, key, value);
     return true;
   },
 
-  'user.updateUserBoardArrivalState': async ({userId, projectId, boardId, nodeId, status}) => {
-    await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status})
+  "user.updateUserBoardArrivalState": async ({
+    userId,
+    projectId,
+    boardId,
+    nodeId,
+    status,
+  }) => {
+    await updateUserBoardArrivalState(userId, projectId, boardId, {
+      nodeId,
+      status,
+    });
   },
 
-  'user.getUserVar': ({userId, projectId, varName}) => {
+  "user.getUserVar": ({ userId, projectId, varName }) => {
     let userProjectData = getUserProjectData(userId, projectId);
-    return userProjectData?.userVars?.[varName]
+    return userProjectData?.userVars?.[varName];
   },
 
-  'user.setUserVar': async ({userId, projectId, varName, value}) => {
-    console.log("user.setUserVar", varName, value)
-    await updateUserVar(userId, projectId, varName, value)
+  "user.setUserVar": async ({ userId, projectId, varName, value }) => {
+    console.log("user.setUserVar", varName, value);
+    await updateUserVar(userId, projectId, varName, value);
   },
 
-  'user.setElementProperty': async ({userId, projectId, elementKey, propertyName, value}) => {
-    console.log("user.setElementProperty", propertyName, value)
-    await updateUserElementProperty(userId, projectId, elementKey, propertyName, value);
+  "user.setElementProperty": async ({
+    userId,
+    projectId,
+    elementKey,
+    propertyName,
+    value,
+  }) => {
+    console.log("user.setElementProperty", propertyName, value);
+    await updateUserElementProperty(
+      userId,
+      projectId,
+      elementKey,
+      propertyName,
+      value
+    );
   },
 
-  'user.getElementProperty': async ({userId, projectId, elementKey, propertyName}) => {
-    console.log("user.getElementProperty", propertyName)
+  "user.getElementProperty": async ({
+    userId,
+    projectId,
+    elementKey,
+    propertyName,
+  }) => {
+    console.log("user.getElementProperty", propertyName);
     let userProjectData = getUserProjectData(userId, projectId);
-    let elementProperties = userProjectData.elementProperties
+    let elementProperties = userProjectData.elementProperties;
     return elementProperties?.[elementKey]?.[propertyName];
   },
 
-  'user.setChannelProperty': async ({userId, projectId, channelKey, propertyName, value}) => {
-    console.log("user.setChannelProperty", propertyName, value)
-    await updateUserChannelProperty(userId, projectId, channelKey, propertyName, value)
+  "user.setChannelProperty": async ({
+    userId,
+    projectId,
+    channelKey,
+    propertyName,
+    value,
+  }) => {
+    console.log("user.setChannelProperty", propertyName, value);
+    await updateUserChannelProperty(
+      userId,
+      projectId,
+      channelKey,
+      propertyName,
+      value
+    );
   },
 
-  'users.getForNode': ({projectId, boardId, nodeId}) => {
-    let nodeIdKey = `projectUserData.${projectId}.boardState.${boardId}.nodeId`
-    let statusKey = `projectUserData.${projectId}.boardState.${boardId}.status`
-    let query = {[nodeIdKey]: nodeId, [statusKey]: "arrived"};
-    console.log("users.getForNode query", query)
+  "users.getForNode": ({ projectId, boardId, nodeId }) => {
+    let nodeIdKey = `projectUserData.${projectId}.boardState.${boardId}.nodeId`;
+    let statusKey = `projectUserData.${projectId}.boardState.${boardId}.status`;
+    let query = { [nodeIdKey]: nodeId, [statusKey]: "arrived" };
+    console.log("users.getForNode query", query);
     let users = Meteor.users.find(query).fetch();
     return users;
   },
 
-  'user.moveTo': async ({projectId, userId, boardId, nodeId}) => {
-    console.log("user.moveTo", projectId, userId, boardId, nodeId)
+  "user.moveTo": async ({ projectId, userId, boardId, nodeId }) => {
+    console.log("user.moveTo", projectId, userId, boardId, nodeId);
     let boardState = getBoardState(projectId, userId, boardId);
-    if(boardState) {
-      const usersUpdatedCount = await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status: "arriving"})
+    if (boardState) {
+      const usersUpdatedCount = await updateUserBoardArrivalState(
+        userId,
+        projectId,
+        boardId,
+        { nodeId, status: "arriving" }
+      );
       return usersUpdatedCount;
     }
-    return false
+    return false;
   },
 
-  'users.moveTo': async ({ projectId, userIds, boardId, nodeId }) => {
+  "users.moveTo": async ({ projectId, userIds, boardId, nodeId }) => {
     // TODO this is stupidly sequentialized, not efficient, and not DRY.
-    console.log('users.moveTo', { projectId, userIds, boardId, nodeId })
-    const successful = []
-    const errored = []
+    console.log("users.moveTo", { projectId, userIds, boardId, nodeId });
+    const successful = [];
+    const errored = [];
     for (const userId of userIds) {
       let userBoardState = getBoardState(projectId, userId, boardId);
       if (!userBoardState) {
-        console.warn(`users.moveTo user ${userId} has no boardState`)
-        continue
+        console.warn(`users.moveTo user ${userId} has no boardState`);
+        continue;
       }
       if (!userBoardState[boardId]) {
-        console.warn(`users.moveTo user ${userId} has no boardState for board ${boardId}`)
-        continue
+        console.warn(
+          `users.moveTo user ${userId} has no boardState for board ${boardId}`
+        );
+        continue;
       }
-      const usersUpdatedCount = await updateUserBoardArrivalState(userId, projectId, boardId, {nodeId, status: "arriving"})
-      
+      const usersUpdatedCount = await updateUserBoardArrivalState(
+        userId,
+        projectId,
+        boardId,
+        { nodeId, status: "arriving" }
+      );
+
       if (usersUpdatedCount === 1) {
-        successful.push(userId)
+        successful.push(userId);
       } else {
-        errored.push(userId)
+        errored.push(userId);
       }
     }
     return {
       successful,
-      errored
-    }
+      errored,
+    };
   },
 
-  'users.block': async ({ projectId, userIds, setBlocked }) => {
-    let result
+  "users.block": async ({ projectId, userIds, setBlocked }) => {
+    let result;
     result = await Meteor.users.update(
       { _id: { $in: userIds } },
       { $set: { blocked: setBlocked } },
       { multi: true }
-    )
-    return result
+    );
+    return result;
   },
 
-  'user.setBoardInterface': async ({interfaceConfig, projectId, userId, boardId}) => {
+  "user.setBoardInterface": async ({
+    interfaceConfig,
+    projectId,
+    userId,
+    boardId,
+  }) => {
     let boardState = getBoardState(projectId, userId, boardId);
-    if(boardState) {
+    if (boardState) {
       boardState[boardId].interfaceConfig = interfaceConfig;
-      await updateUserBoardInterface(userId, projectId, boardId, interfaceConfig)
+      await updateUserBoardInterface(
+        userId,
+        projectId,
+        boardId,
+        interfaceConfig
+      );
     }
   },
 
-  'user.registerProjectServerUser': async ({projectId}) => {
-    const username = 'projectserver_'+projectId
+  "user.registerProjectServerUser": async ({ projectId }) => {
+    const username = "projectserver_" + projectId;
     let password = projectServerPasswords[projectId] || Random.secret();
     // TODO save this in project collection and expose only to admin and author
     projectServerPasswords[projectId] = password;
-    seedUser('projectserver_'+projectId, password, 'projectserver')
+    seedUser("projectserver_" + projectId, password, "projectserver");
     return {
       username,
-      password
-    }
+      password,
+    };
   },
 
-  'user.getRoles': async ({ userId }) => {
-    const user = Meteor.users.findOne(userId)
-    if (!user) return false
+  "user.getRoles": async ({ userId }) => {
+    const user = Meteor.users.findOne(userId);
+    if (!user) return false;
     return {
-      admin: userIsInRoles(userId, ['admin'])
-    }
-  }
+      admin: userIsInRoles(userId, ["admin"]),
+    };
+  },
 
+  "user.trackActivity": async function ({ url }) {
+    const userId = Meteor.userId();
+    const connectionId = this.connection.id;
+    if (!userId || !connectionId) {
+      console.warn("user.trackActivity missing userId or connectionId");
+      return;
+    }
+    // console.log(
+    //   "user.trackActivity",
+    //   userId,
+    //   url, connectionId
+    // );
+    processUserActivity({ userId, connectionId, url });
+    return true;
+  },
 });

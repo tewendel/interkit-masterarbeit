@@ -7,6 +7,7 @@
   
   $: currentProjectServerStatus = $currentProject?.projectServer?.status
   $: viteServerStatus = $currentProject?.uiState?.viteServer?.status
+  $: devServerActionRequested = $currentProject?.devServer?.actionRequested
 
   let sub = null;
   let bundlerIsOnline = null;
@@ -36,14 +37,26 @@
 <span>
 
   {#if $currentProject}
+    <span title={devServerActionRequested}>
+      {#if devServerActionRequested == "start"}
+        👍
+      {:else}
+        👎
+      {/if}
+    </span>
+
+    &nbsp;
+  {/if}
+
+  {#if $currentProject}
     {#if viteServerStatus == "running"}
       <Checkmark title="Vite server is running" />
     {:else}
       <Warning title={"Vite server " + viteServerStatus} style="color:orange;"/>
     {/if}
-  {/if}
 
-  &nbsp;
+    &nbsp;
+  {/if}
 
   {#if $currentProject}
     {#if currentProjectServerStatus == "running"}
@@ -51,9 +64,9 @@
     {:else}
       <Warning title={"Project server " + currentProjectServerStatus} style="color:red;"/>
     {/if}
+
+    &nbsp;
   {/if}
-  
-  &nbsp;
 
   {#if connected}
     <Checkmark title="Connected to server" />

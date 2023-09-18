@@ -5,6 +5,7 @@
   import NotificationBadge from "../Atoms/NotificationBadge.svelte";
   import ReportsNotificationBadge from "../Messages/ReportsNotificationBadge.svelte";
   import RepositoryNotificationBadge from "../Project/RepositoryNotificationBadge.svelte";
+  import TopTabLabel from "./TopTabLabel.svelte";
   import { compileError, runtimeError, bundleProcessing } from '../BundleServer.js'
 
   import { secondaryTabIndex, secondaryTabsHidden } from "../admin.js"
@@ -16,6 +17,10 @@
 
   let mainSelected; // this is a numeric index
   let selectedDropdownId = "more"; // this is a string
+
+  /* Hack to avoid active blockly input etc. hovering above other tabs.
+   * See root App.svelte style and App/BlocklyEditor */
+  $: document.body.classList.toggle('appTabActive', (mainSelected === 1) || (tab === 'components'))
 
   const mainTabPaths = [
     '',
@@ -72,16 +77,36 @@
       <!--a use:link href="/components" >Appa</a>
       <a use:link href="/sheets" >Daten</a-->
       <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+
         <Tab>
           Start
         </Tab>
+
         <Tab>
-          App
-          <NotificationBadge count={0} />
+          <TopTabLabel path={mainTabPaths[1]} {tab}>
+            App 
+            <NotificationBadge count={0} />
+          </TopTabLabel>
         </Tab>
-        <Tab label="Data" />
-        <Tab label="Media" />
-        <Tab label="Story" />
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[2]} {tab}>
+            Data
+          </TopTabLabel>
+        </Tab>
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[3]} {tab}>
+            Media
+          </TopTabLabel>
+        </Tab>
+
+        <Tab>
+          <TopTabLabel path={mainTabPaths[4]} {tab}>
+            Story
+          </TopTabLabel>
+        </Tab>
+
         <!-- disabled tab for when dropdown is active -->
         <Tab label="" disabled />
         

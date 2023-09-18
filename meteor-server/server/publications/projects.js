@@ -8,15 +8,20 @@ Meteor.publish('projects', function() {
     slug: 1,
     isDefaultProject: 1,
     isTemplate: 1,
-    history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+    history: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
     projectServer: {
       status: 1,
-      cpu:1,
-      actionRequested: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
-      messages: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+      cpu: 1,
+      actionRequested: userIsInRoles(this.userId, [
+        "admin",
+        "author",
+        "bundler",
+      ]),
+      messages: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
     },
-    uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
-  }
+    uiState: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
+    devServer: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
+  };
   //console.log("projects sub")
   if (userIsInRoles(this.userId, ['admin', 'author', 'bundler'])) {
     let projects = Projects.find({}, { fields});
@@ -37,6 +42,7 @@ Meteor.publish('projects.list', function() {
       status: 1,
       cpu: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     },
+    devServer: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler'])
   }
   //console.log("projects sub")

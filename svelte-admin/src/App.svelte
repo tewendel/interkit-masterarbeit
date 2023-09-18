@@ -38,7 +38,7 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject, currentUser, secondaryTabPreviewProjectId } from './admin.js'
+  import { projectId, currentProject, currentUser, currentProjectEditingUsers, secondaryTabPreviewProjectId } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -54,10 +54,13 @@
     $projectId = event.detail?.params?.projectId
     tab = event.detail?.params?.tab
 
+    //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
+
     // reset preview when leaving project
     if(event?.detail?.location == "/") {
       secondaryTabPreviewProjectId.set(null)
     }
+
   }
 
   onMount(async ()=>{
@@ -69,6 +72,7 @@
 
   let userId = InterkitClient.userId;
   InterkitClient.initAuth()
+  InterkitClient.userEnableActivityTracking()
 
   let isUserOpen = false;
 
@@ -129,6 +133,20 @@
             {#if $userIsRole?.admin}<UserAdmin />&ensp;has&nbsp;role&nbsp;<i>admin</i>{/if}
           </div>
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
+
+          {#if $currentProjectEditingUsers}
+            <HeaderPanelDivider>Other Users (now active)</HeaderPanelDivider>
+            <div class="status">
+              {#each $currentProjectEditingUsers as user}
+                {#if user.id != $currentUser.id}
+                  <div>
+                    {user.username}
+                  </div>
+                {/if}
+              {/each}
+            </div>  
+          {/if}
+
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
           <div class="status">
             {#if $userId}
@@ -243,5 +261,13 @@
   }
 
   /* END DataTable Hack */
+
+  /* Hack to avoid active blockly input etc. hovering above other tabs.
+   * The two classes are toggled in App/BlocklyEditor and Layout/TopTabs. */
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyWidgetDiv[style]),
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyDropDownDiv[style]),
+  :global(body:not(.appTabActive.appBlocklyTabActive) .blocklyTooltipDiv[style]) {
+    display: none !important;
+  }
 
 </style>
