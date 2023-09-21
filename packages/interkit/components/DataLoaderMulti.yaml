@@ -2,6 +2,7 @@ name: DataLoaderMulti
 fields: 
   - name: sheetKey
     type: sheetId
+    defaultValue: elements
   - type: extraProps
     props:
     - name: sortColumn

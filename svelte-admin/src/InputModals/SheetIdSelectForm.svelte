@@ -52,12 +52,12 @@
         <SelectItem value={sheet.key} text={sheet.name} />
       {/each}
   </Select>
-  {#if !sheets.find(s => s.key == value.sheetKey) && value.sheetKey != 'empty'}
+  {#if !sheets.find(s => s.key === value.sheetKey) && value.sheetKey !== 'empty' && value.sheetKey !== ''}
     <InlineNotification
       lowContrast
       hideCloseButton
       kind="warning"
-      subtitle="This sheet is currently set to '{value.sheetKey}', but this sheet doesn't exist in your database. Would you like to create it?"
+      subtitle="This sheet is currently set to '{value.sheetKey}', but a sheet with this key doesn't exist in your database. Would you like to create it?"
     >
       <svelte:fragment slot="actions">
         <NotificationActionButton on:click={()=>createSheetAndReload(value)}>Create</NotificationActionButton>
