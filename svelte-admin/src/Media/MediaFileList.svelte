@@ -322,7 +322,7 @@
       <span slot="cell" let:row let:cell>
         {#if cell.key === 'key'}
           {#if row.meta?.key}
-            <span title={row.meta?.key} class="cell__1line">
+            <span title={row.meta?.key} class="cell__1line" on:click={() => console.log(row.meta?.key)}>
               {#if !radio}
                 <CopyButton style="display: inline;" text={row.meta?.key} feedback="Copied mediaKey to clipboard!"/>
               {/if}
