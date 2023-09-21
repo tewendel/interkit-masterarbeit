@@ -2,13 +2,12 @@ name: DataLoaderMulti
 fields: 
   - name: sheetKey
     type: sheetId
-    defaultValue: "elements"
   - type: extraProps
     props:
     - name: sortColumn
       type: sheetColumn
     - name: hideColumn
-      defaultValue: "elements/hide"
+      type: sheetColumn
     - name: includeOnlyAnnotated
       type: string
       help: Filter to only include elements that have a Data Annotation set to "true", for example "bookmarked". You can list multiple anotations with "checked, bookmarked".
