@@ -1,10 +1,11 @@
 <script>
   import { push } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
   
   import { InterkitClient } from 'interkit'
   import { bundleServerURL$ } from '../BundleServer.js'
-  import { projectManagerSortKey, projectManagerSortDirection, projectManagerPage } from '../admin.js'
   import DataTablePaginationAutofit from '../Data/DataTablePaginationAutofit.svelte'
+  import { projectManagerTab } from '../admin.js'
   
   import { 
     DataTable,
@@ -29,17 +30,29 @@
   export let previewProject
   export let description
 
+  export let sortKeyStore
+  export let sortDirectionStore
+  export let pageStore
+
   const bundleServerURL = bundleServerURL$
   const userIsRole = InterkitClient.userIsRole
     
-  let sortKey = $projectManagerSortKey
-  $: projectManagerSortKey.set(sortKey)
+  let sortKey 
+  let sortDirection 
+  let page 
 
-  let sortDirection = $projectManagerSortDirection
-  $: projectManagerSortDirection.set(sortDirection)
-
-  let page = 1
-  $: projectManagerPage.set(page)
+  onMount(()=>{
+    console.log("resetting sort and page")
+    sortKey = $sortKeyStore
+    sortDirection = $sortDirectionStore
+    page = $pageStore
+  })
+  
+  $: sortKeyStore.set(sortKey)
+  $: sortDirectionStore.set(sortDirection)
+  $: {
+    if(typeof page == "number") pageStore.set(page)
+  }
 
   let pageSize = 10
 
@@ -70,7 +83,14 @@
   40 + // DataTable tfoot
   24   // potential horizontal scrollbar + buffer
 
-  const openProject = id => push('/' + id)
+  const openProject = (row) => {
+    console.log("openProject", row)
+    if(row.isTemplate) {
+      push('/template/' + row.slug)
+    } else {
+      push('/' + row.id)
+    }
+  }
 
   const infoProject = (row, file) => {
     secondaryTabIndex.set(1)
@@ -93,6 +113,7 @@
   const duplicateProject = async (row) => {
     console.log("duplicating project", row.id)
     await InterkitClient.call("project.duplicate", {projectId: row.id})
+    projectManagerTab.set(0)
   }
 
   const updateProjectSetIsTemplate = async (row, isTemplate) => {
@@ -172,12 +193,21 @@
     {/if}
     {#if cell.key === 'overflow'}
       <ButtonSet style="justify-content: end">
-        <Button
-          kind="ghost"
-          size="small"
-          icon={Edit}
-          on:click={() => openProject(row.id)}
-          >Edit</Button>
+        {#if !row.isTemplate}
+          <Button
+            kind="ghost"
+            size="small"
+            icon={Edit}
+            on:click={() => openProject(row)}
+            >Edit</Button>
+        {:else} 
+          <Button
+            kind="ghost"
+            size="small"
+            icon={Edit}
+            on:click={() => openProject(row)}
+          >Inspect</Button>
+        {/if}
         <!--
         <Button
           kind="ghost"
@@ -199,10 +229,12 @@
             ><Copy />&ensp;Duplicate</OverflowMenuItem>
           <OverflowMenuItem
             on:click={() => renameProject(row)}
+            disabled={row.isTemplate && !$userIsRole?.admin}
             ><QID />&ensp;Rename</OverflowMenuItem>
           <OverflowMenuItem
             danger
             on:click={() => removeProject(row.id)}
+            disabled={row.isTemplate && !$userIsRole?.admin}
             ><TrashCan />&ensp;Delete</OverflowMenuItem>
           <OverflowMenuItem
             hasDivider

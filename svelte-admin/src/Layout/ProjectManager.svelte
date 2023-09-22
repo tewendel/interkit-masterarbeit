@@ -8,7 +8,14 @@
     secondaryTabIndex,
     secondaryTabPreviewProjectId,
     secondaryTabsSizes,
-    secondaryTabsSize
+    secondaryTabsSize,
+    projectManagerTab,
+    projectManagerSortKey, 
+    projectManagerSortDirection, 
+    projectManagerPage,
+    projectManagerSortKeyTemplate, 
+    projectManagerSortDirectionTemplate, 
+    projectManagerPageTemplate
   } from '../admin.js'
   import { docsGo } from '../docs.js'
 
@@ -116,7 +123,10 @@
               <Loading style="background-color:white"/>
             {/if}
           {:else if createProjectStep === false}
-            <Tabs>
+            <Tabs 
+              selected={$projectManagerTab}
+              on:change={(event)=>{projectManagerTab.set(event.detail)}}
+            >
               <Tab label="Your Projects" />
               <Tab label="Templates" />
               <svelte:fragment slot="content">
@@ -125,6 +135,9 @@
                     <ProjectList 
                       {projectRows}
                       {previewProject}
+                      sortKeyStore={projectManagerSortKey} 
+                      sortDirectionStore={projectManagerSortDirection} 
+                      pageStore={projectManagerPage}
                       description="These are the projects created by your team on this server."
                     >
                       <Button
@@ -149,6 +162,9 @@
                       projectRows={templates}
                       description="These are the templates available on this server as starting points."
                       {previewProject}
+                      sortKeyStore={projectManagerSortKeyTemplate} 
+                      sortDirectionStore={projectManagerSortDirectionTemplate} 
+                      pageStore={projectManagerPageTemplate}
                     >
                       <Button
                           size="small"

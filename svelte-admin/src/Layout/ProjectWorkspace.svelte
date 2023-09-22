@@ -1,19 +1,15 @@
 <script>
   import {
-    Tabs,
-    Tab,
-    TabContent,
     Button,
-    ButtonSet
+    ButtonSet,
+    Toggle,
+    Tag
   } from "carbon-components-svelte";
+  import Copy from "carbon-icons-svelte/lib/Copy.svelte";
+
   import { onDestroy } from 'svelte';
 
-  import Information from 'carbon-icons-svelte/lib/Information.svelte'
-  import OpenPanelFilledRight from 'carbon-icons-svelte/lib/OpenPanelFilledRight.svelte'
-
-  import WorkArea from './WorkArea.svelte';
   import Sheets from '../Data/Sheets.svelte'
-  //import ComponentEditor from './ComponentEditor.svelte'
   import BlocklyEditor from '../App/BlocklyEditor.svelte'
   import RepositoryTab from "../Project/RepositoryTab.svelte"
   import MediaManager from "../Media/MediaManager.svelte"
@@ -24,18 +20,22 @@
   import NodeEditor from '../Story/NodeEditor.svelte'
   import Theming from '../Style/Theming.svelte'
   
-  export let projectId
-  export let tab
-  //export let currentProject
-  export let updatePreviewUserAuth
-
+  import { InterkitClient } from 'interkit'
   import {
     currentProject,
     secondaryTabIndex,
     secondaryTabSpecialDoc,
-    secondaryTabPreviewProjectId
+    currentProjectReadOnly,
+    projectManagerTab
   } from '../admin.js'
   import { docsGo } from "../docs";
+  import { push } from "svelte-spa-router";
+
+  export let projectId
+  export let tab
+  export let updatePreviewUserAuth
+
+  const userIsRole = InterkitClient.userIsRole
   
   let selected
   let editorFilesKey = "init"
@@ -71,6 +71,17 @@
       docsGo(docsPath)
     } else {
       window.open(url, '_blank')
+    }
+  }
+
+  const duplicateProject = async () => {
+    console.log("duplicating project", projectId)
+    const newId = await InterkitClient.call("project.duplicate", {projectId})
+    if(newId) {
+      projectManagerTab.set(0)
+      push("/" + newId)
+    } else {
+      alert("There was an error, creating the new project.")
     }
   }
 
@@ -113,6 +124,29 @@
         </h1>
         This project/template does not provide an information file (project.md).
       {/if}
+      {#if $currentProject?.isTemplate}
+        <div style="margin-top: 2em;">
+          <p>This project is a <Tag>template</Tag></p>
+          {#if $userIsRole?.admin}
+            <p>As an admin user, you can deactivate readonly mode to make changes directly to the template.
+            <Toggle 
+              labelText="Read only mode" 
+              toggled={$currentProjectReadOnly}
+              on:toggle={(e) => {
+                if(!e.detail.toggled) {
+                  currentProjectReadOnly.set(false)
+                } else {
+                  currentProjectReadOnly.set(true)
+                }
+              }}
+            /></p>
+          {/if}
+          <p>
+            You can create a new project based on this template
+            <Button size="small" icon={Copy} on:click={duplicateProject}>Create</Button>
+          </p>
+        </div>
+      {/if} 
     </div>
   </div>
 </div>

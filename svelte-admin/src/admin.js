@@ -121,8 +121,14 @@ export const currentUser = derived(
 export const secondaryTabPreviewProjectId = writable()
 
 export const previewOverrideStyleTokens = writable('')
+
+export const projectManagerTab = writable(0)
 export const projectManagerSortKey = writable('createdAt')
 export const projectManagerSortDirection = writable('descending')
 export const projectManagerPage = writable(1)
+export const projectManagerSortKeyTemplate = writable('createdAt')
+export const projectManagerSortDirectionTemplate = writable('descending')
+export const projectManagerPageTemplate = writable(1)
+
 
 export const currentProjectReadOnly = writable(false)
