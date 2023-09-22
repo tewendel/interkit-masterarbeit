@@ -46,7 +46,7 @@
 </script>
 
 {#if code && activated}
-  <CodeEditor bind:code/>
+  <CodeEditor bind:code readOnly={$currentProjectReadOnly}/>
   <br/>
   <div class="main-buttons">
     <Button 
