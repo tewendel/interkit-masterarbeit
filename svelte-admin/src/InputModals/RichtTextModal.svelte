@@ -15,6 +15,8 @@
     TabContent
   } from "carbon-components-svelte";
 
+  import { currentProjectReadOnly } from "../admin";
+
   import { onMount } from 'svelte'
 
   export let value = "";
@@ -36,7 +38,7 @@
       <Tab label="view" />
       <div slot="content">
         <TabContent style="height: 400px">
-          <TextArea style="height: 350px" bind:value={value} />
+          <TextArea disabled={$currentProjectReadOnly} style="height: 350px" bind:value={value} />
           <p style="margin-top: 5px">You can use markdown to format your text. <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">More information</a></p>
         </TabContent>
         <TabContent style="height: 400px">
@@ -45,6 +47,6 @@
       </div>
     </Tabs>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>
 
