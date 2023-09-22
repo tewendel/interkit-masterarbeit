@@ -29,8 +29,8 @@
 
   const mainTabPaths = [
     '',
-    'components', 
-    'sheets', 
+    'app', 
+    'data', 
     'media', 
     'story', 
   ];
@@ -67,7 +67,7 @@
       if($currentProjectReadOnly) {
         push(`/template/${$currentProject.slug}/${path}`);
       } else {
-        push(`/${projectId}/${path}`);
+        push(`/project/${projectId}/${path}`);
       }
       
     }

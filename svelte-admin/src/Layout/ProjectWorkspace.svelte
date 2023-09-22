@@ -152,7 +152,7 @@
 </div>
 
 <!-- sheets -->
-<div class="scrollable" class:active={tab == 'sheets' }>
+<div class="scrollable" class:active={tab == 'data' }>
   <Sheets {projectId}/>
 </div>
 
@@ -162,8 +162,8 @@
 </div>
 
 <!-- components -->
-<div class:active={tab == 'components'}>
-  <BlocklyEditor {projectId} open={tab == 'components'}/>
+<div class:active={tab == 'app'}>
+  <BlocklyEditor {projectId} open={tab == 'app'}/>
 </div>
 
 <!-- theming -->

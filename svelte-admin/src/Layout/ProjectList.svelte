@@ -88,7 +88,7 @@
     if(row.isTemplate) {
       push('/template/' + row.slug)
     } else {
-      push('/' + row.id)
+      push('/project/' + row.id)
     }
   }
 

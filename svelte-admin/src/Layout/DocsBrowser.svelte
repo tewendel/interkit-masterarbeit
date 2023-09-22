@@ -1,14 +1,24 @@
 <script>
 
-  import { registerIframe, docsURL } from '../docs.js'
+  import { registerIframe, docsURL, docsGo } from '../docs.js'
+  import { push } from 'svelte-spa-router';
 
   import { onMount } from 'svelte'
 
   let iframe
 
   onMount(() => {
+    console.log("DocsBrowser remounting")
     registerIframe(iframe)
   })
+  
+  window.onmessage = function(e) {
+    console.log("got message from iframe", e?.data)
+    if(e?.data?.method == "open-template") {
+      push('/template/' + e?.data?.slug)
+    }
+  }
+
 
 </script>
 

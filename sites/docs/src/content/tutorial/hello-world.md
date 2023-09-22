@@ -1,8 +1,12 @@
+<script>
+  import TemplateLoader from "../../components/TemplateLoader.svelte";
+</script>
+
 ## Hello World
 
 This is the first project in the tutorial. This template renders static text to the screen. 
 
-To see the preview of the app, select the Preview tab in the top menu. You can always switch back and forth between Preview and Docs to continue with the tutorial.
+<TemplateLoader slug="hello-world"/>
 
 #### Which parts of the system were used
 

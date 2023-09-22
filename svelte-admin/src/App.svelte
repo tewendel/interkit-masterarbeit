@@ -54,16 +54,18 @@
 
   // see https://github.com/ItalyPaleAle/svelte-spa-router/blob/master/README.md
   const routes = {
-    '/template/:projectSlug?/:tab?': ProjectManager,  
-    '/:projectId?/:tab?': ProjectManager,  
+    '/:mode?/:project?/:tab?': ProjectManager,  
   }
+  // modes are 'template' oder 'project'
+  // /template/hello-world    - use slug
+  // /project/shjkdfsd87f6    - use id
 
   const routeLoading = async event => {
     console.log("routeLoading", event)
 
-    // if we are only the readonly route, get the projectId via the slug
-    if(event.detail?.route?.startsWith("/template/")) {
-      let slug = event.detail?.params?.projectSlug
+    // if we are on a template route, we expect a slug and find the projectId
+    if(event.detail?.params?.mode == "template") {
+      let slug = event.detail?.params?.project
       if(slug) {
         console.log("readonly route via slug", slug)
         if($currentProject?.slug != slug) {
@@ -74,9 +76,9 @@
         }
       }
     } else {
-      // otherwise use the projectId from the route
-      console.log("setting projectId store to", event.detail?.params?.projectId)
-      projectId.set(event.detail?.params?.projectId)
+      // otherwise use the projectId
+      console.log("setting projectId store to", event.detail?.params?.project)
+      projectId.set(event.detail?.params?.project)
       currentProjectReadOnly.set(false)
     }
 
@@ -114,7 +116,9 @@
   const commitHash = matches ? matches[0] : null
 
   
+  
 </script>
+
 
 <Header 
   href="/#/"
