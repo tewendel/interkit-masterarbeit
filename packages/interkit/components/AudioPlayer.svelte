@@ -55,15 +55,12 @@
   export let titleColumn = "elements/title"
   export let audioColumn = "elements/audio"
   
-  const elementColumns = {
-    titleColumn,
-    audioColumn,
-  }
-
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
   setContext("element", audioPlayerElement)
-  $: title = util.rowVal($audioPlayerElement, elementColumns.titleColumn)
+
+  let title
+  $: title = util.rowVal($audioPlayerElement, titleColumn)
   
   const closePlayer = () => {
     audioPlayerStatus.set({active: false})

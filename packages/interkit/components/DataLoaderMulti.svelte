@@ -119,8 +119,8 @@
 
     //console.log("initSubs", sheetKey)
 
-    if(!sheetKey) {
-      alert("ElementsContextProvider - no sheetKey set")
+    if (!sheetKey) {
+      console.warn('DataLoaderMulti: no sheetKey')
       return;
     }
 
@@ -155,5 +155,9 @@
   })
 
 </script>
+
+{#if !sheetKey}
+<div class="blockly-error"><i>DataLoaderMulti: no sheetKey</i></div>
+{/if}
 
 <slot/>

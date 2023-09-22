@@ -7,7 +7,7 @@ export default (Blockly, update) => {
   class ExtraPropsField extends Blockly.FieldImage {
     constructor(props, blockName) {
       // call FieldImage constructor and pass in update as onClick function
-      super("/images/sheet_icon_inv.png", 15, 15, "*")
+      super("/images/sheet_icon_inv_padded_small.png", 24, 18, "extraProps")
 
       //console.log("setup ExtraPropsField with this", this)
       //console.log("extra props field constructor with props", props)

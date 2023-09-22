@@ -4,18 +4,18 @@ fields:
     props:
     - name: mediafileKey
       type: string
-      help: "Use the key of a media file directly"
+      help: "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
     - name: altText
       type: string
-      help: "alt text"
+      help: "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
     - name: imageColumn
       type: sheetColumn
       columnType: mediaFile
-      help: "The column on the element context (for example DataLoaderSingle) containing the image file"
+      help: "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above."
     - name: altColumn
       type: sheetColumn
       columnType: string
-      help: "The column on the element context (for example DataLoaderSingle) containing the alt text"
+      help: "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those."
     - name: width
       type: string
       defaultValue: 100%

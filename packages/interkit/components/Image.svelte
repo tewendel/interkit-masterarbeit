@@ -41,7 +41,7 @@
           : '')
       }
       src={url}
-      alt={altText}
+      alt={altText || mediafile?.meta?.alt}
       class={`
         ${classes}
         Image

@@ -63,3 +63,10 @@ body.blockly--dragging {
   user-select: none;
 }
 
+.blocklySvg image[alt="extraProps"] {
+  cursor: pointer;
+}
+
+.blocklySvg image[alt="extraProps"]:hover {
+  filter: invert(1);
+}
