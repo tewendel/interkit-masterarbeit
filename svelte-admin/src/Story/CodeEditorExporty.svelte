@@ -6,6 +6,7 @@
   const dispatch = createEventDispatcher()
 
   export let code = ''
+  export let readOnly = false
 
   let onMessage = ''
   let onArrive = ''
@@ -39,6 +40,7 @@
       {#if i % 2 === 0 && i > 0}
         <CodeEditor
           code={block}
+          {readOnly}
           on:codechange={evt => { blocks[i] = evt.detail; update() }}
           />
       {:else}

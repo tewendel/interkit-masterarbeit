@@ -4,7 +4,7 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
   import { tick, onMount } from 'svelte'
-  import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens } from '../admin.js'
+  import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
 
   import { get } from 'svelte/store'
 
@@ -303,7 +303,7 @@
       kind="tertiary"
       size="small"
       on:click={() => build()}
-      disabled={$bundleProcessing}
+      disabled={$bundleProcessing || $currentProjectReadOnly}
       icon={Save}
       >
       Publish

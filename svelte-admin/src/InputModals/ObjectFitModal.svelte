@@ -12,6 +12,8 @@
     Row, Column
   } from "carbon-components-svelte"
 
+  import { currentProjectReadOnly } from "../admin";
+
   export let value = {
     objectFit: 'auto',
     backgroundColor: 'transparent'
@@ -68,7 +70,7 @@
       </Row>
     </FormGroup>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>
 
 <style>

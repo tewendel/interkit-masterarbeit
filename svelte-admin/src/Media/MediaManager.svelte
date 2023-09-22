@@ -17,6 +17,7 @@
 
   import MediaFileList from './MediaFileList.svelte'
   import MediaUpload from './MediaUpload.svelte'
+  import { currentProjectReadOnly } from '../admin.js';
 
   export let projectId
 
@@ -39,7 +40,7 @@
   }
 
   onDestroy(() => {
-    unsubscribe()
+    if(unsubscribe) unsubscribe()
   });
   
   let selectedTab
@@ -60,7 +61,7 @@
     <Tab label={`User generated (${mediafiles[1].length})`} />
     <div slot="content">
       <TabContent>
-        <MediaUpload {projectId} />
+        {#if !$currentProjectReadOnly}<MediaUpload {projectId} />{/if}
         <MediaFileList
           mediafiles={mediafiles[0]}
           {projectId}

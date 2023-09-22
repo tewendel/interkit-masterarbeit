@@ -49,6 +49,8 @@
   import { boardsApi } from '../BundleServer.js'
   import { genericErrorHandler, errorify } from '../apiHelpers.js'
 
+  import { currentProjectReadOnly } from '../admin.js'
+
   export let users; // this should be an array, not a store
   export let projectId;
   export let previewUserId
@@ -422,6 +424,7 @@
             iconDescription="move users to a Story board/node"
             tooltipPosition="bottom"
             tooltipAlignment="start"
+            disabled={$currentProjectReadOnly}
             >
             moveTo…
           </Button>
@@ -431,6 +434,7 @@
             on:click={() => { openQuickMessage = true }}
             iconDescription="send message to users"
             tooltipPosition="top"
+            disabled={$currentProjectReadOnly}
             >
             message…
           </Button>
@@ -438,7 +442,7 @@
             size="small"
             icon={TableSplit}
             on:click={openUserVarEditor}
-            disabled={usersSelection.length !== 1}
+            disabled={usersSelection.length !== 1 || $currentProjectReadOnly}
             iconDescription='edit user variables'
             tooltipPosition="top"
             tooltipAlignment="end"
@@ -462,6 +466,7 @@
             on:click={() => { batchBlock(true) }}
             iconDescription="block"
             tooltipPosition="right"
+            disabled={$currentProjectReadOnly}
             />
           <Button
             size="small"
@@ -469,6 +474,7 @@
             on:click={() => { batchBlock(false) }}
             iconDescription="unblock"
             tooltipPosition="right"
+            disabled={$currentProjectReadOnly}
             />
           <Button
             size="small"
@@ -476,6 +482,7 @@
             on:click={batchDelete}
             iconDescription="delete"
             tooltipPosition="left"
+            disabled={$currentProjectReadOnly}
             />
         </ToolbarBatchActions>
         <ToolbarContent>
@@ -493,6 +500,7 @@
             iconDescription="create new project user"
             tooltipPosition="top"
             tooltipAlignment="end"
+            disabled={$currentProjectReadOnly}
             >
             Create…
           </Button>

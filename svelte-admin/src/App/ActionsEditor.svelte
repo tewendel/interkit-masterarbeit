@@ -5,6 +5,8 @@
   import { BundleServer } from '../BundleServer.js'
   import { Button } from "carbon-components-svelte";
 
+  import { currentProjectReadOnly } from '../admin';
+
   export let projectId;
   export let active;
 
@@ -47,7 +49,10 @@
   <CodeEditor bind:code/>
   <br/>
   <div class="main-buttons">
-    <Button on:click={()=>saveAndCompile(true)}>save</Button>
+    <Button 
+      size="field"
+      disabled={$currentProjectReadOnly}
+      on:click={()=>saveAndCompile(true)}>Save</Button>
   </div>
 {:else}
   <span>loading actions.js</span>

@@ -11,6 +11,7 @@
   import Login from './User/Login.svelte';
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
+  import { Tag } from "carbon-components-svelte";
 
   import Exit from "carbon-icons-svelte/lib/Exit.svelte";
   
@@ -38,7 +39,14 @@
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte";
 
-  import { projectId, currentProject, currentUser, currentProjectEditingUsers, secondaryTabPreviewProjectId } from './admin.js'
+  import { 
+    projectId, 
+    currentProject, 
+    currentUser, 
+    currentProjectEditingUsers, 
+    secondaryTabPreviewProjectId ,
+    currentProjectReadOnly
+  } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
 
@@ -46,13 +54,34 @@
 
   // see https://github.com/ItalyPaleAle/svelte-spa-router/blob/master/README.md
   const routes = {
-      '/:projectId?/:tab?': ProjectManager,
+    '/template/:projectSlug?/:tab?': ProjectManager,  
+    '/:projectId?/:tab?': ProjectManager,  
   }
 
-  const routeLoaded = event => {
-    console.log("routeLoaded", event)
-    $projectId = event.detail?.params?.projectId
+  const routeLoading = async event => {
+    console.log("routeLoading", event)
+
+    // if we are only the readonly route, get the projectId via the slug
+    if(event.detail?.route?.startsWith("/template/")) {
+      let slug = event.detail?.params?.projectSlug
+      if(slug) {
+        console.log("readonly route via slug", slug)
+        if($currentProject?.slug != slug) {
+          let projectIdFromSlug = await InterkitClient.call("project.getId", {slug})
+          console.log("got projectId from slug", projectIdFromSlug)
+          projectId.set(projectIdFromSlug)
+          currentProjectReadOnly.set(true)
+        }
+      }
+    } else {
+      // otherwise use the projectId from the route
+      console.log("setting projectId store to", event.detail?.params?.projectId)
+      projectId.set(event.detail?.params?.projectId)
+      currentProjectReadOnly.set(false)
+    }
+
     tab = event.detail?.params?.tab
+    console.log("tab set to ", tab)
 
     //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
 
@@ -95,6 +124,7 @@
     {#if $currentProject}
       <span class="exit-arrow"><Exit /></span>
       <span class="project-name">{$currentProject?.name}</span>
+      {#if $currentProjectReadOnly}<Tag type="red">readonly</Tag>{/if}
     {:else}
       interkit
     {/if}
@@ -180,7 +210,7 @@
 {#if $userId}
   <Content style="padding:0;width:100%;height:var(--content-height);overflow:hidden;">
 
-    <Router {routes} on:routeLoaded={routeLoaded} />
+    <Router {routes} on:routeLoading={routeLoading} />
 
   </Content>
 {:else}

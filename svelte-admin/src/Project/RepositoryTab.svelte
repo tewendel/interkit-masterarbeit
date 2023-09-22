@@ -3,6 +3,8 @@
   import CloudCmd from './CloudCmd.svelte'
   import RepositoryEditor from './RepositoryEditor.svelte'
 
+  import { currentProjectReadOnly } from "../admin";
+
   export let projectId
   export let currentProject
 
@@ -17,8 +19,12 @@
     <TabContent>
         <RepositoryEditor {projectId} {currentProject} open={selectedTab == 0} />
     </TabContent>
-    <TabContent>
-      <CloudCmd {projectId} open={selectedTab == 1} />
-    </TabContent>
+      <TabContent>
+        {#if !$currentProjectReadOnly}
+          <CloudCmd {projectId} open={selectedTab == 1} />
+        {:else}
+          <span>cloudcmd disabled in readonly mode.</span>
+        {/if}
+      </TabContent>
   </div>
 </Tabs>

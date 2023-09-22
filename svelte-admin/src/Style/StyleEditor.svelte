@@ -5,7 +5,7 @@
   import StyleTokensForm from '../InputModals/StyleTokensForm.svelte'
   import { docsGo } from '../docs.js'
   import { BundleServer } from '../BundleServer.js'
-  import { projectId, currentProject, previewOverrideStyleTokens } from '../admin.js'
+  import { projectId, currentProject, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
 
   let originalStyleTokens = $currentProject?.uiState?.styleTokens
   let initialStyleTokens = $currentProject?.uiState?.styleTokens
@@ -81,7 +81,7 @@
         />
       <Button
         icon={Save}
-        disabled={!modified}
+        disabled={!modified || $currentProjectReadOnly}
         on:click={save}
         >
         Save

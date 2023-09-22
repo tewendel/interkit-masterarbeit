@@ -12,6 +12,8 @@ import {
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
+  import { currentProjectReadOnly } from "../admin";
+
   export let open = false;
   export let value;
   
@@ -137,7 +139,7 @@ import {
      <button on:click={moveToMarker}>back to marker</button>
     
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>
 
 

@@ -18,6 +18,8 @@
   import ButtonOptionsForm from './ButtonOptionsForm.svelte';
   import StyleTokensForm from './StyleTokensForm.svelte';
 
+  import { currentProjectReadOnly } from '../admin';
+
   export let value = [] // array of objects with name, type, defaultValue, value, help
   console.log("ExtraPropsModal value", value)
   export let submit;
@@ -131,7 +133,7 @@
     </DataTable>
 
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Update" secondaryButtonText="Cancel" primaryButtonDisabled = {$currentProjectReadOnly}/>  
 </ComposedModal>
 
 

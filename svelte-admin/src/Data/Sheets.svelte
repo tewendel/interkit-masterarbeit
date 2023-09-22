@@ -11,6 +11,8 @@
   import Add from "carbon-icons-svelte/lib/Add.svelte"
   import Help from "carbon-icons-svelte/lib/Help.svelte"
 
+  import { currentProjectReadOnly } from '../admin'
+
   export let projectId
 
   let sheets;
@@ -19,9 +21,11 @@
   
   $: resetSub(projectId)
 
-  const resetSub = async (projectId) => {
+  const resetSub = async (_projectId) => {
+    console.log("resetSub sheets", _projectId)
+    if(!_projectId) return
     if(subHandle) await subHandle.stop()
-    subHandle = await InterkitClient.getSub('sheets', 'sheets', {projectId}, (s)=>s.projectId == projectId);
+    subHandle = await InterkitClient.getSub('sheets', 'sheets', {projectId: _projectId}, (s)=>s.projectId == _projectId);
     sheets = subHandle.data
   }
 
@@ -59,6 +63,7 @@
         on:click={() => docsGo('/basics/interface_overview#data')}
         >Help</Button>
       <Button
+        disabled={$currentProjectReadOnly}
         icon={Add}
         size="field"
         on:click={createSheet}

@@ -28,6 +28,8 @@
 
   import { columnTypes } from '../baseConfig.js';
 
+  import { currentProjectReadOnly } from '../admin.js'
+
   export let sheetKey;
   export let projectId;
   export let close;
@@ -186,6 +188,10 @@
     }
 
     if(columnType == "string") {
+      if($currentProjectReadOnly) {
+        alert(cell.value)
+        return
+      }
       let newVal = prompt("Update " + columnName, cell.value)
       if(newVal != null) {
         InterkitClient.call('row.updateValue', {rowKey: row.key, colKey: column.key, newVal, projectId})
@@ -193,6 +199,10 @@
     }
 
     if(columnType == "number") {
+      if($currentProjectReadOnly) {
+        alert(cell.value)
+        return
+      }
       let newVal = prompt("Update " + columnName, (cell.value && typeof cell.value == "number") ? cell.value : "")
       console.log("newVal", newVal)
       if(newVal != null) {
@@ -339,8 +349,8 @@
   <h4>{$currentSheet.name} 
     <small>key={$currentSheet.key}</small>
   </h4>
-  <Button size="small" on:click={() => { sheetRenameModal.start() }}>Rename</Button>
-  <Button size="small" on:click={remove} icon={TrashCan}>Remove Sheet</Button>
+  <Button size="small" disabled={$currentProjectReadOnly} on:click={() => { sheetRenameModal.start() }}>Rename</Button>
+  <Button size="small" disabled={$currentProjectReadOnly} on:click={remove} icon={TrashCan}>Remove Sheet</Button>
 
   <br><br>
 
@@ -361,7 +371,7 @@
       <span slot="cell-header" let:header>
         {#if header.key == "overflow"}
           <OverflowMenu style="float: right" flipped>
-              <OverflowMenuItem on:click={createColumn} text="add column" />    
+              <OverflowMenuItem on:click={createColumn} text="add column" disabled={$currentProjectReadOnly} />    
           </OverflowMenu>   
         {:else}
           <div class="sheet-header" >
@@ -374,10 +384,10 @@
                 {/if}
               </div>
               {#if header.key != "key"}
-                <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" />
-                <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" />
-                <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" />
-                <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" />
+                <OverflowMenuItem on:click={()=>{openUpdateHeaderModal(header)}} text="edit" disabled={$currentProjectReadOnly} />
+                <OverflowMenuItem on:click={()=>{moveCol(header, -1)}} text="move left" disabled={$currentProjectReadOnly} />
+                <OverflowMenuItem on:click={()=>{moveCol(header, 1)}} text="move right" disabled={$currentProjectReadOnly} />
+                <OverflowMenuItem on:click={()=>{deleteCol(header)}} text="remove" disabled={$currentProjectReadOnly} />
               {/if}
             </OverflowMenu>
           </div>
@@ -388,7 +398,7 @@
         {#if cell.key === 'overflow'}
           <OverflowMenu style="float: right" flipped>
             <!--OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" /-->
-            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="delete row" />
+            <OverflowMenuItem on:click={()=>{removeRow(row)}} text="delete row" disabled={$currentProjectReadOnly} />
           </OverflowMenu>
         {:else if cell.key == 'key'}
           <CopyButton style="display: inline;" text={row?.key} feedback="Copied Row Key to clipboard!"/>
@@ -402,7 +412,7 @@
     
     </DataTable>
   </div>
-  <Button size="small" icon={Add} on:click={createRow}>Add Row</Button>
+  <Button disabled={$currentProjectReadOnly} size="small" icon={Add} on:click={createRow}>Add Row</Button>
 {/if}
 
 <InputModal

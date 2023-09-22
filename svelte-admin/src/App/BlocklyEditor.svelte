@@ -5,12 +5,14 @@
   
   import { Tabs, Tab, TabContent, Button, ButtonSet } from "carbon-components-svelte";
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
+  import Rotate from "carbon-icons-svelte/lib/Rotate.svelte"
   import Help from "carbon-icons-svelte/lib/Help.svelte";
 
   import MainColumns from '../Layout/MainColumns.svelte'
   
   import { watchResize } from "svelte-watch-resize";
 
+  import { currentProjectReadOnly } from '../admin';
 
   import Blockly from 'blockly';
   import {javascriptGenerator} from 'blockly/javascript';
@@ -170,6 +172,36 @@
     return correctedBlocklyState;
   }
 
+  const loadBlocklyData = async () => {
+
+    let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
+    if(blocklyJson?.content) {
+      try {
+        let stateToLoad = JSON.parse(blocklyJson.content)
+        console.log("blockly stateToLoad", stateToLoad)
+        let correctedBlocklyState = checkBlocklyJson(stateToLoad);
+        Blockly.serialization.workspaces.load(correctedBlocklyState, workspace)
+      } catch(e) {
+        alert("error importing blockly json")
+        console.log("json import error", e)
+      }
+    }
+
+    if(!blocklyJson) {
+      let blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
+      if(blocklyXML?.content) {
+        //console.log("blocklyXML", blocklyXML.content)
+        let xml = Blockly.Xml.textToDom(blocklyXML.content);
+        try {
+          Blockly.Xml.domToWorkspace(xml, workspace);
+        } catch(e) {
+          alert("error importing blockly xml")
+        }
+      }
+    }
+
+  }
+
   const initBlockly = async () => {
 
     console.log("initBlockly")
@@ -226,31 +258,7 @@
     
     workspace.addChangeListener(myUpdateFunction);
 
-    let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
-    if(blocklyJson?.content) {
-      try {
-        let stateToLoad = JSON.parse(blocklyJson.content)
-        console.log("blockly stateToLoad", stateToLoad)
-        let correctedBlocklyState = checkBlocklyJson(stateToLoad);
-        Blockly.serialization.workspaces.load(correctedBlocklyState, workspace)
-      } catch(e) {
-        alert("error importing blockly json")
-        console.log("json import error", e)
-      }
-    }
-
-    if(!blocklyJson) {
-      let blocklyXML = await BundleServer.loadSrcFile({filename: blocklyXMLFile, projectId});
-      if(blocklyXML?.content) {
-        //console.log("blocklyXML", blocklyXML.content)
-        let xml = Blockly.Xml.textToDom(blocklyXML.content);
-        try {
-          Blockly.Xml.domToWorkspace(xml, workspace);
-        } catch(e) {
-          alert("error importing blockly xml")
-        }
-      }
-    }
+    await loadBlocklyData()
 
     blocklyConfig.initCodeGenerator(Blockly, javascriptGenerator, blockObjects, workspace); // generates code generator from yaml component files
     
@@ -437,6 +445,11 @@
     }, { once: true })
   }
 
+  const resetBlockly = async () => {
+    console.log("resetBlockly")
+    await loadBlocklyData()
+  }
+
 </script>
 
   <svelte:window on:keydown={onKeyDown} />
@@ -469,10 +482,22 @@
               size="field"
               on:click={() => docsGo('/basics/interface_overview#app')}
               >Help</Button>
-            <Button
-              size="field"
-              on:click={() => saveAndCompile(true)}
-              >Save</Button>
+              {#if selectedTab == 0}
+              <Button
+                kind="ghost"
+                size="small"
+                icon={Rotate}
+                on:click={resetBlockly}
+                iconDescription="Back to last save"
+                tooltipAlignment="start"
+                tooltipPosition="bottom"
+                />
+              {/if}
+              <Button
+                size="field"
+                on:click={() => saveAndCompile(true)}
+                disabled={$currentProjectReadOnly}
+                >Save</Button>
           </ButtonSet>
         </div>
       
@@ -482,10 +507,6 @@
             <Tab label="actions.js" />
               <div slot="content" class="content">
                 <TabContent>
-                  <div class="main-buttons">
-                    <!--Button on:click={createDatabase} iconDescription="Check Database" kind="ghost" icon={DataCheck}/-->
-                    <Button on:click={()=>saveAndCompile(true)}>save</Button>            
-                  </div>          
                   <div class="blocklyTabContent">
                     <div class="blocklyWrapper">
                       <div

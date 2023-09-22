@@ -11,6 +11,7 @@
     ListItem,
     TextInput
   } from "carbon-components-svelte";
+  import { currentProjectReadOnly } from '../admin';
 
   export let projectId
   export let currentProject
@@ -112,8 +113,15 @@
 
   {#if unstagedFiles && unstagedFiles.length > 0}
     <section>
-      <Button on:click={commitAll}>Commit all changed files</Button>
-      <Button disabled={loadingCheckoutHead} kind="tertiary" on:click={checkoutHead}>
+      <Button 
+        on:click={commitAll}
+        disabled={$currentProjectReadOnly}
+      >Commit all changed files</Button>
+      <Button 
+        disabled={loadingCheckoutHead || $currentProjectReadOnly} 
+        kind="tertiary" 
+        on:click={checkoutHead}
+      >
         Discard Changes
         {#if loadingCheckoutHead}
           <InlineLoading />

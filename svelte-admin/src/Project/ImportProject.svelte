@@ -4,6 +4,8 @@
       ToastNotification
     } from "carbon-components-svelte";
 
+  import { currentProjectReadOnly } from "../admin";
+
   export let projectId
 
   const importEndpoint = `${INTERKIT_SERVER_URL}/import`
@@ -58,6 +60,7 @@
   status={uploadStatus} 
   accept={"application/zip"} 
   buttonLabel="Import DB & Media (.zip)" 
+  disabled={$currentProjectReadOnly}
   bind:files={uploadFiles}
 />
 {#if uploadError !== ""}

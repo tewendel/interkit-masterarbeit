@@ -5,6 +5,7 @@
   const dispatch = createEventDispatcher()
 
   export let code = ''
+  export let readOnly
 
   let div = null
   let lastNonEditableContent = ''
@@ -27,7 +28,7 @@
         input.style.width = (block.length - 2) + 'ch'
         input.value = block.substr(1, block.length - 2)*/
         const span = document.createElement('span')
-        span.contentEditable = true
+        span.contentEditable = !readOnly
         span.appendChild(document.createTextNode(block.substr(1, block.length - 2)))
         editor.push(span)
         editor.push(document.createTextNode(quot))

@@ -22,6 +22,7 @@ export const currentProject = derived(
   async ($projectId, set) => {
 
     if (!$projectId && currentProjectSub?.stop) {
+      console.log("stopping project sub")
       currentProjectSub.stop()
       set(null)
     }
@@ -124,3 +125,4 @@ export const projectManagerSortKey = writable('createdAt')
 export const projectManagerSortDirection = writable('descending')
 export const projectManagerPage = writable(1)
 
+export const currentProjectReadOnly = writable(false)

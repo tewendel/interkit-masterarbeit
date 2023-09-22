@@ -49,6 +49,7 @@
   import MediaFilePreview from '../Media/MediaFilePreview.svelte'
 
   import { idRE } from 'interkit/project-regex.js'
+  import { currentProjectReadOnly } from '../admin.js'
 
   const dispatch = createEventDispatcher()
 
@@ -95,7 +96,9 @@
     })
   }
 
-  onDestroy(() => unsubscribe());
+  onDestroy(() => {
+    if(unsubscribe) unsubscribe()
+  });
 
   // force update of the SVG hack
   // TODO: some sort of debounce
@@ -723,6 +726,7 @@
         style="color: black; font-weight: 500; width: 100%"
         on:click={createBoard}
         icon={Add}
+        disabled={$currentProjectReadOnly}
         >
         New Board
       </Button>
@@ -761,7 +765,7 @@
               kind="ghost"
               icon={TrashCan}
               iconDescription="delete board"
-              disabled={!board}
+              disabled={!board || $currentProjectReadOnly}
               on:click={deleteCurrentBoard}
               />
             <Button
@@ -781,7 +785,7 @@
               <Button
                 kind="secondary"
                 on:click={saveModifiedNodes}
-                disabled={!nodesModifiedCount}
+                disabled={!nodesModifiedCount || $currentProjectReadOnly}
                 icon={Save}
                 >
                 Save {nodesModifiedCount} nodes
@@ -790,7 +794,7 @@
             <Button
               icon={Add}
               on:click={() => { createNodeInCurrentBoard() }}
-              disabled={!board}
+              disabled={!board || $currentProjectReadOnly}
               >
               New Node
             </Button>
@@ -848,7 +852,7 @@
         <Button
           kind="ghost"
           on:click={renameCurrentNode}
-          disabled={!board || !editNodeId}
+          disabled={!board || !editNodeId || $currentProjectReadOnly}
           icon={Edit}
           iconDescription="Rename node"
           tooltipPosition="top"
@@ -867,19 +871,19 @@
           icon={Copy}
           iconDescription="Copy node"
           tooltipPosition="top"
-          disabled={!editNodeId}
+          disabled={!editNodeId || $currentProjectReadOnly}
           />
         <Button
           kind="ghost"
           on:click={deleteCurrentNode}
-          disabled={!board || !editNodeId}
+          disabled={!board || !editNodeId || $currentProjectReadOnly}
           icon={TrashCan}
           iconDescription="Delete node"
           tooltipPosition="top"
           />
         <Button
           on:click={saveCurrentNode}
-          disabled={!board || !editNodeId || !editNodeModified }
+          disabled={!board || !editNodeId || !editNodeModified || $currentProjectReadOnly}
           icon={Save}
           >
           Save
@@ -934,11 +938,13 @@
         {#if editorMode === 0}
           <CodeEditorStringy
             class="editor"
+            readOnly={$currentProjectReadOnly}
             bind:code={editorContents}
             />
         {:else if editorMode === 1}
           <CodeEditorExporty
             code={editorContents}
+            readOnly={$currentProjectReadOnly}
             on:codechange={evt => { editorContents = evt.detail }}
             />
         {:else if editorMode === 2}
@@ -946,19 +952,21 @@
             <CodeEditor
               code={editorContents}
               on:codechange={evt => { editorContents = evt.detail }}
+              readOnly={$currentProjectReadOnly}
               class="editor"
               />
           {:else}
             <textarea
               class="editor"
               bind:value={editorContents}
-              disabled={editorContents === null}
+              disabled={editorContents === null || $currentProjectReadOnly}
               />
           {/if}
         {:else if editorMode === 3}
           {#if twinyHint === 'sync'}
             <CodeEditorTwiny
               code={editorContents}
+              readOnly={$currentProjectReadOnly}
               on:codechange={evt => { editorContents = evt.detail }}
               class="editor"
               />
@@ -970,7 +978,10 @@
               {:else if twinyHint === 'none'}
                 <p>This node does not contain twine-ish code.</p>
               {/if}
-              <Button on:click={() => { editorContents = minimalSnippet }}>twinify</Button>
+              <Button 
+                on:click={() => { editorContents = minimalSnippet }}
+                disabled={$currentProjectReadOnly}
+              >twinify</Button>
               <p>Warning: this will overwrite this node's contents</p>
             </div>
           {/if}

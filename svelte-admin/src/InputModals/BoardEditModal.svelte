@@ -15,6 +15,7 @@
 
   import MediaFileList from '../Media/MediaFileList.svelte'
   import MediaUpload from '../Media/MediaUpload.svelte'
+  import { currentProjectReadOnly } from '../admin';
 
   export let projectId
 
@@ -75,5 +76,5 @@
       on:selected={({ detail }) => { image = detail }}
       />
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>

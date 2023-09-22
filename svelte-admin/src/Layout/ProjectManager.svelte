@@ -51,6 +51,7 @@
   import WatsonHealthThumbnailPreview from 'carbon-icons-svelte/lib/WatsonHealthThumbnailPreview.svelte'
   import {
     currentProject,
+    projectId,
     secondaryTabIndex,
     secondaryTabSpecialDoc,
     secondaryTabPreviewProjectId,
@@ -60,7 +61,7 @@
 
   import { docsGo } from '../docs.js'
 
-  export let params = {}
+  export let params = {} // these come from the route
 
   let createProjectStep = false
   let createProjectVariant
@@ -81,11 +82,13 @@
 
   const bundleServerURL = bundleServerURL$
 
-  const manageProjectsSub = async (projectId)=>{
-    console.log("project subscription " + projectId)
-    if (projectId) {
+  const manageProjectsSub = async (_projectId)=>{
+    console.log("project subscription " + _projectId)
+    if (_projectId) {
+      // if there is a project loaded, we don't need the list of projects
       if (projectsListSub) { projectsListSub.stop() }
     } else {
+      // if there is no project, we neeed all the projects
       projectsListSub = await InterkitClient.getSub('projects', 'projects.list') 
       projects = projectsListSub.data;
     }
@@ -135,10 +138,10 @@
     projectsListSub?.stop()
   })
 
-  $: currentProjectId = params.projectId
+  //$: currentProjectId = $projectId
   $: tab = params.tab
 
-  $: manageProjectsSub(currentProjectId)
+  $: manageProjectsSub($projectId)
 
   // add "id" for carbon table
   $: projectRows = projects
@@ -250,12 +253,12 @@
         }
         data-foo={JSON.stringify(secondaryTabsSizes)}
         >
-        <div class={`left-pane`} class:left-pane--has-current-project={!!currentProjectId}>
-          {#if currentProjectId}
+        <div class={`left-pane`} class:left-pane--has-current-project={!!$projectId}>
+          {#if $projectId}
             {#if $currentProject}
               <ProjectWorkspace 
                 {tab} 
-                projectId={currentProjectId} 
+                projectId={$projectId} 
                 {currentProject}
                 updatePreviewUserAuth={data => { previewUserAuth = data; }}
                 />
@@ -626,7 +629,7 @@
           {/if}
         </div>
         <SecondaryTabsContent
-          projectId={currentProjectId}
+          projectId={$projectId}
           {currentProject}
           {previewUserAuth}
           />

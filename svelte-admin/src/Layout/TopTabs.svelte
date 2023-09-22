@@ -8,7 +8,12 @@
   import TopTabLabel from "./TopTabLabel.svelte";
   import { compileError, runtimeError, bundleProcessing } from '../BundleServer.js'
 
-  import { secondaryTabIndex, secondaryTabsHidden } from "../admin.js"
+  import { 
+    secondaryTabIndex, 
+    secondaryTabsHidden,
+    currentProjectReadOnly,
+    currentProject
+  } from "../admin.js"
   
   export let projectId;
   export let tab; // this is a string of the active path
@@ -59,7 +64,12 @@
   const navigate = (path) => {
     if(path != undefined) {
       console.log("navigate", path)
-      push(`/${projectId}/${path}`);
+      if($currentProjectReadOnly) {
+        push(`/template/${$currentProject.slug}/${path}`);
+      } else {
+        push(`/${projectId}/${path}`);
+      }
+      
     }
   }
 

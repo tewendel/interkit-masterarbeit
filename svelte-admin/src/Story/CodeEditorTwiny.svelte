@@ -14,6 +14,7 @@
   const verbose = true
 
   export let code = ''
+  export let readOnly
 
   let valid = false
   let synced = false
@@ -54,6 +55,7 @@
 <div class={`root root--${valid ? 'valid' : 'invalid'}`}>
   {#if valid}
     <textarea
+      disabled={readOnly}
       class="twinycode"
       value={twinyCode}
       on:input={evt => twinyInput(evt.target.value) }

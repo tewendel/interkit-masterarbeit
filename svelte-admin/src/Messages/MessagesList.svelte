@@ -25,6 +25,8 @@
   import Filter from 'carbon-icons-svelte/lib/Filter.svelte'
   import FilterRemove from 'carbon-icons-svelte/lib/FilterRemove.svelte'
 
+  import { currentProjectReadOnly } from '../admin'
+
   import { InterkitClient, util } from 'interkit'
 
   let userId = InterkitClient.userId
@@ -306,9 +308,23 @@
           }}
           formatTotalSelected={num => `${num}\u00a0message${num > 1 ? 's' : ''}`}
           >
-          <Button size="small" icon={TrashCan} on:click={batchDelete}>Delete</Button>
-          <Button size="small" icon={ErrorFilled} on:click={() => { batchBlock(true) }}>Block</Button>
-          <Button size="small" icon={ErrorOutline} on:click={() => { batchBlock(false) }}>Unblock</Button>
+          <Button size="small" 
+            icon={TrashCan} 
+            on:click={batchDelete} 
+            disabled={$currentProjectReadOnly}
+          >Delete</Button>
+          <Button 
+            size="small" 
+            icon={ErrorFilled} 
+            on:click={() => { batchBlock(true) }} 
+            disabled={$currentProjectReadOnly}
+          >Block</Button>
+          <Button 
+            size="small" 
+            icon={ErrorOutline} 
+            on:click={() => { batchBlock(false) }} 
+            disabled={$currentProjectReadOnly}
+          >Unblock</Button>
         </ToolbarBatchActions>
 
         <ToolbarContent>

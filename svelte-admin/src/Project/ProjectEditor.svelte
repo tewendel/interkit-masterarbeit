@@ -11,6 +11,8 @@
   import ProjectServerInfo from './ProjectServerInfo.svelte'
   import HistoryList from './HistoryList.svelte'
 
+  import { currentProjectReadOnly } from '../admin.js'
+
   export let projectId
   export let currentProject
 
@@ -32,68 +34,76 @@
 
 </script>
 
-<h4>Info</h4>
-<dl>
-  <dd>
-    Project ID
-  </dd>
-  <dt>
-    {projectId}
-  </dt>
-  <dd>
-    Project name
-  </dd>
-  <dt>
-    {$currentProject.name}
-  </dt>
-</dl>
+{#if $currentProject}
 
-<Row>
-  <Column>
-    <TextInput inline labelText="Project Slug"  bind:value={slug} />
-  </Column>
-  <Column>
-    {#if slug != $currentProject.slug}
-      <Button on:click={saveSlug} size="small">Save</Button>
-      <Button on:click={cancelSlug} size="small" kind="tertiary">Cancel</Button>
-    {/if}
-  </Column>
-</Row>
+  <h4>Info</h4>
+  <dl>
+    <dd>
+      Project ID
+    </dd>
+    <dt>
+      {projectId}
+    </dt>
+    <dd>
+      Project name
+    </dd>
+    <dt>
+      {$currentProject?.name}
+    </dt>
+  </dl>
+
+  <Row>
+    <Column>
+      <TextInput inline labelText="Project Slug"  bind:value={slug} disabled={$currentProjectReadOnly} />
+    </Column>
+    <Column>
+      {#if slug != $currentProject?.slug}
+        <Button on:click={saveSlug} size="small" disabled={$currentProjectReadOnly}>Save</Button>
+        <Button on:click={cancelSlug} size="small" kind="tertiary">Cancel</Button>
+      {/if}
+    </Column>
+  </Row>
 
 
-<h4>
-  Default Project
-</h4>
-<p>
-  {#if $currentProject.isDefaultProject}
-    This project is the default project served at 
-    <a href={BundleServer.getServerURL()} target="_blank">
-      {BundleServer.getServerURL()}
-    </a>
-  {:else}
+  <h4>
+    Default Project
+  </h4>
   <p>
-    The default project will be served at 
-    <a href={BundleServer.getServerURL()} target="_blank">
-      {BundleServer.getServerURL()}
-    </a>
+    {#if $currentProject.isDefaultProject}
+      This project is the default project served at 
+      <a href={BundleServer.getServerURL()} target="_blank">
+        {BundleServer.getServerURL()}
+      </a>
+    {:else}
+    <p>
+      The default project will be served at 
+      <a href={BundleServer.getServerURL()} target="_blank">
+        {BundleServer.getServerURL()}
+      </a>
+    </p>
+      <Button 
+        kind="ghost"
+        disabled={$currentProjectReadOnly}
+        on:click={makeDefaultProject}
+      >
+      Make this project the default project
+      </Button>
+    {/if}
   </p>
-    <Button 
-      kind="ghost"
-      on:click={makeDefaultProject}
-    >
-    Make this project the default project
-    </Button>
-  {/if}
-</p>
 
-<h4>Import/Export Database & Media</h4>
+  <h4>Import/Export Database & Media</h4>
 
-<ImportProject {projectId} />
+  <ImportProject {projectId} />
 
-<Button size="small" href={exportEndpoint + `?projectId=${projectId}`}>Export DB & Media (.zip)</Button>
+  <Button 
+    size="small" 
+    href={exportEndpoint + `?projectId=${projectId}`}
+  >Export DB & Media (.zip)</Button>
 
-<h4>Project History</h4>
-<HistoryList {currentProject} />
+  <h4>Project History</h4>
+  <HistoryList {currentProject} />
+
+{/if}
 
 <style>
   h4 {

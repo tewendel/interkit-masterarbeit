@@ -12,6 +12,7 @@ import {
   } from "carbon-components-svelte";
 
   import { onMount, onDestroy } from 'svelte'
+  import { currentProjectReadOnly } from '../admin.js'
 
   export let value = {};
   export let submit;
@@ -97,7 +98,7 @@ import {
     {/if}
      
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
     
 </ComposedModal>
 

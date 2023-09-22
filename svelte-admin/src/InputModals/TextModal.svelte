@@ -9,9 +9,13 @@
     TextArea
   } from "carbon-components-svelte"
 
+  import { currentProjectReadOnly } from "../admin";
+
   export let value = ''
   export let submit
   export let close
+
+  
 
 </script>
 
@@ -25,5 +29,5 @@
       <TextArea bind:value={value} />
     </FormGroup>
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>

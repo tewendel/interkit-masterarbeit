@@ -35,6 +35,8 @@
   import InputModal from '../InputModals/InputModal.svelte'
   import { InterkitClient, util } from 'interkit'
 
+  import { currentProjectReadOnly } from '../admin';
+
   export let mediafiles // this should be an array, not a store
   export let radio = false
   export let value
@@ -312,6 +314,7 @@
               on:click={batchDelete}
               iconDescription="delete"
               tooltipPosition="left"
+              disabled={$currentProjectReadOnly}
               >
               delete
             </Button>

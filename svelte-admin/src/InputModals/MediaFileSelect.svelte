@@ -16,6 +16,8 @@
 
   import { onMount } from 'svelte'
 
+  import { currentProjectReadOnly } from '../admin';
+
   export let value = {};
   export let submit;
   export let close;
@@ -49,7 +51,7 @@
       on:selected={onSelect}
     />
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
+  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
 </ComposedModal>
 
 <style>

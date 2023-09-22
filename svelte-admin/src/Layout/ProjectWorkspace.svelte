@@ -109,7 +109,7 @@
         </div>
       {:else}
         <h1>
-        Welcome to {$currentProject.name}
+        Welcome to {$currentProject?.name}
         </h1>
         This project/template does not provide an information file (project.md).
       {/if}
