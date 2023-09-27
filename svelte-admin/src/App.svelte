@@ -121,7 +121,6 @@
     } 
   }
 
-  
 </script>
 
 
@@ -176,6 +175,14 @@
           
           <HeaderPanelLink on:click={logout}>Logout</HeaderPanelLink>
 
+
+          {#if $userIsRole?.admin}
+            <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
+            <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
+          {/if}
+
+
+
           {#if $currentProjectEditingUsers}
             <HeaderPanelDivider>Other Users (now active)</HeaderPanelDivider>
             <div class="status">
@@ -189,10 +196,12 @@
             </div>  
           {/if}
 
+
           {#if $userIsRole?.admin}
             <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
             <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
           {/if}
+
 
 
           <HeaderPanelDivider>System Status</HeaderPanelDivider>
