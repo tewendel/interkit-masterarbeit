@@ -112,8 +112,8 @@
         videoPlayerCurrentTime = 0;
         vimeoPlayer.setCurrentTime(0);
       });
-      vimeoPlayer.play()
-      videoPlayerPaused = false
+      //vimeoPlayer.play() // deactivated, prevents play on iOS, because not directly connected to button press
+      videoPlayerPaused = true
     }, 50)
   }
 
