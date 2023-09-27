@@ -130,13 +130,15 @@ const updateAllViteServerStatus = async () => {
   }
 };
 
-await resetUsers();
-await resetViteServers();
+const init = async () => {
+  await resetUsers();
+  await resetViteServers();
 
-Meteor.setInterval( async function(){
-  await pruneConnections();
-  await updateAllViteServerStatus()
-}, 10000);
+  Meteor.setInterval( async function(){
+    await pruneConnections();
+    await updateAllViteServerStatus()
+  }, 10000);
+}
 
-export { processUserActivity, urlEditingProjectRegex };
+export { processUserActivity, urlEditingProjectRegex, init };
 
