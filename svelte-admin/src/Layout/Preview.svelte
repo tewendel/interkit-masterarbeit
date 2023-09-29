@@ -223,10 +223,14 @@
       tooltipPosition="top"
       />
   </ButtonSet>
-  <div style="margin-right: auto" class="currentRoute">
-    {$previewCurrentRoute}
-  </div>
-  <div style="text-align: center; margin-left: 1em">
+  <input
+    value={$previewCurrentRoute}
+    style="flex-grow: 1"
+    class="currentRoute"
+    readonly
+    title={$previewCurrentRoute}
+    />
+  <div style="text-align: center; margin-left: 1em; margin-right: 1em">
     <TooltipDefinition
       tooltipText="Size of the preview window in device pixels"
       >
@@ -240,7 +244,7 @@
       </TooltipDefinition>
     {/if}
   </div>
-  <Select inline size="sm" bind:selected={$secondaryTabsPreviewSize} style="flex-grow: 0; margin-left: auto">
+  <Select inline size="sm" bind:selected={$secondaryTabsPreviewSize} style="flex-grow: 0">
     {#each sizes as _, idx}
       <SelectItem value={idx} text={_.name} />
     {/each}
@@ -464,6 +468,8 @@
 
   .currentRoute {
     cursor: default;
+    border: 0;
+    background: transparent;
   }
 
 </style>
