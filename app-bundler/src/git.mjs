@@ -20,10 +20,15 @@ async function gitAddAll(projectPath) {
 }
 
 async function gitListRemotes(projectPath) {
-  return await git.listRemotes({
-    fs,
-    dir: projectPath,
-  })
+  try {
+    return await git.listRemotes({
+      fs,
+      dir: projectPath,
+    })
+  } catch (error) {
+    console.warn(error)
+    return false
+  }
 }
 
 async function gitAdd(projectPath, filepath) {
