@@ -101,32 +101,30 @@
     checkRetryCountdown()
   });
 
-  $: {
-    // if we're in an iframe...
-    if (window.parent !== window) {
-      // ...tell frame parent (=admin) the userId
-      let postMessageOrigin = '*'
-      if (false && document.location.port) {
-        console.warn('assuming dev mode, allowing unsafe inter-frame communication')
-      } else {
-        postMessageOrigin = $config?.INTERKIT_ADMIN_URL
-      }
-      if (!postMessageOrigin) {
-        console.warn('no admin url, preventing unsafe inter-frame communication')
-      }
-      // console.log('inter-frame', postMessageOrigin, $userId)
-      try {
-        window.parent.postMessage({ userId: $userId }, postMessageOrigin)
-      } catch (e) {
-        console.error('Inter-frame communication failed. Are you running interkit on non-standard ports? Check your script blockers?')
-      }
-    }
-  }
-
   let config = InterkitClient.config;
   let projectId = InterkitClient.projectId;
   let connectionIssue = InterkitClient.connectionIssue;
   let clientConnected = InterkitClient.connected;
+
+  let postMessageOrigin
+  $: postMessageOrigin = $config?.INTERKIT_ADMIN_URL
+
+  const postMessage = payload => {
+    if (window.parent === window) {
+      console.log('AppBaseAdvanced postMessage not in iframe, bailing')
+      return
+    }
+    try {
+      window.parent.postMessage(payload, postMessageOrigin)
+    } catch (e) {
+      console.error('Inter-frame communication failed. Are you running interkit on non-standard ports? Check your script blockers?')
+    }
+  }
+
+  $: {
+    // if we're in an iframe, tell frame parent (=admin) the userId
+    postMessage({ userId: $userId })
+  }
 
   connectionIssue.subscribe(value => {
     checkRetryCountdown()
@@ -248,7 +246,7 @@
 <svelte:window on:popstate={popState} on:message={receiveMessage} />
 
 <div class="AppBase AppBaseAdvanced Theming" id="Theming">
-  <Router>
+  <Router {postMessage} {projectId}>
     <Styling
       isRootStyling
       {overrideStyleTokens}

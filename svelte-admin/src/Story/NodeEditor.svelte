@@ -32,7 +32,7 @@
   import Undo from 'carbon-icons-svelte/lib/Undo.svelte'
   import CheckmarkOutlineWarning from 'carbon-icons-svelte/lib/CheckmarkOutlineWarning.svelte'
   import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
-  import WatsonHealthRotate_360 from 'carbon-icons-svelte/lib/WatsonHealthRotate_360.svelte'
+  import Renew from 'carbon-icons-svelte/lib/Renew.svelte'
 
   import { boardsApi as api } from '../BundleServer.js'
   import { genericErrorHandler, errorify } from '../apiHelpers.js'
@@ -777,7 +777,7 @@
               />
             <Button
               kind="ghost"
-              icon={WatsonHealthRotate_360}
+              icon={Renew}
               iconDescription="refresh"
               on:click={refresh}
               />

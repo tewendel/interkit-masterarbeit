@@ -44,8 +44,9 @@
     currentProject, 
     currentUser, 
     currentProjectEditingUsers, 
-    secondaryTabPreviewProjectId ,
-    currentProjectReadOnly
+    secondaryTabPreviewProjectId,
+    currentProjectReadOnly,
+    previewCurrentRoute
   } from './admin.js'
 
   let userIsRole = InterkitClient.userIsRole
@@ -115,6 +116,14 @@
   const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
   const commitHash = matches ? matches[0] : null
 
+  window.addEventListener('message', evt => {
+    console.log('App received message')
+    if (evt.data && evt.data.previewHistoryEvent) {
+      previewCurrentRoute.set(evt.data.previewHistoryEvent?.location?.pathname || '(?)')
+    }
+  })
+
+  
   const rebuildProjectTemplates = () => { 
     if(confirm("Build all project templates from source? (If projects of the same name exist, they will be skipped.)")) {
       InterkitClient.call("project.rebuildTemplates")
