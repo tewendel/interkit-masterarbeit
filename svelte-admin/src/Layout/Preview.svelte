@@ -4,7 +4,7 @@
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
   import { tick, onMount } from 'svelte'
-  import { currentProject, secondaryTabsPreviewSize, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
+  import { currentProject, secondaryTabsPreviewSize, previewCurrentRoute, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
 
   import { get } from 'svelte/store'
 
@@ -25,6 +25,7 @@
   import ChevronLeft from "carbon-icons-svelte/lib/ChevronLeft.svelte"
   import ChevronRight from "carbon-icons-svelte/lib/ChevronRight.svelte"
   import Rotate from "carbon-icons-svelte/lib/Rotate.svelte"
+  import Renew from "carbon-icons-svelte/lib/Renew.svelte"
   import Settings from "carbon-icons-svelte/lib/Settings.svelte"
   import CopyLink from "carbon-icons-svelte/lib/CopyLink.svelte"
   import Reset from "carbon-icons-svelte/lib/Reset.svelte"
@@ -122,9 +123,12 @@
     }
     query.set("dev", true)
     //console.log("query", query.toString())
-    previewURL = projectId ? bundleServerURL + "/dev/" + projectId + "/" + "?" + query : null
-    buildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
-    bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
+    if (bundleServerURL) {
+      previewURL = projectId ? bundleServerURL + "/dev/" + projectId + "/" + "?" + query : null
+      console.log('Layout/Preview', previewURL)
+      buildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
+      bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
+    }
   }
 
   // send new previewUserId to preview when it is changed in admin
@@ -190,7 +194,7 @@
 
 </script>
 
-<div style="display: flex; justify-content: space-between">
+<div style="display: flex; align-items: center">
   <ButtonSet>
     <!-- Back/forward buttons do not work in the current state.
       See interkit/components/AppBase for more info.
@@ -212,14 +216,17 @@
     <Button
       kind="ghost"
       size="small"
-      icon={Rotate}
+      icon={Renew}
       on:click={() => reload(false)}
       iconDescription="Reload (Preview)"
       tooltipAlignment="start"
       tooltipPosition="top"
       />
   </ButtonSet>
-  <div style="align-self: center">
+  <div style="margin-right: auto" class="currentRoute">
+    {$previewCurrentRoute}
+  </div>
+  <div style="text-align: center; margin-left: 1em">
     <TooltipDefinition
       tooltipText="Size of the preview window in device pixels"
       >
@@ -233,7 +240,7 @@
       </TooltipDefinition>
     {/if}
   </div>
-  <Select inline bind:selected={$secondaryTabsPreviewSize} style="flex-grow: 0">
+  <Select inline size="sm" bind:selected={$secondaryTabsPreviewSize} style="flex-grow: 0; margin-left: auto">
     {#each sizes as _, idx}
       <SelectItem value={idx} text={_.name} />
     {/each}
@@ -454,4 +461,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .currentRoute {
+    cursor: default;
+  }
+
 </style>
