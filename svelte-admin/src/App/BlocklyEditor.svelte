@@ -6,6 +6,7 @@
   import { Tabs, Tab, TabContent, Button, ButtonSet } from "carbon-components-svelte";
   import DataCheck from "carbon-icons-svelte/lib/DataCheck.svelte";
   import Rotate from "carbon-icons-svelte/lib/Rotate.svelte"
+  import Undo from "carbon-icons-svelte/lib/Undo.svelte"
   import Help from "carbon-icons-svelte/lib/Help.svelte";
 
   import MainColumns from '../Layout/MainColumns.svelte'
@@ -486,7 +487,7 @@
               <Button
                 kind="ghost"
                 size="small"
-                icon={Rotate}
+                icon={Undo}
                 on:click={resetBlockly}
                 iconDescription="Back to last save"
                 tooltipAlignment="start"

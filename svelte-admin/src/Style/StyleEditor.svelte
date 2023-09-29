@@ -1,6 +1,6 @@
 <script>
   import { ButtonSet, Button, InlineNotification } from 'carbon-components-svelte'
-  import { Help, Reset, Save, TrashCan } from 'carbon-icons-svelte'
+  import { Help, Reset, Save, Undo, TrashCan } from 'carbon-icons-svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
   import StyleTokensForm from '../InputModals/StyleTokensForm.svelte'
   import { docsGo } from '../docs.js'
@@ -75,7 +75,7 @@
       <Button
         kind="ghost"
         disabled={!modified}
-        icon={Reset}
+        icon={Undo}
         on:click={reset}
         iconDescription="Undo Changes"
         />
