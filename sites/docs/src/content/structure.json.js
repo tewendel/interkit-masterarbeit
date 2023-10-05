@@ -189,19 +189,19 @@ export const items = [
         items: [
           {
             title: 'Docs',
-            path: '/contribute/docs'
+            path: '/guides/contribute/docs'
           },
           {
             title: 'Components',
-            path: '/contribute/components'
+            path: '/guides/contribute/components'
           },
           {
             title: 'Component CSS',
-            path: '/contribute/component_css'
+            path: '/guides/contribute/component_css'
           },
           {
             title: 'Custom Theme',
-            path: '/contribute/theme'
+            path: '/guides/contribute/theme'
           }
         ]
       }
