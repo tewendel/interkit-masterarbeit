@@ -1,8 +1,9 @@
 <script>
   import Sidebar from "../components/Sidebar.svelte"
   import Breadcrumbs from "../components/Breadcrumbs.svelte"
-  import { items } from "../content/sidebar.json.js"
-
+  import Topbar from "../components/Topbar.svelte"
+  import { items } from "../content/structure.json.js"
+  
   import {
     setupHistory,
     isIframed,
@@ -16,10 +17,8 @@
 
   //export const prerender = true;
 
-  import { page } from '$app/stores'
-
   let sidebarEl
-
+  
   setupHistory()
 
 </script>
@@ -62,6 +61,7 @@
     <slot></slot>
   </main>
   <nav class="sidebar" bind:this={sidebarEl}>
+    <Topbar {items}/>
     <Sidebar {items} />
   </nav>
 </div>
@@ -211,13 +211,17 @@
     text-decoration: none;
   }
 
-  :global(h2[id]:not([id="table-of-contents"]) a::after),
-  :global(h3[id] a::after),
-  :global(h4[id] a::after),
-  :global(h5[id] a::after),
-  :global(h6[id] a::after) {
-    content: "§";
-    margin-right: 0.2em;
+  :global(h2[id]:not([id="table-of-contents"]) a),
+  :global(h3[id] a),
+  :global(h4[id] a),
+  :global(h5[id] a),
+  :global(h6[id] a) {
+    height: 10px;
+    width: 40px;
+    display:inline-block;
+    background-image: url('/images/link.svg');
+    background-position: center;
+    vertical-align: middle;
   }
 
   :global([id="table-of-contents"] + ul li p) {

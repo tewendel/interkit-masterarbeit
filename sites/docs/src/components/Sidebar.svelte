@@ -1,18 +1,27 @@
 <script>
   import Submenu from './Submenu.svelte'
+  import { page } from '$app/stores';
+  import { getSectionItems } from '../util/pathUtils'
   
   export let items;
+  console.log("Sidebar got items", items)
 
+  let sectionItems
+  $: currentPath = $page.url.pathname
+  $: sectionItems = getSectionItems(currentPath, items)
+  
 </script>
 
-{#each items as section}
-  <Submenu 
-    title={section.title}
-    path={section.path}
-    items={section.items} 
-    open={section.open}
-  />
-{/each}
+{#if sectionItems}
+  {#each sectionItems as subSection}
+    <Submenu 
+      title={subSection.title}
+      path={subSection.path}
+      items={subSection.items} 
+      open={subSection.open}
+    />
+  {/each}
+{/if}
 
 <hr />
 
