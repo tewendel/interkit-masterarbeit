@@ -1,7 +1,7 @@
 <script>
-  import ComponentInfo from "../../components/ComponentInfo.svelte";
-  import example_svelte from "../../../../../repositories/starters/starter/src/components/ProjectComponentExample.svelte?raw";
-  import example_yaml from "../../../../../repositories/starters/starter/src/components/ProjectComponentExample.yaml?raw";
+  import ComponentInfo from "../../../components/ComponentInfo.svelte";
+  import example_svelte from "../../../../../../repositories/starters/starter/src/components/ProjectComponentExample.svelte?raw";
+  import example_yaml from "../../../../../../repositories/starters/starter/src/components/ProjectComponentExample.yaml?raw";
 </script>
 
 # Components
