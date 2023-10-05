@@ -1,35 +1,35 @@
 <script>
 
   import { page } from '$app/stores'
+  import { getSection } from '../util/pathUtils.js';
 
   export let items
 
   let activeSection
-  let activeSubItem
+  let activeSubsection
+  let activeItem
   let currentPath
 
   $: {
     currentPath = $page.url.pathname
-    items.forEach(s => {
+    activeSection = getSection(currentPath, items)    
+    activeSection.items.forEach(s => {
       s.items.forEach(i => {
         if (i.path === currentPath) {
-          activeSection = s
-          activeSubItem = i
+          activeSubsection = s
+          activeItem = i
         }
       })
     })
+
   }
 
 </script>
 
-{#if currentPath !== '/'}
-  <a href="/">Home</a>
-{:else}
-  Home
-{/if}
-›
-{activeSection?.title}
+{activeSection.title}
 › 
 <!--<a href={activeSubItem.path}>-->
-{activeSubItem?.title}
+{activeSubsection?.title}
 <!--</a>-->
+›
+{activeItem?.title}

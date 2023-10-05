@@ -18,7 +18,7 @@
 
 </script>
 
-<details open={currentPath?.includes(path)}>
+<details open={open || currentPath?.includes(path)}>
   <summary>
     {title}
   </summary>

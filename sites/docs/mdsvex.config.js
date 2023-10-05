@@ -24,7 +24,7 @@ const config = defineConfig({
 	},
 
 	remarkPlugins: [sveld, relativeImages, remarkToc],
-	rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
+	rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {behavior: 'append'}]]
 });
 
 export default config;
