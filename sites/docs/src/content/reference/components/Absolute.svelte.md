@@ -16,7 +16,7 @@ You'll need to add a css unit, eg 10px for 10 pixels distance.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Absolute.svelte
+../../../../../../packages/interkit/components/Absolute.svelte
 ```
 
 </details>

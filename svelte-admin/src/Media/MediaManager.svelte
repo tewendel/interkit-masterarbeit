@@ -83,7 +83,7 @@
         icon={Help}
         kind="ghost"
         size="field"
-        on:click={() => docsGo('/basics/interface_overview#media')}
+        on:click={() => docsGo('/guides/overview/interface_overview#media')}
         >Help</Button>
     </ButtonSet>
   </div>

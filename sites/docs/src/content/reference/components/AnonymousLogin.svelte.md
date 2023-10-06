@@ -17,7 +17,7 @@ Adding AnonymousLogin inside of [AppBase](/components/AppBase) is necessary for 
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/AnonymousLogin.svelte
+../../../../../../packages/interkit/components/AnonymousLogin.svelte
 ```
 
 </details>

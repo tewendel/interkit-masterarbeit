@@ -13,7 +13,7 @@ Add spacing around content using the predefined spacings set in the theme.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Spacing.svelte
+../../../../../../packages/interkit/components/Spacing.svelte
 ```
 
 </details>

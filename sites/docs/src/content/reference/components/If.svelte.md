@@ -21,7 +21,7 @@ Checks whether a Data element (a sheet row) has a certain annotation (set from e
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/IfDataAnnotation.svelte
+../../../../../../packages/interkit/components/IfDataAnnotation.svelte
 ```
 
 </details>
@@ -36,7 +36,7 @@ Checks a `UIKey` or `globalStore` (which can be set from Buttons or actions.js c
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/IfUIKey.svelte
+../../../../../../packages/interkit/components/IfUIKey.svelte
 ```
 
 </details>
@@ -51,7 +51,7 @@ Checks a `UserVar` (which can be set e.g. from Story/chat code or other code).
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/IfUserVar.svelte
+../../../../../../packages/interkit/components/IfUserVar.svelte
 ```
 
 </details>

@@ -18,7 +18,7 @@ Use Group to form a named group of blocks.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Group.svelte
+../../../../../../packages/interkit/components/Group.svelte
 ```
 
 </details>
@@ -35,7 +35,7 @@ Use GroupConnector to insert a previously named group. You can connect a group t
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/GroupConnector.yaml.svelte
+../../../../../../packages/interkit/components/GroupConnector.yaml.svelte
 ```
 
 </details>

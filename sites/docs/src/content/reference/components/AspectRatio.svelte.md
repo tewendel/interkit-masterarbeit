@@ -13,7 +13,7 @@ Forces content to resize to a specific aspect ration, eg square.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/AspectRatio.svelte
+../../../../../../packages/interkit/components/AspectRatio.svelte
 ```
 
 </details>

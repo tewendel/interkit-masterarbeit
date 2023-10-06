@@ -18,7 +18,7 @@ Common child components are [DataCell](/components/DataCell) or [DataCard](/comp
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataLoaderSingle.svelte
+../../../../../../packages/interkit/components/DataLoaderSingle.svelte
 ```
 
 </details>
@@ -35,7 +35,7 @@ Common child components are [DataList](/components/DataList) or [DataCarousel](/
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataLoaderMulti.svelte
+../../../../../../packages/interkit/components/DataLoaderMulti.svelte
 ```
 
 </details>

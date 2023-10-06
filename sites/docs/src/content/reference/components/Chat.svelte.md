@@ -18,7 +18,7 @@ Requires the [AnonmymousLogin](/components/AnonymousLogin) component to be prese
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Chat.svelte
+../../../../../../packages/interkit/components/Chat.svelte
 ```
 
 </details>

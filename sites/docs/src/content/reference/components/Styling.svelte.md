@@ -15,7 +15,7 @@ The Styling component allows you to modify styling variables for its child compo
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Styling.svelte
+../../../../../../packages/interkit/components/Styling.svelte
 ```
 
 </details>

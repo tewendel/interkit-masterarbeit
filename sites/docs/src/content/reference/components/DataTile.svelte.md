@@ -22,6 +22,6 @@ Data must be previously loaded for example with [DataLoaderMulti](/components/Da
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataTile.svelte
+../../../../../../packages/interkit/components/DataTile.svelte
 ```
 </details>

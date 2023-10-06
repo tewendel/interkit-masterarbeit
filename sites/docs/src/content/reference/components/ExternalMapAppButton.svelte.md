@@ -15,7 +15,7 @@ A button that opens an external map application for navigation to a place (curre
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/ExternalMapAppButton.svelte
+../../../../../../packages/interkit/components/ExternalMapAppButton.svelte
 ```
 
 </details>

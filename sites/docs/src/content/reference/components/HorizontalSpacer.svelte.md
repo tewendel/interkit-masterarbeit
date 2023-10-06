@@ -21,7 +21,7 @@ Useful to create top bars, for example in the TopBar of Layout [Shells](/compone
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/HorizontalSpacer.svelte
+../../../../../../packages/interkit/components/HorizontalSpacer.svelte
 ```
 
 </details>
@@ -41,7 +41,7 @@ Useful to display a row of individually loaded [DataTiles](/components/DataTile)
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/HorizontalSpacer.svelte
+../../../../../../packages/interkit/components/HorizontalSpacer.svelte
 ```
 
 </details>

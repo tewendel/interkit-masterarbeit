@@ -24,7 +24,7 @@ Basic routes are defined using the Route component and connected using the [Rout
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Route.svelte
+../../../../../../packages/interkit/components/Route.svelte
 ```
 
 </details>
@@ -45,7 +45,7 @@ You can activate routes using [Button effects](/components/Button).
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/RouteConnector.svelte
+../../../../../../packages/interkit/components/RouteConnector.svelte
 ```
 
 </details>
@@ -66,7 +66,7 @@ When you set "elements" as the path, DataRouteSingle makes individual element ro
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataRouteSingle.svelte
+../../../../../../packages/interkit/components/DataRouteSingle.svelte
 ```
 
 </details>
@@ -81,7 +81,7 @@ DataRouteMulti is a special Route with a built-in [DataLoaderMulti](/components/
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataRouteMulti.svelte
+../../../../../../packages/interkit/components/DataRouteMulti.svelte
 ```
 
 </details>
@@ -96,7 +96,7 @@ ChatRoute is a special Route that loads a specific StoryBoard. Use ChatRoute to 
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/ChatRoute.svelte
+../../../../../../packages/interkit/components/ChatRoute.svelte
 ```
 
 </details>

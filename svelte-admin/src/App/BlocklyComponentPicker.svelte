@@ -82,7 +82,7 @@
 
   const openBlocklyHelp = blockName => {
     const docsPath = getBlocklyHelpHref(blockName)
-    docsGo(`/components/${docsPath}`)
+    docsGo(`/reference/components/${docsPath}`)
   }
 
   const getBlocklyHelpHref = blockName => {
@@ -91,7 +91,7 @@
   }
 
   const referenceHelp = () => {
-    docsGo(`/components/BlocklySubtree`)
+    docsGo(`/reference/components/BlocklySubtree`)
   }
 
   const panToSubtree = (block) => {

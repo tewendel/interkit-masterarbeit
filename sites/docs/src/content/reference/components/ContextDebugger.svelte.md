@@ -12,7 +12,7 @@ Shows information about a Svelte context currently available, for example "eleme
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/ContextDebugger.svelte
+../../../../../../packages/interkit/components/ContextDebugger.svelte
 ```
 
 </details>

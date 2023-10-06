@@ -63,7 +63,7 @@
       <Button
         icon={Help}
         kind="ghost"
-        on:click={() => docsGo('/basics/interface_overview#style')}
+        on:click={() => docsGo('/guides/overview/interface_overview#style')}
         >Help</Button>
       <Button
         kind="ghost"

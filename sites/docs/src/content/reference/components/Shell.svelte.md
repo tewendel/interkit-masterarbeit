@@ -18,7 +18,7 @@ Divides the screen into a main section and a bar at the bottom, where you can po
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/BottomBarShell.svelte
+../../../../../../packages/interkit/components/BottomBarShell.svelte
 ```
 
 </details>
@@ -37,7 +37,7 @@ Inside the TopBar, you can use [HorizonalSpacer](/components/HorizontalSpacer) t
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/TopBarShell.svelte
+../../../../../../packages/interkit/components/TopBarShell.svelte
 ```
 
 </details>
@@ -55,7 +55,7 @@ Adds a bar at the top and the bottom.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/LayoutShell.svelte
+../../../../../../packages/interkit/components/LayoutShell.svelte
 ```
 
 </details>
@@ -72,7 +72,7 @@ Adds an additional space above the bottom bar. This is used for the [AudioPlayer
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/LayoutShellAudio.svelte
+../../../../../../packages/interkit/components/LayoutShellAudio.svelte
 ```
 
 </details>

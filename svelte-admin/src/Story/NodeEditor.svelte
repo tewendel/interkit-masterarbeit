@@ -759,7 +759,7 @@
             <Button
               icon={Help}
               kind="ghost"
-              on:click={() => docsGo('/basics/interface_overview#story')}
+              on:click={() => docsGo('/guides/overview/interface_overview#story')}
               >Help</Button>
             <Button
               kind="ghost"
@@ -907,7 +907,7 @@
           style="margin-left: auto"
           kind="ghost"
           icon={Help}
-          on:click={() => docsGo('/guides/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
+          on:click={() => docsGo('/reference/chat/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
           size="small"
           iconDescription="syntax cheatsheet"
           tooltipAlignment="end"

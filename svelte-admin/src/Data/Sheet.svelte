@@ -338,7 +338,7 @@
       size="field"
       kind="ghost"
       icon={Help}
-      on:click={() => docsGo('/basics/interface_overview#data')}
+      on:click={() => docsGo('/guides/overview/interface_overview#data')}
       >
       Help
     </Button>

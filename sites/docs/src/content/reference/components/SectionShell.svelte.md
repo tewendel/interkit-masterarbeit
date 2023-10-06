@@ -14,7 +14,7 @@ An area with gray background and spacing. Recommended for use with [DataCard](/c
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/SectionShell.svelte
+../../../../../../packages/interkit/components/SectionShell.svelte
 ```
 
 </details>
