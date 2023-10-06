@@ -141,8 +141,12 @@ export const items = [
         open: false,
         items: [
           {
-            title: 'Adding Actions to components',
-            path: '/guides/howto/actions'
+            title: 'Set up your own interkit server',
+            path: '/guides/howto/server_setup'
+          },
+          {
+            title: 'Setting up a custom domain',
+            path: '/guides/howto/custom_domain'
           },
           {
             title: 'Internationalization (i18n) and localization (l10n)',
@@ -153,12 +157,8 @@ export const items = [
             path: '/guides/howto/styling'
           },
           {
-            title: 'How to setup your own interkit server',
-            path: '/guides/howto/server_setup'
-          },
-          {
-            title: 'Setting up a custom domain',
-            path: '/guides/howto/custom_domain'
+            title: 'Adding Actions to components',
+            path: '/guides/howto/actions'
           },
           {
             title: 'Build for native app and deploy to app stores',
