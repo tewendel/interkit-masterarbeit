@@ -4,7 +4,7 @@
 
 # How to create a custom theme
 
-There are several levels of customization for a theme. See also [Styling](../guides/styling) for a general overview. 
+There are several levels of customization for a theme. See also [Styling](/guides/howto/styling) for a general overview. 
 
 A theme consists of these elements:
 - settings for interkit style variables (file `src/styleTokens.json`)

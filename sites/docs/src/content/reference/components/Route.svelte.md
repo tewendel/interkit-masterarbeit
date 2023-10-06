@@ -37,7 +37,7 @@ Every Route must be connected to your app using RouteConnector. Usually, this is
 
 RouteConnector determines where in the component hierarchy the contents of your route are rendered when the route is activated.
 
-You can activate routes using [Button effects](/components/Button).
+You can activate routes using [Button effects](/reference/components/Button).
 
 <ComponentInfoYaml component="RouteConnector" />
 
@@ -54,9 +54,9 @@ You can activate routes using [Button effects](/components/Button).
 
 DataRouteSingle defines a special route, where a specific row from the database is loaded and made available to the child components.
 
-Use DataRouteSingle when you want to open a detail view for a specific element from the database that the user selected, for example from a [DataList](/components/DataList).
+Use DataRouteSingle when you want to open a detail view for a specific element from the database that the user selected, for example from a [DataList](/reference/components/DataList).
 
-DataRouteSingle is often called via a [Button](/components/Button) effect. The Button then automatically passes the row key to DataRouteSingle, which uses that information to load the element.
+DataRouteSingle is often called via a [Button](/reference/components/Button) effect. The Button then automatically passes the row key to DataRouteSingle, which uses that information to load the element.
 
 When you set "elements" as the path, DataRouteSingle makes individual element routes available in the form of "/elements/16502d07-97ec-4b67-8283-ad5a7f44cd2c"
 
@@ -73,7 +73,7 @@ When you set "elements" as the path, DataRouteSingle makes individual element ro
 
 ## DataRouteMulti
 
-DataRouteMulti is a special Route with a built-in [DataLoaderMulti](/components/DataLoader#dataloadermulti). It is equivalent to using Route and DataLoaderMulti together manually.
+DataRouteMulti is a special Route with a built-in [DataLoaderMulti](/reference/components/DataLoader#dataloadermulti). It is equivalent to using Route and DataLoaderMulti together manually.
 
 <ComponentInfoYaml component="DataRouteMulti" />
 
@@ -88,7 +88,7 @@ DataRouteMulti is a special Route with a built-in [DataLoaderMulti](/components/
 
 ## ChatRoute
 
-ChatRoute is a special Route that loads a specific StoryBoard. Use ChatRoute to contain your [Chat](/components/Chat) component when you are working with multiple storyboards, for example with a [StoryBoardsList](/components/StoryBoard#storyboardslist)
+ChatRoute is a special Route that loads a specific StoryBoard. Use ChatRoute to contain your [Chat](/reference/components/Chat) component when you are working with multiple storyboards, for example with a [StoryBoardsList](/reference/components/StoryBoard#storyboardslist)
 
 <ComponentInfoYaml component="ChatRoute" />
 

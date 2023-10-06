@@ -2,7 +2,7 @@
 
 This guide documents serveral different ways to configure custom domains for your app. 
 
-Make sure you read the general guide about [setting up your own interkit server](/guides/server_setup) first.
+Make sure you read the general guide about [setting up your own interkit server](/guides/howto/server_setup) first.
 
 ## Basic setup
 

@@ -5,7 +5,7 @@
 
 # TextFormat
 
-Use this to apply text formats to [StaticText](/components/StaticText) or other text components. See the Figma embed below for available formats.
+Use this to apply text formats to [StaticText](/reference/components/StaticText) or other text components. See the Figma embed below for available formats.
 
 <ComponentInfoYaml component="TextFormat" />
 

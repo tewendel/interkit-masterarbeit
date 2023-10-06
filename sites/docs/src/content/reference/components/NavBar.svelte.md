@@ -8,7 +8,7 @@
 
 ![A NavBar example](/images/component_previews/NavBar.png)
 
-Used as a container to build a navigation bar at the bottom of the screen. Use one of the layout [Shells](/components/Shell) to position the NavBar. Add [NavButton](/components/NavBar#navbutton) components to setup the individual buttons. 
+Used as a container to build a navigation bar at the bottom of the screen. Use one of the layout [Shells](/reference/components/Shell) to position the NavBar. Add [NavButton](/reference/components/NavBar#navbutton) components to setup the individual buttons. 
 
 <ComponentInfoYaml component="NavBar" />
 
@@ -16,7 +16,7 @@ Used as a container to build a navigation bar at the bottom of the screen. Use o
 
 ![A NavButton example](/images/component_previews/NavButton.png)
 
-To add functionality, you need to configure the NavButton's effect, for example to open a [Route](/components/Route). The NavButton will be automaticaly highlighted when a route is opened. When using [Icons](/components/Icon), make sure to use the `Thin-` version (the `Full-`) version is used when highlighted.
+To add functionality, you need to configure the NavButton's effect, for example to open a [Route](/reference/components/Route). The NavButton will be automaticaly highlighted when a route is opened. When using [Icons](/reference/components/Icon), make sure to use the `Thin-` version (the `Full-`) version is used when highlighted.
 
 <ComponentInfoYaml component="NavButton" />
 

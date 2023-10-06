@@ -6,7 +6,7 @@
 
 A full screen overlay that is rendered above other content, depending on zIndex.
 
-Use this in combination with [Conditionals](/components/If) to show content in specific occasions.
+Use this in combination with [Conditionals](/reference/components/If) to show content in specific occasions.
 
 <ComponentInfoYaml component="Overlay" />
 

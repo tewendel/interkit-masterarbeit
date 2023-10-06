@@ -6,7 +6,7 @@
 
 Different modals to notify users of special events. 
 
-Use [Overlay](/components/Overlay), [Conditionals](/components/If) or [Routing](/components/Route) for display, where applicable.
+Use [Overlay](/reference/components/Overlay), [Conditionals](/reference/components/If) or [Routing](/reference/components/Route) for display, where applicable.
 
 ## CenterModal
 

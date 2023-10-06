@@ -12,7 +12,7 @@ Content on the left and right is aligned left and right, respectively.
 
 Content in the center is centered.
 
-Useful to create top bars, for example in the TopBar of Layout [Shells](/components/Shell)
+Useful to create top bars, for example in the TopBar of Layout [Shells](/reference/components/Shell)
 
 
 <ComponentInfoYaml component="HorizontalSpacer" />
@@ -33,7 +33,7 @@ Useful to create top bars, for example in the TopBar of Layout [Shells](/compone
 
 Divides horizonal space in 2 or 3 columns, equally sized. Content in the columns is left aligned by default.
 
-Useful to display a row of individually loaded [DataTiles](/components/DataTile)
+Useful to display a row of individually loaded [DataTiles](/reference/components/DataTile)
 
 <ComponentInfoYaml component="HorizontalSpacer" />
 

@@ -9,7 +9,7 @@
 
 A simple card based on an image. A title, labels or buttons can be displayed on top of the image. See the embedded Figma for the available variants.
 
-Data must be previously loaded for example with [DataLoaderMulti](/components/DataLoader) and [Mosaic](/components/Mosaic) or individually using [DataLoaderSingle](/components/DataLoader) and [ColumnShell](/components/HorizontalSpacer#columnshell).
+Data must be previously loaded for example with [DataLoaderMulti](/reference/components/DataLoader) and [Mosaic](/reference/components/Mosaic) or individually using [DataLoaderSingle](/reference/components/DataLoader) and [ColumnShell](/reference/components/HorizontalSpacer#columnshell).
 
 <ComponentInfoYaml component="DataTile" />
 

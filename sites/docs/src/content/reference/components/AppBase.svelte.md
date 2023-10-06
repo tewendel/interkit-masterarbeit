@@ -6,7 +6,7 @@
 
 The AppBase component ist the starting point for all interkit apps and needs to be the outermost component you add to any project.
 
-If you are creating a multilanguage project, see [the internationalisation guide](/guides/i18n) for setting the `languages` parameter.
+If you are creating a multilanguage project, see [the internationalisation guide](/guides/howto/i18n) for setting the `languages` parameter.
 
 <ComponentInfoYaml component="AppBase" />
 

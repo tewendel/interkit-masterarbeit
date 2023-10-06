@@ -7,7 +7,7 @@
 
 ![A Label example](/images/component_previews/Label.png)
 
-Small labels showing text or an icon, mainly used in the Chips slots of the [DataCard](/components/DataCard) component
+Small labels showing text or an icon, mainly used in the Chips slots of the [DataCard](/reference/components/DataCard) component
 
 <ComponentInfoYaml component="Label" />
 
