@@ -8,13 +8,16 @@
   
   $: currentPath = $page.url.pathname
 
-  if(title == "Components") {
-    items.sort(function(a, b) {
-      var textA = a.title.toUpperCase();
-      var textB = b.title.toUpperCase();
-      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    });
+  $: {
+    if(title == "Components") {
+      items.sort(function(a, b) {
+        var textA = a.title.toUpperCase();
+        var textB = b.title.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      });
+    }
   }
+  
 
 </script>
 
