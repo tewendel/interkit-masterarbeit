@@ -36,7 +36,7 @@ Creating an app is a multi-stage process that often involves several people with
 Before you start building your app, you should think about how to structure it in the framework of interkit.
 
 - Check the templates for similar apps and how they are done
-- [Define your "elements"](./build_app)
+- [define your database](/guides/quick-start/elements)
 - Think about the layout of your app
     - Which screens do you need?
     - Check if suitable components exist
@@ -72,7 +72,7 @@ Sections `App` and `Data`
     - Do you need a single element view?
     - map, menu, chat, ... 
 - set up routing
-- set up component [actions](../components/actions) (optional)
+- set up component [actions](/guides/howto/actions) (optional)
 - set up database sheets
 - connect components to database sheets
 
@@ -96,7 +96,7 @@ Design Chat interaction and server-side actions.
 - add chat channels and bots
 - add server-side actions
 - connect external services
-- use [cron](../guides/cron_setup) for global timed actions
+- use [cron](/guides/howto/cron_setup) for global timed actions
 
 ### Styling
 Tweak visual appearance of the app  
@@ -123,7 +123,7 @@ It is a good idea to have people test your app, gather feedback and improve it.
 
 ### Internationalization (optional)
 
-see [Internationalization guide](../guides/i18n)  
+see [Internationalization guide](/guides/howto/i18n)  
 [...]
 
 ### Deployment

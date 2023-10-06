@@ -8,7 +8,7 @@
 
 A card that displays user variables.
 
-User variables can be set through the `api.setUserVar` method in the [Chat api](/guides/story_cheatsheet). 
+User variables can be set through the `api.setUserVar` method in the [Chat api](/reference/chat/story_cheatsheet). 
 
 <ComponentInfoYaml component="UserCard" />
 

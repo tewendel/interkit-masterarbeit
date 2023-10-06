@@ -99,7 +99,7 @@ you'll need screenshots - these are easiest to make with iphone and ipad simulat
 
 Important: make sure you set a clear description of what you want to use the location data for in `plist.info` *NSLocationWhenInUseUsageDescription* - see https://developer.apple.com/design/human-interface-guidelines/patterns/accessing-private-data 
 
-Important: If you want to use push messages, please go through [Push Setup Guide](/guides/push_setup)
+Important: If you want to use push messages, please go through [Push Setup Guide](/guides/howto/push_setup)
 
 ### iOS
 

@@ -6,7 +6,7 @@
 
 These components allow you to display multiple rows from the database in different ways. 
 
-In order for them to display data, they need to be children of a [DataLoaderMulti](/components/DataLoaderMulti) oder a [DataRouteMulti](/components/Route#dataroutemulti).
+In order for them to display data, they need to be children of a [DataLoaderMulti](/reference/components/DataLoaderMulti) oder a [DataRouteMulti](/reference/components/Route#dataroutemulti).
 
 
 
@@ -14,7 +14,7 @@ In order for them to display data, they need to be children of a [DataLoaderMult
 
 ![A DataList example](/images/component_previews/DataList.png)
 
-Show data elements as a list. Use [ScrollContainer](/components/ScrollContainer) to add scrolling. Commonly used in conjunction with a [DataCard](/components/DataCard).
+Show data elements as a list. Use [ScrollContainer](/reference/components/ScrollContainer) to add scrolling. Commonly used in conjunction with a [DataCard](/reference/components/DataCard).
 
 <ComponentInfoYaml component="DataList" />
 
@@ -31,7 +31,7 @@ Show data elements as a list. Use [ScrollContainer](/components/ScrollContainer)
 
 ![A DataCarousel example](/images/component_previews/DataCarousel.png)
 
-Show data elements as a carousel that you can slide left and right. Commonly used in conjunction with a [DataCard](/components/DataCard).
+Show data elements as a carousel that you can slide left and right. Commonly used in conjunction with a [DataCard](/reference/components/DataCard).
 
 <ComponentInfoYaml component="DataCarousel" />
 
@@ -48,7 +48,7 @@ Show data elements as a carousel that you can slide left and right. Commonly use
 
 ![A PictureBook example](/images/component_previews/PictureBook.png)
 
-Shows images that you can swipe left and right. When an image is swiped, the component provides the data of the selected element to its "contentElement" slot, where you can show additional info, for example using a [DataCell](/components/DataCell).
+Shows images that you can swipe left and right. When an image is swiped, the component provides the data of the selected element to its "contentElement" slot, where you can show additional info, for example using a [DataCell](/reference/components/DataCell).
 
 <ComponentInfoYaml component="PictureBook" />
 
@@ -65,7 +65,7 @@ Shows images that you can swipe left and right. When an image is swiped, the com
 
 ![A Mosaic example](/images/component_previews/Mosaic.png)
 
-Displays a mosaic of images in three columns. Intended to be used with [DataTile](/components/DataTile).
+Displays a mosaic of images in three columns. Intended to be used with [DataTile](/reference/components/DataTile).
 
 <ComponentInfoYaml component="Mosaic" />
 

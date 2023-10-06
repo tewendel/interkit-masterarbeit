@@ -4,7 +4,7 @@
 
 # StaticText
 
-Display static text that changes rarely. You can format the text using the [TextFormat](/components/TextFormat) component.
+Display static text that changes rarely. You can format the text using the [TextFormat](/reference/components/TextFormat) component.
 
 <ComponentInfoYaml component="StaticText" />
 

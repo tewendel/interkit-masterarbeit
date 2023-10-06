@@ -8,7 +8,7 @@ This component creates a userId for each user and saves it in local storage on t
 
 You can find the user in the project's Users page.
 
-Adding AnonymousLogin inside of [AppBase](/components/AppBase) is necessary for personalised features like [Chat](/components/Chat) to work. 
+Adding AnonymousLogin inside of [AppBase](/reference/components/AppBase) is necessary for personalised features like [Chat](/reference/components/Chat) to work. 
 
 <ComponentInfoYaml component="AnonymousLogin" />
 

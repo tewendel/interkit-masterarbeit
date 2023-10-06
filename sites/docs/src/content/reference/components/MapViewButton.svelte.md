@@ -6,7 +6,7 @@
 
 ![A MapViewButton example](/images/component_previews/MapViewButton.png)
 
-An interface to allow for the selction of MapViews on a [MapSimple](/components/MapSimple), allowing the user to filter markers and change the map style.
+An interface to allow for the selction of MapViews on a [MapSimple](/reference/components/MapSimple), allowing the user to filter markers and change the map style.
 
 MapViews are managed via a separate database sheet that you can set up using dialogs in the settings of this component.
 

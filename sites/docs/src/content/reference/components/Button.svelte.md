@@ -13,7 +13,7 @@
 
 Basic button to allow user input. 
 
-Your app can respond to a button press in several different ways by setting it's effect, for example activating a specific [Route](/components/Route). 
+Your app can respond to a button press in several different ways by setting it's effect, for example activating a specific [Route](/reference/components/Route). 
 
 <ComponentInfoYaml component="Button" />
 
@@ -96,6 +96,6 @@ Your app can respond to a button press in several different ways by setting it's
 
 ![A Button example](/images/component_previews/ButtonBar.png)
 
-Use the ButtonBar to organize [Buttons](/components/Button) horizontically, for example by centering a button or allowing buttons to fill the full width of the bar. You can also add a help text below the bar.
+Use the ButtonBar to organize [Buttons](/reference/components/Button) horizontically, for example by centering a button or allowing buttons to fill the full width of the bar. You can also add a help text below the bar.
 
 <ComponentInfoYaml component="ButtonBar" />

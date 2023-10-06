@@ -25,7 +25,7 @@ Display a summary of a story board.
 
 ![A StoryBoardsList example](/images/component_previews/StoryBoardsList.png)
 
-Display a list of all StoryBoardCards for all available story boards. When a card is tapped, the corresponding [ChatRoute](/components/Route#chatroute) is opened.
+Display a list of all StoryBoardCards for all available story boards. When a card is tapped, the corresponding [ChatRoute](/reference/components/Route#chatroute) is opened.
 
 <ComponentInfoYaml component="StoryBoardsList" />
 

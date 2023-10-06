@@ -10,7 +10,7 @@ There are several layout shell to organize space on the screen of your app verti
 
 ![A BottomBarShell example](/images/component_previews/BottomBarShell.png)
 
-Divides the screen into a main section and a bar at the bottom, where you can position a [NavBar](/components/NavBar).
+Divides the screen into a main section and a bar at the bottom, where you can position a [NavBar](/reference/components/NavBar).
 
 <ComponentInfoYaml component="BottomBarShell" />
 
@@ -29,7 +29,7 @@ Divides the screen into a main section and a bar at the bottom, where you can po
 
 Divides the screen into a main section and a bar at the top, where you can position a title or additional buttons. 
 
-Inside the TopBar, you can use [HorizonalSpacer](/components/HorizontalSpacer) to position elements left, right and center.
+Inside the TopBar, you can use [HorizonalSpacer](/reference/components/HorizontalSpacer) to position elements left, right and center.
 
 <ComponentInfoYaml component="TopBarShell" />
 
@@ -64,7 +64,7 @@ Adds a bar at the top and the bottom.
 
 ![A LayoutShellAudio example](/images/component_previews/LayoutShellAudio.png)
 
-Adds an additional space above the bottom bar. This is used for the [AudioPlayer](/components/AudioPlayer).
+Adds an additional space above the bottom bar. This is used for the [AudioPlayer](/reference/components/AudioPlayer).
 
 <ComponentInfoYaml component="LayoutShellAudio" />
 
