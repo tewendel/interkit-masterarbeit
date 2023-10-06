@@ -1,8 +1,8 @@
 # Working with Data and Components
 
-## Define your "elements"
+## Define your data
 
-Most apps have a `elements sheet` that defines the central elements that will be used in the app.
+Most apps have a main database `sheet` that defines the central elements that will be used in the app.
 
 Examples:
 - Objects that can be found in places in the city
@@ -15,21 +15,21 @@ It's a good way to start by identifying the core "elements" of your project.
 
 ## Build the user interface with Components
 
-Components define the structure of the UI of the app. Start the app with the `AppBase` component.
+Components define the structure of the UI of the app. Start the app with the `AppBase` component. You can look up the documentation for all components by right clicking on them and clicking on `help`. Common design patterns are covered in the [tutorial](/guides/tutorial/intro).
 
-### Component Actions
+## Connect your components to the database
 
-Component Actions are required for more complex interactions between components in the user interface.
+If you want to display data from the database, you need to load it with special components such as [DataLoaderSingle](/reference/components/DataLoader).
 
-Examples:
-- Tap on "Help" opens a submenu on the menu overlay
-- Navigation from a details view of an element to its entry on the map
+## Divide your app into different screens and set up navigation
 
-### "Building" an App
+Use [Route](/reference/components/Route) components to define different screens that the user can navigate to inside your app. To allow a user to navigate to a different route, use the effect property on interactice components like [Button](/reference/components/Button).
 
-Whenever you change something in the component structure, you need to press the "Save" button for changes to become effective in the app preview section.
+## Updating your app
 
-The "Build App" button does the same, but also generates a link to test the app on your mobile device or the interkit playground app.
+Whenever you change something in the component structure, you need to press the `Save` button for changes to become effective in the app preview section.
 
-Changes in the database do not need a rebuild, they update immediately.
+The `Publish` button does the same, but makes the structural changes visible to visitors of your app. It also generates a link to test the app on your mobile device.
+
+Important: Changes in the database do not need to be explicitly published, they update immediately.
 
