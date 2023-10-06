@@ -83,7 +83,7 @@ export const initBlockDefinitions = (Blockly, blockObjects, customFields, docsGo
           enabled: true,
           callback: function() { 
             console.log ("help for block " + blockObject.name, blockObject)
-            docsGo(`/components/${blockObject.docsPath || blockObject.name}`)
+            docsGo(`/reference/components/${blockObject.docsPath || blockObject.name}`)
           }
         })
       }

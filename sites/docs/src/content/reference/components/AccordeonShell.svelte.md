@@ -15,7 +15,7 @@ Expands to show optionals content.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/AccordeonShell.svelte
+../../../../../../packages/interkit/components/AccordeonShell.svelte
 ```
 
 </details>

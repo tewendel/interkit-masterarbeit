@@ -52,19 +52,19 @@ A splash page with rich content, arranged in a grid intended for wider viewports
 ## AppBase
 
 ```docs
-../../../../../packages/interkit/components/AppBase.svelte
+../../../../../../packages/interkit/components/AppBase.svelte
 ```
 
 ## AppBaseAdvanced
 
 ```docs
-../../../../../packages/interkit/components/AppBaseAdvanced.svelte
+../../../../../../packages/interkit/components/AppBaseAdvanced.svelte
 ```
 
 ## DesktopFallback
 
 ```docs
-../../../../../packages/interkit/components/DesktopFallback.svelte
+../../../../../../packages/interkit/components/DesktopFallback.svelte
 ```
 
 </details>

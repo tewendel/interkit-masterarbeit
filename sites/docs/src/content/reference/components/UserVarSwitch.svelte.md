@@ -17,7 +17,7 @@ User variables can also be set through the `api.setUserVar` method in the [Chat 
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/UserVarSwitch.svelte
+../../../../../../packages/interkit/components/UserVarSwitch.svelte
 ```
 
 </details>

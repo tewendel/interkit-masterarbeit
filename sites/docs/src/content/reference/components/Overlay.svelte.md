@@ -15,7 +15,7 @@ Use this in combination with [Conditionals](/components/If) to show content in s
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Overlay.svelte
+../../../../../../packages/interkit/components/Overlay.svelte
 ```
 
 </details>
@@ -32,7 +32,7 @@ A full screen overlay with a close button in the top left.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/OverlayFull.svelte
+../../../../../../packages/interkit/components/OverlayFull.svelte
 ```
 
 </details>

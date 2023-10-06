@@ -16,7 +16,7 @@ Data can be loaded through [DataLoaderSingle](/components/DataLoader#dataloaders
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataCell.svelte
+../../../../../../packages/interkit/components/DataCell.svelte
 ```
 
 </details>

@@ -26,7 +26,7 @@ MapViews with the Layer+Filter type are shown together with the layers.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/MapViewButton.svelte
+../../../../../../packages/interkit/components/MapViewButton.svelte
 ```
 
 </details>

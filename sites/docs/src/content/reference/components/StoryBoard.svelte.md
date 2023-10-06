@@ -15,7 +15,7 @@ Display a summary of a story board.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/StoryBoardCard.svelte
+../../../../../../packages/interkit/components/StoryBoardCard.svelte
 ```
 
 </details>
@@ -34,7 +34,7 @@ Display a list of all StoryBoardCards for all available story boards. When a car
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/StoryBoardsList.svelte.svelte
+../../../../../../packages/interkit/components/StoryBoardsList.svelte.svelte
 ```
 
 </details>

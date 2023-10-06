@@ -481,7 +481,7 @@
               icon={Help}
               kind="ghost"
               size="field"
-              on:click={() => docsGo('/basics/interface_overview#app')}
+              on:click={() => docsGo('/guides/overview/interface_overview#app')}
               >Help</Button>
               {#if selectedTab == 0}
               <Button

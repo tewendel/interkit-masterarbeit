@@ -21,7 +21,7 @@ See [MapViewButton](/components/MapViewButton) for an interface that provides fi
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/MapSimple.svelte
+../../../../../../packages/interkit/components/MapSimple.svelte
 ```
 
 </details>

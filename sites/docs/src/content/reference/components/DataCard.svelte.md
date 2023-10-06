@@ -24,6 +24,6 @@ We recommended wrapping layouts with Cards in [SectionShell](/components/Section
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataCard.svelte
+../../../../../../packages/interkit/components/DataCard.svelte
 ```
 </details>

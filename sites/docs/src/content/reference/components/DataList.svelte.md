@@ -22,7 +22,7 @@ Show data elements as a list. Use [ScrollContainer](/components/ScrollContainer)
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataList.svelte
+../../../../../../packages/interkit/components/DataList.svelte
 ```
 
 </details>
@@ -39,7 +39,7 @@ Show data elements as a carousel that you can slide left and right. Commonly use
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/DataCarousel.svelte
+../../../../../../packages/interkit/components/DataCarousel.svelte
 ```
 
 </details>
@@ -56,7 +56,7 @@ Shows images that you can swipe left and right. When an image is swiped, the com
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/PictureBook.svelte
+../../../../../../packages/interkit/components/PictureBook.svelte
 ```
 
 </details>
@@ -73,7 +73,7 @@ Displays a mosaic of images in three columns. Intended to be used with [DataTile
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Mosaic.svelte
+../../../../../../packages/interkit/components/Mosaic.svelte
 ```
 
 </details>

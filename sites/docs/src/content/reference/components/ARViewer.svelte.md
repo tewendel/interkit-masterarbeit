@@ -19,7 +19,7 @@ The viewer is a full screen overlay and should be displayed inside its own route
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/ARViewer.svelte
+../../../../../../packages/interkit/components/ARViewer.svelte
 ```
 
 </details>

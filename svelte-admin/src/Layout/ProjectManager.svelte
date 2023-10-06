@@ -144,7 +144,7 @@
                         size="small"
                         kind="ghost"
                         icon={Help}
-                        on:click={() => docsGo('/basics/build_app#creating-a-project')}
+                        on:click={() => docsGo('/guides/overview/build_app#creating-a-project')}
                         >
                         Help
                       </Button>
@@ -170,7 +170,7 @@
                           size="small"
                           kind="ghost"
                           icon={Help}
-                          on:click={() => docsGo('/basics/build_app#creating-a-project')}
+                          on:click={() => docsGo('/guides/overview/build_app#creating-a-project')}
                           >
                           Help
                         </Button>

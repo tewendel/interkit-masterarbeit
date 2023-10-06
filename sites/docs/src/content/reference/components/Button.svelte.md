@@ -88,7 +88,7 @@ Your app can respond to a button press in several different ways by setting it's
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/Button.svelte
+../../../../../../packages/interkit/components/Button.svelte
 ```
 </details>
 

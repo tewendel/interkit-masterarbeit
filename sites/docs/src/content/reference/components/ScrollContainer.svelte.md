@@ -12,7 +12,7 @@ Enable vertical scrolling around content.
 <summary>Developer docs</summary>
 
 ```docs
-../../../../../packages/interkit/components/ScrollContainer.svelte
+../../../../../../packages/interkit/components/ScrollContainer.svelte
 ```
 
 </details>
