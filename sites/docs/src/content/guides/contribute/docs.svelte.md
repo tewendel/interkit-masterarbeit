@@ -10,7 +10,7 @@ Files are in subdirectories in `sites/docs/src/content`
 
 ## Sidebar
 
-Sidebar is configured manually in `sites/docs/src/content/sidebar.json.js`
+Sidebar is configured manually in `sites/docs/src/content/structure.json.js`
 
 ## Run locally
 
