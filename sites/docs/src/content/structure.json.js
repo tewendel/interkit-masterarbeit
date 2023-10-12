@@ -202,6 +202,10 @@ export const items = [
           {
             title: 'Custom Theme',
             path: '/guides/contribute/theme'
+          },
+          {
+            title: 'Template',
+            path: '/guides/contribute/template'
           }
         ]
       }

@@ -62,6 +62,9 @@ After pulling many images, you might need to free up disk space on the server to
 - `docker image prune -a` - delete unused images
 - `docker system prune` - delete unused containers
 
+## initialize the included templates
+
+- see [templates](/guides/contribute/template)
 
 ## setup project repository on the new interkit server
 

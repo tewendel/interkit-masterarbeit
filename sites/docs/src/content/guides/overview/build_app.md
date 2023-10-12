@@ -58,9 +58,7 @@ Click **Create project…** to start the wizard, where you can pick between thre
 
 - If your server has **templates** pre-installed, you choose between them in the following step.
 - Advanced users might want to start with an **empty&nbsp;project**.
-- You can **import** a starter project from a repository.
-  Interkit hosts several at 
-  <a href="https://gitlab.interkit.app/interkit-project-templates" target="_blank">gitlab.interkit.app/interkit-project-templates</a>
+- You can **import** an existing project from a git repository.
 - You can also **duplicate** a project to start a new project based off of it. This works for templates and regular projects.
 
 ### Build the App Structure
