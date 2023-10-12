@@ -1,0 +1,1 @@
+Save bookmarked items in a separate list.

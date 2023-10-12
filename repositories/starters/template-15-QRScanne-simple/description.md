@@ -1,0 +1,1 @@
+Use the QR scanner to open the detail view for an element identified by the code.

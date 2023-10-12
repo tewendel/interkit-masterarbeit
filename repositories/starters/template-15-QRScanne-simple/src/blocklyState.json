@@ -1,0 +1,585 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 87,
+        "y": 84,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "RouteConnector",
+              "id": "aP-FpD!xHUCgnfYm{X|R",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/"
+              },
+              "next": {
+                "block": {
+                  "type": "RouteConnector",
+                  "id": "{K=DoTQh0vz_Y;|k=Os#",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "path": "/scanner"
+                  },
+                  "next": {
+                    "block": {
+                      "type": "RouteConnector",
+                      "id": "){[b0@V.8h+dlx%Gj?i0",
+                      "data": "{\"origin\":\"interkit\"}",
+                      "fields": {
+                        "path": "/elements"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "mrWgF`{0R.p,3cz`#+n]",
+        "x": 96,
+        "y": 346,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "9|d?/Y)0;LYaZAzwxZg1",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "m"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "m"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "m"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "m"
+                    }
+                  ]
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "Spacing",
+                  "id": "[IS=`*7oZ5FP2UW5`:4b",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "extraProps": {
+                      "props": [
+                        {
+                          "name": "top",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "top",
+                          "value": "none"
+                        },
+                        {
+                          "name": "right",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "right",
+                          "value": "m"
+                        },
+                        {
+                          "name": "bottom",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "bottom",
+                          "value": "m"
+                        },
+                        {
+                          "name": "left",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "left",
+                          "value": "m"
+                        }
+                      ]
+                    }
+                  },
+                  "inputs": {
+                    "default": {
+                      "block": {
+                        "type": "Button",
+                        "id": "/S9M_X5o#0$*M5HJuNB5",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Open scanner",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "id": "effect",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/scanner"
+                                }
+                              },
+                              {
+                                "name": "type",
+                                "type": "options",
+                                "options": [
+                                  "primary",
+                                  "secondary",
+                                  "ghost",
+                                  "link",
+                                  "spacer",
+                                  "list-item",
+                                  "nav-tab"
+                                ],
+                                "defaultValue": "primary",
+                                "help": "Appearance of the button.",
+                                "id": "type"
+                              },
+                              {
+                                "name": "size",
+                                "type": "options",
+                                "options": [
+                                  "medium",
+                                  "small",
+                                  "large"
+                                ],
+                                "defaultValue": "medium",
+                                "help": "Large, medium or small.",
+                                "id": "size"
+                              },
+                              {
+                                "name": "flex",
+                                "type": "options",
+                                "options": [
+                                  "normal",
+                                  "fill"
+                                ],
+                                "defaultValue": "normal",
+                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                "id": "flex"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "DataRouteSingle",
+        "id": "dcF`QtasxCmwTSmC(LLB",
+        "x": 578,
+        "y": 108,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/elements",
+          "sheet": {
+            "value": {
+              "value": "elements",
+              "text": "elements"
+            }
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "Z9)jKbM)R-eCU;6=FBx[",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": ",xEKba22$wbzWW)Tm7[{",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "Button",
+                          "id": "8U4ta14Colbz(lDXU_=h",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "effect",
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "value": {
+                                    "effectType": "route",
+                                    "path": "/"
+                                  }
+                                },
+                                {
+                                  "id": "type",
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ],
+                                  "defaultValue": "primary",
+                                  "help": "Appearance of the button.",
+                                  "value": "link"
+                                },
+                                {
+                                  "id": "size",
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small."
+                                },
+                                {
+                                  "id": "flex",
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "#qxl|JXxt/a,UwO@y}7s",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Thin-Arrow-Left",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "DataCard",
+                    "id": "jF5FGQABGfJk{k!UKu2F",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "variant",
+                            "name": "variant",
+                            "type": "options",
+                            "options": [
+                              "full",
+                              "large",
+                              "medium",
+                              "small"
+                            ],
+                            "defaultValue": "full"
+                          },
+                          {
+                            "id": "rightArrow",
+                            "name": "rightArrow",
+                            "type": "checkbox",
+                            "help": "Display the right arrow next to the headline"
+                          },
+                          {
+                            "id": "effect",
+                            "name": "effect",
+                            "type": "effect",
+                            "help": "What should happen when you tap on the card"
+                          },
+                          {
+                            "id": "imageColumn",
+                            "name": "imageColumn",
+                            "type": "sheetColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/image",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "image",
+                              "text": "elements/image",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "id": "headlineColumn",
+                            "name": "headlineColumn",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/headline",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "title",
+                              "text": "elements/title",
+                              "columnType": "string"
+                            }
+                          },
+                          {
+                            "id": "label1Column",
+                            "name": "label1Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label1",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label1",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "subtitle1Column",
+                            "name": "subtitle1Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle1",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle1",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "label2Column",
+                            "name": "label2Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label2",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label2",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "subtitle2Column",
+                            "name": "subtitle2Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle2",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle2",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "label3Column",
+                            "name": "label3Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label3",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label3",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "subtitle3Column",
+                            "name": "subtitle3Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle3",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle3",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "id": "descriptionColumn",
+                            "name": "descriptionColumn",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/description",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "description",
+                              "text": "elements/description",
+                              "columnType": "string"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "oF4af$G0+{kMW`kT;e`1",
+        "x": 374,
+        "y": 128,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/scanner",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "QRScanner",
+              "id": "1QSiz+OEIKIiO8R(lKch",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "sheetColumn",
+                      "name": "elementKeyColumn",
+                      "columnType": "string",
+                      "defaultValue": "elements/qrKey",
+                      "help": "The column containing the codes that you want to detect with the scanner.",
+                      "id": "elementKeyColumn",
+                      "value": {
+                        "sheetKey": "elements",
+                        "columnKey": "qrKey",
+                        "text": "elements/qrKey",
+                        "columnType": "string"
+                      }
+                    },
+                    {
+                      "type": "effect",
+                      "name": "closeEffect",
+                      "help": "What should happen when the user taps the x",
+                      "id": "closeEffect",
+                      "value": {
+                        "effectType": "back"
+                      }
+                    },
+                    {
+                      "type": "effect",
+                      "name": "scanEffect",
+                      "help": "What schould happen when the scanner scans a code",
+                      "id": "scanEffect",
+                      "value": {
+                        "effectType": "dataRouteSingle",
+                        "path": "/elements"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

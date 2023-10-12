@@ -1,0 +1,1 @@
+List both cats and categories, and navigate the connections between the two.

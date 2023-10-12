@@ -1,0 +1,1687 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "DataRouteMulti",
+        "id": "2Z4xg/,Sigqf(*Wv!|4+",
+        "x": 396,
+        "y": 116,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "sheet": {
+            "value": {
+              "value": "elements",
+              "text": "cats"
+            }
+          },
+          "keepAlive": false,
+          "extraProps": {
+            "props": [
+              {
+                "name": "referenceElementStore",
+                "type": "string"
+              },
+              {
+                "name": "referenceElementColumn",
+                "type": "sheetColumn"
+              },
+              {
+                "name": "sortColumn",
+                "type": "sheetColumn"
+              },
+              {
+                "name": "hideColumn",
+                "defaultValue": "elements/hide",
+                "type": "sheetColumn"
+              },
+              {
+                "name": "excludeAnnotated",
+                "type": "string",
+                "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+              },
+              {
+                "name": "includeOnlyAnnotated",
+                "type": "string",
+                "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+              },
+              {
+                "name": "discoverableColumn",
+                "type": "sheetColumn",
+                "defaultValue": "elements/discoverable",
+                "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+              },
+              {
+                "name": "discoverProperty",
+                "type": "string",
+                "defaultValue": "discovered"
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "E5j$.$be@ymg/hP:#Jey",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "7SiTPH{1.UlS51sN2@3p",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Cats"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": ";jY:s7z8$qP#UB49Y)yf",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "SectionShell",
+                          "id": "DU%i$84g.c50HPASKwY?",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataList",
+                                "id": "yl^{enz/x6,fB;DX7TW2",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "inputs": {
+                                  "dataElement": {
+                                    "block": {
+                                      "type": "DataCard",
+                                      "id": "Ss}yo(NxTPr:F#g.v%HK",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "name": "variant",
+                                              "type": "options",
+                                              "options": [
+                                                "full",
+                                                "large",
+                                                "medium",
+                                                "small"
+                                              ],
+                                              "defaultValue": "full",
+                                              "id": "variant",
+                                              "value": "large"
+                                            },
+                                            {
+                                              "name": "rightArrow",
+                                              "type": "checkbox",
+                                              "help": "Display the right arrow next to the headline",
+                                              "id": "rightArrow"
+                                            },
+                                            {
+                                              "name": "effect",
+                                              "type": "effect",
+                                              "help": "What should happen when you tap on the card",
+                                              "id": "effect",
+                                              "value": {
+                                                "effectType": "dataRouteSingle",
+                                                "path": "/cat"
+                                              }
+                                            },
+                                            {
+                                              "name": "imageColumn",
+                                              "type": "sheetColumn",
+                                              "columnType": "mediaFile",
+                                              "defaultValue": "elements/image",
+                                              "id": "imageColumn",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "image",
+                                                "text": "cats/image",
+                                                "columnType": "mediaFile"
+                                              }
+                                            },
+                                            {
+                                              "name": "headlineColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/headline",
+                                              "id": "headlineColumn",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "title",
+                                                "text": "cats/title",
+                                                "columnType": "string"
+                                              }
+                                            },
+                                            {
+                                              "name": "label1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label1",
+                                              "id": "label1Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label1",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "subtitle1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle1",
+                                              "id": "subtitle1Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle1",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "label2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label2",
+                                              "id": "label2Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label2",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "subtitle2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle2",
+                                              "id": "subtitle2Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle2",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "label3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label3",
+                                              "id": "label3Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label3",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "subtitle3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle3",
+                                              "id": "subtitle3Column",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle3",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "name": "descriptionColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/description",
+                                              "id": "descriptionColumn",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "description",
+                                                "text": "cats/description",
+                                                "columnType": "richText"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "jAn5tYSW=1JmVTsWIei:",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "^#xnfk][`v/SjS+:6WWt",
+        "x": 1157,
+        "y": 126,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/categories",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "6vtuWQRa+z{~8)|%#!fV",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "hk`YvAR3Xh4rr}H2@R?%",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Categories"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "H7oZi,,8R*:rMJvn61#;",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "SectionShell",
+                          "id": "EI+=fd{ot(S-f=OgPy3v",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataLoaderMulti",
+                                "id": "88#xS-bCURjdlsX.Kp.r",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "sheetKey": {
+                                    "value": {
+                                      "value": "categories",
+                                      "text": "categories"
+                                    }
+                                  },
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "name": "sortColumn",
+                                        "type": "sheetColumn"
+                                      },
+                                      {
+                                        "name": "hideColumn",
+                                        "defaultValue": "elements/hide"
+                                      },
+                                      {
+                                        "name": "includeOnlyAnnotated",
+                                        "type": "string",
+                                        "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                      },
+                                      {
+                                        "name": "excludeAnnotated",
+                                        "type": "string",
+                                        "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                      },
+                                      {
+                                        "name": "discoverableColumn",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/discoverable",
+                                        "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                                      },
+                                      {
+                                        "name": "discoverProperty",
+                                        "type": "string",
+                                        "defaultValue": "discovered"
+                                      },
+                                      {
+                                        "name": "referenceColumn",
+                                        "type": "sheetColumn",
+                                        "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context."
+                                      }
+                                    ]
+                                  }
+                                },
+                                "inputs": {
+                                  "default": {
+                                    "block": {
+                                      "type": "DataList",
+                                      "id": "br/[/J]OY+hxA6J+aOtx",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "inputs": {
+                                        "dataElement": {
+                                          "block": {
+                                            "type": "Button",
+                                            "id": "VseP+V;qO%=X9Nie}T8=",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "text": "",
+                                              "extraProps": {
+                                                "props": [
+                                                  {
+                                                    "type": "effect",
+                                                    "name": "effect",
+                                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                    "id": "effect",
+                                                    "value": {
+                                                      "effectType": "dataRouteSingle",
+                                                      "path": "/category"
+                                                    }
+                                                  },
+                                                  {
+                                                    "name": "type",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "primary",
+                                                      "secondary",
+                                                      "ghost",
+                                                      "link",
+                                                      "spacer",
+                                                      "list-item",
+                                                      "nav-tab"
+                                                    ],
+                                                    "defaultValue": "primary",
+                                                    "help": "Appearance of the button.",
+                                                    "id": "type",
+                                                    "value": "list-item"
+                                                  },
+                                                  {
+                                                    "name": "size",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "medium",
+                                                      "small",
+                                                      "large"
+                                                    ],
+                                                    "defaultValue": "medium",
+                                                    "help": "Large, medium or small.",
+                                                    "id": "size"
+                                                  },
+                                                  {
+                                                    "name": "flex",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "normal",
+                                                      "fill"
+                                                    ],
+                                                    "defaultValue": "normal",
+                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                    "id": "flex"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "inputs": {
+                                              "default": {
+                                                "block": {
+                                                  "type": "DataCell",
+                                                  "id": "2z9la.xPi!A*DoWs`DcH",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "name": "column",
+                                                          "type": "sheetColumn",
+                                                          "columnType": "richText",
+                                                          "defaultValue": "settings/content",
+                                                          "id": "column",
+                                                          "value": {
+                                                            "sheetKey": "categories",
+                                                            "columnKey": "name",
+                                                            "text": "categories/name",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "name": "format",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "richtText",
+                                                            "string"
+                                                          ],
+                                                          "defaultValue": "richText",
+                                                          "id": "format",
+                                                          "value": "string"
+                                                        },
+                                                        {
+                                                          "name": "inline",
+                                                          "type": "checkbox",
+                                                          "defaultValue": false,
+                                                          "id": "inline"
+                                                        },
+                                                        {
+                                                          "name": "centerContent",
+                                                          "type": "checkbox",
+                                                          "defaultValue": false,
+                                                          "id": "centerContent"
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "o5c7?:J^aLDtkiuL%85$",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 108,
+        "y": 110,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "RouteConnector",
+              "id": "*fsdC(B]+a!x)Qe`-dX8",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/"
+              },
+              "next": {
+                "block": {
+                  "type": "RouteConnector",
+                  "id": "k4L:=R%rXfni0bx3UIs`",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "path": "/cat"
+                  },
+                  "next": {
+                    "block": {
+                      "type": "RouteConnector",
+                      "id": "cB*0c1x^@K~ywzu@egif",
+                      "data": "{\"origin\":\"interkit\"}",
+                      "fields": {
+                        "path": "/categories"
+                      },
+                      "next": {
+                        "block": {
+                          "type": "RouteConnector",
+                          "id": "`8M0`1LUn^!+-pTkv8;=",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "path": "/category"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "DataRouteSingle",
+        "id": "7Xd:RBzCU+n]#a,20_VG",
+        "x": 706,
+        "y": 121,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/cat",
+          "sheet": {
+            "value": {
+              "value": "elements",
+              "text": "cats"
+            }
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "5Zs1;_H8AYIRBLg%z22F",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "@[O,@LuZ=w;ZcbnoY0-Y",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "Button",
+                          "id": "ur=H*=^I2u%IT3VVU~v)",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "back"
+                                  }
+                                },
+                                {
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ],
+                                  "defaultValue": "primary",
+                                  "help": "Appearance of the button.",
+                                  "id": "type",
+                                  "value": "link"
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "*uN6r2XhA;2gVtXm0tg1",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Thin-Arrow-Left",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "DataCell",
+                          "id": "ZS%Rjzm-*GeH{#7Nk:t#",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "column",
+                                  "type": "sheetColumn",
+                                  "columnType": "richText",
+                                  "defaultValue": "settings/content",
+                                  "id": "column",
+                                  "value": {
+                                    "sheetKey": "categories",
+                                    "columnKey": "title",
+                                    "text": "categories/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "format",
+                                  "type": "options",
+                                  "options": [
+                                    "richtText",
+                                    "string"
+                                  ],
+                                  "defaultValue": "richText",
+                                  "id": "format",
+                                  "value": "string"
+                                },
+                                {
+                                  "name": "inline",
+                                  "type": "checkbox",
+                                  "defaultValue": "TRUE",
+                                  "id": "inline",
+                                  "value": false
+                                },
+                                {
+                                  "name": "centerContent",
+                                  "type": "checkbox",
+                                  "defaultValue": "FALSE",
+                                  "id": "centerContent",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "?wEmvqq9_a)bu:$}Z;=g",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataCard",
+                          "id": "eBQ~c$5Dx:$zvm!MF^Tp",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "variant",
+                                  "type": "options",
+                                  "options": [
+                                    "full",
+                                    "large",
+                                    "medium",
+                                    "small"
+                                  ],
+                                  "defaultValue": "full",
+                                  "id": "variant"
+                                },
+                                {
+                                  "name": "rightArrow",
+                                  "type": "checkbox",
+                                  "help": "Display the right arrow next to the headline",
+                                  "id": "rightArrow"
+                                },
+                                {
+                                  "name": "effect",
+                                  "type": "effect",
+                                  "help": "What should happen when you tap on the card",
+                                  "id": "effect"
+                                },
+                                {
+                                  "name": "imageColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "mediaFile",
+                                  "defaultValue": "elements/image",
+                                  "id": "imageColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "image",
+                                    "text": "cats/image",
+                                    "columnType": "mediaFile"
+                                  }
+                                },
+                                {
+                                  "name": "headlineColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/headline",
+                                  "id": "headlineColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "title",
+                                    "text": "cats/title",
+                                    "columnType": "string"
+                                  }
+                                },
+                                {
+                                  "name": "label1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label1",
+                                  "id": "label1Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label1",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle1",
+                                  "id": "subtitle1Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle1",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "label2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label2",
+                                  "id": "label2Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label2",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle2",
+                                  "id": "subtitle2Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle2",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "label3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label3",
+                                  "id": "label3Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label3",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle3",
+                                  "id": "subtitle3Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle3",
+                                    "text": "cats/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "descriptionColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/description",
+                                  "id": "descriptionColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "description",
+                                    "text": "cats/description",
+                                    "columnType": "richText"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "SectionShell",
+                              "id": "llv-IyLJ=R(1Jde@68N#",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "StaticText",
+                                    "id": "0:(eP`1k.9Tv=L(XdhOE",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "text": "This cat belongs to the following categories"
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "DataLoaderMulti",
+                                        "id": "BpIHJ!*6:?k:^-D?eVow",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "fields": {
+                                          "sheetKey": {
+                                            "value": {
+                                              "value": "categories",
+                                              "text": "categories"
+                                            }
+                                          },
+                                          "extraProps": {
+                                            "props": [
+                                              {
+                                                "name": "sortColumn",
+                                                "type": "sheetColumn",
+                                                "id": "sortColumn",
+                                                "value": {
+                                                  "sheetKey": "empty",
+                                                  "text": ""
+                                                }
+                                              },
+                                              {
+                                                "name": "hideColumn",
+                                                "defaultValue": "elements/hide",
+                                                "id": "hideColumn"
+                                              },
+                                              {
+                                                "name": "includeOnlyAnnotated",
+                                                "type": "string",
+                                                "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                                "id": "includeOnlyAnnotated"
+                                              },
+                                              {
+                                                "name": "excludeAnnotated",
+                                                "type": "string",
+                                                "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                                "id": "excludeAnnotated"
+                                              },
+                                              {
+                                                "name": "discoverableColumn",
+                                                "type": "sheetColumn",
+                                                "defaultValue": "elements/discoverable",
+                                                "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below",
+                                                "id": "discoverableColumn",
+                                                "value": {
+                                                  "sheetKey": "elements",
+                                                  "columnKey": "discoverable",
+                                                  "text": "cats/undefined"
+                                                }
+                                              },
+                                              {
+                                                "id": "discoverProperty",
+                                                "name": "discoverProperty",
+                                                "type": "string",
+                                                "defaultValue": "discovered"
+                                              },
+                                              {
+                                                "name": "referenceColumn",
+                                                "type": "sheetColumn",
+                                                "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context.",
+                                                "id": "referenceColumn",
+                                                "value": {
+                                                  "sheetKey": "elements",
+                                                  "columnKey": "category",
+                                                  "text": "cats/category",
+                                                  "columnType": "sheetRef"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "inputs": {
+                                          "default": {
+                                            "block": {
+                                              "type": "DataList",
+                                              "id": "Qe~t;e7,8)cG;Th!mRj{",
+                                              "data": "{\"origin\":\"interkit\"}",
+                                              "inputs": {
+                                                "dataElement": {
+                                                  "block": {
+                                                    "type": "Button",
+                                                    "id": "-;-{L#p?8y6zb6@$oO){",
+                                                    "data": "{\"origin\":\"interkit\"}",
+                                                    "fields": {
+                                                      "text": "",
+                                                      "extraProps": {
+                                                        "props": [
+                                                          {
+                                                            "type": "effect",
+                                                            "name": "effect",
+                                                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                            "id": "effect",
+                                                            "value": {
+                                                              "effectType": "dataRouteSingle",
+                                                              "path": "/category"
+                                                            }
+                                                          },
+                                                          {
+                                                            "name": "type",
+                                                            "type": "options",
+                                                            "options": [
+                                                              "primary",
+                                                              "secondary",
+                                                              "ghost",
+                                                              "link",
+                                                              "spacer",
+                                                              "list-item",
+                                                              "nav-tab"
+                                                            ],
+                                                            "defaultValue": "primary",
+                                                            "help": "Appearance of the button.",
+                                                            "id": "type",
+                                                            "value": "list-item"
+                                                          },
+                                                          {
+                                                            "name": "size",
+                                                            "type": "options",
+                                                            "options": [
+                                                              "medium",
+                                                              "small",
+                                                              "large"
+                                                            ],
+                                                            "defaultValue": "medium",
+                                                            "help": "Large, medium or small.",
+                                                            "id": "size",
+                                                            "value": "small"
+                                                          },
+                                                          {
+                                                            "name": "flex",
+                                                            "type": "options",
+                                                            "options": [
+                                                              "normal",
+                                                              "fill"
+                                                            ],
+                                                            "defaultValue": "normal",
+                                                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                            "id": "flex"
+                                                          }
+                                                        ]
+                                                      }
+                                                    },
+                                                    "inputs": {
+                                                      "default": {
+                                                        "block": {
+                                                          "type": "DataCell",
+                                                          "id": "~(39TecvLV=Q^DI(u0fH",
+                                                          "data": "{\"origin\":\"interkit\"}",
+                                                          "fields": {
+                                                            "extraProps": {
+                                                              "props": [
+                                                                {
+                                                                  "name": "column",
+                                                                  "type": "sheetColumn",
+                                                                  "columnType": "richText",
+                                                                  "defaultValue": "settings/content",
+                                                                  "id": "column",
+                                                                  "value": {
+                                                                    "sheetKey": "categories",
+                                                                    "columnKey": "name",
+                                                                    "text": "categories/name",
+                                                                    "columnType": "string"
+                                                                  }
+                                                                },
+                                                                {
+                                                                  "name": "format",
+                                                                  "type": "options",
+                                                                  "options": [
+                                                                    "richtText",
+                                                                    "string"
+                                                                  ],
+                                                                  "defaultValue": "richText",
+                                                                  "id": "format",
+                                                                  "value": "string"
+                                                                },
+                                                                {
+                                                                  "name": "inline",
+                                                                  "type": "checkbox",
+                                                                  "defaultValue": false,
+                                                                  "id": "inline"
+                                                                },
+                                                                {
+                                                                  "name": "centerContent",
+                                                                  "type": "checkbox",
+                                                                  "defaultValue": false,
+                                                                  "id": "centerContent"
+                                                                }
+                                                              ]
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "DataRouteSingle",
+        "id": "S+z8UT%oVI,EUoqI(K]U",
+        "x": 1497,
+        "y": 125,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/category",
+          "sheet": {
+            "value": {
+              "value": "categories",
+              "text": "categories"
+            }
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "VT%fM`oAuoJx{+o.CXS0",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "v@JHc:,~w^%c.MQ]w*re",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "Button",
+                          "id": ".xW9jHa?zJ7Qv:ER{=aC",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "back"
+                                  }
+                                },
+                                {
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ],
+                                  "defaultValue": "primary",
+                                  "help": "Appearance of the button.",
+                                  "id": "type",
+                                  "value": "link"
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "IEQJE=3(4%#S[z__Kq`/",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Thin-Arrow-Left",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "$se}/XC(I4,DI+?D?Q?V",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "headline-4"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataCell",
+                                "id": "fW;[d?#8}kX57ip9(PKt",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "name": "column",
+                                        "type": "sheetColumn",
+                                        "columnType": "richText",
+                                        "defaultValue": "settings/content",
+                                        "id": "column",
+                                        "value": {
+                                          "sheetKey": "categories",
+                                          "columnKey": "name",
+                                          "text": "categories/name",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "name": "format",
+                                        "type": "options",
+                                        "options": [
+                                          "richtText",
+                                          "string"
+                                        ],
+                                        "defaultValue": "richText",
+                                        "id": "format",
+                                        "value": "string"
+                                      },
+                                      {
+                                        "name": "inline",
+                                        "type": "checkbox",
+                                        "defaultValue": "TRUE",
+                                        "id": "inline",
+                                        "value": false
+                                      },
+                                      {
+                                        "name": "centerContent",
+                                        "type": "checkbox",
+                                        "defaultValue": "FALSE",
+                                        "id": "centerContent",
+                                        "value": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "DataCell",
+                    "id": "Id3PTB@G;Hv~FFOwIPH%",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "column",
+                            "type": "sheetColumn",
+                            "columnType": "richText",
+                            "defaultValue": "settings/content",
+                            "id": "column",
+                            "value": {
+                              "sheetKey": "categories",
+                              "columnKey": "description",
+                              "text": "categories/description",
+                              "columnType": "string"
+                            }
+                          },
+                          {
+                            "name": "format",
+                            "type": "options",
+                            "options": [
+                              "richtText",
+                              "string"
+                            ],
+                            "defaultValue": "richText",
+                            "id": "format"
+                          },
+                          {
+                            "name": "inline",
+                            "type": "checkbox",
+                            "defaultValue": false,
+                            "id": "inline"
+                          },
+                          {
+                            "name": "centerContent",
+                            "type": "checkbox",
+                            "defaultValue": false,
+                            "id": "centerContent"
+                          }
+                        ]
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "SectionShell",
+                        "id": ",@xHun)f=x?02;Ev*u6!",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "DataLoaderMulti",
+                              "id": "hc{w)M3/EFqW3vX:6=3i",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "sheetKey": {
+                                  "value": {
+                                    "value": "elements",
+                                    "text": "cats"
+                                  }
+                                },
+                                "extraProps": {
+                                  "props": [
+                                    {
+                                      "name": "sortColumn",
+                                      "type": "sheetColumn",
+                                      "id": "sortColumn",
+                                      "value": {
+                                        "sheetKey": "empty",
+                                        "text": ""
+                                      }
+                                    },
+                                    {
+                                      "name": "hideColumn",
+                                      "defaultValue": "elements/hide",
+                                      "id": "hideColumn"
+                                    },
+                                    {
+                                      "name": "includeOnlyAnnotated",
+                                      "type": "string",
+                                      "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                      "id": "includeOnlyAnnotated"
+                                    },
+                                    {
+                                      "name": "excludeAnnotated",
+                                      "type": "string",
+                                      "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                      "id": "excludeAnnotated"
+                                    },
+                                    {
+                                      "name": "discoverableColumn",
+                                      "type": "sheetColumn",
+                                      "defaultValue": "elements/discoverable",
+                                      "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below",
+                                      "id": "discoverableColumn",
+                                      "value": {
+                                        "sheetKey": "elements",
+                                        "columnKey": "discoverable",
+                                        "text": "cats/undefined"
+                                      }
+                                    },
+                                    {
+                                      "id": "discoverProperty",
+                                      "name": "discoverProperty",
+                                      "type": "string",
+                                      "defaultValue": "discovered"
+                                    },
+                                    {
+                                      "name": "referenceColumn",
+                                      "type": "sheetColumn",
+                                      "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context.",
+                                      "id": "referenceColumn",
+                                      "value": {
+                                        "sheetKey": "elements",
+                                        "columnKey": "category",
+                                        "text": "cats/category",
+                                        "columnType": "sheetRef"
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "DataList",
+                                    "id": "I~USU45!!R/^tiYzF}(I",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "inputs": {
+                                      "dataElement": {
+                                        "block": {
+                                          "type": "DataCard",
+                                          "id": "RdRUduwdpwK4VoAhx~it",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "extraProps": {
+                                              "props": [
+                                                {
+                                                  "name": "variant",
+                                                  "type": "options",
+                                                  "options": [
+                                                    "full",
+                                                    "large",
+                                                    "medium",
+                                                    "small"
+                                                  ],
+                                                  "defaultValue": "full",
+                                                  "id": "variant",
+                                                  "value": "medium"
+                                                },
+                                                {
+                                                  "name": "rightArrow",
+                                                  "type": "checkbox",
+                                                  "help": "Display the right arrow next to the headline",
+                                                  "id": "rightArrow"
+                                                },
+                                                {
+                                                  "name": "effect",
+                                                  "type": "effect",
+                                                  "help": "What should happen when you tap on the card",
+                                                  "id": "effect",
+                                                  "value": {
+                                                    "effectType": "dataRouteSingle",
+                                                    "path": "/cat"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "imageColumn",
+                                                  "type": "sheetColumn",
+                                                  "columnType": "mediaFile",
+                                                  "defaultValue": "elements/image",
+                                                  "id": "imageColumn",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "image",
+                                                    "text": "cats/image",
+                                                    "columnType": "mediaFile"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "headlineColumn",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/headline",
+                                                  "id": "headlineColumn",
+                                                  "value": {
+                                                    "sheetKey": "categories",
+                                                    "columnKey": "title",
+                                                    "text": "categories/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "label1Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label1",
+                                                  "id": "label1Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "label1",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "subtitle1Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle1",
+                                                  "id": "subtitle1Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "subtitle1",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "label2Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label2",
+                                                  "id": "label2Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "label2",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "subtitle2Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle2",
+                                                  "id": "subtitle2Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "subtitle2",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "label3Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label3",
+                                                  "id": "label3Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "label3",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "subtitle3Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle3",
+                                                  "id": "subtitle3Column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "subtitle3",
+                                                    "text": "cats/undefined"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "descriptionColumn",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/description",
+                                                  "id": "descriptionColumn",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "description",
+                                                    "text": "cats/description",
+                                                    "columnType": "richText"
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "MZZ%,zK,zAjpQJ0=Jg.3",
+        "x": 105,
+        "y": 432,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "bottomMenu"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "NavBar",
+              "id": "N#zI;QM[T30!j)OMWho*",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "NavButton",
+                    "id": "^:`9LRY|39Vp(;nEGxjA",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Cats",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "disabled",
+                            "type": "checkbox",
+                            "defaultValue": false,
+                            "id": "disabled"
+                          },
+                          {
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "id": "effect",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "NavButton",
+                        "id": "[P%e3,tGy6t(:jDmOf7-",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Categories",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "name": "disabled",
+                                "type": "checkbox",
+                                "defaultValue": false,
+                                "id": "disabled"
+                              },
+                              {
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "id": "effect",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/categories"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

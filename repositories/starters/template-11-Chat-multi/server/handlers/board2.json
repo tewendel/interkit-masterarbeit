@@ -1,0 +1,14 @@
+{
+  "name": "board2",
+  "nodes": [
+    {
+      "id": "start",
+      "posX": 10,
+      "posY": 10,
+      "contents": "export const onArrive = async (api) => {\n  api.sendText(\"miauuuu\")\n}\n\nexport const onMessage = async (msg, api) => {\n  api.sendText(\"mooooiauw\")\n}",
+      "modified": false,
+      "_originalContents": ""
+    }
+  ],
+  "startId": "start"
+}

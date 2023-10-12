@@ -1,0 +1,405 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 564,
+        "y": 281,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "DataLoaderMulti",
+              "id": ";^9{[o4-Ngu3HgL~}~E:",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "sheetKey": {
+                  "value": {
+                    "value": "elements",
+                    "text": "elements"
+                  }
+                },
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "referenceElementStore",
+                      "type": "string"
+                    },
+                    {
+                      "name": "referenceElementColumn",
+                      "type": "sheetColumn"
+                    },
+                    {
+                      "name": "sortColumn",
+                      "type": "sheetColumn"
+                    },
+                    {
+                      "name": "hideColumn",
+                      "defaultValue": "elements/hide",
+                      "type": "sheetColumn"
+                    },
+                    {
+                      "name": "excludeAnnotated",
+                      "type": "string",
+                      "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                    },
+                    {
+                      "name": "includeOnlyAnnotated",
+                      "type": "string",
+                      "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                    },
+                    {
+                      "name": "discoverableColumn",
+                      "type": "sheetColumn",
+                      "defaultValue": "elements/discoverable",
+                      "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                    },
+                    {
+                      "name": "discoverProperty",
+                      "type": "string",
+                      "defaultValue": "discovered"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "MapSimple",
+                    "id": "zVlb(RxT6F]OP%@A}ebg",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "string",
+                            "name": "defaultLocation",
+                            "id": "defaultLocation"
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerPositionsColumn",
+                            "columnType": "location",
+                            "defaultValue": "elements/position",
+                            "id": "markerPositionsColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "position",
+                              "text": "elements/position",
+                              "columnType": "location"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "customIconColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/mapMarkerIcon",
+                            "id": "customIconColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "image",
+                              "text": "elements/image",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerLabelColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/markerLabel",
+                            "id": "markerLabelColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "markerLabel",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerTitleColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/markerTitle",
+                            "id": "markerTitleColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "title",
+                              "text": "elements/title",
+                              "columnType": "string"
+                            }
+                          },
+                          {
+                            "type": "string",
+                            "name": "checkedProperty",
+                            "defaultValue": "checked",
+                            "id": "checkedProperty"
+                          },
+                          {
+                            "type": "string",
+                            "name": "secondaryPositionProperty",
+                            "id": "secondaryPositionProperty"
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "hideOnMapColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/hideOnMap",
+                            "id": "hideOnMapColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "hideOnMap",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "type": "string",
+                            "name": "permissionNotification",
+                            "id": "permissionNotification"
+                          },
+                          {
+                            "type": "string",
+                            "name": "enableGeolocationHint",
+                            "id": "enableGeolocationHint"
+                          },
+                          {
+                            "type": "string",
+                            "name": "mapId",
+                            "defaultValue": "map",
+                            "id": "mapId"
+                          },
+                          {
+                            "type": "string",
+                            "name": "height",
+                            "defaultValue": "100%",
+                            "id": "height"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "showControls",
+                            "defaultValue": true,
+                            "id": "showControls"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "showPopups",
+                            "defaultValue": true,
+                            "id": "showPopups"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "inline",
+                            "defaultValue": false,
+                            "id": "inline"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "nearestElementMode",
+                            "defaultValue": false,
+                            "id": "nearestElementMode"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "disableControls",
+                            "defaultValue": false,
+                            "id": "disableControls"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "singleElementContext",
+                            "help": "The map shows a single marker defined by a single element context.",
+                            "defaultValue": false,
+                            "id": "singleElementContext"
+                          },
+                          {
+                            "type": "string",
+                            "name": "tileLayer",
+                            "defaultValue": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            "id": "tileLayer",
+                            "value": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          },
+                          {
+                            "type": "string",
+                            "name": "mapBoxGLStyle",
+                            "id": "mapBoxGLStyle",
+                            "value": ""
+                          },
+                          {
+                            "type": "string",
+                            "name": "clickTrigger",
+                            "id": "clickTrigger"
+                          },
+                          {
+                            "type": "string",
+                            "name": "closeButtonLabel",
+                            "defaultValue": "Schließen",
+                            "id": "closeButtonLabel",
+                            "value": "Close"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "popup": {
+                        "block": {
+                          "type": "DataCard",
+                          "id": "cbidZ}59{dLAcCV08=o1",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "variant",
+                                  "type": "options",
+                                  "options": [
+                                    "full",
+                                    "large",
+                                    "medium",
+                                    "small"
+                                  ],
+                                  "defaultValue": "full",
+                                  "id": "variant",
+                                  "value": "small"
+                                },
+                                {
+                                  "name": "rightArrow",
+                                  "type": "checkbox",
+                                  "help": "Display the right arrow next to the headline",
+                                  "id": "rightArrow",
+                                  "value": false
+                                },
+                                {
+                                  "name": "effect",
+                                  "type": "effect",
+                                  "help": "What should happen when you tap on the card",
+                                  "id": "effect"
+                                },
+                                {
+                                  "name": "imageColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "mediaFile",
+                                  "defaultValue": "elements/image",
+                                  "id": "imageColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "image",
+                                    "text": "elements/image",
+                                    "columnType": "mediaFile"
+                                  }
+                                },
+                                {
+                                  "name": "headlineColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/headline",
+                                  "id": "headlineColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "title",
+                                    "text": "elements/title",
+                                    "columnType": "string"
+                                  }
+                                },
+                                {
+                                  "name": "label1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label1",
+                                  "id": "label1Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle1",
+                                  "id": "subtitle1Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "label2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label2",
+                                  "id": "label2Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle2",
+                                  "id": "subtitle2Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "label3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label3",
+                                  "id": "label3Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "subtitle3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle3",
+                                  "id": "subtitle3Column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "name": "descriptionColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/description",
+                                  "id": "descriptionColumn",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "description",
+                                    "text": "elements/undefined"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

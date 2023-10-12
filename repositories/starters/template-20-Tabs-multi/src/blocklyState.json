@@ -1,0 +1,699 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "Group",
+        "id": "R,#(ST-Kd]2A2.CZ7NO2",
+        "x": 354,
+        "y": 360,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab1.1"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": "2{yisKb|7p7!(]Kogj5/",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "tab1",
+                "value": "1"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "@4W.$?xEjcU(4#wPM7)z",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Some content"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 11,
+        "y": -98,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "KJ5D$*-s!+`c.mI|]y:q",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "s"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "s"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "s"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "s"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "ZJV[Nso!~D)TVM0}m!.W",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Here are two independent sets of tabs:"
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "GroupConnector",
+                  "id": "O%15Nupkmcd;8I{`23)I",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "name": "tab1"
+                  },
+                  "next": {
+                    "block": {
+                      "type": "GroupConnector",
+                      "id": "mvToC*k2;Aa-[]Vr0Q(T",
+                      "data": "{\"origin\":\"interkit\"}",
+                      "fields": {
+                        "name": "tab2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "@@`^qHf[t=~#K{E06$3|",
+        "x": 582,
+        "y": 355,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab1.2"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": "(Bi,ciD~+67xCo)]GAM_",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "tab1",
+                "value": "2"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "2xT|i=DBSCs6Ran#VGv3",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "More content"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "1AOf^`nZ*6vMW*,JEXLp",
+        "x": 809,
+        "y": 357,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab1.3"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": "MyhV=q}(dIlwob.(P})1",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "tab1",
+                "value": "3"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "f_YG)/(0Br@81K[1$SOl",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Other"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "fGiTvN@F}3@5Se?/Mdq9",
+        "x": 390,
+        "y": 969,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab2.1"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": "E?0=iWPyDBGu6LZ.43Vc",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "tab2",
+                "value": "1"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "gjIK!dY-Wg6)*nI{kVF|",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Some more"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "*K=T(o*J^AL[wDskM},T",
+        "x": 627,
+        "y": 964,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab2.2"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": ":aO:3QA_@eFe{t9E,{tS",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "tab2",
+                "value": "2"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "5k5dS{)9Hb;`dKAO{ZD!",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Also this"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "DfCNh#;OOD:{j?QjC9]X",
+        "x": 18,
+        "y": 228,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab1"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TabBar",
+              "id": "G*}D^Q9M@)+KpAv4c[Qu",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Tab",
+                    "id": "v:Z?+-Oiw=cW?4t8](/0",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Tab One",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "setUIKey",
+                              "value": "1",
+                              "key": "tab1"
+                            }
+                          },
+                          {
+                            "id": "execOnMount",
+                            "type": "checkbox",
+                            "name": "execOnMount",
+                            "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                            "value": true
+                          }
+                        ]
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "Tab",
+                        "id": "Plr@G:+0:3eSWT4!vjF3",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Tab Two",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "id": "effect",
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "setUIKey",
+                                  "value": "2",
+                                  "key": "tab1"
+                                }
+                              },
+                              {
+                                "id": "execOnMount",
+                                "type": "checkbox",
+                                "name": "execOnMount",
+                                "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                              }
+                            ]
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "Tab",
+                            "id": "(Cyg$=Jt*.)e:|Ph5o?H",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "text": "Tab Three",
+                              "extraProps": {
+                                "props": [
+                                  {
+                                    "id": "effect",
+                                    "type": "effect",
+                                    "name": "effect",
+                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                    "value": {
+                                      "effectType": "setUIKey",
+                                      "value": "3",
+                                      "key": "tab1"
+                                    }
+                                  },
+                                  {
+                                    "id": "execOnMount",
+                                    "type": "checkbox",
+                                    "name": "execOnMount",
+                                    "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "Spacing",
+                  "id": "{c+Amk!Dh|i`#:|AyVnC",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "extraProps": {
+                      "props": [
+                        {
+                          "name": "top",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "top",
+                          "value": "s"
+                        },
+                        {
+                          "name": "right",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "right",
+                          "value": "s"
+                        },
+                        {
+                          "name": "bottom",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "bottom",
+                          "value": "s"
+                        },
+                        {
+                          "name": "left",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "left",
+                          "value": "s"
+                        }
+                      ]
+                    }
+                  },
+                  "inputs": {
+                    "default": {
+                      "block": {
+                        "type": "GroupConnector",
+                        "id": "iUcC*k]ow=zxEkc4Y0l^",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "name": "tab1.1"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "GroupConnector",
+                            "id": "=yikZH$9[Ryb0G#3m,CU",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "name": "tab1.2"
+                            },
+                            "next": {
+                              "block": {
+                                "type": "GroupConnector",
+                                "id": "~!Yv3I64EPB#=D6st-l@",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "name": "tab1.3"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "xBiUj;kWjjo411E/?cEa",
+        "x": 95,
+        "y": 999,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "tab2"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TabBar",
+              "id": "kXBm?1Z^K7Q]y8V:V!eS",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Tab",
+                    "id": "IL1Wr9jNTS=c=eRWWI5N",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Tab One",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "setUIKey",
+                              "value": "1",
+                              "key": "tab2"
+                            }
+                          },
+                          {
+                            "id": "execOnMount",
+                            "type": "checkbox",
+                            "name": "execOnMount",
+                            "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                            "value": true
+                          }
+                        ]
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "Tab",
+                        "id": "ecD3*?{:]B@tAg.ShG(x",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Tab Two",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "id": "effect",
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "setUIKey",
+                                  "value": "2",
+                                  "key": "tab2"
+                                }
+                              },
+                              {
+                                "id": "execOnMount",
+                                "type": "checkbox",
+                                "name": "execOnMount",
+                                "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "Spacing",
+                  "id": "8{n%D--hodqi)DPP5h`J",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "extraProps": {
+                      "props": [
+                        {
+                          "name": "top",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "top",
+                          "value": "s"
+                        },
+                        {
+                          "name": "right",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "right",
+                          "value": "s"
+                        },
+                        {
+                          "name": "bottom",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "bottom",
+                          "value": "s"
+                        },
+                        {
+                          "name": "left",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "left",
+                          "value": "s"
+                        }
+                      ]
+                    }
+                  },
+                  "inputs": {
+                    "default": {
+                      "block": {
+                        "type": "GroupConnector",
+                        "id": "j^%3Vo#0UZUN-|G1CMSm",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "name": "tab2.1"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "GroupConnector",
+                            "id": "f-tjpW:v6v|2x6hQ.l-9",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "name": "tab2.2"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
