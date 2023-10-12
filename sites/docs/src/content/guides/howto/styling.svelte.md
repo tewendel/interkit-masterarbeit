@@ -48,4 +48,4 @@ Some example usages:
 
 While **Styling** lets you change the values of a set of built-in variables, **Theming** is a way to extend and modify the appearence of an app in a deeper and more flexible way.
 
---> [Theming](../contribute/theme)
+See [Theming](/guides/contribute/theme)
