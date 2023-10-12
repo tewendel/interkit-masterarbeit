@@ -55,6 +55,12 @@ Meteor.publish('projects.list', function() {
 
 Meteor.publish('project', function(projectId) {
   //console.log("project sub")
+  if (userIsInRoles(this.userId, ['admin', 'author'])) {
+    Projects.update(
+      { _id: projectId },
+      { $set: { ["devServer.actionRequested"]: "start" } }
+    );
+  }
   let projects = Projects.find({_id: projectId});
   return projects;
 });

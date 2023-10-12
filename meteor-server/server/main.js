@@ -7,7 +7,7 @@ require('dotenv').config( {
 
 
 import '../imports/collections.js';
-import "../imports/userActivity.js";
+import {init as initUserActivity} from "../imports/userActivity.js";
 import './publications';
 import './userRolesSetup.js';
 
@@ -37,6 +37,8 @@ Meteor.startup(() => {
     { $set: {"projectServer.actionRequested": null} }, 
     { multi: true }
   )
+
+  //initUserActivity();
 
 });
 

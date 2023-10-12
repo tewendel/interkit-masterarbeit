@@ -1,0 +1,330 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "Route",
+        "id": "0Vi3Kxo|{r+1ufg2r2w@",
+        "x": 360,
+        "y": 112,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/item",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "DataLoaderSingle",
+              "id": "@]D@yVyTJoX*o7q}2n~P",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "sheet",
+                      "type": "sheetId",
+                      "id": "sheet",
+                      "value": {
+                        "sheetKey": "elements",
+                        "text": "elements"
+                      }
+                    },
+                    {
+                      "name": "rowKey",
+                      "type": "string",
+                      "id": "rowKey",
+                      "value": "101a271e-8f72-43b7-bfe2-be5ede8102fd"
+                    },
+                    {
+                      "name": "customKeyColumn",
+                      "type": "sheetColumn",
+                      "columnType": "string",
+                      "defaultValue": "settings/contentKey",
+                      "id": "customKeyColumn",
+                      "value": {
+                        "sheetKey": "empty",
+                        "columnKey": "84188782-b54d-4be6-9c09-20cf76bbd105",
+                        "text": ""
+                      }
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "ARViewer",
+                    "id": ".UEAr/2otezi@phpP+p#",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "sheetColumn",
+                            "name": "titleColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/title",
+                            "id": "titleColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "title",
+                              "text": "elements/title",
+                              "columnType": "string"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "glbColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/glbFile",
+                            "id": "glbColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "glbFile",
+                              "text": "elements/glbFile",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "usdzColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/usdzFile",
+                            "id": "usdzColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "usdzFile",
+                              "text": "elements/usdzFile",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "modelPreviewImageColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/modelPreviewImageColumn",
+                            "id": "modelPreviewImageColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "modelPreviewImageColumn",
+                              "text": "elements/modelPreviewImageColumn",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "videoColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/video",
+                            "id": "videoColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "video",
+                              "text": "elements/video",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "string",
+                            "name": "closeTrigger",
+                            "id": "closeTrigger"
+                          },
+                          {
+                            "type": "string",
+                            "name": "startButtonText",
+                            "id": "startButtonText",
+                            "value": "Start"
+                          },
+                          {
+                            "type": "string",
+                            "name": "videoButtonText",
+                            "id": "videoButtonText",
+                            "value": "Video"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 65,
+        "y": 85,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages"
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Route",
+              "id": "Ak/l[:#8}_M$],W=I.j=",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/",
+                "keepAlive": false
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Spacing",
+                    "id": "]/?qsFY4d2,a|Lf,q#Qd",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "top",
+                            "name": "top",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "value": "m"
+                          },
+                          {
+                            "id": "right",
+                            "name": "right",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "value": "m"
+                          },
+                          {
+                            "id": "bottom",
+                            "name": "bottom",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "value": "m"
+                          },
+                          {
+                            "id": "left",
+                            "name": "left",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "value": "m"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Button",
+                          "id": "ACp{^NxFBu}6RP~l@qb9",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "Open AR Viewer",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "effect",
+                                  "type": "clickEffect",
+                                  "name": "effect",
+                                  "value": {
+                                    "effectType": "route",
+                                    "path": "/item"
+                                  }
+                                },
+                                {
+                                  "id": "type",
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ]
+                                },
+                                {
+                                  "id": "size",
+                                  "type": "options",
+                                  "name": "size",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "value": "large"
+                                },
+                                {
+                                  "id": "flex",
+                                  "type": "options",
+                                  "name": "flex",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "value": "fill"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "RouteConnector",
+                  "id": "7nok4cx[jauNWc|u@$A5",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "path": "/item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

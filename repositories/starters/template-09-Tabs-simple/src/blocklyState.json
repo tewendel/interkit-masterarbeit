@@ -1,0 +1,296 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 104,
+        "y": 27,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TabBar",
+              "id": "G*}D^Q9M@)+KpAv4c[Qu",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Tab",
+                    "id": "J,kA[K%bTT{J+}{~YC4%",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Tab One",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/"
+                            }
+                          },
+                          {
+                            "id": "execOnMount",
+                            "type": "checkbox",
+                            "name": "execOnMount",
+                            "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                          }
+                        ]
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "Tab",
+                        "id": "3@oX|;,8@3ikFr(CmS4`",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Tab Two",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "id": "effect",
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/2"
+                                }
+                              },
+                              {
+                                "id": "execOnMount",
+                                "type": "checkbox",
+                                "name": "execOnMount",
+                                "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                              }
+                            ]
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "Tab",
+                            "id": "ec|+{]O:`xa+^v|dAWQv",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "text": "Tab Three",
+                              "extraProps": {
+                                "props": [
+                                  {
+                                    "id": "effect",
+                                    "type": "effect",
+                                    "name": "effect",
+                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                    "value": {
+                                      "effectType": "route",
+                                      "path": "/3"
+                                    }
+                                  },
+                                  {
+                                    "id": "execOnMount",
+                                    "type": "checkbox",
+                                    "name": "execOnMount",
+                                    "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "Spacing",
+                  "id": "+)KF-_T5_tG[aq]tg8Cc",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "extraProps": {
+                      "props": [
+                        {
+                          "name": "top",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "top",
+                          "value": "s"
+                        },
+                        {
+                          "name": "right",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "right",
+                          "value": "s"
+                        },
+                        {
+                          "name": "bottom",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "bottom",
+                          "value": "s"
+                        },
+                        {
+                          "name": "left",
+                          "type": "options",
+                          "options": [
+                            "none",
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl"
+                          ],
+                          "id": "left",
+                          "value": "s"
+                        }
+                      ]
+                    }
+                  },
+                  "inputs": {
+                    "default": {
+                      "block": {
+                        "type": "RouteConnector",
+                        "id": "=!bbkRhdQ,7{{puOSezy",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "path": "/"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "RouteConnector",
+                            "id": "_u5uU3yj`=b~;rrV~fZr",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "path": "/2"
+                            },
+                            "next": {
+                              "block": {
+                                "type": "RouteConnector",
+                                "id": "TpPY_my_te6Iga3?y*!6",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "path": "/3"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "Mux0z;.eq[cYN}CpG_),",
+        "x": 877,
+        "y": 81,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/3",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "StaticText",
+              "id": "PnO~Ila@q(/0G;$^pVe!",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "Even more content"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "lEq{uZYb%JjRI(UMvcH=",
+        "x": 670,
+        "y": 80,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/2",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "StaticText",
+              "id": "[^^2bU4el5#LU9B;K:w/",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "More content"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": ".,WDPEKS^*qM.?*N9Fv2",
+        "x": 446,
+        "y": 79,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "StaticText",
+              "id": "@4W.$?xEjcU(4#wPM7)z",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "Some content"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

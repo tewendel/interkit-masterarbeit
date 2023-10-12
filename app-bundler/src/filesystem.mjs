@@ -2,6 +2,7 @@ import * as path from 'path';
 import fs from 'fs'
 import fse from 'fs-extra'
 import git from 'isomorphic-git'
+import fetch, { Blob, FormData } from "node-fetch";
 
 import { gitAddAll, gitAdd, gitCommit, gitCloneProject } from './git.mjs'
 import { compile_project } from './get_compile.mjs'
@@ -93,10 +94,11 @@ async function duplicateRepository(project, sourceProjectId) {
 
 }
 
-async function setupNewRepository(project, template="starter", gitRepository) {
+async function setupNewRepository(project, template, gitRepository) {
   const projectId = project.id
   
-  const starterPath = process.env.REPOSITORIES_PATH + "/starters/" + template
+  const starterPath = process.env.REPOSITORIES_PATH + "/starters/starter"
+  const templatePath = process.env.REPOSITORIES_PATH + "/starters/" + template
   const projectPath = getProjectPath(projectId)
   const interkitConfigJson = JSON.stringify(generateInterkitConfig(project), null, "  ")
 
@@ -111,14 +113,44 @@ async function setupNewRepository(project, template="starter", gitRepository) {
       if (gitRepository) {
         console.log("clone new app from " + gitRepository)
         try {
-          await gitCloneProject(projectPath, gitRepository)
+          await gitCloneProject(projectPath, gitRepository);
+          
+          // import seed data and mediafiles, if available
+          const seedDataPath = path.join(projectPath, "/seed.zip");
+          if (fs.existsSync(seedDataPath)) {
+            console.log("importing seed data from " + seedDataPath)
+
+            const zipBuffer = fs.readFileSync(
+              seedDataPath
+            );
+            const blob = new Blob([zipBuffer], {
+              type: "application/zip",
+            });
+            const formData = new FormData();
+            formData.append("projectId", projectId);
+            formData.append("importfile", blob);
+            const res = await fetch(INTERKIT_SERVER_URL + "/import", {
+              method: "POST",
+              body: formData,
+            });
+            console.log("seed data import status code: " + res.status);
+          }
+
         } catch (err) {
           console.error(err)
         }
       } else {
+        // new project creation
         await git.init({ fs, dir: projectPath });
-        fse.copySync(starterPath, projectPath)
+        
+        fse.copySync(starterPath, projectPath) // copy starter
+        if(template) {
+          fse.copySync(templatePath, projectPath) // copy individual files from template into new project
+        }
+      
       }
+
+      
       
       await fs.promises.writeFile(
         path.join(projectPath, "static/interkit.config.json"),

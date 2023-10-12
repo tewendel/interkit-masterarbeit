@@ -1,0 +1,265 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 307,
+        "y": 144,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "ScrollContainer",
+              "id": "ykrRX0f=Yq,Rb^+`)2?(",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "SectionShell",
+                    "id": "l,Zxy/+F0yMCq^B/YW.D",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataLoaderMulti",
+                          "id": "*2L.J,AH)0f`._nX3{EH",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "sheetKey": {
+                              "value": {
+                                "value": "elements",
+                                "text": "cats"
+                              }
+                            },
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "referenceElementStore",
+                                  "type": "string"
+                                },
+                                {
+                                  "name": "referenceElementColumn",
+                                  "type": "sheetColumn"
+                                },
+                                {
+                                  "name": "sortColumn",
+                                  "type": "sheetColumn"
+                                },
+                                {
+                                  "name": "hideColumn",
+                                  "defaultValue": "elements/hide",
+                                  "type": "sheetColumn"
+                                },
+                                {
+                                  "name": "excludeAnnotated",
+                                  "type": "string",
+                                  "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                },
+                                {
+                                  "name": "includeOnlyAnnotated",
+                                  "type": "string",
+                                  "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                },
+                                {
+                                  "name": "discoverableColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/discoverable",
+                                  "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                                },
+                                {
+                                  "name": "discoverProperty",
+                                  "type": "string",
+                                  "defaultValue": "discovered"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataList",
+                                "id": "DW)_77/P4v8))68;yUmC",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "inputs": {
+                                  "dataElement": {
+                                    "block": {
+                                      "type": "DataCard",
+                                      "id": "8|5X3ko2y:;=ud:qn{1y",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "id": "variant",
+                                              "name": "variant",
+                                              "type": "options",
+                                              "options": [
+                                                "full",
+                                                "large",
+                                                "medium",
+                                                "small"
+                                              ],
+                                              "defaultValue": "full",
+                                              "value": "large"
+                                            },
+                                            {
+                                              "id": "rightArrow",
+                                              "name": "rightArrow",
+                                              "type": "checkbox",
+                                              "help": "Display the right arrow next to the headline"
+                                            },
+                                            {
+                                              "id": "effect",
+                                              "name": "effect",
+                                              "type": "effect",
+                                              "help": "What should happen when you tap on the card"
+                                            },
+                                            {
+                                              "id": "imageColumn",
+                                              "name": "imageColumn",
+                                              "type": "sheetColumn",
+                                              "columnType": "mediaFile",
+                                              "defaultValue": "elements/image",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "image",
+                                                "text": "cats/image",
+                                                "columnType": "mediaFile"
+                                              }
+                                            },
+                                            {
+                                              "id": "headlineColumn",
+                                              "name": "headlineColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/headline",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "name",
+                                                "text": "cats/name",
+                                                "columnType": "string"
+                                              }
+                                            },
+                                            {
+                                              "id": "label1Column",
+                                              "name": "label1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label1",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "empty",
+                                                "text": "",
+                                                "columnType": "string"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle1Column",
+                                              "name": "subtitle1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle1",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle1",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "label2Column",
+                                              "name": "label2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label2",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "comment",
+                                                "text": "cats/comment",
+                                                "columnType": "string"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle2Column",
+                                              "name": "subtitle2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle2",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle2",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "label3Column",
+                                              "name": "label3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label3",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label3",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle3Column",
+                                              "name": "subtitle3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle3",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle3",
+                                                "text": "cats/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "descriptionColumn",
+                                              "name": "descriptionColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/description",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "description",
+                                                "text": "cats/undefined"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "emptyElement": {
+                                    "block": {
+                                      "type": "StaticText",
+                                      "id": "vG@Hg1f.%/%w!Wy71!4K",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "text": "The list is empty."
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

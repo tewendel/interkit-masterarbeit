@@ -1,0 +1,46 @@
+{
+  "name": "board1",
+  "nodes": [
+    {
+      "id": "start",
+      "posX": 157,
+      "posY": 126,
+      "contents": "export const twinterkitSource = `\nWillkommen zum Katzen-Chat!|Welcome to cat chat!\n\n[[Weiter auf Deutsch|Switch to German->de]]\n[[Zu Englisch wechseln|Stay English->en]]\n` // end twinterkitSource\n\n/* Warning! This code has been generated in Twine-ish-mode.\n * Changes below might be overwritten when it is edited the next time,\n * changes above will not work until you re-edit in twine-ish mode\n */\n\nexport const onArrive = async (api) => {\n  api.sendTextT(`Willkommen zum Katzen-Chat!|Welcome to cat chat!`)\n  api.sendChoiceT({\n    \"choice0\": \"Weiter auf Deutsch|Switch to German\",\n    \"choice1\": \"Zu Englisch wechseln|Stay English\"\n  })\n}\n\nexport const onMessage = async (msg, api) => {\n  switch (msg.payload.key) {\n    case 'choice0':\n      api.moveTo('de')\n      break\n    case 'choice1':\n      api.moveTo('en')\n      break\n  }\n}",
+      "modified": false,
+      "_originalContents": ""
+    },
+    {
+      "id": "de",
+      "posX": 57,
+      "posY": 232,
+      "contents": "export const twinterkitSource = `\n\n` // end twinterkitSource\n\n/* Warning! This code has been generated in Twine-ish-mode.\n * Changes below might be overwritten when it is edited the next time,\n * changes above will not work until you re-edit in twine-ish mode\n */\n\nexport const onArrive = async (api) => {\n  await api.sendSystem('Deutsch')\n  await api.setLang('de', 0)\n  api.moveTo('welcome')\n}\n\nexport const onMessage = async (msg, api) => {\n  switch (msg.payload.key) {}\n}",
+      "modified": false,
+      "_originalContents": ""
+    },
+    {
+      "id": "en",
+      "posX": 232,
+      "posY": 241,
+      "contents": "export const twinterkitSource = `\n\n` // end twinterkitSource\n\n/* Warning! This code has been generated in Twine-ish-mode.\n * Changes below might be overwritten when it is edited the next time,\n * changes above will not work until you re-edit in twine-ish mode\n */\n\nexport const onArrive = async (api) => {\n  await api.sendSystem('English')\n  await api.setLang('en', 1)\n  api.moveTo('welcome')\n}\n\nexport const onMessage = async (msg, api) => {\n  switch (msg.payload.key) {}\n}",
+      "modified": false,
+      "_originalContents": ""
+    },
+    {
+      "id": "welcome",
+      "posX": 156,
+      "posY": 337,
+      "contents": "export const twinterkitSource = `\nMiau!|Meow!\n\n[[Miau?|Meow?->examples]]\n` // end twinterkitSource\n\n/* Warning! This code has been generated in Twine-ish-mode.\n * Changes below might be overwritten when it is edited the next time,\n * changes above will not work until you re-edit in twine-ish mode\n */\n\nexport const onArrive = async (api) => {\n  api.sendTextT(`Miau!|Meow!`)\n  api.sendChoiceT({\n    \"choice0\": \"Miau?|Meow?\"\n  })\n}\n\nexport const onMessage = async (msg, api) => {\n  switch (msg.payload.key) {\n    case 'choice0':\n      api.moveTo('examples')\n      break\n  }\n}",
+      "modified": false,
+      "_originalContents": ""
+    },
+    {
+      "id": "examples",
+      "posX": 496,
+      "posY": 239,
+      "contents": "export const onArrive = async (api, t) => {\n  // access current language\n  api.sendText('your language: ' + api.userLang)\n  api.sendText('your language, index: ' + api.userLangIndex)\n  // use current language\n  if (api.userLang === 'en') api.sendText('your language is English')\n  if (api.userLangIndex === 0) api.sendText('deine Sprache ist Deutsch')\n  // ...as an array index\n  let text1 = ['Katzen', 'Cats'][api.userLangIndex]\n  // ...as an object key\n  let text2 = {\n    de: 'Kätzchen',\n    en: 'Kittens'\n  } [api.userLang]\n  api.sendText(text1 + ' & ' + text2)\n  // the t() helper function\n  api.sendText(t('sind|are'))\n  // ...also works with arrays\n  api.sendText(t(['neugierig', 'curious']))\n  // ...and objects\n  api.sendText(t({\n    en: 'aren\\'t they',\n    de: 'nicht wahr'\n  }))\n  // there are also the send…T helper functions\n  api.sendTextT('Hunde weniger, oder?|Dogs not so much, right?')\n  api.sendSystemT('nur Spaß|Just kidding')\n  api.sendChoiceT({\n    y: 'Ja|Yes',\n    n: ['Nein', 'No']\n  })\n}\n\nexport const onMessage = async (msg, api) => {\n  switch (msg.payload.key) {\n    case 'y':\n      await api.sendTextT('Wuff :(|Woof :(')\n      break\n    case 'n':\n      await api.sendTextT('Wuff :)|Woof :)')\n      break\n  }\n  api.moveTo('start')\n}",
+      "modified": false,
+      "_originalContents": ""
+    }
+  ],
+  "startId": "start"
+}

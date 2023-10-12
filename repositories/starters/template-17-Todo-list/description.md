@@ -1,0 +1,1 @@
+Check off items using a button in the detail view.

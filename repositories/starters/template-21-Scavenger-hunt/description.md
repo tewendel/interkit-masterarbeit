@@ -1,0 +1,1 @@
+Move through the city scanning QR codes to reveal elements one by one.

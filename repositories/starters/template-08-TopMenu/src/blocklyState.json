@@ -1,0 +1,744 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 3,
+        "y": 54,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "RouteConnector",
+              "id": "+sJaWz;(Ba0Om3UaEoH4",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/"
+              },
+              "next": {
+                "block": {
+                  "type": "RouteConnector",
+                  "id": "2e_QzmrQb1Vx^7}h8B?V",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "path": "/settings"
+                  },
+                  "next": {
+                    "block": {
+                      "type": "RouteConnector",
+                      "id": "/iF{`S/bjiR}eU,OC3Yr",
+                      "data": "{\"origin\":\"interkit\"}",
+                      "fields": {
+                        "path": "/about"
+                      },
+                      "next": {
+                        "block": {
+                          "type": "RouteConnector",
+                          "id": "*Fk@nVVb82*(;Eb(cy*F",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "path": "/privacy"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "YQ/Agd7bmdco.IZ7GPvN",
+        "x": 543,
+        "y": 52,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/settings",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "*Jw^Ud=1SaTuDq`m)a-a",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "2=L24uZ]Tik#Uv%E!LeL",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "J=nHB;(OJ~5h@zUX%B(I",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "u%(mLNX)7|]k|ruYg`/L",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "interfaceFormat",
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "value": "headline-4"
+                                },
+                                {
+                                  "id": "contentFormat",
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "value": "none"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "Q`?a$v/-g_ypPr(yQ^n0",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "Settings"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ListItem",
+                    "id": "X+(#O0n6^{P-FX`9S=RA",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "About",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "effect",
+                            "type": "effect",
+                            "id": "effect",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/about"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Icon",
+                          "id": "BC[h`KWEcNjPSQjxTUg$",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "type": "Thin-Arrow-Right",
+                            "inverse": false
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "ListItem",
+                        "id": "8@=BX0R@5$:|3q#-s`Bq",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "Privacy",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "name": "effect",
+                                "type": "effect",
+                                "id": "effect",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/privacy"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "Icon",
+                              "id": "Vs:TwW?WpOE(Zm6Y0^pH",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "type": "Thin-Arrow-Right",
+                                "inverse": false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "/|wD[`YA!2xnSsf$X4_.",
+        "x": 835,
+        "y": 48,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/about",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "+k!SzFTjl_^[Via)j,:`",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "=3u03J!ymxMkoM-=z7/*",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "wHOyssjlb@A2`oxTjpLQ",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "Y+c.%EplaGD2+h/$.Y:L",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "interfaceFormat",
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "value": "headline-4"
+                                },
+                                {
+                                  "id": "contentFormat",
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "?pCwjr[cbT)Ncw5Um-~2",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "About"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "`b_VWXD={idqR-nwlUUY",
+        "x": 1121,
+        "y": 45,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/privacy",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "sJ_6=vZpe/*)m@E5A[.E",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "=O*!wnpNzuZWM/9|~~!C",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "5+3Ik4m#TI].mP(5y%B*",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "oTVm{]0}0U]fw:v!Ch{W",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "interfaceFormat",
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "value": "headline-4"
+                                },
+                                {
+                                  "id": "contentFormat",
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "rN0*,U:W6Z:vS%:y_?9I",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "Privacy"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": ";4h+bk[wl=KZ_r-I3E[P",
+        "x": 236,
+        "y": 56,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "w)m]q:L4P=PN33`$dXY+",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "Unl6km.*S8!jHqW,)68S",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "right": {
+                        "block": {
+                          "type": "Button",
+                          "id": "-aqHRj1$Az+.FLn[NvAi",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "danger"
+                                  ],
+                                  "defaultValue": "primary",
+                                  "help": "Appearance of the button.",
+                                  "id": "type",
+                                  "value": "link"
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "small",
+                                    "medium",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                },
+                                {
+                                  "name": "disabled",
+                                  "type": "checkbox",
+                                  "defaultValue": false,
+                                  "id": "disabled"
+                                },
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "route",
+                                    "path": "/settings"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "E[f6+shq$d3tqjpQb_#+",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Full-Menu",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "Spacing",
+                    "id": "Yqf:zy.I`C{-IC(.*dzU",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "top",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "top",
+                            "value": "m"
+                          },
+                          {
+                            "name": "right",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "right"
+                          },
+                          {
+                            "name": "bottom",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "bottom"
+                          },
+                          {
+                            "name": "left",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "left",
+                            "value": "m"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "6WW`D:w-{tLPa^sFp1UL",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "Home"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": ".Ccrz^0z}oDNmUmNCaKe",
+        "x": 236,
+        "y": 768,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "backButton"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Button",
+              "id": "G^KKbBTqVUyf0fD^6#t$",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "",
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "type",
+                      "type": "options",
+                      "options": [
+                        "primary",
+                        "secondary",
+                        "ghost",
+                        "link",
+                        "danger"
+                      ],
+                      "defaultValue": "primary",
+                      "help": "Appearance of the button.",
+                      "id": "type",
+                      "value": "link"
+                    },
+                    {
+                      "name": "size",
+                      "type": "options",
+                      "options": [
+                        "small",
+                        "medium",
+                        "large"
+                      ],
+                      "defaultValue": "medium",
+                      "help": "Large, medium or small.",
+                      "id": "size"
+                    },
+                    {
+                      "name": "flex",
+                      "type": "options",
+                      "options": [
+                        "normal",
+                        "fill"
+                      ],
+                      "defaultValue": "normal",
+                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                      "id": "flex"
+                    },
+                    {
+                      "name": "disabled",
+                      "type": "checkbox",
+                      "defaultValue": false,
+                      "id": "disabled"
+                    },
+                    {
+                      "type": "effect",
+                      "name": "effect",
+                      "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                      "id": "effect",
+                      "value": {
+                        "effectType": "back"
+                      }
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Icon",
+                    "id": "|$F7zv~|S!WSG@4~W;wX",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "type": "Thin-Arrow-Left",
+                      "inverse": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,29 +1,34 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects } from '../imports/collections.js';
 import { duplicateProject, makeProjectHistoryEntry } from '../imports/projectUtils.js'
+import { promises as fs } from 'fs';
+import { importData } from '../imports/importServer.js';
+
+const createProject = async ({ name, template, gitRepository, isTemplate }) => {
+    
+  const doc = { 
+    name, 
+    slug: name,
+    isTemplate,
+    history: [
+      makeProjectHistoryEntry("create_project", {
+        template,
+        gitRepository
+      })
+    ]
+  }
+
+  let projectId = await Projects.insert(doc);
+
+  return projectId
+
+  // bundler will be notified via subscription
+}
 
 Meteor.methods({
 
   // create repo  
-  'project.create': async ({ name, template, gitRepository }) => {
-    
-    const doc = { 
-      name, 
-      slug: name,
-      history: [
-        makeProjectHistoryEntry("create_project", {
-          template,
-          gitRepository
-        })
-      ]
-    }
-
-    let projectId = await Projects.insert(doc);
-
-    return projectId
-
-    // bundler will be notified via subscription
-  },
+  'project.create': createProject, 
 
   'project.remove': async ({ projectId }) => {
       Projects.remove(projectId);
@@ -169,6 +174,38 @@ Meteor.methods({
 
   'bundler.getUrl': async () => {
     return process.env.BUNDLER_URL
+  },
+
+  // method to create new projects based on the templates defined in starters
+  // template folders must begin with "template-"
+  'project.rebuildTemplates': async () => {    
+    console.log("rebuilding project templates")
+    const REPOSITORIES_PATH = process.env.REPOSITORIES_PATH
+    const templateFolder = REPOSITORIES_PATH + "/starters"
+    const files = await fs.readdir(templateFolder)
+    for(let file of files) {
+      if(file.substring(0, 9) == "template-") {
+        const templateName = file.substring(9)
+        console.log("template", templateName)
+        // Build template project if it doesn't exist yet
+        // TODO ask if user wants to replace it, for now templates need to be deleted manually to rebuild
+        let existingProject = Projects.findOne({name: templateName})
+        if(existingProject) {
+          console.log(`Project called ${templateName} already exists, skipping build`)
+        } else {
+          // create the project entry in the database 
+          // bundler will copy respository when notified through subscription in filesystem/ensureRepositories
+          let projectId = await createProject({
+            name: templateName,
+            template: file,
+            isTemplate: true,
+          })
+          // import seed data and mediafiles, if available
+          const seedDataPath = templateFolder + "/" + file + "/seed.zip";
+          await importData({body: {projectId}, file: {path: seedDataPath}})
+        }
+      }
+    }
   },
   
 });

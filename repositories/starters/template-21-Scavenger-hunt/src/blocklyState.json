@@ -1,0 +1,1790 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "DataRouteSingle",
+        "id": "7Xd:RBzCU+n]#a,20_VG",
+        "x": 1103,
+        "y": 109,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/element",
+          "sheet": {
+            "value": {
+              "value": "elements",
+              "text": "elements"
+            }
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "5Zs1;_H8AYIRBLg%z22F",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "@[O,@LuZ=w;ZcbnoY0-Y",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "Button",
+                          "id": "Wsv1oTdaz@J?k=GV=5H3",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "effect",
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "value": {
+                                    "effectType": "back"
+                                  }
+                                },
+                                {
+                                  "id": "type",
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ],
+                                  "defaultValue": "primary",
+                                  "help": "Appearance of the button.",
+                                  "value": "link"
+                                },
+                                {
+                                  "id": "size",
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small."
+                                },
+                                {
+                                  "id": "flex",
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "*uN6r2XhA;2gVtXm0tg1",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Thin-Arrow-Left",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "DataCell",
+                          "id": "ZS%Rjzm-*GeH{#7Nk:t#",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "column",
+                                  "type": "sheetColumn",
+                                  "columnType": "richText",
+                                  "defaultValue": "settings/content",
+                                  "id": "column",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "title",
+                                    "text": "elements/title",
+                                    "columnType": "string"
+                                  }
+                                },
+                                {
+                                  "name": "format",
+                                  "type": "options",
+                                  "options": [
+                                    "richtText",
+                                    "string"
+                                  ],
+                                  "defaultValue": "richText",
+                                  "id": "format",
+                                  "value": "string"
+                                },
+                                {
+                                  "name": "inline",
+                                  "type": "checkbox",
+                                  "defaultValue": "TRUE",
+                                  "id": "inline",
+                                  "value": false
+                                },
+                                {
+                                  "name": "centerContent",
+                                  "type": "checkbox",
+                                  "defaultValue": "FALSE",
+                                  "id": "centerContent",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "q[UKs[c3#{{!@vonvImN",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataCard",
+                          "id": "1[,_b4LYmWPmv6:((E5j",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "variant",
+                                  "name": "variant",
+                                  "type": "options",
+                                  "options": [
+                                    "full",
+                                    "large",
+                                    "medium",
+                                    "small"
+                                  ],
+                                  "defaultValue": "full"
+                                },
+                                {
+                                  "id": "rightArrow",
+                                  "name": "rightArrow",
+                                  "type": "checkbox",
+                                  "help": "Display the right arrow next to the headline"
+                                },
+                                {
+                                  "id": "effect",
+                                  "name": "effect",
+                                  "type": "effect",
+                                  "help": "What should happen when you tap on the card"
+                                },
+                                {
+                                  "id": "imageColumn",
+                                  "name": "imageColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "mediaFile",
+                                  "defaultValue": "elements/image",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "image",
+                                    "text": "elements/image",
+                                    "columnType": "mediaFile"
+                                  }
+                                },
+                                {
+                                  "id": "headlineColumn",
+                                  "name": "headlineColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/headline",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "title",
+                                    "text": "elements/title",
+                                    "columnType": "string"
+                                  }
+                                },
+                                {
+                                  "id": "label1Column",
+                                  "name": "label1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label1",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle1Column",
+                                  "name": "subtitle1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle1",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "label2Column",
+                                  "name": "label2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label2",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle2Column",
+                                  "name": "subtitle2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle2",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "label3Column",
+                                  "name": "label3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label3",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle3Column",
+                                  "name": "subtitle3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle3",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "descriptionColumn",
+                                  "name": "descriptionColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/description",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "description",
+                                    "text": "elements/description",
+                                    "columnType": "richText"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "chips": {
+                              "block": {
+                                "type": "GroupConnector",
+                                "id": "pG@,-Iq`*frQ/j+*h4?a",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "name": "checked"
+                                }
+                              }
+                            },
+                            "content": {
+                              "block": {
+                                "type": "IfDataAnnotation",
+                                "id": "-#Nj0QOghj`}/9|i0]sj",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "key": "final",
+                                  "value": "true"
+                                },
+                                "inputs": {
+                                  "iftrue": {
+                                    "block": {
+                                      "type": "StaticText",
+                                      "id": "]a!`}4]e1q+%=(9HGE~l",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "text": "Congratulations, this was the last cat."
+                                      }
+                                    }
+                                  },
+                                  "else": {
+                                    "block": {
+                                      "type": "IfDataAnnotation",
+                                      "id": "?f%0NO$!VWf.QkU4XFnf",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "key": "checked",
+                                        "value": "true"
+                                      },
+                                      "inputs": {
+                                        "iftrue": {
+                                          "block": {
+                                            "type": "StaticText",
+                                            "id": "fZXNEox*416t9A-8ot`@",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "text": "You scanned this cat! Look at the map to find more."
+                                            }
+                                          }
+                                        },
+                                        "else": {
+                                          "block": {
+                                            "type": "Spacing",
+                                            "id": "wdjyr?@ukR276}YGUmvL",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "extraProps": {
+                                                "props": [
+                                                  {
+                                                    "id": "top",
+                                                    "name": "top",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "none",
+                                                      "xs",
+                                                      "s",
+                                                      "m",
+                                                      "l",
+                                                      "xl"
+                                                    ],
+                                                    "value": "s"
+                                                  },
+                                                  {
+                                                    "id": "right",
+                                                    "name": "right",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "none",
+                                                      "xs",
+                                                      "s",
+                                                      "m",
+                                                      "l",
+                                                      "xl"
+                                                    ],
+                                                    "value": "none"
+                                                  },
+                                                  {
+                                                    "id": "bottom",
+                                                    "name": "bottom",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "none",
+                                                      "xs",
+                                                      "s",
+                                                      "m",
+                                                      "l",
+                                                      "xl"
+                                                    ],
+                                                    "value": "s"
+                                                  },
+                                                  {
+                                                    "id": "left",
+                                                    "name": "left",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "none",
+                                                      "xs",
+                                                      "s",
+                                                      "m",
+                                                      "l",
+                                                      "xl"
+                                                    ],
+                                                    "value": "none"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "inputs": {
+                                              "default": {
+                                                "block": {
+                                                  "type": "TextFormat",
+                                                  "id": "jzDjDc64,lEqxj~2/Bue",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "id": "interfaceFormat",
+                                                          "type": "options",
+                                                          "name": "interfaceFormat",
+                                                          "options": [
+                                                            "none",
+                                                            "headline-1",
+                                                            "headline-2",
+                                                            "headline-3",
+                                                            "headline-4",
+                                                            "headline-5",
+                                                            "body-1",
+                                                            "body-2",
+                                                            "subtitle-1",
+                                                            "subtitle-2",
+                                                            "button",
+                                                            "caption",
+                                                            "caption-bold",
+                                                            "overline"
+                                                          ],
+                                                          "defaultValue": "none",
+                                                          "help": "Use these formats to select typography for parts of the interface.",
+                                                          "value": "body-1"
+                                                        },
+                                                        {
+                                                          "id": "contentFormat",
+                                                          "type": "options",
+                                                          "name": "contentFormat",
+                                                          "options": [
+                                                            "none",
+                                                            "headline-1",
+                                                            "headline-2",
+                                                            "headline-3",
+                                                            "headline-4",
+                                                            "headline-5",
+                                                            "body-1",
+                                                            "body-2"
+                                                          ],
+                                                          "defaultValue": "none",
+                                                          "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                                        }
+                                                      ]
+                                                    }
+                                                  },
+                                                  "inputs": {
+                                                    "default": {
+                                                      "block": {
+                                                        "type": "StaticText",
+                                                        "id": "T6wohLYj8t0Pgr~3rE2S",
+                                                        "data": "{\"origin\":\"interkit\"}",
+                                                        "fields": {
+                                                          "text": "When you're on site, scan the cat!"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "ButtonBar",
+                                                "id": ":`JG7?fW:~!]3aWf%StE",
+                                                "data": "{\"origin\":\"interkit\"}",
+                                                "fields": {
+                                                  "extraProps": {
+                                                    "props": [
+                                                      {
+                                                        "id": "justify",
+                                                        "name": "justify",
+                                                        "type": "options",
+                                                        "options": [
+                                                          "left",
+                                                          "center",
+                                                          "right"
+                                                        ],
+                                                        "defaultValue": "left",
+                                                        "help": "Where the buttons in the bar are justified",
+                                                        "value": "center"
+                                                      },
+                                                      {
+                                                        "id": "helpText",
+                                                        "name": "helpText",
+                                                        "type": "string",
+                                                        "help": "An explanation text below the buttonBar"
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "inputs": {
+                                                  "default": {
+                                                    "block": {
+                                                      "type": "Button",
+                                                      "id": "+nF.PF_UH0O_hZY8G,P^",
+                                                      "data": "{\"origin\":\"interkit\"}",
+                                                      "fields": {
+                                                        "text": "Scan",
+                                                        "extraProps": {
+                                                          "props": [
+                                                            {
+                                                              "id": "type",
+                                                              "name": "type",
+                                                              "type": "options",
+                                                              "options": [
+                                                                "primary",
+                                                                "secondary",
+                                                                "ghost",
+                                                                "link",
+                                                                "danger"
+                                                              ],
+                                                              "defaultValue": "primary",
+                                                              "help": "Appearance of the button."
+                                                            },
+                                                            {
+                                                              "id": "size",
+                                                              "name": "size",
+                                                              "type": "options",
+                                                              "options": [
+                                                                "small",
+                                                                "medium",
+                                                                "large"
+                                                              ],
+                                                              "defaultValue": "medium",
+                                                              "help": "Large, medium or small."
+                                                            },
+                                                            {
+                                                              "id": "flex",
+                                                              "name": "flex",
+                                                              "type": "options",
+                                                              "options": [
+                                                                "normal",
+                                                                "fill"
+                                                              ],
+                                                              "defaultValue": "normal",
+                                                              "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                              "value": "fill"
+                                                            },
+                                                            {
+                                                              "id": "disabled",
+                                                              "name": "disabled",
+                                                              "type": "checkbox",
+                                                              "defaultValue": false
+                                                            },
+                                                            {
+                                                              "id": "effect",
+                                                              "type": "effect",
+                                                              "name": "effect",
+                                                              "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                              "value": {
+                                                                "effectType": "setUIKey",
+                                                                "value": "true",
+                                                                "key": "showScanner"
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "GroupConnector",
+                                                    "id": "c+0K:vd-wr}U-h/{Akl#",
+                                                    "data": "{\"origin\":\"interkit\"}",
+                                                    "fields": {
+                                                      "name": "scanner"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 205,
+        "y": 116,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "DataLoaderMulti",
+              "id": ")ob;z9*/S=?PVj}sM{Qf",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "sheetKey": {
+                  "value": {
+                    "value": "elements",
+                    "text": "elements"
+                  }
+                },
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "sortColumn",
+                      "type": "sheetColumn",
+                      "id": "sortColumn",
+                      "value": {
+                        "sheetKey": "elements",
+                        "text": "elements/index",
+                        "columnType": "number",
+                        "columnKey": "index"
+                      }
+                    },
+                    {
+                      "name": "hideColumn",
+                      "defaultValue": "elements/hide",
+                      "id": "hideColumn"
+                    },
+                    {
+                      "name": "includeOnlyAnnotated",
+                      "type": "string",
+                      "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\".",
+                      "id": "includeOnlyAnnotated"
+                    },
+                    {
+                      "name": "excludeAnnotated",
+                      "type": "string",
+                      "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\".",
+                      "id": "excludeAnnotated"
+                    },
+                    {
+                      "name": "discoverableColumn",
+                      "type": "sheetColumn",
+                      "defaultValue": "elements/discoverable",
+                      "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below",
+                      "id": "discoverableColumn",
+                      "value": {
+                        "sheetKey": "elements",
+                        "columnKey": "discoverable",
+                        "text": "elements/discoverable",
+                        "columnType": "string"
+                      }
+                    },
+                    {
+                      "name": "discoverAnnotation",
+                      "type": "string",
+                      "defaultValue": "discovered",
+                      "help": "The data annotation to use for discovering elements.",
+                      "id": "discoverAnnotation"
+                    },
+                    {
+                      "name": "referenceColumn",
+                      "type": "sheetColumn",
+                      "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context.",
+                      "id": "referenceColumn",
+                      "value": {
+                        "sheetKey": "empty",
+                        "text": ""
+                      }
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "RouteConnector",
+                    "id": "*fsdC(B]+a!x)Qe`-dX8",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "path": "/"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "RouteConnector",
+                        "id": "@tH!aXgt+KY6vWvsH(@_",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "path": "/map"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "RouteConnector",
+                            "id": "k4L:=R%rXfni0bx3UIs`",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "path": "/element"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "/Lt^bR)#yQnY*/?W+8pR",
+        "x": 775,
+        "y": 111,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/map",
+          "keepAlive": true
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "I8vTc5haS^{iq=fkm0$T",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "b?C9QpeikN!lf~4_*^RP",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Map View"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "MapSimple",
+                    "id": ",oJZ$pZl(3]!QR1q$$w%",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "string",
+                            "name": "defaultLocation",
+                            "id": "defaultLocation"
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerPositionsColumn",
+                            "columnType": "location",
+                            "defaultValue": "elements/position",
+                            "id": "markerPositionsColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "location",
+                              "text": "elements/location",
+                              "columnType": "location"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "customIconColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/mapMarkerIcon",
+                            "id": "customIconColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "image",
+                              "text": "elements/image",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerLabelColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/markerLabel",
+                            "id": "markerLabelColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "markerLabel",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "markerTitleColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/markerTitle",
+                            "id": "markerTitleColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "markerTitle",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "type": "string",
+                            "name": "checkedProperty",
+                            "defaultValue": "checked",
+                            "id": "checkedProperty"
+                          },
+                          {
+                            "type": "string",
+                            "name": "secondaryPositionProperty",
+                            "id": "secondaryPositionProperty"
+                          },
+                          {
+                            "type": "sheetColumn",
+                            "name": "hideOnMapColumn",
+                            "columnType": "string",
+                            "defaultValue": "elements/hideOnMap",
+                            "id": "hideOnMapColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "hideOnMap",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "type": "string",
+                            "name": "permissionNotification",
+                            "id": "permissionNotification"
+                          },
+                          {
+                            "type": "string",
+                            "name": "enableGeolocationHint",
+                            "id": "enableGeolocationHint"
+                          },
+                          {
+                            "type": "string",
+                            "name": "mapId",
+                            "defaultValue": "map",
+                            "id": "mapId"
+                          },
+                          {
+                            "type": "string",
+                            "name": "height",
+                            "defaultValue": "100%",
+                            "id": "height"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "showControls",
+                            "defaultValue": true,
+                            "id": "showControls"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "showPopups",
+                            "defaultValue": true,
+                            "id": "showPopups"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "inline",
+                            "defaultValue": false,
+                            "id": "inline"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "nearestElementMode",
+                            "defaultValue": false,
+                            "id": "nearestElementMode"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "disableControls",
+                            "defaultValue": false,
+                            "id": "disableControls"
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "singleElementContext",
+                            "help": "The map shows a single marker defined by a single element context.",
+                            "defaultValue": false,
+                            "id": "singleElementContext"
+                          },
+                          {
+                            "type": "string",
+                            "name": "tileLayer",
+                            "defaultValue": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            "id": "tileLayer"
+                          },
+                          {
+                            "type": "string",
+                            "name": "mapBoxGLStyle",
+                            "id": "mapBoxGLStyle"
+                          },
+                          {
+                            "type": "string",
+                            "name": "clickTrigger",
+                            "id": "clickTrigger"
+                          },
+                          {
+                            "type": "string",
+                            "name": "closeButtonLabel",
+                            "defaultValue": "Schließen",
+                            "id": "closeButtonLabel"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "popup": {
+                        "block": {
+                          "type": "DataCard",
+                          "id": "0Qn_0/[T=:UiB,ppZPw]",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "variant",
+                                  "name": "variant",
+                                  "type": "options",
+                                  "options": [
+                                    "full",
+                                    "large",
+                                    "medium",
+                                    "small"
+                                  ],
+                                  "defaultValue": "full",
+                                  "value": "small"
+                                },
+                                {
+                                  "id": "rightArrow",
+                                  "name": "rightArrow",
+                                  "type": "checkbox",
+                                  "help": "Display the right arrow next to the headline"
+                                },
+                                {
+                                  "id": "effect",
+                                  "name": "effect",
+                                  "type": "effect",
+                                  "help": "What should happen when you tap on the card",
+                                  "value": {
+                                    "effectType": "dataRouteSingle",
+                                    "path": "/element"
+                                  }
+                                },
+                                {
+                                  "id": "imageColumn",
+                                  "name": "imageColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "mediaFile",
+                                  "defaultValue": "elements/image",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "image",
+                                    "text": "elements/image",
+                                    "columnType": "mediaFile"
+                                  }
+                                },
+                                {
+                                  "id": "headlineColumn",
+                                  "name": "headlineColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/headline",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "title",
+                                    "text": "elements/title",
+                                    "columnType": "string"
+                                  }
+                                },
+                                {
+                                  "id": "label1Column",
+                                  "name": "label1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label1",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle1Column",
+                                  "name": "subtitle1Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle1",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle1",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "label2Column",
+                                  "name": "label2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label2",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle2Column",
+                                  "name": "subtitle2Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle2",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle2",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "label3Column",
+                                  "name": "label3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/label3",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "label3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "subtitle3Column",
+                                  "name": "subtitle3Column",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/subtitle3",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "subtitle3",
+                                    "text": "elements/undefined"
+                                  }
+                                },
+                                {
+                                  "id": "descriptionColumn",
+                                  "name": "descriptionColumn",
+                                  "type": "sheetColumn",
+                                  "defaultValue": "elements/description",
+                                  "value": {
+                                    "sheetKey": "elements",
+                                    "columnKey": "description",
+                                    "text": "elements/description",
+                                    "columnType": "richText"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "iHK6mx(B,m[BFqILsD.Y",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "fGWr4UNOK{eKi3Ve,ll+",
+        "x": 490,
+        "y": 108,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": true
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": ".:L7l0x?nx9h5)9AzM-a",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "7SiTPH{1.UlS51sN2@3p",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Find the cats!"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": ";jY:s7z8$qP#UB49Y)yf",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "SectionShell",
+                          "id": "EFLN4$KhbM9FNnJ,;Xd1",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataList",
+                                "id": "yl^{enz/x6,fB;DX7TW2",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "inputs": {
+                                  "dataElement": {
+                                    "block": {
+                                      "type": "DataCard",
+                                      "id": "%F0f}R6l^widvt;uQj8q",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "id": "variant",
+                                              "name": "variant",
+                                              "type": "options",
+                                              "options": [
+                                                "full",
+                                                "large",
+                                                "medium",
+                                                "small"
+                                              ],
+                                              "defaultValue": "full",
+                                              "value": "medium"
+                                            },
+                                            {
+                                              "id": "rightArrow",
+                                              "name": "rightArrow",
+                                              "type": "checkbox",
+                                              "help": "Display the right arrow next to the headline"
+                                            },
+                                            {
+                                              "id": "effect",
+                                              "name": "effect",
+                                              "type": "effect",
+                                              "help": "What should happen when you tap on the card",
+                                              "value": {
+                                                "effectType": "dataRouteSingle",
+                                                "path": "/element"
+                                              }
+                                            },
+                                            {
+                                              "id": "imageColumn",
+                                              "name": "imageColumn",
+                                              "type": "sheetColumn",
+                                              "columnType": "mediaFile",
+                                              "defaultValue": "elements/image",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "image",
+                                                "text": "elements/image",
+                                                "columnType": "mediaFile"
+                                              }
+                                            },
+                                            {
+                                              "id": "headlineColumn",
+                                              "name": "headlineColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/headline",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "title",
+                                                "text": "elements/title",
+                                                "columnType": "string"
+                                              }
+                                            },
+                                            {
+                                              "id": "label1Column",
+                                              "name": "label1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label1",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label1",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle1Column",
+                                              "name": "subtitle1Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle1",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle1",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "label2Column",
+                                              "name": "label2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label2",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label2",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle2Column",
+                                              "name": "subtitle2Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle2",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle2",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "label3Column",
+                                              "name": "label3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/label3",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "label3",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "subtitle3Column",
+                                              "name": "subtitle3Column",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/subtitle3",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "subtitle3",
+                                                "text": "elements/undefined"
+                                              }
+                                            },
+                                            {
+                                              "id": "descriptionColumn",
+                                              "name": "descriptionColumn",
+                                              "type": "sheetColumn",
+                                              "defaultValue": "elements/description",
+                                              "value": {
+                                                "sheetKey": "elements",
+                                                "columnKey": "description",
+                                                "text": "elements/description",
+                                                "columnType": "richText"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "inputs": {
+                                        "chips": {
+                                          "block": {
+                                            "type": "GroupConnector",
+                                            "id": "b8pBGPp{bAow_rXGN48R",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "name": "checked"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "J~,*w,Q0?n{oo;HUvEJY",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "9-KCF~hBW^-g9[zDciZX",
+        "x": 185,
+        "y": 514,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "bottomMenu"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "NavBar",
+              "id": "q,Zoe^3iC/DF~bCV0;ie",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "NavButton",
+                    "id": "~ap}hM{OcB_9^%+Yi?n3",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "disabled",
+                            "name": "disabled",
+                            "type": "checkbox",
+                            "defaultValue": false
+                          },
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Icon",
+                          "id": "1bn{nh?ex.j$O$v~^J5`",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "type": "Thin-Dashboard",
+                            "inverse": false
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "NavButton",
+                        "id": "im0*(XklDwE7,mYx$.%x",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "id": "disabled",
+                                "name": "disabled",
+                                "type": "checkbox",
+                                "defaultValue": false
+                              },
+                              {
+                                "id": "effect",
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/map"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "Icon",
+                              "id": "W-+F1H8Ry^;iq0Jw~#lT",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "type": "Thin-Map",
+                                "inverse": false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": ";:0HV6kO+Yx?|2Q_O71:",
+        "x": 1583,
+        "y": 226,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "scanner"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfUIKey",
+              "id": "1,!d-+*Z{Nu~2:UoDUbW",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "storeType": "UIKey",
+                "key": "showScanner",
+                "value": "true"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "Overlay",
+                    "id": "|#tba;^YpSTF3F,w}fXB",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "string",
+                            "name": "zIndex",
+                            "id": "zIndex",
+                            "value": "2"
+                          },
+                          {
+                            "type": "string",
+                            "name": "customStyle",
+                            "id": "customStyle",
+                            "value": "background-color: white;"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "TopBarShell",
+                          "id": "sos,JGth[d%0}8|4L[nE",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "TopBar": {
+                              "block": {
+                                "type": "HorizontalSpacer",
+                                "id": "yox$5b9Kn%2lseV01NJ_",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "inputs": {
+                                  "left": {
+                                    "block": {
+                                      "type": "Button",
+                                      "id": "dkG)T/J+N_5i8TnclE/7",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "text": "",
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "id": "type",
+                                              "name": "type",
+                                              "type": "options",
+                                              "options": [
+                                                "primary",
+                                                "secondary",
+                                                "ghost",
+                                                "link",
+                                                "spacer",
+                                                "list-item",
+                                                "nav-tab"
+                                              ],
+                                              "defaultValue": "primary",
+                                              "help": "Appearance of the button."
+                                            },
+                                            {
+                                              "id": "size",
+                                              "name": "size",
+                                              "type": "options",
+                                              "options": [
+                                                "medium",
+                                                "small",
+                                                "large"
+                                              ],
+                                              "defaultValue": "medium",
+                                              "help": "Large, medium or small."
+                                            },
+                                            {
+                                              "id": "flex",
+                                              "name": "flex",
+                                              "type": "options",
+                                              "options": [
+                                                "normal",
+                                                "fill"
+                                              ],
+                                              "defaultValue": "normal",
+                                              "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                            },
+                                            {
+                                              "id": "effect",
+                                              "type": "effect",
+                                              "name": "effect",
+                                              "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                              "value": {
+                                                "effectType": "back"
+                                              }
+                                            },
+                                            {
+                                              "id": "execOnMount",
+                                              "type": "checkbox",
+                                              "name": "execOnMount",
+                                              "help": "Runs the effect once when the button is rendered (for example to set a default value)"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "inputs": {
+                                        "default": {
+                                          "block": {
+                                            "type": "Icon",
+                                            "id": ")]Jz#t}`gY2d7aHhF=!]",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "type": "Thin-Arrow-Left",
+                                              "inverse": false
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "Content": {
+                              "block": {
+                                "type": "QRScanner",
+                                "id": ")@tVuH6hJv$qtAJ|rntk",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "id": "elementKeyColumn",
+                                        "type": "sheetColumn",
+                                        "name": "elementKeyColumn",
+                                        "columnType": "string",
+                                        "defaultValue": "elements/qrKey",
+                                        "help": "The column containing the codes that you want to detect with the scanner.",
+                                        "value": {
+                                          "sheetKey": "elements",
+                                          "columnKey": "index",
+                                          "text": "elements/index",
+                                          "columnType": "number"
+                                        }
+                                      },
+                                      {
+                                        "id": "closeEffect",
+                                        "type": "effect",
+                                        "name": "closeEffect",
+                                        "help": "What should happen when the user taps the x",
+                                        "value": {
+                                          "effectType": "setUIKey",
+                                          "value": "false",
+                                          "key": "showScanner"
+                                        }
+                                      },
+                                      {
+                                        "id": "scanEffect",
+                                        "type": "effect",
+                                        "name": "scanEffect",
+                                        "help": "What schould happen when the scanner scans a code",
+                                        "value": {
+                                          "effectType": "actionTrigger",
+                                          "trigger": "scan"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "wR?ofVH~48lymh)^$ec1",
+        "x": 490,
+        "y": 876,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "checked"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "IfDataAnnotation",
+              "id": ";4]fYRqEU$;4(}AuM6Tg",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "key": "checked",
+                "value": "true"
+              },
+              "inputs": {
+                "iftrue": {
+                  "block": {
+                    "type": "Label",
+                    "id": "s.f3V4UgiRgsGHXrxui*",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "type",
+                            "name": "type",
+                            "type": "options",
+                            "options": [
+                              "text",
+                              "icon"
+                            ],
+                            "value": "icon"
+                          },
+                          {
+                            "id": "variant",
+                            "name": "variant",
+                            "type": "options",
+                            "options": [
+                              "strong",
+                              "normal",
+                              "soft"
+                            ]
+                          },
+                          {
+                            "id": "content",
+                            "type": "string",
+                            "name": "content"
+                          },
+                          {
+                            "id": "icon",
+                            "type": "options",
+                            "name": "icon",
+                            "options": [
+                              "Thin-AR",
+                              "Thin-Archiv",
+                              "Thin-Arrow-Left",
+                              "Thin-Arrow-Right",
+                              "Thin-Bookmark",
+                              "Thin-Camera",
+                              "Thin-Chat",
+                              "Thin-Check",
+                              "Thin-Close-Circle",
+                              "Thin-Close",
+                              "Thin-Copy",
+                              "Thin-Dashboard",
+                              "Thin-Dropdown-Up",
+                              "Thin-Dropdown",
+                              "Thin-Filter",
+                              "Thin-Forward-15",
+                              "Thin-FullScreen",
+                              "Thin-Hint",
+                              "Thin-Layer",
+                              "Thin-Location",
+                              "Thin-Map",
+                              "Thin-Menu",
+                              "Thin-Microphone",
+                              "Thin-Minus",
+                              "Thin-Pause",
+                              "Thin-Phaenomen",
+                              "Thin-Play",
+                              "Thin-Plus",
+                              "Thin-Position",
+                              "Thin-QR-Scan",
+                              "Thin-Replay-30",
+                              "Thin-Settings",
+                              "Thin-Social",
+                              "Thin-to_Gallery",
+                              "Thin-zoom-In",
+                              "Full-AR",
+                              "Full-Archiv",
+                              "Full-Bookmark",
+                              "Full-Camera",
+                              "Full-Chat",
+                              "Full-Check",
+                              "Full-Close-Circle",
+                              "Full-Copy",
+                              "Full-Dashboard",
+                              "Full-Date",
+                              "Full-Drag",
+                              "Full-FullScreen",
+                              "Full-GroupChat",
+                              "Full-Help",
+                              "Full-Layer",
+                              "Full-List",
+                              "Full-Location",
+                              "Full-Map",
+                              "Full-Menu",
+                              "Full-Microphone",
+                              "Full-More-1",
+                              "Full-More",
+                              "Full-Pause",
+                              "Full-Phaenomen",
+                              "Full-Play",
+                              "Full-QR-Scan",
+                              "Full-Send",
+                              "Full-Settings",
+                              "Full-SingleChat",
+                              "Full-Social",
+                              "Full-Splitscreen",
+                              "Full-Warning",
+                              "Full-to_Gallery"
+                            ],
+                            "help": "Select an icon.",
+                            "value": "Full-Check"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

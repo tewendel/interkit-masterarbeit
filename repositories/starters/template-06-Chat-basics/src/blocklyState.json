@@ -1,0 +1,87 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 187,
+        "y": 86,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "id": "languages",
+                "value": "en"
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "AnonymousLogin",
+              "id": "^EdNo0_5m{,bRZ`5b=Kb",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "string",
+                      "name": "defaultLang",
+                      "defaultValue": "en"
+                    },
+                    {
+                      "type": "string",
+                      "name": "defaultLangIndex",
+                      "defaultValue": 0
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Chat",
+                    "id": "#_y$=P-|TI,l|7M%t~T3",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "board": "board1",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "checkbox",
+                            "name": "messagesReportableDefault",
+                            "defaultValue": "TRUE"
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingDurationTypeChoiceDefault",
+                            "defaultValue": "0.0"
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingDurationTypeTextPerCharacter",
+                            "defaultValue": "0.075"
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingHideTypes",
+                            "defaultValue": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

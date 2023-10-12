@@ -1,0 +1,508 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "Route",
+        "id": "v[-|hU]Y/m|8!Q3JI7kg",
+        "x": 373,
+        "y": 48,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "#4}9sMam/Ek1J9}9/B|F",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "m"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "m"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "m"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "m"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "O^r]wPc_pu,SyqgAQa;L",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "home screen"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": ".y/qV*{ID)=~Mp@=s^F?",
+        "x": 596,
+        "y": 53,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/something",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "dJ3Zv/[?:}pi_~P:zE^h",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "m"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "m"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "m"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "m"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "F#*C#_E#RN5yrqZ!~cUD",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "something else"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 83,
+        "y": 27,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "BottomBarShell",
+              "id": "iYor~ATRn?w0k{GsT/Ao",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "Content": {
+                  "block": {
+                    "type": "RouteConnector",
+                    "id": "bVtUO,E-0?9%0sH?4W}n",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "path": "/"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "RouteConnector",
+                        "id": "t)FhmUNK~[j8Q+uGxPBu",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "path": "/something"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "RouteConnector",
+                            "id": "GS2yk_QjQNpXQ3.O?=kX",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "path": "/other"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "Pc`h1J5Vb$HtGew1#tf(",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "!IevzyPRJk9!AD#AaTpy",
+        "x": 830,
+        "y": 50,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/other",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "{8SK66Wi!LR;i#.dlY7v",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "m"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "m"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "m"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "m"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "Gu)l)6*H8#}oY=ok,MJu",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "another screen"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "rnoPhLHuJW7/.v.q$]J?",
+        "x": 409,
+        "y": 333,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "bottomMenu"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "NavBar",
+              "id": "fOKqQy(:F982Y1Vg3-a[",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "NavButton",
+                    "id": ")?ItWY02z;}#gG=OOI0|",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "home",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "disabled",
+                            "name": "disabled",
+                            "type": "checkbox",
+                            "defaultValue": false
+                          },
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Icon",
+                          "id": "!QT5oORU{i)WyhFx|D*x",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "type": "Thin-Dashboard",
+                            "inverse": false
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "NavButton",
+                        "id": "Q+9cbVgt|{Wvw~^k?Dv5",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "something",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "id": "disabled",
+                                "name": "disabled",
+                                "type": "checkbox",
+                                "defaultValue": false
+                              },
+                              {
+                                "id": "effect",
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/something"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "Icon",
+                              "id": "VxePR2v.q,5q.mO$N2+%",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "type": "Thin-Archiv",
+                                "inverse": false
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "NavButton",
+                            "id": "w-[MN-sWJN0%bWXD_8Iz",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "text": "other",
+                              "extraProps": {
+                                "props": [
+                                  {
+                                    "id": "disabled",
+                                    "name": "disabled",
+                                    "type": "checkbox",
+                                    "defaultValue": false
+                                  },
+                                  {
+                                    "id": "effect",
+                                    "type": "effect",
+                                    "name": "effect",
+                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                    "value": {
+                                      "effectType": "route",
+                                      "path": "/other"
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "inputs": {
+                              "default": {
+                                "block": {
+                                  "type": "Icon",
+                                  "id": "|sV$s`b417#b0Q@OaZ%O",
+                                  "data": "{\"origin\":\"interkit\"}",
+                                  "fields": {
+                                    "type": "Thin-Map",
+                                    "inverse": false
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

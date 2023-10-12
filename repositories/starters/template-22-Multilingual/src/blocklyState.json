@@ -1,0 +1,342 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "DF:`aX|V,:dFl?Xo*U2_",
+        "x": 280,
+        "y": 74,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language.",
+                "id": "languages",
+                "value": "de,en"
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "AnonymousLogin",
+              "id": "2#92!}y4H//vEV=*=E@~",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "string",
+                      "name": "defaultLang",
+                      "defaultValue": "en"
+                    },
+                    {
+                      "type": "string",
+                      "name": "defaultLangIndex",
+                      "defaultValue": 0
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "LangSwitch",
+                    "id": "b,)%)BP}v!KwJ?jp_owT",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "label": "$langswitch_label",
+                      "reloadAfterSwitch": "no"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "StaticText",
+                        "id": "~UG_KYN=~e])K=PRI|7g",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "$cats"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "DataLoaderMulti",
+                            "id": "_~}[ax~Wg|`ILWdv=XsX",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "sheetKey": {
+                                "value": {
+                                  "value": "4aa16a47-fcea-4ca9-a288-e687b0112c88",
+                                  "text": "Cats"
+                                }
+                              },
+                              "extraProps": {
+                                "props": [
+                                  {
+                                    "name": "sortColumn",
+                                    "type": "sheetColumn"
+                                  },
+                                  {
+                                    "name": "hideColumn",
+                                    "defaultValue": "elements/hide"
+                                  },
+                                  {
+                                    "name": "includeOnlyAnnotated",
+                                    "type": "string",
+                                    "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                  },
+                                  {
+                                    "name": "excludeAnnotated",
+                                    "type": "string",
+                                    "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                  },
+                                  {
+                                    "name": "discoverableColumn",
+                                    "type": "sheetColumn",
+                                    "defaultValue": "elements/discoverable",
+                                    "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                                  },
+                                  {
+                                    "name": "discoverAnnotation",
+                                    "type": "string",
+                                    "defaultValue": "discovered",
+                                    "help": "The data annotation to use for discovering elements."
+                                  },
+                                  {
+                                    "name": "referenceColumn",
+                                    "type": "sheetColumn",
+                                    "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context."
+                                  }
+                                ]
+                              }
+                            },
+                            "inputs": {
+                              "default": {
+                                "block": {
+                                  "type": "DataList",
+                                  "id": "o;schR/iPAm4T.S@J?x-",
+                                  "data": "{\"origin\":\"interkit\"}",
+                                  "inputs": {
+                                    "dataElement": {
+                                      "block": {
+                                        "type": "Spacing",
+                                        "id": "3RFQA4^+P5v$-HlvaIwj",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "fields": {
+                                          "extraProps": {
+                                            "props": [
+                                              {
+                                                "name": "top",
+                                                "type": "options",
+                                                "options": [
+                                                  "none",
+                                                  "xs",
+                                                  "s",
+                                                  "m",
+                                                  "l",
+                                                  "xl"
+                                                ]
+                                              },
+                                              {
+                                                "name": "right",
+                                                "type": "options",
+                                                "options": [
+                                                  "none",
+                                                  "xs",
+                                                  "s",
+                                                  "m",
+                                                  "l",
+                                                  "xl"
+                                                ]
+                                              },
+                                              {
+                                                "name": "bottom",
+                                                "type": "options",
+                                                "options": [
+                                                  "none",
+                                                  "xs",
+                                                  "s",
+                                                  "m",
+                                                  "l",
+                                                  "xl"
+                                                ]
+                                              },
+                                              {
+                                                "name": "left",
+                                                "type": "options",
+                                                "options": [
+                                                  "none",
+                                                  "xs",
+                                                  "s",
+                                                  "m",
+                                                  "l",
+                                                  "xl"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "inputs": {
+                                          "default": {
+                                            "block": {
+                                              "type": "StaticText",
+                                              "id": "k`SU_]G44BR8YAre+G1k",
+                                              "data": "{\"origin\":\"interkit\"}",
+                                              "fields": {
+                                                "text": "🐈"
+                                              },
+                                              "next": {
+                                                "block": {
+                                                  "type": "DataCell",
+                                                  "id": "_T-nT40LbojCW|+[%`AN",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "name": "column",
+                                                          "type": "sheetColumn",
+                                                          "columnType": "richText",
+                                                          "defaultValue": "settings/content",
+                                                          "id": "column",
+                                                          "value": {
+                                                            "sheetKey": "4aa16a47-fcea-4ca9-a288-e687b0112c88",
+                                                            "columnKey": "name$lang",
+                                                            "text": "Cats/name$lang",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "name": "format",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "richText",
+                                                            "string"
+                                                          ],
+                                                          "defaultValue": "richText",
+                                                          "id": "format",
+                                                          "value": "string"
+                                                        },
+                                                        {
+                                                          "name": "inline",
+                                                          "type": "checkbox",
+                                                          "defaultValue": false,
+                                                          "id": "inline",
+                                                          "value": true
+                                                        },
+                                                        {
+                                                          "name": "centerContent",
+                                                          "type": "checkbox",
+                                                          "defaultValue": false,
+                                                          "id": "centerContent"
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "rK-]n]G(:FO:_fu?Z+VA",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$example_untranslated_text"
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "Overlay",
+                                    "id": "kcJW+4pb2QGV01g4hQfO",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "extraProps": {
+                                        "props": [
+                                          {
+                                            "type": "string",
+                                            "name": "zIndex",
+                                            "id": "zIndex"
+                                          },
+                                          {
+                                            "type": "string",
+                                            "name": "customStyle",
+                                            "id": "customStyle",
+                                            "value": "height: 45vh; top: auto; bottom: 0; left: 1em; right: 1em; border: 1px solid black; border-bottom: 0;"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "inputs": {
+                                      "default": {
+                                        "block": {
+                                          "type": "Chat",
+                                          "id": "Pe-(Hw,?N;8$RrS$GPA%",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "extraProps": {
+                                              "props": [
+                                                {
+                                                  "type": "string",
+                                                  "name": "board",
+                                                  "defaultValue": "board1",
+                                                  "help": "The Story board to use first."
+                                                },
+                                                {
+                                                  "type": "checkbox",
+                                                  "name": "messagesReportableDefault",
+                                                  "defaultValue": "TRUE",
+                                                  "help": "If messages should be reportable (for admin moderation) by default. The reportability of individual messages can be changed by code."
+                                                },
+                                                {
+                                                  "type": "string",
+                                                  "name": "typingDurationTypeChoiceDefault",
+                                                  "defaultValue": "0.0",
+                                                  "help": "How long a multiple-choice message should from the server should be displayed as 'typing'. 0 to disable completely."
+                                                },
+                                                {
+                                                  "type": "string",
+                                                  "name": "typingDurationTypeTextPerCharacter",
+                                                  "defaultValue": "0.075",
+                                                  "help": "Used to calculate how long 'typing' dots should be displayed for a message from the server. In seconds."
+                                                },
+                                                {
+                                                  "type": "string",
+                                                  "name": "typingHideTypes",
+                                                  "defaultValue": "",
+                                                  "help": "Don't show the 'typing' dots for certain message types. Provide a comma seperated list of types."
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

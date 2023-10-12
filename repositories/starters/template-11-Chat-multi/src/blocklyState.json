@@ -1,0 +1,243 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "ChatRoute",
+        "id": "wNTuRB7CJ[H|vl5ZMb_S",
+        "x": 451,
+        "y": 95,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/chat"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "TopBarShell",
+              "id": "n:%rVQfa4J4{YpxmTht@",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "4h6yn4XpWm%6vf`6y(*+",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "Button",
+                          "id": "t,9Fj~e/|d:s56U$/oh#",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "back"
+                                  }
+                                },
+                                {
+                                  "name": "type",
+                                  "type": "options",
+                                  "options": [
+                                    "primary",
+                                    "secondary",
+                                    "ghost",
+                                    "link",
+                                    "spacer",
+                                    "list-item",
+                                    "nav-tab"
+                                  ],
+                                  "defaultValue": "secondary",
+                                  "help": "Appearance of the button.",
+                                  "id": "type"
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Icon",
+                                "id": "_(|W:2s+``lreXG(nXm`",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "type": "Thin-Arrow-Left",
+                                  "inverse": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "Chat",
+                    "id": "SA0;VOb(WRxQ}wfB]xUv",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "type": "string",
+                            "name": "board",
+                            "defaultValue": "board1",
+                            "help": "The Story board to use first."
+                          },
+                          {
+                            "type": "checkbox",
+                            "name": "messagesReportableDefault",
+                            "defaultValue": "TRUE",
+                            "help": "If messages should be reportable (for admin moderation) by default. The reportability of individual messages can be changed by code."
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingDurationTypeChoiceDefault",
+                            "defaultValue": "0.0",
+                            "help": "How long a multiple-choice message should from the server should be displayed as 'typing'. 0 to disable completely."
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingDurationTypeTextPerCharacter",
+                            "defaultValue": "0.075",
+                            "help": "Used to calculate how long 'typing' dots should be displayed for a message from the server. In seconds."
+                          },
+                          {
+                            "type": "string",
+                            "name": "typingHideTypes",
+                            "defaultValue": "",
+                            "help": "Don't show the 'typing' dots for certain message types. Provide a comma seperated list of types."
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 34,
+        "y": 103,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "AnonymousLogin",
+              "id": "Yy41Y,0h5owx#Gsa*zR@",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "string",
+                      "name": "defaultLang",
+                      "defaultValue": "en"
+                    },
+                    {
+                      "type": "string",
+                      "name": "defaultLangIndex",
+                      "defaultValue": 0
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "RouteConnector",
+                    "id": "+J]V?Rw[}(f(P`Z6||`=",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "path": "/"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "RouteConnector",
+                        "id": "b]X8Jt$?8LE8$N[C+vPL",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "path": "/chat"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "8bW/:DPo7jZrZftZr~rW",
+        "x": 250,
+        "y": 101,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": true
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "ChatBoardsList",
+              "id": ",nC,arp,M~~{@(H5W?wi",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/chat"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

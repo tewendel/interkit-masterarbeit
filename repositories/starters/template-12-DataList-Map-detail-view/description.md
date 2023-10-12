@@ -1,0 +1,1 @@
+Switch between a list and a map showing the same data. Access the detail view from both.

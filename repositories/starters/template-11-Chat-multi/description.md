@@ -1,0 +1,1 @@
+Show available story boards in a list. When you tap on one, the chat opens.

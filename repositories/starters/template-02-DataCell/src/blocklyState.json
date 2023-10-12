@@ -1,0 +1,121 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "(mdKm[sHM82?UlPpF%=:",
+        "x": 554,
+        "y": 270,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "DataLoaderSingle",
+              "id": "S?0ha}Fr)BYo@^_/xAFX",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "sheet",
+                      "type": "sheetId",
+                      "help": "Select the sheet you want to load data from.",
+                      "id": "sheet",
+                      "value": {
+                        "text": "elements",
+                        "sheetKey": "elements"
+                      }
+                    },
+                    {
+                      "name": "rowKey",
+                      "type": "string",
+                      "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                      "id": "rowKey",
+                      "value": "content1"
+                    },
+                    {
+                      "name": "customKeyColumn",
+                      "type": "sheetColumn",
+                      "columnType": "string",
+                      "defaultValue": "settings/contentKey",
+                      "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                      "id": "customKeyColumn",
+                      "value": {
+                        "sheetKey": "elements",
+                        "columnKey": "contentKey",
+                        "text": "elements/contentKey",
+                        "columnType": "string"
+                      }
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "DataCell",
+                    "id": "H`)2EA|Ys}g{^-3EL!:2",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "column",
+                            "type": "sheetColumn",
+                            "columnType": "richText",
+                            "defaultValue": "settings/content",
+                            "id": "column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "text",
+                              "text": "elements/text",
+                              "columnType": "richText"
+                            }
+                          },
+                          {
+                            "name": "format",
+                            "type": "options",
+                            "options": [
+                              "richtText",
+                              "string"
+                            ],
+                            "defaultValue": "richText",
+                            "id": "format"
+                          },
+                          {
+                            "name": "inline",
+                            "type": "checkbox",
+                            "defaultValue": false,
+                            "id": "inline"
+                          },
+                          {
+                            "name": "centerContent",
+                            "type": "checkbox",
+                            "defaultValue": false,
+                            "id": "centerContent"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

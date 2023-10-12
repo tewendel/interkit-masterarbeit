@@ -1,0 +1,1101 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "Group",
+        "id": "bo~Qd3L?H9du{q`u}VGi",
+        "x": 1065,
+        "y": 18,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "dataAnnotation"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "7,r_@%__2*TU%w4XfJwz",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "id": "top",
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "value": "s"
+                    },
+                    {
+                      "id": "right",
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "value": "s"
+                    },
+                    {
+                      "id": "bottom",
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "value": "none"
+                    },
+                    {
+                      "id": "left",
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "value": "s"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "DataLoaderSingle",
+                    "id": "sduEfwt4!TA%GmbujN^u",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "sheet",
+                            "type": "sheetId",
+                            "help": "Select the sheet you want to load data from.",
+                            "id": "sheet",
+                            "value": {
+                              "sheetKey": "elements",
+                              "text": "elements"
+                            }
+                          },
+                          {
+                            "name": "rowKey",
+                            "type": "string",
+                            "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                            "id": "rowKey",
+                            "value": "1"
+                          },
+                          {
+                            "name": "customKeyColumn",
+                            "type": "sheetColumn",
+                            "columnType": "string",
+                            "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                            "defaultValue": "settings/contentKey",
+                            "id": "customKeyColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "number",
+                              "text": "elements/number",
+                              "columnType": "string"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "Z]~kW6R}9|#Nll6T-YR3",
+        "x": 706,
+        "y": 30,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "userVar"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": "$LOA{DY)Ad#NNd4tngK{",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "s"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "s"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "s"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "s"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "IfUserVar",
+                    "id": "mF,bzrGA*UN{gofGHEf(",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "variable": "status",
+                      "value": "alive"
+                    },
+                    "inputs": {
+                      "iftrue": {
+                        "block": {
+                          "type": "Button",
+                          "id": "?Z8y89TXz`[I.4LmSrm)",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "set userVar status to dead",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "setUserVar",
+                                    "value": "dead",
+                                    "key": "status"
+                                  }
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "StaticText",
+                              "id": "R+pM;mB.),W~5JiAJfsG",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "text": "user is alive"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "else": {
+                        "block": {
+                          "type": "Button",
+                          "id": "NDfrZx~2PPait,D*|;hA",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "set userVar status to alive",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "setUserVar",
+                                    "value": "alive",
+                                    "key": "status"
+                                  }
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "StaticText",
+                              "id": "nVeaP/N}L[eKzxoAP7UU",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "text": "user is dead"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "X[iG==+(4.wWE?fP83]-",
+        "x": 137,
+        "y": 347,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/test",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "StaticText",
+              "id": "7-!]]3J)C_w0=X@p(dLz",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "on route /test"
+              },
+              "next": {
+                "block": {
+                  "type": "Button",
+                  "id": "MXSAp=Cet@R0D@;/z%vP",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "text": "navigate back",
+                    "extraProps": {
+                      "props": [
+                        {
+                          "type": "effect",
+                          "name": "effect",
+                          "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                          "id": "effect",
+                          "value": {
+                            "effectType": "back"
+                          }
+                        },
+                        {
+                          "name": "size",
+                          "type": "options",
+                          "options": [
+                            "medium",
+                            "small",
+                            "large"
+                          ],
+                          "defaultValue": "medium",
+                          "help": "Large, medium or small.",
+                          "id": "size"
+                        },
+                        {
+                          "name": "flex",
+                          "type": "options",
+                          "options": [
+                            "normal",
+                            "fill"
+                          ],
+                          "defaultValue": "normal",
+                          "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                          "id": "flex"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": -183,
+        "y": -50,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "AnonymousLogin",
+              "id": "^}BgF3:InWuSMQ-*7W(Z",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "string",
+                      "name": "defaultLang",
+                      "defaultValue": "en"
+                    },
+                    {
+                      "type": "string",
+                      "name": "defaultLangIndex",
+                      "defaultValue": 0
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "/6`rbhdf*mWP1}h7F1G=",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Spacing",
+                          "id": "Gbba?mu!T7JYO$Sx~7RL",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "top",
+                                  "type": "options",
+                                  "options": [
+                                    "none",
+                                    "xs",
+                                    "s",
+                                    "m",
+                                    "l",
+                                    "xl"
+                                  ],
+                                  "id": "top",
+                                  "value": "s"
+                                },
+                                {
+                                  "name": "right",
+                                  "type": "options",
+                                  "options": [
+                                    "none",
+                                    "xs",
+                                    "s",
+                                    "m",
+                                    "l",
+                                    "xl"
+                                  ],
+                                  "id": "right",
+                                  "value": "s"
+                                },
+                                {
+                                  "name": "bottom",
+                                  "type": "options",
+                                  "options": [
+                                    "none",
+                                    "xs",
+                                    "s",
+                                    "m",
+                                    "l",
+                                    "xl"
+                                  ],
+                                  "id": "bottom",
+                                  "value": "s"
+                                },
+                                {
+                                  "name": "left",
+                                  "type": "options",
+                                  "options": [
+                                    "none",
+                                    "xs",
+                                    "s",
+                                    "m",
+                                    "l",
+                                    "xl"
+                                  ],
+                                  "id": "left",
+                                  "value": "s"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Button",
+                                "id": "[lVV+@SFF!V?]8b*ViPT",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "open a url",
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "type": "effect",
+                                        "name": "effect",
+                                        "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                        "id": "effect",
+                                        "value": {
+                                          "effectType": "linkTargetBlank",
+                                          "url": "http://google.com"
+                                        }
+                                      },
+                                      {
+                                        "name": "size",
+                                        "type": "options",
+                                        "options": [
+                                          "medium",
+                                          "small",
+                                          "large"
+                                        ],
+                                        "defaultValue": "medium",
+                                        "help": "Large, medium or small.",
+                                        "id": "size"
+                                      },
+                                      {
+                                        "name": "flex",
+                                        "type": "options",
+                                        "options": [
+                                          "normal",
+                                          "fill"
+                                        ],
+                                        "defaultValue": "normal",
+                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                        "id": "flex"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "Spacing",
+                              "id": "k=OHt4dHea_hwh:L|aAK",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "extraProps": {
+                                  "props": [
+                                    {
+                                      "name": "top",
+                                      "type": "options",
+                                      "options": [
+                                        "none",
+                                        "xs",
+                                        "s",
+                                        "m",
+                                        "l",
+                                        "xl"
+                                      ],
+                                      "id": "top",
+                                      "value": "s"
+                                    },
+                                    {
+                                      "name": "right",
+                                      "type": "options",
+                                      "options": [
+                                        "none",
+                                        "xs",
+                                        "s",
+                                        "m",
+                                        "l",
+                                        "xl"
+                                      ],
+                                      "id": "right",
+                                      "value": "s"
+                                    },
+                                    {
+                                      "name": "bottom",
+                                      "type": "options",
+                                      "options": [
+                                        "none",
+                                        "xs",
+                                        "s",
+                                        "m",
+                                        "l",
+                                        "xl"
+                                      ],
+                                      "id": "bottom",
+                                      "value": "s"
+                                    },
+                                    {
+                                      "name": "left",
+                                      "type": "options",
+                                      "options": [
+                                        "none",
+                                        "xs",
+                                        "s",
+                                        "m",
+                                        "l",
+                                        "xl"
+                                      ],
+                                      "id": "left",
+                                      "value": "s"
+                                    }
+                                  ]
+                                }
+                              },
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "RouteConnector",
+                                    "id": "BU,J~on=b`de{*?L`Xsw",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "path": "/"
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "RouteConnector",
+                                        "id": "LX6#C-iNg}/cVRwc4zF:",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "fields": {
+                                          "path": "/test"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "next": {
+                                "block": {
+                                  "type": "GroupConnector",
+                                  "id": "O^GMr;e0z~(Nx1Jxl[C+",
+                                  "data": "{\"origin\":\"interkit\"}",
+                                  "fields": {
+                                    "name": "UIKey"
+                                  },
+                                  "next": {
+                                    "block": {
+                                      "type": "GroupConnector",
+                                      "id": "WH~2l#lx=:CwVJYNv2Q8",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "name": "userVar"
+                                      },
+                                      "next": {
+                                        "block": {
+                                          "type": "GroupConnector",
+                                          "id": "ZllKyt+--58RIfrP!zUw",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "name": "dataAnnotation"
+                                          },
+                                          "next": {
+                                            "block": {
+                                              "type": "Spacing",
+                                              "id": "v,U,JG+%$W7{^m2IU|Tt",
+                                              "data": "{\"origin\":\"interkit\"}",
+                                              "fields": {
+                                                "extraProps": {
+                                                  "props": [
+                                                    {
+                                                      "id": "top",
+                                                      "name": "top",
+                                                      "type": "options",
+                                                      "options": [
+                                                        "none",
+                                                        "xs",
+                                                        "s",
+                                                        "m",
+                                                        "l",
+                                                        "xl"
+                                                      ],
+                                                      "value": "none"
+                                                    },
+                                                    {
+                                                      "id": "right",
+                                                      "name": "right",
+                                                      "type": "options",
+                                                      "options": [
+                                                        "none",
+                                                        "xs",
+                                                        "s",
+                                                        "m",
+                                                        "l",
+                                                        "xl"
+                                                      ],
+                                                      "value": "s"
+                                                    },
+                                                    {
+                                                      "id": "bottom",
+                                                      "name": "bottom",
+                                                      "type": "options",
+                                                      "options": [
+                                                        "none",
+                                                        "xs",
+                                                        "s",
+                                                        "m",
+                                                        "l",
+                                                        "xl"
+                                                      ],
+                                                      "value": "s"
+                                                    },
+                                                    {
+                                                      "id": "left",
+                                                      "name": "left",
+                                                      "type": "options",
+                                                      "options": [
+                                                        "none",
+                                                        "xs",
+                                                        "s",
+                                                        "m",
+                                                        "l",
+                                                        "xl"
+                                                      ],
+                                                      "value": "s"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "inputs": {
+                                                "default": {
+                                                  "block": {
+                                                    "type": "Button",
+                                                    "id": "vu4fh,EJs]Ivl2()v819",
+                                                    "data": "{\"origin\":\"interkit\"}",
+                                                    "fields": {
+                                                      "text": "trigger an action",
+                                                      "extraProps": {
+                                                        "props": [
+                                                          {
+                                                            "type": "effect",
+                                                            "name": "effect",
+                                                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                            "id": "effect",
+                                                            "value": {
+                                                              "effectType": "actionTrigger",
+                                                              "trigger": "test"
+                                                            }
+                                                          },
+                                                          {
+                                                            "name": "size",
+                                                            "type": "options",
+                                                            "options": [
+                                                              "medium",
+                                                              "small",
+                                                              "large"
+                                                            ],
+                                                            "defaultValue": "medium",
+                                                            "help": "Large, medium or small.",
+                                                            "id": "size",
+                                                            "value": "medium"
+                                                          },
+                                                          {
+                                                            "name": "flex",
+                                                            "type": "options",
+                                                            "options": [
+                                                              "normal",
+                                                              "fill"
+                                                            ],
+                                                            "defaultValue": "normal",
+                                                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                            "id": "flex"
+                                                          }
+                                                        ]
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": ".qWNP3+Yz:)XM#vqOQM^",
+        "x": 130,
+        "y": 57,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Button",
+              "id": "nfBAk,]4SpY?:#G9,)Q5",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "navigate to a route",
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "effect",
+                      "name": "effect",
+                      "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                      "id": "effect",
+                      "value": {
+                        "effectType": "route",
+                        "path": "/test"
+                      }
+                    },
+                    {
+                      "name": "size",
+                      "type": "options",
+                      "options": [
+                        "medium",
+                        "small",
+                        "large"
+                      ],
+                      "defaultValue": "medium",
+                      "help": "Large, medium or small.",
+                      "id": "size",
+                      "value": "medium"
+                    },
+                    {
+                      "name": "flex",
+                      "type": "options",
+                      "options": [
+                        "normal",
+                        "fill"
+                      ],
+                      "defaultValue": "normal",
+                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                      "id": "flex"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "Z2ECVS:rK7!~IkV;RiA+",
+        "x": 410,
+        "y": 15,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "UIKey"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "Spacing",
+              "id": ";!PgRE,kusK4`*Uv}t0n",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "top",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "top",
+                      "value": "s"
+                    },
+                    {
+                      "name": "right",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "right",
+                      "value": "s"
+                    },
+                    {
+                      "name": "bottom",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "bottom",
+                      "value": "s"
+                    },
+                    {
+                      "name": "left",
+                      "type": "options",
+                      "options": [
+                        "none",
+                        "xs",
+                        "s",
+                        "m",
+                        "l",
+                        "xl"
+                      ],
+                      "id": "left",
+                      "value": "s"
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "IfUIKey",
+                    "id": "9gw+H-$*K%_?Y9?J/%VQ",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "storeType": "UIKey",
+                      "key": "key1",
+                      "value": "on"
+                    },
+                    "inputs": {
+                      "iftrue": {
+                        "block": {
+                          "type": "Button",
+                          "id": "@6-%AajC(Hj,CO6[$+8y",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "toggle UIkey",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "setUIKey",
+                                    "value": "off",
+                                    "key": "key1"
+                                  }
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "StaticText",
+                              "id": "(~J+?0#t/LH`Vo~27SH1",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "text": "key1 is on"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "else": {
+                        "block": {
+                          "type": "Button",
+                          "id": "(){OkYJ{iY[)gm-{)=WL",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "toggle UIkey",
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "effect",
+                                  "name": "effect",
+                                  "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                  "id": "effect",
+                                  "value": {
+                                    "effectType": "setUIKey",
+                                    "value": "on",
+                                    "key": "key1"
+                                  }
+                                },
+                                {
+                                  "name": "size",
+                                  "type": "options",
+                                  "options": [
+                                    "medium",
+                                    "small",
+                                    "large"
+                                  ],
+                                  "defaultValue": "medium",
+                                  "help": "Large, medium or small.",
+                                  "id": "size"
+                                },
+                                {
+                                  "name": "flex",
+                                  "type": "options",
+                                  "options": [
+                                    "normal",
+                                    "fill"
+                                  ],
+                                  "defaultValue": "normal",
+                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                  "id": "flex"
+                                }
+                              ]
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "StaticText",
+                              "id": "uU$87-dQu|?^EWb3hpHE",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "text": "key1 is off"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

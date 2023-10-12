@@ -17,29 +17,24 @@ const headers = (req, res, next) => {
   next()
 }
 
-const importData = async (req, res) => {
-
-  /*res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");*/
-
-
-  //if (!request.query.uploadToken || !uploadTokens.has(request.query.uploadToken)) {
-  //  throw Boom.unauthorized("wrong or missing downloadToken.");
-  //}; uploadTokens.delete(request.query.uploadToken)
-  //
-  //console.log(EJSON.parse(request.payload.data))
-
-  //console.log(request.payload)
-
-  //return new Promise( resolve => {
+/* 
+  opens a zip file and imports the data into an existing project (overwrites!)
+  expects 
+  req = {
+    body: {
+      projectId
+    },
+    file: {
+      path
+    }
+  }
+*/
+export const importData = async (req) => {
 
   const errorMessages = []
 
   if (!req.file) {
-    res.sendStatus(400)
-    return
+    return false;
   }
 
   let replace = false
@@ -112,7 +107,6 @@ const importData = async (req, res) => {
       }
     }
     
-
     //const project = data.project
 
     const newProjectName = meta.filename ?
@@ -133,14 +127,40 @@ const importData = async (req, res) => {
     // Do not forget to close the file once you're done
     zip.close()
 
-    res.status(200).send(errorMessages.length > 0 ? JSON.parse(errorMessages) : {status: "ok"})
-    res.end();
+    return(errorMessages.length > 0 ? JSON.parse(errorMessages) : {status: "ok"})
   });
 
+}
+
+// wrapper for an express endpoint
+const importDataEnpoint = async (req, res) => {
+
+  /*res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");*/
+
+  //if (!request.query.uploadToken || !uploadTokens.has(request.query.uploadToken)) {
+  //  throw Boom.unauthorized("wrong or missing downloadToken.");
+  //}; uploadTokens.delete(request.query.uploadToken)
+  //
+  //console.log(EJSON.parse(request.payload.data))
+
+  //console.log(request.payload)
+
+  //return new Promise( resolve => {
+
+  const result = await importData(req);
+
+  if(!result) {
+    res.sendStatus(400);
+    return
+  } else {
+    res.status(200).send(result)
+    res.end();
+  }
+
   //})
-
-  return true
-
 
   //const payload = {
   //  ...request.payload,
@@ -149,10 +169,11 @@ const importData = async (req, res) => {
   //console.log(payload)
   //insertProjectAsDuplicate(request.payload.data)
 
-}
-
+}  
+  
 export const setupImportServer = (app) => {
   app.post('/import', upload.single('importfile'), cors(), headers, async (req, res) => { // should be PUT, but PUT creates cors issues
-    importData(req, res)
+    importDataEnpoint(req, res)
   })
 }
+

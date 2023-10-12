@@ -1,0 +1,1 @@
+Show static text on the screen.

@@ -484,6 +484,7 @@ Meteor.methods({
   },
 
   "user.trackActivity": async function ({ url }) {
+    
     const userId = Meteor.userId();
     const connectionId = this.connection.id;
     if (!userId || !connectionId) {
@@ -495,7 +496,10 @@ Meteor.methods({
     //   userId,
     //   url, connectionId
     // );
-    processUserActivity({ userId, connectionId, url });
+    
+    /* disabled */
+    // processUserActivity({ userId, connectionId, url });
+    
     return true;
   },
 });

@@ -1,0 +1,851 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "AppBase",
+        "id": "ZRUHk3aCGOiRK+,1oTYx",
+        "x": 147,
+        "y": -24,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language."
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "RouteConnector",
+              "id": "6.Co^=_E|#wlOhRvd7YL",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "path": "/"
+              },
+              "next": {
+                "block": {
+                  "type": "RouteConnector",
+                  "id": "HuQTdK9[VV]%v#{]4CF$",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "path": "/other"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "Rl-R`q)?E]}}1Y`(gX#2",
+        "x": 1036,
+        "y": -6,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/other",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShellAudio",
+              "id": "::JgnWw.*$:2Kl0$7w6R",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "`2)g.MtMh8,HX!fsBTNU",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Something else"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "Spacing",
+                    "id": "rIlD.#/n/vKGt,=q12-1",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "top",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "top",
+                            "value": "s"
+                          },
+                          {
+                            "name": "right",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "right",
+                            "value": "s"
+                          },
+                          {
+                            "name": "bottom",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "bottom",
+                            "value": "s"
+                          },
+                          {
+                            "name": "left",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "left",
+                            "value": "s"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "Y~I~~t}KsnQHgT~K8bhE",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "This is an inline audio player."
+                          },
+                          "next": {
+                            "block": {
+                              "type": "DataLoaderSingle",
+                              "id": "IgTAX*88tQOpm1hNG~IE",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "extraProps": {
+                                  "props": [
+                                    {
+                                      "id": "sheet",
+                                      "name": "sheet",
+                                      "type": "sheetId",
+                                      "help": "Select the sheet you want to load data from.",
+                                      "value": {
+                                        "sheetKey": "elements",
+                                        "text": "elements"
+                                      }
+                                    },
+                                    {
+                                      "id": "rowKey",
+                                      "name": "rowKey",
+                                      "type": "string",
+                                      "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                      "value": "a8159b74-a6dc-4ebe-b0e2-d24012531b8c"
+                                    },
+                                    {
+                                      "id": "customKeyColumn",
+                                      "name": "customKeyColumn",
+                                      "type": "sheetColumn",
+                                      "columnType": "string",
+                                      "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                      "defaultValue": "settings/contentKey",
+                                      "value": {
+                                        "sheetKey": "empty",
+                                        "columnKey": "title",
+                                        "text": "",
+                                        "columnType": "string"
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "InlineAudioButton",
+                                    "id": "Z6-/G^Nx[HTGTL{Qi_Qw",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "audioColumn": {
+                                        "value": {
+                                          "columnType": "mediaFile",
+                                          "value": "elements/audio",
+                                          "text": "elements/audio"
+                                        }
+                                      },
+                                      "hideSkipControls": true
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Player": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "m-O1p+l7`.W/)45dYV{I",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "AudioPlayer"
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "QiI#7Fz6@7(`lSGjD=4A",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "BottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "I{hAs1@7kiWME2k;mKYq",
+        "x": 580,
+        "y": -9,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShellAudio",
+              "id": "EdPmH:GM,,RPUB3^Y!(?",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "StaticText",
+                    "id": "PzFxmf@`rkWP25!nO{Re",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "Audios"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "Spacing",
+                    "id": "oM~6w97E`.MO+LZ^6^?Y",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "top",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "top",
+                            "value": "s"
+                          },
+                          {
+                            "name": "right",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "right",
+                            "value": "s"
+                          },
+                          {
+                            "name": "bottom",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "bottom",
+                            "value": "s"
+                          },
+                          {
+                            "name": "left",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl"
+                            ],
+                            "id": "left",
+                            "value": "s"
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "f]30whdJP+_4C-px,5]-",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "This is a list of audios that launch the popout player."
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "DataLoaderMulti",
+                        "id": "MT}XeNwXsS5-C|Efvd.;",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "sheetKey": {
+                            "value": {
+                              "value": "elements",
+                              "text": "elements"
+                            }
+                          },
+                          "extraProps": {
+                            "props": [
+                              {
+                                "name": "referenceElementStore",
+                                "type": "string"
+                              },
+                              {
+                                "name": "referenceElementColumn",
+                                "type": "sheetColumn"
+                              },
+                              {
+                                "name": "sortColumn",
+                                "type": "sheetColumn"
+                              },
+                              {
+                                "name": "hideColumn",
+                                "defaultValue": "elements/hide"
+                              },
+                              {
+                                "name": "excludeAnnotated",
+                                "type": "string",
+                                "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                              },
+                              {
+                                "name": "includeOnlyAnnotated",
+                                "type": "string",
+                                "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                              },
+                              {
+                                "name": "discoverableColumn",
+                                "type": "sheetColumn",
+                                "defaultValue": "elements/discoverable",
+                                "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                              },
+                              {
+                                "name": "discoverProperty",
+                                "type": "string",
+                                "defaultValue": "discovered"
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "DataList",
+                              "id": "MBr(yO,o+3.S{e=;U@w`",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "inputs": {
+                                "dataElement": {
+                                  "block": {
+                                    "type": "Spacing",
+                                    "id": "%Uxp*[S+WvCf4iMmP([]",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "extraProps": {
+                                        "props": [
+                                          {
+                                            "name": "top",
+                                            "type": "options",
+                                            "options": [
+                                              "none",
+                                              "xs",
+                                              "s",
+                                              "m",
+                                              "l",
+                                              "xl"
+                                            ],
+                                            "id": "top",
+                                            "value": "s"
+                                          },
+                                          {
+                                            "name": "right",
+                                            "type": "options",
+                                            "options": [
+                                              "none",
+                                              "xs",
+                                              "s",
+                                              "m",
+                                              "l",
+                                              "xl"
+                                            ],
+                                            "id": "right",
+                                            "value": "s"
+                                          },
+                                          {
+                                            "name": "bottom",
+                                            "type": "options",
+                                            "options": [
+                                              "none",
+                                              "xs",
+                                              "s",
+                                              "m",
+                                              "l",
+                                              "xl"
+                                            ],
+                                            "id": "bottom",
+                                            "value": "s"
+                                          },
+                                          {
+                                            "name": "left",
+                                            "type": "options",
+                                            "options": [
+                                              "none",
+                                              "xs",
+                                              "s",
+                                              "m",
+                                              "l",
+                                              "xl"
+                                            ],
+                                            "id": "left",
+                                            "value": "s"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "inputs": {
+                                      "default": {
+                                        "block": {
+                                          "type": "DataCell",
+                                          "id": "H^s6fd[EXZK|TUirJe7{",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "extraProps": {
+                                              "props": [
+                                                {
+                                                  "name": "column",
+                                                  "type": "sheetColumn",
+                                                  "columnType": "richText",
+                                                  "defaultValue": "settings/content",
+                                                  "id": "column",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "title",
+                                                    "text": "elements/title",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "name": "format",
+                                                  "type": "options",
+                                                  "options": [
+                                                    "richtText",
+                                                    "string"
+                                                  ],
+                                                  "defaultValue": "richText",
+                                                  "id": "format"
+                                                },
+                                                {
+                                                  "name": "inline",
+                                                  "type": "checkbox",
+                                                  "defaultValue": false,
+                                                  "id": "inline",
+                                                  "value": true
+                                                },
+                                                {
+                                                  "name": "centerContent",
+                                                  "type": "checkbox",
+                                                  "defaultValue": false,
+                                                  "id": "centerContent"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "next": {
+                                            "block": {
+                                              "type": "PopoutAudioButton",
+                                              "id": "*tx[XiKMgdKf$lNUfZI6",
+                                              "data": "{\"origin\":\"interkit\"}",
+                                              "fields": {
+                                                "audioColumn": {
+                                                  "value": {
+                                                    "value": "elements/audio",
+                                                    "text": "elements/audio"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Player": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "87*e^(0jly^lnjZ$k04:",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "AudioPlayer"
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "I2q}|H9FKg%LVJP=Hnvd",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "BottomMenu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "_D0%-hh6X*Qth}wq?``H",
+        "x": 288,
+        "y": 232,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "AudioPlayer"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "AudioPlayer",
+              "id": ";Qx1SLM-{M)a@VdM$p.I",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "audioColumn": {
+                  "value": {
+                    "value": "elements/audio",
+                    "text": "elements/audio"
+                  }
+                },
+                "titleColumn": {
+                  "value": {
+                    "value": "elements/title",
+                    "text": "elements/title"
+                  }
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "DataCard",
+                    "id": "0~8c9Ap#Vzm:Y:|1kq~p",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "variant",
+                            "type": "options",
+                            "options": [
+                              "full",
+                              "large",
+                              "medium",
+                              "small"
+                            ],
+                            "defaultValue": "full",
+                            "id": "variant"
+                          },
+                          {
+                            "name": "rightArrow",
+                            "type": "checkbox",
+                            "help": "Display the right arrow next to the headline",
+                            "id": "rightArrow"
+                          },
+                          {
+                            "name": "effect",
+                            "type": "effect",
+                            "help": "What should happen when you tap on the card",
+                            "id": "effect"
+                          },
+                          {
+                            "name": "imageColumn",
+                            "type": "sheetColumn",
+                            "columnType": "mediaFile",
+                            "defaultValue": "elements/image",
+                            "id": "imageColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "image",
+                              "text": "elements/image",
+                              "columnType": "mediaFile"
+                            }
+                          },
+                          {
+                            "name": "headlineColumn",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/headline",
+                            "id": "headlineColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "title",
+                              "text": "elements/title",
+                              "columnType": "string"
+                            }
+                          },
+                          {
+                            "name": "label1Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label1",
+                            "id": "label1Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label1",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "subtitle1Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle1",
+                            "id": "subtitle1Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle1",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "label2Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label2",
+                            "id": "label2Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label2",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "subtitle2Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle2",
+                            "id": "subtitle2Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle2",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "label3Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/label3",
+                            "id": "label3Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "label3",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "subtitle3Column",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/subtitle3",
+                            "id": "subtitle3Column",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "subtitle3",
+                              "text": "elements/undefined"
+                            }
+                          },
+                          {
+                            "name": "descriptionColumn",
+                            "type": "sheetColumn",
+                            "defaultValue": "elements/description",
+                            "id": "descriptionColumn",
+                            "value": {
+                              "sheetKey": "elements",
+                              "columnKey": "description",
+                              "text": "elements/description",
+                              "columnType": "richText"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "HmlLYua]k$Tw_M1xvLUp",
+        "x": 39,
+        "y": 227,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "BottomMenu"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "NavButton",
+              "id": "vR|@.8%Hwy^?eI/n@wNe",
+              "data": "{\"origin\":\"interkit\"}",
+              "fields": {
+                "text": "Audios",
+                "extraProps": {
+                  "props": [
+                    {
+                      "name": "disabled",
+                      "type": "checkbox",
+                      "defaultValue": false,
+                      "id": "disabled"
+                    },
+                    {
+                      "type": "effect",
+                      "name": "effect",
+                      "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                      "id": "effect",
+                      "value": {
+                        "effectType": "route",
+                        "path": "/"
+                      }
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "Icon",
+                    "id": "KrHScu,S@6V;ykgo+vz!",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "type": "Thin-Dashboard",
+                      "inverse": false
+                    }
+                  }
+                }
+              },
+              "next": {
+                "block": {
+                  "type": "NavButton",
+                  "id": "o7w$+LoB,Wg,[GC6mufM",
+                  "data": "{\"origin\":\"interkit\"}",
+                  "fields": {
+                    "text": "Other",
+                    "extraProps": {
+                      "props": [
+                        {
+                          "name": "disabled",
+                          "type": "checkbox",
+                          "defaultValue": false,
+                          "id": "disabled"
+                        },
+                        {
+                          "type": "effect",
+                          "name": "effect",
+                          "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                          "id": "effect",
+                          "value": {
+                            "effectType": "route",
+                            "path": "/other"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "inputs": {
+                    "default": {
+                      "block": {
+                        "type": "Icon",
+                        "id": "`|f`q!QbvBn`3QkooIff",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "type": "Thin-Archiv",
+                          "inverse": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
