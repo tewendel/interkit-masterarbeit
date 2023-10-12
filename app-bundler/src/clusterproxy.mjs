@@ -137,9 +137,10 @@ function selectWorker(req, workers) {
 }
 
 function getUnusedPort() {
+  //console.log("checking port", Object.values(cluster.workers).map((w) => w.port + " " + w.state + " " + w.isDead() + " " + w.isConnected()));
   for (let port = _portrange[0]; port <= _portrange[1]; port++) {
     if (
-      !Object.values(cluster.workers).find((worker) => worker.port === port)
+      !Object.values(cluster.workers).find((worker) => worker.port === port && worker.isConnected() && !worker.isDead())
     ) {
       return port;
     }
@@ -198,8 +199,8 @@ function removeWorker(workerId) {
   for (let worker of Object.values(cluster.workers)) {
     if (worker.id === workerId && worker.isConnected() && !worker.isDead() && !worker.beingKilled)
     {
-      worker.kill();
       worker.beingKilled = true;
+      worker.kill();
       console.log("Killing worker", worker.id);
     }
   }

@@ -30,15 +30,6 @@ const resetUsers = async () => {
   );
 };
 
-const resetViteServers = async () => {
-  // reset viteServer.actionRequested on all projects if it exists
-  await Projects.update(
-    {},
-    { $set: { ["viteServer.actionRequested"]: null } },
-    { multi: true }
-  );
-};
-
 
 const processUserActivity = async ({userId, connectionId, url}) => {
   // update user.connections
@@ -89,6 +80,7 @@ const pruneConnections = async () => {
   // Meteor.users.find({ "connections": { $elemMatch: { "lastSeen": { $lt: "2023-09-07T06:35:05.255Z" } } } });
 };
 
+/*
 const updateAllViteServerStatus = async () => {
   // find all users that have connections whose url match urlEditingProjectRegex
   const users = await Meteor.users.find(
@@ -128,15 +120,13 @@ const updateAllViteServerStatus = async () => {
   if (started > 0 || stopped > 0) {
     console.log(`updateAllViteServerStatus requested ${started} starts and ${stopped} stops`)
   }
-};
+};*/
 
 const init = async () => {
   await resetUsers();
-  await resetViteServers();
 
   Meteor.setInterval( async function(){
     await pruneConnections();
-    await updateAllViteServerStatus()
   }, 10000);
 }
 

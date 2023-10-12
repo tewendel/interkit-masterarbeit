@@ -38,7 +38,14 @@ Meteor.startup(() => {
     { multi: true }
   )
 
-  //initUserActivity();
+  // reset devServers
+  Projects.update(
+    {},
+    { $set: { ["devServer.actionRequested"]: "stop" } },
+    { multi: true }
+  );
+
+  initUserActivity();
 
 });
 

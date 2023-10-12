@@ -255,7 +255,7 @@
   bind:clientHeight={containerHeight}
   >
   {#if bundleServerURL && !$compileError}
-    {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
+    {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status) }
       <iframe 
         class="preview-iframe"
         style={iframeStyle}
