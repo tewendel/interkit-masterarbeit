@@ -193,7 +193,8 @@ Meteor.methods({
         if(existingProject) {
           console.log(`Project called ${templateName} already exists, skipping build`)
         } else {
-          // create the project entry in the database - bundler will copy respository when notified through subscription
+          // create the project entry in the database 
+          // bundler will copy respository when notified through subscription in filesystem/ensureRepositories
           let projectId = await createProject({
             name: templateName,
             template: file,

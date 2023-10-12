@@ -1,8 +1,0 @@
-{
-  "project_slug": "Hello, World",
-  "bundle_version": "0.1",
-  "INTERKIT_APP_LOAD_THEME": true,
-  "INTERKIT_BUNDLER_URL": "http://localhost:4000",
-  "INTERKIT_SERVER_WEBSOCKETS_URL": "ws://localhost:3000/websocket",
-  "INTERKIT_SERVER_URL": "http://localhost:3000"
-}
