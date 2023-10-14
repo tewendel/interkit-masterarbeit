@@ -70,13 +70,13 @@ function ensureWorker(project) {
         // add a little delay for the vite server to be really ready
         setTimeout(()=> {
           if (still_alive) {
-            // console.log("worker ready", )
+            console.log("worker ready", )
             interkit_server.call("project.viteServer.setStatus", {
               projectId: project.id,
               status: "running",
             });
           }
-        }, 300)
+        }, 1000)
       }
     });
     worker.on("exit", (code, signal) => {
