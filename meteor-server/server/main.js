@@ -45,7 +45,7 @@ Meteor.startup(() => {
     { multi: true }
   );
 
-  initUserActivity();
+  //initUserActivity();
 
 });
 

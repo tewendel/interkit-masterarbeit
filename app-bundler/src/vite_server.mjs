@@ -64,15 +64,23 @@ function ensureWorker(project) {
         INTERKIT_PATH: interkitPath,
       },
     });
+    let still_alive = true
     worker.on("message", (msg) => {
       if (msg.type === "ready") {
-        interkit_server.call("project.viteServer.setStatus", {
-          projectId: project.id,
-          status: "running",
-        });
+        // add a little delay for the vite server to be really ready
+        setTimeout(()=> {
+          if (still_alive) {
+            // console.log("worker ready", )
+            interkit_server.call("project.viteServer.setStatus", {
+              projectId: project.id,
+              status: "running",
+            });
+          }
+        }, 300)
       }
     });
     worker.on("exit", (code, signal) => {
+      still_alive = false
       interkit_server.call("project.viteServer.setStatus", {
         projectId: project.id,
         status: "dead",

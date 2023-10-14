@@ -255,8 +255,9 @@
   bind:clientHeight={containerHeight}
   >
   {#if bundleServerURL && !$compileError}
-    {#key $buildHash + currentProject + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status) }
+    {$buildHash + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running")}
       <iframe 
+        on:error={(e) => console.log("iframe error", e)}
         class="preview-iframe"
         style={iframeStyle}
         title="embedded app preview" 

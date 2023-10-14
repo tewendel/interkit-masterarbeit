@@ -11,15 +11,15 @@ Meteor.publish('projects', function() {
     history: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
     projectServer: {
       status: 1,
-      cpu: 1,
+      ...(userIsInRoles(this.userId, ["admin", "author"]) ? { cpu: 1 } : {}),
       actionRequested: userIsInRoles(this.userId, [
         "admin",
         "author",
         "bundler",
       ]),
-      messages: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
+      ...(userIsInRoles(this.userId, ["admin", "author"] ? { messages: 1 } : {})),
     },
-    uiState: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
+    ...(userIsInRoles(this.userId, ["admin", "author", "bundler"]) ? { uiState: 1 } : {}),
     devServer: userIsInRoles(this.userId, ["admin", "author", "bundler"]),
   };
   //console.log("projects sub")
@@ -40,7 +40,7 @@ Meteor.publish('projects.list', function() {
     history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,
-      cpu: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
+      cpu: userIsInRoles(this.userId, ['admin', 'author']),
     },
     devServer: userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     uiState: userIsInRoles(this.userId, ['admin', 'author', 'bundler'])
