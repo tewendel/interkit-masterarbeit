@@ -43,6 +43,7 @@ const processAllProjectFiles = async projectId => {
   }
   updateProjectMdFiles(projectId, filesRelative);
   updateTheme(projectId, wF)
+  updateGit(projectId)
 }
 
 const runUpdater = async function(projectId) {

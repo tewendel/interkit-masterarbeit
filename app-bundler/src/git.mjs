@@ -155,6 +155,7 @@ async function gitUnstagedChanges(projectPath) {
   }
 }
 
+/* diff is quite slow and difficult to parse */
 async function gitDiff(projectPath) {
   const A = TREE({ ref: 'HEAD' });
   const B = WORKDIR();
