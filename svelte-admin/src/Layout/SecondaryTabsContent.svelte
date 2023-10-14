@@ -95,14 +95,16 @@
           <Preview projectId={$secondaryTabPreviewProjectId} appVariant="build"/>
         {:else}
           <!-- TODO find better component -->
-          <ToastNotification
-            kind="info"
-            lowContrast
-            hideCloseButton
-            title="Preview"
-            caption="Pick a project from the dashboard to preview it here."
-            >
-          </ToastNotification>
+          <div class="toastContainer">
+            <ToastNotification
+              kind="info"
+              lowContrast
+              hideCloseButton
+              title="Preview"
+              caption="Pick a project from the dashboard to preview it here."
+              >
+            </ToastNotification>
+          </div>
         {/if}
       </section>
     
@@ -199,6 +201,12 @@
 
   section.right-pane-content-docs {
     height: 100%;
+  }
+
+  .toastContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .right-pane-content-docs-special {

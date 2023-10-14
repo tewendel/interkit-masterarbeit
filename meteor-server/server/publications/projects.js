@@ -55,6 +55,7 @@ Meteor.publish('projects.list', function() {
 
 class ProjectSubscriptionTracker {
   constructor() {
+    this.delayMs = 60 * 1000; // set devServer to sleep after 1 minute
     this.pubCount = {};
   }
 
@@ -91,7 +92,7 @@ class ProjectSubscriptionTracker {
         if (this.pubCount[projectId] === 0) {
           this.stopDevServer(projectId);
         }
-      }, 30 * 1000);
+      }, this.delayMs);
     }
   }
 

@@ -45,6 +45,13 @@ Meteor.startup(() => {
     { multi: true }
   );
 
+  // reset uiState
+  Projects.update(
+    {},
+    { $set: { uiState : {} } },
+    { multi: true }
+  );
+
   //initUserActivity();
 
 });

@@ -131,6 +131,9 @@
     }
   }
 
+  // trigger a reload of the iframe
+  $: reloadHash = $buildHash + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status)
+
   // send new previewUserId to preview when it is changed in admin
   $: {
     console.log("PreviewUserAuth update", previewUserAuth)
@@ -254,8 +257,8 @@
   bind:clientWidth={containerWidth}
   bind:clientHeight={containerHeight}
   >
-  {#if bundleServerURL && !$compileError}
-    {#key $buildHash + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status !== "running") }
+  {#if bundleServerURL && !$compileError && (!$currentProject || $currentProject?.uiState?.viteServer?.status === "running")}
+    {#key reloadHash }
       <iframe 
         on:error={(e) => console.log("iframe error", e)}
         class="preview-iframe"
@@ -425,7 +428,6 @@
   .preview-container {
     /* ...- .pane-controls - top ButtonSet - bottom ButtonSet - bottom padding */
     height: calc(var(--content-height) - 48px - 40px - 32px - 8px);
-    overflow: hidden;
     padding: 8px 0;
   }
 
@@ -445,8 +447,9 @@
     display: flex;
     align-items: center;
     place-content: center;
-    background: #5555;
-    backdrop-filter: blur(2px);
+    border-radius: 24px;
+    background-color: #eee;
+    margin: 8px 0;
   }
 
   .error {
