@@ -20,7 +20,7 @@ Here are some basic things to know:
 Interkit uses a few different technologies under the hood:
 - The server is  based on <a href="https://www.meteor.com/" target="_blank">Meteor</a>, which provides real time database updates, media and user management.
 - The authoring system is based on <a href="https://svelte.dev/" target="_blank">Svelte</a>, <a href="https://carbon-components-svelte.onrender.com/" target="_blank">Carbon Components</a> and <a href="https://developers.google.com/blockly/" target="_blank">Blockly</a>.
-- You can install the authoring system using <a href="https://www.docker.com/" target="_blank">Docker</a>.
+- You can install interkit using <a href="https://www.docker.com/" target="_blank">Docker</a>.
 - The apps you create using the authoring system are Svelte-based Single Page Applications (SPA), assembled from pre-built components. You can expand the system by writing your own Svelte components
 - Each app can optionally include a Node-based project server for managing multi-user chat interactions, including variables of different scope.
 - You can distribute your apps as PWA or through the app stores using Capacitor.

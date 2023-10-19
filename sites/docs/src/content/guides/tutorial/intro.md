@@ -1,19 +1,23 @@
-# Tutorial
+# Tutorials
 
-Welcome! In this tutorial, you'll learn how to create projects with interkit.
+Welcome! In the tutorials, you'll learn how to create projects from scratch with interkit.
 
-This tutorial is organised by project templates, from simple to complex.
+We recommend you start with the Foundation tutorials and then decide which of the Intermediate Techniques you want to explore futher.
 
-To proceed through the tutorial, create a new project based on each template. Then go through the explanations and excersises.
+### Foundation
 
-### Simple Projects (1-9)
+In the [Hello World](/guides/tutorials/hello-world) tutorial, you will create your first App from scratch and display the classic "Hello World" message on the screen.
 
-These projects are great when you're learning the basics of how interkit works.
+In the [Data Loading](/guides/tutorials/data) tutorial, you will learn how to load data from individual cells, and load multiple rows to display them as lists, carousels or markers on a map.
 
-### Medium Projects (10-21)
+In the [Routing](/guides/tutorials/routing) tutorial, you will learn how to divide your app into different screens and create navigation between them.
 
-Dive into some of the intermediate techniques.
+### Intermediate Techniques
 
-### Full Projects
+Combine you knowledge about Data Loading and Routing in the [Data and Routing](/guides/tutorials/data-routing) tutorial.
 
-These projects can be used as starting points for full projects.
+The [Media](/guides/tutorials/media) tutorial teaches you how to work with Images, Videos, Audios, AR content, QR Codes.
+
+In the [Button effects](/guides/tutorials/effects) tutorial, you will learn how to add more interactivity to your components interface, such as Bookmarks & Todo Lists, more complex navigation or a scavenger hunt with programmatic actions.
+
+Learn how to write complex interactive stories and chatbots in the [Stories and Chatbots](/guides/tutorials/data-routing) tutorial.

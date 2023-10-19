@@ -36,7 +36,7 @@ Creating an app is a multi-stage process that often involves several people with
 Before you start building your app, you should think about how to structure it in the framework of interkit.
 
 - Check the templates for similar apps and how they are done
-- [define your database](/guides/quick-start/elements)
+- [define your database](/guides/quick-start/data)
 - Think about the layout of your app
     - Which screens do you need?
     - Check if suitable components exist

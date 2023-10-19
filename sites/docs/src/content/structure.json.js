@@ -17,11 +17,11 @@ export const items = [
             path: '/guides/overview/what-is-interkit'
           },
           {
-            title: 'Interface Overview',
+            title: 'Interface Tour',
             path: '/guides/overview/interface_overview'
           },
           {
-            title: 'The process of creating an app',
+            title: 'The Process of Creating an App',
             path: '/guides/overview/build_app'
           },
         ]
@@ -33,14 +33,34 @@ export const items = [
         open: false,
         items: [
           {
-            title: 'Working with Data and Components',
-            path: '/guides/quick-start/elements'
-          }
+            title: 'Creating and Managing Projects',
+            path: '/guides/quick-start/projects'
+          },
+          {
+            title: 'Working with Data',
+            path: '/guides/quick-start/data'
+          },
+          {
+            title: 'Building an App with Components',
+            path: '/guides/quick-start/components'
+          },
+          {
+            title: 'Changing the Appearance of your App',
+            path: '/guides/quick-start/styling'
+          },
+          {
+            title: 'Getting started with Chatbots',
+            path: '/guides/quick-start/chat'
+          },
+          {
+            title: 'Content Moderation',
+            path: '/guides/quick-start/moderation'
+          },
         ]
       },
       
       {
-        title: 'Tutorial',
+        title: 'Tutorials',
         path: 'tutorial',
         open: false,
         items: [
@@ -49,90 +69,35 @@ export const items = [
             path: '/guides/tutorial/intro'
           },
           {
-            title: '1: Hello World',
+            title: 'Hello World',
             path: '/guides/tutorial/hello-world'
           },
           {
-            title: '2: DataCell',
-            path: '/guides/tutorial/datacell'
+            title: 'Loading Data',
+            path: '/guides/tutorial/data'
           },
           {
-            title: '3: DataList',
-            path: '/guides/tutorial/datalist'
+            title: 'Routing',
+            path: '/guides/tutorial/routing'
           },
           {
-            title: '4: DataCarousel',
-            path: '/guides/tutorial/datacarousel'
+            title: 'Combinding Data and Routing',
+            path: '/guides/tutorial/data-routing'
           },
           {
-            title: '5: Map basics',
-            path: '/guides/tutorial/map-basics'
+            title: 'Working with Media',
+            path: '/guides/tutorial/media'
           },
           {
-            title: '6: Chat basics',
-            path: '/guides/tutorial/chat-basics'
+            title: 'Button effects',
+            path: '/guides/tutorial/effects'
           },
           {
-            title: '7: Bottom Menu',
-            path: '/guides/tutorial/bottom-menu'
+            title: 'Interactive Stories and Chatbots',
+            path: '/guides/tutorial/chat'
           },
-          {
-            title: '8: Top Menu',
-            path: '/guides/tutorial/top-menu'
-          },
-          {
-            title: '9: Tabs Simple',
-            path: '/guides/tutorial/tabs-simple'
-          },
-          /* medium */
-          {
-            title: '10: DataList with Detail View',
-            path: '/guides/tutorial/datalist-detail-view'
-          },
-          {
-            title: '11: Chat multi',
-            path: '/guides/tutorial/chat-multi'
-          },
-          {
-            title: '12: DataList + Map + Detail View',
-            path: '/guides/tutorial/datalist-map-detail'
-          },
-          {
-            title: '13: Audio Player',
-            path: '/guides/tutorial/audio-player'
-          },
-          {
-            title: '14: AR Viewer',
-            path: '/guides/tutorial/ar-viewer'
-          },
-          {
-            title: '15: QR Scanner simple',
-            path: '/guides/tutorial/qr-scanner-simple'
-          },
-          {
-            title: '16: Button effects',
-            path: '/guides/tutorial/button-effects'
-          },
-          {
-            title: '17: Todo list',
-            path: '/guides/tutorial/todo-list'
-          },
-          {
-            title: '18: Bookmarks',
-            path: '/guides/tutorial/bookmarks'
-          },
-          {
-            title: '19: Categories',
-            path: '/guides/tutorial/categories'
-          },
-          {
-            title: '20: Tabs multiple',
-            path: '/guides/tutorial/tabs-multi'
-          },
-          {
-            title: '21: Scavenger Hunt',
-            path: '/guides/tutorial/scavenger-hunt'
-          },
+          
+          
         ]
       },
       {
@@ -151,10 +116,6 @@ export const items = [
           {
             title: 'Internationalization (i18n) and localization (l10n)',
             path: '/guides/howto/i18n'
-          },
-          {
-            title: 'Style your app',
-            path: '/guides/howto/styling'
           },
           {
             title: 'Adding Actions to components',

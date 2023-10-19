@@ -133,6 +133,7 @@
     grid-column: 2;
     overflow-y: auto;
     padding-bottom: 1em !important;
+    padding-right: 1em;
   }
 
   .container__iframed .main {

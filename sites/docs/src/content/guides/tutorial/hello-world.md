@@ -6,7 +6,7 @@
 
 This is the first project in the tutorial. This template renders static text to the screen. 
 
-<TemplateLoader slug="hello-world"/>
+<TemplateLoader slug="01-HelloWorld"/>
 
 #### Which parts of the system were used
 
