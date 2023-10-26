@@ -5,3 +5,4 @@ import './channels.js';
 import './sheduled_events.js';
 import './users.js';
 import './messages.js';
+import './themes.js';

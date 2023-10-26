@@ -6,5 +6,5 @@ date: 2023
 
 # Theme by Studio S/M/L
 
-info info info
+About this theme...
 

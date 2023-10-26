@@ -5,5 +5,5 @@ date: 2023
 
 # Theme by Knoth & Renner
 
-info info info
+About this theme...
 
