@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Messages, Channels, ScheduledEvents } from '../imports/collections.js';
+import { Messages, Channels, ScheduledEvents } from '../../imports/collections.js';
 import { add, setHours, setMinutes, compareAsc } from 'date-fns'
-import * as pushnotifications from '../imports/pushnotifications.js'
+import * as pushnotifications from '../../imports/pushnotifications.js'
 
 const isUserBlocked = () => {
   const userId = Meteor.userId()

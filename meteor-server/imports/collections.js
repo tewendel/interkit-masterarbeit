@@ -96,6 +96,14 @@ export const ScheduledEvents = new Mongo.Collection('scheduled_events');
 - payload // object, depends on type
 */
 
+export const Themes = new Mongo.Collection("themes");
+
+/*
+- slug
+- meta
+- readme
+*/
+
 if (Meteor.isServer && Messages._driver.mongo._oplogHandle) {
   console.log('oplog is enabled');
 } else {
@@ -114,3 +122,4 @@ Meteor.startup(() => {
     default_language: "none"
   })
 });
+

@@ -1,7 +1,7 @@
 import { setup as serverSetup } from 'interkit/interkit-connect.js';
 import { ensureRepositories } from './filesystem.mjs'
 import { updateProjectServers } from './project_server.mjs'
-import { runUpdaters } from './updater.mjs'
+import { runProjectUpdaters, runSystemUpdaters } from "./updater.mjs";
 import { ensureViteServers } from './vite_server.mjs'
 import { runMigrationsOncePerProject } from "./migration.mjs";
 import { avoidParallelExecution } from "./utils.mjs";
@@ -20,12 +20,15 @@ const setup = async (app, main_server) => {
 
     let reactiveCollection = server.collection('projects').reactive();
 
+    console.log("running system updaters")
+    await runSystemUpdaters()
+
     reactiveCollection.onChange( avoidParallelExecution(async (newData) => {
       projects = newData;
       await ensureRepositories(newData)
       await runMigrationsOncePerProject(newData);
       updateProjectServers(newData)
-      runUpdaters(newData)
+      runProjectUpdaters(newData);
       ensureViteServers(newData, app, main_server)
     }));
 

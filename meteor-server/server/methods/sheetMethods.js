@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Sheets, Rows } from '../imports/collections.js';
+import { Sheets, Rows } from '../../imports/collections.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const addColumn = async ({sheetKey, projectId, colKey, name, type, reference, options}) => {

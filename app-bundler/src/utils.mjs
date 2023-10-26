@@ -2,6 +2,9 @@ import interkit_server from './interkit_server.mjs'
 import { promises as fs } from "fs";
 import path from "path";
 import match from "minimatch";
+import frontmatter from "remark-frontmatter";
+import remark from "remark";
+import grayMatter from "gray-matter";
 
 const projectIdRegex = /[a-zA-Z0-9]+/
 const projectSlugRegex = /[a-zA-Z0-9\-_]+/
@@ -96,10 +99,48 @@ const getAllFilesRecursive = async (projectPath, ignorelist) => {
   return getAllFilesRecursive(projectPath, ignorelist);
 };
 
+async function extractFrontmatterAndContent(fileContent) {
+  // Usage
+  //
+  // (async () => {
+  //   const { frontMatterData, markdownContent } =
+  //     await extractFrontmatterAndContent("path/to/your/file.md");
+  //   console.log("Frontmatter Data:", frontMatterData);
+  //   console.log("Markdown Content:", markdownContent);
+  // })();
+  try {
+    let frontMatterData = {};
+    let markdownContent = "";
+
+    await new Promise((resolve, reject) => {
+      remark()
+        .use(frontmatter, { type: "yaml", marker: "-" })
+        .process(fileContent, (err, file) => {
+          if (err) reject(err);
+
+    const parsed = grayMatter(String(file));
+
+    console.log("Frontmatter data:", parsed.data);
+
+          
+          markdownContent = parsed.content;
+          frontMatterData = parsed.data;
+          resolve();
+        });
+    });
+
+    return { frontMatterData, markdownContent };
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export {
   validateProjectId,
   resolveProjectPath,
   projectSlugRegex,
   avoidParallelExecution,
   getAllFilesRecursive,
+  extractFrontmatterAndContent,
 };

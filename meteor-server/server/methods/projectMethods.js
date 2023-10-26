@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects } from '../imports/collections.js';
-import { duplicateProject, makeProjectHistoryEntry } from '../imports/projectUtils.js'
+import { Projects } from '../../imports/collections.js';
+import { duplicateProject, makeProjectHistoryEntry } from '../../imports/projectUtils.js'
 import { promises as fs } from 'fs';
-import { importData } from '../imports/importServer.js';
+import { importData } from '../../imports/importServer.js';
 
 const createProject = async ({ name, template, gitRepository, isTemplate }) => {
     

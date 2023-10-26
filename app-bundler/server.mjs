@@ -115,3 +115,13 @@ app.get('/readme/:projectId', get_readme)
 app.get("/*", get_app_files);
 
 server.listen(PORT, () => console.log('listening on port ' + PORT)); 
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+  // Handle or clean up code here
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  // Handle or clean up code here
+});
