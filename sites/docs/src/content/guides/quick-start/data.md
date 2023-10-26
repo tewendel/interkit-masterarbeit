@@ -37,6 +37,10 @@ Each column has a certain type, depending on what kind of data it should hold. T
 - **Location** for locations on the map
 - **SheetRef** for referencing data in other sheets
 
+### Media
+
+Media files have to be uploaded first in the media section of the authoring system, and can then be selected in media columns of database sheets.
+
 ### Updating data
 
 Use the **Add Row** button at the bottom to add a new row to a sheet.
