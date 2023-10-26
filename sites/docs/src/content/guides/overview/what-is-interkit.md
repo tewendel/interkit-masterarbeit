@@ -13,7 +13,7 @@ Here are some basic things to know:
 - Your team can then use a [web-based authoring interface](/guides/overview/interface_overview) on desktop computers to create apps for mobile devices.
 - Your audiences can access these apps by visiting specific urls or scanning qr codes with their phones. You can also publish your app in the app stores, but this requires more effort.
 - You can base your apps off of templates that come with the system, covering common use cases like a museum guide with audio.
-- You can also build new apps based on predefined components. For this, you will have to familiarise yourself with the component system, for example by going through the [tutorial](/guides/tutorial/intro).
+- You can also build new apps based on predefined components. For this, you will have to familiarise yourself with the component system, for example by going through the [tutorial](/guides/tutorials/intro).
 
 ## For developers
 

@@ -55,4 +55,4 @@ Use the ... menu for each row to remove a row.
 
 ### Explore further
 
-See the [Data tutorial](/guides/tutorial/data) for an in depth look at how to work with data in your App.
+See the [Data tutorial](/guides/tutorials/data) for an in depth look at how to work with data in your App.

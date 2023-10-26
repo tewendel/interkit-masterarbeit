@@ -8,7 +8,7 @@ Every App needs to start with the `AppBase` component.
 
 You can look up the documentation for all components by right clicking on them and clicking on `help` or by browsing the components section in the [reference](/reference).
 
-Common design patterns are covered in the [tutorial](/guides/tutorial/intro).
+Common design patterns are covered in the [tutorial](/guides/tutorials/intro).
 
 ### Connect your components to the database
 

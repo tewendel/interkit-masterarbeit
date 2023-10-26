@@ -18,7 +18,7 @@ Used as a container to build a tab bar.
 
 To add functionality, you need to configure each Tab's effect, for example to open a [Route](/reference/components/Route). The Tab will be automaticaly highlighted when a route is opened. 
 
-See the [Tabs multi](/tutorial/tabs-multi) tutorial project in case you want to work with multiple TabBars open simultaneously.
+See the [Tabs multi](/tutorials/tabs-multi) tutorial project in case you want to work with multiple TabBars open simultaneously.
 
 <ComponentInfoYaml component="Tab" />
 

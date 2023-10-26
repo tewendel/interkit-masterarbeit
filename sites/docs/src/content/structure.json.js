@@ -61,40 +61,40 @@ export const items = [
       
       {
         title: 'Tutorials',
-        path: 'tutorial',
+        path: 'tutorials',
         open: false,
         items: [
           {
             title: 'Intro',
-            path: '/guides/tutorial/intro'
+            path: '/guides/tutorials/intro'
           },
           {
             title: 'Hello World',
-            path: '/guides/tutorial/hello-world'
+            path: '/guides/tutorials/hello-world'
           },
           {
             title: 'Loading Data',
-            path: '/guides/tutorial/data'
+            path: '/guides/tutorials/data'
           },
           {
             title: 'Routing',
-            path: '/guides/tutorial/routing'
+            path: '/guides/tutorials/routing'
           },
           {
             title: 'Combinding Data and Routing',
-            path: '/guides/tutorial/data-routing'
+            path: '/guides/tutorials/data-routing'
           },
           {
             title: 'Working with Media',
-            path: '/guides/tutorial/media'
+            path: '/guides/tutorials/media'
           },
           {
             title: 'Button effects',
-            path: '/guides/tutorial/effects'
+            path: '/guides/tutorials/effects'
           },
           {
             title: 'Interactive Stories and Chatbots',
-            path: '/guides/tutorial/chat'
+            path: '/guides/tutorials/chat'
           },
           
           

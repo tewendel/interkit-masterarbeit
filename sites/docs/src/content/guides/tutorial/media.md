@@ -1,3 +1,0 @@
-# Working with Media
-
-TODO
