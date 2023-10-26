@@ -17,4 +17,12 @@
 
 </script>
 
-<button on:click={open}>Open template '{slug}'</button>
+<div>
+  <button on:click={open}>Open template '{slug}'</button>
+</div>
+
+<style>
+  div {
+    padding: 0.5em;
+  }
+</style>
