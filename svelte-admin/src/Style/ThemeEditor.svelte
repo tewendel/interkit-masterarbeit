@@ -29,6 +29,13 @@
 
   $: theme = $themesStore.find(t => t.slug == themeSlug)
 
+  const applyThem = async () => {
+    await BundleServer.applyTheme({
+      projectId: $projectId,
+      themeSlug: themeSlug
+    })
+  }
+
 </script>
 
 <div class="main">
@@ -37,11 +44,19 @@
     {theme?.meta?.name} (slug: {themeSlug})
     
     <ButtonSet style="justify-content: end">
+
       <Button
         icon={Help}
         kind="ghost"
         on:click={() => docsGo('/guides/overview/interface_overview#style')}
         >Help
+      </Button>
+
+      <Button
+        icon={Save}
+        kind="primary"
+        on:click={applyThem}
+        >Apply this theme
       </Button>
 
     </ButtonSet>      

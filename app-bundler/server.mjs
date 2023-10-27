@@ -19,6 +19,7 @@ import { get_git_push } from "./src/get_git_push.mjs";
 import { get_git_pull } from "./src/get_git_pull.mjs";
 import { get_yamls } from './src/get_yamls.mjs'
 import { get_readme } from './src/get_readme.mjs'
+import { get_themes_apply } from './src/get_themes_apply.mjs'
 
 import { api as board_node_api } from 'interkit/project-boards-nodes.js'
 
@@ -107,6 +108,9 @@ app.delete('/src/:projectId/:filename', project_files_api.delete)
 // readme / docs
 // TODO remove if unnecessary
 app.get('/readme/:projectId', get_readme)
+
+// themes
+app.get('/themes/:themeSlug', get_themes_apply)
 
 //app.use(express.static('public', { index: false }))
 
