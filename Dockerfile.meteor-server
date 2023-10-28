@@ -26,6 +26,7 @@ COPY ./repositories /var/repositories
 ENV REPOSITORIES_PATH /var/repositories
 # set REPOSITORIES_PATH at runtime
 RUN echo "export REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $SCRIPTS_FOLDER/startup.sh
+RUN chmod a+x $SCRIPTS_FOLDER/startup.sh
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
