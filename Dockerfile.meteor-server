@@ -21,13 +21,6 @@ RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 # Copy app source into container
 COPY ${BUILD_SOURCE_PATH} $APP_SOURCE_FOLDER/
 
-# copy project templates into container for reference
-COPY ./repositories/starters/ /var/repositories/starters/
-ENV REPOSITORIES_PATH /var/repositories
-# set REPOSITORIES_PATH at runtime
-RUN echo "export REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $SCRIPTS_FOLDER/startup.sh
-RUN chmod a+x $SCRIPTS_FOLDER/startup.sh
-
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.0
@@ -46,6 +39,13 @@ COPY --from=meteor-base $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
 # Copy in app bundle
 COPY --from=meteor-base $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+
+# copy project templates into container
+COPY ./repositories/starters/ /var/repositories/starters/
+# set REPOSITORIES_PATH at runtime
+ENV REPOSITORIES_PATH /var/repositories
+RUN echo "export REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $SCRIPTS_FOLDER/startup.sh
+RUN chmod a+x $SCRIPTS_FOLDER/startup.sh
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 
