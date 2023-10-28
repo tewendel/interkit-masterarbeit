@@ -22,7 +22,7 @@ RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 COPY ${BUILD_SOURCE_PATH} $APP_SOURCE_FOLDER/
 
 # copy project templates into container for reference
-COPY ./repositories /var/repositories
+COPY ./repositories/starters/ /var/repositories/starters/
 ENV REPOSITORIES_PATH /var/repositories
 # set REPOSITORIES_PATH at runtime
 RUN echo "export REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $SCRIPTS_FOLDER/startup.sh
