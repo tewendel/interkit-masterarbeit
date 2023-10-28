@@ -2,7 +2,7 @@
 # source: https://github.com/disney/meteor-base/blob/master/example/default.dockerfile
 
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.13 AS meteor-base
+FROM geoffreybooth/meteor-base:2.12 AS meteor-base
 
 ARG BUILD_SOURCE_PATH=./meteor-server
 
@@ -15,17 +15,17 @@ RUN meteor npm install -g npm@7
 # copy interkit-packages
 # COPY --from=interkit-packages /packages /packages
 
-# copy project templates into container for reference
-COPY ./repositories /var/repositories
-ENV REPOSITORIES_PATH /var/repositories
-# set REPOSITORIES_PATH at runtime
-RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > .env
-
 # install meteor app dependencies
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
 # Copy app source into container
 COPY ${BUILD_SOURCE_PATH} $APP_SOURCE_FOLDER/
+
+# copy project templates into container for reference
+COPY ./repositories /var/repositories
+ENV REPOSITORIES_PATH /var/repositories
+# set REPOSITORIES_PATH at runtime
+RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $APP_SOURCE_FOLDER/.env
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
