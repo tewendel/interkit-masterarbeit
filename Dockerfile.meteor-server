@@ -25,7 +25,7 @@ COPY ${BUILD_SOURCE_PATH} $APP_SOURCE_FOLDER/
 COPY ./repositories /var/repositories
 ENV REPOSITORIES_PATH /var/repositories
 # set REPOSITORIES_PATH at runtime
-RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $APP_SOURCE_FOLDER/.env
+RUN echo "export REPOSITORIES_PATH=${REPOSITORIES_PATH}" > $SCRIPTS_FOLDER/startup.sh
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
