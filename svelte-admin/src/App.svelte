@@ -119,6 +119,7 @@
   window.addEventListener('message', evt => {
     console.log('App received message')
     if (evt.data && evt.data.previewHistoryEvent) {
+      console.log('App received message, previewHistoryEvent', evt.data.previewHistoryEvent?.location?.pathname)
       previewCurrentRoute.set(evt.data.previewHistoryEvent?.location?.pathname || '(?)')
     }
   })

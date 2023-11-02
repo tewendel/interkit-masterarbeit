@@ -21,6 +21,8 @@ export const currentProject = derived(
   projectId,
   async ($projectId, set) => {
 
+    previewCurrentRoute.set('…')
+
     if (!$projectId && currentProjectSub?.stop) {
       console.log("stopping project sub")
       currentProjectSub.stop()

@@ -107,17 +107,40 @@
   let clientConnected = InterkitClient.connected;
 
   let postMessageOrigin
-  $: postMessageOrigin = $config?.INTERKIT_ADMIN_URL
+  $: {
+    postMessageOrigin = $config?.INTERKIT_ADMIN_URL
+    if (postMessageOrigin) {
+      console.log('AppBaseAdvanced postMessageOrigin set, processing queue', JSON.stringify(postMessageQueue))
+      while (postMessageQueue.length) {
+        // shift() = first in, first out = in the order they were queued = "reproduce history"
+        const payload = postMessageQueue.shift()
+        // console.log('AppBaseAdvanced postMessageOrigin set, processing queue, payload', JSON.stringify(payload))
+        postMessage(payload)
+      }
+    }
+  }
+
+  const postMessageQueue = []
 
   const postMessage = payload => {
     if (window.parent === window) {
       console.log('AppBaseAdvanced postMessage not in iframe, bailing')
       return
     }
+    // Messages can come in before postMessageOrigin is set.
+    // Sending them would result in an exception, so we queue them for later (see above)
+    if (!postMessageOrigin) {
+      postMessageQueue.push(payload)
+      console.log('AppBaseAdvanced postMessage, but Origin not set (yet?) from config, queued', JSON.stringify(postMessageQueue))
+      return
+    }
     try {
       window.parent.postMessage(payload, postMessageOrigin)
     } catch (e) {
-      console.error('Inter-frame communication failed. Are you running interkit on non-standard ports? Check your script blockers?')
+      console.error(
+        'Inter-frame communication failed. Are you running interkit on non-standard ports? Check your script blockers?',
+        { postMessageOrigin, payload }
+      )
     }
   }
 

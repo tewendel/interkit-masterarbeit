@@ -62,11 +62,12 @@
     // only if "explicit" (the initial set of '/' on load is a POP somehow)...
     if (evt.action !== 'PUSH') return
     try {
-      window.localStorage.setItem('initialRoute', evt.location?.pathname)
       const _projectId = get(projectId)
-      if (_projectId) {
-        window.localStorage.setItem('initialRoute.' + _projectId, evt.location?.pathname)
+      if (!_projectId) {
+        console.warn('Router set initialRoute, projectId not there (yet), bailing')
+        return
       }
+      window.localStorage.setItem('initialRoute.' + _projectId, evt.location?.pathname)
     } catch (e) {
       console.warn('Router set initialRoute failed', e)
     }
@@ -74,20 +75,38 @@
 
   const hashHistory = createHistory(createHashSource());
 
-  onMount(() => {
+  const followInitialRoute = () => {
     // this check is kinda dumb
-    if (document.location.href.indexOf('/dev/') > -1) {
-      try {
-        const _projectId = get(projectId)
-        const initialRoute = _projectId
-          ? window.localStorage.getItem('initialRoute.' + projectId)
-          : window.localStorage.getItem('initialRoute')
-        if (initialRoute) memoryHistory.navigate(initialRoute)
-      } catch (e) {
-        console.warn('Router onMount initialRoute failed', e)
-      }
+    if (document.location.href.indexOf('/dev/') === -1) {
+      console.log('Router followInitialRoute, not dev, bailing')
+      return
     }
+    const _projectId = get(projectId)
+    if (!_projectId) {
+      console.log('Router followInitialRoute, no projectId (yet), bailing')
+      return
+    }
+    const localStorageKey = 'initialRoute.' + _projectId
+    const initialRoute = window.localStorage.getItem(localStorageKey)
+    if (!initialRoute) {
+      console.log('Router followInitialRoute, initialRoute not set, bailing', { localStorageKey })
+      return
+    }
+    const fakeEvent = { previewHistoryEvent: { location: { pathname: initialRoute } } }
+    console.log('Router followInitialRoute, have initialRoute, navigating', { initialRoute, postMessage, fakeEvent })
+    memoryHistory.navigate(initialRoute)
+    postMessage?.(fakeEvent)
+  }
+
+  onMount(() => {
+    console.log('Router, gonna followInitialRoute, from onMount')
+    followInitialRoute()
   })
+
+  $: if (projectId && $projectId) {
+    console.log('Router, gonna followInitialRoute, from $projectId')
+    followInitialRoute()
+  }
 
 </script>
 
