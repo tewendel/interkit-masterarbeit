@@ -1,25 +1,7 @@
 <script>
   import { 
-    InlineNotification,
-    Grid,
-    Row,
-    Column,
     Button,
     ButtonSet,
-    StructuredList,
-    StructuredListHead,
-    StructuredListRow,
-    StructuredListCell,
-    StructuredListBody,
-    TextInput,
-    Form,
-    FormGroup,
-    InlineLoading,
-    RadioTile,
-    TileGroup,
-    ProgressIndicator,
-    ProgressStep,
-    ImageLoader
   } from 'carbon-components-svelte'
   import { Help, Reset, Save, Undo, TrashCan } from 'carbon-icons-svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
@@ -60,6 +42,7 @@
       <Button
         icon={Help}
         kind="ghost"
+        size="field"
         on:click={() => docsGo('/guides/overview/interface_overview#style')}
         >Help
       </Button>
@@ -67,6 +50,7 @@
       <Button
         icon={Save}
         kind="primary"
+        size="field"
         on:click={applyTheme}
         >Apply this skin
       </Button>

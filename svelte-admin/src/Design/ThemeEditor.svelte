@@ -1,21 +1,9 @@
 <script>
   import { 
     InlineNotification,
-    Grid,
-    Row,
-    Column,
     Button,
     ButtonSet,
     CodeSnippet,
-    TextInput,
-    Form,
-    FormGroup,
-    InlineLoading,
-    RadioTile,
-    TileGroup,
-    ProgressIndicator,
-    ProgressStep,
-    ImageLoader
   } from 'carbon-components-svelte'
   import { Help, Reset, Save, Undo, TrashCan } from 'carbon-icons-svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
@@ -50,6 +38,7 @@
       <Button
         icon={Help}
         kind="ghost"
+        size="field"
         on:click={() => docsGo('/guides/overview/interface_overview#style')}
         >Help
       </Button>
@@ -57,6 +46,8 @@
       <Button
         icon={Save}
         kind="danger"
+        size="field"
+        disabled={!theme}
         on:click={removeTheme}
         >Remove
       </Button>
@@ -108,7 +99,7 @@
           hideCloseButton
           kind="info-square"
           title="Empty"
-          subtitle="There is no extra CSS or skin in this project. You can adjust the Styles to change the appearence"
+          subtitle="There is no extra CSS or skin in this project."
         />
 
       {/if}
