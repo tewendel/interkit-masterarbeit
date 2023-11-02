@@ -6,6 +6,7 @@
     Column,
     Button,
     ButtonSet,
+    CodeSnippet,
     TextInput,
     Form,
     FormGroup,
@@ -22,17 +23,16 @@
   import { docsGo } from '../docs.js'
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
-  import marked from "marked"
+  import ThemeInfo from './ThemeInfo.svelte'
   
-  export let themeSlug
+
   export let themesStore
 
-  $: theme = $themesStore.find(t => t.slug == themeSlug)
+  $: theme = $currentProject?.uiState?.installedTheme
 
-  const applyThem = async () => {
-    await BundleServer.applyTheme({
+  const removeTheme = async () => {
+    await BundleServer.removeTheme({
       projectId: $projectId,
-      themeSlug: themeSlug
     })
   }
 
@@ -40,10 +40,12 @@
 
 <div class="main">
   <div class="main-header">
-
-    {theme?.meta?.name} (slug: {themeSlug})
     
-    <ButtonSet style="justify-content: end">
+    <ButtonSet style="justify-content: end; align-items: center">
+
+      <h5 style="flex:1; padding: 0 15px">
+        {theme?.meta?.name || "<Untitled>"}
+      </h5>
 
       <Button
         icon={Help}
@@ -54,18 +56,67 @@
 
       <Button
         icon={Save}
-        kind="primary"
-        on:click={applyThem}
-        >Apply this theme
+        kind="danger"
+        on:click={removeTheme}
+        >Remove
       </Button>
 
     </ButtonSet>      
   </div>
   <div class="main-content">
     
+    {#if theme?.meta} 
+    
+      <InlineNotification
+        hideCloseButton
+        kind="info-square"
+        title="Custom Skin"
+        subtitle="This project uses a skin."
+      />
+
+    {:else}
+
+      {#if theme?.globalCssContent }
+
+        <InlineNotification
+            hideCloseButton
+            kind="info-square"
+            title="Custom CSS"
+            subtitle="This project uses custom CSS, but there is no description. You can change the skin by editing the file static/theme/global.css directly"
+          />
+
+          <InlineNotification
+            hideCloseButton
+            kind="warning"
+            title="Modification warning"
+            subtitle="If you apply another skin or remove this skin, it may be lost forever. Please do a commit in the repository tab before making any changes"
+          />
+
+          <h4>Custom CSS</h4>
+        <CodeSnippet 
+        description="x"
+          type="multi" 
+          showMoreLess 
+          hideCopyButton 
+          wrapText  
+          code={theme?.globalCssContent}
+        />
+          
+      {:else}
+
+        <InlineNotification
+          hideCloseButton
+          kind="info-square"
+          title="Empty"
+          subtitle="There is no extra CSS or skin in this project. You can adjust the Styles to change the appearence"
+        />
+
+      {/if}
+
+    {/if}
 
 
-  {@html marked(theme?.readme)}
+  <ThemeInfo {theme} />
     
   </div>
 </div>

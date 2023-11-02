@@ -142,8 +142,19 @@ const applyTheme = async ({projectId, themeSlug}) => {
   return resJSON;
 };
 
+const removeTheme = async ({ projectId }) => {
+  console.log("removeTheme", projectId);
+  const res = await fetch(
+    bundleServerURL + "/themes/?removeFromProject=" + projectId
+  );
+  const resJSON = await res.json();
+  return resJSON;
+};
+
+
 export const BundleServer = {
   applyTheme,
+  removeTheme,
   connect,
   getServerURL: () => bundleServerURL,
   initProject,

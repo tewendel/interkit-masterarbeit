@@ -132,7 +132,7 @@
   }
 
   // trigger a reload of the iframe
-  $: reloadHash = $buildHash + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status)
+  $: reloadHash = $buildHash + $currentProject?.id + String($currentProject?.uiState?.viteServer?.status) + $currentProject?.uiState?.installedTheme?.meta?.slug
 
   // send new previewUserId to preview when it is changed in admin
   $: {
@@ -257,6 +257,10 @@
   bind:clientWidth={containerWidth}
   bind:clientHeight={containerHeight}
   >
+  <!--span style="word-break: break-all">
+    {reloadHash}
+  </span-->
+
   {#if bundleServerURL && !$compileError && (!$currentProject || $currentProject?.uiState?.viteServer?.status === "running")}
     {#key reloadHash }
       <iframe 

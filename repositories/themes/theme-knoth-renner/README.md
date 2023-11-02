@@ -1,6 +1,7 @@
 ---
 name: Knoth-Renner
-date: 2023
+version: 0.9
+slug: knoth-renner
 ---
 
 # Theme by Knoth & Renner

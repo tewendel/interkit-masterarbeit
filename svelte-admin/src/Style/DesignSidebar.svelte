@@ -5,6 +5,7 @@
   import { Accordion, AccordionItem, ButtonSet, Button } from "carbon-components-svelte"; 
   import Help from "carbon-icons-svelte/lib/Help.svelte";
   import { docsGo } from '../docs.js'
+  import { projectId, currentProject, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
 
   export let contentMain
   export let themeSlug
@@ -45,7 +46,7 @@
         kind="ghost"
         iconDescription="refresh"
         size="small"
-        style="color: black; width: 100%; font-weight:500"
+        style="color: black; width: 100%; font-weight:500; {contentMain == "style" ? "background-color:lightgrey" : "" }"
         on:click={() => navigate({view: "style"})}
         >
         Styles
@@ -58,7 +59,7 @@
       >
       <svelte:fragment slot="title">
         <span style="font-weight:500">
-          Themes
+          Predefined Skins
         </span>
       </svelte:fragment>
       <ButtonSet stacked>
@@ -78,6 +79,14 @@
       </AccordionItem>    
     </Accordion>
 
+          <Button
+            kind="ghost"
+            size="small"
+            style="color: black; width: 100%; font-weight:500; {contentMain == "installedTheme" ? "background-color:lightgrey" : "" }"
+            on:click={() => navigate({view: "installedTheme" })}
+          >
+            Skin
+          </Button>
   
   </div>
 

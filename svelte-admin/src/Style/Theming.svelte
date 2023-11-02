@@ -2,9 +2,11 @@
     import { onMount, onDestroy } from 'svelte'
   import { InterkitClient } from 'interkit'
   import { writable } from 'svelte/store'
+  import { currentProject } from '../admin.js'
   import MainColumns from '../Layout/MainColumns.svelte'
   import StyleEditor from './StyleEditor.svelte'
   import ThemeEditor from './ThemeEditor.svelte'
+  import ThemePreview from './ThemePreview.svelte'
   import DesignSidebar from './DesignSidebar.svelte'
 
   let contentMain = "style"
@@ -41,10 +43,12 @@
   </svelte:fragment>
 
   <svelte:fragment slot="contentMain">
-    {#if contentMain === "style"}
-      <StyleEditor />
+    {#if contentMain === "installedTheme"}
+      <ThemeEditor {themesStore} />
     {:else if contentMain === "theme"}
-      <ThemeEditor {themesStore} {themeSlug} />
+      <ThemePreview {themesStore} {themeSlug} bind:contentMain />
+    {:else}
+      <StyleEditor />
     {/if}
   </svelte:fragment>
 </MainColumns>
