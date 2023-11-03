@@ -8,10 +8,11 @@ import path from "path";
 import interkit_server from "../interkit_server.mjs";
 import { getThemesPath } from "../filesystem.mjs";
 import remarkFrontmatter from "remark-frontmatter";
+import imgLinks from "@pondorasti/remark-img-links";
 import remark from "remark";
 import grayMatter from "gray-matter";
 
-const markdownProcessor = remark().use(remarkFrontmatter, ["yaml"]);
+const INTERKIT_BUNDLER_URL = process.env.INTERKIT_BUNDLER_URL;
 
 async function getThemeMetadata(themesPath) {
   // read README.md files from each subdirectory of the themesPath directory
@@ -29,6 +30,13 @@ async function getThemeMetadata(themesPath) {
       const readmePath = path.join(dirPath, "README.md");
 
       try {
+        const markdownProcessor = remark()
+          .use(imgLinks, {
+            absolutePath:
+              INTERKIT_BUNDLER_URL + "/themes/" + dir.name + "/",
+          })
+          .use(remarkFrontmatter, ["yaml"]);
+
         const readmeContent = await fs.readFile(readmePath, "utf8");
         const processed = await markdownProcessor.process(readmeContent);
         const parsed = grayMatter(String(processed));

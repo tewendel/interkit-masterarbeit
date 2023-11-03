@@ -4,6 +4,7 @@ import cors from 'cors';
 import * as io from 'socket.io';
 import http from 'http';
 
+import { getThemesPath } from "./src/filesystem.mjs";
 import { get_compile } from './src/get_compile.mjs'
 import { get_bundle_zip } from './src/get_bundle_zip.mjs'
 import { get_config } from './src/get_config.mjs'
@@ -113,6 +114,7 @@ app.get('/readme/:projectId', get_readme)
 // themes
 app.get('/themes/:themeSlug', get_themes_apply)
 app.get("/themes/", get_themes_remove);
+app.use("/themes/", express.static(getThemesPath(), { index: false }));
 
 //app.use(express.static('public', { index: false }))
 

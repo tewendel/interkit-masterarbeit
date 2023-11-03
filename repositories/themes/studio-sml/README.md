@@ -9,3 +9,4 @@ slug: studio-sml
 
 About this theme...
 
+Menu Icon: ![icon](icons/Full/Menu.svg)
