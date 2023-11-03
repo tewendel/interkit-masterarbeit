@@ -133,7 +133,28 @@ const boardsApi = (projectId, resource, init) => fetch(
   init
 )
 
+const applyTheme = async ({projectId, themeSlug}) => {
+  console.log("applyTheme", projectId, themeSlug)
+  const res = await fetch(
+    bundleServerURL + "/themes/" + themeSlug + "/?applyToProject=" + projectId
+  );
+  const resJSON = await res.json();
+  return resJSON;
+};
+
+const removeTheme = async ({ projectId }) => {
+  console.log("removeTheme", projectId);
+  const res = await fetch(
+    bundleServerURL + "/themes/?removeFromProject=" + projectId
+  );
+  const resJSON = await res.json();
+  return resJSON;
+};
+
+
 export const BundleServer = {
+  applyTheme,
+  removeTheme,
   connect,
   getServerURL: () => bundleServerURL,
   initProject,

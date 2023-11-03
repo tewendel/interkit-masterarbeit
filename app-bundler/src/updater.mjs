@@ -13,6 +13,7 @@ import { updateGit } from "./updaters/gitFiles.mjs";
 import { updateProjectMdFiles } from "./updaters/mdFiles.mjs";
 import { updateProjectDirFiles } from "./updaters/projectFiles.mjs";
 import { updateTheme } from "./updaters/themeFiles.mjs";
+import { updateThemesMeta } from "./updaters/defaultThemes.mjs";
 
 const watchignore = [
   "**/node_modules",
@@ -95,13 +96,20 @@ const runUpdater = async function(projectId) {
   });
 }
 
-const runUpdaters = async function(projects) {
+// run updater for each project
+const runProjectUpdaters = async function (projects) {
   for (let project of projects) {
-    await runUpdater(project.id)
+    await runUpdater(project.id);
   }
+};
+
+// run updater for whole system
+const runSystemUpdaters = async function() {
+  updateThemesMeta()
 }
 
 export {
-  runUpdaters,
+  runProjectUpdaters,
+  runSystemUpdaters,
   updateGit,
 }

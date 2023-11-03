@@ -18,6 +18,11 @@ function getProjectPath(projectId) {
   return projectPath
 }
 
+function getThemesPath() {
+  const themesPath = path.join(REPOSITORIES_PATH, "themes")
+  return themesPath
+}
+
 // check if folders exist to for all projects and setup starter if they don't
 async function ensureRepositories(projects) {
   //console.log("ensureRepositories", projects)
@@ -183,5 +188,6 @@ async function setupNewRepository(project, template, gitRepository) {
 export {
   ensureRepositories,
   getProjectPath,
+  getThemesPath,
   generateInterkitConfig
 }

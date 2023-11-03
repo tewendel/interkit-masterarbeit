@@ -18,7 +18,7 @@
   import MessagesManager from '../Messages/MessagesManager.svelte'
   import ScheduledeventsManager from '../Project/ScheduledeventsManager.svelte'
   import NodeEditor from '../Story/NodeEditor.svelte'
-  import Theming from '../Style/Theming.svelte'
+  import Design from '../Design/Design.svelte'
   
   import { InterkitClient } from 'interkit'
   import {
@@ -168,7 +168,7 @@
 
 <!-- theming -->
 <div class="scrollable" class:active={tab == 'style' }>
-  <Theming />
+  <Design />
 </div>
 
 <!-- nodes -->

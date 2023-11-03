@@ -4,6 +4,7 @@ import cors from 'cors';
 import * as io from 'socket.io';
 import http from 'http';
 
+import { getThemesPath } from "./src/filesystem.mjs";
 import { get_compile } from './src/get_compile.mjs'
 import { get_bundle_zip } from './src/get_bundle_zip.mjs'
 import { get_config } from './src/get_config.mjs'
@@ -19,6 +20,8 @@ import { get_git_push } from "./src/get_git_push.mjs";
 import { get_git_pull } from "./src/get_git_pull.mjs";
 import { get_yamls } from './src/get_yamls.mjs'
 import { get_readme } from './src/get_readme.mjs'
+import { get_themes_apply } from './src/get_themes_apply.mjs'
+import { get_themes_remove } from './src/get_themes_remove.mjs'
 
 import { api as board_node_api } from 'interkit/project-boards-nodes.js'
 
@@ -108,6 +111,11 @@ app.delete('/src/:projectId/:filename', project_files_api.delete)
 // TODO remove if unnecessary
 app.get('/readme/:projectId', get_readme)
 
+// themes
+app.get('/themes/:themeSlug', get_themes_apply)
+app.get("/themes/", get_themes_remove);
+app.use("/themes/", express.static(getThemesPath(), { index: false }));
+
 //app.use(express.static('public', { index: false }))
 
 // get app public files
@@ -115,3 +123,13 @@ app.get('/readme/:projectId', get_readme)
 app.get("/*", get_app_files);
 
 server.listen(PORT, () => console.log('listening on port ' + PORT)); 
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+  // Handle or clean up code here
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  // Handle or clean up code here
+});

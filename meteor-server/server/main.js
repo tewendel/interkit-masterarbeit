@@ -11,10 +11,11 @@ import {init as initUserActivity} from "../imports/userActivity.js";
 import './publications';
 import './userRolesSetup.js';
 
-import './projectMethods.js';
-import './sheetMethods.js';
-import './userMethods.js';
-import './chatMethods.js';
+import './methods/projectMethods.js';
+import './methods/sheetMethods.js';
+import './methods/userMethods.js';
+import './methods/chatMethods.js';
+import './methods/themeMethods.js';
 
 import { Projects } from '../imports/collections.js';
 import { seedUser } from '../imports/userUtils.js';
