@@ -139,7 +139,7 @@
           { id: "messages", text: "Messages" },
           { id: "schedule", text: "Schedule" },
           { id: "repository", text: "Repository" },
-          { id: "style", text: "Style"}
+          { id: "style", text: "Design"}
         ]}
       >
         {item.text}

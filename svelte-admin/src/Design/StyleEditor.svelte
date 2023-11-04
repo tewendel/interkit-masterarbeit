@@ -97,7 +97,7 @@
             hideCloseButton
             kind="info-square"
             title="Default Style"
-            subtitle="This project uses the default interkit style"
+            subtitle="This project uses the default values"
           />
         {:else}
           {#if equalsDefaults}
@@ -105,14 +105,14 @@
               hideCloseButton
               kind="info-square"
               title="Default Style"
-              subtitle="This project uses it's own styles, but they are equal to the interkit defaults"
+              subtitle="This project uses it's own style settings, but they are equal to the interkit defaults"
             />
           {:else}
             <InlineNotification
               hideCloseButton
               kind="success"
               title="Custom Style"
-              subtitle="This project uses styles that differ from the interkit defaults"
+              subtitle="This project uses styles settings that differ from the interkit defaults"
             />
           {/if}
         {/if}

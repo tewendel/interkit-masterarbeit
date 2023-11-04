@@ -49,7 +49,7 @@
         : ''}"
       on:click={() => navigate({ view: "style" })}
     >
-      Styles
+      Base Styles
     </Button>
   </ButtonSet>
 
