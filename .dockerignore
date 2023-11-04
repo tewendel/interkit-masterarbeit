@@ -4,6 +4,7 @@ node_modules/
 .env
 repositories/*
 !repositories/starters
+!repositories/themes
 
 # all apps
 **/node_modules/
