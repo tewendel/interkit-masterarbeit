@@ -47,7 +47,7 @@
         icon={Save}
         kind="danger"
         size="field"
-        disabled={!theme}
+        disabled={!theme && !$currentProject?.uiState?.globalCssContent}
         on:click={removeTheme}
         >Remove
       </Button>
@@ -67,7 +67,7 @@
 
     {:else}
 
-      {#if theme?.globalCssContent }
+      {#if $currentProject?.uiState?.globalCssContent }
 
         <InlineNotification
             hideCloseButton

@@ -43,12 +43,10 @@ const updateTheme = async function (projectId, watchedFiles) {
     // and theme global css (may be present)
     if (file === themeReadmePath) {
 
-      const absPathMarkdownDir = path.dirname(path.join(projectPath, file));
-      console.log("xxx ", absPathMarkdownDir);
+      //const absPathMarkdownDir = path.dirname(path.join(projectPath, file));
       const markdownProcessor = remark()
         .use(imgLinks, { absolutePath: INTERKIT_BUNDLER_URL + "/app/" + projectId + "/theme/" })
         .use(remarkFrontmatter, ["yaml"]);
-        //.use(remarkEmbedImages);
 
       let readmeResult = null;
       try {
@@ -67,11 +65,19 @@ const updateTheme = async function (projectId, watchedFiles) {
         );
       }
 
-      let globalCssResult = null;
+      interkit_server.call("project.updateUiState", {
+        projectId: projectId,
+        section: "installedTheme",
+        data: readmeResult,
+      });
+    }
+
+    if (file ===  globalCssPath) {
+        let result = null;
       try {
         const absPath = path.join(projectPath, globalCssPath);
         const globalCssContent = await fs.readFile(absPath, "utf8");
-        globalCssResult = { globalCssContent };
+        result = { globalCssContent };
       } catch (err) {
         console.log(
           `global.css not found in project ${projectId} ${globalCssPath} ( -> probable no theme installed)`,
@@ -79,14 +85,9 @@ const updateTheme = async function (projectId, watchedFiles) {
         );
       }
 
-      const result =
-        readmeResult || globalCssResult
-          ? { ...readmeResult, ...globalCssResult }
-          : null;
-
       interkit_server.call("project.updateUiState", {
         projectId: projectId,
-        section: "installedTheme",
+        section: "globalCssContent",
         data: result,
       });
     }

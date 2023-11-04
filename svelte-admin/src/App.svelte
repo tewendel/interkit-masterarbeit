@@ -138,10 +138,12 @@
   href="/#/"
   >
 
-  <span slot="company">
+  <span slot="company" class="company">
     {#if $currentProject}
       <span class="exit-arrow"><Exit /></span>
-      <span class="project-name">{$currentProject?.name}</span>
+      <span class="project-name" title={$currentProject?.name}>
+        {$currentProject?.name}
+      </span>
       {#if $currentProjectReadOnly}<Tag type="red">readonly</Tag>{/if}
     {:else}
       interkit
@@ -262,13 +264,21 @@
   @use '@carbon/styles/scss/theme';
   @use '@carbon/type';
 
+  .company {
+    display:flex;
+  }
+
   .exit-arrow {
     position: relative;
     top: 2px;
     margin-right: 3px;
   }
   .project-name {
-    @include type.type-style("heading-compact-02")
+    @include type.type-style("heading-compact-02");
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 8rem;
   }
 
   .status {
