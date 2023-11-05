@@ -1,5 +1,6 @@
 import git from 'isomorphic-git'
 import fs from 'fs'
+import path from "path";
 import http from 'isomorphic-git/http/node//index.cjs'
 import * as Diff from "diff"
 import { TREE, WORKDIR, STAGE } from "isomorphic-git";
@@ -95,10 +96,42 @@ async function gitCheckout(projectPath) {
     fs,
     dir: projectPath,
     force: true,
-    ref: 'master'
+    //ref: 'master',
+    //filepaths: ["./"],
   })
   console.log("git checkout:", result)
   return result
+}
+
+
+/**
+ * 
+ * remove untracked files
+ */
+async function gitClean(projectPath) {
+  // Get the status matrix
+
+  const repo = {
+    fs,
+    dir: projectPath,
+  };
+  const statusMatrix = await git.statusMatrix(repo);
+  
+  // statusMatrix is an array of [filepath, headStatus, workdirStatus, stageStatus]
+  // We're interested in files where headStatus is 0 (untracked) and workdirStatus is 2 (file present)
+  const untrackedFiles = statusMatrix
+    .filter(
+      ([_, headStatus, workdirStatus]) =>
+        headStatus === 0 && workdirStatus === 2
+    )
+    .map(([filepath]) => filepath);
+
+  // Delete the untracked files
+  for (const filepath of untrackedFiles) {
+    const fullPath = path.join(projectPath, filepath);
+    await fs.promises.unlink(fullPath);
+    console.log(`Deleted untracked file: ${fullPath}`);
+  }
 }
 
 async function gitLatestCommit(projectPath, branch = "master") {
@@ -240,6 +273,7 @@ export {
   gitCommit,
   gitCommitAll,
   gitCheckout,
+  gitClean,
   gitUnstagedChanges,
   gitLog,
   gitCloneProject,
