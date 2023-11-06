@@ -76,8 +76,7 @@ const updateTheme = async function (projectId, watchedFiles) {
         let result = null;
       try {
         const absPath = path.join(projectPath, globalCssPath);
-        const globalCssContent = await fs.readFile(absPath, "utf8");
-        result = { globalCssContent };
+        result = await fs.readFile(absPath, "utf8");
       } catch (err) {
         console.log(
           `global.css not found in project ${projectId} ${globalCssPath} ( -> probable no theme installed)`,

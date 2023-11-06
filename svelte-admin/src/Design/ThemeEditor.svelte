@@ -83,14 +83,14 @@
             subtitle="If you apply another skin or remove this skin, it may be lost forever. Please do a commit in the repository tab before making any changes"
           />
 
-          <h4>Custom CSS</h4>
+          <h4>global.css</h4>
         <CodeSnippet 
         description="x"
           type="multi" 
           showMoreLess 
           hideCopyButton 
           wrapText  
-          code={theme?.globalCssContent}
+          code={$currentProject?.uiState?.globalCssContent}
         />
           
       {:else}
