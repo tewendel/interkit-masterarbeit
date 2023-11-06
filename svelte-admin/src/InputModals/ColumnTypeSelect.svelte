@@ -30,10 +30,12 @@
     value.newColKey = value.key;
   })
 
+  $: newColKeyValid = value?.newColKey && value.newColKey.length > 0 && value.newColKey != "key";
+
 </script>
 
 <ComposedModal open
-  on:submit={submit}
+  on:submit={(e) => newColKeyValid ? submit(e) : alert("Please enter a valid key")}
   on:close={close}
 >
   <ModalHeader label="{value.key}" title="Update Column" />
@@ -65,7 +67,7 @@
     {/if}
     <FormGroup>
       <span>WARNING: only change if you know what you are doing</span>
-      <TextInput labelText="Key" placeholder="Enter column key..." bind:value={value.newColKey} />
+      <TextInput labelText="Key" placeholder="Enter column key..." bind:value={value.newColKey} invalid={!newColKeyValid} />
     </FormGroup>
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />
