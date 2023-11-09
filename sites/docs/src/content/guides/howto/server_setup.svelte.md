@@ -101,6 +101,19 @@ It is possible to optionally connect your interkit project to an external reposi
 - `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml pull`
 - `docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d`
 
+## set up swap space
+
+This can make oparations faster and more stable. In this example, 1G of swap is set up. As a rule of thumb, swap space should be half the amount of available RAM.
+
+This example works on Ubuntu 18, 20, 22.
+
+```bash
+  fallocate -l 1G /swapfile
+  chmod 600 /swapfile
+  mkswap /swapfile
+  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
 ### troubleshooting
 - check if `.env` needs different variables compared to last deployed version
 - check if `docker-compose.yml` has different options compared to last deployed version
