@@ -40,6 +40,7 @@
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "node-fetch": "^3.3.2",
+    "node-git-server": "^1.0.0",
     "node-watch": "^0.7.3",
     "picomatch": "^2.3.1",
     "remark-frontmatter": "^5.0.0",

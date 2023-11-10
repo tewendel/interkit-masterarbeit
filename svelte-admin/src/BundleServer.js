@@ -151,6 +151,8 @@ const removeTheme = async ({ projectId }) => {
   return resJSON;
 };
 
+const getGitServerURL = ({ projectId }) => bundleServerURL + "/git/" + projectId;
+
 
 export const BundleServer = {
   applyTheme,
@@ -168,7 +170,8 @@ export const BundleServer = {
   gitPull,
   loadBlockData,
   loadSrcFile,
-  saveSrcFile
+  saveSrcFile,
+  getGitServerURL
 }
 
 export { boardsApi }

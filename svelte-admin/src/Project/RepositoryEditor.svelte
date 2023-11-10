@@ -6,6 +6,7 @@
     Accordion,
     AccordionItem,
     Button,
+    CodeSnippet,
     Form,
     FormGroup,
     InlineLoading,
@@ -109,7 +110,7 @@
       </UnorderedList>
     </section>
   {/if}
-
+  
   {#if unstagedFiles && unstagedFiles.length > 0}
     <h3>
       There are {unstagedFiles.length} changed files
@@ -238,6 +239,10 @@
       </Accordion>
     </section>
   {/if}
+
+  <h3>Repository cloning</h3>
+  <CodeSnippet style="margin-bottom:1em;" code="git clone {BundleServer.getGitServerURL({ projectId })}" />
+
 {/if}
 
 <style>
