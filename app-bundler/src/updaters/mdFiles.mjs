@@ -10,7 +10,7 @@ import { getProjectPath } from "../filesystem.mjs";
 const watchedFileReMd = /^(project|readme|description)\.(md|markdown)$/i;
 
 const updateFileMd = (projectId, { path, filename, basename, extension }) => {
-  console.log("updateFileMd", { path, filename, basename, extension });
+  //console.log("updateFileMd", { path, filename, basename, extension });
   fs.readFile(path)
     .then((file) => file.toString())
     .then(async (mdStr) => {
