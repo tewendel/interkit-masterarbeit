@@ -2,6 +2,8 @@
 
   import { createEventDispatcher } from 'svelte'
   import CodeEditor from '../Atoms/CodeEditor.svelte'
+  import Arrival from "carbon-icons-svelte/lib/Arrival.svelte";
+  import EmailNew from "carbon-icons-svelte/lib/EmailNew.svelte";
 
   const dispatch = createEventDispatcher()
 
@@ -44,7 +46,17 @@
           on:codechange={evt => { blocks[i] = evt.detail; update() }}
           />
       {:else}
-        <pre class="block">{block}</pre>
+        {@const handlerName = block.match(/on[A-Z][a-z]+/)?.[0]}
+        {#if handlerName}
+        <h4 style="background-color: #eee; padding: 1ex 1em;">
+          {#if handlerName === 'onMessage'}
+            <EmailNew />
+          {:else if handlerName === 'onArrive'}
+            <Arrival />
+          {/if}          
+            {handlerName}
+          </h4>
+        {/if}
       {/if}
     {/each}
   {/if}
