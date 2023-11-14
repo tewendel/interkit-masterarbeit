@@ -1,34 +1,28 @@
 <script>
-  import { page } from '$app/stores';
-  import { getCurrentSection } from "../util/pathUtils.js";
-  export let items;
+
+  import { page } from '$app/stores'
+  import { getCurrentSection, getFirstDeepPath } from "../util/pathUtils.js"
+  export let items
 
   $: currentSection = getCurrentSection($page.url.pathname)
 
+  const forceSidebarDetailsOpen = path => {
+    const details = document.querySelector(`details[data-path="${path}"]`)
+    console.log('###', path, details)
+    if (!details) return
+    details.open = true
+  }
+
 </script>
   
-<ul>
-  {#each items as section}
-    <li>
-      {#if currentSection != section.path}
-        <a href={section.path}>{section.title}</a>  
-      {:else}
-        <b>{section.title}</b>
-      {/if}
-    </li>
-  {/each}
-</ul>
-
-<style>
-  ul {
-    padding: 0;
-  }
-  li {
-    display: inline;
-  }
-
-
-
-</style>
-  
-  
+{#each items as section}
+  <li
+    class:active={currentSection === section.path}
+    >
+      <!-- FIXME this href won't work in iframe; the 307-redirect (see routes/{guides,reference}/page.js) does not play nice with our "custom router" -->
+    <a
+      href={getFirstDeepPath(section)}
+      on:click={forceSidebarDetailsOpen(section.path)}
+      >{section.title}</a>  
+  </li>
+{/each}
