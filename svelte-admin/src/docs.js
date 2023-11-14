@@ -13,7 +13,7 @@ export const registerIframe = element => {
   iframe = element
 }
 
-export const docsGo = async (route) => {
+export const docsGo = async (routeOrDirection) => {
   secondaryTabsHidden.set(false)
   secondaryTabsMinimized.set(false)
   secondaryTabIndex.set(1)
@@ -24,10 +24,14 @@ export const docsGo = async (route) => {
     console.warn('docsGo called, but no iframe', { iframe, contentWindow: iframe?.contentWindow, postMessage: iframe?.contentWindow?.postMessage })
     return
   }
+  const routeIsUrl = typeof routeOrDirection === 'string'
+  const method = routeIsUrl
+    ? 'docsGo'
+    : (routeOrDirection <= 0 ? 'routerHistoryBack' : 'routerHistoryForward')
   iframe.contentWindow.postMessage(
     {
-      method: 'docsGo',
-      route
+      method,
+      ...(routeIsUrl ? { route: routeOrDirection } : {})
     },
     '*' // not security-critical
   )

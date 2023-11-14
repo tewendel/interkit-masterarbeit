@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store'
 import {InterkitClient} from 'interkit'
+import { docsURL } from './docs'
 
 export const projectId = writable()
 
@@ -133,5 +134,10 @@ export const projectManagerSortKeyTemplate = writable('createdAt')
 export const projectManagerSortDirectionTemplate = writable('descending')
 export const projectManagerPageTemplate = writable(1)
 
-
 export const currentProjectReadOnly = writable(false)
+
+export const docsRouterCanNavigate = writable({
+  back: true,
+  forward: true,
+  currentRoute: docsURL
+})

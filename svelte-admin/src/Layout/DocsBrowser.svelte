@@ -1,6 +1,7 @@
 <script>
 
   import { registerIframe, docsURL, docsGo } from '../docs.js'
+  import { docsRouterCanNavigate } from '../admin.js'
   import { push } from 'svelte-spa-router';
 
   import { onMount } from 'svelte'
@@ -14,8 +15,13 @@
   
   window.onmessage = function(e) {
     console.log("got message from iframe", e?.data)
-    if(e?.data?.method == "open-template") {
-      push('/template/' + e?.data?.slug)
+    switch (e?.data?.method) {
+      case 'open-template':
+        push('/template/' + e?.data?.slug)
+        break
+      case 'docsRouterCanNavigateUpdate':
+        docsRouterCanNavigate.set(e.data?.payload)
+        break
     }
   }
 

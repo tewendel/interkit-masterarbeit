@@ -25,4 +25,7 @@ export const getSectionItems = (path, items) => {
     return []
 }
 
-
+export const getFirstDeepPath = section =>
+    section?.items?.[0]?.items?.[0].path ||
+    section?.items?.[0]?.path ||
+    section?.path

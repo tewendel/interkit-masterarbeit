@@ -6,7 +6,7 @@ Welcome to the interkit docs!
 
 There are two main areas
 - **Guides** – Learn how to do things
-- **[Reference](/reference)** – Look up technical details
+- **[Reference](/reference/system/reference-overview)** – Look up technical details
 
 ### Getting started
 

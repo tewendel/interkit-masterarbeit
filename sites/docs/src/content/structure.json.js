@@ -1,3 +1,5 @@
+/* items "at path" /reference/components are sorted upon creation */
+
 export const items = [
   {
     title: "Guides",
@@ -5,7 +7,7 @@ export const items = [
     items: [
       {
         title: 'Overview',
-        path: 'overview',
+        path: '/guides/overview',
         open: true,
         items: [
           {
@@ -29,7 +31,7 @@ export const items = [
 
       {
         title: 'Quick Start',
-        path: 'quick-start',
+        path: '/guides/quick-start',
         open: false,
         items: [
           {
@@ -61,7 +63,7 @@ export const items = [
       
       {
         title: 'Tutorials',
-        path: 'tutorials',
+        path: '/guides/tutorials',
         open: false,
         items: [
           {
@@ -102,7 +104,7 @@ export const items = [
       },
       {
         title: 'HowTo',
-        path: 'howto',
+        path: '/guides/howto',
         open: false,
         items: [
           {
@@ -181,7 +183,7 @@ export const items = [
     items: [
       {
         title: 'System',
-        path: 'system',
+        path: '/reference/system',
         open: false,
         items: [
           {
@@ -206,10 +208,9 @@ export const items = [
 
       {
         title: 'Components',
-        path: 'components',
+        path: '/reference/components',
         open: false,
         items: [
-          /* this is sorted alphabetically by title in Submenu.svelte */
           {
             title: 'AppBase',
             path: '/reference/components/AppBase'
@@ -507,14 +508,12 @@ export const items = [
             title: 'UserVarSwitch',
             path: '/reference/components/UserVarSwitch'
           },
-          
-          
-        ]
+        ].sort((a, b) => a.title.toUpperCase() < b.title.toUpperCase() ? -1 : 1)
       },
       
       {
         title: 'Chat',
-        path: 'chat',
+        path: '/reference/chat',
         open: false,
         items: [
           {

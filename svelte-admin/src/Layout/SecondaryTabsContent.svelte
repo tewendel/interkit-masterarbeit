@@ -14,6 +14,9 @@
   // import PageFirst from 'carbon-icons-svelte/lib/PageFirst.svelte'
   // import PageLast from 'carbon-icons-svelte/lib/PageLast.svelte'
   import ChevronLeft from 'carbon-icons-svelte/lib/ChevronLeft.svelte'
+  import ArrowLeft from 'carbon-icons-svelte/lib/ArrowLeft.svelte'
+  import ArrowRight from 'carbon-icons-svelte/lib/ArrowRight.svelte'
+  import Launch from 'carbon-icons-svelte/lib/Launch.svelte'
   
   import {
     projectId,
@@ -24,8 +27,11 @@
     secondaryTabSpecialDoc,
     secondaryTabPreviewProjectId,
     secondaryTabsSize,
-    secondaryTabsSizes
+    secondaryTabsSizes,
+    docsRouterCanNavigate
   } from '../admin.js'
+
+  import { docsGo } from '../docs.js'
 
   import Preview from './Preview.svelte'
   import DocsBrowser from './DocsBrowser.svelte'
@@ -41,9 +47,12 @@
 
 </script>
 
-<div class="right-pane" class:minimized={$secondaryTabsMinimized}>
+<div
+  class={`right-pane right-pane--tab${$secondaryTabIndex}`}
+  class:minimized={$secondaryTabsMinimized}
+  >
   <div class="pane-controls">
-    <ButtonSet>
+    <ButtonSet style="width: 100%">
       {#if $secondaryTabIndex}
         {#if $secondaryTabSpecialDoc}
           <Button
@@ -64,12 +73,41 @@
           -->
         {/if}
       {/if}
+      {#if !$secondaryTabSpecialDoc && ($secondaryTabIndex === 1)}
+        <Button
+          kind="ghost"
+          icon={ArrowLeft}
+          iconDescription="go back"
+          disabled={!$docsRouterCanNavigate.back}
+          on:click={() => { docsGo(-1) }}
+          />
+        <Button
+          kind="ghost"
+          icon={ArrowRight}
+          iconDescription="go forward"
+          disabled={!$docsRouterCanNavigate.forward}
+          on:click={() => { docsGo(1) }}
+          style="box-shadow: none; -webkit-box-shadow: none"
+          />
+        <!-- default Button doesnt support target, have to do custom -->
+        <Button
+          as let:props
+          kind="ghost"
+          icon={Launch}
+          >
+          <a {...props} target="_blank" rel="noopener noreferrer" href={$docsRouterCanNavigate.currentRoute}>
+            <span style="margin-right: 0.5rem">Open page</span>
+            <Launch />
+          </a>
+        </Button>
+      {/if}
     <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
     <Button
       kind="ghost"
       iconDescription="cycle size"
       on:click={() => { secondaryTabsSize.set(($secondaryTabsSize + 1) % secondaryTabsSizes.length) }}
       icon={FitToWidth}
+      style="margin-left: auto"
       />
     <Button
       kind="ghost"
@@ -79,6 +117,7 @@
       icon={$secondaryTabsMinimized ? Maximize : Minimize}
       />
     </ButtonSet>
+    <!--<div>currentRoute: {$docsRouterCanNavigate.currentRoute}</div>-->
   </div>
   <div
     class="right-pane-content"

@@ -1,6 +1,6 @@
 import { goto, afterNavigate, beforeNavigate, disableScrollHandling } from '$app/navigation'
 import { tick } from 'svelte'
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 
 const logPrefix = 'interkit docs iframed'
 
@@ -91,6 +91,14 @@ const routerHistoryForward = () => {
 const updateCanNavigate = () => {
   routerCanBack.set(routerHistoryPointer > 0)
   routerCanForward.set(routerHistoryPointer <= routerHistory.length - 2)
+  messageParent(
+    'docsRouterCanNavigateUpdate',
+    {
+      back: get(routerCanBack),
+      forward: get(routerCanForward),
+      currentRoute: routerHistory?.[routerHistoryPointer]?.route?.toString?.() || document.location.href
+    }
+  )
 }
 
 const setupClientside = (window, document) => {
@@ -128,6 +136,17 @@ const setupClientside = (window, document) => {
         console.warn(logPrefix, 'message received, but unknown method?', evt.data)
     }
   })
+}
+
+const messageParent = (method, payload) => {
+  if (!isIframed) {
+    console.log(logPrefix, 'not isIframed, won\'t message parent, bailing')
+    return
+  }
+  window.top.postMessage(
+    { method, payload },
+    '*' // not security-critical (for now)
+  )
 }
 
 // TODO will this work with ssr/prerendering?
