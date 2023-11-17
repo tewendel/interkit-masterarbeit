@@ -49,14 +49,14 @@
         : ''}"
       on:click={() => navigate({ view: "style" })}
     >
-      Base Styles
+      Base Design
     </Button>
   </ButtonSet>
 
   <Accordion size="sm">
     <AccordionItem>
       <svelte:fragment slot="title">
-        <span style="font-weight:500"> Predefined Skins </span>
+        <span style="font-weight:500"> Predefined Themes </span>
       </svelte:fragment>
       <ButtonSet stacked>
         {#if $themesStore}
@@ -85,7 +85,7 @@
       : ''}"
     on:click={() => navigate({ view: "installedTheme" })}
   >
-    Skin 
+    Installed Theme 
     {#if $currentProject?.uiState?.installedTheme}
       <PaintBrush />
     {/if}

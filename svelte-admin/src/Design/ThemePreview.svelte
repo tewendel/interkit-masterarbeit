@@ -53,7 +53,7 @@
         size="field"
         on:click={applyTheme}
         title="Make a copy of the theme files and place them into your project, overwriting current theme files"
-        >Apply this skin
+        >Apply this theme
       </Button>
 
     </ButtonSet>      
