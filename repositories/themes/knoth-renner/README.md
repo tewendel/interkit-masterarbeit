@@ -1,10 +1,11 @@
 ---
-name: Knoth-Renner
+name: Building Blocks
 version: 0.9
-slug: knoth-renner
+slug: building-blocks
 ---
 
-# Theme by Knoth & Renner
+# Building Blocks by Knoth & Renner
 
-About this theme...
+Stapeln, Mauern, Legen — das Theme »Building Blocks« beschäftigt sich mit urbanen Perspektiven und städtebaulichen Formaten. Platzsparende Typografie und große, raumgreifende Grafiken in unterschiedlichen Lautstärken machen Platz für diverse Inhalten, die sich mit Themen wie Stadt, Verkehr und Gesellschaft auseinandersetzen.
 
+![example](images/knoth-renner-template_01-min.png)
