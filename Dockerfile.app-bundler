@@ -6,7 +6,7 @@ WORKDIR /app
 
 # copy shared files and install dependencies
 COPY /packages /packages
-RUN cd /packages/interkit && npm ci
+RUN cd /packages/interkit && npm ci && npm cache clean --force
 
 # install dependencies
 COPY ./app-bundler/package*json ./
