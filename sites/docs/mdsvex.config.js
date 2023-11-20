@@ -19,9 +19,9 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	highlight: {
-		highlighter
-	},
+	// highlight: {
+	//   highlighter
+	// },
 
 	remarkPlugins: [sveld, relativeImages, remarkToc],
 	rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {behavior: 'append'}]]

@@ -78,6 +78,7 @@ pre {
 
 pre code {
   border: none;
+  font-size: 90% !important;
 }
 
 table {
