@@ -71,7 +71,7 @@ async function setupServerProcess(projectId) {
   });
   interkit_server.call("project.projectServer.setStatus", { projectId, status: "running" })
   proc.stdout.on('data', (data) => {
-    console.log(`projectServer ${projectId} stdout: ${data}`);
+    //console.log(`projectServer ${projectId} stdout: ${data}`);
     interkit_server.call("project.projectServer.addMessage", { projectId, message: {
       type: "stdout",
       text: data.toString()
