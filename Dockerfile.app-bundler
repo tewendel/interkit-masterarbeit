@@ -12,7 +12,7 @@ RUN cd /packages/interkit && npm ci
 COPY ./app-bundler/package*json ./
 #RUN npm i @node-rs/bcrypt-linux-musl
 #RUN apt-get update && apt-get install musl
-RUN npm ci
+RUN npm ci && npm cache clean --force
 #RUN npx node-prune --yes
 
 # copy app files
