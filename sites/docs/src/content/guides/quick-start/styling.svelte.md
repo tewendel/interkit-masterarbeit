@@ -21,6 +21,10 @@ Think about, for example:
 - backgrounds: light, dark, transparent, ...
 - meaning: descriptive images, abstract images, ...
 
+## Map Styles
+
+If your project uses a Map, you can change the appearence and style of the map layers. See [Map Component Reference](/reference/components/MapSimple)
+
 ## Styling
 
 Interkit comes with a set of variables that define the appearance of the Base Design. They are used throughout all components.

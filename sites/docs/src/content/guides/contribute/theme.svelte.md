@@ -6,7 +6,7 @@
 
 # How to create a custom theme
 
-There are several levels of customization for a theme. See also [Styling](/guides/howto/styling) for a general overview. 
+There are several levels of customization for a theme. See also [Styling](/guides/quick-start/styling) for a general overview. 
 
 A theme consists of these elements:
 - a customs css file (file `static/theme/global.css`)

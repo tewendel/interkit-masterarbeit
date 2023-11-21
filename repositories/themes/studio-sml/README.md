@@ -9,4 +9,8 @@ slug: studio-sml
 
 About this theme...
 
-Menu Icon: ![icon](icons/Full/Menu.svg)
+## Recommended custom map style
+
+Use this in the `Map` component
+
+https://api.maptiler.com/maps/fa6f378a-98bb-4d40-848c-a158191bcece/style.json?key=z8YjzgcIgxOszO2iy1p5
