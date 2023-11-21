@@ -131,6 +131,12 @@
     } 
   }
 
+  const removeProjectTemplates = () => { 
+    if(confirm("Remove all project templates?")) {
+      InterkitClient.call("project.removeTemplates")
+    } 
+  }
+
 </script>
 
 
@@ -205,6 +211,7 @@
           {#if $userIsRole?.admin}
             <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
             <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
+            <HeaderPanelLink on:click={removeProjectTemplates}>Remove Project Templates</HeaderPanelLink>
           {/if}
 
 

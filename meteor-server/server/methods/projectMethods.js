@@ -207,5 +207,14 @@ Meteor.methods({
       }
     }
   },
+
+  // method to remove all template projects
+  'project.removeTemplates': async () => {
+    console.log("removing project templates")
+    Projects.find({isTemplate: true}).forEach(async project => {
+      console.log("removing", project.name)
+      await Meteor.call('project.remove', {projectId: project._id})
+    })
+  },
   
 });
