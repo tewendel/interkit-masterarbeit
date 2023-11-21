@@ -29,11 +29,7 @@
       {/if}
     </TabContent>
     <TabContent>
-      {#if !$currentProjectReadOnly}
-        <RepositoryGit {projectId} {currentProject} open={selectedTab == 2} />
-      {:else}
-        <span>git mode disabled in readonly mode.</span>
-      {/if}
+      <RepositoryGit {projectId} {currentProject} open={selectedTab == 2} />
     </TabContent>
   </div>
 </Tabs>
