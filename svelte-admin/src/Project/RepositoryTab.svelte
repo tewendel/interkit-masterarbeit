@@ -2,6 +2,7 @@
   import { Tabs, Tab, TabContent } from "carbon-components-svelte";
   import CloudCmd from './CloudCmd.svelte'
   import RepositoryEditor from './RepositoryEditor.svelte'
+  import RepositoryGit from './RepositoryGit.svelte'
 
   import { currentProjectReadOnly } from "../admin";
 
@@ -13,18 +14,26 @@
 </script>
 
 <Tabs bind:selected={selectedTab}>
-  <Tab label="repository" />
-  <Tab label="cloudcmd" />
+  <Tab label="Commits" />
+  <Tab label="Files" />
+  <Tab label="GIT Server" />
   <div slot="content">
     <TabContent>
         <RepositoryEditor {projectId} {currentProject} open={selectedTab == 0} />
     </TabContent>
-      <TabContent>
-        {#if !$currentProjectReadOnly}
-          <CloudCmd {projectId} open={selectedTab == 1} />
-        {:else}
-          <span>cloudcmd disabled in readonly mode.</span>
-        {/if}
-      </TabContent>
+    <TabContent>
+      {#if !$currentProjectReadOnly}
+        <CloudCmd {projectId} open={selectedTab == 1} />
+      {:else}
+        <span>cloudcmd disabled in readonly mode.</span>
+      {/if}
+    </TabContent>
+    <TabContent>
+      {#if !$currentProjectReadOnly}
+        <RepositoryGit {projectId} {currentProject} open={selectedTab == 2} />
+      {:else}
+        <span>git mode disabled in readonly mode.</span>
+      {/if}
+    </TabContent>
   </div>
 </Tabs>
