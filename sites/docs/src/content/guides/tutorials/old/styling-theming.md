@@ -22,7 +22,6 @@ Note: Toggle the theme with **use theme** in the preview settings
 
 ### Files to look at
 
-- `src/syleTokens.css`
 - `static/theme/global.css`
 - `static/theme/global.js`
 - `svg` files in `static/theme/icons/`
