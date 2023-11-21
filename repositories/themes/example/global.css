@@ -1,0 +1,100 @@
+/* example interkit theme file global.css */
+
+/* for brevity, import another css file */
+@import url('icons.css');
+
+/* and import fonts from public url */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@300;400;700&display=auto');
+
+/* ... or from local assets */
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/DancingScript-Regular.woff2') format('woff2')
+}
+
+/* you may use theme variables */
+
+:root {
+  --font-size-ticker: 75px;
+  --font-ticker: var(--font-size-ticker)/var(--font-size-ticker) "Roboto Serif";
+}
+
+/* overwriting the interkit variables is possible, but a bit tricky */
+#Theming * {
+  --color-background-backdrop: transparent;
+}
+
+/* change the style of an element using interkit component classes */
+#Theming .Card {
+  background-color: #fffe;
+  border: 1px dashed #0003;
+}
+
+#Theming .Card__header .headline {
+  font-weight: 400;
+  font-family: "Roboto Serif", serif;
+  text-transform: uppercase;
+  mask-image: linear-gradient(to right, transparent, black 20px, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black 90%, transparent);
+}
+
+/* always use #Theming to scope your css */
+#Theming .Button:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* get really specifiv and overwrite a font just in one component */
+#Theming .Button {
+  font-family: "Dancing Script", cursive;
+  font-size: 140%;
+}
+
+/* add a custom local asset */
+#Theming {
+  background-image: url("assets/bg.png")
+}
+
+/* below: example for a complex add-on that works in conjunction with global.js */
+
+#Theming .card-header .headline {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#Theming .card-header .headline:not(.tickered) {
+  visibility: hidden;
+}
+
+/* code for the ticker animation */
+
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.ticker-container {
+  display: inline-block;
+  overflow: hidden;
+  width: calc(100% + 0.66em);
+  position: relative;
+  left: -0.33em;
+}
+
+.ticker-move {
+  /* Basically move items from right side of screen to left in infinite loop */
+  display: inline-block;
+  white-space: nowrap;
+  padding-right: 100%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: ticker;
+  animation-duration: 120s;
+}

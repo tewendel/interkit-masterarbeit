@@ -2,6 +2,7 @@
 name: Plain Starter
 version: 0.1
 slug: plain
+starter: true
 ---
 
 # Plain

@@ -19,35 +19,23 @@ The files need to be places in the `static/theme` folder of your project. Themes
 
 ## Examples
 
-Check the [themes folder](https://gitlab.interkit.app/interkit/interkit-experiments/-/tree/v04/repositories/themes) in the interkit repository for some examples!
+### Example Theme / Theme Starter
 
-## Style Variables
+There is an example theme that demonstrates all the possibilities.
 
-Style variables are global variables that are used in all interkit components. You can start your theme by adjusting these variables. They are saved in the `src/styleTokens.json` file in your project. You can also edit this file directly.
+The easiest way to start a new theme in a project is to go to the `Design` tab and install the "example" theme.
 
-<details>
-  <summary>
-    <b>See the list of variables</b>
-  </summary>
-  <StyleTokensTable />
-</details>
+Then go to the `Repository` tab and edit the files.
 
-The values are not part of the theme, but you can override the values in your theme. Check the source code of the <InterkitComponent name="Styling" /> component Example:
+### Predefined themes
 
-```css
-:root {
-  --colorText: #f00;
-}
-```
+The example theme is just one of the predefined themes that Interkit comes with.
 
-<details>
-<summary>
-<InterkitComponent name="Styling" /> source code
-</summary>
-<ComponentInfo noheader component="Styling" />
-</details>
+Check the [themes folder](https://gitlab.interkit.app/interkit/interkit-experiments/-/tree/v04/repositories/themes) in the interkit repository for the source code of all predefined themes and see how they are made!
 
-## Custom CSS
+## Techniques of Customization in a Theme
+
+### Custom CSS
 
 CSS knowledge required.
 
@@ -63,7 +51,7 @@ See [Component CSS](/contribute/component-css) for more information on how to co
 
 Loading of `static/theme/global.css` can be toggled using "Load Theme" in the settings of the Preview.
 
-### Custom assets
+#### Custom assets
 
 You can create a custom assets (`static/theme/assets`) folder and put your images, fonts, etc. in it.
 
@@ -71,13 +59,39 @@ You can then reference these assets in your `global.css`, for example as backgro
 
 You can also import fonts this way.
 
-## Custom Javascript
+#### Style Variables
+
+Style variables are global variables that are used in all interkit components. You can start your theme by adjusting these variables. They are saved in the `src/styleTokens.json` file in your project. You can also edit this file directly.
+
+<details>
+  <summary>
+    <b>See the list of variables</b>
+  </summary>
+  <StyleTokensTable />
+</details>
+
+The values are not part of the theme, but you can override the values in your theme. Check the source code of the <InterkitComponent name="Styling" /> component Example:
+
+```css
+#Theming * {
+  --color-text: rgb(0, 0, 0);
+}
+```
+
+<details>
+<summary>
+<InterkitComponent name="Styling" /> source code
+</summary>
+<ComponentInfo noheader component="Styling" />
+</details>
+
+### Custom Javascript
 
 Required knowledge: Javascript.
 
 You can also create a cusom javascript in `static/theme/global.js`.
 
-## README.md
+### README.md
 
 You can add a description to your theme that will show up in the interface. Use frontmatter to add metadata. Example:
 
@@ -98,7 +112,13 @@ Description on what it does and how to use it
 
 Required Knowledge: CSS.
 
-To use custom Icons, generate your own assets and put the into `static/theme/icons`. The use CSS to override the icons from the <InterkitComponent name="Icon" /> component. The source code lists a number of icon names you can override.
+To use custom Icons, generate your own assets and put the into `static/theme/icons`. Use CSS to override the icons from the <InterkitComponent name="Icon" /> component. Example:
+
+```css
+#Theming .icon-Full-Camera       { background-image: url("icons/Full/Camera.svg"); }
+```
+
+The source code lists a number of icon names you can override.
 
 <details>
 <summary>
@@ -107,16 +127,16 @@ To use custom Icons, generate your own assets and put the into `static/theme/ico
 <ComponentInfo noheader component="Icon" />
 </details>
 
-## Map Style
+### Map Style
 
 You can also edit the map style using Map Tiler and reference it in the <InterkitComponent name="Map" /> component
 
-## Custom components
+### Custom components
 
 Required knowledge: Javascript, Svelte.
 
 You can create your own components. This is the most powerful way to customize interkit apps. However, you cannot include custom components in themes yet. See [Components](../contribute/components)
 
-## Style Recommendations
+### Style Recommendations
 
 A general learning from our outdoor projects is that dark backgrounds do not work, mostly because of the reflections on the screen. We strongly recommend to use light backgrounds for versatile themes.
