@@ -91,6 +91,8 @@
   export let height = "1.5rem"
   export let inverse = false
 
+  let iconUrl = null
+
   const iconHeightOverride = getContext("iconHeight")
   if (iconHeightOverride) height = iconHeightOverride
 
@@ -104,8 +106,18 @@
   }
 
   // convert icon type to url
-  $: iconUrl = eval(activeType.replace("-", "_"))
-
+  // TODO refactor names - change icon names in Icon.yaml to make this obsolete
+  // -> will break icon names in existing apps
+  $: {
+    // replace - with _
+    const variableName = activeType.replace(/-/g, "_")
+    try {
+    iconUrl = eval(typeof variableName == "undefined" ? null : variableName)
+    } catch (e) {
+      console.error(`Icon: Icon type "${activeType}" (${variableName}) not found`)
+      iconUrl = null
+    }
+  }
 
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 

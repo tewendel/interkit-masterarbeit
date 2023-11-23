@@ -160,9 +160,17 @@ A general learning from our outdoor projects is that dark backgrounds do not wor
 3. Go to the `Repository` tab and commit the changed to set a baseline to return to
 4. Edit the files in `static/theme` locally with git (see below)
 5. Test the theme with different projects and templates:
-    1. clone a project locally with git (see below) and manually copy the `static/theme` folder into the cloned project
-    2. test and iterate
-    3. Dont's git push because that would change the template
+    - locally
+        1. clone a project locally with git (see below) and manually copy the `static/theme` folder into the cloned project
+        2. test and iterate
+        3. Dont's git push because that would change the template
+    - OR on interkit
+        1. dumplicate a template
+        2. Go to `Repository/Files` and copy the theme folder into the project
+        3. Tets and iterate, then download the improved theme from the folder
+    - OR if you have a local interkit running
+        1. copy the theme to `repositories/themes` and restart interkit
+        2. duplicate template project and press `apply this theme`. Whenever you press this button, interkit copies the contents of the theme's folder into the project. This way you can easily test a change on a range of projects.
 6. Once the theme works fine on a range of different projects, copy it into the interkit repository in `repositories/themes`
 
 ### Local git workflow
@@ -173,7 +181,7 @@ You can clone an interkit project and work on it locally. You can also clone a t
 2. `git clone <URL from 1.>`
 3. install interkit package, the tab should provide an exact URL `npm install https://...`
 4. `npm run dev`
-5. edit files in `static/theme`
+5. Edit files in `static/theme`
     - you need to manually reload to enable changes
     - you can make git commits and push if this is your own project
     - do not push if this is a template
