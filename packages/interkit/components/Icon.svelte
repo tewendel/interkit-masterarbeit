@@ -1,4 +1,5 @@
 <script>
+  // Icons: Full
   import Full_AR            from "./icons/Full/AR.svg"
   import Full_Archiv        from "./icons/Full/Archiv.svg"
   import Full_Bookmark      from "./icons/Full/Bookmark.svg"
@@ -34,6 +35,7 @@
   import Full_Warning       from "./icons/Full/Warning.svg"
   import Full_to_Gallery    from "./icons/Full/to_Gallery.svg"
   import Thin_AR            from "./icons/Thin/AR.svg"
+  // Icons: Thin
   import Thin_Archiv        from "./icons/Thin/Archiv.svg"
   import Thin_Arrow_Left    from "./icons/Thin/Arrow-Left.svg"
   import Thin_Arrow_Right   from "./icons/Thin/Arrow-Right.svg"
@@ -71,7 +73,13 @@
   import Thin_Social        from "./icons/Thin/Social.svg"
   import Thin_to_Gallery    from "./icons/Thin/to_Gallery.svg"
   import Thin_zoom_In       from "./icons/Thin/zoom-In.svg"
-
+  // Icons: Legacy
+  import Arrow_Up           from "./icons/Thin/Chevron-Up.svg"
+  import Arrow_Down         from "./icons/Thin/Chevron-Down.svg"
+  import Arrow_Left         from "./icons/Thin/Arrow-Left.svg"
+  import Arrow_Right        from "./icons/Thin/Arrow-Right.svg"
+  
+  // Other imports
   import { getContext } from 'svelte';
   import { useLocation } from "svelte-navigator";
   import { InterkitClient } from "../"
@@ -141,25 +149,5 @@
   /* helpers */
 
   .icon.inverse           { filter: invert(1) }
-
-  /* legacy icons */
-
-  
-  .icon-arrow-up {
-    background-image: url("./icons/Thin/Chevron-Up.svg");
-  }
-
-  .icon-arrow-down {
-    background-image: url("./icons/Thin/Chevron-Down.svg");
-  }
-
-  .icon-arrow-left {
-    background-image: url("./icons/Thin/Arrow-Left.svg");
-  }
-
-  .icon-arrow-right {
-    background-image: url("./icons/Thin/Arrow-Right.svg");
-  }
-
 
 </style>

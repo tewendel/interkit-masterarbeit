@@ -6,6 +6,8 @@
 
 # How to create a custom theme
 
+## Table of contents
+
 There are several levels of customization for a theme. See also [Styling](/guides/quick-start/styling) for a general overview. 
 
 A theme consists of these elements:
@@ -108,7 +110,7 @@ Description on what it does and how to use it
 
 ```
 
-## Custom Icons
+### Custom Icons
 
 Required Knowledge: CSS.
 
@@ -137,6 +139,41 @@ Required knowledge: Javascript, Svelte.
 
 You can create your own components. This is the most powerful way to customize interkit apps. However, you cannot include custom components in themes yet. See [Components](../contribute/components)
 
-### Style Recommendations
+## Style Recommendations
 
 A general learning from our outdoor projects is that dark backgrounds do not work, mostly because of the reflections on the screen. We strongly recommend to use light backgrounds for versatile themes.
+
+## Development workflows
+
+### Create a custom theme for an existing project
+
+1. Go to the `Design` tab and apply the `Example Starter` theme
+2. Go to the `Repository` tab and commit the changed to set a baseline to return to
+3. Edit the files in `static/theme`
+    - either directly in the `Repository/Files` tab
+    - locally with git (see below)
+
+### Create a theme to share and to contribute to interkit
+
+1. Clone the `Maxi` template
+2. Go to the `Design` tab and apply the `Example Starter` theme
+3. Go to the `Repository` tab and commit the changed to set a baseline to return to
+4. Edit the files in `static/theme` locally with git (see below)
+5. Test the theme with different projects and templates:
+    1. clone a project locally with git (see below) and manually copy the `static/theme` folder into the cloned project
+    2. test and iterate
+    3. Dont's git push because that would change the template
+6. Once the theme works fine on a range of different projects, copy it into the interkit repository in `repositories/themes`
+
+### Local git workflow
+
+You can clone an interkit project and work on it locally. You can also clone a template.
+
+1. Go to the `Repository/GIT` tab and find the URL for cloning
+2. `git clone <URL from 1.>`
+3. install interkit package, the tab should provide an exact URL `npm install https://...`
+4. `npm run dev`
+5. edit files in `static/theme`
+    - you need to manually reload to enable changes
+    - you can make git commits and push if this is your own project
+    - do not push if this is a template
