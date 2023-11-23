@@ -12,14 +12,15 @@ RUN cd /packages/interkit && npm ci && npm cache clean --force
 COPY ./app-bundler/package*json ./
 #RUN npm i @node-rs/bcrypt-linux-musl
 #RUN apt-get update && apt-get install musl
-RUN npm ci && npm cache clean --force
+RUN npm ci && npm prune && npm cache clean --force
 #RUN npx node-prune --yes
 
 # copy app files
 COPY ./app-bundler ./
 
 # copy shared files AGAIN for starters
-RUN cp -r /packages /var/packages
+# link cp -r /packages /var/packages 
+RUN ln -s /packages /var/packages
 
 # set repositories path in container
 ENV REPOSITORIES_PATH=/var/repositories
@@ -31,7 +32,11 @@ RUN echo "REPOSITORIES_PATH=${REPOSITORIES_PATH}" > .env
 # npm install starter
 # RUN cd ${REPOSITORIES_PATH}/starters/starter && npm ci
 
-# Rest of your Dockerfile instructions...
+
+# remove all translations except en_US.UTF-8
+# RUN rm -rf /usr/share/locale/*
+# remove build tools
+# RUN apt-get remove -y gcc g++ make python && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
 CMD ["npm", "start"]
