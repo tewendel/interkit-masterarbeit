@@ -61,4 +61,34 @@
 
 # System Architecture
 
+Interkit consists of three elements. In the standard installation via Docker, each runs in it's own container.
+
+## Server
+
+A meteorjs backe-end server that handles
+- the database (see [collections](collections))
+- `media files` (uploaded files)
+
+Every project, as well as the admin interface, needs to connect to an interkit server
+
+## Bundler
+
+A node back-end server that handles project files and repositories.
+- serves projects via HTTP
+- runs vite servers for project development
+- runs `project servers` ("story")
+- manages project repositories with `git`.
+- has several RPC and REST interfaces
+- connects to server via ddp
+
+The bundler is required for the admin interface to work. Apart from that, projects are able to run standalone.
+
+## Admin
+
+A svelte front-end to edit projects (Redaktionssystem / admin interface). It connects to the server and sends requests to the bundler in order to manage project files.
+
+# Graph
+
+This graph illustrates the connections between the subsystems and containers.
+
 <Mermaid code={graph} {legend} />
