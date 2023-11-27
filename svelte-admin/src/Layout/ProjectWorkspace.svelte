@@ -1,9 +1,30 @@
+<script context="module">
+  import {
+    currentProject,
+    currentProjectReadOnly,
+  } from '../admin.js'
+  import { push, replace } from 'svelte-spa-router'
+  import { get } from 'svelte/store'
+
+  export const navigateTab = async (path, pathReplace=false) => {
+    if(path != undefined) {
+      const project = await get(currentProject)
+      console.log("navigate", path)
+      const nav = pathReplace ? replace : push
+      if(get(currentProjectReadOnly)) {
+        nav(`/template/${project.slug}/${path}`);
+      } else {
+        nav(`/project/${project.id}/${path}`);
+      }
+    }
+  }
+</script>
+
 <script>
-
-
   import { onDestroy } from 'svelte';
 
   import ProjectDashboard from '../Project/ProjectDashboard.svelte'
+  import ProjectTab from '../Project/ProjectTab.svelte'
   import Sheets from '../Data/Sheets.svelte'
   import BlocklyEditor from '../App/BlocklyEditor.svelte'
   import RepositoryTab from "../Project/RepositoryTab.svelte"
@@ -15,10 +36,7 @@
   import NodeEditor from '../Story/NodeEditor.svelte'
   import Design from '../Design/Design.svelte'
   
-  import {
-    currentProject,
-  } from '../admin.js'
-
+  
   export let projectId
   export let tab
   export let updatePreviewUserAuth
@@ -39,20 +57,59 @@
 
   let scheduledeventsListNotification
 
-
-
   onDestroy(() => {
     console.log("destroying ProjectWorkspace")
     window.removeEventListener('message', messageListener)
   });
 
-
-
 </script>
 
 <!-- start -->
-<div class="scrollable" class:active={!tab}>
-  <ProjectDashboard {projectId} />
+<div class="scrollable" class:active={[null, 'project', 'users', 'repository', 'schedule', 'messages'].includes(tab)}>
+  <ProjectTab {projectId} {tab}>
+
+    <!-- start -->
+    <div class="scrollable main" class:active={tab == null}>
+      <ProjectDashboard {projectId} />
+    </div>
+
+    <!-- project -->
+    <div class="scrollable padding main" class:active={tab == 'project'}>
+      <ProjectEditor {projectId} {currentProject} />
+    </div>
+
+    <!-- users -->
+    <div class="scrollable main" class:active={tab == 'users'}>
+      <UsersManager
+      {projectId}
+      {previewUserId}
+      {updatePreviewUserAuth}
+      moveToBoardId={nodeEditorBoardId}
+      moveToNodeId={nodeEditorNodeId}
+      />
+    </div>
+
+    <!-- messages -->
+    <div class="scrollable main" class:active={tab == 'messages'}>
+      <MessagesManager
+        {projectId}
+      />
+    </div>
+
+    <!-- scheduler -->
+    <div class="scrollable main" class:active={tab == 'schedule'}>
+      <ScheduledeventsManager
+      {projectId}
+      bind:notification={scheduledeventsListNotification}
+      />
+    </div>
+
+    <!-- repository -->
+    <div class="scrollable main" class:active={tab == 'repository'}>
+      <RepositoryTab {projectId} {currentProject} />
+    </div>
+
+  </ProjectTab>
 </div>
 
 <!-- sheets -->
@@ -85,77 +142,19 @@
   />
 </div>
 
-<!-- project -->
-<div class="scrollable padding" class:active={tab == 'project'}>
-  <ProjectEditor {projectId} {currentProject} />
-</div>
-
-<!-- users -->
-<div class="scrollable" class:active={tab == 'users'}>
-  <UsersManager
-  {projectId}
-  {previewUserId}
-  {updatePreviewUserAuth}
-  moveToBoardId={nodeEditorBoardId}
-  moveToNodeId={nodeEditorNodeId}
-  />
-</div>
-
-<!-- messages -->
-<div class="scrollable" class:active={tab == 'messages'}>
-  <MessagesManager
-    {projectId}
-  />
-</div>
-
-<!-- scheduler -->
-<div class="scrollable" class:active={tab == 'schedule'}>
-  <ScheduledeventsManager
-  {projectId}
-  bind:notification={scheduledeventsListNotification}
-  />
-</div>
-
-<!-- repository -->
-<div class="scrollable" class:active={tab == 'repository'}>
-  <RepositoryTab {projectId} {currentProject} />
-</div>
-
 <style>
-
-  h1 {
-    margin-bottom: 10px;
-  }
 
   .scrollable {
     overflow-x: auto;
     overflow-y: auto;
   }
 
-  .content {
-    padding: 0 1rem;
-    margin: 1rem 0;
+  .main:not(.active) {
+    display: none;
   }
 
-  :global(.markdownContent h2) {
-    margin-bottom: 0.25em;
-    font-weight: bold;
-  }
-  
-  :global(.markdownContent h4) {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-    font-weight: bold;
-  }
-
-  :global(.markdownContent ul) {
-    list-style: disc;
-    margin-left: 1em;
-  }
-
-  :global(.markdownContent li) {
-    margin-bottom: 1em;
-
+  .padding {
+    padding: 1rem;
   }
 
 </style>

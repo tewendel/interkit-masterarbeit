@@ -10,6 +10,11 @@
   export let sidebarLeftLabel
   export let modalPanelRightLabel
 
+  // slot: sidebarLeft
+  // slot: contentMain
+  // slot: modalPanelRightHeaderActions
+  // slot: modalPanelRight
+
   let modalPanelRightOpen = false
 
   export const modalPanelRightOpenSet = v => {
