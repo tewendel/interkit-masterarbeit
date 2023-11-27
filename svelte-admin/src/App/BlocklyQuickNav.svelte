@@ -1,0 +1,138 @@
+<script>
+  import { Accordion, AccordionItem, Button } from "carbon-components-svelte"; 
+  import CenterIcon from "carbon-icons-svelte/lib/CenterToFit.svelte";
+  import Help from "carbon-icons-svelte/lib/Help.svelte";
+
+  export let topBlocks;
+  export let workspace;
+  
+  let subtrees = []
+  
+  // blocks that appear as quick nav links at the bottom
+  let quickNavTypes = ["Group", "AppBase", "Route", "DataRouteSingle", "DataRouteMulti", "ChatRoute"]
+
+  $: {
+    if(topBlocks) {
+      subtrees = topBlocks.filter(b => quickNavTypes.includes(b.type))
+      subtrees.sort(function(a, b) {
+        const A = quickNavblockToString(a)
+        const B = quickNavblockToString(b)
+        return (A < B) ? -1 : (A > B) ? 1 : 0;
+      })
+      //console.log("subtrees", subtrees)
+    } else {
+      subtrees = [];
+    }
+  }
+
+  // gets the title to show in quick nav from block
+  const quickNavblockToString = (block) => {
+    switch(block.type) {
+      case "AppBase": return "AppBase";
+      case "Group": return block.getFieldValue("name");
+      default: return block.getFieldValue("path");
+    }
+  }
+
+  const referenceHelp = () => {
+    docsGo(`/reference/components/BlocklySubtree`)
+  }
+
+  const panToSubtree = (block) => {
+    let xy = block.getRelativeToSurfaceXY();	// Scroll the workspace so that the block's top left corner
+    let m = workspace.getMetrics();					// is in the (0.2; 0.3) part of the viewport.
+    
+    console.log({scrollbar: workspace.scrollbar, metrics: m, xy: xy})
+    
+    workspace.scrollbar.set(
+        xy.x * workspace.scale - m.contentLeft + m.viewWidth  * 0.2,
+				xy.y * workspace.scale - m.contentTop + m.viewHeight * 0.3
+    );
+  }
+
+
+
+
+
+</script>
+
+
+
+
+<div class="navigation-accordion">
+      {#if subtrees.length}
+        <ul>
+        {#each subtrees as subtree} 
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <li class="subtree" on:click={() => {panToSubtree(subtree)}}>
+            <span title={quickNavblockToString(subtree)}>
+              {quickNavblockToString(subtree)}
+            </span>
+            <div class="move-button">
+              <CenterIcon/>
+            </div>
+          </li>
+        {/each}
+        </ul>
+      {/if}
+      {#if subtrees.length == 1}
+        <p>Groups and Routes will appear here as shortcuts.</p>
+        <Button
+            kind="ghost"
+            size="small"
+            tooltipPosition="top"
+            tooltipAlignment="end"
+            icon={Help}
+            on:click={referenceHelp}
+            iconDescription="docs"
+          />
+      {/if}
+    
+</div>
+
+
+
+<style>
+  .navigation-accordion {
+    margin-top: 1rem;
+    padding: 5px;
+  }
+
+  .navigation-accordion p {
+    font-size: 90%;
+    color: #999;
+  }
+
+  .navigation-accordion li {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .navigation-accordion li span {
+    flex: 0.9;
+    align-self: center;
+    overflow: hidden;
+    padding: 2px;
+    text-overflow: "...";
+    white-space: nowrap;
+  }
+
+  .navigation-accordion li .move-button {
+    flex: 0.1;
+  }
+
+  .move-button {
+    padding: 4px;
+  }
+
+  .subtree {
+    padding: 2px;
+  }
+
+  .subtree:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
+
+
+</style>
