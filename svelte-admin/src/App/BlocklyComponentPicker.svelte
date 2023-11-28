@@ -86,14 +86,16 @@
   {#if componentSearchQuery}
 
     {#each componentSearchResults as block}
-      <BlocklyComponentPreview 
-        blockName={block.name} 
-        add={() => dispatch('addcomponent', block.name)}
-        help={()=>{openBlocklyHelp(block.name)}}
-        helpHref={getBlocklyHelpHref(block.name)}
-        bind:activeBlockPreview
-        on:startdrag={evt => dispatch('startdrag', evt.detail)}
-      />
+      {#key block.name}
+        <BlocklyComponentPreview 
+          blockName={block.name} 
+          add={() => dispatch('addcomponent', block.name)}
+          help={()=>{openBlocklyHelp(block.name)}}
+          helpHref={getBlocklyHelpHref(block.name)}
+          bind:activeBlockPreview
+          on:startdrag={evt => dispatch('startdrag', evt.detail)}
+        />
+      {/key}
     {/each}
 
   {:else}
