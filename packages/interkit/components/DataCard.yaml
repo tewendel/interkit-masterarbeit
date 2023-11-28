@@ -50,6 +50,6 @@ fields:
   - type: slot
     name: content
     help: "Use this slot to place further content inside the card, for example a ButtonBar or a DataCell."
-toolboxCategory: Data
+toolboxCategory: Data Display (single)
 docsPath: DataCard
 
