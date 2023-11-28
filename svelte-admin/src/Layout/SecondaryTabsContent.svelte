@@ -80,7 +80,7 @@
           iconDescription="go back"
           disabled={!$docsRouterCanNavigate.back}
           on:click={() => { docsGo(-1) }}
-          />
+        />
         <Button
           kind="ghost"
           icon={ArrowRight}
@@ -102,13 +102,15 @@
         </Button>
       {/if}
     <!-- \u00ad is a soft hyphens so the word breaks nicely to fit in minimized, narrow sidebar -->
-    <Button
-      kind="ghost"
-      iconDescription="cycle size"
-      on:click={() => { secondaryTabsSize.set(($secondaryTabsSize + 1) % secondaryTabsSizes.length) }}
-      icon={FitToWidth}
-      style="margin-left: auto"
-      />
+    {#if !$secondaryTabsMinimized}
+      <Button
+        kind="ghost"
+        iconDescription="cycle size"
+        on:click={() => { secondaryTabsSize.set(($secondaryTabsSize + 1) % secondaryTabsSizes.length) }}
+        icon={FitToWidth}
+        style="margin-left: auto"
+        />
+    {/if}
     <Button
       kind="ghost"
       iconDescription={$secondaryTabsMinimized ? "maxi\u00admize" : "minimize"}
