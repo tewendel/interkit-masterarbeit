@@ -238,6 +238,8 @@
     width: calc(33.3333333vw - 48px);
     height: 100%;
     visibility: hidden;
+    display: flex;
+    align-items: end;
   }
 
   .tabs-preview.visible {

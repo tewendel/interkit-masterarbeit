@@ -21,7 +21,8 @@
 
   const dispatch = createEventDispatcher()
 
-  $: active = activeBlockPreview == blockName;
+  //$: active = activeBlockPreview == blockName;
+  const active = true;
 
   const toggleActive = () => {
     if(active) {
@@ -36,18 +37,18 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="container" class:active>
   <div title={blockName} class="header">
+    <span class="header-blockname">{blockName}</span>
     <span
       class="header-icon header-icon--drag"
       on:mousedown={dispatch('startdrag', blockName)}
       >
       <Draggable />
     </span>
-    <span class="header-blockname">{blockName}</span>
-    <span class="header-icon header-icon--toggle"
+    <!--span class="header-icon header-icon--toggle"
       on:click={toggleActive}
       >
       {#if active}<ChevronUp/>{:else}<ChevronDown/>{/if}
-    </span>
+    </span-->
   </div>
   <div class="preview">
     <div class="previewImage" style="background-image: url({imageSrc})"></div>
@@ -92,6 +93,7 @@
     vertical-align: middle;
     -webkit-user-select: none;
     user-select: none;
+    padding: 8px;
   }
   .header-icon:hover {
     background: lightgray;

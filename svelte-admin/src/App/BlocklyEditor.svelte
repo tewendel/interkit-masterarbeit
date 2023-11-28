@@ -20,6 +20,7 @@
   import { blocklyConfig } from 'interkit-blockly'
   
   import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
+  import BlocklyQuickNav from './BlocklyQuickNav.svelte';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from '../BundleServer.js'
@@ -451,23 +452,38 @@
     await loadBlocklyData()
   }
 
+  let activeTab = 0
+
 </script>
 
   <svelte:window on:keydown={onKeyDown} />
 
   <MainColumns
-    sidebarLeftLabel="Components"
+    sidebarLeftLabel=""
     >
 
+    <svelte:fragment slot="sidebarLeftTitleSlot">
+      <Tabs autoWidth bind:selected={activeTab}>
+        <Tab label="Components" />
+        <Tab label="Focus" />
+      </Tabs>
+    </svelte:fragment>
+
     <svelte:fragment slot="sidebarLeft">
-      <BlocklyComponentPicker
-        {workspace}
-        {toolbox}
-        {topBlocks}
-        blockDefinitionsYaml={blockObjects}
-        on:startdrag={startDrag}
-        on:addcomponent={evt => addComponent(evt.detail)}
+      <div class:displayNone={activeTab != 0}>
+        <BlocklyComponentPicker
+          {toolbox}
+          blockDefinitionsYaml={blockObjects}
+          on:startdrag={startDrag}
+          on:addcomponent={evt => addComponent(evt.detail)}
         />
+      </div>
+      <div class:displayNone={activeTab != 1}>
+        <BlocklyQuickNav
+          {workspace}
+          {topBlocks}
+        />
+      </div>
     </svelte:fragment>
    
     <svelte:fragment slot="contentMain">
@@ -550,6 +566,10 @@
   />
 
 <style>
+
+  .displayNone {
+    display: none;
+  }
 
   .blocklyTabContent,
   .__BlocklyEditor,

@@ -40,7 +40,8 @@
     {:else}
       <div>
         <div class="headingWithButton">
-          <h2>{sidebarLeftLabel}</h2>
+          <slot name="sidebarLeftTitleSlot"></slot>
+          {#if sidebarLeftLabel}<h2>{sidebarLeftLabel}</h2>{/if}
           <Button
             kind="ghost"
             iconDescription="minimize"
@@ -115,9 +116,9 @@ h3 {
 }
 
 .sidebarLeft {
-  flex: 0 0 20%;
-  width: 20%;
-  max-width: 20%;
+  flex: 0 0 25%;
+  width: 25%;
+  max-width: 25%;
   min-width: 8em;
   background: white;
   display: flex;

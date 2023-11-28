@@ -17,6 +17,6 @@ fields:
     - name: centerContent
       type: checkbox
       defaultValue: false
-toolboxCategory: "Data"
+toolboxCategory: Data Display (single)
 docsPath: DataCell
 

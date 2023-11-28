@@ -1,6 +1,6 @@
 name: Spacing
 colour: 100
-toolboxCategory: Layout
+toolboxCategory: Spacers
 fields:
   - type: extraProps
     props:

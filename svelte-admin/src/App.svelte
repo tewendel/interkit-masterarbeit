@@ -313,6 +313,10 @@
     border-color: theme.$background;
   }
 
+  :global(.bx--header) {
+    align-items: end;
+  }
+
   /* END Hack to make Carbon UIShell white */
 
   /* BEGIN Hack to place stuff in Header */
