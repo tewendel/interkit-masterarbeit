@@ -35,7 +35,7 @@
     {:else}
       <div>
         <div class="headingWithButton">
-          <slot name="sidebarLefttitleSlot"></slot>
+          <slot name="sidebarLeftTitleSlot"></slot>
           {#if sidebarLeftLabel}<h2>{sidebarLeftLabel}</h2>{/if}
           <Button
             kind="ghost"

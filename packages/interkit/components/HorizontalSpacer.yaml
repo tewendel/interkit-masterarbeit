@@ -1,5 +1,5 @@
 name: HorizontalSpacer
-toolboxCategory: Layout
+toolboxCategory: Spacers
 colour: 140
 fields:
   - name: left

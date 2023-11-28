@@ -1,7 +1,6 @@
 name: AspectRatio
 title: Aspect Ratio
 colour: 100
-toolboxCategory: Layout
 fields:
   - name: aspectRatioType
     type: options
@@ -17,3 +16,5 @@ fields:
   - name: default
     type: slot
 docsPath: AspectRatio
+toolboxCategory: Layout Utilities
+

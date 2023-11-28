@@ -462,19 +462,17 @@
     sidebarLeftLabel=""
     >
 
-    <svelte:fragment slot="sidebarLefttitleSlot">
+    <svelte:fragment slot="sidebarLeftTitleSlot">
       <Tabs autoWidth bind:selected={activeTab}>
         <Tab label="Components" />
-        <Tab label="Board" />
+        <Tab label="Focus" />
       </Tabs>
     </svelte:fragment>
 
     <svelte:fragment slot="sidebarLeft">
       <div class:displayNone={activeTab != 0}>
         <BlocklyComponentPicker
-          {workspace}
           {toolbox}
-          {topBlocks}
           blockDefinitionsYaml={blockObjects}
           on:startdrag={startDrag}
           on:addcomponent={evt => addComponent(evt.detail)}

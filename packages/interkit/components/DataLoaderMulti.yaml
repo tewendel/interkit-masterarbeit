@@ -28,6 +28,6 @@ fields:
       help: The column that contains references to the elements we want to select. Which element to use is determined through the "element" context.
   - name: default
     type: slot
-toolboxCategory: Data
+toolboxCategory: Data Loaders
 docsPath: DataLoader#dataloadermulti
 

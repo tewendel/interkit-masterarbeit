@@ -1,5 +1,5 @@
 name: MarkdownContent
-toolboxCategory: Basics
+toolboxCategory: Data Display (single)
 color: 230
 fields:
   - type: extraProps

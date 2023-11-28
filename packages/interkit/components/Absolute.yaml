@@ -16,4 +16,4 @@ fields:
     help: Distance from bottom of container
   - type: slot
     name: default
-toolboxCategory: Layout
+toolboxCategory: Layout Utilities

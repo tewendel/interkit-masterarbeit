@@ -1,5 +1,5 @@
 name: AccordeonShell
-toolboxCategory: Layout
+toolboxCategory: Containers
 fields:
   - type: slot
     name: label

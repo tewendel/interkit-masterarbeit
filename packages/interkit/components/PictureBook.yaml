@@ -13,6 +13,6 @@ fields:
       defaultValue: elements/order
   - type: slot
     name: contentElement
-toolboxCategory: Data
+toolboxCategory: Data Display (multi)
 docsPath: DataList#picturebook
 

@@ -77,7 +77,7 @@
       {/if}
       {#if subtrees.length == 1}
         <p>Groups and Routes will appear here as shortcuts.</p>
-        <Button
+        <!--Button
             kind="ghost"
             size="small"
             tooltipPosition="top"
@@ -85,7 +85,7 @@
             icon={Help}
             on:click={referenceHelp}
             iconDescription="docs"
-          />
+          /-->
       {/if}
     
 </div>
@@ -101,6 +101,7 @@
   .navigation-accordion p {
     font-size: 90%;
     color: #999;
+    padding: 0.5em;
   }
 
   .navigation-accordion li {

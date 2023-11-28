@@ -16,4 +16,4 @@ fields:
     type: slot
     help: "Add the icon here."
 docsPath: NavBar#navbutton
-toolboxCategory: Buttons
+toolboxCategory: Navigation
