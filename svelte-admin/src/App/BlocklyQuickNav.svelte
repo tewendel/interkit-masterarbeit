@@ -76,7 +76,7 @@
         </ul>
       {/if}
       {#if subtrees.length == 1}
-        <p>Groups and Routes will appear here as shortcuts.</p>
+        <p>Groups and Routes will appear here as shortcuts that you can jump to. This is useful for larger projects.</p>
         <!--Button
             kind="ghost"
             size="small"
