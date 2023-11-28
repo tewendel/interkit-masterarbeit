@@ -73,7 +73,7 @@
           -->
         {/if}
       {/if}
-      {#if !$secondaryTabSpecialDoc && ($secondaryTabIndex === 1)}
+      {#if !$secondaryTabSpecialDoc && ($secondaryTabIndex === 1) && !$secondaryTabsMinimized}
         <Button
           kind="ghost"
           icon={ArrowLeft}
