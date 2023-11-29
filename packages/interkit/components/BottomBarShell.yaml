@@ -1,5 +1,5 @@
 name: BottomBarShell
-toolboxCategory: Layout
+toolboxCategory: Shells
 colour: 140
 fields:
   - name: Content
