@@ -2,7 +2,7 @@
 
 ## The top bar and right sidebar
 
-- On the top left, when managing and creating projects, it says *interkit Authoring System*.  
+- On the top left, when managing and creating projects, it says *interkit*.  
   Later, it tells you which project you are editing.
 - On the far right, the user icon activates the user sidebar.
   It lets you log out, shows you information about your user and the project.
@@ -10,7 +10,7 @@
     - **Preview** – an interactive simulation/view of your app.
     - **Docs** – you can read the documentation while working on your app.
     - **Logs** – shows you what the project server is doing.
-- When you're editing a project, on the left, you can switch between the main tabs, described below.
+- When you're editing a project you can switch between the main tabs in the center, as described below.
 
 ## Project
 
@@ -26,9 +26,9 @@ The Project tab contains administative information and settings about your proje
 
 Three tabs in the main area:
 
-- **blockly**: Build the interface of your app from components. Browse components in the left sidebar, click to expand, select and finally add. Drag and drop them in the main area; they will snap into slots. Each block has some properties/settings visible immediately; others can be edited by clicking the table icon on a block.
+- **blockly**: Build the interface of your app from components. Browse components in the left sidebar, drag and drop them in the main area; they will snap into slots. Each block has some properties/settings visible immediately; others can be edited by clicking the table icon on a block.
 - **App.svelte** shows you the generated code. You don't need to and can't edit it.
-- **actions.js** lets you implement advanced behaviors.
+- **actions.js** lets you implement [advanced behaviors](/guides/howto/actions).
 
 See [Building an App with Components](/guides/quick-start/components)
 
@@ -54,10 +54,16 @@ to reference them in blockly components, Sheets or in code.
 
 You also manage and moderate *User generated* media that has been submitted by users of your app.
 
+See the [Media](/guides/tutorials/media) tutorial for details.
+
 ## Story
 
 Build complex interactions that can be expressed by narrative flow concepts, e.g. chat bots.
 
-See [Getting started with Chatbots](/guides/quick-start/chat)
+See [Getting started with Chatbots](/guides/quick-start/chat) for more.
 
+## Design
 
+This area allows you to modify style variables that change the appearance of your app. You can also select predefined themes.
+
+See [Changing the appearance of your App](/guides/quick-start/styling) for more.

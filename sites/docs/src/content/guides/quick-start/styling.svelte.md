@@ -43,7 +43,7 @@ They let you define
   <StyleTokensTable />
 </details>
 
-You can change these variables visually in the `Design` section of the Redaktionssystem. When you press "Save", a file called `styleTokens.json` is saved in your project. It contains all the values of your variables (You can also edit this file directly).
+You can change these variables visually in the `Design` section of the authoring system. When you press "Save", a file called `styleTokens.json` is saved in your project. It contains all the values of your variables (You can also edit this file directly).
 
 For example, if you change "Color / Text" in the "general" section, it changes the color text all over your app.
 

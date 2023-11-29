@@ -12,12 +12,13 @@ Examples:
 - Objects that can be found in places in the city
 - Artworks to discover in the exhibition
 - Places to visit
+- Text content that you use elsewhere in the app
 
 ![Example elements sheet](/images/elements_sheet.png "Example elements sheet")
 
 ### Structure of the data
 
-Data in interkit is organised into `sheets`, representing the different types of elements you want to use in your app, for example Artworks.
+Data in interkit is organised into `sheets`, representing the different types of elements you want to use in your app, for example Artworks. You might have to create multiple sheets for a project to set up different kind of elements
 
 Each `sheet` is structured into `columns` and `rows`.
 
@@ -32,7 +33,7 @@ Click on the column title to edit, move or remove it.
 Each column has a certain type, depending on what kind of data it should hold. The available types are:
 - **String** for short unformatted text
 - **Number** for numbers
-- **Richtext** for longer text with headlines, links and paragraphs
+- **Richtext** for longer text with headlines, links and paragraphs formatted with Markdown
 - **Media** for Images, Audio or Video files, and AR content
 - **Location** for locations on the map
 - **SheetRef** for referencing data in other sheets
@@ -40,6 +41,8 @@ Each column has a certain type, depending on what kind of data it should hold. T
 ### Media
 
 Media files have to be uploaded first in the media section of the authoring system, and can then be selected in media columns of database sheets.
+
+Note: You need to set alt texts and determine the fit mode for images for each media item in the Media section.
 
 ### Updating data
 

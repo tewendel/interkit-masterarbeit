@@ -2,11 +2,15 @@
 
 ### What are components
 
-Components define the structure of the UI of the app, for example lists, navigation, or more complex things like a map. 
+Components define the structure of the User Interface (UI) of the app, for example lists, navigation, or more complex things like a map. 
 
 Every App needs to start with the `AppBase` component. 
 
-You can look up the documentation for all components by right clicking on them and clicking on `help` or by browsing the components section in the [reference](/reference).
+Drag components onto the workspace from the left sidebar. They snap onto each other.
+
+You can look up the documentation for all components by right clicking on them and clicking on `help` or by browsing the components section in the [reference](/reference). Through the right click context menu you can also duplicate components and whole constellations of blocks.
+
+Tip: Use the [Group and GroupConnector](/reference/components/group) components to organize more complex component configurations. 
 
 Common design patterns are covered in the [tutorial](/guides/tutorials/intro).
 
