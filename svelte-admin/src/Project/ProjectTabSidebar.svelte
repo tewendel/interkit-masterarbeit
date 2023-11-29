@@ -68,7 +68,7 @@
     style={buttonStyle("schedule", contentMain)}
     on:click={() => navigate("schedule")}
   >
-    schedule
+    Schedule
   </Button>  
 
   <Button
