@@ -143,6 +143,10 @@ export const items = [
             title: 'Migrate app to vite',
             path: '/guides/howto/migrate_to_vite'
           },
+          {
+            title: 'Troubleshooting',
+            path: '/guides/howto/troubleshooting'
+          },
         ]
       },
 

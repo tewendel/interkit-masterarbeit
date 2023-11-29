@@ -21,10 +21,27 @@ Interkit uses a few different technologies under the hood:
 - The server is  based on <a href="https://www.meteor.com/" target="_blank">Meteor</a>, which provides real time database updates, media and user management.
 - The authoring system is based on <a href="https://svelte.dev/" target="_blank">Svelte</a>, <a href="https://carbon-components-svelte.onrender.com/" target="_blank">Carbon Components</a> and <a href="https://developers.google.com/blockly/" target="_blank">Blockly</a>.
 - You can install interkit using <a href="https://www.docker.com/" target="_blank">Docker</a>.
-- The apps you create using the authoring system are Svelte-based Single Page Applications (SPA), assembled from pre-built components. You can expand the system by writing your own Svelte components
-- Each app can optionally include a Node-based project server for managing multi-user chat interactions, including variables of different scope.
-- You can distribute your apps as PWA or through the app stores using Capacitor.
+- The apps you create using the authoring system are Svelte-based Single Page Applications (SPA), assembled from pre-built Svelte components that you can assemble by drag and drop using a <a href="https://developers.google.com/blockly/" target="_blank">blockly</a> based interface. You can expand the system by writing your own Svelte components
+- Each app can optionally include a Node-based project server for managing multi-user chat interactions, including variables of different scope. You can program the server to manage chatbots and interactive stories using a node based editor with a javascript API or a simplified syntax based on <a href="https://twinery.org/" target="_blank">Twine</a>.
+- Apps can be distributed as PWA or through the app stores using <a href="https://capacitorjs.com/" target="_blank">Capacitor</a>.
 
-## For artists
+## For artists and game designers
+
+Interkit is designed to be integrated into art and cultural projects in a number of scenarios:
+- Show a catalog of works that the audience can explore, using lists, carousels, categories and more.
+- Present locations on a map and associate media (formatted text, images, audio, video, AR) with locations.
+- Audiences can continue to listen to audio while they navigate through the app.
+- Allow audiences to select, collect, unlock or bookmark content by using a QR scanner or pressing buttons.
+- Using the freely programmable chatbot and interactive story functionality, you can create very elaborate forms of engagement with your audience. You can use a single channel, or add multiple channels, like contacts in a messenger application. The chats can be indiviudal single-player stories, or coordinated multi-player experiences.
+- It is possible to combine the progress users make in chat with what they see in the rest of the app.
+See the quick start guides and the [tutorial](/guides/tutorials/intro) for more information.
 
 ## For visual designers
+
+The look and feel of the system can be customized in a number of ways:
+- arranging components to meet your needs
+- through your uploaded media assets
+- styling the base design
+- selecting one of multiple premade themes
+- creating your own theme with CSS to create a custom appearance
+See the quick start guide on [styling](/guides/quick-start/styling) for more information.

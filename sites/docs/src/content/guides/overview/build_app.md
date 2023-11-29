@@ -30,6 +30,8 @@ Creating an app is a multi-stage process that often involves several people with
     - Sharing content?
 - consider interactions between users and their environment
     - Where should the experience take place? In public space? Indoor?
+- think about your distribution process
+    - Do you want users to find your app via a QR code or download an App from the Android and iOS stores?
 
 ### Implementation - how can you do it with interkit?
 
@@ -65,7 +67,7 @@ Click **Create project…** to start the wizard, where you can pick between thre
 
 Sections `App` and `Data`
 
-- setup components 
+- setup [components](/guides/quick-start/components)
     - Do you need a list of elements?
     - Do you need a single element view?
     - map, menu, chat, ... 
@@ -90,20 +92,19 @@ Section `Story`
 
 Design Chat interaction and server-side actions.
 
-- write interactions in the chat interface
+- [write interactions](/guides/quick-start/chat) in the chat interface
 - add chat channels and bots
 - add server-side actions
 - connect external services
 - use [cron](/guides/howto/cron_setup) for global timed actions
 
 ### Styling
-Tweak visual appearance of the app  
-[...]
+
+Tweak visual appearance of the app, see the quick start guide on [styling](/guides/quick-start/styling)
 
 ### Testing
 
 It is a good idea to have people test your app, gather feedback and improve it. 
-[...]
 
 --- 
 
@@ -121,20 +122,22 @@ It is a good idea to have people test your app, gather feedback and improve it.
 
 ### Internationalization (optional)
 
-see [Internationalization guide](/guides/howto/i18n)  
-[...]
+See the [Internationalization guide](/guides/howto/i18n)  
 
 ### Deployment
 
-Publish App  
-[...]
+Decide if you want to distribute your project as 
+- a progressive web app (PWA) that users can access via a URL in their mobile browsers and can install on their devices.  
+- a downloadable app that users find and download through the app stores.
 
-optinal: App Store and Play Store 
+If you want to use a simpler url, it can be useful to make your project the [default project](/guides/quick-start/projects#make-a-project-the-default-project-on-the-server) on the server.
+
+See the [technical guide](/guides/howto/native) to package your project for the app stores.
 
 --- 
 
 ## Stage 4: Maintaining
 
 ### Moderation
-Moderate users and user generated content (optional)  
-[...]
+
+See the [Moderation and Monitoring guide](/guides/quick-start/moderation)
