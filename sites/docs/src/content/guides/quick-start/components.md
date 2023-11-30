@@ -10,7 +10,7 @@ Drag components onto the workspace from the left sidebar. They snap onto each ot
 
 You can look up the documentation for all components by right clicking on them and clicking on `help` or by browsing the components section in the [reference](/reference). Through the right click context menu you can also duplicate components and whole constellations of blocks.
 
-Tip: Use the [Group and GroupConnector](/reference/components/group) components to organize more complex component configurations. 
+Tip: Use the [Group and GroupConnector](/reference/components/group) components to organize more complex component configurations and use the Nav tab in the left sidebar to jump quickly between areas of the workspace.
 
 Common design patterns are covered in the [tutorial](/guides/tutorials/intro).
 
