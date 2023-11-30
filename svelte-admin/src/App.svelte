@@ -17,6 +17,8 @@
   
   import { onMount } from 'svelte'
 
+  import { navigateTab } from './Layout/ProjectWorkspace.svelte'
+
   import { 
     Header,
     Content,
@@ -68,7 +70,7 @@
     if(event.detail?.params?.mode == "template") {
       let slug = event.detail?.params?.project
       if(slug) {
-        console.log("readonly route via slug", slug)
+        console.log(`currentProject slug ${$currentProject?.slug} readonly route via slug ${slug}`)
         if($currentProject?.slug != slug) {
           let projectIdFromSlug = await InterkitClient.call("project.getId", {slug})
           console.log("got projectId from slug", projectIdFromSlug)
@@ -82,9 +84,6 @@
       projectId.set(event.detail?.params?.project)
       currentProjectReadOnly.set(false)
     }
-
-    tab = event.detail?.params?.tab
-    console.log("tab set to ", tab)
 
     //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
 

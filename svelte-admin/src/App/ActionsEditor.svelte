@@ -34,9 +34,14 @@
     BundleServer.compileReloadPreview(dev);
   }
 
-  onMount(async ()=>{
+  const setup = async () => {
     await load();
-  })
+  }
+
+  $: {
+    projectId
+    setup()
+  }
 
   let activated = false;
   $: {

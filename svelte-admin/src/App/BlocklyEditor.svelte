@@ -175,6 +175,7 @@
   }
 
   const loadBlocklyData = async () => {
+    console.log("loadBlocklyData")
 
     let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
     if(blocklyJson?.content) {
@@ -318,7 +319,7 @@
 
   onMount(async () => {
     console.log("blockly onMount")
-    initBlockly();
+    initBlockly(); // run init onMount 
     blocklyDragHelperEl = document.getElementById('blocklyDragHelper') || document.createElement('div')
     blocklyDragHelperEl.id = 'blocklyDragHelper'
     document.body.appendChild(blocklyDragHelperEl)
@@ -330,6 +331,24 @@
       workspace.dispose();
     }
   });
+
+  /*
+    // run init when projectId changes 
+    // currently disabled to reduce complexity
+    // the whole component is reloaded using #key in ProjectWorkspace
+    const updateProjectId = (projectId) => {
+    console.log("updateProjectId")
+    if (workspace) {
+      workspace.dispose()
+    }
+    selectedTab = 0
+    initBlockly()
+  }
+
+  $: {
+    console.log("BlocklyEditor projectId changed", projectId)
+    updateProjectId()
+  }*/
 
   const save = async ()=>{
 

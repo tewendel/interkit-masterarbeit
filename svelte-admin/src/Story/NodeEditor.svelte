@@ -659,11 +659,21 @@
       ?.map(node => node.id)
     if (search && treeView) treeView.expandAll()
   }
- 
-  onMount(async () => {
-    await loadBoardList();
-    if (boards.length) currentBoardId = boards[0].id
-  })
+   
+  // this is called when projectId changes through routing
+  const initialLoadBoards = async () => {
+    console.log("initialLoadBoards")
+    board = null
+    editNodeId = null
+    modalPanelRightOpenSet(false)
+    await loadBoardList()
+    if (boards.length) {
+      currentBoardId = boards[0].id
+      loadBoard(currentBoardId)
+    }
+  }
+
+  $: projectId, initialLoadBoards()
 
 </script>
 

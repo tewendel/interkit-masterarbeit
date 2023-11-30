@@ -48,7 +48,7 @@
         icon={Save}
         kind="danger"
         size="field"
-        disabled={!theme && !$currentProject?.uiState?.globalCssContent}
+        disabled={!theme && !$currentProject?.uiState?.globalCssContent || $currentProjectReadOnly}
         on:click={removeTheme}
         >Remove
       </Button>

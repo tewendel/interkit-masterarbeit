@@ -7,6 +7,7 @@
   import { get } from 'svelte/store'
 
   export const navigateTab = async (path, pathReplace=false) => {
+    console.log("navigateTab", path)
     if(path != undefined) {
       const project = await get(currentProject)
       console.log("navigate", path)
@@ -124,7 +125,9 @@
 
 <!-- components -->
 <div class:active={tab == 'app'}>
-  <BlocklyEditor {projectId} open={tab == 'app'}/>
+  {#key projectId}
+    <BlocklyEditor {projectId} open={tab == 'app'}/>
+  {/key}
 </div>
 
 <!-- theming -->

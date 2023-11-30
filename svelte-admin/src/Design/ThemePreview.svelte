@@ -49,6 +49,7 @@
 
       <Button
         icon={Save}
+        disabled={$currentProjectReadOnly}
         kind="primary"
         size="field"
         on:click={applyTheme}

@@ -27,6 +27,7 @@
     if(subHandle) await subHandle.stop()
     subHandle = await InterkitClient.getSub('sheets', 'sheets', {projectId: _projectId}, (s)=>s.projectId == _projectId);
     sheets = subHandle.data
+    currentSheetKey = null
   }
 
   onDestroy(async ()=>{
