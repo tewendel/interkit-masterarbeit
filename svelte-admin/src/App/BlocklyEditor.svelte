@@ -484,7 +484,7 @@
     <svelte:fragment slot="sidebarLeftTitleSlot">
       <Tabs autoWidth bind:selected={activeTab}>
         <Tab label="Components" />
-        <Tab label="Focus" />
+        <Tab label="Nav" />
       </Tabs>
     </svelte:fragment>
 
