@@ -85,6 +85,9 @@
       currentProjectReadOnly.set(false)
     }
 
+    tab = event.detail?.params?.tab
+    console.log("tab set to ", tab)
+
     //InterkitClient.call("user.trackActivity", { editingProjectId: $projectId, path: window.location.pathname + window.location.search + window.location.hash })
 
     // reset preview when leaving project

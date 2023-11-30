@@ -93,38 +93,39 @@
     <div class="tabs-main">
       <!--a use:link href="/components" >Appa</a>
       <a use:link href="/sheets" >Daten</a-->
-      <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+      <Tabs autoWidth bind:selected={mainSelected}>
 
-        <Tab>
+        <!-- we are using on:click here and below because we also have the tabs bound to a prop and don't want the event to fire when that changes -->
+        <Tab on:click={e => navigate(mainTabPaths[0])}>
           Project
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[1])}>
           <TopTabLabel path={mainTabPaths[1]} {tab}>
             App 
             <NotificationBadge count={0} />
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[2])}>
           <TopTabLabel path={mainTabPaths[2]} {tab}>
             Data
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[3])}>
           <TopTabLabel path={mainTabPaths[3]} {tab}>
             Media
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[4])}>
           <TopTabLabel path={mainTabPaths[4]} {tab}>
             Story
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[5])}>
           <TopTabLabel path={mainTabPaths[5]} {tab}>
             Design
           </TopTabLabel>
