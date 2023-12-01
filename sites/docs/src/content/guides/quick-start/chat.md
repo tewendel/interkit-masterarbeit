@@ -5,9 +5,9 @@ e.g. chat bots.
 
 ### Boards
 
-Create *boards* to organize story components, e.g. if you have several chat bots, chat "channels", or chapters in an interactive story.
+Create *boards* to organize your story into different parts. For example, if you have several chat bots, chat "channels", or chapters in an interactive story.
 
-You don't need to necessarily have several board, but you need at least one to use the Story functionality. You activate and edit other boards by selecting them in the left sidebar.
+You don't necessarily need to have several boards, but you will need at least one to use the Story functionality. You activate and edit other boards by selecting them in the left sidebar.
 
 At the top of the central area, you can edit your board's name and some metadata, like *Title* and *Label*.
 

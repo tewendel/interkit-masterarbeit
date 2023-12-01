@@ -1,6 +1,6 @@
 # Twinish
 
-Twinish is a limited, simplifed syntax loosely inspired by the interactive fiction tool [twine](http://twinery.org). 
+Twinish is a limited, simplifed syntax loosely inspired by the interactive fiction tool <a href="http://twinery.org" target="_blank">Twine</a>. 
 
 It is meant for the rapid writing of branching narratives without complex logic.
 
