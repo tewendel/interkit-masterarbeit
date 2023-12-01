@@ -20,4 +20,4 @@ The [Media](/guides/tutorials/media) tutorial teaches you how to work with Image
 
 In the [Button effects](/guides/tutorials/effects) tutorial, you will learn how to add more interactivity to your components interface, such as Bookmarks & Todo Lists, more complex navigation or a scavenger hunt with programmatic actions.
 
-Learn how to write complex interactive stories and chatbots in the [Stories and Chatbots](/guides/tutorials/data-routing) tutorial.
+Learn how to write complex interactive stories and chatbots in the [Stories and Chatbots](/guides/tutorials/chat) tutorial.
