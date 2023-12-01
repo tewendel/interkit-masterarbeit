@@ -514,6 +514,18 @@ export const items = [
           },
         ].sort((a, b) => a.title.toUpperCase() < b.title.toUpperCase() ? -1 : 1)
       },
+
+      {
+        title: 'Actions',
+        path: '/reference/client',
+        open: false,
+        items: [
+          {
+            title: 'InterkitClient',
+            path: '/reference/chat/interkit-client'
+          },
+        ]
+      },
       
       {
         title: 'Chat',
@@ -521,11 +533,17 @@ export const items = [
         open: false,
         items: [
           {
-            title: 'Story programming cheatsheet',
-            path: '/reference/chat/story_cheatsheet'
+            title: 'Javascript API',
+            path: '/reference/chat/javascript_api'
+          },
+          {
+            title: 'Twinish',
+            path: '/reference/chat/twinish'
           },
         ]
       },
+
+      
       
     ]
   }
