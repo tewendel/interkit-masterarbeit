@@ -75,4 +75,4 @@ Call a server method. projectId is added to methodParams automatically.
   await InterkitClient.call("methodName", methodParams)
 ```
 
-Further documentation needed. See <a href="https://gitlab.interkit.app/interkit/interkit-experiments/-/tree/v04/meteor-server/server/methods" target="_blank"> for the available methods.
+Further documentation needed. See <a href="https://gitlab.interkit.app/interkit/interkit-experiments/-/tree/v04/meteor-server/server/methods" target="_blank">source code</a> for the available methods.
