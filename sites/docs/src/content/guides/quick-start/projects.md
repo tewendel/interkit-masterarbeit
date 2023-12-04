@@ -11,12 +11,12 @@ For each project or template, you can tap on **Preview** to load it in the previ
 ### Creating a new project
 
 You have several options to create a new project.
-- duplicate an existing project or template using the ... menu in the list
+- duplicate an existing project or template using the ⋮ menu in the list
 - use the **create project** wizard to create a new project (from scratch, by importing or by basing it off of a template)
 
 ### More options
 
-The ... menu contains further options:
+The ⋮ menu contains further options:
 - rename your project
 - delete your project
 - determine if your project should be a template (this is only available to admin users)

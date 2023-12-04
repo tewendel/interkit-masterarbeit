@@ -1,0 +1,366 @@
+# Javascript API
+
+## Table of contents
+
+## onArrive and onMessage
+
+Each node must contain one `onArrive` and one `onMessage` function. 
+
+`onArrive` is called when the user enters the node for the first time.
+
+```js
+export const onArrive = async (api) => {
+  /* place your code here */
+} 
+```
+
+`onMessage` is called each time the user sends a message or makes a choice.
+
+```js
+export const onMessage = async (msg, api) => {
+  /* place your code here */
+} 
+```
+
+The code that defines the behaviour of the node is placed between the `{` and `}`
+
+In the `Handlers` tab, these functions are provided automatically for you. 
+
+## moveTo
+
+Move the player to a different node on the same board:
+
+```js
+api.moveTo("node1")
+```
+
+Advanced: Move the player on a different board:
+
+```js
+api.moveTo("node1", {channelKey: "board2"})
+```
+This does not change the node on the current board.
+
+## Sending messages
+
+### sendText
+
+Sends a text message to the player.
+```js
+api.sendText("hello")
+```
+
+### sendImage
+
+Sends an image message to the user.
+
+```js
+api.sendImage("f00ba420-0123-4567-89abcdef012356789")
+```
+
+The first parameter is the media file key. To get the media file key, go to the Media tab, open ⋮ menu, copy key.
+
+Images are normally scaled and cropped to fit ("cover" mode). To make sure that everything on the image is visible, you can switch to "contain" mode:
+
+```js
+api.sendImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  { objectFit: "contain" }
+)
+```
+
+Images are by default zoomable (enlarge on click or tap). Prevent zoom:
+
+```js
+api.sendImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  { zoomable: false }
+)
+```
+
+Send an image with a link that the user can click on:
+
+```js
+api.sendImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  { url: "https://docs.interkit.app/" }
+)
+```
+
+Trigger an [action](/guides/howto/actions) on the client by clicking an image
+
+```js
+api.sendImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  {action: {trigger: "triggerName", payload: payloadObject}}
+)
+```
+
+### sendAudio
+
+```js
+api.sendAudio("e4770840-3c2e-4eeb-b59b-a0e15e14190b")
+```
+
+The first parameter is the media file key. To get the media file key, go to the Media tab, open ⋮ menu, copy key.
+
+
+### sendVideo
+
+```js
+api.sendVideo("b94eb8f3-72ef-476d-ad61-64adc18204e7")
+```
+The first parameter is the media file key. To get the media file key, go to the Media tab, open ⋮ menu, copy key.
+
+
+### sendChoice
+
+Send a choice, presented as multiple choic buttons.
+
+```js
+api.sendChoice({
+  a: "option a",
+  b: "option b"
+})
+```
+
+See the [responding to messages](#responding-to-messages) section below for reponding to a choice made by a user
+
+### sendSystem
+
+Send a system message das is displayed in the center of the chat. Useful for error messages or neutral informational content.
+
+```js
+api.sendSystem("Someone entered the channel")
+```
+
+### sendSystemImage
+
+Send a system image displayed in the center of the chat.
+
+```js
+api.sendSystemImage("f00ba420-0123-4567-89abcdef012356789")
+```
+
+Set a custom width for the image
+```js
+api.sendSystemImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  {width: "200px"}
+)
+```
+Place the system image on either side of the chat
+```js
+api.sendSystemImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  {placement: "me"}
+)
+api.sendSystemImage(
+  "f00ba420-0123-4567-89abcdef012356789", 
+  {placement: "other"}
+)
+```
+
+## Labels
+
+Add a label to identify a sender.
+```js
+api.sendText("hello", {label: "bot"})
+```
+
+You can add labels in the same way to the other types of messages.
+
+## Delays
+
+Use the dealy option to schedule events for later delivery. This works for sendText, sendChoice, sendImage and moveTo.
+
+Send a message 10 seconds later
+```js
+api.sendText("hello", {delay: 10}) 
+```
+
+Send a message 1 hour, 30 minutes later
+```js
+api.sendText("hello", {delay: {hours: 1, minutes: 30}}) 
+```
+
+Send a message the "next 13 o'clock", either later today, or tomorrow (in the server's timezone!)
+```js
+api.sendText("hello", {delay: {nextHour: 13}}) 
+```
+
+Add between 0 and 60 minutes, randomly
+```js
+api.sendText("hello", {delay: {nextHour: 13, randomHours: 1}})
+```
+
+## Responding to messages
+
+The `onMessage` method receives a msg parameter that you can evaluate to respond conditionally to messages.
+
+```js
+if(msg.payload.text == "foo") {
+  // do something
+}
+```
+
+If the user made a [multiple choice](#sendchoice) selection, the key attribute on `msg.payload` will be set.
+
+```js
+if(msg.payload.key == "a") {
+  // do something
+}
+```
+
+`msg.payload.type` contains information about the type of message that the user sent.
+
+## echo
+
+To create, multiplayer chatrooms, you need to forward incoming messages to other users.
+
+`echo` forwards a message to other users currently in the same node.
+```js
+api.echo(msg)
+```
+The user variable "name" is used by default as a label.
+
+## Variables
+
+Set a variable for this user, for example set the user's "name" to "alice".
+```js
+await api.setUserVar("name", "alice")
+```
+
+Get a variable for this user, for example the variable called "name"
+```js
+await api.getUserVar("name")
+```
+
+These operations read from the database, so await is needed.
+
+## Database rows
+
+Load rows from a sheet
+```js
+await api.getRows("elements")
+```
+
+Add a row to a sheet
+```js
+await api.addRow("elements", {title: "hello"})
+```
+Update a row
+```js
+await api.updateRow("elements", "rowKey", {title: "bye"})
+```
+
+These operations read from the database, so await is needed.
+
+## Data annotations
+
+Set or get a data annotation (formerly called element properties) about an element for this user. Data annotations are user specific data that is added to database rows, for example bookmarks.
+
+The first parameter is the row key, the second the annotation name, the third, the value you want to set.
+
+```js
+await api.setElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered", true)
+await api.getElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered")
+```
+
+These operations read from the database, so await is needed.
+
+## Interface
+
+You can set what interface the chat could display to the user. For example if you want users to be able to take photos or not. These settings persist across nodes per board. 
+
+The default is text entry, with photo turned off.
+
+Hide the interface for sending messages:
+```js
+api.setInterface({text: false})
+api.setInterface({text: true}) // turn it back on 
+```
+
+Allow user to take pictures and send them into chat:
+```js
+api.setInterface({text: true, photo: true}) // text and photo entry
+api.setInterface({text: false, photo: true}) // just photo entry
+```
+
+Set preferred camera (front or back):
+```js
+api.setInterface({photo: true, cameraFacingMode: "environment"}) // or "user" for selfie mode
+```
+
+The interface can be also set per message.
+
+```js
+api.sendText('Give me a photo', { setInterface: { photo: true, text: false } })
+```
+
+## Location
+
+To get a user's location, we can present the user with a button that enables them to send their location.
+
+```js
+api.requestLocation("Send Location", {cancel: "Cancel"}) // you can also leave the cancel option blank
+```
+
+Responding to a location looks like this
+
+```js
+if(msg.payload.type == "locationResponse") {
+  // do something
+  if(api.distance(msg.payload.location, {lat: 56, lng: 12}) < 100) {
+    api.sendText("you're close!")
+  }
+}
+if(msg.payload.type == "locationRequestCanceled") {
+  api.sendText("ok")
+}
+```
+
+## Translation
+
+See the [i18n](/guides/howto/i18n) guide for general intro to interkit's i18n system.
+
+Access the current language
+```js
+api.sendText('your language: ' + api.userLang)
+api.sendText('your language, index: ' + api.userLangIndex)
+```
+
+Set language
+```js
+api.setLang('de', 1) 
+```
+The second argument has to match the index (0-based) in the AppBase blockly field 
+
+Use current language
+```js
+if (api.userLang === 'en') ...
+if (api.userLangIndex === 1) ...
+let text1 = ['Deutsch', 'Englisch'][api.userLangIndex]
+let text2 = {de: 'Deutsch', en: 'Englisch'}[api.userLang]
+```
+
+Use text localized to current user language
+```js
+export const onMessage = async (msg, api, t) => {
+  api.sendChoice({ a: t('Ja|Yes'), b: t('Nein|No') })
+}
+```
+
+The t helper function takes pipe-separated strings, arrays or objets:
+```js
+api.sendText(t('Ja|Yes'))
+api.sendText(t(['Ja', 'Yes']))
+api.sendText(t({ de: 'Ja', en: 'Yes' })) // order-independant
+```
+You can use sendTextT, sendChoiceT, sendSystemT shortcuts, equivalently
+```js
+api.sendTextT('Tschüß|Bye')
+api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
+api.sendSystemT('Chat verlassen|Left the chat')
+```
+

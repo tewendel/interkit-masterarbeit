@@ -917,7 +917,7 @@
           style="margin-left: auto"
           kind="ghost"
           icon={Help}
-          on:click={() => docsGo('/reference/chat/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
+          on:click={() => docsGo('/reference/chat/' + ['javascript_api', 'javascript_api', 'javascript_api', 'twinish'][editorMode])}
           size="small"
           iconDescription="syntax cheatsheet"
           tooltipAlignment="end"

@@ -5,8 +5,8 @@
       {
         "type": "AppBase",
         "id": "ZRUHk3aCGOiRK+,1oTYx",
-        "x": 187,
-        "y": 86,
+        "x": 330,
+        "y": 139,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "extraProps": {
@@ -14,6 +14,7 @@
               {
                 "type": "string",
                 "name": "languages",
+                "help": "List available language codes, for example \"en,de\". The first is the default language.",
                 "id": "languages",
                 "value": "en"
               }
@@ -46,31 +47,45 @@
                 "default": {
                   "block": {
                     "type": "Chat",
-                    "id": "#_y$=P-|TI,l|7M%t~T3",
+                    "id": "T,W70M)64D!eLsGxTgeN",
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
-                      "board": "board1",
                       "extraProps": {
                         "props": [
                           {
+                            "id": "board",
+                            "type": "string",
+                            "name": "board",
+                            "defaultValue": "board1",
+                            "help": "The Story board to use first."
+                          },
+                          {
+                            "id": "messagesReportableDefault",
                             "type": "checkbox",
                             "name": "messagesReportableDefault",
-                            "defaultValue": "TRUE"
+                            "defaultValue": "TRUE",
+                            "help": "If messages should be reportable (for admin moderation) by default. The reportability of individual messages can be changed by code."
                           },
                           {
+                            "id": "typingDurationTypeChoiceDefault",
                             "type": "string",
                             "name": "typingDurationTypeChoiceDefault",
-                            "defaultValue": "0.0"
+                            "defaultValue": "0.0",
+                            "help": "How long a multiple-choice message should from the server should be displayed as 'typing'. 0 to disable completely."
                           },
                           {
+                            "id": "typingDurationTypeTextPerCharacter",
                             "type": "string",
                             "name": "typingDurationTypeTextPerCharacter",
-                            "defaultValue": "0.075"
+                            "defaultValue": "0.075",
+                            "help": "Used to calculate how long 'typing' dots should be displayed for a message from the server. In seconds."
                           },
                           {
+                            "id": "typingHideTypes",
                             "type": "string",
                             "name": "typingHideTypes",
-                            "defaultValue": ""
+                            "defaultValue": "",
+                            "help": "Don't show the 'typing' dots for certain message types. Provide a comma seperated list of types."
                           }
                         ]
                       }

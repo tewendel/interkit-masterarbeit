@@ -26,7 +26,7 @@ You can think of each `row` as an individual element, with the `columns` represe
 
 ### Working with columns
 
-You can add columns to a sheet by clicking on the ... menu on the top right in the sheet header.
+You can add columns to a sheet by clicking on the ⋮ menu on the top right in the sheet header.
 
 Click on the column title to edit, move or remove it.
 
@@ -54,7 +54,7 @@ Interkit provides a real-time database, meaning changes are displayed immedeatel
 
 The **Row Key** is a unique identifier for each row that you can use in some components.
 
-Use the ... menu for each row to remove a row.
+Use the ⋮ menu for each row to remove a row.
 
 ### Explore further
 
