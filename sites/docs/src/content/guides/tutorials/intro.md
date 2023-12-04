@@ -16,7 +16,7 @@ In the [Routing](/guides/tutorials/routing) tutorial, you will learn how to divi
 
 Combine you knowledge about Data Loading and Routing in the [Data and Routing](/guides/tutorials/data-routing) tutorial.
 
-The [Maps & Media](/guides/tutorials/media) tutorial teaches you how to work with Maps, Images, Videos, Audios, AR content, QR Codes.
+The [Media](/guides/tutorials/media) tutorial teaches you how to work Images, Videos, Audios, AR content, and QR Codes.
 
 In the [Button effects](/guides/tutorials/effects) tutorial, you will learn how to add more interactivity to your components interface, such as Bookmarks & Todo Lists, more complex navigation or a scavenger hunt with programmatic actions.
 
