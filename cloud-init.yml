@@ -10,20 +10,23 @@ packages:
   - gnupg-agent
   - software-properties-common
 runcmd:
-  # install docker and docker compose
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  - add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-  - apt-get update -y
-  - apt-get install -y docker-ce docker-ce-cli containerd.io
+  # install docker and docker compose (https://docs.docker.com/engine/install/ubuntu/)
+  - install -m 0755 -d /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  - chmod a+r /etc/apt/keyrings/docker.gpg
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - apt-get update
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   - systemctl start docker
   - systemctl enable docker
   # download interkit docker compose definitions
+  - cd /root
   - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose.env.live.example
   - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose.yml
   - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/docker-compose-proxy-live.yml
   # download scripts
-  - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/env-configure.sh
-  - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/env-randomize.sh
+  - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/env-configure.sh && chmod +x env-configure.sh
+  - wget https://gitlab.interkit.app/interkit/interkit-experiments/-/raw/v04/env-randomize.sh && chmod +x env-randomize.sh
   # generate config
   - cp docker-compose.env.live.example .env
   # ... randomize passwords
@@ -33,3 +36,4 @@ runcmd:
   # docker compose setup
   - docker network create frontproxy
   - docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d
+

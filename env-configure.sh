@@ -45,7 +45,7 @@ $SED_INPLACE "s/demo.interkit.app/$DOMAIN/g" .env
 
 # Update password if provided
 if [ "$PASSWORD_PROVIDED" = true ]; then
-  $SED_INPLACE "s/INTERKIT_BUNDLER_PASSWORD=.*/INTERKIT_BUNDLER_PASSWORD=$PASSWORD/" .env
+  $SED_INPLACE "s/INTERKIT_ADMIN_PASSWORD=.*/INTERKIT_ADMIN_PASSWORD=$PASSWORD/" .env
 fi
 
 echo "Configuration updated in .env file."
