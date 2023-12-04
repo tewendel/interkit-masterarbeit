@@ -103,7 +103,7 @@ Meteor.publish("user.editingProject", function ({ projectId }) {
     if (userIsInRoles(this.userId, ['admin', 'author'])) {
       // find user that have entries in connection urls that match "/#/[projectId]"
       // connections: [{url: "/#/projectId", ...}]
-      const regex = `\/#\/${projectId}`;
+      const regex = `\/#\/project\/${projectId}`;
 
       const cursor = Meteor.users.find({
         connections: {

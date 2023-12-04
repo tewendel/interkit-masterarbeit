@@ -83,7 +83,7 @@ export const currentProjectEditingUsers = derived(
             const urls = u.connections.filter((c) => c.url.includes($projectId)).map((c) => c.url)
             let tabs = urls.map((url) => {
               const URLobject = new URL(url)
-              return URLobject.hash.split("/")[2]
+              return URLobject.hash.split("/")[3]
             })
             return { ...u, tabs }
           }));
