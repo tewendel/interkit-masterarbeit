@@ -497,8 +497,7 @@ Meteor.methods({
     //   url, connectionId
     // );
     
-    /* disabled */
-    // processUserActivity({ userId, connectionId, url });
+    processUserActivity({ userId, connectionId, url });
     
     return true;
   },
