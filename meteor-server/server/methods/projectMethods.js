@@ -172,6 +172,10 @@ Meteor.methods({
     });
   },
 
+  'projects.get.all.ids': async () => {
+    return Projects.find({}, { fields: { _id: 1 } }).fetch().map(project => project._id)
+  },
+
   'bundler.getUrl': async () => {
     return process.env.BUNDLER_URL
   },
