@@ -1,6 +1,6 @@
 # Actions
 
-`actions` are snippets of code that connect components and states
+`actions` are snippets of code that extend the functionality of components using javascript.
 
 ## Wording
 
@@ -8,6 +8,10 @@
 - `method`: a function that is executed when a matching trigger is received. It can contain arbitrary code, but usually it sets a `uiKey` or populates a `globalStore`
 - `action` : a combination of multiple triggers and one method.
 - `actions.js`: This file container all actions of the project
+
+## InterkitClient
+
+`actions` commonly use the InterkitClient library, which provides a set of common methods. See the [InterkitClient](/reference/client/interkit-client) reference.
 
 ## Example
 

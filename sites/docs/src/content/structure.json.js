@@ -522,7 +522,7 @@ export const items = [
         items: [
           {
             title: 'InterkitClient',
-            path: '/reference/chat/interkit-client'
+            path: '/reference/client/interkit-client'
           },
         ]
       },
