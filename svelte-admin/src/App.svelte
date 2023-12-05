@@ -11,6 +11,7 @@
   import Login from './User/Login.svelte';
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
+  import PlaygroundNotice from './Atoms/PlaygroundNotice.svelte';
   import { Tag } from "carbon-components-svelte";
 
   import Exit from "carbon-icons-svelte/lib/Exit.svelte";
@@ -168,6 +169,10 @@
       <HeaderNavItem href="/" text="Link 3" />
     </HeaderNavMenu>
   </HeaderNav-->
+
+  {#if $connected}
+    <PlaygroundNotice />
+  {/if}
 
   {#if $userId}
     <TopTabs
