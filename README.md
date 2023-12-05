@@ -108,6 +108,12 @@ vi .env
 docker-compose up -d
 ````
 
+### deploy a self-deleting playground
+
+1. deploy a regular instance
+2. make `playground-reset-containers.sh` in the same path as `docker-compose.yml`
+3. in crontab, add: `0 5 * * * /home/username/playground-reset-containers.sh "tomorrow 05:00"`
+
 ### increase file watcher limit
 
 If your systems hosts many projects, you may need to increase the file watcher limit.
