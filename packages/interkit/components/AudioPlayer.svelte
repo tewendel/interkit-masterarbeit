@@ -1,11 +1,13 @@
 <script context="module">
+  /*
+  // moved to InterkitClient
   import { get } from "svelte/store"
-  import { getShowDummyDataStore } from './dummyDataHelpers.js'
-  import { util } from "../"
+  
   const audioPlayerStatus = InterkitClient.getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = InterkitClient.getGlobalStore("audioPlayerElement")
   
   export const playAudio = async (elementRow, audioColumn, autoplay=true) => {
+
     if(elementRow) {
       if(elementRow.key == get(audioPlayerElement)?.key) {
         // if this element is already in player, just toggle paused state
@@ -29,7 +31,7 @@
         })  
       }
     }
-  }
+  }*/
 
   export const format = (seconds) => {
     if (isNaN(seconds)) return '...';
@@ -44,8 +46,9 @@
 </script>
 
 <script>
+  import { getShowDummyDataStore } from './dummyDataHelpers.js'
   import { onMount, setContext } from 'svelte'
-  import { InterkitClient } from '../'
+  import { InterkitClient, util } from '../'
   import Icon from './Icon.svelte'
   import Button from './Button.svelte'
   import Loading from './Loading.svelte'

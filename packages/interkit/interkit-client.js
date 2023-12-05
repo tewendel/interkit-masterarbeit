@@ -492,13 +492,14 @@ const getRowSubStore = async (sheetKeyOrSheetColumn, columnMap, subKey) => {
     rowSubs[subKey] = {
       status: "subscribing",
       subPromise: new Promise(async (resolve, reject) => {
-        //console.log("getRowSubstore: creating row subscription on sheet", sheetKey)
+        console.log("getRowSubstore: creating row subscription on sheet", sheetKey)
         let rsub = await getSub("rows", "rows", {sheetKey}, r=>r.sheetKey==sheetKey, false, columnMap)
         resolve(rsub);
       })
     };
   }
   let sub = await rowSubs[subKey].subPromise;
+  //console.log("getRowSubStore got sub", subKey, sub)
   if(columnMap) {
     return sub?.objects
   } else {
@@ -1002,6 +1003,36 @@ userId.subscribe((data)=>{
 //   }
 // })
 
+const playFloatingAudio = async (elementRow, audioColumn, autoplay=true) => {
+  const audioPlayerStatus = getGlobalStore("audioPlayerStatus")
+  const audioPlayerElement = getGlobalStore("audioPlayerElement")
+  
+  if(elementRow) {
+    if(elementRow.key == get(audioPlayerElement)?.key) {
+      // if this element is already in player, just toggle paused state
+      audioPlayerStatus.update( s => ({
+        ...s, 
+        paused: !get(audioPlayerStatus)?.paused,
+        currentTime: s?.currentTime == s?.duration ? 0 : s.currentTime
+      })) 
+    } else {
+      // new element, reset
+      audioPlayerElement.set(elementRow)
+      audioPlayerStatus.set({
+        active: true,
+        //elementRow,
+        autoplay,
+        paused: false,
+        currentTime: 0,
+        expanded: false,
+        loading: true,
+        audioKey: util.rowVal(elementRow, audioColumn)?.value
+      })  
+    }
+  }
+}
+
+
 const InterkitClient = {
   userId,
   userIsRole,
@@ -1053,6 +1084,7 @@ const InterkitClient = {
   getUiKey,
   registerGlobalMethod,
   callGlobalMethod,
+  playFloatingAudio
 };
 
 export default InterkitClient;
