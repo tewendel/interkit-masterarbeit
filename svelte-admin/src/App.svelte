@@ -280,6 +280,7 @@
 
   .company {
     display:flex;
+    align-items: center;
   }
 
   .exit-arrow {
@@ -293,6 +294,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 8rem;
+    margin-right: 2px;
   }
 
   .status {
