@@ -5,7 +5,7 @@
   import Button from './Button.svelte'
   import Loading from './Loading.svelte'
   import Icon from './Icon.svelte'
-  import { playAudio } from './AudioPlayer.svelte';
+  //import { playAudio } from './AudioPlayer.svelte';
 
   export let audioColumn // the column that holds the audio we want to play
   export let buttonOptions
@@ -26,9 +26,10 @@
   $: loading = $audioPlayerStatus?.loading
   $: playing = $element && ($element.key == $audioPlayerElement?.key) && $audioPlayerStatus?.active
 
-  const play = () => {
+  const play = async () => {
     console.log("AudioButon play", util.rowVal($element, audioColumn))
-    playAudio($element, audioColumn)
+    //playAudio($element, audioColumn)
+    await InterkitClient.playFloatingAudio($element, audioColumn)
   }
 
 </script>

@@ -67,6 +67,20 @@ Loading metadata for a media file identified by it's key
   await InterkitClient.getMediaFile("9b59b249-3d9f-4335-905c-260291e1237f")
 ```
 
+## Playback audio
+
+Plays audio of the correct language in the floating player, assuming audio is stored in column "elements/audio$lang".
+
+```js
+  import { lang } from 'interkit/i18n.js';
+  import { get } from 'svelte/store'
+
+  await InterkitClient.playFloatingAudio(
+    arg.payload.elementRow, 
+    "elements/audio$" + get(lang)
+  )
+```
+
 ## Server Methods
 
 Call a server method. projectId is added to methodParams automatically.

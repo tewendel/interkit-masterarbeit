@@ -18,7 +18,7 @@ Open a [DataRoute](/reference/components/Route) corresponding to the scanned cod
 
 2. Targeted action for a specific code
 
-You might want to limit which codes can be scanned or process them in some other way. Use [action](/guides/howto/actions] effect for fine-grained control. 
+You might want to limit which codes can be scanned or process them in some other way. Use [action](/guides/howto/actions) effect for fine-grained control. 
 
 The scanner calls the action with the following payload:
 - `code` the scanned code
@@ -26,6 +26,10 @@ The scanner calls the action with the following payload:
 - `elementRow` a data row if a target was identified
 
 You specify a target for the scanner to look for by placing the scanner in an "element" context, for example using [DataLoaderSingle](/reference/components/DataLoader).
+
+If you want to automatically close the QRScanner from an action, you'll have to show it using a UIKey, as routing is currently not possible from actions.js.
+
+Tip: You can use **space bar** to manually enter a qr code for testing.
 
 <ComponentInfoYaml component="QRScanner" />
 
