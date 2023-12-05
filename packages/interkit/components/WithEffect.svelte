@@ -8,6 +8,7 @@
   export let execOnMount = false;
   
   const elementContext = getContext("element");
+  const elementsContext = getContext("elements")?.elements;
 
   let navigate;
   try {
@@ -69,6 +70,75 @@
       if($elementContext) {
         InterkitClient.setElementProperty($elementContext?.key, effect.key, effect.value)
       }
+    }
+
+    if(effectType == "next") {
+
+      // check for elements context
+      console.log("elements", $elementsContext)
+      const elements = $elementsContext
+
+      // check for element context
+      console.log("element", $elementContext)
+      const currentElement = $elementContext
+
+      if(elements && currentElement) {
+
+        // find the next element of elements
+        let currentElementIndex;
+        for(const [index, element] of elements.entries()) {
+          if(element.key == currentElement.key) {
+            currentElementIndex = index
+          }
+        }
+        console.log("found current key", currentElementIndex)
+
+        // check if there is a next element
+        if(elements.length > currentElementIndex + 1) {
+          const nextElement = elements[currentElementIndex + 1]
+
+          const nextPath = effect.path + "/" + nextElement?.key
+          console.log("navigating to", nextPath)
+
+          // go to the specified path with next element key
+          navigate(nextPath)
+        }
+      }
+    }
+
+    if(effectType == "previous") {
+
+      // check for elements context
+      console.log("elements", $elementsContext)
+      const elements = $elementsContext
+
+      // check for element context
+      console.log("element", $elementContext)
+      const currentElement = $elementContext
+
+      if(elements && currentElement) {
+
+        // find the next element of elements
+        let currentElementIndex;
+        for(const [index, element] of elements.entries()) {
+          if(element.key == currentElement.key) {
+            currentElementIndex = index
+          }
+        }
+        console.log("found current key", currentElementIndex)
+
+        // check if there is a next element
+        if(currentElementIndex > 0) {
+          const nextElement = elements[currentElementIndex - 1]
+
+          const nextPath = effect.path + "/" + nextElement?.key
+          console.log("navigating to", nextPath)
+
+          // go to the specified path with next element key
+          navigate(nextPath)
+        }
+      }
+
     }
   }
 
