@@ -180,6 +180,10 @@ Meteor.methods({
     return process.env.BUNDLER_URL
   },
 
+  "system.getPlaygroundResetTimestamp": async () => {
+    return process.env.INTERKIT_PLAYGROUND_RESET_TIMESTAMP;
+  },
+
   // method to create new projects based on the templates defined in starters
   // template folders must begin with "template-"
   'project.rebuildTemplates': async () => {    

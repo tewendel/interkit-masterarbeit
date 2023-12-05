@@ -25,6 +25,7 @@ services:
       BUNDLER_URL: $INTERKIT_BUNDLER_URL
       BUNDLER_PASSWORD: $INTERKIT_BUNDLER_PASSWORD
       ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
+      INTERKIT_PLAYGROUND_RESET_TIMESTAMP: $INTERKIT_PLAYGROUND_RESET_TIMESTAMP
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontproxy"
