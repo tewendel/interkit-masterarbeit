@@ -1,0 +1,11 @@
+name: IfPrevious
+colour: 50
+fields:
+  - type: slot
+    name: iftrue
+    help: "Show if there is a previous value in the elements context"
+  - type: slot
+    name: else
+    help: "Show otherwise"
+toolboxCategory: "Conditionals"
+docsPath: If#ifprevious

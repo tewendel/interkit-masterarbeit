@@ -56,3 +56,32 @@ Checks a `UserVar` (which can be set e.g. from Story/chat code or other code).
 
 </details>
 
+## IfNext
+
+Checks if there is a next element in the elements context (after the one in the current element context)
+
+<ComponentInfoYaml component="IfNext" />
+
+<details>
+<summary>Developer docs</summary>
+
+```docs
+../../../../../../packages/interkit/components/IfNext.svelte
+```
+
+</details>
+
+## IfPrevious
+
+Checks if there is a previous element in the elements context (before the one in the current element context)
+
+<ComponentInfoYaml component="IfPrevious" />
+
+<details>
+<summary>Developer docs</summary>
+
+```docs
+../../../../../../packages/interkit/components/IfPrevious.svelte
+```
+
+</details>
