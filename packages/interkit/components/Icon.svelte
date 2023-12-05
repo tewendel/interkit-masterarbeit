@@ -91,6 +91,82 @@
   export let height = "1.5rem"
   export let inverse = false
 
+  // Mapping of icon types to their respective imports
+  const iconMap = {
+    Full_AR            ,
+    Full_Archiv        ,
+    Full_Bookmark      ,
+    Full_Camera        ,
+    Full_Chat          ,
+    Full_Check         ,
+    Full_Close         ,
+    Full_Close_Circle  ,
+    Full_Copy          ,
+    Full_Dashboard     ,
+    Full_Date          ,
+    Full_Drag          ,
+    Full_FullScreen    ,
+    Full_GroupChat     ,
+    Full_Help          ,
+    Full_Layer         ,
+    Full_List          ,
+    Full_Location      ,
+    Full_Map           ,
+    Full_Menu          ,
+    Full_Microphone    ,
+    Full_More_1        ,
+    Full_More          ,
+    Full_Pause         ,
+    Full_Phaenomen     ,
+    Full_Play          ,
+    Full_QR_Scan       ,
+    Full_Send          ,
+    Full_Settings      ,
+    Full_SingleChat    ,
+    Full_Social        ,
+    Full_Splitscreen   ,
+    Full_Warning       ,
+    Full_to_Gallery    ,
+    Thin_AR            ,    
+    Thin_Archiv        ,
+    Thin_Arrow_Left    ,
+    Thin_Arrow_Right   ,
+    Thin_Bookmark      ,
+    Thin_Camera        ,
+    Thin_Chat          ,
+    Thin_Check         ,
+    Thin_Chevron_Down  ,
+    Thin_Chevron_Up    ,
+    Thin_Close_Circle  ,
+    Thin_Close         ,
+    Thin_Copy          ,
+    Thin_Dashboard     ,
+    Thin_Dropdown_Up   ,
+    Thin_Dropdown      ,
+    Thin_Filter        ,
+    Thin_Forward_15    ,
+    Thin_FullScreen    ,
+    Thin_Help          ,
+    Thin_Hint          ,
+    Thin_Layer         ,
+    Thin_Location      ,
+    Thin_Map           ,
+    Thin_Menu          ,
+    Thin_Microphone    ,
+    Thin_Minus         ,
+    Thin_Pause         ,
+    Thin_Phaenomen     ,
+    Thin_Play          ,
+    Thin_Plus          ,
+    Thin_Position      ,
+    Thin_QR_Scan       ,
+    Thin_Replay_30     ,
+    Thin_Settings      ,
+    Thin_Social        ,
+    Thin_to_Gallery    ,
+    Thin_zoom_In       ,
+  };
+
   let iconUrl = null
 
   const iconHeightOverride = getContext("iconHeight")
@@ -105,19 +181,17 @@
       activeType = type
   }
 
-  // convert icon type to url
+  // // Use the mapping to set iconUrl
   // TODO refactor names - change icon names in Icon.yaml to make this obsolete
   // -> will break icon names in existing apps
   $: {
-    // replace - with _
-    const variableName = activeType.replace(/-/g, "_")
-    try {
-    iconUrl = eval(typeof variableName == "undefined" ? null : variableName)
-    } catch (e) {
-      console.error(`Icon: Icon type "${activeType}" (${variableName}) not found`)
-      iconUrl = null
+    const variableName = activeType.replace(/-/g, "_");
+    iconUrl = iconMap[variableName];
+    if (!iconUrl) {
+      console.error(`Icon: Icon type "${activeType}" (${variableName}) not found`);
     }
   }
+
 
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 
