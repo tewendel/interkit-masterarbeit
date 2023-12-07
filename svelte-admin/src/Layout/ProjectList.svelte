@@ -70,11 +70,6 @@
     { key: 'overflow', empty: true }
   ]
 
-  let expandedRowIds = []
-  $: expandedRowIds = projectRows
-    .filter(row => row.uiState?.metafile?.description?.html)
-    .map(row => row.id)
-
   let nonExpandableRowIds = []
   $: nonExpandableRowIds = projectRows
     .filter(row => !row.uiState?.metafile?.description?.html)
@@ -142,7 +137,6 @@
   bind:page
   {headers}
   rows={filteredRows}
-  batchExpansion
   {description}
   
   {nonExpandableRowIds}

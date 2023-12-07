@@ -358,9 +358,6 @@
 
       <div slot="expanded-row" let:row>
         {#if row?.channel_key === REPORTS_CHANNEL_KEY}
-          <pre style="font-family: monospace; white-space: pre-wrap">
-            {JSON.stringify(parseReport(row), null, 2)}
-          </pre>
           <ButtonSet>
             <Button size="small" icon={TrashCan} on:click={() => { reportedDeleteMessage(row) }}>Delete reported message</Button>
             <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockMessage(row) }}>Block reported message</Button>
@@ -371,6 +368,9 @@
           </ButtonSet>
         {/if}
         {#if verbose}
+          <div><strong>report:</strong></div>
+          <JsonView json={parseReport(row)} />
+          <div><strong>full message:</strong></div>
           <JsonView json={row} />
         {/if}
       </div>

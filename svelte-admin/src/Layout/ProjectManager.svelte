@@ -276,9 +276,4 @@
     display: none;
   }
 
-  :global(.__ProjectWorkspace .bx--table-expand) {
-    display: none;
-  }
-
-
 </style>
