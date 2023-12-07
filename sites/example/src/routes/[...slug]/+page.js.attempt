@@ -1,0 +1,1 @@
+export * from 'interkit-websitetools/src/util/pageLoader.js'

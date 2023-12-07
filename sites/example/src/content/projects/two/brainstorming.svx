@@ -1,0 +1,12 @@
+<script>
+
+  let foo = 'bar'
+
+</script>
+
+# Brainstorming
+
+brainstorming.svx
+
+foo={foo}
+
