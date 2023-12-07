@@ -77,7 +77,8 @@
 
   const dataTableOverheadHeight = 0 +
   48 + // header of outer UI
-  68 + // DataTable title
+  40 + // tabs: Your Projects | Templates
+  58 + // hint: These are...
   2 + // DataTable container padding top
   48 + // DataTable toolbar
   48 + // DataTable thead = 1 row height
@@ -126,8 +127,12 @@
 <DataTable
   style={`
     background: #f4f4f4;
-    /* = pageSize * row + search/actions + thead + data table padding-top */
-    min-height: ${(pageSize || 0) * 48 + 32 + 48 + 2 + 68}px;
+    /* = pageSize * row + search/actions + hint + thead + data table padding-top */
+    min-height: ${pageSize < filteredRows.length ? ((pageSize || 0) * 48 + 32 + 48 + 2 + 58) + 'px' : 'auto'};
+    flex-grow: 1;
+    /* = 100vh - UI header height - Tabs height - DataTablePaginationAutofit Footer height */
+    max-height: calc(100vh - 48px - 40px - 42px);
+    overflow-y: auto;
   `}
   
   sortable
