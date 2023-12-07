@@ -1,5 +1,5 @@
 name: ColumnShell
-toolboxCategory: Layout
+toolboxCategory: Containers
 colour: 140
 fields:
   - name: columns

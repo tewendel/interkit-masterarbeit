@@ -56,7 +56,7 @@
   let modalPanelRightOpenSet = () => { /* dummy */ }
   
   const useCodeMirror = true
-  let editorMode = 2
+  let editorMode = 0
 
   let unmetMoveTos
 
@@ -659,11 +659,21 @@
       ?.map(node => node.id)
     if (search && treeView) treeView.expandAll()
   }
- 
-  onMount(async () => {
-    await loadBoardList();
-    if (boards.length) currentBoardId = boards[0].id
-  })
+   
+  // this is called when projectId changes through routing
+  const initialLoadBoards = async () => {
+    console.log("initialLoadBoards")
+    board = null
+    editNodeId = null
+    modalPanelRightOpenSet(false)
+    await loadBoardList()
+    if (boards.length) {
+      currentBoardId = boards[0].id
+      loadBoard(currentBoardId)
+    }
+  }
+
+  $: projectId, initialLoadBoards()
 
 </script>
 
@@ -898,16 +908,16 @@
           bind:selected={editorMode}
           autoWidth={true}
           >
-          <Tab label="Strings" />
           <Tab label="Handlers" />
           <Tab label="Full" />
+          <Tab label="Strings" />
           <Tab label={`Twine-ish${twinyHintIcons[twinyHint] || ''}`} />
         </Tabs>
         <Button
           style="margin-left: auto"
           kind="ghost"
           icon={Help}
-          on:click={() => docsGo('/reference/chat/story_cheatsheet#' + ['javascript', 'javascript', 'javascript', 'twine-ish-syntax'][editorMode])}
+          on:click={() => docsGo('/reference/chat/' + ['javascript_api', 'javascript_api', 'javascript_api', 'twinish'][editorMode])}
           size="small"
           iconDescription="syntax cheatsheet"
           tooltipAlignment="end"
@@ -936,18 +946,12 @@
           </div>
         {/if}
         {#if editorMode === 0}
-          <CodeEditorStringy
-            class="editor"
-            readOnly={$currentProjectReadOnly}
-            bind:code={editorContents}
-            />
-        {:else if editorMode === 1}
           <CodeEditorExporty
             code={editorContents}
             readOnly={$currentProjectReadOnly}
             on:codechange={evt => { editorContents = evt.detail }}
-            />
-        {:else if editorMode === 2}
+            />  
+        {:else if editorMode === 1}
           {#if useCodeMirror}
             <CodeEditor
               code={editorContents}
@@ -962,6 +966,13 @@
               disabled={editorContents === null || $currentProjectReadOnly}
               />
           {/if}
+        {:else if editorMode === 2}
+        
+          <CodeEditorStringy
+            class="editor"
+            readOnly={$currentProjectReadOnly}
+            bind:code={editorContents}
+            />
         {:else if editorMode === 3}
           {#if twinyHint === 'sync'}
             <CodeEditorTwiny

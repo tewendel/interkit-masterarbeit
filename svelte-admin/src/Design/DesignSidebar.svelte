@@ -35,6 +35,10 @@
     themeSlug = obj.themeSlug;
   };
 
+  $: sortedThemes = $themesStore ? $themesStore.sort((a,b)=> ((a?.meta?.name > b?.meta?.name ? 1 : -1))) : []
+  $: starterThemes = sortedThemes.filter((theme) => theme.meta.starter)
+  $: predefinedThemes = sortedThemes.filter((theme) => !theme.meta.starter)
+
 </script>
 
 <div class="design-sidebar-container">
@@ -49,18 +53,36 @@
         : ''}"
       on:click={() => navigate({ view: "style" })}
     >
-      Base Styles
+      Base Design
     </Button>
   </ButtonSet>
 
   <Accordion size="sm">
     <AccordionItem>
       <svelte:fragment slot="title">
-        <span style="font-weight:500"> Predefined Skins </span>
+        <span style="font-weight:500"> Predefined Themes </span>
       </svelte:fragment>
       <ButtonSet stacked>
-        {#if $themesStore}
-          {#each $themesStore as theme}
+        {#if predefinedThemes.length > 0}
+          {#each predefinedThemes as theme}
+            <Button
+              kind="ghost"
+              size="small"
+              style="color: black; width: 100%"
+              on:click={() =>
+                navigate({ view: "theme", themeSlug: theme.slug })}
+            >
+              {theme.meta.name}
+            </Button>
+          {/each}
+        {/if}
+      </ButtonSet>
+      <h6>
+        Starters
+      </h6>
+      <ButtonSet stacked>
+        {#if starterThemes.length > 0}
+          {#each starterThemes as theme}
             <Button
               kind="ghost"
               size="small"
@@ -85,7 +107,7 @@
       : ''}"
     on:click={() => navigate({ view: "installedTheme" })}
   >
-    Skin 
+    Installed Theme 
     {#if $currentProject?.uiState?.installedTheme}
       <PaintBrush />
     {/if}
@@ -93,5 +115,8 @@
   
 </div>
 
-<style>
+<style lang="scss">
+  h6 {
+    padding: 16px 16px 8px 16px;
+  }
 </style>

@@ -1,5 +1,7 @@
 /* 
-  how to use custom theme: 
+  How to use custom theme: 
+  ========================
+
   https: //github.com/carbon-design-system/carbon/blob/acead26eeb6f15ec6d39970e4af08aa23ee48cdc/examples/custom-theme/src/index.scss
 
   .... implement with (npm install @carbon/themes)
@@ -8,8 +10,12 @@
 
   ... or like this?
   @use '@carbon/themes';
+*/
 
-  How the colors work in Carbon: 
+/*
+  How the colors work in Carbon:
+  ==============================
+
   https://carbondesignsystem.com/guidelines/color/usage/
 
   ... and how to use them: https://github.com/carbon-design-system/carbon/tree/main/packages/themes
@@ -21,6 +27,19 @@
   @use '@carbon/styles/scss/theme';
 
   ... how to use it: https://github.com/carbon-design-system/carbon/tree/main/packages/styles
+*/
+
+/* 
+  How to use typography styles from carbon
+  ========================================
+
+  - find label here https://carbondesignsystem.com/guidelines/typography/type-sets/
+  - example: body-compact-01
+  - use it like this: 
+    @use '@carbon/type';
+    h4 {
+      @include type.type-style('heading-compact-01');
+    }
 */
 
 /* include a theme */

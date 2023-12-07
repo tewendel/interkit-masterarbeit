@@ -18,7 +18,7 @@ Create a new empty project or continue with the project you created during the h
 
 Begin by setting up a database sheet for your project. Go to the "Data" section using the main tab navigation at the top, then click on the **Create Sheet** button and give your sheet a name, for example "elements".
 
-Click on the ... menu in the table header and add a database column, you can call it "content" and select **RichText** as type.
+Click on the ⋮ menu in the table header and add a database column, you can call it "content" and select **RichText** as type.
 
 Now we're ready to add some content! Click the **Add Row** button and click on the cell in the content column to add some text. Press **Save** to submit your changes to the database. Add a second row with some more text.
 

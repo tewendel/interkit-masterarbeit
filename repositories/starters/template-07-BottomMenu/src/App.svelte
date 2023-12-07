@@ -17,59 +17,24 @@ $: $translations, translations, t, $lang, lang, console.log('AppBase i18n $', { 
 console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
 </script>
 
-<AppBase
-   >
+<Route
+   path="/"
+   keepAlive={false}
+>
   <BottomBarShell
   >
   <svelte:fragment slot="Content">
-    <Route
-       path="/"
-       keepAlive={false}
+    <Spacing
+       top="m"
+       right="m"
+       bottom="m"
+       left="m"
     >
-      <Spacing
-         top="m"
-         right="m"
-         bottom="m"
-         left="m"
+      <StaticText
+         text="home screen"
       >
-        <StaticText
-           text="home screen"
-        >
-        </StaticText>
-      </Spacing>
-    </Route>
-    <Route
-       path="/something"
-       keepAlive={false}
-    >
-      <Spacing
-         top="m"
-         right="m"
-         bottom="m"
-         left="m"
-      >
-        <StaticText
-           text="something else"
-        >
-        </StaticText>
-      </Spacing>
-    </Route>
-    <Route
-       path="/other"
-       keepAlive={false}
-    >
-      <Spacing
-         top="m"
-         right="m"
-         bottom="m"
-         left="m"
-      >
-        <StaticText
-           text="another screen"
-        >
-        </StaticText>
-      </Spacing>
-    </Route>
+      </StaticText>
+    </Spacing>
   </svelte:fragment>
   <svelte:fragment slot="BottomBar">
       <NavBar
@@ -110,55 +75,305 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       </NavBar>
   </svelte:fragment>
   </BottomBarShell>
-</AppBase>
-
-<Route
-   path="/"
-   keepAlive={false}
->
-  <Spacing
-     top="m"
-     right="m"
-     bottom="m"
-     left="m"
-  >
-    <StaticText
-       text="home screen"
-    >
-    </StaticText>
-  </Spacing>
 </Route>
+
+<AppBase
+   >
+  <Route
+     path="/"
+     keepAlive={false}
+  >
+    <BottomBarShell
+    >
+    <svelte:fragment slot="Content">
+      <Spacing
+         top="m"
+         right="m"
+         bottom="m"
+         left="m"
+      >
+        <StaticText
+           text="home screen"
+        >
+        </StaticText>
+      </Spacing>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+        <NavBar
+        >
+          <NavButton
+             text="home"
+             disabled={false}
+             effect={{"effectType":"route","path":"/"}}
+          >
+            <Icon
+               type="Thin-Dashboard"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="something"
+             disabled={false}
+             effect={{"effectType":"route","path":"/something"}}
+          >
+            <Icon
+               type="Thin-Archiv"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="other"
+             disabled={false}
+             effect={{"effectType":"route","path":"/other"}}
+          >
+            <Icon
+               type="Thin-Map"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+        </NavBar>
+    </svelte:fragment>
+    </BottomBarShell>
+  </Route>
+  <Route
+     path="/something"
+     keepAlive={false}
+  >
+    <BottomBarShell
+    >
+    <svelte:fragment slot="Content">
+      <Spacing
+         top="m"
+         right="m"
+         bottom="m"
+         left="m"
+      >
+        <StaticText
+           text="something else"
+        >
+        </StaticText>
+      </Spacing>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+        <NavBar
+        >
+          <NavButton
+             text="home"
+             disabled={false}
+             effect={{"effectType":"route","path":"/"}}
+          >
+            <Icon
+               type="Thin-Dashboard"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="something"
+             disabled={false}
+             effect={{"effectType":"route","path":"/something"}}
+          >
+            <Icon
+               type="Thin-Archiv"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="other"
+             disabled={false}
+             effect={{"effectType":"route","path":"/other"}}
+          >
+            <Icon
+               type="Thin-Map"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+        </NavBar>
+    </svelte:fragment>
+    </BottomBarShell>
+  </Route>
+  <Route
+     path="/other"
+     keepAlive={false}
+  >
+    <BottomBarShell
+    >
+    <svelte:fragment slot="Content">
+      <Spacing
+         top="m"
+         right="m"
+         bottom="m"
+         left="m"
+      >
+        <StaticText
+           text="another screen"
+        >
+        </StaticText>
+      </Spacing>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+        <NavBar
+        >
+          <NavButton
+             text="home"
+             disabled={false}
+             effect={{"effectType":"route","path":"/"}}
+          >
+            <Icon
+               type="Thin-Dashboard"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="something"
+             disabled={false}
+             effect={{"effectType":"route","path":"/something"}}
+          >
+            <Icon
+               type="Thin-Archiv"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+          <NavButton
+             text="other"
+             disabled={false}
+             effect={{"effectType":"route","path":"/other"}}
+          >
+            <Icon
+               type="Thin-Map"
+               inverse={false}
+            >
+            </Icon>
+          </NavButton>
+        </NavBar>
+    </svelte:fragment>
+    </BottomBarShell>
+  </Route>
+</AppBase>
 
 <Route
    path="/something"
    keepAlive={false}
 >
-  <Spacing
-     top="m"
-     right="m"
-     bottom="m"
-     left="m"
+  <BottomBarShell
   >
-    <StaticText
-       text="something else"
+  <svelte:fragment slot="Content">
+    <Spacing
+       top="m"
+       right="m"
+       bottom="m"
+       left="m"
     >
-    </StaticText>
-  </Spacing>
+      <StaticText
+         text="something else"
+      >
+      </StaticText>
+    </Spacing>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+           text="home"
+           disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+           text="something"
+           disabled={false}
+           effect={{"effectType":"route","path":"/something"}}
+        >
+          <Icon
+             type="Thin-Archiv"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+           text="other"
+           disabled={false}
+           effect={{"effectType":"route","path":"/other"}}
+        >
+          <Icon
+             type="Thin-Map"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </BottomBarShell>
 </Route>
 
 <Route
    path="/other"
    keepAlive={false}
 >
-  <Spacing
-     top="m"
-     right="m"
-     bottom="m"
-     left="m"
+  <BottomBarShell
   >
-    <StaticText
-       text="another screen"
+  <svelte:fragment slot="Content">
+    <Spacing
+       top="m"
+       right="m"
+       bottom="m"
+       left="m"
     >
-    </StaticText>
-  </Spacing>
+      <StaticText
+         text="another screen"
+      >
+      </StaticText>
+    </Spacing>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+           text="home"
+           disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+           text="something"
+           disabled={false}
+           effect={{"effectType":"route","path":"/something"}}
+        >
+          <Icon
+             type="Thin-Archiv"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+           text="other"
+           disabled={false}
+           effect={{"effectType":"route","path":"/other"}}
+        >
+          <Icon
+             type="Thin-Map"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </BottomBarShell>
 </Route>

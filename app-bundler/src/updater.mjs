@@ -30,21 +30,31 @@ const watchignore = [
 ];
 
 const watchedProjectIds = []
+const initializedProjectIds = []
 
 const processAllProjectFiles = async projectId => {
+  // make sure the project is initialized only once
+  if (initializedProjectIds.includes(projectId)) return false
+  initializedProjectIds.push(projectId)
+
   const projectPath = getProjectPath(projectId);
-  const allFilesRecursive = await getAllFilesRecursive(projectPath, watchignore);
-  const filesRelative = allFilesRecursive.map(f => path.relative(projectPath, f))
+  const allFilesRecursive = await getAllFilesRecursive(
+    projectPath,
+    watchignore
+  );
+  const filesRelative = allFilesRecursive.map((f) =>
+    path.relative(projectPath, f)
+  );
   console.log(
     `processing ${allFilesRecursive.length} files of project ${projectId}`
   );
-  const wF = {}
+  const wF = {};
   for (let file of filesRelative) {
-    wF[file] = null
+    wF[file] = null;
   }
   updateProjectMdFiles(projectId, filesRelative);
-  updateTheme(projectId, wF)
-  updateGit(projectId)
+  updateTheme(projectId, wF);
+  updateGit(projectId);
 }
 
 const runUpdater = async function(projectId) {
@@ -68,7 +78,7 @@ const runUpdater = async function(projectId) {
   // watch project path and trigger updaters
   const projectPath = getProjectPath(projectId)
 
-  processAllProjectFiles(projectId)
+  console.log("Watching files of project %s", projectId)
 
   watch(projectPath, {
     recursive: true,
@@ -96,10 +106,19 @@ const runUpdater = async function(projectId) {
   });
 }
 
-// run updater for each project
-const runProjectUpdaters = async function (projects) {
-  for (let project of projects) {
+// run updater for each active project
+const ensureProjectUpdaters = async function (projects) {
+  const activeProjects = projects.filter(p => p?.devServer?.actionRequested === "start")
+  for (let project of activeProjects) {
     await runUpdater(project.id);
+  }
+};
+
+// run updater for each project at startup
+const initProjectUpdaters = async function (projects) {
+  for (let project of projects) {
+    const projectId = project.id;
+    await processAllProjectFiles(projectId);
   }
 };
 
@@ -108,8 +127,10 @@ const runSystemUpdaters = async function() {
   updateThemesMeta()
 }
 
+
 export {
-  runProjectUpdaters,
+  initProjectUpdaters,
+  ensureProjectUpdaters,
   runSystemUpdaters,
   updateGit,
-}
+};

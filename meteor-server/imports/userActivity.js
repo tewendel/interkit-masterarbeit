@@ -3,8 +3,6 @@ import { Projects } from "./collections.js";
 
 const pruneTimeout = 1000 * 60 // 1 minute
 
-const urlEditingProjectRegex = /\/#\/([a-zA-Z0-9]+)/; // matches /#/projectid => a project being edited
-
 /*
  * expected data structure in Meteor.users:
  * {
@@ -50,18 +48,6 @@ const processUserActivity = async ({userId, connectionId, url}) => {
       { $push: { connections: object } }
     );
   }
-  
-  // (optimization) start vite server if a project is being edited by this user
-  if (url.match(urlEditingProjectRegex)) {
-    const projectId = url.match(urlEditingProjectRegex)[1];
-    const started = Projects.update(
-      { _id: projectId, ["devServer.actionRequested"]: { $ne: "start" } },
-      { $set: { ["devServer.actionRequested"]: "start" } }
-    );
-    if (started > 0) {
-      console.log(`processUserActivity requested start of vite server for project ${projectId}`,)
-    }
-  }
 }
 
 const pruneConnections = async () => {
@@ -80,47 +66,6 @@ const pruneConnections = async () => {
   // Meteor.users.find({ "connections": { $elemMatch: { "lastSeen": { $lt: "2023-09-07T06:35:05.255Z" } } } });
 };
 
-/*
-const updateAllViteServerStatus = async () => {
-  // find all users that have connections whose url match urlEditingProjectRegex
-  const users = await Meteor.users.find(
-    { "connections.url": { $regex: urlEditingProjectRegex } },
-    { fields: { connections: 1 } }
-  ).fetch();
-
-  // find all projectIds of projects being edited
-  const projectIds = users.reduce((acc, user) => {
-    const projectIds = user.connections
-      .filter((c) => c.url.match(urlEditingProjectRegex))
-      .map((c) => c.url.match(urlEditingProjectRegex)[1]);
-    return [...acc, ...projectIds];
-  }, []);
-  //console.log("updateAllViteServerStatus", projectIds)
-  
-  // request to start vite server for all projects being edited
-  const started = Projects.update(
-    {
-      _id: { $in: projectIds },
-      ["devServer.actionRequested"]: { $ne: "start" },
-    },
-    { $set: { ["devServer.actionRequested"]: "start" } },
-    { multi: true }
-  );
-  
-  // request to stop vite server for all projects not being edited
-  const stopped = Projects.update(
-    {
-      _id: { $nin: projectIds },
-      ["devServer.actionRequested"]: { $ne: "stop" },
-    },
-    { $set: { ["devServer.actionRequested"]: "stop" } },
-    { multi: true }
-  );
-
-  if (started > 0 || stopped > 0) {
-    console.log(`updateAllViteServerStatus requested ${started} starts and ${stopped} stops`)
-  }
-};*/
 
 const init = async () => {
   await resetUsers();

@@ -13,4 +13,4 @@ fields:
       name: execOnMount
       help: "Runs the effect once when the button is rendered (for example to set a default value)"
 docsPath: TabBar#tab
-toolboxCategory: Buttons
+toolboxCategory: Navigation

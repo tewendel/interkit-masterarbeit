@@ -11,7 +11,7 @@ RUN cd /packages/interkit-blockly && npm ci
 
 # copy app files and install dependencies
 COPY ${BUILD_SOURCE_PATH} ./
-RUN npm ci
+RUN npm ci && npm cache clean --force
 
 # build
 RUN npm run build

@@ -28,6 +28,8 @@ import { api as project_files_api } from "./src/api_project_files.mjs";
 
 import { git_server_middleware } from "./src/git_server.mjs";
 
+import { startGarbageCollection } from "./src/cleanup.mjs";
+
 const PORT = process.env.PORT;
 
 
@@ -180,5 +182,4 @@ process.on("unhandledRejection", (reason, promise) => {
   // Handle or clean up code here
 });
 
-
-
+startGarbageCollection();

@@ -20,6 +20,7 @@
   import { blocklyConfig } from 'interkit-blockly'
   
   import BlocklyComponentPicker from './BlocklyComponentPicker.svelte';
+  import BlocklyQuickNav from './BlocklyQuickNav.svelte';
   
   import { InterkitClient } from 'interkit'
   import { BundleServer } from '../BundleServer.js'
@@ -174,6 +175,7 @@
   }
 
   const loadBlocklyData = async () => {
+    console.log("loadBlocklyData")
 
     let blocklyJson = await BundleServer.loadSrcFile({filename: blocklyJsonFile, projectId});
     if(blocklyJson?.content) {
@@ -317,7 +319,7 @@
 
   onMount(async () => {
     console.log("blockly onMount")
-    initBlockly();
+    initBlockly(); // run init onMount 
     blocklyDragHelperEl = document.getElementById('blocklyDragHelper') || document.createElement('div')
     blocklyDragHelperEl.id = 'blocklyDragHelper'
     document.body.appendChild(blocklyDragHelperEl)
@@ -329,6 +331,24 @@
       workspace.dispose();
     }
   });
+
+  /*
+    // run init when projectId changes 
+    // currently disabled to reduce complexity
+    // the whole component is reloaded using #key in ProjectWorkspace
+    const updateProjectId = (projectId) => {
+    console.log("updateProjectId")
+    if (workspace) {
+      workspace.dispose()
+    }
+    selectedTab = 0
+    initBlockly()
+  }
+
+  $: {
+    console.log("BlocklyEditor projectId changed", projectId)
+    updateProjectId()
+  }*/
 
   const save = async ()=>{
 
@@ -451,23 +471,38 @@
     await loadBlocklyData()
   }
 
+  let activeTab = 0
+
 </script>
 
   <svelte:window on:keydown={onKeyDown} />
 
   <MainColumns
-    sidebarLeftLabel="Components"
+    sidebarLeftLabel=""
     >
 
+    <svelte:fragment slot="sidebarLeftTitleSlot">
+      <Tabs autoWidth bind:selected={activeTab}>
+        <Tab label="Components" />
+        <Tab label="Nav" />
+      </Tabs>
+    </svelte:fragment>
+
     <svelte:fragment slot="sidebarLeft">
-      <BlocklyComponentPicker
-        {workspace}
-        {toolbox}
-        {topBlocks}
-        blockDefinitionsYaml={blockObjects}
-        on:startdrag={startDrag}
-        on:addcomponent={evt => addComponent(evt.detail)}
+      <div class:displayNone={activeTab != 0}>
+        <BlocklyComponentPicker
+          {toolbox}
+          blockDefinitionsYaml={blockObjects}
+          on:startdrag={startDrag}
+          on:addcomponent={evt => addComponent(evt.detail)}
         />
+      </div>
+      <div class:displayNone={activeTab != 1}>
+        <BlocklyQuickNav
+          {workspace}
+          {topBlocks}
+        />
+      </div>
     </svelte:fragment>
    
     <svelte:fragment slot="contentMain">
@@ -550,6 +585,10 @@
   />
 
 <style>
+
+  .displayNone {
+    display: none;
+  }
 
   .blocklyTabContent,
   .__BlocklyEditor,

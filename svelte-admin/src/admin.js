@@ -16,6 +16,15 @@ export const secondaryTabsPreviewSize = writable(0)
 export const secondaryTabsSize = writable(0)
 export const secondaryTabsSizes = [1/3, 1/2, 2/3]
 
+// the path of the active subtab in the project tab
+export const projectTabPath = writable('')
+// reset the project tab path to the default when leaving the project
+projectId.subscribe((p)=>{
+  if(!p) {
+    projectTabPath.set('')
+  }
+})
+
 let currentProjectSub = null
 // a derived store that subscribes to the current project according to $projectId
 export const currentProject = derived(
@@ -74,7 +83,7 @@ export const currentProjectEditingUsers = derived(
             const urls = u.connections.filter((c) => c.url.includes($projectId)).map((c) => c.url)
             let tabs = urls.map((url) => {
               const URLobject = new URL(url)
-              return URLobject.hash.split("/")[2]
+              return URLobject.hash.split("/")[3]
             })
             return { ...u, tabs }
           }));

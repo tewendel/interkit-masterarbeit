@@ -45,7 +45,8 @@ const updateTheme = async function (projectId, watchedFiles) {
 
       //const absPathMarkdownDir = path.dirname(path.join(projectPath, file));
       const markdownProcessor = remark()
-        .use(imgLinks, { absolutePath: INTERKIT_BUNDLER_URL + "/app/" + projectId + "/theme/" })
+        // change the path of images to abolute URLS
+        .use(imgLinks, { absolutePath: INTERKIT_BUNDLER_URL + "/dev/" + projectId + "/theme/" })
         .use(remarkFrontmatter, ["yaml"]);
 
       let readmeResult = null;

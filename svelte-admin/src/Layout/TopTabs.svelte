@@ -6,13 +6,15 @@
   import ReportsNotificationBadge from "../Messages/ReportsNotificationBadge.svelte";
   import RepositoryNotificationBadge from "../Project/RepositoryNotificationBadge.svelte";
   import TopTabLabel from "./TopTabLabel.svelte";
+  import { navigateTab } from "./ProjectWorkspace.svelte"
   import { compileError, runtimeError, bundleProcessing } from '../BundleServer.js'
 
   import { 
     secondaryTabIndex, 
     secondaryTabsHidden,
     currentProjectReadOnly,
-    currentProject
+    currentProject,
+    projectTabPath
   } from "../admin.js"
   
   export let projectId;
@@ -27,20 +29,25 @@
    * See root App.svelte style and App/BlocklyEditor */
   $: document.body.classList.toggle('appTabActive', (mainSelected === 1) || (tab === 'components'))
 
+  // main tabs
   const mainTabPaths = [
     '',
     'app', 
     'data', 
     'media', 
     'story', 
+    'style'
   ];
+  // dropdown items
   const dropdownPaths = [
+  ];
+  // subtabs in the project tab
+  const startPaths = [
     'project',
     'users',
     'messages',
     'schedule',
     'repository',
-    'style'
   ];
 
   const updateTabFromPropChange = (newTab) => {
@@ -54,28 +61,28 @@
     }
     if(dropdownPaths.includes(newTab)) {
       selectedDropdownId = newTab;
-      mainSelected = mainTabPaths.length;
+      mainSelected = 0;
+    }
+    if(startPaths.includes(newTab)) {
+      selectedDropdownId = "more";
+      mainSelected = 0;
     }
     console.log("tab changed from prop to:", newTab, mainSelected)
   }
 
   $: updateTabFromPropChange(tab)
   
-  const navigate = (path) => {
-    if(path != undefined) {
-      console.log("navigate", path)
-      if($currentProjectReadOnly) {
-        push(`/template/${$currentProject.slug}/${path}`);
-      } else {
-        push(`/project/${projectId}/${path}`);
-      }
-      
-    }
-  }
-
   const changeSecondaryTab = (e) => {
     //console.log("secondary Tab changed to ", e.detail)
     secondaryTabIndex.set(e.detail)
+  }
+
+  const navigate = (path) => {
+    let targetPath = path
+    if (path === '') {
+      targetPath = $projectTabPath
+    }
+    navigateTab(targetPath)
   }
 
 </script>
@@ -86,72 +93,80 @@
     <div class="tabs-main">
       <!--a use:link href="/components" >Appa</a>
       <a use:link href="/sheets" >Daten</a-->
-      <Tabs autoWidth bind:selected={mainSelected} on:change={ e => navigate(mainTabPaths[e.detail])}>
+      <Tabs autoWidth bind:selected={mainSelected}>
 
-        <Tab>
-          Start
+        <!-- we are using on:click here and below because we also have the tabs bound to a prop and don't want the event to fire when that changes -->
+        <Tab on:click={e => navigate(mainTabPaths[0])}>
+          Project
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[1])}>
           <TopTabLabel path={mainTabPaths[1]} {tab}>
             App 
             <NotificationBadge count={0} />
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[2])}>
           <TopTabLabel path={mainTabPaths[2]} {tab}>
             Data
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[3])}>
           <TopTabLabel path={mainTabPaths[3]} {tab}>
             Media
           </TopTabLabel>
         </Tab>
 
-        <Tab>
+        <Tab on:click={e => navigate(mainTabPaths[4])}>
           <TopTabLabel path={mainTabPaths[4]} {tab}>
             Story
           </TopTabLabel>
         </Tab>
 
+        <Tab on:click={e => navigate(mainTabPaths[5])}>
+          <TopTabLabel path={mainTabPaths[5]} {tab}>
+            Design
+          </TopTabLabel>
+        </Tab>
+
         <!-- disabled tab for when dropdown is active -->
-        <Tab label="" disabled />
+        <!--Tab label="" disabled /-->
         
       </Tabs>
       
     </div>
 
-    <div class="extra-dropdown">
+    {#if dropdownPaths.length > 0}
+      <div class="extra-dropdown">
+        <Dropdown
+          light
+          type = "inline"
+          bind:selectedId={selectedDropdownId}
+          on:select={ e => navigate(e.detail.selectedId) }
+          let:item
+          items={[
+            { id: "more", text: "more", disabled: true },
+            { id: "project", text: "Project" },
+            { id: "users", text: "Users" },
+            { id: "messages", text: "Messages" },
+            { id: "schedule", text: "Schedule" },
+            { id: "repository", text: "Repository" },
+            { id: "style", text: "Design"}
+          ]}
+        >
+          {item.text}
+          {#if item.id == "messages" }
+            <ReportsNotificationBadge {projectId} />
+          {/if}
+          {#if item.id == "repository" }
+            <RepositoryNotificationBadge  />
+          {/if}
+        </Dropdown>
 
-      <Dropdown
-        light
-        type = "inline"
-        bind:selectedId={selectedDropdownId}
-        on:select={ e => navigate(e.detail.selectedId) }
-        let:item
-        items={[
-          { id: "more", text: "more", disabled: true },
-          { id: "project", text: "Project" },
-          { id: "users", text: "Users" },
-          { id: "messages", text: "Messages" },
-          { id: "schedule", text: "Schedule" },
-          { id: "repository", text: "Repository" },
-          { id: "style", text: "Design"}
-        ]}
-      >
-        {item.text}
-        {#if item.id == "messages" }
-          <ReportsNotificationBadge {projectId} />
-        {/if}
-        {#if item.id == "repository" }
-          <RepositoryNotificationBadge  />
-        {/if}
-      </Dropdown>
-
-    </div>
+      </div>
+    {/if}
 
   </div>
 {:else}
@@ -200,6 +215,7 @@
     width: 100%;
     color: white;
     display: flex;
+    place-content: center;
   }
   .tabs-main {
     width: 440px;
@@ -223,6 +239,8 @@
     width: calc(33.3333333vw - 48px);
     height: 100%;
     visibility: hidden;
+    display: flex;
+    align-items: end;
   }
 
   .tabs-preview.visible {

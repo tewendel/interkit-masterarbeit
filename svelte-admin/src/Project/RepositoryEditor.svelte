@@ -10,6 +10,7 @@
     Form,
     FormGroup,
     InlineLoading,
+    InlineNotification,
     UnorderedList,
     ListItem,
     StructuredList,
@@ -59,16 +60,6 @@
     window.location.reload(); // reload to reset non-reactive blockly editor and story editor. TODO just reload the files
   };
 
-  const push = async (remote) => {
-    const res = await BundleServer.gitPush(projectId, remote);
-    alert(res.status + "\n\n" + JSON.stringify(res));
-  };
-
-  const pull = async (remote) => {
-    const res = await BundleServer.gitPull(projectId, remote);
-    alert(res.status + "\n\n" + JSON.stringify(res));
-  };
-
   const dateFormat = {
     year: "numeric",
     month: "short",
@@ -80,36 +71,10 @@
 
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || [];
   $: log = $currentProject?.uiState?.git?.log || [];
-  $: remotes = $currentProject?.uiState?.git?.remotes || [];
   $: diff = $currentProject?.uiState?.git?.diff || [];
 </script>
 
 {#if open}
-  {#if remotes.length > 0}
-    <h3>Remotes</h3>
-    <section>
-      <UnorderedList>
-        {#each remotes as remote}
-          <ListItem>
-            <strong>{remote.remote}</strong>
-            <br />
-            {remote.url}
-            <br />
-            <Button
-              on:click={() => push(remote.remote)}
-              size="small"
-              kind="tertiary">push</Button
-            >
-            <Button
-              on:click={() => pull(remote.remote)}
-              size="small"
-              kind="tertiary">pull</Button
-            >
-          </ListItem>
-        {/each}
-      </UnorderedList>
-    </section>
-  {/if}
   
   {#if unstagedFiles && unstagedFiles.length > 0}
     <h3>
@@ -239,9 +204,6 @@
       </Accordion>
     </section>
   {/if}
-
-  <h3>Repository cloning</h3>
-  <CodeSnippet style="margin-bottom:1em;" code="git clone {BundleServer.getGitServerURL({ projectId })}" />
 
 {/if}
 

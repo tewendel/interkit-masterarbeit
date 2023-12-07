@@ -8,7 +8,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 // mermaid not working yet, see 
 // - https://github.com/pngwn/MDsveX/issues/304
 // - https://github.com/pngwn/MDsveX/issues/93
-import { remarkMermaid } from 'remark-mermaidjs';
+//import { remarkMermaid } from 'remark-mermaidjs';
 
 import sveld from "mdsvex-sveld";
 
@@ -19,9 +19,9 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	highlight: {
-		highlighter
-	},
+	// highlight: {
+	//   highlighter
+	// },
 
 	remarkPlugins: [sveld, relativeImages, remarkToc],
 	rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {behavior: 'append'}]]

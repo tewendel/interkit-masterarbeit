@@ -7,5 +7,5 @@ fields:
       type: styleTokens
   - name: default
     type: slot  
-toolboxCategory: Styling
+toolboxCategory: Layout Utilities
 

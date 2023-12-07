@@ -16,6 +16,6 @@ fields:
       help: "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values." 
   - name: default
     type: slot
-toolboxCategory: "Data"
+toolboxCategory: Data Loaders
 docsPath: DataLoader#dataloadersingle
 

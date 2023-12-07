@@ -23,6 +23,11 @@ function getThemesPath() {
   return themesPath
 }
 
+function getProjectsPath() {
+  const projectsPath = path.join(REPOSITORIES_PATH, "projects")
+  return projectsPath
+}
+
 // check if folders exist to for all projects and setup starter if they don't
 async function ensureRepositories(projects) {
   //console.log("ensureRepositories", projects)
@@ -189,5 +194,6 @@ export {
   ensureRepositories,
   getProjectPath,
   getThemesPath,
+  getProjectsPath,
   generateInterkitConfig
 }

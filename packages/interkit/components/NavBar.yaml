@@ -3,4 +3,4 @@ colour: 300
 fields:
   - type: slot
     name: default
-toolboxCategory: Buttons
+toolboxCategory: Navigation

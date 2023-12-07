@@ -1,8 +1,87 @@
 <script>
+  // Icons: Full
+  import Full_AR            from "./icons/Full/AR.svg"
+  import Full_Archiv        from "./icons/Full/Archiv.svg"
+  import Full_Bookmark      from "./icons/Full/Bookmark.svg"
+  import Full_Camera        from "./icons/Full/Camera.svg"
+  import Full_Chat          from "./icons/Full/Chat.svg"
+  import Full_Check         from "./icons/Full/Check.svg"
+  import Full_Close         from "./icons/Full/Close.svg"
+  import Full_Close_Circle  from "./icons/Full/Close-Circle.svg"
+  import Full_Copy          from "./icons/Full/Copy.svg"
+  import Full_Dashboard     from "./icons/Full/Dashboard.svg"
+  import Full_Date          from "./icons/Full/Date.svg"
+  import Full_Drag          from "./icons/Full/Drag.svg"
+  import Full_FullScreen    from "./icons/Full/FullScreen.svg"
+  import Full_GroupChat     from "./icons/Full/GroupChat.svg"
+  import Full_Help          from "./icons/Full/Help.svg"
+  import Full_Layer         from "./icons/Full/Layer.svg"
+  import Full_List          from "./icons/Full/List.svg"
+  import Full_Location      from "./icons/Full/Location.svg"
+  import Full_Map           from "./icons/Full/Map.svg"
+  import Full_Menu          from "./icons/Full/Menu.svg"
+  import Full_Microphone    from "./icons/Full/Microphone.svg"
+  import Full_More_1        from "./icons/Full/More-1.svg"
+  import Full_More          from "./icons/Full/More.svg"
+  import Full_Pause         from "./icons/Full/Pause.svg"
+  import Full_Phaenomen     from "./icons/Full/Phaenomen.svg"
+  import Full_Play          from "./icons/Full/Play.svg"
+  import Full_QR_Scan       from "./icons/Full/QR-Scan.svg"
+  import Full_Send          from "./icons/Full/Send.svg"
+  import Full_Settings      from "./icons/Full/Settings.svg"
+  import Full_SingleChat    from "./icons/Full/SingleChat.svg"
+  import Full_Social        from "./icons/Full/Social.svg"
+  import Full_Splitscreen   from "./icons/Full/Splitscreen.svg"
+  import Full_Warning       from "./icons/Full/Warning.svg"
+  import Full_to_Gallery    from "./icons/Full/to_Gallery.svg"
+  import Thin_AR            from "./icons/Thin/AR.svg"
+  // Icons: Thin
+  import Thin_Archiv        from "./icons/Thin/Archiv.svg"
+  import Thin_Arrow_Left    from "./icons/Thin/Arrow-Left.svg"
+  import Thin_Arrow_Right   from "./icons/Thin/Arrow-Right.svg"
+  import Thin_Bookmark      from "./icons/Thin/Bookmark.svg"
+  import Thin_Camera        from "./icons/Thin/Camera.svg"
+  import Thin_Chat          from "./icons/Thin/Chat.svg"
+  import Thin_Check         from "./icons/Thin/Check.svg"
+  import Thin_Chevron_Down  from "./icons/Thin/Chevron-Down.svg"
+  import Thin_Chevron_Up    from "./icons/Thin/Chevron-Up.svg"
+  import Thin_Close_Circle  from "./icons/Thin/Close-Circle.svg"
+  import Thin_Close         from "./icons/Thin/Close.svg"
+  import Thin_Copy          from "./icons/Thin/Copy.svg"
+  import Thin_Dashboard     from "./icons/Thin/Dashboard.svg"
+  import Thin_Dropdown_Up   from "./icons/Thin/Dropdown-Up.svg"
+  import Thin_Dropdown      from "./icons/Thin/Dropdown.svg"
+  import Thin_Filter        from "./icons/Thin/Filter.svg"
+  import Thin_Forward_15    from "./icons/Thin/Forward-15.svg"
+  import Thin_FullScreen    from "./icons/Thin/FullScreen.svg"
+  import Thin_Help          from "./icons/Thin/Help.svg"
+  import Thin_Hint          from "./icons/Thin/Hint.svg"
+  import Thin_Layer         from "./icons/Thin/Layer.svg"
+  import Thin_Location      from "./icons/Thin/Location.svg"
+  import Thin_Map           from "./icons/Thin/Map.svg"
+  import Thin_Menu          from "./icons/Thin/Menu.svg"
+  import Thin_Microphone    from "./icons/Thin/Microphone.svg"
+  import Thin_Minus         from "./icons/Thin/Minus.svg"
+  import Thin_Pause         from "./icons/Thin/Pause.svg"
+  import Thin_Phaenomen     from "./icons/Thin/Phaenomen.svg"
+  import Thin_Play          from "./icons/Thin/Play.svg"
+  import Thin_Plus          from "./icons/Thin/Plus.svg"
+  import Thin_Position      from "./icons/Thin/Position.svg"
+  import Thin_QR_Scan       from "./icons/Thin/QR-Scan.svg"
+  import Thin_Replay_30     from "./icons/Thin/Replay-30.svg"
+  import Thin_Settings      from "./icons/Thin/Settings.svg"
+  import Thin_Social        from "./icons/Thin/Social.svg"
+  import Thin_to_Gallery    from "./icons/Thin/to_Gallery.svg"
+  import Thin_zoom_In       from "./icons/Thin/zoom-In.svg"
+  // Icons: Legacy
+  import Arrow_Up           from "./icons/Thin/Chevron-Up.svg"
+  import Arrow_Down         from "./icons/Thin/Chevron-Down.svg"
+  import Arrow_Left         from "./icons/Thin/Arrow-Left.svg"
+  import Arrow_Right        from "./icons/Thin/Arrow-Right.svg"
+  
+  // Other imports
   import { getContext } from 'svelte';
-
   import { useLocation } from "svelte-navigator";
-
   import { InterkitClient } from "../"
 
   const config = InterkitClient.config
@@ -11,6 +90,84 @@
   export let type
   export let height = "1.5rem"
   export let inverse = false
+
+  // Mapping of icon types to their respective imports
+  const iconMap = {
+    Full_AR            ,
+    Full_Archiv        ,
+    Full_Bookmark      ,
+    Full_Camera        ,
+    Full_Chat          ,
+    Full_Check         ,
+    Full_Close         ,
+    Full_Close_Circle  ,
+    Full_Copy          ,
+    Full_Dashboard     ,
+    Full_Date          ,
+    Full_Drag          ,
+    Full_FullScreen    ,
+    Full_GroupChat     ,
+    Full_Help          ,
+    Full_Layer         ,
+    Full_List          ,
+    Full_Location      ,
+    Full_Map           ,
+    Full_Menu          ,
+    Full_Microphone    ,
+    Full_More_1        ,
+    Full_More          ,
+    Full_Pause         ,
+    Full_Phaenomen     ,
+    Full_Play          ,
+    Full_QR_Scan       ,
+    Full_Send          ,
+    Full_Settings      ,
+    Full_SingleChat    ,
+    Full_Social        ,
+    Full_Splitscreen   ,
+    Full_Warning       ,
+    Full_to_Gallery    ,
+    Thin_AR            ,    
+    Thin_Archiv        ,
+    Thin_Arrow_Left    ,
+    Thin_Arrow_Right   ,
+    Thin_Bookmark      ,
+    Thin_Camera        ,
+    Thin_Chat          ,
+    Thin_Check         ,
+    Thin_Chevron_Down  ,
+    Thin_Chevron_Up    ,
+    Thin_Close_Circle  ,
+    Thin_Close         ,
+    Thin_Copy          ,
+    Thin_Dashboard     ,
+    Thin_Dropdown_Up   ,
+    Thin_Dropdown      ,
+    Thin_Filter        ,
+    Thin_Forward_15    ,
+    Thin_FullScreen    ,
+    Thin_Help          ,
+    Thin_Hint          ,
+    Thin_Layer         ,
+    Thin_Location      ,
+    Thin_Map           ,
+    Thin_Menu          ,
+    Thin_Microphone    ,
+    Thin_Minus         ,
+    Thin_Pause         ,
+    Thin_Phaenomen     ,
+    Thin_Play          ,
+    Thin_Plus          ,
+    Thin_Position      ,
+    Thin_QR_Scan       ,
+    Thin_Replay_30     ,
+    Thin_Settings      ,
+    Thin_Social        ,
+    Thin_to_Gallery    ,
+    Thin_zoom_In       ,
+  };
+
+  let iconUrl = null
 
   const iconHeightOverride = getContext("iconHeight")
   if (iconHeightOverride) height = iconHeightOverride
@@ -24,6 +181,18 @@
       activeType = type
   }
 
+  // // Use the mapping to set iconUrl
+  // TODO refactor names - change icon names in Icon.yaml to make this obsolete
+  // -> will break icon names in existing apps
+  $: {
+    const variableName = activeType.replace(/-/g, "_");
+    iconUrl = iconMap[variableName];
+    if (!iconUrl) {
+      console.error(`Icon: Icon type "${activeType}" (${variableName}) not found`);
+    }
+  }
+
+
   if (typeof inverse == "string") inverse = inverse === "TRUE" // blockly conversion
 
   const buttonContext = getContext("button");
@@ -32,14 +201,13 @@
 </script>
 
 
-
 <span
   on:click
   class={`Icon icon icon-${activeType}`}
   class:inverse
   class:Icon--inverse={inverse}
   class:theme={$config?.INTERKIT_APP_LOAD_THEME}
-  style={`--height: ${height};`}
+  style={`--height: ${height}; --icon-url: url(${iconUrl})`}
   >
   <slot />
 </span>
@@ -61,185 +229,11 @@
     user-select: none;        
     display: inline-flex;
     flex-shrink: 0;
+    background-image: var(--icon-url);
   }
 
   /* helpers */
 
   .icon.inverse           { filter: invert(1) }
-
-  /* figma import Full/ */
-  
-  .icon-Full-AR           { background-image: url("./icons/Full/AR.svg"); }  
-  .icon-Full-Archiv       { background-image: url("./icons/Full/Archiv.svg"); }
-  .icon-Full-Bookmark     { background-image: url("./icons/Full/Bookmark.svg"); }
-  .icon-Full-Camera       { background-image: url("./icons/Full/Camera.svg"); }
-  .icon-Full-Chat         { background-image: url("./icons/Full/Chat.svg"); }
-  .icon-Full-Check        { background-image: url("./icons/Full/Check.svg"); }
-  .icon-Full-Close        { background-image: url("./icons/Full/Close.svg"); }
-  .icon-Full-Close-Circle { background-image: url("./icons/Full/Close-Circle.svg"); }
-  .icon-Full-Copy         { background-image: url("./icons/Full/Copy.svg"); }
-  .icon-Full-Dashboard    { background-image: url("./icons/Full/Dashboard.svg"); }
-  .icon-Full-Date         { background-image: url("./icons/Full/Date.svg"); }
-  .icon-Full-Drag         { background-image: url("./icons/Full/Drag.svg"); }
-  .icon-Full-FullScreen   { background-image: url("./icons/Full/FullScreen.svg"); }
-  .icon-Full-GroupChat    { background-image: url("./icons/Full/GroupChat.svg"); }
-  .icon-Full-Help         { background-image: url("./icons/Full/Help.svg"); }
-  .icon-Full-Layer        { background-image: url("./icons/Full/Layer.svg"); }
-  .icon-Full-List         { background-image: url("./icons/Full/List.svg"); }
-  .icon-Full-Location     { background-image: url("./icons/Full/Location.svg"); }
-  .icon-Full-Map          { background-image: url("./icons/Full/Map.svg"); }
-  .icon-Full-Menu         { background-image: url("./icons/Full/Menu.svg"); }
-  .icon-Full-Microphone   { background-image: url("./icons/Full/Microphone.svg"); }
-  .icon-Full-More-1       { background-image: url("./icons/Full/More-1.svg"); }
-  .icon-Full-More         { background-image: url("./icons/Full/More.svg"); }
-  .icon-Full-Pause        { background-image: url("./icons/Full/Pause.svg"); }
-  .icon-Full-Phaenomen    { background-image: url("./icons/Full/Phaenomen.svg"); }
-  .icon-Full-Play         { background-image: url("./icons/Full/Play.svg"); }
-  .icon-Full-QR-Scan      { background-image: url("./icons/Full/QR-Scan.svg"); }
-  .icon-Full-Send         { background-image: url("./icons/Full/Send.svg"); }
-  .icon-Full-Settings     { background-image: url("./icons/Full/Settings.svg"); }
-  .icon-Full-SingleChat   { background-image: url("./icons/Full/SingleChat.svg"); }
-  .icon-Full-Social       { background-image: url("./icons/Full/Social.svg"); }
-  .icon-Full-Splitscreen  { background-image: url("./icons/Full/Splitscreen.svg"); }
-  .icon-Full-Warning      { background-image: url("./icons/Full/Warning.svg"); }
-  .icon-Full-to_Gallery   { background-image: url("./icons/Full/to_Gallery.svg"); }
-  
-  /* figma import Thin/ */
-
-  .icon-Thin-AR           { background-image: url("./icons/Thin/AR.svg"); }
-  .icon-Thin-Archiv       { background-image: url("./icons/Thin/Archiv.svg"); }
-  .icon-Thin-Arrow-Left   { background-image: url("./icons/Thin/Arrow-Left.svg"); }
-  .icon-Thin-Arrow-Right  { background-image: url("./icons/Thin/Arrow-Right.svg"); }
-  .icon-Thin-Bookmark     { background-image: url("./icons/Thin/Bookmark.svg"); }
-  .icon-Thin-Camera       { background-image: url("./icons/Thin/Camera.svg"); }
-  .icon-Thin-Chat         { background-image: url("./icons/Thin/Chat.svg"); }
-  .icon-Thin-Check        { background-image: url("./icons/Thin/Check.svg"); }
-  .icon-Thin-Chevron-Down { background-image: url("./icons/Thin/Chevron-Down.svg"); }
-  .icon-Thin-Chevron-Up   { background-image: url("./icons/Thin/Chevron-Up.svg"); }  
-  .icon-Thin-Close-Circle { background-image: url("./icons/Thin/Close-Circle.svg"); }
-  .icon-Thin-Close        { background-image: url("./icons/Thin/Close.svg"); }
-  .icon-Thin-Copy         { background-image: url("./icons/Thin/Copy.svg"); }
-  .icon-Thin-Dashboard    { background-image: url("./icons/Thin/Dashboard.svg"); }
-  .icon-Thin-Dropdown-Up  { background-image: url("./icons/Thin/Dropdown-Up.svg"); }
-  .icon-Thin-Dropdown     { background-image: url("./icons/Thin/Dropdown.svg"); }
-  .icon-Thin-Filter       { background-image: url("./icons/Thin/Filter.svg"); }
-  .icon-Thin-Forward-15   { background-image: url("./icons/Thin/Forward-15.svg"); }
-  .icon-Thin-FullScreen   { background-image: url("./icons/Thin/FullScreen.svg"); }
-  .icon-Thin-Help         { background-image: url("./icons/Thin/Help.svg"); }
-  .icon-Thin-Hint         { background-image: url("./icons/Thin/Hint.svg"); }
-  .icon-Thin-Layer        { background-image: url("./icons/Thin/Layer.svg"); }
-  .icon-Thin-Location     { background-image: url("./icons/Thin/Location.svg"); }
-  .icon-Thin-Map          { background-image: url("./icons/Thin/Map.svg"); }
-  .icon-Thin-Menu         { background-image: url("./icons/Thin/Menu.svg"); }
-  .icon-Thin-Microphone   { background-image: url("./icons/Thin/Microphone.svg"); }
-  .icon-Thin-Minus        { background-image: url("./icons/Thin/Minus.svg"); }
-  .icon-Thin-Pause        { background-image: url("./icons/Thin/Pause.svg"); }
-  .icon-Thin-Phaenomen    { background-image: url("./icons/Thin/Phaenomen.svg"); }
-  .icon-Thin-Play         { background-image: url("./icons/Thin/Play.svg"); }
-  .icon-Thin-Plus         { background-image: url("./icons/Thin/Plus.svg"); }
-  .icon-Thin-Position     { background-image: url("./icons/Thin/Position.svg"); }
-  .icon-Thin-QR-Scan      { background-image: url("./icons/Thin/QR-Scan.svg"); }
-  .icon-Thin-Replay-30    { background-image: url("./icons/Thin/Replay-30.svg"); }
-  .icon-Thin-Settings     { background-image: url("./icons/Thin/Settings.svg"); }
-  .icon-Thin-Social       { background-image: url("./icons/Thin/Social.svg"); }
-  .icon-Thin-to_Gallery   { background-image: url("./icons/Thin/to_Gallery.svg"); }
-  .icon-Thin-zoom-In      { background-image: url("./icons/Thin/zoom-In.svg"); }
-  
-  /* icons from theme Full */
-
-  .theme.icon-Full-AR           { background-image: url("/theme/icons/Full/AR.svg"); }  
-  .theme.icon-Full-Archiv       { background-image: url("/theme/icons/Full/Archiv.svg"); }
-  .theme.icon-Full-Bookmark     { background-image: url("/theme/icons/Full/Bookmark.svg"); }
-  .theme.icon-Full-Camera       { background-image: url("/theme/icons/Full/Camera.svg"); }
-  .theme.icon-Full-Chat         { background-image: url("/theme/icons/Full/Chat.svg"); }
-  .theme.icon-Full-Check        { background-image: url("/theme/icons/Full/Check.svg"); }
-  .theme.icon-Full-Close-Circle { background-image: url("/theme/icons/Full/Close-Circle.svg"); }
-  .theme.icon-Full-Copy         { background-image: url("/theme/icons/Full/Copy.svg"); }
-  .theme.icon-Full-Dashboard    { background-image: url("/theme/icons/Full/Dashboard.svg"); }
-  .theme.icon-Full-Date         { background-image: url("/theme/icons/Full/Date.svg"); }
-  .theme.icon-Full-Drag         { background-image: url("/theme/icons/Full/Drag.svg"); }
-  .theme.icon-Full-FullScreen   { background-image: url("/theme/icons/Full/FullScreen.svg"); }
-  .theme.icon-Full-GroupChat    { background-image: url("/theme/icons/Full/GroupChat.svg"); }
-  .theme.icon-Full-Help         { background-image: url("/theme/icons/Full/Help.svg"); }
-  .theme.icon-Full-Layer        { background-image: url("/theme/icons/Full/Layer.svg"); }
-  .theme.icon-Full-List         { background-image: url("/theme/icons/Full/List.svg"); }
-  .theme.icon-Full-Location     { background-image: url("/theme/icons/Full/Location.svg"); }
-  .theme.icon-Full-Map          { background-image: url("/theme/icons/Full/Map.svg"); }
-  .theme.icon-Full-Menu         { background-image: url("/theme/icons/Full/Menu.svg"); }
-  .theme.icon-Full-Microphone   { background-image: url("/theme/icons/Full/Microphone.svg"); }
-  .theme.icon-Full-More-1       { background-image: url("/theme/icons/Full/More-1.svg"); }
-  .theme.icon-Full-More         { background-image: url("/theme/icons/Full/More.svg"); }
-  .theme.icon-Full-Pause        { background-image: url("/theme/icons/Full/Pause.svg"); }
-  .theme.icon-Full-Phaenomen    { background-image: url("/theme/icons/Full/Phaenomen.svg"); }
-  .theme.icon-Full-Play         { background-image: url("/theme/icons/Full/Play.svg"); }
-  .theme.icon-Full-QR-Scan      { background-image: url("/theme/icons/Full/QR-Scan.svg"); }
-  .theme.icon-Full-Send         { background-image: url("/theme/icons/Full/Send.svg"); }
-  .theme.icon-Full-Settings     { background-image: url("/theme/icons/Full/Settings.svg"); }
-  .theme.icon-Full-SingleChat   { background-image: url("/theme/icons/Full/SingleChat.svg"); }
-  .theme.icon-Full-Social       { background-image: url("/theme/icons/Full/Social.svg"); }
-  .theme.icon-Full-Splitscreen  { background-image: url("/theme/icons/Full/Splitscreen.svg"); }
-  .theme.icon-Full-Warning      { background-image: url("/theme/icons/Full/Warning.svg"); }
-  .theme.icon-Full-to_Gallery   { background-image: url("/theme/icons/Full/to_Gallery.svg"); }
-
-  /* icons from theme Thin/ */
-
-  .theme.icon-Thin-AR           { background-image: url("/theme/icons/Thin/AR.svg"); }
-  .theme.icon-Thin-Archiv       { background-image: url("/theme/icons/Thin/Archiv.svg"); }
-  .theme.icon-Thin-Arrow-Left   { background-image: url("/theme/icons/Thin/Arrow-Left.svg"); }
-  .theme.icon-Thin-Arrow-Right  { background-image: url("/theme/icons/Thin/Arrow-Right.svg"); }
-  .theme.icon-Thin-Bookmark     { background-image: url("/theme/icons/Thin/Bookmark.svg"); }
-  .theme.icon-Thin-Camera       { background-image: url("/theme/icons/Thin/Camera.svg"); }
-  .theme.icon-Thin-Chat         { background-image: url("/theme/icons/Thin/Chat.svg"); }
-  .theme.icon-Thin-Check        { background-image: url("/theme/icons/Thin/Check.svg"); }
-  .theme.icon-Thin-Chevron-Down { background-image: url("/theme/icons/Thin/Chevron-Down.svg"); }
-  .theme.icon-Thin-Chevron-Up   { background-image: url("/theme/icons/Thin/Chevron-Up.svg"); }
-  .theme.icon-Thin-Close-Circle { background-image: url("/theme/icons/Thin/Close-Circle.svg"); }
-  .theme.icon-Thin-Close        { background-image: url("/theme/icons/Thin/Close.svg"); }
-  .theme.icon-Thin-Copy         { background-image: url("/theme/icons/Thin/Copy.svg"); }
-  .theme.icon-Thin-Dashboard    { background-image: url("/theme/icons/Thin/Dashboard.svg"); }
-  .theme.icon-Thin-Dropdown-Up  { background-image: url("/theme/icons/Thin/Dropdown-Up.svg"); }
-  .theme.icon-Thin-Dropdown     { background-image: url("/theme/icons/Thin/Dropdown.svg"); }
-  .theme.icon-Thin-Filter       { background-image: url("/theme/icons/Thin/Filter.svg"); }
-  .theme.icon-Thin-Forward-15   { background-image: url("/theme/icons/Thin/Forward-15.svg"); }
-  .theme.icon-Thin-FullScreen   { background-image: url("/theme/icons/Thin/FullScreen.svg"); }
-  .theme.icon-Thin-Help         { background-image: url("/theme/icons/Thin/Help.svg"); }
-  .theme.icon-Thin-Hint         { background-image: url("/theme/icons/Thin/Hint.svg"); }
-  .theme.icon-Thin-Layer        { background-image: url("/theme/icons/Thin/Layer.svg"); }
-  .theme.icon-Thin-Location     { background-image: url("/theme/icons/Thin/Location.svg"); }
-  .theme.icon-Thin-Map          { background-image: url("/theme/icons/Thin/Map.svg"); }
-  .theme.icon-Thin-Menu         { background-image: url("/theme/icons/Thin/Menu.svg"); }
-  .theme.icon-Thin-Microphone   { background-image: url("/theme/icons/Thin/Microphone.svg"); }
-  .theme.icon-Thin-Minus        { background-image: url("/theme/icons/Thin/Minus.svg"); }
-  .theme.icon-Thin-Pause        { background-image: url("/theme/icons/Thin/Pause.svg"); }
-  .theme.icon-Thin-Phaenomen    { background-image: url("/theme/icons/Thin/Phaenomen.svg"); }
-  .theme.icon-Thin-Play         { background-image: url("/theme/icons/Thin/Play.svg"); }
-  .theme.icon-Thin-Plus         { background-image: url("/theme/icons/Thin/Plus.svg"); }
-  .theme.icon-Thin-Position     { background-image: url("/theme/icons/Thin/Position.svg"); }
-  .theme.icon-Thin-QR-Scan      { background-image: url("/theme/icons/Thin/QR-Scan.svg"); }
-  .theme.icon-Thin-Replay-30    { background-image: url("/theme/icons/Thin/Replay-30.svg"); }
-  .theme.icon-Thin-Settings     { background-image: url("/theme/icons/Thin/Settings.svg"); }
-  .theme.icon-Thin-Social       { background-image: url("/theme/icons/Thin/Social.svg"); }
-  .theme.icon-Thin-to_Gallery   { background-image: url("/theme/icons/Thin/to_Gallery.svg"); }
-  .theme.icon-Thin-zoom-In      { background-image: url("/theme/icons/Thin/zoom-In.svg"); }
-
-  /* legacy icons */
-
-  
-  .icon-arrow-up {
-    background-image: url("./icons/Thin/Chevron-Up.svg");
-  }
-
-  .icon-arrow-down {
-    background-image: url("./icons/Thin/Chevron-Down.svg");
-  }
-
-  .icon-arrow-left {
-    background-image: url("./icons/Thin/Arrow-Left.svg");
-  }
-
-  .icon-arrow-right {
-    background-image: url("./icons/Thin/Arrow-Right.svg");
-  }
-
 
 </style>

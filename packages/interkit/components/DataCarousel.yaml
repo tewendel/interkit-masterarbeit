@@ -1,5 +1,5 @@
 name: DataCarousel
-toolboxCategory: "Data"
+toolboxCategory: Data Display (multi)
 color: 230
 fields:
   - type: extraProps

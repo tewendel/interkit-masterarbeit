@@ -1,5 +1,5 @@
 name: TopBarShell
-toolboxCategory: Layout
+toolboxCategory: Shells
 colour: 140
 fields:
   - name: TopBar

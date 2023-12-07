@@ -2,7 +2,7 @@
 
 ## The top bar and right sidebar
 
-- On the top left, when managing and creating projects, it says *interkit Authoring System*.  
+- On the top left, when managing and creating projects, it says *interkit*.  
   Later, it tells you which project you are editing.
 - On the far right, the user icon activates the user sidebar.
   It lets you log out, shows you information about your user and the project.
@@ -10,17 +10,27 @@
     - **Preview** – an interactive simulation/view of your app.
     - **Docs** – you can read the documentation while working on your app.
     - **Logs** – shows you what the project server is doing.
-- When you're editing a project, on the left, you can switch between the main tabs, described below.
+- When you're editing a project you can switch between the main tabs in the center, as described below.
+
+## Project
+
+The Project tab contains administative information and settings about your project. In the sidebar, there are several sections:
+- **Start** - show a welcome message, that you can customize by editing the file `src/project.md``
+- **Users** - show a list of users 
+- **Messages** - manage chat messages
+- **Schedule** - track scheduled messages that will be sent later
+- **Repository** - manage and edit the files in your project
+- **Settings** - general settings and import/export of media
 
 ## App
 
 Three tabs in the main area:
 
-- **blockly**: Build the interface of your app from components. Browse components in the left sidebar, click to expand, select and finally add. Drag and drop them in the main area; they will snap into slots. Each block has some properties/settings visible immediately; others can be edited by clicking the table icon on a block.
+- **blockly**: Build the interface of your app from components. Browse components in the left sidebar, drag and drop them in the main area; they will snap into slots. Each block has some properties/settings visible immediately; others can be edited by clicking the table icon on a block.
 - **App.svelte** shows you the generated code. You don't need to and can't edit it.
-- **actions.js** lets you implement advanced behaviors.
+- **actions.js** lets you implement [advanced behaviors](/guides/howto/actions).
 
-TODO Continue with the tutorial.
+See [Building an App with Components](/guides/quick-start/components)
 
 ## Data
 
@@ -35,7 +45,7 @@ Click the new row's cells to enter the data.
 The column's type will determine how you enter it, e.g. an *image* can be selected from
 the media you upload in the **Media** tab.
 
-TODO Continue with the tutorial.
+See [Working with Data](/guides/quick-start/data)
 
 ## Media
 
@@ -44,26 +54,16 @@ to reference them in blockly components, Sheets or in code.
 
 You also manage and moderate *User generated* media that has been submitted by users of your app.
 
-TODO Continue with the tutorial.
+See the [Media](/guides/tutorials/media) tutorial for details.
 
 ## Story
 
-Build complex interactions that can be expressed by narrative flow concepts,
-e.g. chat bots.
+Build complex interactions that can be expressed by narrative flow concepts, e.g. chat bots.
 
-See [Getting started with Chatbots](/guides/quick-start/chat)
+See [Getting started with Chatbots](/guides/quick-start/chat) for more.
 
-## Troubleshooting
+## Design
 
-### Preview Iframe does not work
+This area allows you to modify style variables that change the appearance of your app. You can also select predefined themes.
 
-* We rely on inter-frame communication.
-  Some script/ad blockers intercept this;
-  switch yours off or add an exception.
-* If you happen to run the server on `127.0.0.1` (check your `.env`s)
-  but access admin in *incognito mode*, via `localhost`,
-  the preview will fail (or you have to enable 3rd-party cookies).
-  Cf. [this StackOverflow question](https://stackoverflow.com/q/30481516/629238).  
-  Presumably also the case for other IPs vs domains.
-* Also check the DevTools console for mentions of `window` and `iframe`.
-
+See [Changing the appearance of your App](/guides/quick-start/styling) for more.

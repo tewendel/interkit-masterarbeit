@@ -12,13 +12,13 @@
 	},
 	"devDependencies": {
 		"@modyfi/vite-plugin-yaml": "^1.0.4",
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-auto": "^2.1.1",
+		"@sveltejs/kit": "^1.27.6",
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
 		"interkit-websitetools": "https://gitlab.interkit.app/interkit/interkit-websitetools/-/archive/fa04c079834e4fe688e2e05a6e3bad713a740126/interkit-websitetools.tar.gz",
-		"mdsvex": "^0.10.5",
+		"mdsvex": "^0.11.0",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
 		"rehype-autolink-headings": "^6.1.1",
@@ -27,7 +27,7 @@
 		"shiki": "^0.14.2",
 		"sveld": "^0.18.0",
 		"svelte": "^3.44.0",
-		"svelte-highlight": "^6.0.1",
+		"svelte-highlight": "^7.4.1",
 		"vite-plugin-sveld": "^1.1.0"
 	},
 	"type": "module",
@@ -35,7 +35,7 @@
 		"@sveltejs/adapter-node": "^1.0.0-next.73",
 		"mdsvex-relative-images": "^1.0.3",
 		"mdsvex-sveld": "^1.0.3",
-		"mermaid": "^9.0.0",
+		"mermaid": "^10.6.1",
 		"puppeteer": "^13.5.2",
 		"remark-mermaidjs": "^2.1.1"
 	}

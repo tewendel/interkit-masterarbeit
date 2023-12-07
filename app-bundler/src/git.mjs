@@ -256,6 +256,21 @@ async function gitPush(projectPath, remote) {
   }
 }
 
+async function getResetIndex(projectPath) {
+  try {
+    await git.writeRef({
+      fs,
+      dir: projectPath,
+      ref: 'master',
+      value: 'HEAD',
+      force: true,
+    })
+  } catch (error) {
+    console.warn(error)
+    return false
+  }
+}
+
 async function gitSetupUser(projectPath, username = "interkit") {
   return await git.setConfig({
     fs,
@@ -263,6 +278,16 @@ async function gitSetupUser(projectPath, username = "interkit") {
     dir: projectPath,
     path: "user.name",
     value: username,
+  });
+}
+
+async function gitSetupAllowPush(projectPath) {
+  return await git.setConfig({
+    fs,
+    http,
+    dir: projectPath,
+    path: "receive.denyCurrentBranch",
+    value: "warn",
   });
 }
 
@@ -280,5 +305,7 @@ export {
   gitListRemotes,
   gitPull,
   gitPush,
+  getResetIndex,
   gitDiff,
+  gitSetupAllowPush,
 };

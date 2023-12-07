@@ -172,8 +172,16 @@ Meteor.methods({
     });
   },
 
+  'projects.get.all.ids': async () => {
+    return Projects.find({}, { fields: { _id: 1 } }).fetch().map(project => project._id)
+  },
+
   'bundler.getUrl': async () => {
     return process.env.BUNDLER_URL
+  },
+
+  "system.getPlaygroundResetTimestamp": async () => {
+    return process.env.INTERKIT_PLAYGROUND_RESET_TIMESTAMP;
   },
 
   // method to create new projects based on the templates defined in starters
@@ -206,6 +214,15 @@ Meteor.methods({
         }
       }
     }
+  },
+
+  // method to remove all template projects
+  'project.removeTemplates': async () => {
+    console.log("removing project templates")
+    Projects.find({isTemplate: true}).forEach(async project => {
+      console.log("removing", project.name)
+      await Meteor.call('project.remove', {projectId: project._id})
+    })
   },
   
 });

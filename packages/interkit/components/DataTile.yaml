@@ -1,6 +1,6 @@
 name: DataTile
 color: 230
-toolboxCategory: Data
+toolboxCategory: Data Display (single)
 fields: 
   - type: extraProps
     props:

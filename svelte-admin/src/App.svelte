@@ -11,11 +11,14 @@
   import Login from './User/Login.svelte';
   import SystemStatusBar from './Atoms/SystemStatusBar.svelte';
   import TopTabs from './Layout/TopTabs.svelte';
+  import PlaygroundNotice from './Atoms/PlaygroundNotice.svelte';
   import { Tag } from "carbon-components-svelte";
 
   import Exit from "carbon-icons-svelte/lib/Exit.svelte";
   
   import { onMount } from 'svelte'
+
+  import { navigateTab } from './Layout/ProjectWorkspace.svelte'
 
   import { 
     Header,
@@ -68,7 +71,7 @@
     if(event.detail?.params?.mode == "template") {
       let slug = event.detail?.params?.project
       if(slug) {
-        console.log("readonly route via slug", slug)
+        console.log(`currentProject slug ${$currentProject?.slug} readonly route via slug ${slug}`)
         if($currentProject?.slug != slug) {
           let projectIdFromSlug = await InterkitClient.call("project.getId", {slug})
           console.log("got projectId from slug", projectIdFromSlug)
@@ -131,6 +134,12 @@
     } 
   }
 
+  const removeProjectTemplates = () => { 
+    if(confirm("Remove all project templates?")) {
+      InterkitClient.call("project.removeTemplates")
+    } 
+  }
+
 </script>
 
 
@@ -160,6 +169,10 @@
       <HeaderNavItem href="/" text="Link 3" />
     </HeaderNavMenu>
   </HeaderNav-->
+
+  {#if $connected}
+    <PlaygroundNotice />
+  {/if}
 
   {#if $userId}
     <TopTabs
@@ -205,6 +218,7 @@
           {#if $userIsRole?.admin}
             <HeaderPanelDivider>Admin Tools</HeaderPanelDivider>          
             <HeaderPanelLink on:click={rebuildProjectTemplates}>Build Project Templates</HeaderPanelLink>
+            <HeaderPanelLink on:click={removeProjectTemplates}>Remove Project Templates</HeaderPanelLink>
           {/if}
 
 
@@ -266,6 +280,7 @@
 
   .company {
     display:flex;
+    align-items: center;
   }
 
   .exit-arrow {
@@ -279,6 +294,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 8rem;
+    margin-right: 2px;
   }
 
   .status {
@@ -304,6 +320,10 @@
   }
   :global(.bx--header .bx--tabs__nav-link) {
     border-color: theme.$background;
+  }
+
+  :global(.bx--header) {
+    align-items: end;
   }
 
   /* END Hack to make Carbon UIShell white */

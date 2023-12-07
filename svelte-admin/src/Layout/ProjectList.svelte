@@ -9,6 +9,7 @@
   
   import { 
     DataTable,
+    Search,
     Toolbar,
     ToolbarContent,
     Button,
@@ -40,6 +41,7 @@
   let sortKey 
   let sortDirection 
   let page 
+  let searchQuery
 
   onMount(()=>{
     console.log("resetting sort and page")
@@ -53,6 +55,10 @@
   $: {
     if(typeof page == "number") pageStore.set(page)
   }
+
+  $: filteredRows = projectRows.filter(row => 
+    searchQuery ? row.name.toLowerCase().includes(searchQuery.toLowerCase()) : true
+  );
 
   let pageSize = 10
 
@@ -135,7 +141,7 @@
   {pageSize}
   bind:page
   {headers}
-  rows={projectRows}
+  rows={filteredRows}
   batchExpansion
   {description}
   
@@ -143,6 +149,11 @@
   >
   <Toolbar>
     <ToolbarContent>
+      <Search
+        placeholder="Filter by name"
+        
+        bind:value={searchQuery}
+      />
       <slot/>
     </ToolbarContent>
   </Toolbar>
