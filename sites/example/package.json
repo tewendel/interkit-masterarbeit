@@ -16,7 +16,7 @@
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
-    "interkit-websitetools": "file:../../../interkit-websitetools",
+		"interkit-websitetools": "https://gitlab.interkit.app/interkit/interkit-websitetools/-/archive/fa04c079834e4fe688e2e05a6e3bad713a740126/interkit-websitetools.tar.gz",
 		"mdsvex": "^0.10.5",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
@@ -28,29 +28,5 @@
 	"dependencies": {
 		"@sveltejs/adapter-node": "^1.0.0-next.73",
 		"mdsvex-sveld": "^1.0.3"
-	},
-  "workspaces": [
-    "../../../packages/"
-  ],
-
-
-
-
-
-  "//": {
-  "devDependencies": {
-		"@modyfi/vite-plugin-yaml": "^1.0.4",
-		"rehype-autolink-headings": "^6.1.1",
-		"rehype-slug": "^5.1.0",
-		"remark-toc": "^8.0.1",
-		"svelte-highlight": "^6.0.1",
-		"shiki": "^0.14.2"
-  },
-  "dependencies": {
-		"mdsvex-relative-images": "^1.0.3",
-		"mermaid": "^9.0.0",
-		"puppeteer": "^13.5.2",
-		"remark-mermaidjs": "^2.1.1"
-  }
-  }
+	}
 }
