@@ -18,7 +18,7 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
 		"mdsvex": "^0.11.0",
-		"interkit-websitetools": "file:../../../interkit-websitetools",
+		"interkit-websitetools": "https://gitlab.interkit.app/interkit/interkit-websitetools/-/archive/fa04c079834e4fe688e2e05a6e3bad713a740126/interkit-websitetools.tar.gz",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
 		"rehype-autolink-headings": "^6.1.1",
