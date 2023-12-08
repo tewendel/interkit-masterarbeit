@@ -55,6 +55,9 @@ Meteor.startup(() => {
 
   initUserActivity();
 
+  // install project templates
+  Meteor.call('project.rebuildTemplates')
+
 });
 
 
