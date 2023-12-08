@@ -2,4 +2,4 @@
 
 This project was created using the "Map basics" template.
 
-Have a look at the [tutorial](https://docs.interkit.app/guides/tutorials/map-basics) to learn more.
+Have a look at the [tutorial](https://docs.interkit.app/guides/tutorials/data) to learn more.
