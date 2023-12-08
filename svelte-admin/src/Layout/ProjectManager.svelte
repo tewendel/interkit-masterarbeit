@@ -236,6 +236,8 @@
   .left-pane {
     flex-grow: 1;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
     width: var(--left-pane-size);
     height: 100%;
     /*overflow-x: auto;*/
@@ -253,6 +255,18 @@
 
   :global(.__ProjectList .bx--tab-content) {
     padding: 0;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  :global(.__ProjectList .bx--tab-content:not([hidden])) {
+    display: flex;
+  }
+
+  .__ProjectList {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   :global(.__ProjectWorkspace .bx--tile) {
@@ -275,10 +289,5 @@
      */
     display: none;
   }
-
-  :global(.__ProjectWorkspace .bx--table-expand) {
-    display: none;
-  }
-
 
 </style>
