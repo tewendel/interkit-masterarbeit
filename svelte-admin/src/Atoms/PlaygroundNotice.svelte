@@ -1,11 +1,13 @@
 <script>
   import { InterkitClient } from 'interkit'
-  import { onMount } from 'svelte'
   import { Tag } from "carbon-components-svelte";
+  import Timer from "carbon-icons-svelte/lib/Timer.svelte";
+  
+  export let large
 
   let timestamp, dateString, date
   
-  onMount( async () => {
+  const load = async () => {
     timestamp = await InterkitClient.call("system.getPlaygroundResetTimestamp")
     console.log("timestamp:.", timestamp)
 
@@ -13,11 +15,20 @@
     date = new Date(timestamp * 1000)
     // format just the time hh:mm
     dateString = date.toLocaleDateString('de', { hour: 'numeric', minute: 'numeric' })
-  })
+  }
+
+  const connected = InterkitClient.connected
+  
+  $: {
+    if ($connected) {
+      load()    
+    }
+  }
 </script>
 
+<slot />
 {#if timestamp && date && dateString}
-  <Tag type="magenta">
+  <Tag size={large ? "default" : "sm"} type="magenta" icon={Timer} style="white-space: nowrap;;">
     Playground resets<br>
     {dateString}
   </Tag>

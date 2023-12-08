@@ -170,10 +170,6 @@
     </HeaderNavMenu>
   </HeaderNav-->
 
-  {#if $connected}
-    <PlaygroundNotice />
-  {/if}
-
   {#if $userId}
     <TopTabs
       projectId={$projectId}
@@ -265,6 +261,13 @@
     <h1 style="padding-bottom: 1em; text-align: center;">
       Welcome to interkit
     </h1>
+    <div style="max-width: 320px; display: flex; flex-direction: column;; text-align: center; margin-top: -1em; margin-bottom: 1em;">
+      <PlaygroundNotice large>
+        <div class="playground-notice">
+          This playground will reset regularly. It is intended for testing and exploration.
+        </div>
+      </PlaygroundNotice>
+    </div>
     {#if $connected}
       <Login/>
     {:else}
@@ -295,6 +298,10 @@
     text-overflow: ellipsis;
     max-width: 8rem;
     margin-right: 2px;
+  }
+
+  .playground-notice {
+    @include type.type-style("heading-01");
   }
 
   .status {

@@ -5,6 +5,7 @@
   import NotificationBadge from "../Atoms/NotificationBadge.svelte";
   import ReportsNotificationBadge from "../Messages/ReportsNotificationBadge.svelte";
   import RepositoryNotificationBadge from "../Project/RepositoryNotificationBadge.svelte";
+  import PlaygroundNotice from "../Atoms/PlaygroundNotice.svelte";
   import TopTabLabel from "./TopTabLabel.svelte";
   import { navigateTab } from "./ProjectWorkspace.svelte"
   import { compileError, runtimeError, bundleProcessing } from '../BundleServer.js'
@@ -167,10 +168,13 @@
 
       </div>
     {/if}
+    
+    <PlaygroundNotice />
 
   </div>
 {:else}
   <div style="flex: 1; width: 100%"><!--spacer--></div>
+  <PlaygroundNotice />
 {/if}
 
 {#if showTabsRight}
