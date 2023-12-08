@@ -28,8 +28,8 @@ docker-build-server:
   script:
     #- docker pull interkit/server-base:$INTERKIT_BASE_TAG || true
     #- docker pull interkit/server:$INTERKIT_BASE_TAG || true
-    - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --target meteor-base --cache-from interkit/server-base:$INTERKIT_BASE_TAG -t interkit/server-base:$INTERKIT_BASE_TAG -f Dockerfile.meteor-server --build-arg BUILDKIT_INLINE_CACHE=1
-    - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG --cache-from interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_IMAGE_TAG -f Dockerfile.meteor-server --build-arg BUILDKIT_INLINE_CACHE=1
+    - docker build . --network=host --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --target meteor-base --cache-from interkit/server-base:$INTERKIT_BASE_TAG -t interkit/server-base:$INTERKIT_BASE_TAG -f Dockerfile.meteor-server --build-arg BUILDKIT_INLINE_CACHE=1
+    - docker build . --network=host --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/server-base:$INTERKIT_BASE_TAG --cache-from interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_BASE_TAG -t interkit/server:$INTERKIT_IMAGE_TAG -f Dockerfile.meteor-server --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/server-base:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_BASE_TAG
     - docker push interkit/server:$INTERKIT_IMAGE_TAG
@@ -48,7 +48,7 @@ docker-build-bundler:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
     #- docker pull interkit/bundler:$INTERKIT_BASE_TAG || true
-    - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler --build-arg BUILDKIT_INLINE_CACHE=1
+    - docker build . --network=host --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_BASE_TAG -t interkit/bundler:$INTERKIT_IMAGE_TAG -f Dockerfile.app-bundler --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/bundler:$INTERKIT_BASE_TAG
     - docker push interkit/bundler:$INTERKIT_IMAGE_TAG
     - echo DONE
@@ -66,7 +66,7 @@ docker-build-admin:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
     #- docker pull interkit/admin:$INTERKIT_BASE_TAG || true
-    - docker build . --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin --build-arg BUILDKIT_INLINE_CACHE=1
+    - docker build . --network=host --build-arg INTERKIT_BASE_TAG=$INTERKIT_BASE_TAG --cache-from interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_BASE_TAG -t interkit/admin:$INTERKIT_IMAGE_TAG -f Dockerfile.svelte-admin --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/admin:$INTERKIT_BASE_TAG
     - docker push interkit/admin:$INTERKIT_IMAGE_TAG
     - echo DONE
@@ -81,7 +81,7 @@ docker-build-docs:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
     #- docker pull interkit/docs:latest || true
-    - docker build . -t interkit/docs:latest -f Dockerfile.docs --cache-from interkit/docs:latest --build-arg BUILDKIT_INLINE_CACHE=1
+    - docker build . --network=host -t interkit/docs:latest -f Dockerfile.docs --cache-from interkit/docs:latest --build-arg BUILDKIT_INLINE_CACHE=1
     - docker push interkit/docs:latest
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
