@@ -28,7 +28,7 @@ describe(testname, function () {
           $set: {
             connections: [
               {
-                url: "http://admin.interkit.app/#/" + projectId,
+                url: "http://admin.interkit.app/#/project/" + projectId,
               },
             ],
           },
@@ -42,7 +42,7 @@ describe(testname, function () {
           $set: {
             connections: [
               {
-                url: "http://admin.interkit.app/#/" + projectId + "/something",
+                url: "http://admin.interkit.app/#/project/" + projectId + "/something",
               },
             ],
           },
@@ -56,7 +56,7 @@ describe(testname, function () {
           $set: {
             connections: [
               {
-                url: "http://admin.interkit.app/#/" + "somethingelse",
+                url: "http://admin.interkit.app/#/project/" + "somethingelse",
               },
             ],
           },
