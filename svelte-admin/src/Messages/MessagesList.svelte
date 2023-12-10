@@ -363,7 +363,7 @@
             <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockMessage(row) }}>Block reported message</Button>
             <Button size="small" icon={ErrorFilled} on:click={() => { reportedBlockUser(row) }}>Block User</Button>
           </ButtonSet>
-          <ButtonSet>
+          <ButtonSet style="margin-top: 1px;">
             <Button size="small" icon={Checkmark} on:click={() => { reportedSeen(row.id) }}>Set Seen</Button>
           </ButtonSet>
         {/if}

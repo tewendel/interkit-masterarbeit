@@ -159,16 +159,22 @@ Meteor.methods({
   },
 
   'messages.see': async function ({ messageIds, seenByUserId }) {
-    let result = await Messages.update(
+    let result1 = await Messages.update(
       { _id: { $in: messageIds } },
       { 
         $push: { seen: seenByUserId }, 
-        seenCount: { $size: '$seen' }
       },
       { multi: true }
     )
+    let result2 = await Messages.update(
+      { _id: { $in: messageIds } },
+      {
+        seenCount: { $size: "$seen" },
+      },
+      { multi: true }
+    );
     console.log('messages.see', { messageIds, seenByUserId, result })
-    return result
+    return result1
   },
 
   'messages.delete': async function (ids) {
