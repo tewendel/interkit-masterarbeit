@@ -73,7 +73,7 @@
   </div>
 
   {#if sheets}
-    <ul>
+    <ul class="sheets">
     <!-- we need to use $sheets here to get the reactive value of the store -->
     {#each $sheets as sheet}
       <li on:click={()=>{openSheet(sheet)}}>
@@ -113,6 +113,13 @@
 
   .active {
     font-weight: bold;
+  }
+
+  .sheets {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
   }
 
   li {

@@ -26,8 +26,8 @@
   }
 </script>
 
-<slot />
 {#if timestamp && date && dateString}
+  <slot />
   <Tag size={large ? "default" : "sm"} type="magenta" icon={Timer} style="white-space: nowrap;;">
     Playground resets<br>
     {dateString}
