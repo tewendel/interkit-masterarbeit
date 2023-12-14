@@ -1,8 +1,11 @@
 <script>
   import TemplateLoader from "../../../components/TemplateLoader.svelte";
+  import YouTube from "../../../components/YouTube.svelte"
 </script>
 
 # Working with Data
+
+<YouTube url="https://www.youtube.com/embed/DSAdIgPQ8vk?si=t5hzdktMKV45qwEF"/> 
 
 Interkit provides each app with a database.
 

@@ -1,6 +1,13 @@
+<script>
+  import YouTube from "../../../components/YouTube.svelte"
+</script>
+
 # Interkit documentation
 
 Welcome to the interkit docs!
+
+<YouTube url="https://www.youtube.com/embed/L3auHTVXut4?si=w9uzhgGFRBP_qzV5"/> 
+
 
 ### Structure of the docs
 
