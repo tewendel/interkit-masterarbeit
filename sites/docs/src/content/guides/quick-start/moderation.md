@@ -1,4 +1,10 @@
+<script>
+  import YouTube from "../../../components/YouTube.svelte"
+</script>
+
 # Content Moderation and Monitoring
+
+<YouTube url="https://www.youtube.com/embed/UZ5apGbir2o?si=nttdb6wTzEtY7oBl"/> 
 
 Content Moderation and Monitoring become important when you allow users to input information or media that are then shown to others. For example, you might create multi-user chat rooms, where users can talk to each other and upload images.
 
