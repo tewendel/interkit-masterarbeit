@@ -1,0 +1,19 @@
+[*.json]
+indent_style = space
+indent_size = 2
+
+[*.js]
+indent_style = space
+indent_size = 2
+
+[*.mjs]
+indent_style = space
+indent_size = 2
+
+[*.svelte]
+indent_style = space
+indent_size = 2
+
+[*.css]
+indent_style = space
+indent_size = 2

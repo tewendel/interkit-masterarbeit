@@ -52,6 +52,8 @@ function initCluster({ settings, portrange, app, server }) {
         console.error("Error while proxying request:", err);
         res.writeHead(500);
         res.end("Internal server error");
+        console.log("Killing worker", worker.id);
+        worker.kill();
       });
     } else {
       next();
@@ -101,11 +103,11 @@ function initCluster({ settings, portrange, app, server }) {
       // Pipe the sockets together
       socket.pipe(workerSocket).pipe(socket);
 
-      /*workerSocket.on("error", (err) => {
+      workerSocket.on("error", (err) => {
         console.error("Error while proxying websocket upgrade request:", err);
         socket.destroy();
       });
-      */
+      /*
       workerSocket.on("end", () => {
         console.log("Worker socket ended");
         socket.end();
@@ -113,7 +115,7 @@ function initCluster({ settings, portrange, app, server }) {
       workerSocket.on("close", () => {
         console.log("Worker socket closed");
         socket.destroy();
-      });
+      });*/
     });
   });
 
@@ -192,14 +194,16 @@ function addWorker({ pathPrefix, env, id }) {
         );
       } else if (code === 0) {
         console.log(`Vite Worker ${worker.id} exited with code: ${code}.`);
-      } /*else {
+      } else {
         console.log(
           `Vite Worker ${worker.id} died with code: ${code} and signal: ${signal}. Restarting in 10s...`
         );
+        /*
         setTimeout(() => {
           addWorker({ pathPrefix, env, id });
         }, 10000);
-      }*/
+        */
+      }
     });
 
     worker.on("error", (error) => {
