@@ -4,6 +4,7 @@
   import Timer from "carbon-icons-svelte/lib/Timer.svelte";
   
   export let large
+  export let isPlayground
 
   let timestamp, dateString, date
   
@@ -24,9 +25,12 @@
       load()    
     }
   }
+
+  $: isPlayground = timestamp && date && dateString
+
 </script>
 
-{#if timestamp && date && dateString}
+{#if isPlayground}
   <slot />
   <Tag size={large ? "default" : "sm"} type="magenta" icon={Timer} style="white-space: nowrap;;">
     Playground resets<br>
