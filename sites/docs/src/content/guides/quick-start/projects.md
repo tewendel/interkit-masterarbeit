@@ -1,4 +1,10 @@
+<script>
+  import YouTube from "../../../components/YouTube.svelte"
+</script>
+
 # Creating and Managing Projects
+
+<YouTube url="https://www.youtube.com/embed/3FRZH612U5k?si=sxYuRLiCZfchyfYY"/> 
 
 ### Exploring existing projects on the server
 

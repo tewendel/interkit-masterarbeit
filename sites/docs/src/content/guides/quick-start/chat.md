@@ -1,7 +1,13 @@
+<script>
+  import YouTube from "../../../components/YouTube.svelte"
+</script>
+
 # Getting started with Chatbots
 
 interkit allows you to create complex interactions that can be expressed by narrative flow concepts,
 e.g. chat bots. 
+
+<YouTube url="https://www.youtube.com/embed/eFPSLS0S9tg?si=kAGrQyF11TXoq2T8"/> 
 
 ### Boards
 

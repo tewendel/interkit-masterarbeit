@@ -1,8 +1,11 @@
 <script>
   import StyleTokensTable from '/src/components/StyleTokensTable.svelte';
+  import YouTube from "../../../components/YouTube.svelte"
 </script>
 
 # Changing the Appearance of your App
+
+<YouTube url="https://www.youtube.com/embed/_2Z4GHrACcE?si=YecsqyftEp2VgANU"/> 
 
 There are three ways to change the visual appearance of your app:
 

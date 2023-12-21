@@ -1,4 +1,10 @@
+<script>
+  import YouTube from "../../../components/YouTube.svelte"
+</script>
+
 # Build an App with Components
+
+<YouTube url="https://www.youtube.com/embed/uzoBi1_Oa00?si=wRaM9TMtRZ9W8FuV"/> 
 
 ### What are components
 

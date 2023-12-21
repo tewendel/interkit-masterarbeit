@@ -16,7 +16,6 @@ export async function load({ params }) {
   if (path === '') path = 'index'
 
   let post
-  let logFound
   let logTried = ''
   let logError
 
@@ -24,18 +23,14 @@ export async function load({ params }) {
    * They have to start with a "static" dot and end with a "static" extension,
    * e.g. this won't work:
    *   await import(`${path}${extension}`)
-   * and this won't either, if path contains a slash?!
-   *   await import(`./${path}.ext`)
    * This forces us to repeat ourselves with all these try blocks.
    */
 
   // try .svelte
 	if (!post) {
 		try {
-			post = await import('../../content/' + path + '.svelte')
-      logFound = '.svelte'
+			post = await import(`../../content/${path}.svelte`)
 		} catch (error) {
-      console.error(error)
       logTried += ' .svelte'
       logError = error
 		}
@@ -44,8 +39,7 @@ export async function load({ params }) {
 	// try .svelte.md
 	if (!post) {
 		try {
-			post = await import('../../content/' + path + '.svelte.md')
-      logFound = '.svelte.md'
+			post = await import(`../../content/${path}.svelte.md`)
 		} catch (error) {
       logTried += ' .svelte.md'
       logError = error
@@ -55,10 +49,9 @@ export async function load({ params }) {
 	// try .md
 	if (!post) {
 		try {
-			post = await import('../../content/' + path + '.md');
-      logFound = '.md'
+			post = await import(`../../content/${path}.md`);
 		} catch (error) {
-      logTried += ' .md'
+      logTried += ' .svelte.md'
       logError = error
 		}
 	}
@@ -66,18 +59,15 @@ export async function load({ params }) {
 	// try .svx
 	if (!post) {
 		try {
-			post = await import('../../content/' + path + '.svx');
-      logFound = '.svx'
+			post = await import(`../../content/${path}.svx`);
 		} catch (error) {
       logTried += ' .svx'
       logError = error
 		}
 	}
 
-  if (post) {
-    console.log('found ../../content/', path, logFound)
-  } else {
-    console.error('error importing, tried ../../content/', path, logTried, 'last error', logError.message)
+  if (!post) {
+    console.error('error importing ../../content', path, 'tried', logTried, 'last error', logError.message)
     throw error(404, 'test')
   }
 
