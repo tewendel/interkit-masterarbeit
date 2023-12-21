@@ -31,6 +31,29 @@ Meteor.publish('projectUsersPaginated', function({
       {[`projectUserData.${projectId}.userToken`]: { $regex: searchQuery, $options: 'i' }},
       // search in names of userVars (exact match only!)
       {[`projectUserData.${projectId}.userVars.${searchQuery}`] : { $exists:true } },
+      // search in board & nodes
+      {
+        [`projectUserData.${projectId}.boardState`]: { $exists: true, $ne: null },
+        $expr: {
+          $gt: [
+            {
+              $size: {
+                $filter: {
+                  input: { $objectToArray: `$projectUserData.${projectId}.boardState` },
+                  as: "board",
+                  cond: {
+                    $or: [
+                      { $regexMatch: { input: "$$board.k", regex: searchQuery, options: "i" } },
+                      { $regexMatch: { input: "$$board.v.nodeId", regex: searchQuery, options: "i" } },
+                    ]
+                  }
+                }
+              },
+            },
+            0
+          ]
+        }
+      },
       // search in values of userVars (credits: ChatGPT)
       {
         $and: [
