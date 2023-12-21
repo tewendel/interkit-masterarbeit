@@ -32,7 +32,8 @@ export async function load({ params }) {
   // try .svelte
 	if (!post) {
 		try {
-			post = await import('../../content/' + path + '.svelte')
+      // TODO: apply to other extensions; fix shorter paths, fix redirects, index?
+      post = await import(`../../content/${pathParts[0]}/${pathParts[1]}/${pathParts[2]}.md`)
       logFound = '.svelte'
 		} catch (error) {
       console.error(error)
