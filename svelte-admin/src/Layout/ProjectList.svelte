@@ -127,8 +127,6 @@
 <DataTable
   style={`
     background: #f4f4f4;
-    /* = pageSize * row + search/actions + hint + thead + data table padding-top */
-    min-height: ${pageSize < filteredRows.length ? ((pageSize || 0) * 48 + 32 + 48 + 2 + 58) + 'px' : 'auto'};
     flex-grow: 1;
     /* = 100vh - UI header height - Tabs height - DataTablePaginationAutofit Footer height */
     max-height: calc(100vh - 48px - 40px - 42px);
