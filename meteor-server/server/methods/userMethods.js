@@ -18,6 +18,13 @@ const updateUserProjectData = async (userId, projectId, key, value) => {
   return usersModifiedCount
 }
 
+const initialiseUserBoardState = async (userId, projectId, boardId) => {
+  const key = `projectUserData.${projectId}.boardState` + (boardId ? '.' + boardId : '')
+  const modifiedCount = await Meteor.users.update({ _id: userId }, { $set: { [key]: {} } })
+  console.log(`initialiseUserBoardState, user ${userId}, project ${projectId}, board ${boardId}, modified ${modifiedCount}`)
+  return modifiedCount
+}
+
 const updateUserBoardArrivalState = async (userId, projectId, boardId, value) => {
   // write projectData updates to user
   const $setLastArrived = {}
@@ -88,9 +95,9 @@ const getUserProjectData = (userId, projectId) => {
   return data;
 }
 
-const getBoardState = (projectId, userId, boardId) => {
+const getBoardState = async (projectId, userId, boardId, doCreateIfNotExists) => {
   // get user
-  const user = Meteor.users.findOne(userId)
+  let user = await Meteor.users.findOne(userId)
   if (!user) {
     console.warn(`getBoardState user ${userId} not found`)
     return
@@ -106,14 +113,25 @@ const getBoardState = (projectId, userId, boardId) => {
     return
   }
   if (!user.projectUserData[projectId].boardState) {
-    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}`)
-    // console.log(user.projectUserData[projectId])
-    return
+    console.log(`getBoardState user ${userId} has no boardState for project ${projectId}`)
+    if (doCreateIfNotExists) {
+      const initialised = await initialiseUserBoardState(userId, projectId)
+      if (!initialised) return
+      user = await Meteor.users.findOne(userId)
+    } else {
+      // console.log(user.projectUserData[projectId])
+      return
+    }
   }
   if (boardId && !user.projectUserData[projectId].boardState[boardId]) {
-    console.warn(`getBoardState user ${userId} has no boardState for project ${projectId}, board ${boardId}`)
-    console.log(user.projectUserData[projectId].boardState)
-    return
+    console.log(`getBoardState user ${userId} has no boardState for project ${projectId}, board ${boardId}`)
+    if (doCreateIfNotExists) {
+      const initialised = await initialiseUserBoardState(userId, projectId, boardId)
+      if (!initialised) return
+      user = await Meteor.users.findOne(userId)
+    } else {
+      return
+    }
   }
   // N.B. pretty weird that we pass boardId but return boardState (the parent)
   return user.projectUserData[projectId]?.boardState
@@ -386,7 +404,7 @@ Meteor.methods({
 
   "user.moveTo": async ({ projectId, userId, boardId, nodeId }) => {
     console.log("user.moveTo", projectId, userId, boardId, nodeId);
-    let boardState = getBoardState(projectId, userId, boardId);
+    let boardState = await getBoardState(projectId, userId, boardId, true);
     if (boardState) {
       const usersUpdatedCount = await updateUserBoardArrivalState(
         userId,
@@ -405,7 +423,7 @@ Meteor.methods({
     const successful = [];
     const errored = [];
     for (const userId of userIds) {
-      let userBoardState = getBoardState(projectId, userId, boardId);
+      let userBoardState = await getBoardState(projectId, userId, boardId, true);
       if (!userBoardState) {
         console.warn(`users.moveTo user ${userId} has no boardState`);
         continue;
@@ -451,7 +469,7 @@ Meteor.methods({
     userId,
     boardId,
   }) => {
-    let boardState = getBoardState(projectId, userId, boardId);
+    let boardState = await getBoardState(projectId, userId, boardId, true);
     if (boardState) {
       boardState[boardId].interfaceConfig = interfaceConfig;
       await updateUserBoardInterface(
