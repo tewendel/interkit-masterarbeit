@@ -4,9 +4,9 @@
   "main": "index.js",
   "dependencies": {
     "@capacitor-community/http": "^0.3.0",
-    "@capacitor/cli": "^2.4.7",
-    "@capacitor/core": "^2.4.7",
-    "@capacitor/ios": "^2.4.7",
+    "@capacitor/cli": "^5.6.0",
+    "@capacitor/core": "^5.6.0",
+    "@capacitor/ios": "^5.6.0",
     "@vimeo/player": "^2.20.1",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-zip": "^3.1.0",
@@ -31,6 +31,9 @@
   },
   "type": "module",
   "devDependencies": {
+    "@capacitor/network": "^5.0.6",
+    "@capacitor/push-notifications": "^5.1.0",
+    "@capacitor/splash-screen": "^5.0.6",
     "@maplibre/maplibre-gl-leaflet": "^0.0.15"
   }
 }
