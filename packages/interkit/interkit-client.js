@@ -4,7 +4,7 @@ import { simpleDDPLogin } from 'simpleddp-plugin-login';
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
-import InterkitLiveReload from "./interkit-live-reload.js"
+// import InterkitLiveReload from "./interkit-live-reload.js"
 
 import { Capacitor } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
@@ -252,7 +252,9 @@ const versionCompare = (a, b) => {
 }
 
 const checkForUpdates = async () => {
+  return
 
+  /*
     let _config = get(config);
     let _projectId = get(projectId);
 
@@ -309,6 +311,7 @@ const checkForUpdates = async () => {
       console.log("online is same or older - we are on the newest available version, no update or switch needed");
     }
     return false;   
+  */
 }
 
 /**
