@@ -2,7 +2,9 @@
 
   import { Capacitor } from '@capacitor/core'
   import { Plugins } from '@capacitor/core'
-  const { SplashScreen, Network } = Plugins;
+  // const { SplashScreen, Network } = Plugins;
+  import { Network } from '@capacitor/network'
+  import { SplashScreen } from '@capacitor/splash-screen'
 
   import { InterkitClient } from '../'
   import { executeTrigger } from '../actions.js'
