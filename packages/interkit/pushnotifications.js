@@ -29,13 +29,7 @@ const enableHeartbeat = false
 const heartbeatDelay = 10000 // milliseconds
 
 const isPushNotificationsAvailable = () => {
-  console.log(
-    "Capacitor.isPluginAvailable('PushNotifications')",
-    Capacitor.isPluginAvailable('PushNotifications')
-  )
-  // FIXME
-  return true
-  // return Capacitor.isPluginAvailable('PushNotifications');
+  return Capacitor.isPluginAvailable('PushNotifications');
 }
 
 const addListeners = async () => {
