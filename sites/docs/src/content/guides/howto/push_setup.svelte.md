@@ -2,7 +2,15 @@
 
 ## Table of contents
 
-Note: You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
+<!-- TOC will consume any paragraph here, leave blank -->
+
+## Notes
+
+* You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
+* Please study the [Capacitor Push Notification API docs](https://capacitorjs.com/docs/apis/push-notifications#push-notifications-icon),
+  since we do not cover everything in this guide.
+  E.g. you might want to look into channels, foreground/background quirks,
+  and styling capabilities like badges, sounds...
 
 ## Google Firebase Services setup
 
@@ -57,7 +65,7 @@ end
 
 Then `npx cap update ios` to update new Pods. This might take a minute.
 
-````swift
+```swift
 // fooproject/ios/App/App/AppDelegate.swift
 
 import UIKit
@@ -131,6 +139,7 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
 * There is also an online tool: [romannurik.github.io/AndroidAssetStudio/](https://romannurik.github.io/AndroidAssetStudio/icons-notification.html).
 * Link the resource: edit `android/app/src/main/AndroidManifest.xml`, to the `<application>` node add this child node:  
   `<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/our_icon_name" />`  
+  See also relevant [Capacitor docs](https://capacitorjs.com/docs/apis/push-notifications#push-notifications-icon)
 * `npx cap sync android`
 * Compile, run, debug... done.
 * With more effort, full-color (over white-on-transparent) might be possible, or just re-coloring/hue-ing the white icon. Consider  
