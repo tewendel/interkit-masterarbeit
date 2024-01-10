@@ -142,7 +142,7 @@
   import '@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl.js';
   
   import { Plugins, Capacitor } from '@capacitor/core';
-  const { Geolocation, Permissions } = Plugins;
+  import { Geolocation } from '@capacitor/geolocation';
 
   // what to tell the user when there is no permission for gps
   export let permissionNotification;
@@ -334,12 +334,52 @@
 
   let lastErrorCode;
 
+  let geoPermission = false
+
+  const handleGeoPermissions = async () => {
+    if (geoPermission) return true
+    // Geolocation plugin is unimplemented on web, permissions will be handled by the browser.
+    // If user denies location in browser, Geolocation.watchPosition will fail with
+    //   GeolocationPositionError { message: 'User denied Geolocation', code: 1 }
+    // which could be caught; right now it just fails silently & harmlessly
+    if (!Capacitor.isNative) return true
+    try {
+      // no real need for Geolocation.checkPermissions(), requestPermissions will
+      // just wave us through...
+      const request = await Geolocation.requestPermissions({ permissions: 'location' })
+      // not sure about coarseLocation, double check if you differentiate or run into problems
+      console.log('Geolocation.requestPermissions', request)
+      if (request?.location === 'granted' || request?.coarseLocation === 'granted') {
+        return true
+      } else {
+        alert(permissionNotification)
+        return false
+      }
+    } catch (err) {
+      // rather not scan the err.message, assume location services disabled
+      // err === 'Location services are not enabled'
+      // when we just assume permissions were given (which we do!)
+      // on android, we get a more accurate error from Geolocation.watchPosition:
+      //   Missing the following permissions in AndroidManifest.xml: android.permission.ACCESS_FINE_LOCATION
+      console.info('Geolocation caught error, assuming location services disabled', err)
+      alert(enableGeolocationHint)
+      return false
+    }
+  }
+
   // active user position tracking
-  const activateGeoWatch = () => {
+  const activateGeoWatch = async () => {
 
     if(geoWatch) {
       console.log("position is already being tracked, aborting", geoWatch)
       return;
+    }
+
+    geoPermission = await handleGeoPermissions()
+
+    if (!geoPermission) {
+      console.log('activateGeoWatch: no geoPermission, bailing')
+      return
     }
 
     console.log("activating geoWatch")
@@ -514,29 +554,18 @@
   })
 
   const panToUserPosition = async () => {
-    if(Capacitor.isNative) {
-      let result = await Permissions.query({name: "geolocation"})
-      console.log("geo permission", JSON.stringify(result))
-      console.log("panning to", JSON.stringify(currentPosition))
-      if(result.state != "granted") {
-        alert(permissionNotification)
-      } else {
-        if(currentPosition) {
-          map.panTo(currentPosition, {animate: false})
-          map.setZoom(16)
-        } else {
-          // granted but not enabled
-          alert(enableGeolocationHint)
-          console.log("currentPosition", currentPosition)
-        }
-      }
-    } else {
-      if(currentPosition) {
-        console.log(currentPosition)
-        map.panTo(currentPosition, {animate: false})
-        map.setZoom(16)
-      }
+    geoPermission = await handleGeoPermissions()
+    if (!geoPermission) {
+      console.log('panToUserPosition: no geoPermission, bailing')
+      return
     }
+    if (!currentPosition) {
+      console.warn('panToUserPosition, but no currentPosition')
+      return
+    }
+    console.log('panToUserPosition', currentPosition)
+    map.panTo(currentPosition, {animate: false})
+    map.setZoom(16)
   }
 
   const zoomIn = async () => {
