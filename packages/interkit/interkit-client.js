@@ -4,7 +4,9 @@ import { simpleDDPLogin } from 'simpleddp-plugin-login';
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
-// import InterkitLiveReload from "./interkit-live-reload.js"
+/* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
+import InterkitLiveReload from "./interkit-live-reload.js"
+*/
 
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
@@ -250,10 +252,8 @@ const versionCompare = (a, b) => {
   if(aNumeric[1] < bNumeric[1]) return 1;
 }
 
+/* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
 const checkForUpdates = async () => {
-  return
-
-  /*
     let _config = get(config);
     let _projectId = get(projectId);
 
@@ -310,8 +310,8 @@ const checkForUpdates = async () => {
       console.log("online is same or older - we are on the newest available version, no update or switch needed");
     }
     return false;   
-  */
 }
+*/
 
 /**
 
@@ -701,9 +701,11 @@ const initApp = async options => {
   }
 
   let updating = false;
+  /* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
   if (Capacitor.isNative) {
     updating = await checkForUpdates();
   }
+  */
   if (!updating) {
     await connect()
     return true;
