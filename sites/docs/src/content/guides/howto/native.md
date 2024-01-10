@@ -33,6 +33,9 @@ In addition, change the *app identifier* in the following files
 
 **Warning:** changing the *app identifier* will currently only work if you also replace the `google-services.json` with info from firebase (see [push setup dedicated guide](/guides/push_setup) )
 
+Optionally, you can remove unneeded permissions from `/android/app/src/main/AndroidManifest.xml`,
+e.g. `<uses-permission android:name="android.permission.CAMERA" />`.
+
 ### iOS
 
 Change the *display name* and *bundle* in xcode (click App in the tree on the left)

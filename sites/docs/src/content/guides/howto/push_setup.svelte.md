@@ -27,7 +27,7 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
         3. "Add Firebase SDK": Choose version *7.11.0*. You only need to add "FirebaseMessaging"
         4. "Add initialisation code": Skip this step! Do **iOS setup** below instead
     * *Android*
-        1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `fooproject/android/app/`  
+        1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `projects/yourproject/android/app/`  
           (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
 
 ## Obtain APNs for iOS setup
@@ -36,10 +36,18 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
 2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account, a key is supposed to serve "all your apps".
 3. Plug it into Firebase Console: Project Settings › Cloud Messageing › Apple app configuration › Apple apps › Fooproject › Upload…
 
+## Install the plugin
+
+```
+cd projects/yourproject
+npm install --save @capacitor/push-notifications
+npx cap sync
+```
+
 ## Android setup
 
-Push and Firebase are enabled by default;
-but please do read "iOS setup" below and read the linked guide, it is helpful.
+Not much else to do, but
+please also read "iOS setup" below and read the linked guide, it is helpful.
 
 ## iOS setup
 
@@ -66,7 +74,7 @@ end
 Then `npx cap update ios` to update new Pods. This might take a minute.
 
 ```swift
-// fooproject/ios/App/App/AppDelegate.swift
+// projects/yourproject/ios/App/App/AppDelegate.swift
 
 import UIKit
 import Capacitor
