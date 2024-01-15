@@ -11,13 +11,13 @@
 There are several levels of customization for a theme. See also [Styling](/guides/quick-start/styling) for a general overview. 
 
 A theme consists of these elements:
-- a customs css file (file `static/theme/global.css`)
+- a custom css file (file `static/theme/global.css`)
 - custom javascript (file `static/theme/global.js`)
 - custom map style (URL)
 - custom assets that are referenced in the css file (files in `static/theme/assets/`), such as icons, background images, etc.
 - a style guide that explains how to generate media assets that fit the theme
 
-The files need to be places in the `static/theme` folder of your project. Themes are mostly project-specific at this point. The `Design` provides access to the installed theme.
+The files need to be placed in the `static/theme` folder of your project. Themes are mostly project-specific at this point. The `Design` tab provides access to the installed theme.
 
 ## Examples
 
@@ -91,7 +91,7 @@ The values are not part of the theme, but you can override the values in your th
 
 Required knowledge: Javascript.
 
-You can also create a cusom javascript in `static/theme/global.js`.
+You can also write custom Javascript Code in `static/theme/global.js`.
 
 ### README.md
 
@@ -163,14 +163,14 @@ A general learning from our outdoor projects is that dark backgrounds do not wor
     - locally
         1. clone a project locally with git (see below) and manually copy the `static/theme` folder into the cloned project
         2. test and iterate
-        3. Dont's git push because that would change the template
+        3. Don't git push because that would change the template
     - OR on interkit
         1. dumplicate a template
         2. Go to `Repository/Files` and copy the theme folder into the project
-        3. Tets and iterate, then download the improved theme from the folder
+        3. Test and iterate, then download the improved theme from the folder
     - OR if you have a local interkit running
         1. copy the theme to `repositories/themes` and restart interkit
-        2. duplicate template project and press `apply this theme`. Whenever you press this button, interkit copies the contents of the theme's folder into the project. This way you can easily test a change on a range of projects.
+        2. duplicate the template project and press `apply this theme`. Whenever you press this button, interkit copies the contents of the theme's folder into the project. This way you can easily test a change on a range of projects.
 6. Once the theme works fine on a range of different projects, copy it into the interkit repository in `repositories/themes`
 
 ### Local git workflow
