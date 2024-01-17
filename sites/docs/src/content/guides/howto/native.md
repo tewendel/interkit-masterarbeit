@@ -40,6 +40,26 @@ e.g. `<uses-permission android:name="android.permission.CAMERA" />`.
 
 Change the *display name* and *bundle* in xcode (click App in the tree on the left)
 
+### Re-creating capacitor directories/"platforms" (both Android and iOS)
+
+Some places recommend to re-create your `android`/`ios` directories if you severely mess up your Capacitor setup;
+or just to re-initialize it, e.g. after changing your bundleId.  
+This is not as trivial. The directories cannot be recreated completely without manual tweaks.  
+Generally, it works like this:
+
+```shell
+npm run build
+rm -rf ios # or, swap ios with android
+npx cap add ios
+export LANG=en_US.UTF-8 # only needed for ios
+npx cap sync ios
+```
+
+...but you might have to re-add permissions, like access to location, gps, camera etc.
+If your project is version controlled,
+check your `git diff` and restore all lines that relate to permissions,
+usually in `ios/App/App/Info.plist` and `android/app/src/main/AndroidManifest.xml`, respectively.
+
 ## Updating the app 
 
 Build the app bundle in /public
