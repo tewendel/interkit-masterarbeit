@@ -103,6 +103,7 @@ they should be included in your next build with the native dev tools
 
 see also: https://github.com/ionic-team/capacitor-assets/tree/cordova-res
 
+<!-- TODO unavailable without InterkitLiveReload
 
 ## Using live reload
 
@@ -111,6 +112,7 @@ interkit comes with a system that allows a native app to download newer versions
 - change the version in your `interkit.config` on the server 
 - on startup, the app checks if the version on the server is newer and downloads this
 
+-->
 
 
 ## Publish to the app stores
@@ -136,10 +138,16 @@ Additional info here: https://developer.apple.com/ios/submit/
 
 ### Android
 
+<!-- 
+
 Make sure you are using our fork of the cordova zip plugin - it prevents a "zip traversal vulnerability" that google detects during submission. Your package.json should contain
 ````json
 "cordova-plugin-zip": "github:bikubi/cordova-plugin-zip#a3855dfcd3baa9ff619a12dd08d3bbce57475a3e",
 ````
+
+-->
+
+<!-- should be unnecessary as of Capacitor v5
 
 In Android Studio, you will also need to add *android:exported="true"* to the application>activity node in `App/AndroidManifest.xml` and *android:exported="false"* to `capacitor-android/manifests/AndroidManifest.xml` to the service node with the intent-filter:
 ````java
@@ -148,7 +156,11 @@ In Android Studio, you will also need to add *android:exported="true"* to the ap
 ````
 https://github.com/ionic-team/capacitor/pull/5350/files
 
-You might have to change the targetSdkVersion located in `android/variables.gradle` (currently 31 is minimum for google play submissions).
+-->
+
+You might have to change the targetSdkVersion located in `android/variables.gradle` (currently 33 is minimum for google play submissions).
+
+<!-- again, TODO InterkitLiveReload
 
 If you have deleted and recreated the `android` folder `npx cap add android`, you need to add 2 lines to the MainActivity of your app in order for live reload to work. The MainActivity file is located at `android/app/src/main/java/interkit/app/starter/MainActivity.java` (or hoewver you changed the app name and path)
 - add `import com.getcapacitor.plugin.http.Http;` as a new line below the other `import` statements
@@ -161,9 +173,11 @@ If you have deleted and recreated the `android` folder `npx cap add android`, yo
     }});
   ```
 
+-->
+
 Build > Generate Signed Bundle/APK. You'll need to create a new key store in that same dialogue.
 Follow this guide for more information: 
-https://developer.android.com/studio/publish/app-signing#sign_release
+<https://developer.android.com/studio/publish/app-signing#sign_release>
 
 After the build, locate you app bundle, create a release in Google Play Console and upload it there.
 

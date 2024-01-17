@@ -4,11 +4,13 @@
  */
 
 // FIXME http plugin is deprecated+redundant since Capacitor v5
+// FIXME we will also need the cordova zip plugin back
 import '@capacitor-community/http';
 
 // FIXME plugin import works differently in Capacitor v5,
 //   please grep other files if you want to go by example
 import { Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+
 
 const { Filesystem } = Plugins;
 
