@@ -31,9 +31,17 @@ runcmd:
   - cp docker-compose.env.live.example .env
   # ... randomize passwords
   - ./env-randomize.sh
-  # ... set domain and password here!
-  - ./env-configure.sh -d interkit.app -p password
+  # set domain and password here!
+  # - replace "myinterkit.app" with your domain
+  # - replace "mypassword" with your password
+  - ./env-configure.sh -d myinterkit.app -p mypassword
   # docker compose setup
   - docker network create frontproxy
   - docker compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d
+  # setup swapfile 2GB
+  - fallocate -l 2G /swapfile
+  - chmod 600 /swapfile
+  - mkswap /swapfile
+  - swapon /swapfile
+  - echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
 
