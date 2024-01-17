@@ -57,7 +57,7 @@ please also read "iOS setup" below and read the linked guide, it is helpful.
 * **but** make sure you're on `v5`
 * Ignore the ionic and Angular bits, especially "Using the Capacitor Push Notification API" - this has been taken care of.
 * You can start at "Creating a Project for your App on Firebase" - there is a bit of overlap with our guide above.
-* **Crucially**, follow the CocoPods nd AppDelegate bits:
+* **Crucially**, follow the CocoPods and AppDelegate bits:
 
 ```Podfile
 #(XCode)/Pods/Podfile
