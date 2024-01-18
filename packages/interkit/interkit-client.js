@@ -4,11 +4,12 @@ import { simpleDDPLogin } from 'simpleddp-plugin-login';
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
+/* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
 import InterkitLiveReload from "./interkit-live-reload.js"
+*/
 
 import { Capacitor } from '@capacitor/core';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+import { Preferences } from '@capacitor/preferences';
 
 import util from './util.js';
 
@@ -251,8 +252,8 @@ const versionCompare = (a, b) => {
   if(aNumeric[1] < bNumeric[1]) return 1;
 }
 
+/* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
 const checkForUpdates = async () => {
-
     let _config = get(config);
     let _projectId = get(projectId);
 
@@ -310,6 +311,7 @@ const checkForUpdates = async () => {
     }
     return false;   
 }
+*/
 
 /**
 
@@ -671,13 +673,14 @@ const restoreUiSnapshot = id => {
 const initAuth = async () => {
   console.log('initAuth')
   try {
-    let userAuthObj = await Storage.get({ key: 'userAuth' })
+    let userAuthObj = await Preferences.get({ key: 'userAuth' })
     if (userAuthObj && userAuthObj.value) {
+      console.log('got userAuth from Preferences')
       userAuthObj = userAuthObj.value
     } else {
       console.log('moving legacy localStorage userAuth to persistent Capacitor Storage')
       userAuthObj = localStorage.getItem('userAuth')
-      await Storage.set({ key: 'userAuth', value: userAuthObj })
+      await Preferences.set({ key: 'userAuth', value: userAuthObj })
       localStorage.removeItem('userAuth')
     }
     userAuthObj = JSON.parse(userAuthObj)
@@ -698,9 +701,11 @@ const initApp = async options => {
   }
 
   let updating = false;
+  /* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
   if (Capacitor.isNative) {
     updating = await checkForUpdates();
   }
+  */
   if (!updating) {
     await connect()
     return true;

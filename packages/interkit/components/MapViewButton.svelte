@@ -27,18 +27,22 @@
   // subscribe to mapViews
   let mapViewsStore;
   onMount(async () => {
-    const sheetKey = util.getSheetKey(typeColumn)
-    mapViewsStore = await InterkitClient.getRowSubStore(sheetKey, { 
-      typeColumn, 
-      orderColumn,
-      titleColumn, 
-      imageColumn,
-      descriptionColumn,
-      labelColumn,
-      subtitleColumn,
-      tilesUrlColumn, 
-      mapBoxGLStyleColumn 
-    });
+    if (typeColumn) {
+      const sheetKey = util.getSheetKey(typeColumn)
+      mapViewsStore = sheetKey
+        ? await InterkitClient.getRowSubStore(sheetKey, { 
+          typeColumn, 
+          orderColumn,
+          titleColumn, 
+          imageColumn,
+          descriptionColumn,
+          labelColumn,
+          subtitleColumn,
+          tilesUrlColumn, 
+          mapBoxGLStyleColumn 
+        })
+        : null 
+    }
   })
   $: filters = mapViewsStore ? $mapViewsStore
     .filter(v => v.typeColumn == "filter")
