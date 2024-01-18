@@ -8,6 +8,15 @@
     const prefix = "SML:";
     console.log(prefix, ...args);
   }
+  function wrap(elem, wrapper) {
+    elem.parentNode.insertBefore(wrapper, elem);
+    wrapper.appendChild(elem);
+  }
+  function wrapInMarquee(elem) {
+    const marqueeContainer = document.createElement("div");
+    marqueeContainer.classList.add("marquee");
+    wrap(elem, marqueeContainer);
+  }
 
   // src/js/card.ts
   var mutationHandlerCard = () => {
@@ -70,6 +79,7 @@
 
   // src/global.ts
   console.info("S/M/L theme");
+  var breakLoop = false;
   (() => {
     const appElement = document.querySelector("#Theming");
     if (!appElement) {
@@ -99,15 +109,41 @@
     const handlePlay = (event) => {
       const mediaElem = event.target;
       mediaElem.addEventListener("timeupdate", handleProgress);
+      const titleElem = document.querySelector(".AudioPlayer__Title");
+      let wrapperWidth = 0;
+      let titleWidth = 0;
+      if (titleElem) {
+        const wrapper = titleElem.parentElement;
+        wrapperWidth = wrapper.getBoundingClientRect().width;
+        titleWidth = titleElem.getBoundingClientRect().width;
+      }
+      const maxScroll = titleWidth - wrapperWidth;
       const loop = () => {
-        if (mediaElem.paused || mediaElem.ended || mediaElem.error) {
+        if (breakLoop || mediaElem.paused || mediaElem.ended || mediaElem.error) {
           mediaElem.removeEventListener("timeupdate", handleProgress);
+          if (titleElem) {
+            titleElem.dataset.offset = "0";
+            titleElem.style.transform = "translateX(0px)";
+          }
           return;
         }
         handleProgress({ target: mediaElem });
+        if (titleElem && maxScroll > 0) {
+          let offset = titleElem.dataset.offset ? parseFloat(titleElem.dataset.offset) : 0;
+          offset -= 1;
+          if (offset < -maxScroll) {
+            offset = wrapperWidth;
+          }
+          titleElem.dataset.offset = offset.toString();
+          titleElem.style.transform = `translateX(${offset}px)`;
+        }
         requestAnimationFrame(loop);
       };
-      loop();
+      breakLoop = true;
+      requestAnimationFrame(() => {
+        breakLoop = false;
+        loop();
+      });
     };
     const handleRangeChange = (event) => {
       const rangeInput2 = event.target;
@@ -121,9 +157,22 @@
         updateBar(currentTime, duration);
       }
     };
+    const initAudioTitleMarquee = () => {
+      const titleElem = document.querySelector(".AudioPlayer__Title");
+      if (!titleElem) {
+        log("title not found");
+        return;
+      }
+      const parent = titleElem.parentElement;
+      if (!parent.classList.contains("marquee")) {
+        titleElem.style.textOverflow = "unset";
+        titleElem.style.overflow = "visible";
+        wrapInMarquee(titleElem);
+      }
+    };
     const initAudio = (audioPlayerMinimized, audioPlayerExpanded) => {
+      barMinimized = document.querySelector(`#${barMinimizedId}`);
       if (audioPlayerMinimized) {
-        barMinimized = document.querySelector(`#${barMinimizedId}`);
         if (!barMinimized) {
           barMinimized = document.createElement("div");
           barMinimized.id = barMinimizedId;
@@ -131,8 +180,12 @@
         } else {
           audioPlayerMinimized.parentNode.insertBefore(barMinimized, audioPlayerMinimized);
         }
+        barMinimized.style.visibility = "visible";
       }
       if (audioPlayerExpanded) {
+        if (barMinimized) {
+          barMinimized.style.visibility = "hidden";
+        }
         const bottomBar = document.querySelector(".AudioPlayer__BottomBar");
         rangeInput = document.querySelector(".AudioPlayer__BottomBar .AudioPlayer__Range__Input");
         barExpanded = document.querySelector(`#${barExpandedId}`);
@@ -171,12 +224,13 @@
         log("no media player found");
         return;
       } else {
-        log("media player found!");
+        log("found media player!");
       }
       const audioPlayerMinimized = document.querySelector(".AudioPlayer--minimised");
       const audioPlayerExpanded = document.querySelector(".AudioPlayer--expanded");
       initAudio(audioPlayerMinimized, audioPlayerExpanded);
-      const videoPlayerBottomBar = videoContainerElem.querySelector(".VideoPlayer__BottomBar");
+      initAudioTitleMarquee();
+      const videoPlayerBottomBar = document.querySelector(".VideoPlayer__BottomBar");
       initVideo(videoPlayerBottomBar);
       if (rangeInput) {
         rangeInput.step = "0.01";
@@ -216,10 +270,13 @@
     const observer = new MutationObserver((mutations_) => {
       const mutations = mutations_.filter((m) => {
         const elem = m.target;
-        if (elem.className.includes("leaflet")) {
+        if (elem.className.includes("leaflet") || elem.className.includes("leaflet-pane")) {
           return false;
         }
         if (elem.className.includes("LayoutShellAudio__AudioPlayer")) {
+          return false;
+        }
+        if (elem.className.includes("marquee")) {
           return false;
         }
         return true;

@@ -1,5 +1,5 @@
-#Theming :root,
-#Theming .Styling {
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+#Theming :root, #Theming .Styling {
   --color-text: rgb(0, 0, 0) !important;
   --color-text-strong: rgb(0, 0, 0) !important;
   --color-text-soft: rgb(0, 0, 0) !important;
@@ -97,36 +97,29 @@
   --distance-xl: 3rem !important;
   --distance-xxl: 4rem !important;
 }
-
 #Theming html {
   font-size: 16px;
 }
-
 #Theming * {
   border-radius: 0;
 }
-
 #Theming * {
   scrollbar-color: rgb(255, 255, 255) rgb(0, 0, 0);
 }
-
 #Theming *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 #Theming *::-webkit-scrollbar-track {
   background: rgb(255, 255, 255);
 }
-
 #Theming *::-webkit-scrollbar-thumb {
   background-color: rgb(0, 0, 0);
 }
-
 #Theming .icon-Full-Play {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Play.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Play.svg");
+  -webkit-mask-image: url("icons/Light/Full/Play.svg");
+  mask-image: url("icons/Light/Full/Play.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -136,11 +129,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Play {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Play.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Play.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Play.svg");
+  mask-image: url("icons/Light/Thin/Play.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -150,11 +142,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Pause {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Pause.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Pause.svg");
+  -webkit-mask-image: url("icons/Light/Full/Pause.svg");
+  mask-image: url("icons/Light/Full/Pause.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -164,11 +155,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Pause {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Pause.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Pause.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Pause.svg");
+  mask-image: url("icons/Light/Thin/Pause.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -178,11 +168,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-AR {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/AR.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/AR.svg");
+  -webkit-mask-image: url("icons/Light/Thin/AR.svg");
+  mask-image: url("icons/Light/Thin/AR.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -192,11 +181,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-AR {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/AR.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/AR.svg");
+  -webkit-mask-image: url("icons/Light/Full/AR.svg");
+  mask-image: url("icons/Light/Full/AR.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -206,11 +194,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Copy {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Copy.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Copy.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Copy.svg");
+  mask-image: url("icons/Light/Thin/Copy.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -220,11 +207,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Copy {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Copy.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Copy.svg");
+  -webkit-mask-image: url("icons/Light/Full/Copy.svg");
+  mask-image: url("icons/Light/Full/Copy.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -234,11 +220,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Dashboard {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dashboard.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dashboard.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Dashboard.svg");
+  mask-image: url("icons/Light/Thin/Dashboard.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -248,11 +233,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Dashboard {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dashboard.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dashboard.svg");
+  -webkit-mask-image: url("icons/Light/Full/Dashboard.svg");
+  mask-image: url("icons/Light/Full/Dashboard.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -262,11 +246,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Archiv {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Archiv.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Archiv.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Archiv.svg");
+  mask-image: url("icons/Light/Thin/Archiv.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -276,11 +259,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Archiv {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Archiv.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Archiv.svg");
+  -webkit-mask-image: url("icons/Light/Full/Archiv.svg");
+  mask-image: url("icons/Light/Full/Archiv.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -290,11 +272,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Map {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Map.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Map.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Map.svg");
+  mask-image: url("icons/Light/Thin/Map.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -304,11 +285,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Map {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Map.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Map.svg");
+  -webkit-mask-image: url("icons/Light/Full/Map.svg");
+  mask-image: url("icons/Light/Full/Map.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -318,11 +298,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Hint {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Hint.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Hint.svg");
+  -webkit-mask-image: url("icons/Light/Full/Hint.svg");
+  mask-image: url("icons/Light/Full/Hint.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -332,11 +311,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Hint {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Hint.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Hint.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Hint.svg");
+  mask-image: url("icons/Light/Thin/Hint.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -346,11 +324,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Social {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Social.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Social.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Social.svg");
+  mask-image: url("icons/Light/Thin/Social.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -360,11 +337,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Social {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Social.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Social.svg");
+  -webkit-mask-image: url("icons/Light/Full/Social.svg");
+  mask-image: url("icons/Light/Full/Social.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -374,11 +350,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Layer {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Layer.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Layer.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Layer.svg");
+  mask-image: url("icons/Light/Thin/Layer.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -388,11 +363,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Layer {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Layer.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Layer.svg");
+  -webkit-mask-image: url("icons/Light/Full/Layer.svg");
+  mask-image: url("icons/Light/Full/Layer.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -402,11 +376,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Location {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Location.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Location.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Location.svg");
+  mask-image: url("icons/Light/Thin/Location.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -416,11 +389,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Location {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Location.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Location.svg");
+  -webkit-mask-image: url("icons/Light/Full/Location.svg");
+  mask-image: url("icons/Light/Full/Location.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -430,11 +402,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Replay-30 {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Replay-30.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Replay-30.svg");
+  -webkit-mask-image: url("icons/Light/Full/Replay-30.svg");
+  mask-image: url("icons/Light/Full/Replay-30.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -444,11 +415,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Replay-30 {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Replay-30.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Replay-30.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Replay-30.svg");
+  mask-image: url("icons/Light/Thin/Replay-30.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -458,11 +428,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Forward-15 {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Forward-15.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Forward-15.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Forward-15.svg");
+  mask-image: url("icons/Light/Thin/Forward-15.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -472,11 +441,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Forward-15 {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Forward-15.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Forward-15.svg");
+  -webkit-mask-image: url("icons/Light/Full/Forward-15.svg");
+  mask-image: url("icons/Light/Full/Forward-15.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -486,11 +454,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Bookmark {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Bookmark.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Bookmark.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Bookmark.svg");
+  mask-image: url("icons/Light/Thin/Bookmark.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -500,11 +467,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Bookmark {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Bookmark.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Bookmark.svg");
+  -webkit-mask-image: url("icons/Light/Full/Bookmark.svg");
+  mask-image: url("icons/Light/Full/Bookmark.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -514,11 +480,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Settings {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Settings.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Settings.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Settings.svg");
+  mask-image: url("icons/Light/Thin/Settings.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -528,11 +493,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Settings {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Settings.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Settings.svg");
+  -webkit-mask-image: url("icons/Light/Full/Settings.svg");
+  mask-image: url("icons/Light/Full/Settings.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -542,11 +506,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-QR-Scan {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/QR-Scan.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/QR-Scan.svg");
+  -webkit-mask-image: url("icons/Light/Full/QR-Scan.svg");
+  mask-image: url("icons/Light/Full/QR-Scan.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -556,11 +519,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-QR-Scan {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/QR-Scan.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/QR-Scan.svg");
+  -webkit-mask-image: url("icons/Light/Thin/QR-Scan.svg");
+  mask-image: url("icons/Light/Thin/QR-Scan.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -570,11 +532,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-to_Gallery {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/to_Gallery.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/to_Gallery.svg");
+  -webkit-mask-image: url("icons/Light/Full/to_Gallery.svg");
+  mask-image: url("icons/Light/Full/to_Gallery.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -584,11 +545,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-to_Gallery {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/to_Gallery.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/to_Gallery.svg");
+  -webkit-mask-image: url("icons/Light/Thin/to_Gallery.svg");
+  mask-image: url("icons/Light/Thin/to_Gallery.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -598,11 +558,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Check {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Check.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Check.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Check.svg");
+  mask-image: url("icons/Light/Thin/Check.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -612,11 +571,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Check {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Check.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Check.svg");
+  -webkit-mask-image: url("icons/Light/Full/Check.svg");
+  mask-image: url("icons/Light/Full/Check.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -626,11 +584,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Close {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Close.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Close.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Close.svg");
+  mask-image: url("icons/Light/Thin/Close.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -640,11 +597,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Close {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Close.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Close.svg");
+  -webkit-mask-image: url("icons/Light/Full/Close.svg");
+  mask-image: url("icons/Light/Full/Close.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -654,11 +610,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Zoom-in {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Zoom-in.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Zoom-in.svg");
+  -webkit-mask-image: url("icons/Light/Full/Zoom-in.svg");
+  mask-image: url("icons/Light/Full/Zoom-in.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -668,11 +623,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Zoom-in {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Zoom-in.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Zoom-in.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Zoom-in.svg");
+  mask-image: url("icons/Light/Thin/Zoom-in.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -682,11 +636,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Warning {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Warning.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Warning.svg");
+  -webkit-mask-image: url("icons/Light/Full/Warning.svg");
+  mask-image: url("icons/Light/Full/Warning.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -696,11 +649,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Warning {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Warning.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Warning.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Warning.svg");
+  mask-image: url("icons/Light/Thin/Warning.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -710,11 +662,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Help {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Help.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Help.svg");
+  -webkit-mask-image: url("icons/Light/Full/Help.svg");
+  mask-image: url("icons/Light/Full/Help.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -724,11 +675,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Help {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Help.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Help.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Help.svg");
+  mask-image: url("icons/Light/Thin/Help.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -738,11 +688,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Arrow-Right {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Arrow-Right.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Arrow-Right.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Arrow-Right.svg");
+  mask-image: url("icons/Light/Thin/Arrow-Right.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -752,11 +701,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Arrow-Right {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Arrow-Right.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Arrow-Right.svg");
+  -webkit-mask-image: url("icons/Light/Full/Arrow-Right.svg");
+  mask-image: url("icons/Light/Full/Arrow-Right.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -766,11 +714,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Arrow-Left {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Arrow-Left.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Arrow-Left.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Arrow-Left.svg");
+  mask-image: url("icons/Light/Thin/Arrow-Left.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -780,11 +727,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Arrow-Left {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Arrow-Left.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Arrow-Left.svg");
+  -webkit-mask-image: url("icons/Light/Full/Arrow-Left.svg");
+  mask-image: url("icons/Light/Full/Arrow-Left.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -794,11 +740,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Chevron-Down {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chevron-Down.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chevron-Down.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Chevron-Down.svg");
+  mask-image: url("icons/Light/Thin/Chevron-Down.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -808,11 +753,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Dropdown {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dropdown.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dropdown.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Dropdown.svg");
+  mask-image: url("icons/Light/Thin/Dropdown.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -822,11 +766,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Chevron-Down {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chevron-Down.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chevron-Down.svg");
+  -webkit-mask-image: url("icons/Light/Full/Chevron-Down.svg");
+  mask-image: url("icons/Light/Full/Chevron-Down.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -836,11 +779,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Dropdown {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dropdown.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dropdown.svg");
+  -webkit-mask-image: url("icons/Light/Full/Dropdown.svg");
+  mask-image: url("icons/Light/Full/Dropdown.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -850,11 +792,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Chevron-Up {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chevron-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chevron-Up.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Chevron-Up.svg");
+  mask-image: url("icons/Light/Thin/Chevron-Up.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -864,11 +805,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Dropdown-Up {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dropdown-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Dropdown-Up.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Dropdown-Up.svg");
+  mask-image: url("icons/Light/Thin/Dropdown-Up.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -878,11 +818,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Chevron-Up {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chevron-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chevron-Up.svg");
+  -webkit-mask-image: url("icons/Light/Full/Chevron-Up.svg");
+  mask-image: url("icons/Light/Full/Chevron-Up.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -892,11 +831,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Dropdown-Up {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dropdown-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Dropdown-Up.svg");
+  -webkit-mask-image: url("icons/Light/Full/Dropdown-Up.svg");
+  mask-image: url("icons/Light/Full/Dropdown-Up.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -906,11 +844,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Camera {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Camera.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Camera.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Camera.svg");
+  mask-image: url("icons/Light/Thin/Camera.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -920,11 +857,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Camera {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Camera.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Camera.svg");
+  -webkit-mask-image: url("icons/Light/Full/Camera.svg");
+  mask-image: url("icons/Light/Full/Camera.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -934,11 +870,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Send {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Send.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Send.svg");
+  -webkit-mask-image: url("icons/Light/Full/Send.svg");
+  mask-image: url("icons/Light/Full/Send.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -948,11 +883,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Send {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Send.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Send.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Send.svg");
+  mask-image: url("icons/Light/Thin/Send.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -962,11 +896,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Chat {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chat.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Chat.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Chat.svg");
+  mask-image: url("icons/Light/Thin/Chat.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -976,11 +909,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Chat {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chat.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chat.svg");
+  -webkit-mask-image: url("icons/Light/Full/Chat.svg");
+  mask-image: url("icons/Light/Full/Chat.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -990,11 +922,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Filter {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Filter.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Filter.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Filter.svg");
+  mask-image: url("icons/Light/Thin/Filter.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1004,11 +935,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Filter {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Filter.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Filter.svg");
+  -webkit-mask-image: url("icons/Light/Full/Filter.svg");
+  mask-image: url("icons/Light/Full/Filter.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1018,11 +948,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Microphone {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Microphone.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Microphone.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Microphone.svg");
+  mask-image: url("icons/Light/Thin/Microphone.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1032,11 +961,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Microphone {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Microphone.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Microphone.svg");
+  -webkit-mask-image: url("icons/Light/Full/Microphone.svg");
+  mask-image: url("icons/Light/Full/Microphone.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1046,11 +974,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Menu {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Menu.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Menu.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Menu.svg");
+  mask-image: url("icons/Light/Thin/Menu.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1060,11 +987,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Menu {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Menu.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Menu.svg");
+  -webkit-mask-image: url("icons/Light/Full/Menu.svg");
+  mask-image: url("icons/Light/Full/Menu.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1074,11 +1000,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Plus {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Plus.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Plus.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Plus.svg");
+  mask-image: url("icons/Light/Thin/Plus.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1088,11 +1013,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Plus {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Plus.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Plus.svg");
+  -webkit-mask-image: url("icons/Light/Full/Plus.svg");
+  mask-image: url("icons/Light/Full/Plus.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1102,11 +1026,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Minus {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Minus.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Minus.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Minus.svg");
+  mask-image: url("icons/Light/Thin/Minus.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1116,11 +1039,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Minus {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Minus.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Minus.svg");
+  -webkit-mask-image: url("icons/Light/Full/Minus.svg");
+  mask-image: url("icons/Light/Full/Minus.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1130,11 +1052,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Fullscreen {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Fullscreen.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Fullscreen.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Fullscreen.svg");
+  mask-image: url("icons/Light/Thin/Fullscreen.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1144,11 +1065,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Fullscreen {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Fullscreen.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Fullscreen.svg");
+  -webkit-mask-image: url("icons/Light/Full/Fullscreen.svg");
+  mask-image: url("icons/Light/Full/Fullscreen.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1158,11 +1078,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Position {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Position.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Position.svg");
+  -webkit-mask-image: url("icons/Light/Full/Position.svg");
+  mask-image: url("icons/Light/Full/Position.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1172,11 +1091,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Position {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Position.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Position.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Position.svg");
+  mask-image: url("icons/Light/Thin/Position.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1186,11 +1104,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Date {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Date.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Date.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Date.svg");
+  mask-image: url("icons/Light/Thin/Date.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1200,11 +1117,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Date {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Date.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Date.svg");
+  -webkit-mask-image: url("icons/Light/Full/Date.svg");
+  mask-image: url("icons/Light/Full/Date.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1214,11 +1130,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Placeholder {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Placeholder.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Placeholder.svg");
+  -webkit-mask-image: url("icons/Light/Full/Placeholder.svg");
+  mask-image: url("icons/Light/Full/Placeholder.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1228,11 +1143,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Placeholder {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Placeholder.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Placeholder.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Placeholder.svg");
+  mask-image: url("icons/Light/Thin/Placeholder.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1242,11 +1156,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-More {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/More.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/More.svg");
+  -webkit-mask-image: url("icons/Light/Thin/More.svg");
+  mask-image: url("icons/Light/Thin/More.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1256,11 +1169,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-More {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/More.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/More.svg");
+  -webkit-mask-image: url("icons/Light/Full/More.svg");
+  mask-image: url("icons/Light/Full/More.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1270,11 +1182,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-Icon {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Icon.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/Icon.svg");
+  -webkit-mask-image: url("icons/Light/Thin/Icon.svg");
+  mask-image: url("icons/Light/Thin/Icon.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1284,11 +1195,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-Icon {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Icon.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Icon.svg");
+  -webkit-mask-image: url("icons/Light/Full/Icon.svg");
+  mask-image: url("icons/Light/Full/Icon.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1298,11 +1208,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Thin-GroupChat {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/GroupChat.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Thin/GroupChat.svg");
+  -webkit-mask-image: url("icons/Light/Thin/GroupChat.svg");
+  mask-image: url("icons/Light/Thin/GroupChat.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1312,11 +1221,10 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .icon-Full-GroupChat {
   background-image: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/GroupChat.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/GroupChat.svg");
+  -webkit-mask-image: url("icons/Light/Full/GroupChat.svg");
+  mask-image: url("icons/Light/Full/GroupChat.svg");
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -1326,16 +1234,13 @@
   -webkit-mask-position: center;
   mask-position: center;
 }
-
 #Theming .Icon {
   background-color: black;
 }
-
 #Theming .Icon--inverse {
   background-color: white;
   filter: none;
 }
-
 #Theming .Button {
   border: solid var(--border-width) var(--color-border);
   font: var(--font-button);
@@ -1343,11 +1248,9 @@
   font-weight: 600;
   text-transform: uppercase;
 }
-
 #Theming .Button--disabled {
   opacity: 0.5;
 }
-
 #Theming .Button--small {
   padding: 0;
   border: solid var(--border-width) var(--color-border);
@@ -1362,11 +1265,9 @@
   padding-right: 0.5rem;
   padding-top: 1px;
 }
-
 #Theming .Button--small .Icon {
   --height: 1rem !important;
 }
-
 #Theming .Button--medium {
   padding: calc(var(--inset-y) * 0.25rem) calc(var(--inset-x) * 1rem);
   border: solid var(--border-width) var(--color-border);
@@ -1375,11 +1276,9 @@
   font-weight: 600;
   text-transform: uppercase;
 }
-
 #Theming .Button--medium .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .Button--large {
   padding: calc(var(--inset-y) * 1rem) calc(var(--inset-x) * 1.5rem);
   border: solid var(--border-width) var(--color-border);
@@ -1388,102 +1287,82 @@
   font-weight: 600;
   text-transform: uppercase;
 }
-
 #Theming .Button--large .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .Button--primary {
   color: var(--color-text-button-primary);
   background-color: var(--color-background-button-primary);
   border-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--primary .Icon {
   background-color: var(--color-text-button-primary);
 }
-
 #Theming .Button--primary:active {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--secondary {
   color: var(--color-text-button);
   background-color: var(--color-background-button);
   border-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--secondary .Icon {
   background-color: var(--color-text-button-primary);
 }
-
 #Theming .Button--secondary:active {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--ghost {
   color: var(--color-background-button-primary);
   background-color: transparent;
   border-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--ghost .Icon {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--ghost:active {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .Button--link {
   color: var(--color-text-button);
   background-color: transparent;
   border-color: transparent;
 }
-
 #Theming .Button--link .Icon {
   background-color: var(--color-text-button);
 }
-
 #Theming .Button--link:active {
   color: var(--color-background-button-primary);
 }
-
 #Theming .Button--danger {
   color: var(--color-text-button);
   background-color: var(--color-background-button-danger);
   border-color: var(--color-background-button-danger);
 }
-
 #Theming .Button--danger .Icon {
   background-color: var(--color-text-button);
 }
-
 #Theming .InlineAudioButton {
   border: solid var(--border-width) var(--color-border);
 }
-
 #Theming .InlineAudioButton .icon-Full-Close {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Close.svg");
+  mask-image: url("icons/Dark/Thin/Close.svg");
 }
-
 #Theming .PopoutAudioButton .icon-Thin-Play {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Play.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Play.svg");
+  -webkit-mask-image: url("icons/Dark/Full/Play.svg");
+  mask-image: url("icons/Dark/Full/Play.svg");
 }
-
 #Theming .PopoutAudioButton .icon-Thin-Pause {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Pause.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Pause.svg");
+  -webkit-mask-image: url("icons/Dark/Full/Pause.svg");
+  mask-image: url("icons/Dark/Full/Pause.svg");
 }
-
 #Theming .Label {
   padding: 0;
   padding: 0;
@@ -1499,55 +1378,43 @@
   padding-right: 0.5rem;
   padding-top: 1px;
 }
-
 #Theming .Label .Icon {
   --height: 1rem !important;
 }
-
 #Theming .Label--typeicon {
   width: 22px;
   height: 22px;
   padding: 0;
 }
-
-#Theming .Label--typeicon.Label--variantnormal .Icon,
-#Theming .Label--typeicon.Label--variantsoft .Icon {
+#Theming .Label--typeicon.Label--variantnormal .Icon, #Theming .Label--typeicon.Label--variantsoft .Icon {
   filter: none;
 }
-
 #Theming .Label--variantstrong {
   background-color: var(--color-background-label2);
   color: var(--color-text-label2);
 }
-
 #Theming .Label--variantstrong .Icon {
   background-color: var(--color-text-label2);
 }
-
 #Theming .Label--variantnormal {
   color: var(--color-text-label1);
   background-color: var(--color-background-label1);
 }
-
 #Theming .Label--variantnormal .Icon {
   background-color: var(--color-text-label1);
 }
-
 #Theming .Label--variantsoft {
   color: var(--color-text);
   border-color: transparent;
   background-color: transparent;
 }
-
 #Theming .Label--variantsoft .Icon {
   background-color: var(--color-text);
 }
-
 #Theming .LangSwitch {
   font-size: 0.75rem;
   height: 22px;
 }
-
 #Theming .LangSwitch .LangSwitch__Select {
   font-weight: 500;
   font-size: 0.75rem;
@@ -1555,20 +1422,18 @@
   border-width: var(--border-width);
   background-size: 0.75rem;
   background-position-x: calc(100% - 9.5px);
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Chevron-Down.svg");
+  background-image: url("icons/Dark/Full/Chevron-Down.svg");
   background-position-y: calc(50% + 1px);
   padding: calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 2.75rem) calc(var(--inset-y) * 0.5rem) calc(var(--inset-x) * 0.6rem);
   padding-top: 0;
   padding-bottom: 0;
   margin-right: calc(-1 * var(--border-width));
 }
-
 #Theming .LangSwitch .LangSwitch__Select:focus {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Chevron-Down.svg");
+  background-image: url("icons/Light/Full/Chevron-Down.svg");
 }
-
 #Theming .LangSwitch::after {
   content: "";
   display: block;
@@ -1577,24 +1442,19 @@
   background-color: rgb(0, 0, 0);
   left: -2.15625rem;
 }
-
 #Theming .LangSwitch:focus-within::after {
   background-color: rgb(255, 255, 255);
 }
-
 #Theming .MessageIndicator .Label {
   font-weight: 600;
 }
-
 #Theming .MessageIndicator .MessageIndicator__Time {
   font-weight: 600;
 }
-
 #Theming .NavButton {
   width: unset;
   gap: 0;
 }
-
 #Theming .NavButton .NavButton__Text {
   padding: 0;
   border: solid var(--border-width) var(--color-border);
@@ -1613,15 +1473,12 @@
   border-color: var(--border-color);
   background-color: transparent;
 }
-
 #Theming .NavButton .NavButton__Text .Icon {
   --height: 1rem !important;
 }
-
 #Theming .NavButton .NavButton__Icon {
   background-color: transparent;
 }
-
 #Theming .NavButton--withicon .NavButton__Icon {
   width: 28px;
   height: 28px;
@@ -1631,17 +1488,14 @@
   padding: 0;
   overflow: hidden;
 }
-
 #Theming .NavButton--withicon .NavButton__Icon .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .NavButton--active .NavButton__Text {
   color: var(--color-text-button-primary);
   background-color: var(--color-background-button-primary);
   border-color: var(--color-background-button-primary);
 }
-
 #Theming .PictureBook__PaginationItem {
   border: solid var(--border-width) var(--color-border);
   width: 12px;
@@ -1649,7 +1503,6 @@
   border-radius: 12px;
   box-sizing: border-box;
 }
-
 #Theming .switch {
   background-image: none;
   height: 18px;
@@ -1658,7 +1511,6 @@
   border-color: rgb(0, 0, 0);
   width: 24px;
 }
-
 #Theming .switch::after {
   content: "";
   display: block;
@@ -1673,20 +1525,15 @@
   left: 0;
   top: calc(-1 * var(--border-width));
 }
-
 #Theming .switch.on::after {
   left: 24px;
   background-color: rgb(0, 255, 0);
 }
-
 #Theming .Tab {
   border-width: 4px;
   font-size: 16px;
 }
-
-#Theming .TabBar .slider .Tab,
-#Theming .TabBar .slider .Tab:first-child,
-#Theming .TabBar .slider .Tab:last-child {
+#Theming .TabBar .slider .Tab, #Theming .TabBar .slider .Tab:first-child, #Theming .TabBar .slider .Tab:last-child {
   border-top-width: 4px !important;
   border-bottom-width: 4px !important;
   border-left-width: 4px !important;
@@ -1694,43 +1541,34 @@
   border-left: 4px solid var(--color-border-button-primary) !important;
   border-right: 4px solid var(--color-border-button-primary) !important;
 }
-
 #Theming .TabBar .slider .Tab:not(:last-child) {
   margin-right: calc(-0.5 * 4px);
 }
-
 #Theming .TabBar .slider .Tab:not(:first-child) {
   margin-left: calc(-0.5 * 4px);
 }
-
 #Theming .TabBar .slider .Tab.Tab--active {
   border-color: transparent !important;
   background-color: rgb(255, 255, 255) !important;
   color: rgb(0, 0, 0) !important;
   font-weight: 600;
 }
-
 #Theming .ARViewer .ARViewer__Close .Button {
   width: 2rem;
   height: 2rem;
 }
-
 #Theming .AudioPlayer {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
 }
-
-#Theming .AudioPlayer .AudioPlayer__Time .currentTime,
-#Theming .AudioPlayer .AudioPlayer__Time .duration {
+#Theming .AudioPlayer .AudioPlayer__Time .currentTime, #Theming .AudioPlayer .AudioPlayer__Time .duration {
   font-weight: 600;
   color: rgb(255, 255, 255);
 }
-
 #Theming .AudioPlayer .AudioPlayer__Title {
   font-weight: 400;
   color: rgb(255, 255, 255);
 }
-
 #Theming .AudioPlayer .Button {
   background-color: transparent;
   border-color: transparent;
@@ -1738,40 +1576,33 @@
   width: 2rem !important;
   padding: 0 !important;
 }
-
 #Theming .AudioPlayer .Button .Icon {
   --height: 1.5rem !important;
   background-color: rgb(255, 255, 255);
   background-image: none;
 }
-
 #Theming .AudioPlayer .AudioPlayer__ExpandCollapse .Icon.icon-arrow-up {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Up.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Chevron-Up.svg");
+  mask-image: url("icons/Dark/Thin/Chevron-Up.svg");
 }
-
 #Theming .AudioPlayer .AudioPlayer__ExpandCollapse .Icon.icon-arrow-down {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Down.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Down.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Chevron-Down.svg");
+  mask-image: url("icons/Dark/Thin/Chevron-Down.svg");
 }
-
 #Theming .AudioPlayer .AudioPlayer__Content {
   overflow-y: auto;
 }
-
 #Theming .AudioPlayer--expanded {
   z-index: 2 !important;
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__Range input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1781,7 +1612,6 @@
   border-radius: 50%;
   border: none;
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__Range input[type=range]::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1791,64 +1621,51 @@
   border-radius: 50%;
   border: none;
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__Range__Input {
   height: 4px;
   background-color: rgb(255, 255, 255);
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__Controls .AudioPlayer__CenterControls {
   gap: 24px;
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__ExpandCollapse {
   width: 0;
   overflow-x: visible;
 }
-
 #Theming .AudioPlayer--expanded .AudioPlayer__BottomBar .AudioPlayer__ExpandCollapse .Button {
   margin-left: -32px;
   transform: translateX(8px);
 }
-
 #Theming .VideoPlayer {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .VideoPlayer__Close .Button {
   width: 32px;
   height: 32px;
   background-color: transparent;
   border-color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .VideoPlayer__Close .Button .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .VideoPlayer .VideoPlayer__Close .Button .Icon.icon-Full-Close {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Close.svg");
+  mask-image: url("icons/Dark/Thin/Close.svg");
 }
-
 #Theming .VideoPlayer .VideoPlayer__Close .Button .Icon {
   background-color: rgb(255, 255, 255);
 }
-
-#Theming .VideoPlayer .VideoPlayer__Time .currentTime,
-#Theming .VideoPlayer .VideoPlayer__Time .duration {
+#Theming .VideoPlayer .VideoPlayer__Time .currentTime, #Theming .VideoPlayer .VideoPlayer__Time .duration {
   font-weight: 600;
   color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .VideoPlayer__Title {
   font-weight: 400;
   color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .Button {
   background-color: transparent;
   border-color: transparent;
@@ -1856,36 +1673,30 @@
   width: 2rem !important;
   padding: 0 !important;
 }
-
 #Theming .VideoPlayer .Button .Icon {
   --height: 1.5rem !important;
   background-color: rgb(255, 255, 255);
   background-image: none;
 }
-
 #Theming .VideoPlayer .AudioPlayer__ExpandCollapse .Icon.icon-arrow-up {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Up.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Up.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Chevron-Up.svg");
+  mask-image: url("icons/Dark/Thin/Chevron-Up.svg");
 }
-
 #Theming .VideoPlayer .AudioPlayer__ExpandCollapse .Icon.icon-arrow-down {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Down.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Chevron-Down.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Chevron-Down.svg");
+  mask-image: url("icons/Dark/Thin/Chevron-Down.svg");
 }
-
 #Theming .VideoPlayer .AudioPlayer__Content {
   overflow-y: auto;
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__Range input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1895,7 +1706,6 @@
   border-radius: 50%;
   border: none;
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__Range input[type=range]::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1905,84 +1715,66 @@
   border-radius: 50%;
   border: none;
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__Range__Input {
   height: 4px;
   background-color: rgb(255, 255, 255);
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__Controls .VideoPlayer__CenterControls {
   gap: 24px;
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__ExpandCollapse {
   width: 0;
   overflow-x: visible;
 }
-
 #Theming .VideoPlayer .VideoPlayer__BottomBar .VideoPlayer__ExpandCollapse .Button {
   margin-left: -32px;
   transform: translateX(8px);
 }
-
 #Theming .ButtonBar {
   margin: 0;
   width: 100%;
 }
-
 #Theming .ButtonBar__HelpText {
   padding: 0.5rem;
 }
-
 #Theming .Chat {
   background-color: rgb(255, 255, 255);
 }
-
 #Theming .Chat .Message--user .Bubble {
   border: solid var(--border-width) var(--color-border);
   color: rgb(255, 255, 255);
 }
-
 #Theming .Chat .Message--user.Message--audio .Message__Contents {
   padding: 0;
   filter: invert(1);
 }
-
 #Theming .Chat .Message--other .Bubble {
   border: solid var(--border-width) var(--color-border);
 }
-
 #Theming .Chat .Message--other.Message--audio .Message__Contents {
   padding: 0;
 }
-
 #Theming .Chat .Message--audio .InlineAudioButton {
   border: none;
 }
-
 #Theming .Chat .MessageDate {
   font-weight: 600;
   position: relative;
   top: var(--distance-s);
 }
-
 #Theming .Chat .Message:not(.Message--lastFromSender) {
   margin-bottom: var(--distance-m-l);
 }
-
 #Theming .Chat .Message.Message--lastFromSender {
   margin-bottom: var(--distance-m);
 }
-
 #Theming .Chat .Bubble {
   overflow: visible;
 }
-
 #Theming .Chat .Bubble .Message__Choices .Message__Choice .Button--selected {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
 }
-
 #Theming .Chat .Bubble::after {
   content: "";
   position: absolute;
@@ -1994,131 +1786,100 @@
   background-position: center;
   z-index: 1;
 }
-
 #Theming .Chat .Bubble.Bubble--typeme::after {
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Chat-Bubble-Arrow_full.svg");
+  background-image: url("icons/Chat-Bubble-Arrow_full.svg");
   left: 100%;
   transform: translateX(-100%);
   margin-left: -5px;
 }
-
 #Theming .Chat .Bubble.Bubble--typeother::after {
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Chat-Bubble-Arrow.svg");
+  background-image: url("icons/Chat-Bubble-Arrow.svg");
   margin-left: 5px;
 }
-
-#Theming .Chat .Bubble.Bubble--messagetypechoice,
-#Theming .Chat .Bubble.Bubble--messagetyperequestLocation {
+#Theming .Chat .Bubble.Bubble--messagetypechoice, #Theming .Chat .Bubble.Bubble--messagetyperequestLocation {
   background-color: var(--color-background-highlight);
   border-color: var(--color-background-highlight) !important;
 }
-
-#Theming .Chat .Bubble.Bubble--messagetypechoice::after,
-#Theming .Chat .Bubble.Bubble--messagetyperequestLocation::after {
+#Theming .Chat .Bubble.Bubble--messagetypechoice::after, #Theming .Chat .Bubble.Bubble--messagetyperequestLocation::after {
   display: none;
 }
-
 #Theming .Chat .Bubble.Bubble--messagetypetext .Message__Contents {
   padding: 1rem;
   padding-top: 0.6875em;
   padding-bottom: 0.6875em;
 }
-
 #Theming .Chat .MessageTyping .Bubble::after {
   display: none;
 }
-
 #Theming .Chat .MessageTyping .MessageTyping__inner {
   padding: 0;
 }
-
 #Theming .Chat .MessageTyping .MessageTyping__Dots {
   border-radius: 100%;
 }
-
 @keyframes typingdot {
   0% {
     background: var(--color-text);
   }
-
   40% {
     background: var(--color-background-highlight);
   }
-
   80% {
     background: var(--color-text);
   }
 }
-
-#Theming .Chat .MessageTyping .MessageTyping__Dots,
-#Theming .Chat .MessageTyping .MessageTyping__Dots::before,
-#Theming .Chat .MessageTyping .MessageTyping__Dots::after {
+#Theming .Chat .MessageTyping .MessageTyping__Dots, #Theming .Chat .MessageTyping .MessageTyping__Dots::before, #Theming .Chat .MessageTyping .MessageTyping__Dots::after {
   animation-name: typingdot !important;
   animation-duration: var(--duration) !important;
   animation-iteration-count: infinite !important;
 }
-
 #Theming .Chat .MessageTyping .MessageTyping__Dots::before {
   animation-delay: calc(var(--duration) * 0.5);
 }
-
 #Theming .Chat .MessageTyping .MessageTyping__Dots {
   animation-delay: calc(var(--duration) * 0.25);
 }
-
 #Theming .Chat .MessageTyping .MessageTyping__Dots::after {
   animation-delay: 0;
 }
-
 #Theming .Chat .Chat__Input {
   border-width: 0;
   filter: invert(1);
 }
-
 #Theming .Chat .Chat__Input .ChatInput__Input {
   margin-right: var(--distance-s);
 }
-
-#Theming .Chat .Chat__Input .ChatInput__Input+.Button {
+#Theming .Chat .Chat__Input .ChatInput__Input + .Button {
   width: 40px;
   height: 40px;
   position: relative;
   left: -1px;
 }
-
 #Theming .ListItem .ListItem__Text {
   font-size: 1rem;
 }
-
 #Theming .ListItem .ListItem__Icon .Icon {
   --height: 1rem !important;
 }
-
 #Theming .MapLayerOverlay .MapLayerOverlay__Info *:not(.Icon) {
   color: rgb(0, 0, 0);
 }
-
 #Theming .MapLayerOverlay .MapLayerOverlay__Info .Icon {
   background-color: rgb(0, 0, 0) !important;
 }
-
 #Theming .MapLayerOverlay .MapLayerOverlay__Cards .Card .Card__content {
   color: rgb(0, 0, 0);
 }
-
 #Theming .MapRenderer .MapRenderer__Map canvas {
   filter: invert(1);
 }
-
 #Theming .MapRenderer .MapRenderer__MarkerTitle {
   filter: invert(1);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls {
   bottom: 50%;
   transform: translateY(50%);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .Button {
   height: 2rem;
   width: 2rem;
@@ -2128,61 +1889,48 @@
   border-color: var(--color-background-button-primary);
   border-color: rgb(0, 0, 0);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .Button .Icon {
   background-color: var(--color-text-button-primary);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .Button:active {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__ZoomIn {
   margin: 0;
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__ZoomIn .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__ZoomOut {
   margin: 0;
   margin-top: var(--distance-s);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__ZoomOut .Icon {
   --height: 1.5rem !important;
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__Locate {
   margin: 0;
   margin-top: var(--distance-l);
 }
-
 #Theming .MapRenderer .MapRenderer__Controls .MapRenderer__Locate .Icon {
   --height: calc(1.13 * 1.5rem) !important;
 }
-
 #Theming .MapRenderer .MapRenderer__Markers {
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Light/Full/Location.svg");
+  background-image: url("icons/Light/Full/Location.svg");
 }
-
 #Theming .MapRenderer .MapRenderer__Markers .MapRenderer__MarkersContent {
   background-color: rgb(0, 0, 0);
   color: rgb(0, 255, 0);
 }
-
 #Theming .MapRenderer .MapRenderer__Markers .MapRenderer__MarkersContent .MapRenderer__Checkmark {
   border-radius: 100%;
   background-size: 0.65rem;
-  background-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Full/Check.svg");
+  background-image: url("icons/Dark/Full/Check.svg");
 }
-
 #Theming .MapRenderer .MapRenderer__Markers .MapRenderer__MarkersContent--selected {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 255, 0);
 }
-
 #Theming .MapRenderer .MapRenderer__Markers:not(.no-frame) .MapRenderer__MarkersContent::after {
   left: calc(50% - 0.5rem);
   width: 1rem;
@@ -2192,18 +1940,15 @@
   border-left: 0.5rem solid transparent;
   border-right: 0.5rem solid transparent;
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup {
   padding: 0;
   bottom: 0;
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup .MapSimple__MarkerPopupClose {
   padding-left: 0.5rem;
   position: static;
   margin-bottom: 0.5rem;
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup .MapSimple__MarkerPopupClose .Button {
   padding: 0;
   border: solid var(--border-width) var(--color-border);
@@ -2221,38 +1966,30 @@
   background-color: var(--color-background-button-primary);
   border-color: var(--color-background-button-primary);
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup .MapSimple__MarkerPopupClose .Button .Icon {
   --height: 1rem !important;
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup .MapSimple__MarkerPopupClose .Button .Icon {
   background-color: var(--color-text-button-primary);
 }
-
 #Theming .MapSimple .MapSimple__MarkerPopup .MapSimple__MarkerPopupClose .Button:active {
   background-color: var(--color-background-button-primary);
 }
-
 #Theming .MapViewButton.MapViewButton--stateselected {
   background-color: var(--color-background-button-primary);
   color: var(--color-text-button-primary);
 }
-
 #Theming .MapViewButton.MapViewButton--stateselected .Icon {
   background-color: var(--color-text-button-primary) !important;
 }
-
 #Theming .FilterControls {
   padding: 0;
   background-color: rgb(0, 0, 0);
 }
-
 #Theming .FilterControls .FilterControls__Segments {
   padding: 0;
   padding-bottom: 0.5rem;
 }
-
 #Theming .FilterControls .FilterControls__Segments .FilterSegment {
   padding: 0;
   border: solid var(--border-width) var(--color-border);
@@ -2268,25 +2005,20 @@
   padding-top: 1px;
   text-transform: none;
 }
-
 #Theming .FilterControls .FilterControls__Segments .FilterSegment .Icon {
   --height: 1rem !important;
 }
-
 #Theming .FilterControls .FilterControls__Segments .FilterSegment.Filtersegment--stateselected {
   background-color: rgb(0, 255, 0);
   color: rgb(0, 0, 0);
 }
-
 #Theming .FilterControls .FilterControls__Segments .FilterSegment.Filtersegment--stateenabled {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
 }
-
 #Theming .FilterControls .FilterControls__Segments .FilterSegment .Icon {
   background-color: rgb(0, 0, 0);
 }
-
 #Theming .NavBar {
   height: unset;
   gap: 0.5rem;
@@ -2298,42 +2030,44 @@
   justify-content: space-between;
   align-items: center;
 }
-
-#Theming .Overlay>.Absolute>.Button {
+#Theming .Overlay > .Absolute > .Button {
   width: 32px;
   height: 32px;
 }
-
-#Theming .Overlay>.Absolute>.Button .Icon {
+#Theming .Overlay > .Absolute > .Button .Icon {
   --height: 1.5rem !important;
 }
-
-#Theming .Overlay>.Absolute>.Button .Icon.icon-Full-Close {
+#Theming .Overlay > .Absolute > .Button .Icon.icon-Full-Close {
   background-image: none;
   filter: none;
-  -webkit-mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
-  mask-image: url("https://rulesrulesrules.studio/_/interkit/static/theme/icons/Dark/Thin/Close.svg");
+  -webkit-mask-image: url("icons/Dark/Thin/Close.svg");
+  mask-image: url("icons/Dark/Thin/Close.svg");
 }
-
 #Theming .Slider .Slider__Slider .Slider__Slide {
   padding: 0;
   padding-bottom: 0.5rem;
 }
-
 #Theming .TabBar {
   display: table;
 }
-
+#Theming .Tile .Tile__Header {
+  row-gap: 0.25rem;
+}
 #Theming .Card .header-wrapper .Card__image {
   margin: 0;
 }
-
 #Theming .Card .header-wrapper .Card__header {
   padding: 0;
   justify-content: flex-start;
   /* .CardHeader__Row3 */
 }
-
+#Theming .Card .header-wrapper .Card__header .CardHeader__Headline {
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row1,
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row2,
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row3,
@@ -2341,7 +2075,6 @@
   margin: 0;
   padding: 0;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row1 .Label {
   border: none;
   padding: 0;
@@ -2350,49 +2083,39 @@
   margin-right: 1rem;
   background-color: transparent;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row2 .CardHeader__Headline,
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row2 .CardHeader__HeadlineChips {
   padding: 0;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row2 .CardHeader__Headline {
   margin-right: 1rem;
   flex: 1;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row2 .CardHeader__HeadlineChips {
   flex-grow: 0;
   margin-top: 3px;
   align-self: flex-start;
   flex-wrap: nowrap;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row1+.CardHeader__Row2 .CardHeader__Headline {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row1 + .CardHeader__Row2 .CardHeader__Headline {
   padding-top: 0.2rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3 .Label {
   margin-right: 0.5rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3 .CardHeader__Subtitle2 {
   font-weight: 600;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row1+.CardHeader__Row3.row-3 {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row1 + .CardHeader__Row3.row-3 {
   padding-top: 0.5rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row2+.CardHeader__Row3.row-3 {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row2 + .CardHeader__Row3.row-3 {
   padding-top: 0.3rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .row-4 {
   display: flex;
   align-items: baseline;
 }
-
 #Theming .Card .header-wrapper .Card__header .row-4 .Label {
   border: unset;
   padding: 0;
@@ -2412,138 +2135,107 @@
   display: inline-block;
   margin-right: 0.5rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .row-4 .Label .Icon {
   --height: 1rem !important;
 }
-
 #Theming .Card .header-wrapper .Card__header .row-4 .Label .Icon {
   background-color: var(--color-text-label1);
 }
-
 #Theming .Card .header-wrapper .Card__header .row-4 .Cardheader__Subtitle3 {
   font-weight: 400;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row1+.row-4 {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row1 + .row-4 {
   padding-top: 0.5rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row2+.row-4 {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row2 + .row-4 {
   padding-top: 0.3rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3+.row-4 {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3 + .row-4 {
   padding-top: 0.5rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader__Description {
   padding: 0;
   margin: 0;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row1+.CardHeader__Description {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row1 + .CardHeader__Description {
   margin-top: 0.5rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row2+.CardHeader__Description {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row2 + .CardHeader__Description {
   margin-top: 0.3rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3+.CardHeader__Description {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-3 + .CardHeader__Description {
   margin-top: 0.5rem;
 }
-
-#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-4+.CardHeader__Description {
+#Theming .Card .header-wrapper .Card__header .CardHeader__Row3.row-4 + .CardHeader__Description {
   margin-top: 0.5rem;
 }
-
 #Theming .Card .header-wrapper .Card__header .CardHeader {
   padding: 0;
 }
-
 #Theming .Card .header-wrapper .CardHeader--variantfull .CardHeader__Headline {
   font: var(--font-content-headline-4);
 }
-
 #Theming .Card .header-wrapper .CardHeader--variantlarge .CardHeader__Headline {
   font: var(--font-content-headline-2);
 }
-
 #Theming .Card .header-wrapper .CardHeader--variantmedium .CardHeader__Headline {
   font: var(--font-content-headline-3);
 }
-
 #Theming .Card .header-wrapper .CardHeader--variantsmall .CardHeader__Headline {
   font: var(--font-content-headline-4);
 }
-
 #Theming .Card .header-wrapper .CardHeader--variantextra-small .CardHeader__Headline {
   font: var(--font-content-headline-5);
 }
-
 #Theming .Card .Card__content {
   padding: 0;
   margin: 0;
   font: var(--font-content-body-1);
 }
-
 #Theming .Card .Card__content:not(:empty) {
   border-top: solid var(--border-width) var(--color-border);
   padding-top: 1rem;
   margin-top: 0.5rem;
 }
-
 #Theming .Card.small .header-wrapper .Card__image {
   width: 6rem;
   height: 6rem;
   margin-right: 0.5rem;
 }
-
 #Theming .Card.small .header-wrapper .CardHeader {
   padding-top: 0;
 }
-
 #Theming .Card.extra-small .header-wrapper .Card__image {
   width: 4rem;
   height: 4rem;
   margin-right: 0.5rem;
 }
-
 #Theming .Card.extra-small .header-wrapper .CardHeader {
   padding-top: 0;
 }
-
 #Theming .Card.medium .header-wrapper {
   display: block;
 }
-
 #Theming .Card.medium .header-wrapper .Card__image {
   width: unset;
   height: unset;
 }
-
 #Theming .Card.medium .header-wrapper .Card__image .AspectRatio {
   --aspect-ratio: 50% !important;
 }
-
 #Theming .Card.large .Card__image .AspectRatio {
   --aspect-ratio: 100% !important;
 }
-
 #Theming .Card.full {
   position: relative;
 }
-
 #Theming .Card.full .Card__image {
   margin-left: -1rem;
   margin-right: -1rem;
 }
-
 #Theming .Card.full .Card__image .AspectRatio {
   --aspect-ratio: 100% !important;
 }
-
 #Theming .Card.full .image-headline-overlay {
   z-index: 1;
   display: block;
@@ -2560,77 +2252,64 @@
   font: var(--font-content-headline-2);
   hyphens: auto;
 }
-
-#Theming .Card.full .CardHeader>*:first-child,
-#Theming .Card.large .CardHeader>*:first-child,
-#Theming .Card.medium .CardHeader>*:first-child {
+#Theming .Card.full .CardHeader > *:first-child, #Theming .Card.large .CardHeader > *:first-child, #Theming .Card.medium .CardHeader > *:first-child {
   margin-top: 0.5rem;
 }
-
 #Theming .DataCard {
   padding: 1rem;
 }
-
 #Theming .DataCard.DataCard--statepressed {
   background-color: var(--color-background-button-pressed);
 }
-
 #Theming .UserCard {
   padding: 1rem;
 }
-
 #Theming .UserCard .UserCardValue .UserCardValue__Value .UserCardValue__Bar {
   border: solid var(--border-width) var(--color-border);
   box-sizing: border-box;
   height: 6px;
   border-width: 1px;
 }
-
 #Theming .UserCard .UserCardValue .UserCardValue__Value .UserCardValue__Bar::before {
   height: 6px;
   top: -1px;
 }
-
 #Theming .CenterModal .CenterModal__Card {
   background-color: var(--color-background-highlight);
 }
-
 #Theming .SlideInModal {
   background-color: var(--color-background-highlight);
 }
-
 #Theming .Snackbar {
   background-color: var(--color-background-highlight);
 }
-
+#Theming .Snackbar .icon-Full-Close {
+  background-image: none;
+  filter: none;
+  -webkit-mask-image: url("icons/Dark/Thin/Close.svg");
+  mask-image: url("icons/Dark/Thin/Close.svg");
+}
 #Theming .AccordeonShell.open .AccordeonShell__toggle {
   background-color: rgb(0, 0, 0);
 }
-
 #Theming .AccordeonShell.open .AccordeonShell__toggle .icon-Thin-Chevron-Up {
   background-color: rgb(255, 255, 255);
 }
-
 #Theming .LayoutShellAudio .LayoutShellAudio__Content {
   overflow-y: auto;
 }
-
 #Theming .LayoutShell .LayoutShell__Content {
   overflow-y: auto;
 }
-
 #Theming .BottomBarShell .BottomBarShell__Content {
   overflow-y: auto;
 }
-
 #Theming .TopBarShell .TopBarShell__Content {
   overflow-y: auto;
 }
-
 #Theming .ScrollContainer {
   overflow-x: hidden;
 }
-
 #Theming .LayoutShellAudio .LayoutShellAudio__TopBar,
 #Theming .LayoutShellAudio .LayoutShellAudio__BottomBar {
   background-color: rgb(0, 0, 0);
@@ -2638,12 +2317,10 @@
   --color-text-button: rgb(0, 255, 0);
   --color-background-button: rgb(0, 0, 0);
 }
-
 #Theming .LayoutShellAudio .LayoutShellAudio__TopBar .Icon,
 #Theming .LayoutShellAudio .LayoutShellAudio__BottomBar .Icon {
   background-color: rgb(0, 255, 0);
 }
-
 #Theming .LayoutShell .LayoutShell__TopBar,
 #Theming .LayoutShell .LayoutShell__BottomBar {
   background-color: rgb(0, 0, 0);
@@ -2651,12 +2328,10 @@
   --color-text-button: rgb(0, 255, 0);
   --color-background-button: rgb(0, 0, 0);
 }
-
 #Theming .LayoutShell .LayoutShell__TopBar .Icon,
 #Theming .LayoutShell .LayoutShell__BottomBar .Icon {
   background-color: rgb(0, 255, 0);
 }
-
 #Theming .BottomBarShell .BottomBarShell__TopBar,
 #Theming .BottomBarShell .BottomBarShell__BottomBar {
   background-color: rgb(0, 0, 0);
@@ -2664,12 +2339,10 @@
   --color-text-button: rgb(0, 255, 0);
   --color-background-button: rgb(0, 0, 0);
 }
-
 #Theming .BottomBarShell .BottomBarShell__TopBar .Icon,
 #Theming .BottomBarShell .BottomBarShell__BottomBar .Icon {
   background-color: rgb(0, 255, 0);
 }
-
 #Theming .TopBarShell .TopBarShell__TopBar,
 #Theming .TopBarShell .TopBarShell__BottomBar {
   background-color: rgb(0, 0, 0);
@@ -2677,72 +2350,56 @@
   --color-text-button: rgb(0, 255, 0);
   --color-background-button: rgb(0, 0, 0);
 }
-
 #Theming .TopBarShell .TopBarShell__TopBar .Icon,
 #Theming .TopBarShell .TopBarShell__BottomBar .Icon {
   background-color: rgb(0, 255, 0);
 }
-
 #Theming .Chat .Chat__Input {
   filter: invert(1);
 }
-
 #Theming .Chat .Chat__Input .ChatInput__Input {
   filter: invert(1);
 }
-
 #Theming .ListItem {
   border: none;
 }
-
 #Theming .SectionShell {
   row-gap: 0;
   padding: 0;
 }
-
 #Theming .SectionShell .Card__content {
   padding-left: 0;
   padding-right: 0;
 }
-
-#Theming .SectionShell>*+* {
+#Theming .SectionShell > * + * {
   border-top: solid 4px var(--color-border);
 }
-
-#Theming .ScrollContainer>*+* {
+#Theming .ScrollContainer > * + * {
   border-top: solid 4px var(--color-border);
 }
-
 #Theming .DataList {
   row-gap: 0;
 }
-
-#Theming .DataList>*+* {
+#Theming .DataList > * + * {
   border-top: solid 4px var(--color-border);
 }
-
 #Theming .ColumnShell {
   gap: 0;
 }
-
-#Theming .ColumnShell>*:not(:last-child) {
+#Theming .ColumnShell > *:not(:last-child) {
   border-right: solid 4px var(--color-border);
 }
-
-#Theming .MapLayerOverlay__Cards>*+* {
+#Theming .MapLayerOverlay__Cards > * + * {
   border-top: solid 4px var(--color-border);
 }
-
 #Theming .Mosaic .Mosaic__Square {
   border: solid var(--border-width) var(--color-border);
   border-width: 4px;
 }
-
 #Theming .AudioPlayer--minimised .minimised-progress-bar {
   background-color: rgb(255, 255, 255);
   width: 100% !important;
 }
-
 #Theming #playerBarOverlayMinimized,
 #Theming #playerBarOverlayExpanded {
   display: block;
@@ -2754,20 +2411,23 @@
   pointer-events: none;
   visibility: visible;
 }
-
 #Theming #playerBarOverlayMinimized {
   height: 55px;
   transform: translateY(3px);
 }
-
 #Theming #playerBarOverlayExpanded {
   bottom: 0;
 }
-
+#Theming .marquee {
+  overflow: hidden;
+  width: 100%;
+}
+#Theming .marquee > * {
+  display: inline-block;
+}
 #Theming .intersection-observer {
   position: relative;
 }
-
 #Theming .intersection-observer::after {
   content: "";
   position: absolute;
@@ -2781,7 +2441,6 @@
   pointer-events: none;
   transition: background-color 0.8s !important;
 }
-
 #Theming .in-view::after {
   background-color: transparent;
 }
