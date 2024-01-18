@@ -1,0 +1,8 @@
+name: PWAHint
+colour: 300
+fields:
+  - type: string
+    name: buttonText
+    defaultValue: "$pwahint_buttontext_default"
+    help: "Text on the button"
+
