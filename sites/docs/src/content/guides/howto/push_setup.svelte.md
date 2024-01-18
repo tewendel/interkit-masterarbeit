@@ -38,7 +38,7 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
 
 ## Install the plugin
 
-```
+```shell
 cd projects/yourproject
 npm install --save @capacitor/push-notifications
 npx cap sync
