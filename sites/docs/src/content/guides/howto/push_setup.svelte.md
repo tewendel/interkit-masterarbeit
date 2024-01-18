@@ -2,7 +2,15 @@
 
 ## Table of contents
 
-Note: You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
+<!-- TOC will consume any paragraph here, leave blank -->
+
+## Notes
+
+* You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
+* Please study the [Capacitor Push Notification API docs](https://capacitorjs.com/docs/apis/push-notifications#push-notifications-icon),
+  since we do not cover everything in this guide.
+  E.g. you might want to look into channels, foreground/background quirks,
+  and styling capabilities like badges, sounds...
 
 ## Google Firebase Services setup
 
@@ -13,60 +21,99 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
     * *iOS*   
         There is a 5 step process,
         1. "Register App": use your app bundle id, for example "interkit.app.starter"
-        2. "Download config file": download the file and put it in `ios/App/App/GoogleService-Info.plist` (might have to add it via XCode), but do not change any code yet.
+        2. "Download config file": download the file and put it in `ios/App/App/GoogleService-Info.plist` (might have to add/drag-drop it via XCode), but do not change any code yet.  
+           (You can download the plist file later under Project Settings › General › Your apps › Apple apps › Fooproject.)  
+           The next might have changed since we wrote this and might not be necessary any more.
         3. "Add Firebase SDK": Choose version *7.11.0*. You only need to add "FirebaseMessaging"
         4. "Add initialisation code": Skip this step! Do **iOS setup** below instead
-    * *android*
-        1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `fooproject/android/app/`  
+    * *Android*
+        1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `projects/yourproject/android/app/`  
           (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
 
 ## Obtain APNs for iOS setup
 
 1. Go to your Apple Developer Account
-2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account.
-3. Plug it into Firebase Console
+2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account, a key is supposed to serve "all your apps".
+3. Plug it into Firebase Console: Project Settings › Cloud Messageing › Apple app configuration › Apple apps › Fooproject › Upload…
+
+## Install the plugin
+
+```
+cd projects/yourproject
+npm install --save @capacitor/push-notifications
+npx cap sync
+```
 
 ## Android setup
 
-Push and Firebase are enabled by default.
+Not much else to do, but
+please also read "iOS setup" below and read the linked guide, it is helpful.
 
 ## iOS setup
 
-`fooproject/ios/App/App/AppDelegate.swift`,
-following [the Capacitor docs for v2](https://capacitorjs.com/docs/v2/guides/push-notifications-firebase#add-initialization-code),
-add
+* Do **not** follow the [API docs mini-guide](https://capacitorjs.com/docs/apis/push-notifications)
+* Do **not** follow the SDK guide on Firebase Console
+* **Do** follow [the Capacitor/ionic guide](https://capacitorjs.com/docs/guides/push-notifications-firebase#add-initialization-code)
+* **but** make sure you're on `v5`
+* Ignore the ionic and Angular bits, especially "Using the Capacitor Push Notification API" - this has been taken care of.
+* You can start at "Creating a Project for your App on Firebase" - there is a bit of overlap with our guide above.
+* **Crucially**, follow the CocoPods and AppDelegate bits:
 
-important: do not follow the sdk guide that is on the firebase cosole!
+```Podfile
+#(XCode)/Pods/Podfile
 
-````swift
-// ...
-import FirebaseCore
-import FirebaseInstanceID
-import FirebaseMessaging
+#...
+target 'App' do
+  capacitor_pods
+  # Add your Pods here
+  pod 'Firebase/Messaging' # 👈 add this line
+end
+#...
+```
+
+Then `npx cap update ios` to update new Pods. This might take a minute.
+
+```swift
+// projects/yourproject/ios/App/App/AppDelegate.swift
+
+import UIKit
+import Capacitor
+import Firebase // 👈 add this line
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  // ...
+
+  var window: UIWindow?
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    FirebaseApp.configure()
+    FirebaseApp.configure() // 👈 add this line
     return true
   }
-  // ...
-  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-      Messaging.messaging().apnsToken = deviceToken
-      InstanceID.instanceID().instanceID { (result, error) in
-          if let error = error {
-              NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidFailToRegisterForRemoteNotificationsWithError.name()), object: error)
-          } else if let result = result {
-              NotificationCenter.default.post(name: Notification.Name(CAPNotifications.DidRegisterForRemoteNotificationsWithDeviceToken.name()), object: result.token)
-          }
-      }
-  }
-}
-````
 
-Add "Push Notifications" capability 
+  // 👇add these two funcs
+
+  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    Messaging.messaging().apnsToken = deviceToken
+    Messaging.messaging().token(completion: { (token, error) in
+      if let error = error {
+          NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+      } else if let token = token {
+          NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+      }
+    })
+  }
+  
+  func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+  }
+
+  // ...
+```
+
+In XCode, add "Push Notifications" capability.
+If you are missing this specific capability, check if your Apple Developer Account is "paid", it doesn't work for free/expired accounts.
+
 ![](/images/push_setup_ios_capability.jpg)
 
 
@@ -100,6 +147,7 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
 * There is also an online tool: [romannurik.github.io/AndroidAssetStudio/](https://romannurik.github.io/AndroidAssetStudio/icons-notification.html).
 * Link the resource: edit `android/app/src/main/AndroidManifest.xml`, to the `<application>` node add this child node:  
   `<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/our_icon_name" />`  
+  See also relevant [Capacitor docs](https://capacitorjs.com/docs/apis/push-notifications#push-notifications-icon)
 * `npx cap sync android`
 * Compile, run, debug... done.
 * With more effort, full-color (over white-on-transparent) might be possible, or just re-coloring/hue-ing the white icon. Consider  

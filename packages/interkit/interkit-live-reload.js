@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 
 // STATUS: INACTIVE
@@ -5,8 +6,21 @@
 
 */
 
+=======
+/* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
+ * currently, this file is unused
+ * FIXMEs and TODOs in this document are not complete!
+ */
+
+// FIXME http plugin is deprecated+redundant since Capacitor v5
+// FIXME we will also need the cordova zip plugin back
+>>>>>>> b01489a33cb0c9f818c632c6fdbbbaf9bfe015d1
 import '@capacitor-community/http';
+
+// FIXME plugin import works differently in Capacitor v5,
+//   please grep other files if you want to go by example
 import { Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+
 
 const { Filesystem } = Plugins;
 

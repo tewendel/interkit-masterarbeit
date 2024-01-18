@@ -1,9 +1,16 @@
 import { InterkitClient } from './'
 import { get } from "svelte/store"
 
-import { Plugins } from '@capacitor/core'
+// import { Plugins } from '@capacitor/core'
 
-const { PushNotifications } = Plugins;
+// const { PushNotifications } = Plugins;
+
+import {
+  // ActionPerformed,
+  // PushNotificationSchema,
+  // Token,
+  PushNotifications
+} from '@capacitor/push-notifications';
 
 /**
  * Consider heartbeats for push notification eligibility?
@@ -57,6 +64,7 @@ const addListeners = async () => {
 }
 
 const registerNotifications = async () => {
+  /*
   // docs seemed out of date, the surrounding code used to be necessary? TODO recheck
   // let permStatus = await PushNotifications.checkPermissions();
   // if (permStatus.receive === 'prompt') {
@@ -71,6 +79,20 @@ const registerNotifications = async () => {
 
   console.log('calling PushNotifications.register');
   await PushNotifications.register();
+  */
+  // https://capacitorjs.com/docs/guides/push-notifications-firebase#using-the-capacitor-push-notification-api
+  // Request permission to use push notifications
+  // iOS will prompt user and return if they granted permission or not
+  // Android will just grant without prompting
+  PushNotifications.requestPermissions().then(result => {
+    if (result.receive === 'granted') {
+      // Register with Apple / Google to receive push via APNS/FCM
+      PushNotifications.register();
+    } else {
+      console.error('User denied push notification permission')
+      // Show some error
+    }
+  });
 }
 
 const getDeliveredNotifications = async () => {
