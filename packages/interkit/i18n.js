@@ -127,9 +127,9 @@ const setUserLang = async (newLang) => {
   })
 }
 
-const t = (id, fallback) => {
+const t = (id, fallback, fallbackLang) => {
   fallback = fallback || '…'
-  const langT = get(translations)?.[get(lang)]
+  const langT = get(translations)?.[get(lang) || fallbackLang]
   if (langT === null || typeof(langT) !== 'object') return fallback
   if (!(id in langT)) return id
   return langT[id]
