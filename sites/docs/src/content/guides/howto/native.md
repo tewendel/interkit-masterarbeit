@@ -105,11 +105,7 @@ they should be included in your next build with the native dev tools
 
 see also: https://github.com/ionic-team/capacitor-assets/tree/cordova-res
 
-<<<<<<< HEAD
-<!-- Status: inactive since udpate to Capacitor 5
-=======
 <!-- TODO unavailable without InterkitLiveReload
->>>>>>> b01489a33cb0c9f818c632c6fdbbbaf9bfe015d1
 
 ## Using live reload
 
@@ -117,13 +113,9 @@ interkit comes with a system that allows a native app to download newer versions
 
 - change the version in your `interkit.config` on the server 
 - on startup, the app checks if the version on the server is newer and downloads this
-<<<<<<< HEAD
--->
-=======
 
 -->
 
->>>>>>> b01489a33cb0c9f818c632c6fdbbbaf9bfe015d1
 
 ## Publish to the app stores
 
