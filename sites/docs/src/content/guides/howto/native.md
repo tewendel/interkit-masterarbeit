@@ -55,7 +55,9 @@ npx cap open ios
 npx cap open android
 ```
 
+<!-- Unavailable since update to Capacitor 5
 Warning: while developing, make sure you've set the version in your interkit.config.json to lower than the one on the server, otherwise the app will load the newer bundle from the server.
+-->
 
 
 ## Icons and Splashscreen
@@ -80,6 +82,7 @@ they should be included in your next build with the native dev tools
 
 see also: https://github.com/ionic-team/capacitor-assets/tree/cordova-res
 
+<!-- Status: inactive since udpate to Capacitor 5
 
 ## Using live reload
 
@@ -87,8 +90,7 @@ interkit comes with a system that allows a native app to download newer versions
 
 - change the version in your `interkit.config` on the server 
 - on startup, the app checks if the version on the server is newer and downloads this
-
-
+-->
 
 ## Publish to the app stores
 

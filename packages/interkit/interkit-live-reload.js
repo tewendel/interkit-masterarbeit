@@ -1,3 +1,10 @@
+/*
+
+// STATUS: INACTIVE
+// With the update of interkit native containers to Capacitor 5, this functionality is no longer unavailable.
+
+*/
+
 import '@capacitor-community/http';
 import { Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 

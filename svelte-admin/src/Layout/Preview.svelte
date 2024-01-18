@@ -367,7 +367,7 @@
   {:else}
     <Tabs>
       <Tab label="Web preview" />
-      <Tab label="App preview" />
+      <!--Tab label="App preview" /-->
       <div slot="content">
         <TabContent>
           <div>
@@ -390,7 +390,8 @@
             </a>
           </div>
         </TabContent>
-        <TabContent>
+        <!-- this was used for the interkit bundle viewer using interkit-live-reload which no longer works since update to Capacitor 5 -->
+        <!--TabContent>
           <div>
             <a
               download
@@ -409,7 +410,7 @@
               <u>Download bundle ZIP</u>
             </a>
           </div>
-        </TabContent>
+        </TabContent-->
       </div>
     </Tabs>  
   {/if}
