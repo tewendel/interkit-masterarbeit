@@ -11,7 +11,22 @@ const messages = {
     '$desktopfallback_fullscreen': 'Ganzer Bildschirm',
     '$desktopfallback_fullscreenhint': 'Wenn Du ein Tablet verwendest, kannst Du hier in die Vollansicht wechseln',
     '$pwahint_buttontext_default': 'Als App installieren',
-    '$pwahint_intro': 'Diese Website kann wie eine App installiert werden, als Progressive Web App. Folge der Anleitung, die am ehesten deiner Plattform entspricht. Nicht alle Plattformen unterstützen diese Funktion.'
+    '$pwahint_intro': 'Diese Website kann wie eine App installiert werden, als Progressive Web App. Folge der Anleitung, die am ehesten deiner Plattform entspricht. Nicht alle Plattformen unterstützen diese Funktion.',
+    '$pwahint_ios_1': 'Finde deine Adressleiste, sie ist meistens unten am Bildschirm. Falls sie dünn erscheint, berühre sie oder scrolle runter. Unter dem URL-Feld siehst du fünf Icons. Berühre den "Teilen"-Button (meistens der Mittlere).',
+    '$pwahint_ios_2': 'Das öffnet ein Menü. Scroll runter, bis du den Eintrag "Zum Home-Bildschirm" siehst, und berühr ihn.',
+    '$pwahint_ios_3': 'Wenn du willst, pass den Titel an. Berühre "Hinzufügen".',
+    '$pwahint_ios_4': 'Ein neues Icon erscheint auf deinem Home-Screen auf. Die Progressive Web App ist jetzt installiert. Berühre das neue Icon um sie zu starten.',
+    '$pwahint_android_0': 'Achtung: Möglicherweise erscheint der Dialog automatisch.',
+    '$pwahint_android_1': 'Finde deine Adressleiste. Rechts ist das Drei-Punkte-Menü-Icon vellip. Berühre es.',
+    '$pwahint_android_2': 'Das öffnet ein Menü.',
+    '$pwahint_android_3': 'Berühre unten "App installieren".',
+    '$pwahint_android_4': 'Berühre unten "Zum Startbildschirm hinzufügen".',
+    '$pwahint_android_5': 'Wenn du willst, pass den Titel an. Berühre "Hinzufügen".',
+    '$pwahint_android_6': 'Folge den Anweisungen, oder berühre einfach "Zum Startbildschirm hinzufügen".',
+    '$pwahint_android_7': 'Ein neues Icon erscheint auf deinem Home-Screen auf. Die Progressive Web App ist jetzt installiert. Berühre das neue Icon um sie zu starten.',
+    '$pwahint_chrome_1': 'Klicke in der Adresszeile auf das "Installieren"-Icon.',
+    '$pwahint_chrome_2': 'Bestätige den Dialog.',
+    '$pwahint_chrome_3': 'Die Progressive Web App erscheint in einem neuen Fenster.'
   },
   en: {
     '$init_loading': 'loading....',
@@ -25,7 +40,22 @@ const messages = {
     '$desktopfallback_fullscreen': 'Full screen',
     '$desktopfallback_fullscreenhint': 'If you are using a tablet, you can enable the full view',
     '$pwahint_buttontext_default': 'Install as app',
-    '$pwahint_intro': 'You can install this web site like an app, a Progressive Web App. Please follow the instructions for the platform that fits you best. Not all platforms are supported, though.'
+    '$pwahint_intro': 'You can install this web site like an app, a Progressive Web App. Please follow the instructions for the platform that fits you best. Not all platforms are supported, though.',
+    '$pwahint_ios_1': 'Find your address bar. It is usually at the bottom. If it is thin, tap it or scroll down to expand it. Below the URL field, you should see five icons. Tap the "share button", which is usually in the middle.',
+    '$pwahint_ios_2': 'This opens a menu. Scroll down, until you see the menu entry "Add To Home" / "Zum Home-Bildschirm" and tap it.',
+    '$pwahint_ios_3': 'Adjust the title if you want to, and tap "Add". / "Hinzufügen".',
+    '$pwahint_ios_4': 'A new icon is added to your home screen. The progressive web app is now installed. Tap the icon to launch it.',
+    '$pwahint_android_0': 'Note: You might get the dialog when you open the page, automatically.',
+    '$pwahint_android_1': 'Find your address bar. On the right sight, tap the vertical ellipsis menu icon &vellip;',
+    '$pwahint_android_2': 'This opens a menu.',
+    '$pwahint_android_3': 'Near the bottom, tap "Install app".',
+    '$pwahint_android_4': 'Near the bottom, tap "Add to Home Screen".',
+    '$pwahint_android_5': 'Adjust the title if you want to, and tap "Add".',
+    '$pwahint_android_6': 'Follow the instructions or just tap "Add to home screen".',
+    '$pwahint_android_7': 'A new icon is added to your home screen. The progressive web app is now installed. Tap the icon to launch it.',
+    '$pwahint_chrome_1': 'In your address bar, find the "Install app" icon. Click it.',
+    '$pwahint_chrome_2': 'Confirm the dialog.',
+    '$pwahint_chrome_3': 'The progressive web app will pop up.'
   }
 }
 
