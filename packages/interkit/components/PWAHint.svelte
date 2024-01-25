@@ -35,7 +35,7 @@
   />
 
 {#if showOverlay}
-  <Overlay customStyle={overlayStyle}>
+  <Overlay customStyle={overlayStyle} zIndex="10000">
     <div style="position: absolute; right: calc(var(--outset-x) * 1rem); top: calc(var(--outset-y) * 1rem);">
       <Button size="small" on:click={() => { showOverlay = false }}>
         <Icon type="Full-Close" />
