@@ -7,10 +7,12 @@ const trackUserUrlPath = () => {
   InterkitClient.call("user.trackActivity", { url: window.location.href });
 };
 
-window.addEventListener("popstate", (event) => {
-  //console.log("popstate", event);
-  trackUserUrlPath();
-});
+if (typeof window !== "undefined") {
+  window.addEventListener("popstate", (event) => {
+    //console.log("popstate", event);
+    trackUserUrlPath();
+  });
+}
 
 function trackRepeatedly() {
   window.setTimeout(() => {

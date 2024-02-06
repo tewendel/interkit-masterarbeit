@@ -2,7 +2,7 @@
   import cloudInit from '$repo/cloud-init.yml?raw'
 </script>
 
-# Simpe Step by Step Guide to Set Up an Interkit Server
+# Simple Step by Step Guide to Set Up an Interkit Server
 
 ## What is this about?
 
