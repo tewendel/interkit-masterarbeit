@@ -2,7 +2,7 @@
 
 Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games, and more. 
 
-*It is currently in alpha stage.*
+*It is has been released as open source software*
 
 More information: https://interkit.app  
 Documentation: https://docs.interkit.app
@@ -152,4 +152,12 @@ docker-compose up -d --build
 
 ### Contributing
 
-It is too early to seriously collaborate but let us know if you're interested. See contac tinformation on http://interkit.app
+Development takes place on our gitlab server at https://gitlab.interkit.app
+
+Feel free to contact us. See contact information on http://interkit.app
+
+Also check the `contribute` section in the docs for some early hints on how to extend interkit https://docs.interkit.app/guides/contribute/docs
+
+### LICENCE
+
+MIT License
