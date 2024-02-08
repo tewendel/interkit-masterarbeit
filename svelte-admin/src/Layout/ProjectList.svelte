@@ -63,11 +63,11 @@
   let pageSize = 10
 
   const headers = [
-    { key: 'favicon', empty: true },
+    { key: 'favicon', empty: true, width: "3.5em" },
     { key: 'name', value: 'Project name' },
-    { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), },
-    { key: 'cpu', value: 'CPU usage' },
-    { key: 'overflow', empty: true }
+    { key: 'createdAt', value: 'Created At', sort: (a, b) => new Date(a||0) - new Date(b||0), width: "10em" },
+    { key: 'cpu', value: 'CPU usage', width: "2em" },
+    { key: 'overflow', empty: true, width: "22em" }
   ]
 
   let nonExpandableRowIds = []
@@ -157,26 +157,25 @@
   <span slot="cell" let:row let:cell>
     {#if cell.key === 'favicon'}
       {#if $bundleServerURL}
-        <ImageLoader
+        <img
           src={`${$bundleServerURL}/app/${row.id}/favicon.png`}
           alt="Favicon"
           fadeIn
-          style="max-width: 2em"
-          >
-          <svelte:fragment slot="error">
-          </svelte:fragment>
-        </ImageLoader>
+          ratio="1x1"
+          style="width: 2em; height: 2em; object-fit: contain; overflow: hidden; display: block; background-color: #444;"
+          />
       {/if}
     {/if}
     {#if cell.key === 'name'}
       <!--<span on:click={() => previewProject(row.id)} class="clickable">-->
       <span class="name-field">
-        {#if row.isTemplate}
-          <Tag>Template</Tag>
-        {/if}
-        {row.name}
+        <span class="title">
+          {#if row.isTemplate}
+            <Tag>Template</Tag>
+          {/if}
+          {row.name}
+        </span>
         {#if row.uiState?.metafile?.description?.html}
-          <br>
           <span class="project-description">
             {@html row.uiState?.metafile?.description?.html}
           </span>
@@ -194,7 +193,11 @@
     {/if}
     {#if cell.key === 'cpu'}
       {#if row.projectServer?.status === 'running' }
-        { (100 * row.projectServer?.cpu).toFixed(2) }%
+        {#if typeof row.projectServer?.cpu === 'number'}
+          { (100 * row.projectServer?.cpu).toFixed(2)  }%
+        {:else}
+          -
+        {/if}
       {:else}
         {row.projectServer?.status || ''}
       {/if}
@@ -284,6 +287,20 @@
 
 
 <style>
+
+  .name-field {
+    
+    
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+
+    
+    overflow: hidden;
+  }
+
   .project-description {
     display: inline-block;
   }
