@@ -1,5 +1,6 @@
 <script>
-  import marked from "marked";
+  import Markdown from "../Atoms/Markdown.svelte";
+
   import {
     StructuredList,
     StructuredListHead,
@@ -30,12 +31,14 @@
 
 {#if theme?.readme}
   <section class="info">
-    {@html marked(theme?.readme)}
+    <Markdown source={theme?.readme} />
   </section>
 {/if}
 
 <style>
   .info {
     padding: 15px;
+    margin: 15px;
+    background: white;
   }
 </style>
