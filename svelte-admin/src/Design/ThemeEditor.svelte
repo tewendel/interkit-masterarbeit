@@ -40,7 +40,7 @@
         icon={Help}
         kind="ghost"
         size="field"
-        on:click={() => docsGo('/guides/overview/interface_overview#style')}
+        on:click={() => docsGo('/guides/contribute/theme')}
         >Help
       </Button>
 
