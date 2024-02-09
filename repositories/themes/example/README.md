@@ -18,3 +18,4 @@ This theme demonstrates the possibilities of theming and can be used as a starte
 - add background images
 - use javascript and CSS to create animations
 - use custom icons
+- use custom `style.css` for map

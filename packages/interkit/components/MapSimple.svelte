@@ -41,9 +41,27 @@
   
   export let mapBoxGLStyle // mapboxGL style, probably a URL like https://api.maptiler.com/maps/1234uuid/style.json?key=f0o. If null-ish or "interkit", default stadiamaps (non-mapboxGL) will be used.
   let activeGLStyle = mapBoxGLStyle // this can be changed through MapViewButton
-  
+
   export let closeButtonLabel = "Schließen"
   export let clickTrigger;
+
+  // set defaultJson if theming is on
+  const themeStyleUrl = "theme/maptiler/style.json"
+  let defaultGLStyle = false
+  const config = get(InterkitClient.config)
+  console.log("MapRenderer config", config)
+  if (config && config.INTERKIT_APP_LOAD_THEME) {
+    // check if themeStyleUrl returns a json
+    fetch(themeStyleUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log("MapRenderer theme style.json found")
+        defaultGLStyle = themeStyleUrl
+      })
+      .catch(e => {
+        console.error(themeStyleUrl + " not a valid json", e)
+      })
+  }
 
   // for new iOS only at this moment
   const deviceorientationRequestPermission = () => {
@@ -194,10 +212,13 @@
       activeGLStyle = layer?.mapBoxGLStyleColumn
     } else {
       activeTileLayer = tileLayer
-      activeGLStyle = mapBoxGLStyle
+      activeGLStyle = mapBoxGLStyle || defaultGLStyle
     }
   }
-  $: updateTileLayer($mapViewState?.activeLayers?.[0])
+  $: {
+    defaultGLStyle // trigger updateTileLayer when defaultGLStyle is set
+    updateTileLayer($mapViewState?.activeLayers?.[0])
+  }
   
   $: {
     selectedElement;
