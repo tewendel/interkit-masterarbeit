@@ -1,6 +1,5 @@
 <script>
-  import { onMount } from 'svelte'
-  import { InterkitClient } from 'interkit'
+  import { InterkitClient } from '../'
 
   // TODO shouldnt be necessary, derive from AppBase?
   export let defaultLang = 'en'
