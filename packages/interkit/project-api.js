@@ -243,6 +243,16 @@ const echo = async function(msg) {
   }
 }
 
+const getUsersInNode = async function (options) {
+  const { message, server, projectId, nodeId, userId } = this;
+  const users = await server.call("users.getForNode", {
+    projectId,
+    boardId: options?.channelKey || message.channel_key,
+    nodeId: options?.nodeId || nodeId,
+  });
+  return users;
+};
+
 // load all the rows in a sheet
 const getRows = async function(sheetKey) {
   const {server, projectId} = this
@@ -289,6 +299,7 @@ export default {
   sendDots,
   moveTo,
   echo,
+  getUsersInNode,
   setUserVar,
   getUserVar,
   setLang,
@@ -300,5 +311,5 @@ export default {
   updateRow,
   setInterface,
   requestLocation,
-  distance
-}
+  distance,
+};

@@ -399,7 +399,7 @@ Meteor.methods({
     let query = { [nodeIdKey]: nodeId, [statusKey]: "arrived" };
     console.log("users.getForNode query", query);
     let users = Meteor.users.find(query).fetch();
-    return users;
+    return users; /* TODO filter out blocked users and do not send sensivite fields */
   },
 
   "user.moveTo": async ({ projectId, userId, boardId, nodeId }) => {

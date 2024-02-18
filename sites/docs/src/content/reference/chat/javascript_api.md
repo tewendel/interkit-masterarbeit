@@ -224,6 +224,37 @@ api.echo(msg)
 ```
 The user variable "name" is used by default as a label.
 
+`msg` is supposed to be a whole message object like the one received in `onMessage(api, msg)`. 
+
+## Sending to specific recipients
+
+By default, the recipient of a message sent by any `api.send...()` function is the current user.
+
+All `api.send...()` functions accept further options to specify the recipients:
+
+      - `channelKey` optionally send this message on a different channel
+      - `recipients` an array of recipients user ids.
+
+```js
+api.sendText("hello", {
+  channelKey: "other_board",
+  recipients: ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"], 
+})
+```
+
+To broadcast a message to all users that are currently in a node, specify the nodeId inside the recipients
+
+```js
+api.sendSystem("The bus will arrive in 5 minutes", {
+  recipients: {
+    nodeId: "waitingforthebus"
+  }
+})
+```
+
+You can also get the explicit list of users in a node with `getUsersInNode({ channelKey, nodeId })`.
+
+
 ## Variables
 
 Set a variable for this user, for example set the user's "name" to "alice".
