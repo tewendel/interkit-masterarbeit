@@ -588,9 +588,10 @@
   const syntaxCheck = (_code) => {
     console.log("syntaxCheck with", _code)
     let code = _code ? _code : editorContents;
-    // export are only allowed in modules
+    // imports and export are only allowed in modules
+    code = code.replace(/^\s*import\b/gm, '/*imprt*/')
     code = code.replace(/^\s*export\b/gm, '/*xprt*/')
-
+    
     // comment out parts that should not be checked
     code = code.replace('//no-check-start', '/*')
     code = code.replace('//no-check-end', '*/')
