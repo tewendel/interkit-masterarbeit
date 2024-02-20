@@ -162,9 +162,8 @@
       </section>
     
       <section class:visible={$secondaryTabIndex == 2}>
-        <h4> Project Server</h4>
         {#if $currentProject}
-          <ProjectServerInfo {currentProject}/>
+          <ProjectServerInfo {currentProject} style="padding-bottom: 10px;"/>
         {:else}
           no current project
         {/if}
@@ -233,6 +232,7 @@
 
   section {
     width: 100%;
+    height: 100%;
     display: none;
     position: absolute;
     top: 0;
