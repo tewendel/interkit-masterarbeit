@@ -589,8 +589,12 @@
     console.log("syntaxCheck with", _code)
     let code = _code ? _code : editorContents;
     // imports and export are only allowed in modules
-    code = code.replace(/^\s*import\b/gm, '/*imprt*/')
     code = code.replace(/^\s*export\b/gm, '/*xprt*/')
+    // replace the start of import with /*import
+    code = code.replace(/^\s*import\b/gm, '/*import')
+    // append */ to the end of import: from ...
+    code = code.replace(/from\s+.*$/gm, 'from */')
+    // NOTE: if there are comments in the import line, this will break /* */
     
     // comment out parts that should not be checked
     code = code.replace('//no-check-start', '/*')
@@ -959,6 +963,7 @@
               on:codechange={evt => { editorContents = evt.detail }}
               readOnly={$currentProjectReadOnly}
               class="editor"
+              lint
               />
           {:else}
             <textarea
