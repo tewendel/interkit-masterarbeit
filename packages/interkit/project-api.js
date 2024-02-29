@@ -163,6 +163,10 @@ const requestLocation = async function(prompt, options) {
 
 
 const moveTo = async function(nodeId, options) { 
+  if (options?.recipients) {
+    return await moveUsers(nodeId, options.recipients, options)
+  }
+
   const {server, projectId, boardId, userId} = this
   const methodParams = {
     projectId,
@@ -172,6 +176,29 @@ const moveTo = async function(nodeId, options) {
   }
   await callWithDelay(server, "user.moveTo", methodParams, options)
 }
+
+const moveUsers = async function(nodeId, recipients = [], options) {
+  const {server, projectId, boardId, userId} = this
+
+  // recipients might be a nodeId
+  if (recipients?.nodeId) {
+    const users = await server.call('users.getForNode', {
+      projectId, 
+      boardId: recipients?.channelKey || boardId, 
+      nodeId: recipients?.nodeId
+    })
+    recipients = users.map((u) => u._id);
+  }
+
+  const methodParams = {
+    projectId,
+    userIds: recipients,
+    boardId: options?.channelKey || boardId, // you can optionally perform a moveTo on a different board
+    nodeId
+  }
+  await callWithDelay(server, "users.moveTo", methodParams, options)
+}
+
 
 const getUserVar = async function(varName) {
   const {message, server, projectId, nodeId, userId} = this
@@ -298,6 +325,7 @@ export default {
   sendChoice,
   sendDots,
   moveTo,
+  moveUsers,
   echo,
   getUsersInNode,
   setUserVar,

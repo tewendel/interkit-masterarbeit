@@ -254,6 +254,44 @@ api.sendSystem("The bus will arrive in 5 minutes", {
 
 You can also get the explicit list of users in a node with `getUsersInNode({ channelKey, nodeId })`.
 
+## Moving other players
+
+While `api.moveTo()` moves the current user by default, you can add a list of `recipients` to move other users.
+
+```js
+api.moveTo(
+  "node1",
+  {
+    recipients: ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"],
+  }
+)
+
+`recipients` is a list of user IDs.
+
+The `nodeId` always relates to the node on the board where `moveTo` is called. Optionally add a `channelKey` to explicitly move users on a different board.
+
+Recipients can be defined as users in a node. Example: Move all users from node "start" to node "end" on the board "board2".
+
+```js
+api.moveTo(
+  "end",
+  {
+    channelKey: "board2",
+    recipients: {
+      nodeId: "start",
+      channelKey: "board2"
+    },
+  }
+)
+```
+
+### Alternative notation
+
+The function `moveUsers` is a shorthand for `moveTo` with the `recipients` as the second argument.
+
+```js
+api.moveUsers("node1", ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"])
+```
 
 ## Variables
 
