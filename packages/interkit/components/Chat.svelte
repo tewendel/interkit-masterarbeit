@@ -15,6 +15,7 @@
 
   const projectDataStore = InterkitClient.userProjectDataStore
 
+  import { Capacitor } from '@capacitor/core';
   import { Geolocation } from '@capacitor/geolocation';
 
   export let board = "board1"
@@ -304,13 +305,17 @@
   const submitLocation = async (message, canceled = false) => {
     let location;
     let error;
-    if(!canceled) {
+    if (Capacitor.isNative) {
+      console.warn('might need to requestPermission?')
+      // TODO: see MapRenderer.svelte for implementation
+    }
+    if (!canceled) {
       try {
         location = await Geolocation.getCurrentPosition();
       } 
-      catch(e) {
+      catch (e) {
         alert("Error obtaining geolocation. You may need to give the app permission.")
-        error = e;
+        console.error('Geolocation error', e)
         return false;
       }
       console.log("sending location", location)
@@ -319,7 +324,7 @@
       sender: userId,
       channel_key: boardId, 
       messageId: message.id,
-      location: location ? {lng: location.coords.longitude, lat: location.coords.latitude} : undefined,
+      location: location ? { lng: location.coords.longitude, lat: location.coords.latitude } : undefined,
       canceled
     })
     return true
