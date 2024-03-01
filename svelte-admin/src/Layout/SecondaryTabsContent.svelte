@@ -29,7 +29,8 @@
     secondaryTabsSize,
     secondaryTabsSizes,
     secondaryTabsMaxWidths,
-    docsRouterCanNavigate
+    docsRouterCanNavigate,
+    actualSecondaryTabsWidth
   } from '../admin.js'
 
   import { docsGo } from '../docs.js'
@@ -52,6 +53,7 @@
   class={`right-pane right-pane--tab${$secondaryTabIndex}`}
   class:minimized={$secondaryTabsMinimized}
   style="--right-pane-max-width:{secondaryTabsMaxWidths[$secondaryTabsSize]}"
+  bind:clientWidth={$actualSecondaryTabsWidth}
   >
   <div class="pane-controls">
     <ButtonSet style="width: 100%">

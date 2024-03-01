@@ -15,7 +15,8 @@
     secondaryTabsHidden,
     currentProjectReadOnly,
     currentProject,
-    projectTabPath
+    projectTabPath,
+    actualSecondaryTabsWidth
   } from "../admin.js"
   
   export let projectId;
@@ -178,8 +179,11 @@
 {/if}
 
 {#if showTabsRight}
-  <div class="tabs-preview" class:visible={!$secondaryTabsHidden}>
-
+  <div 
+    class="tabs-preview" 
+    class:visible={!$secondaryTabsHidden} 
+    style="--right-pane-width:{$actualSecondaryTabsWidth}px;"
+  >
     <Tabs
       autoWidth
       selected={$secondaryTabIndex}
@@ -240,7 +244,8 @@
   }
 
   .tabs-preview {
-    width: calc(33.3333333vw - 48px);
+    width: calc( var(--right-pane-width) - 48px);
+    max-width: var(--right-pane-max-width);
     height: 100%;
     visibility: hidden;
     display: flex;
