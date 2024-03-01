@@ -815,7 +815,7 @@ const login = async ({ username, password }) => {
   console.log(userAuthData)
   userId.set(userAuthData.id);
   localStorage.setItem('userId', userAuthData.id);
-  await Storage.set({ key: 'userAuth', value: JSON.stringify(userAuthData) })
+  await Preferences.set({ key: 'userAuth', value: JSON.stringify(userAuthData) })
   await loadElementPropertiesFromUser();
   return userAuthData
 }
