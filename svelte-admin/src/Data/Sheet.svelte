@@ -14,7 +14,8 @@
     ButtonSet,
     Toolbar,
     ToolbarContent,
-    ToolbarSearch
+    ToolbarSearch,
+    Modal
   } from "carbon-components-svelte"
 
   import Add from 'carbon-icons-svelte/lib/Add.svelte'
@@ -42,6 +43,7 @@
   let updateCell; // the cell being edited in modal
   let inputModalValue; // value edited in input modal
   let modalParams; // object of optional params passed to input modal
+  let rawRowContent; // open a model with raw row content
 
   const sheetRenameModal = {
     open: false,
@@ -399,6 +401,7 @@
           <OverflowMenu style="float: right" flipped>
             <!--OverflowMenuItem on:click={()=>{alert(row.key)}} text="show rowKey" /-->
             <OverflowMenuItem on:click={()=>{removeRow(row)}} text="delete row" disabled={$currentProjectReadOnly} />
+            <OverflowMenuItem on:click={()=>{rawRowContent = row}} text="view raw" />    
           </OverflowMenu>
         {:else if cell.key == 'key'}
           <CopyButton style="display: inline;" text={row?.key} feedback="Copied Row Key to clipboard!"/>
@@ -438,6 +441,17 @@
   submit={() => sheetRenameModal.submit()}
   close={() => { sheetRenameModal.open = false }}
   />
+
+  <!-- raw row content modal -->
+  <Modal
+    hasScrollingContent
+    passiveModal
+    bind:open={rawRowContent}
+    modalHeading="Sheet Row"
+    on:click:button--secondary={() => (rawRowContent = false)}
+  >
+  <pre class="raw">{JSON.stringify(rawRowContent, null, 2)}</pre>
+</Modal>
 
 <style>
 
@@ -484,6 +498,10 @@
 
   span.cell {
     white-space: nowrap;
+  }
+
+  .raw {
+    font-family: monospace;
   }
 
 </style>
