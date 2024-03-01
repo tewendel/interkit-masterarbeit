@@ -908,7 +908,7 @@
   </svelte:fragment>
   <svelte:fragment slot="modalPanelRight">
     <div style="display: flex; flex-direction: column; height: 100%">
-      <div style="display: flex">
+      <div style="display: flex; flex:none;">
         <Tabs
           bind:selected={editorMode}
           autoWidth={true}
@@ -930,9 +930,9 @@
       </div>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
-        <div style="overflow: auto; display: flex; flex-direction: column"><!-- wrapper for CodeMirror(s) -->
+        <div style="overflow: auto; display: flex; flex-direction: column; flex:1"><!-- wrapper for CodeMirror(s) -->
         {#if editorMode !== 3 && twinyHint === 'sync'}
-          <div class="textlike">
+          <div class="textlike warning">
             <p>
               <strong>Warning:</strong> This node contains twine-ish code.
               If you don't edit it via the Twine-ish tab,
@@ -954,6 +954,7 @@
           <CodeEditorExporty
             code={editorContents}
             readOnly={$currentProjectReadOnly}
+            setEditorMode={(m) => { editorMode = m }}
             on:codechange={evt => { editorContents = evt.detail }}
             />  
         {:else if editorMode === 1}
@@ -1221,6 +1222,11 @@ hr {
 
 .textlike p {
   margin: 1em 0;
+}
+
+.warning {
+  border: 4px dashed orange;
+  padding: 1em;
 }
 
 </style>

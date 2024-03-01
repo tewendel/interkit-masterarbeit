@@ -15,6 +15,7 @@ export const secondaryTabsPreviewSize = writable(0)
 
 export const secondaryTabsSize = writable(0)
 export const secondaryTabsSizes = [1/3, 1/2, 2/3]
+export const secondaryTabsMaxWidths = ["500px", "800px", "1200px"]
 
 // the path of the active subtab in the project tab
 export const projectTabPath = writable('')

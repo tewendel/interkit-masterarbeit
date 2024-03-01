@@ -28,6 +28,7 @@
     secondaryTabPreviewProjectId,
     secondaryTabsSize,
     secondaryTabsSizes,
+    secondaryTabsMaxWidths,
     docsRouterCanNavigate
   } from '../admin.js'
 
@@ -50,6 +51,7 @@
 <div
   class={`right-pane right-pane--tab${$secondaryTabIndex}`}
   class:minimized={$secondaryTabsMinimized}
+  style="--right-pane-max-width:{secondaryTabsMaxWidths[$secondaryTabsSize]}"
   >
   <div class="pane-controls">
     <ButtonSet style="width: 100%">
@@ -152,7 +154,7 @@
       <section class:visible={$secondaryTabIndex == 1} class="right-pane-content-docs">
         <div
           class="right-pane-content-docs-special markdownContent"
-          style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'}`}
+          style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'};`}
           >
           {@html $secondaryTabSpecialDoc}
         </div>
@@ -182,7 +184,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     width: var(--right-pane-size);
-    /* max-width: 640px; */
+    max-width: var(--right-pane-max-width);
     display: flex;
     flex-direction: column;
     align-items: flex-end;

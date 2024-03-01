@@ -118,7 +118,7 @@ h3 {
 .sidebarLeft {
   flex: 0 0 25%;
   width: 25%;
-  max-width: 25%;
+  max-width: 250px;
   min-width: 8em;
   background: white;
   display: flex;

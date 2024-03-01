@@ -1,6 +1,7 @@
 <script>
 
   import { createEventDispatcher } from 'svelte'
+  import { Button } from "carbon-components-svelte"
   import CodeEditor from '../Atoms/CodeEditor.svelte'
   import Arrival from "carbon-icons-svelte/lib/Arrival.svelte";
   import EmailNew from "carbon-icons-svelte/lib/EmailNew.svelte";
@@ -9,6 +10,7 @@
 
   export let code = ''
   export let readOnly = false
+  export let setEditorMode
 
   let onMessage = ''
   let onArrive = ''
@@ -51,10 +53,21 @@
         <h4 style="background-color: #eee; padding: 1ex 1em;">
           {#if handlerName === 'onMessage'}
             <EmailNew />
+            {handlerName}
           {:else if handlerName === 'onArrive'}
             <Arrival />
-          {/if}          
             {handlerName}
+          {:else}
+              <Button
+                on:click={() => setEditorMode(1)}
+                kind="tertiary"
+                size="small"
+                style="margin: 0.5em auto"
+                >
+                See all code in the Full tab
+              </Button>
+          {/if}          
+            
           </h4>
         {/if}
       {/if}
@@ -72,8 +85,14 @@
     padding: 0.5em 0;
   }
 
-  .root :global(.CodeMirror) {
-    height: 250px !important;
+  .root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .root :global(.CodeMirror:first-of-type) {
+    height: 35%;
   }
 
   p {
