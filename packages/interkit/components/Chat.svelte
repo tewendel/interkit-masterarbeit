@@ -9,14 +9,13 @@
   /* import StoryBoardImage from "./StoryBoardImage.svelte"; */
   import { getShowDummyDataStore } from './dummyDataHelpers.js' 
   
-  import { Plugins } from '@capacitor/core';
   import { decimalToSexagesimal } from "geolib";
 
   const verbose = false
 
   const projectDataStore = InterkitClient.userProjectDataStore
 
-  const { Geolocation } = Plugins;
+  import { Geolocation } from '@capacitor/geolocation';
 
   export let board = "board1"
   let boardId = board;
