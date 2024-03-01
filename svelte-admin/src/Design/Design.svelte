@@ -19,7 +19,7 @@
     subHandle = await InterkitClient.getSub('themes', 'themes', {});
     subHandle.data.subscribe((data) => {
       themesStore.set(data)
-      console.log("themes sub", data)
+      //console.log("themes sub", data)
     })
   }
 

@@ -230,20 +230,26 @@ async function gitCloneProject(projectPath, url) {
 }
 
 async function gitPull(projectPath, remote) {
-  await gitSetupUser(projectPath);
-  return await git.pull({
-    fs,
-    http,
-    dir: projectPath,
-    remote,
-    ref: "master",
-    singleBranch: true,
-  });
+  try {
+    await gitSetupUser(projectPath);
+    await git.pull({
+      fs,
+      http,
+      dir: projectPath,
+      remote,
+      ref: "master",
+      singleBranch: true,
+    });
+  } catch (error) {
+    console.warn(error)
+    return false
+  }
+  return true
 }
 
 async function gitPush(projectPath, remote) {
   try {
-    return await git.push({
+    await git.push({
       fs,
       http,
       dir: projectPath,
@@ -252,8 +258,10 @@ async function gitPush(projectPath, remote) {
       singleBranch: true,
     });
   } catch(error) {
+    console.warn(error)
     return false  
   }
+  return true
 }
 
 async function getResetIndex(projectPath) {

@@ -1,0 +1,17 @@
+name: UserAutoLogin
+fields:
+  - type: extraProps
+    props:
+    - type: string
+      name: password
+    - type: string
+      name: defaultLang
+      defaultValue: en
+    - type: string
+      name: defaultLangIndex
+      defaultValue: 0
+  - type: string
+    name: username
+  - type: slot
+    name: default
+toolboxCategory: User

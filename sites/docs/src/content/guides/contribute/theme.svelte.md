@@ -13,7 +13,7 @@ There are several levels of customization for a theme. See also [Styling](/guide
 A theme consists of these elements:
 - a custom css file (file `static/theme/global.css`)
 - custom javascript (file `static/theme/global.js`)
-- custom map style (URL)
+- custom map style (file `static/theme/maptiler/style.json`)
 - custom assets that are referenced in the css file (files in `static/theme/assets/`), such as icons, background images, etc.
 - a style guide that explains how to generate media assets that fit the theme
 
@@ -131,7 +131,7 @@ The source code lists a number of icon names you can override.
 
 ### Map Style
 
-You can also edit the map style using Map Tiler and reference it in the <InterkitComponent name="Map" /> component
+You can also change the default style of the <InterkitComponent name="Map" /> component by providing a custom TileJSON file at `static/theme/maptiler/style.json`. One way to create one is [maptiler cloud](https://cloud.maptiler.com/).
 
 ### Custom components
 

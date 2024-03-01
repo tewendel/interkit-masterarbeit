@@ -6,6 +6,7 @@
     Button,
     CodeSnippet,
     InlineNotification,
+    InlineLoading,
     UnorderedList,
     ListItem,
   } from "carbon-components-svelte";
@@ -17,6 +18,9 @@
   export let open = false;
 
   let bundleServerURL;
+
+  let pulling = false;
+  let pushing = false;
 
   // get commit hash from current image tag
   const matches = INTERKIT_IMAGE_TAG.match(/([a-z0-9]{7})/)
@@ -31,13 +35,19 @@
   });
 
   const push = async (remote) => {
+    const confirmation = confirm("Are you sure you want to push to " + remote + "? If the remote is an interkit server, it will overwrite the remote repository and delete all unstaged changes. Check the remote repository for changes first.");
+    if (!confirmation) return;
+    pushing = true;
     const res = await BundleServer.gitPush(projectId, remote);
     alert(res.status + "\n\n" + JSON.stringify(res));
+    pushing = false;
   };
 
   const pull = async (remote) => {
+    pulling = true;
     const res = await BundleServer.gitPull(projectId, remote);
     alert(res.status + "\n\n" + JSON.stringify(res));
+    pulling = false;
   };
 
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || [];
@@ -71,6 +81,8 @@
     {/if}
   </section>
 
+  <hr style="margin-top: 2rem" />
+
     <h3>Remotes</h3>
   {#if remotes.length > 0}
     <section>
@@ -85,17 +97,36 @@
               <Button
                 on:click={() => push(remote.remote)}
                 size="small"
-                kind="tertiary">push</Button
+                disabled={unstagedFiles.length > 0 || pulling || pushing}
+                kind="tertiary">
+                  push
+                </Button
               >
               <Button
                 on:click={() => pull(remote.remote)}
                 size="small"
-                kind="tertiary">pull</Button
+                disabled={unstagedFiles.length > 0 || pulling || pushing}
+                kind="tertiary">
+                  {#if pulling}
+                    <InlineLoading description="pulling" style="min-height: 0"/>
+                  {:else}
+                    pull 
+                  {/if}
+                </Button
               >
             {/if}
           </ListItem>
         {/each}
       </UnorderedList>
+      {#if unstagedFiles.length > 0}
+        <InlineNotification
+          hideCloseButton
+          kind="info"
+          title="Unstaged changes"
+          subtitle="Commit or stash before push. Pull and merge before push."
+        />
+      {/if}
+
     </section>
     {:else}
     <p>

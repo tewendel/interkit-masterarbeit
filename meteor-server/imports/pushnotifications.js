@@ -205,7 +205,7 @@ const send = ({ projectId, Meteor, recipients, payload }) => {
       return false
     }
     try {
-      messaging.sendMulticast({ // solo would be .send()
+      messaging.sendEachForMulticast({
         notification: {
           // TODO
           // title: `Notification from ${projectId}`,
