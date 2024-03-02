@@ -31,7 +31,7 @@
       readOnly: readOnly ? true : false,
       lineWrapping: true,
       gutters: lint ? ["CodeMirror-lint-markers"] : [],
-      lint: lint && {options: {esversion: 11, module: true, asi: true}},
+      lint: lint && {options: {esversion: 11, browser: true, asi: true}},
     });
     let charWidth = editor.defaultCharWidth();
     let basePadding = 4;

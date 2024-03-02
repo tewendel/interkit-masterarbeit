@@ -872,14 +872,14 @@
           iconDescription="Rename node"
           tooltipPosition="top"
           />
-        <Button
+        <!--Button
           kind="ghost"
           on:click={() => { syntaxCheck() }}
           disabled={!board || !editNodeId}
           icon={CheckmarkOutlineWarning}
           iconDescription="Check syntax"
           tooltipPosition="top"
-          />
+          /-->
         <Button
           kind="ghost"
           on:click={() => { copyCurrentNode() }}
