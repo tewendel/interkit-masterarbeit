@@ -74,7 +74,7 @@
       createProjectInitializing = true
       setTimeout(() => {
         createProjectInitializing = false
-        push('/' + newProjectId)
+        push('/project/' + newProjectId)
         createProjectStep = false
       }, 6000)
     }
