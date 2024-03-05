@@ -1220,6 +1220,10 @@ hr {
   padding: 0 1em;
 }
 
+.textlike:last-child {
+  margin-bottom: 1em;
+}
+
 .textlike p {
   margin: 1em 0;
 }

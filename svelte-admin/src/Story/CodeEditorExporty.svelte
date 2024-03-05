@@ -52,11 +52,22 @@
         {#if handlerName}
         <h4 style="background-color: #eee; padding: 1ex 1em;">
           {#if handlerName === 'onMessage'}
-            <EmailNew />
-            {handlerName}
+            <span class="handlerBar">
+              <span>
+                <EmailNew />
+                {handlerName}
+              </span>
+              <span class="args">api, msg</span>
+            </span>
+            
           {:else if handlerName === 'onArrive'}
-            <Arrival />
-            {handlerName}
+            <span class="handlerBar">
+              <span>
+                <Arrival />
+                {handlerName} 
+              </span>
+              <span class="args">api</span>
+            </span>
           {:else}
               <Button
                 on:click={() => setEditorMode(1)}
@@ -75,7 +86,8 @@
   {/if}
 </div>
 
-<style>
+<style lang="scss">
+  @use '@carbon/type';
 
   .block {
     font-family: monospace;
@@ -98,6 +110,17 @@
   p {
     margin: 1em 0;
     padding: 0 1em;
+  }
+
+  .handlerBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .args {
+    @include type.type-style("heading-compact-02");
+    color: #666;
   }
 
 </style>
