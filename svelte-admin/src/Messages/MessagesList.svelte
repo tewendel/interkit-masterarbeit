@@ -171,6 +171,8 @@
         return JSON.stringify(message.payload.choice)
       case 'image':
         return message.payload.mediafileKey
+      case 'location':
+        return JSON.stringify(message.payload.text)
       default:
         return JSON.stringify(message.payload)
     }

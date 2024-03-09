@@ -54,6 +54,24 @@ const sendLink = async function (text, options) {
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
+const sendLocation = async function (text, options) {
+  const { message, server, projectId } = this
+  const methodParams = {
+    projectId,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
+    //sender,
+    recipients: options?.recipients || [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'location',
+      text,
+      coords: {lat: options?.lat, lng: options?.lng},
+      options
+    }
+  }
+  await callWithDelay(server, "message.send", methodParams, options)
+}
+
 const sendDots = async function (duration, options) {
   const { message, server, projectId } = this
   const methodParams = {
@@ -324,6 +342,7 @@ export default {
   sendVideo,
   sendChoice,
   sendDots,
+  sendLocation,
   moveTo,
   moveUsers,
   echo,

@@ -126,6 +126,30 @@ api.sendChoice({
 
 See the [responding to messages](#responding-to-messages) section below for reponding to a choice made by a user
 
+### sendLink
+
+Send a link message to the user.
+
+```js
+api.sendLink("https://docs.interkit.app/")
+```
+
+Separate text from URL
+
+```js
+api.sendLink("Interkit Documentation", "https://docs.interkit.app/")
+```
+
+See [sendImage](#sendimage) to send a link with an image
+
+### sendLocation
+
+Send a location (Coordinates). The user can click on the location to open it in a map app.
+
+```js
+api.sendLocation("Open in map", {lat: 52.51449, lng: 13.38324})
+```
+
 ### sendSystem
 
 Send a system message das is displayed in the center of the chat. Useful for error messages or neutral informational content.

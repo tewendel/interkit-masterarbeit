@@ -11,6 +11,7 @@
   import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
   import MediaFileImage from '../MediaFileImage.svelte'
   import ChatImage from "./ChatImage.svelte"
+  import ExternalMapAppButton from "../ExternalMapAppButton.svelte"
 
   const dispatch = createEventDispatcher();
 
@@ -108,7 +109,7 @@
       doFallback={true}
     />
   </div>  
-{:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation'].includes(message?.payload?.type)}
+{:else if ['text', 'link', 'choice', 'image', 'audio', 'video', 'requestLocation', 'location'].includes(message?.payload?.type)}
   <div 
     class="Message Message--{message.payload?.type} message message--{message.payload.type}"
     class:message__user={isByUser}
@@ -118,15 +119,15 @@
     class:message__lastFromSender={lastFromSender}
     class:Message--lastFromSender={lastFromSender}
     class:contain={message.payload?.options?.objectFit === "contain"}
-    class:Message--hasbuttons={['requestLocation', 'choice'].includes(message.payload?.type)}
-    class:message__hasButtons={['requestLocation', 'choice'].includes(message.payload?.type)}
+    class:Message--hasbuttons={['requestLocation', 'choice', 'location'].includes(message.payload?.type)}
+    class:message__hasButtons={['requestLocation', 'choice', 'location'].includes(message.payload?.type)}
   >
     <Bubble
       messageType={message.payload?.type}
       type = { isByUser ? "me" : "other" }
       showHandle = { lastFromSender && !["choice", "requestLocation"].includes(message?.payload?.type) }
       showSide = { !["choice", "requestLocation", "audio", "video", "image"].includes(message?.payload?.type) }
-      hasButtons={['requestLocation', 'choice'].includes(message.payload?.type)}
+      hasButtons={['requestLocation', 'choice', 'location'].includes(message.payload?.type)}
       on:click={() => { 
         if (['text', 'image'].includes(message?.payload?.type) && !message?.payload?.options?.action) {
           showOptions = true 
@@ -228,6 +229,13 @@
               </li>
             {/if}
           </ul>
+        {:else if message?.payload?.type == "location"}
+          <ExternalMapAppButton
+            buttonOptions={{
+              text: message?.payload?.text,
+            }}
+            coords={message?.payload?.coords}
+          />
         {/if}
       </div>
     </Bubble>
