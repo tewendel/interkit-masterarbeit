@@ -23,6 +23,8 @@
   import ChevronLeft from 'carbon-icons-svelte/lib/ChevronLeft.svelte'
   // import Delete from 'carbon-icons-svelte/lib/Delete.svelte'
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
+  import Replicate from 'carbon-icons-svelte/lib/Replicate.svelte'
+
   import InputModal from '../InputModals/InputModal.svelte'
   import SheetRenameModal from '../InputModals/SheetRenameModal.svelte'
   import SheetCell from './SheetCell.svelte'
@@ -161,6 +163,12 @@
     }
   }
 
+  const duplicate = async () => {
+    const name = window.prompt("Enter name of duplicated sheet", $currentSheet.name + " copy" )
+    await InterkitClient.call('sheet.duplicate', {sheetKey, projectId, name})
+    close();
+  }
+
   const createColumn = async ()=> {
     let newCol = await InterkitClient.call('sheet.addColumn', {sheetKey, projectId})
     openUpdateHeaderModal(newCol);
@@ -173,6 +181,12 @@
   const removeRow = (row)=> {
     if(confirm("permanently delete row?")) {
       InterkitClient.call('row.delete', {key: row.key, projectId})   
+    }
+  }
+
+  const clearRows = ()=> {
+    if(confirm("permanently delete all rows?")) {
+      InterkitClient.call('sheet.clearRows', {sheetKey, projectId})   
     }
   }
   
@@ -336,6 +350,14 @@
       >
       back
     </Button>
+    
+    <OverflowMenu flipped>
+      <OverflowMenuItem disabled={$currentProjectReadOnly} on:click={() => { sheetRenameModal.start()} } text="Rename Sheet" />
+      <OverflowMenuItem disabled={$currentProjectReadOnly} on:click={duplicate} text="Duplicate Sheet" />
+      <OverflowMenuItem disabled={$currentProjectReadOnly} on:click={clearRows} text="Clear Rows" />
+      <OverflowMenuItem disabled={$currentProjectReadOnly} on:click={remove} text="Remove Sheet" />
+    </OverflowMenu>   
+    
     <Button
       size="field"
       kind="ghost"
@@ -351,8 +373,6 @@
   <h4>{$currentSheet.name} 
     <small>key={$currentSheet.key}</small>
   </h4>
-  <Button size="small" disabled={$currentProjectReadOnly} on:click={() => { sheetRenameModal.start() }}>Rename</Button>
-  <Button size="small" disabled={$currentProjectReadOnly} on:click={remove} icon={TrashCan}>Remove Sheet</Button>
 
   <br><br>
 
