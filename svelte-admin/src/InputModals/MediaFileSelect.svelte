@@ -51,7 +51,18 @@
       on:selected={onSelect}
     />
   </ModalBody>
-  <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
+  <ModalFooter 
+    primaryButtonText="Save" 
+    secondaryButtons={[{ text: "Cancel" }, { text: "Delete" }]}
+    primaryButtonDisabled={$currentProjectReadOnly}
+    on:click:button--secondary={({ detail }) => {
+      if (detail.text === "Cancel") close();
+      if (detail.text === "Delete") {
+        value = undefined;
+        submit()
+      };
+    }}  
+  />
 </ComposedModal>
 
 <style>
