@@ -3,6 +3,7 @@ import { Projects } from '../../imports/collections.js';
 import { duplicateProject, makeProjectHistoryEntry } from '../../imports/projectUtils.js'
 import { promises as fs } from 'fs';
 import { importData } from '../../imports/importServer.js';
+import { webPushPublicKey } from '../../imports/pushnotifications.js'
 
 const createProject = async ({ name, template, gitRepository, isTemplate }) => {
     
@@ -15,7 +16,8 @@ const createProject = async ({ name, template, gitRepository, isTemplate }) => {
         template,
         gitRepository
       })
-    ]
+    ],
+    webPushPublicKey
   }
 
   let projectId = await Projects.insert(doc);
@@ -73,6 +75,12 @@ Meteor.methods({
     } else {
       return null
     }
+  },
+
+  'project.getWebPushPublicKey': async ({ projectId }) => {
+    const project = await Projects.findOne({ _id: projectId })
+    console.log('project.getWebPushPublicKey', project)
+    return project.webPushPublicKey
   },
 
   'project.projectServer.init': async ({ projectId }) => {

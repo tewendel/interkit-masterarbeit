@@ -50,6 +50,7 @@ userId.subscribe(async userId => {
 })
 
 let pushnotificationRegistrationToken = writable(null)
+let webPushPublicKey = writable(null)
 
 // a global store to store the state history of stores relavant to the UI
 let uiHistoryStore = writable([])
@@ -708,6 +709,8 @@ const initApp = async options => {
   */
   if (!updating) {
     await connect()
+    const _publicKey = await server.call('project.getWebPushPublicKey', { projectId: get(projectId) })
+    webPushPublicKey.set(_publicKey)
     return true;
   }
 }
@@ -789,6 +792,16 @@ const saveUserPushnotificationRegistrationToken = async () => {
     console.error('saveUserPushnotificationRegistrationToken error', error)
     return false
   }
+  return result
+}
+
+const saveUserWebPushSubscription = async (subscription) => {
+  if (!get(userId)) {
+    console.warn('saveUserWebPushSubscription bailing, no userId')
+    return
+  }
+  console.log('InterkitClient.saveUserWebPushSubscription', subscription)
+  const result = await InterkitClient.call('user.saveWebPushSubscription', { userId: get(userId), subscription })
   return result
 }
 
@@ -1042,6 +1055,7 @@ const InterkitClient = {
   userId,
   userIsRole,
   pushnotificationRegistrationToken,
+  webPushPublicKey,
   config,
   connected, // svelte store
   projectId,
@@ -1057,6 +1071,7 @@ const InterkitClient = {
   createProjectUser,
   deleteProjectUsers,
   saveUserPushnotificationRegistrationToken,
+  saveUserWebPushSubscription,
   userEnableHeartbeat,
   userHeartbeat,
   userEnableActivityTracking,

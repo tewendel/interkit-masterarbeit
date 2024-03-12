@@ -34,6 +34,7 @@ export const Sheets = new Mongo.Collection('sheets');
 /*
 - projectId
 - key
+- name
 - columns: {
     - key
     - name

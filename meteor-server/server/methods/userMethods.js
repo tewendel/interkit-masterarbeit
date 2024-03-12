@@ -287,6 +287,27 @@ Meteor.methods({
     return result;
   },
 
+  "user.saveWebPushSubscription": async function ({
+    projectId,
+    userId,
+    subscription
+  }) {
+    if (!userId) {
+      console.error('user.saveWebPushSubscription no userId')
+      return false
+    }
+    console.log('user.saveWebPushSubscription', arguments)
+    console.log('user.saveWebPushSubscription', { projectId, userId, subscription })
+    const result = Meteor.users.update(userId, {
+      $set: {
+        [`projectUserData.${projectId}.lastHeartbeat`]: new Date(),
+        //[`projectUserData.${projectId}.webPushSubscription`]: subscription
+        webPushSubscription: subscription
+      }
+    });
+    return result;
+  },
+
   "user.heartbeat": async function ({ projectId, userId, isAwake }) {
     // Meteor.userId() is not super reliable?
     userId = userId || Meteor.userId();

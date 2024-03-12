@@ -1,8 +1,6 @@
 <script>
 
   import { Capacitor } from '@capacitor/core'
-  import { Plugins } from '@capacitor/core'
-  // const { SplashScreen, Network } = Plugins;
   import { Network } from '@capacitor/network'
   import { SplashScreen } from '@capacitor/splash-screen'
 
@@ -203,6 +201,9 @@
       pushNotifications.removeAllDeliveredNotifications()
     })
   })()
+
+  // TODO: pushweb.js doesnt export anything
+  import * as pushWeb from '../pushweb.js'
 
   $: {
     if(initComplete) {
