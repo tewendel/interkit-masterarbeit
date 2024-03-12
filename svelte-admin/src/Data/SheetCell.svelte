@@ -38,7 +38,7 @@
 
     {#if cell.value}
 
-      <span class="truncate">
+      <span class="truncate" title={cell.value}>
         {cell.value}
       </span>
 

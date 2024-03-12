@@ -21,6 +21,8 @@
   
   $: resetSub(projectId)
 
+  $: sheetsSorted = $sheets ? $sheets.sort((a, b) => a.name.localeCompare(b.name)) : []
+
   const resetSub = async (_projectId) => {
     console.log("resetSub sheets", _projectId)
     if(!_projectId) return
@@ -72,10 +74,10 @@
     </ButtonSet>
   </div>
 
-  {#if sheets}
+  {#if sheetsSorted}
     <ul class="sheets">
     <!-- we need to use $sheets here to get the reactive value of the store -->
-    {#each $sheets as sheet}
+    {#each sheetsSorted as sheet}
       <li on:click={()=>{openSheet(sheet)}}>
         <img class="icon" src="images/sheet_icon.png"/><br/>
         <div style="text-align: center;">{sheet.name}</div>

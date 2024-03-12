@@ -126,6 +126,30 @@ api.sendChoice({
 
 See the [responding to messages](#responding-to-messages) section below for reponding to a choice made by a user
 
+### sendLink
+
+Send a link message to the user.
+
+```js
+api.sendLink("https://docs.interkit.app/")
+```
+
+Separate text from URL
+
+```js
+api.sendLink("Interkit Documentation", "https://docs.interkit.app/")
+```
+
+See [sendImage](#sendimage) to send a link with an image
+
+### sendLocation
+
+Send a location (Coordinates). The user can click on the location to open it in a map app.
+
+```js
+api.sendLocation("Open in map", {lat: 52.51449, lng: 13.38324})
+```
+
 ### sendSystem
 
 Send a system message das is displayed in the center of the chat. Useful for error messages or neutral informational content.
@@ -223,6 +247,75 @@ To create, multiplayer chatrooms, you need to forward incoming messages to other
 api.echo(msg)
 ```
 The user variable "name" is used by default as a label.
+
+`msg` is supposed to be a whole message object like the one received in `onMessage(api, msg)`. 
+
+## Sending to specific recipients
+
+By default, the recipient of a message sent by any `api.send...()` function is the current user.
+
+All `api.send...()` functions accept further options to specify the recipients:
+
+      - `channelKey` optionally send this message on a different channel
+      - `recipients` an array of recipients user ids.
+
+```js
+api.sendText("hello", {
+  channelKey: "other_board",
+  recipients: ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"], 
+})
+```
+
+To broadcast a message to all users that are currently in a node, specify the nodeId inside the recipients
+
+```js
+api.sendSystem("The bus will arrive in 5 minutes", {
+  recipients: {
+    nodeId: "waitingforthebus"
+  }
+})
+```
+
+You can also get the explicit list of users in a node with `getUsersInNode({ channelKey, nodeId })`.
+
+## Moving other players
+
+While `api.moveTo()` moves the current user by default, you can add a list of `recipients` to move other users.
+
+```js
+api.moveTo(
+  "node1",
+  {
+    recipients: ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"],
+  }
+)
+
+`recipients` is a list of user IDs.
+
+The `nodeId` always relates to the node on the board where `moveTo` is called. Optionally add a `channelKey` to explicitly move users on a different board.
+
+Recipients can be defined as users in a node. Example: Move all users from node "start" to node "end" on the board "board2".
+
+```js
+api.moveTo(
+  "end",
+  {
+    channelKey: "board2",
+    recipients: {
+      nodeId: "start",
+      channelKey: "board2"
+    },
+  }
+)
+```
+
+### Alternative notation
+
+The function `moveUsers` is a shorthand for `moveTo` with the `recipients` as the second argument.
+
+```js
+api.moveUsers("node1", ["ohpppdsCZ9CXZ4Ds4", "bREC5nMSLoRNjSRn3"])
+```
 
 ## Variables
 

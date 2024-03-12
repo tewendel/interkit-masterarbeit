@@ -28,7 +28,9 @@
     secondaryTabPreviewProjectId,
     secondaryTabsSize,
     secondaryTabsSizes,
-    docsRouterCanNavigate
+    secondaryTabsMaxWidths,
+    docsRouterCanNavigate,
+    actualSecondaryTabsWidth
   } from '../admin.js'
 
   import { docsGo } from '../docs.js'
@@ -50,6 +52,8 @@
 <div
   class={`right-pane right-pane--tab${$secondaryTabIndex}`}
   class:minimized={$secondaryTabsMinimized}
+  style="--right-pane-max-width:{secondaryTabsMaxWidths[$secondaryTabsSize]}"
+  bind:clientWidth={$actualSecondaryTabsWidth}
   >
   <div class="pane-controls">
     <ButtonSet style="width: 100%">
@@ -152,7 +156,7 @@
       <section class:visible={$secondaryTabIndex == 1} class="right-pane-content-docs">
         <div
           class="right-pane-content-docs-special markdownContent"
-          style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'}`}
+          style={`display: ${$secondaryTabSpecialDoc ? 'block' : 'none'};`}
           >
           {@html $secondaryTabSpecialDoc}
         </div>
@@ -162,9 +166,8 @@
       </section>
     
       <section class:visible={$secondaryTabIndex == 2}>
-        <h4> Project Server</h4>
         {#if $currentProject}
-          <ProjectServerInfo {currentProject}/>
+          <ProjectServerInfo {currentProject} style="padding-bottom: 10px;"/>
         {:else}
           no current project
         {/if}
@@ -183,7 +186,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     width: var(--right-pane-size);
-    /* max-width: 640px; */
+    max-width: var(--right-pane-max-width);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -233,6 +236,7 @@
 
   section {
     width: 100%;
+    height: 100%;
     display: none;
     position: absolute;
     top: 0;

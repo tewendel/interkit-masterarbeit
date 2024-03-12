@@ -18,6 +18,8 @@
 
   $: theme = $themesStore.find(t => t.slug == themeSlug)
 
+  $: installedTheme = $currentProject?.uiState?.installedTheme
+
   const applyTheme = async () => {
     await BundleServer.applyTheme({
       projectId: $projectId,
@@ -43,17 +45,17 @@
         icon={Help}
         kind="ghost"
         size="field"
-        on:click={() => docsGo('/guides/overview/interface_overview#style')}
+        on:click={() => docsGo('/guides/contribute/theme')}
         >Help
       </Button>
 
       <Button
         icon={Save}
-        disabled={$currentProjectReadOnly}
+        disabled={$currentProjectReadOnly || installedTheme}
         kind="primary"
         size="field"
         on:click={applyTheme}
-        title="Make a copy of the theme files and place them into your project, overwriting current theme files"
+        title={ installedTheme ? "Remove the installed theme first" : "Make a copy of the theme files and place them into your project, overwriting current theme files" }
         >Apply this theme
       </Button>
 

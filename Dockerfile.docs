@@ -20,6 +20,7 @@ COPY sites/docs ./
 COPY meteor-server /meteor-server
 COPY app-bundler /app-bundler
 COPY repositories/starters /repositories/starters
+COPY cloud-init.yml /cloud-init.yml
 
 # build
 RUN npm run build

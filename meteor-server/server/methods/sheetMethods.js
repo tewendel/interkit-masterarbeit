@@ -139,6 +139,33 @@ Meteor.methods({
       }
   },
 
+  'sheet.duplicate': async ({sheetKey, projectId, name}) => {
+    console.log('sheet.duplicate', sheetKey, projectId, name)
+    if(sheetKey && projectId) {
+      // copy the sheet
+      const sheet = Sheets.findOne({key: sheetKey, projectId})
+      delete sheet._id
+      const newSheetKey = uuidv4()
+      Sheets.insert({
+        ...sheet,
+        key: newSheetKey,
+        name: name ? name : sheet.name + " copy",
+      }) 
+
+      // copy all the rows
+      const rows_cursor = Rows.find({sheetKey: sheet.key, projectId})
+
+      for await (let doc of rows_cursor) {
+          delete doc._id
+          await Rows.insert({
+            ...doc,
+            sheetKey: newSheetKey,
+            key: uuidv4(),
+          })
+      }
+    }
+  },
+
   'sheet.addColumn': async (options) => {
     return await addColumn(options);
   },
@@ -164,6 +191,15 @@ Meteor.methods({
     console.log("sheet.getRows", sheetKey, projectId)
     const rows = Rows.find({sheetKey: sheetKey, projectId}).fetch();
     return rows;
+  },
+
+  'sheet.clearRows': ({sheetKey, projectId}) => {
+    console.log("sheet.clearRows", sheetKey, projectId)
+    let result = false
+    if(sheetKey && projectId) {
+      result = Rows.remove({sheetKey, projectId});
+    }
+    return result;
   },
 
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {

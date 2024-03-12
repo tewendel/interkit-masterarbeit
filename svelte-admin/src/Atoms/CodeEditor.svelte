@@ -2,9 +2,12 @@
 
   import CodeMirror from 'codemirror';
   import 'codemirror/lib/codemirror.css';
+  import 'codemirror/addon/lint/lint.css';
   import 'codemirror/mode/javascript/javascript.js';
   import 'codemirror/mode/markdown/markdown.js';
   import 'codemirror/mode/handlebars/handlebars.js';
+  import "codemirror/addon/lint/lint.js";
+  import "codemirror/addon/lint/javascript-lint.js";
 
   import { createEventDispatcher, onMount, afterUpdate, onDestroy } from 'svelte';
 
@@ -13,9 +16,11 @@
   let textArea;
   let editor;
   let editorChanged = false;
+
   export let code = "";
   export let readOnly = false;
   export let language = "javascript";
+  export let lint = false;
   
   onMount(()=>{
     console.log("CodeEditor mount");
@@ -24,7 +29,9 @@
       lineNumbers: true,
       mode: language,
       readOnly: readOnly ? true : false,
-      lineWrapping: true
+      lineWrapping: true,
+      gutters: lint ? ["CodeMirror-lint-markers"] : [],
+      lint: lint && {options: {esversion: 11, browser: true, asi: true}},
     });
     let charWidth = editor.defaultCharWidth();
     let basePadding = 4;
@@ -55,6 +62,10 @@
   })
 
 </script>
+
+<svelte:head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.4/jshint.min.js"></script>
+</svelte:head>
 
 <textarea bind:this={textArea} value={code}></textarea>  
 

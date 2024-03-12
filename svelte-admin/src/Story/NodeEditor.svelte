@@ -588,9 +588,14 @@
   const syntaxCheck = (_code) => {
     console.log("syntaxCheck with", _code)
     let code = _code ? _code : editorContents;
-    // export are only allowed in modules
+    // imports and export are only allowed in modules
     code = code.replace(/^\s*export\b/gm, '/*xprt*/')
-
+    // replace the start of import with /*import
+    code = code.replace(/^\s*import\b/gm, '/*import')
+    // append */ to the end of import: from ...
+    code = code.replace(/from\s+.*$/gm, 'from */')
+    // NOTE: if there are comments in the import line, this will break /* */
+    
     // comment out parts that should not be checked
     code = code.replace('//no-check-start', '/*')
     code = code.replace('//no-check-end', '*/')
@@ -867,14 +872,14 @@
           iconDescription="Rename node"
           tooltipPosition="top"
           />
-        <Button
+        <!--Button
           kind="ghost"
           on:click={() => { syntaxCheck() }}
           disabled={!board || !editNodeId}
           icon={CheckmarkOutlineWarning}
           iconDescription="Check syntax"
           tooltipPosition="top"
-          />
+          /-->
         <Button
           kind="ghost"
           on:click={() => { copyCurrentNode() }}
@@ -903,7 +908,7 @@
   </svelte:fragment>
   <svelte:fragment slot="modalPanelRight">
     <div style="display: flex; flex-direction: column; height: 100%">
-      <div style="display: flex">
+      <div style="display: flex; flex:none;">
         <Tabs
           bind:selected={editorMode}
           autoWidth={true}
@@ -925,9 +930,9 @@
       </div>
     <!-- can't use TabContent here, need if/else so only one of the editors is actually mounted at a time,
       otherwise two-way binds are a hot mess -->
-        <div style="overflow: auto; display: flex; flex-direction: column"><!-- wrapper for CodeMirror(s) -->
+        <div style="overflow: auto; display: flex; flex-direction: column; flex:1"><!-- wrapper for CodeMirror(s) -->
         {#if editorMode !== 3 && twinyHint === 'sync'}
-          <div class="textlike">
+          <div class="textlike warning">
             <p>
               <strong>Warning:</strong> This node contains twine-ish code.
               If you don't edit it via the Twine-ish tab,
@@ -949,6 +954,7 @@
           <CodeEditorExporty
             code={editorContents}
             readOnly={$currentProjectReadOnly}
+            setEditorMode={(m) => { editorMode = m }}
             on:codechange={evt => { editorContents = evt.detail }}
             />  
         {:else if editorMode === 1}
@@ -958,6 +964,7 @@
               on:codechange={evt => { editorContents = evt.detail }}
               readOnly={$currentProjectReadOnly}
               class="editor"
+              lint
               />
           {:else}
             <textarea
@@ -1213,8 +1220,17 @@ hr {
   padding: 0 1em;
 }
 
+.textlike:last-child {
+  margin-bottom: 1em;
+}
+
 .textlike p {
   margin: 1em 0;
+}
+
+.warning {
+  border: 4px dashed orange;
+  padding: 1em;
 }
 
 </style>

@@ -112,6 +112,16 @@ Meteor.methods({
     const userId = Meteor.userId()
     const pushOnly = payload?.type === 'push'
     const dontPush = payload?.type && ['system', 'systemImage', 'empty'].includes(payload.type)
+
+    // check if the recipients requests a broadcast to all users in a node
+    if (recipients.nodeId) {
+      recipients = /*await*/ Meteor.call("users.getForNode", {
+        projectId,
+        boardId: recipients?.channelKey || channel_key,
+        nodeId: recipients?.nodeId,
+      }).map((u) => u._id);
+    }
+
     console.log('message.send', { payload, channel_key, recipients, sender, userId, pushOnly, dontPush })
     let messageResult
     if (!pushOnly) {

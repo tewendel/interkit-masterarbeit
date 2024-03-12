@@ -251,6 +251,7 @@ const sendWebPushMessages = async ({ projectId, subscriptions, payload }) => {
  * @param {Object} payload
  */
 const send = ({ projectId, Meteor, recipients, payload }) => {
+  let messaging
   // note: Meteor needs a Date object, not a number
   const heartbeatQuery = enableHeartbeat
     ? { // ...with heartbeats older than...

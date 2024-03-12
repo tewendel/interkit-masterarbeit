@@ -50,6 +50,7 @@
       commitMessage || `changed ${unstagedFiles.length} files`
     );
     loadingCommit = false;
+    commitMessage = "";
   };
 
   const checkoutHead = async () => {
@@ -72,6 +73,7 @@
   $: unstagedFiles = $currentProject?.uiState?.git?.unstagedChanges || [];
   $: log = $currentProject?.uiState?.git?.log || [];
   $: diff = $currentProject?.uiState?.git?.diff || [];
+  $: lastCommit = log?.[0];
 </script>
 
 {#if open}
@@ -144,23 +146,32 @@
           >
         </FormGroup>
 
-        <FormGroup noMargin>
-          <h4>
-            Discard all changes and restore files from last commit.
-          </h4>
-          <Button
-          style="white-space:nowrap;"
-            disabled={loadingCheckoutHead || $currentProjectReadOnly}
-            kind="danger"
-            title="Discard all changes and reset to last commit"
-            on:click={checkoutHead}
-          >
-            Discard Changes
-            {#if loadingCheckoutHead}
-              &nbsp;<InlineLoading />
-            {/if}
-          </Button>
-        </FormGroup>
+        {#if lastCommit}
+          <FormGroup noMargin>
+            <h4>
+              Discard all changes and restore files from last commit.
+            </h4>
+            <Button
+            style="white-space:nowrap;"
+              disabled={loadingCheckoutHead || $currentProjectReadOnly}
+              kind="danger"
+              title="Discard all changes and reset to last commit"
+              on:click={checkoutHead}
+            >
+              Discard Changes and return to last commit
+              {#if loadingCheckoutHead}
+                &nbsp;<InlineLoading />
+              {/if}
+            </Button>
+            <div style="margin-top: 1ex;">
+            Returns to 
+              <Tag>
+                {lastCommit.date.toLocaleDateString("en-UK", dateFormat)}
+              </Tag>
+            "{lastCommit.commit?.message}"
+            </div>
+          </FormGroup>
+        {/if}
       </Form>
     {/if}
   </section>

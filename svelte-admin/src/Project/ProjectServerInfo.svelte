@@ -3,10 +3,12 @@
     Row,
     Column,
     Button,
+    ButtonSet
   } from "carbon-components-svelte";
   import { InterkitClient } from 'interkit'
 
   export let currentProject // $currentProject
+  export let style
 
   $: messages = ($currentProject?.projectServer?.messages || []).sort( (a,b) => b.date - a.date )
   $: status = $currentProject?.projectServer?.status
@@ -45,22 +47,28 @@
 
 </script>
 
-<div class="container" data-status={$currentProject?.projectServer?.status}>
-  {#if status && status != "init"}
-    <Button on:click={() => status === "running" ? stop() : start() } size="small" kind="secondary" disabled={!!actionRequested}>
-      {#if status === "running"}
-        Stop
-      {:else}
-        Start
+<div class="container" data-status={$currentProject?.projectServer?.status} {style}>
+  <div class="controls">
+    <h4> Project Server Log</h4>
+    <span class="status">
+        Status: {$currentProject?.projectServer?.status}
+      </span>
+    <ButtonSet>
+      {#if status && status != "init"}
+        <Button on:click={() => status === "running" ? stop() : start() } size="small" kind="secondary" disabled={!!actionRequested}>
+          {#if status === "running"}
+            Stop
+          {:else}
+            Start
+          {/if}
+        </Button>
       {/if}
-    </Button>
-  {/if}
-  <span class="status">
-    Status: {$currentProject?.projectServer?.status}
-  </span>
-  <Button on:click={() => clear() } size="small" kind="tertiary">
-    Clear Log
-  </Button>
+      
+      <Button on:click={() => clear() } size="small" kind="tertiary">
+        Clear Log
+      </Button>
+    </ButtonSet>
+  </div>
   <div class="messages">
     {#each messages as message}
       <div class="message">
@@ -79,6 +87,16 @@
 </div>
 
 <style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .controls {
+    margin-bottom: 10px;
+  }
   .status {
     text-transform: capitalize;
     display: inline-flex;
@@ -87,19 +105,21 @@
   .status:before {
     content: "●";
     padding-right: 0.5em;
-    color: transparent;
+    color: #f9f9f9;
   }
   [data-status="running"] .status:before {
     color: #4f9f52;
   }
   .messages {
-    height: 300px;
+    width: 100%;
+    flex:1;
     overflow-y: scroll;
     display:flex;
     flex-direction: column-reverse;
     background: white;
     border: 1px solid black;
     font-family: monospace;
+    background: #f9f9f9;
   }
   .message {
     padding: 0.5ex;

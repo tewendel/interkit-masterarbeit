@@ -10,7 +10,14 @@
   <div slot="sidebarLeft">
     <ProjectTabSidebar contentMain={tab}/>
   </div>
-  <div slot="contentMain">
+  <div slot="contentMain" class="content">
     <slot />
   </div>
 </MainColumns>
+
+<style>
+  .content {
+    height:100%;
+    overflow: auto;
+  }
+</style>

@@ -37,6 +37,8 @@
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
   import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
+  import UserSimulation from "carbon-icons-svelte/lib/UserSimulation.svelte"
+  import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte"
 
   import UserVarTableModal from './UserVarTableModal.svelte';
   import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
@@ -130,7 +132,7 @@
     {
       key: 'userIcon',
       show: true,
-      value: 'Icon',
+      value: 'Active', // Icon
       width: '4em',
     },
     {
@@ -197,9 +199,6 @@
     }
   ]
 
-  const userIconSelf = '\u{01f464}\uFE0E'
-  const userIconPreview = '\u{01f4f1}\uFE0E'
-
   const summarizeBoardState = boardState => Object.keys(boardState || {})
     .map(boardId => `${boardId}_${boardState[boardId]?.nodeId}`)
     .join(' ')
@@ -213,7 +212,7 @@
       .map(user => {
         return {
           ...user,
-          userIcon: user.id === $userId ? userIconSelf : (user.id === previewUserId ? userIconPreview : ''),
+          userIcon: user.id === $userId ? "me" : (user.id === previewUserId ? "active in preview" : ''),
           userToken: user?.projectUserData?.[projectId]?.userToken,
           lastHeartbeat: user?.projectUserData?.[projectId]?.lastHeartbeat,
           pushnotificationRegistrationToken: user?.projectUserData?.[projectId]?.pushnotificationRegistrationToken,
@@ -451,7 +450,7 @@
           </Button>
           <Button
             size="small"
-            icon={MobileAdd}
+            icon={UserSimulation}
             on:click={previewAttach}
             disabled={usersSelection.length !== 1}
             iconDescription='attach user to preview'
@@ -520,12 +519,16 @@
               <OverflowMenuItem on:click={()=>{removeRow(row)}} text="remove" />
             </OverflowMenu>
           {/if}
-        {:else if cell.key === 'usericon'}
+        {:else if cell.key === 'userIcon'}
           {#if row.id === $userId}
-            &#x1F464;&#xFE0E;
+            <span title="This user is you">
+              <UserAdmin />
+            </span>
           {/if}
           {#if row.id === previewUserId}
-            &#x1F4F1;&#xFE0E;
+            <span title="This user is currently active in the preview">
+              <UserSimulation style="color:#f60" />
+            </span>
           {/if}
         {:else if cell.key === 'createdAt'}
           <span title={cell.value} class="cell__1line">{ createdAtdateTimeFormat.format(cell.value) }</span>

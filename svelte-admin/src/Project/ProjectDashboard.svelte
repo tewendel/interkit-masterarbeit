@@ -11,6 +11,7 @@
   import { InterkitClient } from "interkit";
   import { docsGo } from "../docs";
   import { push } from "svelte-spa-router";
+  import Markdown from "../Atoms/Markdown.svelte";
 
   export let projectId;
 
@@ -76,7 +77,7 @@
           e.preventDefault();
         }}
       >
-        {@html $currentProject?.uiState?.metafile?.project?.html}
+      <Markdown source={$currentProject?.uiState?.metafile?.project?.html} />
       </div>
     {:else}
       <h1>

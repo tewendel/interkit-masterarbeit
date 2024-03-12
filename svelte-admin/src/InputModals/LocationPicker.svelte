@@ -1,10 +1,14 @@
 <script>
 
 import {
+    Button,
     ComposedModal,
+    CodeSnippet,
+    FormGroup,
     ModalHeader,
     ModalBody,
-    ModalFooter
+    ModalFooter,
+    TextInput
   } from "carbon-components-svelte";
 
   import { onMount } from 'svelte'
@@ -132,11 +136,30 @@ import {
   <ModalHeader title="Drag the marker or click on the map to choose a location" />
   <ModalBody>
 
-     <div id="mapid"></div>
+    {#if value?.lat && value?.lng}
+      <div class="value">
+        Current Coordinates ([Lat, Lng]): <CodeSnippet
+        code={`[${value.lat}, ${value.lng}]`}
+        type="inline"
+        />
+      </div>
+    {/if}
 
-     <input type="text" bind:value={geocodingQuery} on:keypress={onKeyPress}/>
-     <button on:click={doGeocoding}>move map</button>
-     <button on:click={moveToMarker}>back to marker</button>
+    <div id="mapid"></div>
+
+    <FormGroup legendText="Find on map">
+        <TextInput size="small" placeholder="Enter a place..." bind:value={geocodingQuery} on:keypress={onKeyPress} />
+        <Button size="small" on:click={doGeocoding}>
+          move map
+          {#if geocodingQuery?.length}
+            &nbsp;to&nbsp;
+            <span style="max-width: 10em; overflow: hidden; display: inline-flex; white-space: nowrap; overflow: ellipsis">
+              "{geocodingQuery}"
+            </span>
+          {/if}
+        </Button>
+        <Button size="small" on:click={moveToMarker}>back to marker</Button>
+    </FormGroup>
     
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" primaryButtonDisabled={$currentProjectReadOnly}/>
@@ -145,4 +168,5 @@ import {
 
 <style>
   #mapid { height: 180px; margin-bottom: 20px;}
+  .value { margin-bottom: 1em;}
 </style>

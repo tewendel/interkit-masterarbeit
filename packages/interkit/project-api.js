@@ -40,9 +40,9 @@ const sendLink = async function (text, options) {
   const { message, server, projectId } = this
   const methodParams = {
     projectId,
-    channel_key: message.channel_key,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender,
-    recipients: [message.sender],
+    recipients: options?.recipients || [message.sender],
     origin: "handler",
     payload: {
       type: 'link',
@@ -54,13 +54,31 @@ const sendLink = async function (text, options) {
   await callWithDelay(server, "message.send", methodParams, options)
 }
 
+const sendLocation = async function (text, options) {
+  const { message, server, projectId } = this
+  const methodParams = {
+    projectId,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
+    //sender,
+    recipients: options?.recipients || [message.sender],
+    origin: "handler",
+    payload: {
+      type: 'location',
+      text,
+      coords: {lat: options?.lat, lng: options?.lng},
+      options
+    }
+  }
+  await callWithDelay(server, "message.send", methodParams, options)
+}
+
 const sendDots = async function (duration, options) {
   const { message, server, projectId } = this
   const methodParams = {
     projectId, 
-    channel_key: message.channel_key, 
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender, 
-    recipients: [message.sender],
+    recipients: options?.recipients || [message.sender],
     origin: 'handler',
     payload: {
       type: 'empty',
@@ -74,7 +92,7 @@ const sendSystem = async function (text, options) {
   const { message, server, projectId } = this;
   const methodParams = {
     projectId,
-    channel_key: message.channel_key,
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender,
     recipients: options?.recipients || [message.sender],
     origin: "handler",
@@ -129,9 +147,9 @@ const sendChoice = async function(choice, options) {
   //console.log(this)
   const methodParams = {
     projectId, 
-    channel_key: message.channel_key, 
+    channel_key: options?.channelKey || message.channel_key, // optionally send this message on a different channel
     //sender, 
-    recipients: [message.sender],
+    recipients: options?.recipients || [message.sender],
     origin: "handler",
     payload: {
       type: 'choice',
@@ -163,6 +181,10 @@ const requestLocation = async function(prompt, options) {
 
 
 const moveTo = async function(nodeId, options) { 
+  if (options?.recipients) {
+    return await moveUsers(nodeId, options.recipients, options)
+  }
+
   const {server, projectId, boardId, userId} = this
   const methodParams = {
     projectId,
@@ -172,6 +194,29 @@ const moveTo = async function(nodeId, options) {
   }
   await callWithDelay(server, "user.moveTo", methodParams, options)
 }
+
+const moveUsers = async function(nodeId, recipients = [], options) {
+  const {server, projectId, boardId, userId} = this
+
+  // recipients might be a nodeId
+  if (recipients?.nodeId) {
+    const users = await server.call('users.getForNode', {
+      projectId, 
+      boardId: recipients?.channelKey || boardId, 
+      nodeId: recipients?.nodeId
+    })
+    recipients = users.map((u) => u._id);
+  }
+
+  const methodParams = {
+    projectId,
+    userIds: recipients,
+    boardId: options?.channelKey || boardId, // you can optionally perform a moveTo on a different board
+    nodeId
+  }
+  await callWithDelay(server, "users.moveTo", methodParams, options)
+}
+
 
 const getUserVar = async function(varName) {
   const {message, server, projectId, nodeId, userId} = this
@@ -243,6 +288,16 @@ const echo = async function(msg) {
   }
 }
 
+const getUsersInNode = async function (options) {
+  const { message, server, projectId, nodeId, userId } = this;
+  const users = await server.call("users.getForNode", {
+    projectId,
+    boardId: options?.channelKey || message.channel_key,
+    nodeId: options?.nodeId || nodeId,
+  });
+  return users;
+};
+
 // load all the rows in a sheet
 const getRows = async function(sheetKey) {
   const {server, projectId} = this
@@ -287,8 +342,11 @@ export default {
   sendVideo,
   sendChoice,
   sendDots,
+  sendLocation,
   moveTo,
+  moveUsers,
   echo,
+  getUsersInNode,
   setUserVar,
   getUserVar,
   setLang,
@@ -300,5 +358,5 @@ export default {
   updateRow,
   setInterface,
   requestLocation,
-  distance
-}
+  distance,
+};
