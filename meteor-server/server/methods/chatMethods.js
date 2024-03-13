@@ -192,6 +192,27 @@ Meteor.methods({
     const result = await Messages.remove({ _id: { $in: ids } })
     return result
   },
+
+  'messages.deleteUnseen': async function ({ projectId, channel_key }) {
+    console.log('messages.deleteUnseen', { projectId, channel_key})
+    const result = await Messages.remove({
+      projectId,
+      channel_key,
+      // seenCount is not set yet
+      seenCount: { $exists: false }
+    })
+    return result
+  },
+
+  'messages.deleteAll': async function ({ projectId, channel_key }) {
+    console.log('messages.deleteAll', { projectId, channel_key})
+    const result = await Messages.remove({
+      projectId,
+      channel_key,
+    })
+    return result
+  },
+
   
   // schedules an event for later
   // execution is managed in project-server.js

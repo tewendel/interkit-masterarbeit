@@ -606,7 +606,7 @@
     try {
       eval(code)
       _syntaxCheckStatus = 'ok'
-      _syntaxCheckMessage = 'no <i>syntactical</i> errors<br/><small>errors still might occur when the code runs</small>'
+      _syntaxCheckMessage = 'No <i>syntactical</i> errors<br/><small>Check the Logs tab if the code doesn not run as expected</small>'
     } catch (err) {
       _syntaxCheckStatus = 'bad'
       _syntaxCheckMessage = `<b>${err.message}</b>`
