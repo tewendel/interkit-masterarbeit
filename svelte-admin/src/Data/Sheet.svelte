@@ -295,7 +295,7 @@
           reference: c.reference,
           options: c.options,
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
-          sort: (c.type == "number" || c.type == "string") ? 
+          sort: (c.type == "number" || c.type == "string" || c.type == "date") ? 
             sortFunction : false
         }}).concat([
         {
