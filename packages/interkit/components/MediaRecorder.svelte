@@ -47,7 +47,8 @@
       audio: true
     },
     'image': {
-      video: {facingMode: cameraFacingMode || "user"}
+      video: {facingMode: cameraFacingMode || "user"},
+      audio: false
     },
   }
   
@@ -148,8 +149,9 @@
   const init = async () => {
     try {
       loading = true;
+      const sanitizedStreamOptions = await sanitizeStreamOptions(streamOptions);
       stream = await navigator.mediaDevices.getUserMedia(
-        streamOptions
+        sanitizedStreamOptions
       );
       if(!stream) {
         alert("Error starting camera")
@@ -218,14 +220,44 @@
     });
   }
 
+  async function sanitizeStreamOptions(options) {
+    if (options?.video?.facingMode) {
+      options.video.facingMode = await getSupportedFacingMode(options.video.facingMode);
+    }
+    return options;
+  }
+
+  async function getSupportedFacingMode(requestedFacingMode) {
+    // check if a camera that supports "facing mode" is available, falls back otherwise
+    let devices = []
+    try {
+      devices = await navigator.mediaDevices.enumerateDevices();
+    } catch (error) {
+      console.log('Error enumerating devices', error);
+    }
+    const videoInputDevices = devices.filter(device => device.kind === 'videoinput');
+
+    const hasEnvironmentCamera = videoInputDevices.some(device => device.label.includes('back'));
+    if (requestedFacingMode === 'environment' && !hasEnvironmentCamera) {
+      console.log('No environment camera available, falling back to user camera')
+    }
+    return hasEnvironmentCamera && requestedFacingMode === 'environment' ? 'environment' : 'user';
+  }
+
   onMount(() => {
     init()
   })
 
   onDestroy(() => {
-    stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
+    try {
+      if (stream) {
+        stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+      }
+    } catch (error) {
+      console.log("Error stopping stream", error);
+    }
     cancelAnimationFrame(animationFrameRequestId)
   })
 
