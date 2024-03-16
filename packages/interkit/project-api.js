@@ -182,7 +182,9 @@ const requestLocation = async function(prompt, options) {
 
 const moveTo = async function(nodeId, options) { 
   if (options?.recipients) {
-    return await moveUsers(nodeId, options.recipients, options)
+    // make sure the context ("this") is not lost
+    const boundMoveUsers = moveUsers.bind(this);
+    return await boundMoveUsers(nodeId, options.recipients, options);
   }
 
   const {server, projectId, boardId, userId} = this
@@ -196,7 +198,7 @@ const moveTo = async function(nodeId, options) {
 }
 
 const moveUsers = async function(nodeId, recipients = [], options) {
-  const {server, projectId, boardId, userId} = this
+  const {server, projectId, boardId} = this
 
   // recipients might be a nodeId
   if (recipients?.nodeId) {
