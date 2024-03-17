@@ -42,11 +42,13 @@
 
   let previewURL = ""
   let buildURL = ""
+  let publicBuildURL = ""
   let bundlezipURL = "";
   let bundleServerURL
   let themed = true
   let localConfig = true
   let dummyData = false
+  let sharePublicUrl = true
   
   let iframeRef = null
 
@@ -127,6 +129,7 @@
       previewURL = projectId ? bundleServerURL + "/dev/" + projectId + "/" + "?" + query : null
       console.log('Layout/Preview', previewURL)
       buildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
+      publicBuildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" : null
       bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null
     }
   }
@@ -374,13 +377,13 @@
             <!-- svelte-ignore security-anchor-rel-noreferrer -->
             <a
               target="_blank"
-              title={buildURL}
-              href={buildURL}
+              title={sharePublicUrl ? publicBuildURL : previewURL}
+              href={sharePublicUrl ? publicBuildURL : previewURL}
               style="text-decoration: none"
               >
-              {#key buildURL}
+              {#key previewURL+publicBuildURL}
                 <QrCode
-                  value={buildURL}
+                  value={sharePublicUrl ? publicBuildURL : previewURL}
                   padding={15}
                   />
               {/key}
@@ -412,7 +415,14 @@
           </div>
         </TabContent-->
       </div>
-    </Tabs>  
+    </Tabs>
+      <Toggle
+      size="sm"
+      labelText="Public URL"
+      labelA="Preview"
+      labelB={"Published " + ($currentProject && $currentProject?.uiState?.lastBuildDate ? "("+new Date($currentProject.uiState.lastBuildDate).toLocaleString()+")" : null) }
+      toggled on:toggle={(e) => sharePublicUrl = e.detail.toggled}
+      />
   {/if}
 </Modal>
   
