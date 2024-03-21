@@ -75,13 +75,23 @@ const updateUserChannelProperty = async (userId, projectId, channelKey, property
 }
 
 
-const updateUserVar = async (userId, projectId, varName, value) => {
-  // write projectData updates to user
-  const usersModifiedCount = Meteor.users.update(userId, {
-    $set: {
-      [`projectUserData.${projectId}.userVars.${varName}`] : value      
+const updateUsersVar = async (selector, projectId, varName, value) => {
+  // write projectData updates to users
+  console.log('updateUsersVar', selector, projectId, varName, value)
+  // console.log('updateUsersVar', Meteor.users.find(selector).fetch())
+  const usersModifiedCount = Meteor.users.update(
+    selector,
+    {
+      $set: {
+        [`projectUserData.${projectId}.userVars.${varName}`] : value
+      }
+    },
+    {
+      // not super exact, but good enough
+      // (typeof check also true for arrays; an object selector might still mean to select one...)
+      multi: typeof selector === 'object'
     }
-  })
+  )
   return usersModifiedCount
 }
 
@@ -342,9 +352,10 @@ Meteor.methods({
     return userProjectData?.userVars?.[varName];
   },
 
-  "user.setUserVar": async ({ userId, projectId, varName, value }) => {
-    console.log("user.setUserVar", varName, value);
-    await updateUserVar(userId, projectId, varName, value);
+  "user.setUserVar": async ({ userId /* can also be a Meteor selector */, projectId, varName, value }) => {
+    console.log("user.setUserVar", userId, varName, value);
+    const ret = await updateUsersVar(userId, projectId, varName, value);
+    return ret
   },
 
   "user.setElementProperty": async ({

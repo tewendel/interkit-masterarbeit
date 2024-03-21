@@ -228,6 +228,17 @@
     window.location.reload();
   }
 
+  /* handle server reset requests */
+  InterkitClient.userProjectDataStore.subscribe(async (data) => {
+    // console.log('AppBaseAdvanced userProjectDataStore sub', data)
+    if (data?.userVars?.resetRequested === true) {
+      // new Date didn't work for some reason
+      const res = await InterkitClient.setUserVar('resetRequested', Date.now())
+      console.log('AppBaseAdvanced userProjectDataStore, result', res)
+      localStorage.clear()
+      window.location.reload()
+    }
+  })
 
   function receiveMessage(event) {
     console.log('AppBaseAdvanced in iframe, receiveMessage', event?.data?.command, event?.data?.payload, event)

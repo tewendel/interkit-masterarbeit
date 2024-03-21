@@ -231,6 +231,23 @@ const setUserVar = async function(varName, value) {
   await server.call('user.setUserVar', {userId, projectId, varName, value})
 }
 
+const requestResetAllOtherUsers = async function () {
+  const { message, server, projectId, nodeId, userId } = this
+  const ret = await server.call('user.setUserVar', {
+    // user.setUserVar userId coincidentally, untypedly takes a Meteor selector
+    userId: {
+      _id: { $ne: userId },
+      [`projectUserData.${projectId}.boardState`]: { $exists: true, $ne: null },
+      [`projectUserData.${projectId}.userVars.resetRequested`]: { $ne: true }
+    },
+    projectId,
+    varName: 'resetRequested',
+    value: true
+  })
+  console.log('requestResetAllOtherUsers', userId, ret)
+  return ret
+}
+
 const setLang = async function (lang, langIndex) {
   // TODO as implemented now, user must know both lang and its index
   // in the langs array, which is provided by a blockly field,
@@ -351,6 +368,7 @@ export default {
   getUsersInNode,
   setUserVar,
   getUserVar,
+  requestResetAllOtherUsers,
   setLang,
   setElementProperty,
   getElementProperty,

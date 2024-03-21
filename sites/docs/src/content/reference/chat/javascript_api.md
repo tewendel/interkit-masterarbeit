@@ -331,6 +331,32 @@ await api.getUserVar("name")
 
 These operations read from the database, so await is needed.
 
+There are "magic" variables, see "Restarting" below.
+
+## Restarting (by resetting other players)
+
+Set a user's `userVar` `resetRequested` to `true` to signal their device to reset.
+Their client will reset as soon it "sees" the signal
+(like when they re-open a tab, or launch the app).  
+When a client reacts, it
+
+1. sets its `userVar` to a timestamp, signaling back it has *read* the request
+   (the timestamp is currently not used in user-friendly way,
+   but it can be examined in Project/users table, User vars column)
+2. clears localStorage (thus "forgetting" its userId)
+3. reloads the tab (it then receives a new userId)
+
+There is a batch helper variant of this function, intended for admin-like users:
+
+```js
+const affectedUserCount = await api.requestResetAllOtherUsers()
+```
+
+will set the magic signal userVars for all *other* (i.e. presumably non-admin) users.  
+The return value does not reflect how many users/devices were *successfully* reset,
+only how many were *newly* requested to do so
+(this excludes users/devices where a request is pending).
+
 ## Database rows
 
 Load rows from a sheet
