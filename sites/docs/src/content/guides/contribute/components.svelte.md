@@ -62,6 +62,45 @@ You can find this example for a custom project component in
 
 ![example](/images/ProjectComponentExample.png)
 
+### Reactive Data Loading example
+
+  This example components loads data from a sheet that has the key "sessions" reactivly –  showing updates in real time.
+
+<details>
+  <summary>
+    see source code
+  </summary>
+
+
+```svelte
+  <script>
+    import {onMount} from 'svelte'
+    import { InterkitClient } from "interkit"
+    
+    let rowsStore
+    let sessions = []
+    
+    onMount( async ()=>{
+      // get reactive store for the rows of the sheet "sessions"
+      rowsStore = await InterkitClient.getRowSubStore("sessions")
+    })
+
+    $: {
+      if (rowsStore) {
+        // sort the sessions by start_date
+        sessions = $rowsStore.sort((b, a) => a.values.start_date - b.values.start_date)
+      }
+    }
+  
+  </script>
+
+  <h1>List of sessions</h1>
+  {#each sessions as session}
+    <p>{session.values.title}</p>
+  {/each}
+```
+</details>
+
 ## List of supported attributes in `.yaml`
 
 - `name` name of the file
