@@ -11,19 +11,23 @@ const init = () => {
     return
   }
   console.log('webpush: init')
-  navigator.serviceWorker.ready
-    .then(registration => register(registration, publicKey))
-    .then(subscription => subscribe(subscription))
-    .then(saveResult => {
-      if (saveResult === 1) {
-        console.log('webpush: subscription and save successful')
-      } else {
-        throw new Error('save not successful', saveResult)
-      }
-    })
-    .catch(e => {
-      console.error('webpush: registration/subscription error', e)
-    })
+  try {
+    navigator.serviceWorker.ready
+      .then(registration => register(registration, publicKey))
+      .then(subscription => subscribe(subscription))
+      .then(saveResult => {
+        if (saveResult === 1) {
+          console.log('webpush: subscription and save successful')
+        } else {
+          throw new Error('save not successful', saveResult)
+        }
+      })
+      .catch(e => {
+        console.error('webpush: registration/subscription error', e)
+      })
+  } catch (e) {
+    console.warn('webpush: init failed', e)
+  }
 }
 
 // we need "both"; the listener will bail gracefully if the other is not set yet
