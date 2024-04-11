@@ -1,6 +1,8 @@
 <script>
   import { InterkitClient } from 'interkit'
   import ModelViewer from './ModelViewer.svelte'
+  import MediaUpload from './MediaUpload.svelte'
+  import { currentProjectReadOnly, projectId } from '../admin.js';
 
   export let mediafile
 
@@ -24,7 +26,17 @@
   {/if}
 {/if}
 
+<pre>
+Size: {mediafile.size} Bytes
+Type: {mediafile.type}
+Created At: {mediafile.meta.createdAt}
+</pre>
 
+{#if !$currentProjectReadOnly}
+  <MediaUpload replaceMediafile={mediafile} projectId={$projectId}>  
+    UPLOAD (Replace this file!)
+  </MediaUpload>
+{/if}
 
 <style>
 

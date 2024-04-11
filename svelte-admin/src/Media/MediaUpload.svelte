@@ -9,6 +9,7 @@
   const dispatch = createEventDispatcher()
 
   export let projectId
+  export let replaceMediafile // mediafile to replace
 
   let files = {
     accepted: [],
@@ -35,6 +36,9 @@
     console.log("upload ", file.path, file.name, file.size, file.type)
     formData.append('mediafile', file);
     formData.append('projectId', projectId);
+    if (replaceMediafile?.meta?.key) {
+      formData.append('mediafileKey', replaceMediafile?.meta?.key);
+    }
     fetch(uploadEndpoint, {
         method: 'POST',
         body: formData
@@ -77,7 +81,13 @@
   multiple={true}
   containerStyles="color: #444; border-color: #888; margin: 1em 0;"
   >
-  <div><strong>UPLOAD</strong></div>
+  <div><strong>
+    {#if $$slots.default}
+      <slot></slot>
+    {:else}
+      UPLOAD
+    {/if}
+  </strong></div>
   <div>Drag &amp; drop file here, or click to select files</div>
 </Dropzone>
 
