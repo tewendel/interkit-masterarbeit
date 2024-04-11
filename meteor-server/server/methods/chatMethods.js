@@ -316,6 +316,35 @@ Meteor.methods({
     console.log('events.delete', ids)
     const result = await ScheduledEvents.remove({ _id: { $in: ids } })
     return result
+  },
+
+  'events.clearScheduleOfUser': async ({ projectId, userId }) => {
+    // clear events where userId is in array payload.[recipients]
+    console.log('events.clearScheduleOfUser', { projectId, userId })
+    const result = await ScheduledEvents.update(
+      {
+        projectId, // Match documents by projectId
+        "payload.recipients": userId // Match documents where payload.recipients include userId
+      },
+      {
+        $pull: { "payload.recipients": userId } // Remove userId from payload.recipients array
+      },
+      {
+        multi: true
+      }
+    );
+    // clear events where payload.recipients is empty
+    const result2 = await ScheduledEvents.remove({
+      projectId,
+      "payload.recipients": []
+    });
+
+    // clear events where userId is in payload.userId
+    const result3 = await ScheduledEvents.remove({
+      projectId,
+      "payload.userId": userId
+    });
+    return { result, result2, result3 }
   }
 
 });

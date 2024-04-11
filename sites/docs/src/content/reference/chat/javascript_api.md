@@ -218,6 +218,12 @@ Add between 0 and 60 minutes, randomly
 api.sendText("hello", {delay: {nextHour: 13, randomHours: 1}})
 ```
 
+To clear all scheduled messages and moveTos for the current user, use `clearSchedule()`. Note that this does not only clear the scheduled events from this node, but all scheduled events for the user.
+
+```js
+api.clearSchedule()
+```
+
 ## Responding to messages
 
 The `onMessage` method receives a msg parameter that you can evaluate to respond conditionally to messages.
