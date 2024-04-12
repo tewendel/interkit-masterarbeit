@@ -82,6 +82,10 @@ const configFCMKey = 'firebaseAdminCredentials'
  */
 const fallbackNotificationBody = '\u2709' // ENVELOPE
 
+const defaultWebPushSubject = 'https://interkit.app' // URL or mailto: address
+
+const defaultWebPushCredentialsPath = process.env.PWD + '/webpushcredentials.json'
+
 /**
  * Retrieve FCM credentials from the Database
  * @param {string} projectId
@@ -144,24 +148,58 @@ const getFCMserviceAccount = (projectId) => {
   }
 }
 
+const getWebPushCredentialsFromFS = () => {
+  let path = process.env.WEBPUSH_CREDENTIALS_PATH
+  if (!path) {
+    path = defaultWebPushCredentialsPath
+    console.warn('webpush: credentials path not set, assuming default = CWD', path)
+  }
+  if (!fs.existsSync(path)) {
+    console.log('webpush: credentials path doesnt exist yet, creating', path)
+    try {
+      // we store them in a way that could be easily replaced by shell commands:
+      //  `npx web-push generate-vapid-keys --json > path.json`
+      const vapidKeys = webpush.generateVAPIDKeys()
+      fs.writeFileSync(path, JSON.stringify(vapidKeys), { mode: 0o600 })
+      console.log('webpush: credentials generated and stored', path, vapidKeys.publicKey)
+      return vapidKeys
+    } catch (e) {
+      console.error('webpush: credentials create failed', e)
+      return false
+    }
+  }
+  try {
+    console.log('webpush: reading credentials...', path)
+    let vapidKeys = fs.readFileSync(path)
+    vapidKeys = JSON.parse(vapidKeys)
+    return vapidKeys
+  } catch (e) {
+    console.error('webpush: credentials read failed', path, e)
+    return false
+  }
+}
+
 const setupWebPush = () => {
   console.log('webpush: setup')
-  // TODO: only set WEBPUSH_CREDENTIALS_PATH = a writable path where we can store the credentials.
-  //   In docker, this can be a volume.
-  //   This way, we could run this on startup, and populate if the file doesnt exist yet.
-  //   Ether via node.fs and webpush.generateVAPIDKeys() or 
-  //   via shell and `npx web-push generate-vapid-keys --json > …`
-  const subject = process.env.WEBPUSH_SUBJECT // URL or mailto: address
-  webPushPublicKey = process.env.WEBPUSH_PUBLICKEY
-  const privateKey = process.env.WEBPUSH_PRIVATEKEY
-  if (!subject || !webPushPublicKey || !privateKey) {
-    console.log('webpush: credentials not provided, disabling', process.env)
+  const credentials = getWebPushCredentialsFromFS()
+  webPushPublicKey = credentials.publicKey
+  let subject = process.env.WEBPUSH_SUBJECT // URL or mailto: address
+  if (!subject) {
+    subject = defaultWebPushSubject
+    console.warn('webpush: subject not set, assuming default', subject)
+  }
+  // webPushPublicKey = process.env.WEBPUSH_PUBLICKEY
+  // const privateKey = process.env.WEBPUSH_PRIVATEKEY
+  if (!credentials || !subject || !webPushPublicKey || !credentials.privateKey) {
+    if (credentials.privateKey) credentials.privateKey = 'REDACTED by server for error log'
+    console.log('webpush: subject/credentials not (fully?) provided, disabling', { subject, credentials })
     return
   }
   try {
-    webpush.setVapidDetails(subject, webPushPublicKey, privateKey)
+    webpush.setVapidDetails(subject, webPushPublicKey, credentials.privateKey)
+    console.log('webpush: VAPID details set', { subject, webPushPublicKey })
   } catch (e) {
-    console.error('webpush: credentials error:', e)
+    console.error('webpush: subject/credentials error:', e)
     return
   }
 }

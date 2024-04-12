@@ -3,14 +3,18 @@ import { get } from 'svelte/store';
 
 console.log('webpush: loaded')
 
-const init = () => {
+const setup = () => {
   const userId = get(InterkitClient.userId)
   const publicKey = get(InterkitClient.webPushPublicKey)
   if (!userId || !publicKey) {
-    console.log('webpush: init, userId or publicKey missing, bailing gracefully', userId, publicKey)
+    console.log('webpush: setup, userId or publicKey missing, bailing gracefully', { userId, publicKey })
     return
   }
-  console.log('webpush: init')
+  console.log('webpush: setup')
+  if (!navigator.serviceWorker) {
+    console.warn('webpush: setup, no serviceWorker, bailing. Are you running in a secure context, https?', { 'navigator.serviceWorker': navigator.serviceWorker })
+    return
+  }
   try {
     navigator.serviceWorker.ready
       .then(registration => register(registration, publicKey))
@@ -26,13 +30,15 @@ const init = () => {
         console.error('webpush: registration/subscription error', e)
       })
   } catch (e) {
-    console.warn('webpush: init failed', e)
+    console.warn('webpush: setup failed', JSON.stringify(e), e)
   }
 }
 
-// we need "both"; the listener will bail gracefully if the other is not set yet
-InterkitClient.webPushPublicKey.subscribe(() => init())
-InterkitClient.userId.subscribe(() => init())
+const init = () => {
+  // we need "both"; the listener will bail gracefully if the other is not set yet
+  InterkitClient.webPushPublicKey.subscribe(() => setup())
+  InterkitClient.userId.subscribe(() => setup())
+}
 
 const register = (registration, vapidPublicKey) => {
   console.log('webpush: register')
