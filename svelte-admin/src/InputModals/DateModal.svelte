@@ -19,7 +19,7 @@
   export let projectId;
   export let params;
 
-  const format = 'YYYY-MM-DDTHH:MM'
+  const format = 'YYYY-MM-DDTHH:mm'
   let internal
 
   const input = (x) => (internal = dayjs(x).format(format))
