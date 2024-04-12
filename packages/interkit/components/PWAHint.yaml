@@ -1,0 +1,11 @@
+name: PWAHint
+colour: 300
+fields:
+  - type: string
+    name: buttonText
+    defaultValue: "$pwahint_buttontext_default"
+    help: "Text on the button"
+  - type: checkbox
+    name: truepwa
+    defaultValue: "FALSE"
+    help: "Enable this if your app is a true PWA and can be installed. Will show different info for Android and desktop Chrome"

@@ -1,8 +1,6 @@
 <script>
 
   import { Capacitor } from '@capacitor/core'
-  import { Plugins } from '@capacitor/core'
-  // const { SplashScreen, Network } = Plugins;
   import { Network } from '@capacitor/network'
   import { SplashScreen } from '@capacitor/splash-screen'
 
@@ -17,9 +15,12 @@
   import Overlay from './Overlay.svelte'
   
   export let languages
+  export let enableWebPush
   export let projectIdOverride
   languages = languages && languages.split ? languages.split(',') : false
   setupFrontend(languages)
+
+  enableWebPush = enableWebPush === true || enableWebPush === 'TRUE'
 
   const setHtmlLang = langCode => {
     document.documentElement.setAttribute('lang', langCode)
@@ -203,6 +204,14 @@
       pushNotifications.removeAllDeliveredNotifications()
     })
   })()
+
+  import * as pushWeb from '../pushweb.js'
+
+  if (enableWebPush) {
+    pushWeb.init()
+  } else {
+    console.log('AppBaseAdvanced: webpush: disabled')
+  }
 
   $: {
     if(initComplete) {
