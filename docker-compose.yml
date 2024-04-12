@@ -14,6 +14,7 @@ services:
       - 3000
     volumes:
       - mediafiles:/var/mediafiles
+      - credentials:/var/credentials
     depends_on:
       - mongo
     environment:
@@ -21,6 +22,7 @@ services:
       MONGO_URL: mongodb://mongo:27017/meteor
       MONGO_OPLOG_URL: mongodb://mongo:27017/local?replicaSet=meteor&directConnection=true&retryWrites=true
       MEDIAFILES_PATH: /var/mediafiles
+      WEBPUSH_CREDENTIALS_PATH: /var/credentials/webpush.json
       PORT: 3000
       BUNDLER_URL: $INTERKIT_BUNDLER_URL
       BUNDLER_PASSWORD: $INTERKIT_BUNDLER_PASSWORD
@@ -130,3 +132,4 @@ volumes:
   db-data:
   projects:
   mediafiles:
+  credentials:
