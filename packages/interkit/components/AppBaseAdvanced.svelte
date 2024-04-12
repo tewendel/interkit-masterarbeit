@@ -15,9 +15,12 @@
   import Overlay from './Overlay.svelte'
   
   export let languages
+  export let enableWebPush
   export let projectIdOverride
   languages = languages && languages.split ? languages.split(',') : false
   setupFrontend(languages)
+
+  enableWebPush = enableWebPush === true || enableWebPush === 'TRUE'
 
   const setHtmlLang = langCode => {
     document.documentElement.setAttribute('lang', langCode)
@@ -202,8 +205,13 @@
     })
   })()
 
-  // TODO: pushweb.js doesnt export anything
   import * as pushWeb from '../pushweb.js'
+
+  if (enableWebPush) {
+    pushWeb.init()
+  } else {
+    console.log('AppBaseAdvanced: webpush: disabled')
+  }
 
   $: {
     if(initComplete) {
