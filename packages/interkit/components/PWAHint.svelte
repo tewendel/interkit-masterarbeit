@@ -25,7 +25,7 @@
   } else if (/ipad|iphone/.test(ua)) {
     guessPlatform = 'ios'
   }
-  // TODO check fucking Edge
+  // TODO Samsung ""Internet""
 
 </script>
 
