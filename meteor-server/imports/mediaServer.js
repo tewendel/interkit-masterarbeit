@@ -163,6 +163,8 @@ export const setupMediaServer = (app) => {
                 console.log("getMp3Duration", duration);
               }
 
+              const key = req.body?.mediafileKey || uuidv4();
+
               const meta = {
                 createdAt: new Date(),
                 projectId: req.body.projectId,
@@ -170,7 +172,7 @@ export const setupMediaServer = (app) => {
                 userId: req.body.userId,
                 boardId: req.body.boardId,
                 nodeId: req.body.nodeId,
-                key: uuidv4(),
+                key,
                 duration
               }
 
@@ -186,8 +188,16 @@ export const setupMediaServer = (app) => {
                   console.log(_uploadError);
                   res.status(500).json({ error: "upload error" })
                 } else {
-                  console.log('upload data=', _uploadData); 
+                  //console.log('upload data=', _uploadData); 
                   //_fs.unlink(req.file.path); // remove temp upload
+
+                  // remove other mediafiles with same key
+                  const removed =  MediaFiles.collection.remove({
+                    'meta.key': key, 
+                    _id: { $ne: _uploadData._id }
+                  })
+                  console.log(`removed ${removed} mediafiles with same key (${meta.key})`,_uploadData._id)
+
                   res.status(200).json({ ...meta })
                 }
               });

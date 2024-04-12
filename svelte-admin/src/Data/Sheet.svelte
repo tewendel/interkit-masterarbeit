@@ -1,6 +1,11 @@
+<script context="module">
+  // save sort preferences for this project in a variable (could be saved in the user or localStorage instead)
+  const sortPreferences = {}
+</script>
+
 <script>
 
-  import { onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
 
   import { InterkitClient } from 'interkit'
   import { docsGo } from '../docs.js'
@@ -46,6 +51,9 @@
   let inputModalValue; // value edited in input modal
   let modalParams; // object of optional params passed to input modal
   let rawRowContent; // open a model with raw row content
+
+  let sortKey // the key of the column to sort by
+  let sortDirection // the direction to sort by
 
   const sheetRenameModal = {
     open: false,
@@ -153,6 +161,20 @@
 
     for(let unsub of Object.values(refDataUnsubscribe)) {
       unsub();
+    }
+
+    // save sort preferences for this project and sheet
+    const sortPreferencesKey = projectId + sheetKey
+    sortPreferences[sortPreferencesKey] = { sortKey, sortDirection }
+  })
+
+  onMount(()=>{
+    // restore sort preferences for this project and sheet
+    const sortPreferencesKey = projectId + sheetKey
+    const prefs = sortPreferences[sortPreferencesKey]
+    if (prefs) {
+      sortKey = prefs.sortKey
+      sortDirection = prefs.sortDirection
     }
   })
 
@@ -295,7 +317,7 @@
           reference: c.reference,
           options: c.options,
           // allow sorting only on simple types - note that sort cannot be set to true, the component then expects a custom sorting function!
-          sort: (c.type == "number" || c.type == "string") ? 
+          sort: (c.type == "number" || c.type == "string" || c.type == "date") ? 
             sortFunction : false
         }}).concat([
         {
@@ -379,6 +401,8 @@
   <div class="SheetTableContainer">
     <DataTable
       sortable
+      bind:sortKey
+      bind:sortDirection
       {headers}
       rows={rowsFiltered}
       style="padding-bottom: 48px; overflow-x: auto"

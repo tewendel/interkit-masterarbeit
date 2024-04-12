@@ -287,7 +287,27 @@ Meteor.methods({
   },
 
   'sheet.rename': ({ projectId, id, key, name }) => {
-    return Sheets.update({ _id: id }, { $set: { key, name } })
+    // get current key
+    const sheet = Sheets.findOne({ _id: id });
+    const oldKey = sheet.key;
+    // just rename if key is the same
+    if (!key || oldKey === key) {
+      console.log(`sheet.rename: rename sheet, keep key ${name}`)
+      return Sheets.update({ _id: id }, { $set: { name } })
+    }
+    // check if key is unique
+    if (Sheets.findOne({ key, projectId })) {
+      console.log("sheet.rename: key not unique", key)
+      return false
+    }
+    console.log("sheet.rename: rename sheet and key", name, key)
+    // update key and name
+    const res = Sheets.update({ _id: id }, { $set: { key, name } })
+    if (res === 1) {
+      // update all rows with new key
+      Rows.update({ sheetKey: oldKey, projectId }, { $set: { sheetKey: key } }, { multi: true })
+    }
+    return res
   },
   
 });

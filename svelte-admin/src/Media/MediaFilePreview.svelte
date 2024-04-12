@@ -8,6 +8,7 @@
   import DocumentBlank from "carbon-icons-svelte/lib/DocumentBlank.svelte";
 
   export let key;
+  export let id;
   export let projectId;
   export let mediaManager = false;
   export let enlargable = false;
@@ -16,9 +17,12 @@
   let mediafile, large;
 
   $: {
-    lookupMediafile(key)
+    lookupMediafile(key, id)
+    if (large) { // reactivity through the back door
+      large = mediafile;
+    }
   }
-  const lookupMediafile = async (key) => {
+  const lookupMediafile = async (key, id) => {
     mediafile = await InterkitClient.call("mediafile.get", {key, projectId});
     //console.log("loaded new mediafile for preview", mediafile)
   }
@@ -56,6 +60,7 @@
     {/if}
   {/if}
 </a>
+
 
 <Modal passiveModal bind:open={large} modalHeading={large?.name} on:open on:close>
   {#if large}

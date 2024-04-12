@@ -363,7 +363,7 @@
             </SheetCell>
           </span>
         {:else if cell.key === 'preview'}
-          <MediaFilePreview key={row.meta?.key} {projectId} mediaManager enlargable={!radio} border/>
+          <MediaFilePreview key={row.meta?.key} id={row._id} {projectId} mediaManager enlargable={!radio} border/>
         {:else if cell.key === 'link' && cell.value}
           <a href={row.link} title={row.link} target="_blank">
             <Launch />

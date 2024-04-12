@@ -57,7 +57,7 @@ Set up an account and add payment details first. Then continue the process in th
 |-------------------|--------------------------------------------------------------------------------|
 | `Location`        | Chose a location that is close to you                                     |
 | `Image`           | Chose `Ubuntu`                                                            |
-| `Type`            | Chose "Shared". Select a package with 2 or more vCPUs, for example `CPX11`. You can always increase this later if your project needs it.                                                      |
+| `Type`            | Chose `Shared` and `x86`. Select a package with 2 or more vCPUs, for example `CPX11`. You can always increase this later if your project needs it.                                                      |
 | `Networking`      | IPv4 and IPv6 (Default)                                            |
 | `SSH key`         | If you know what it is, you can add a public SSH key, otherwise just keep it empty |
 | `Volumes`         | keep blank                                                          |
@@ -65,7 +65,7 @@ Set up an account and add payment details first. Then continue the process in th
 | `Backups`         | Not required, but you can check `Backups` for additional recoverability in case of failure                                                                                                     |
 | `Placement groups`| keep blank                                                          |
 | `Labels`          | keep blank                                                          |
-| `Cloud config`    | Copy & Paste this script <pre>{cloudInit}</pre> <br> ☝ Important: Find the line where it says "myinterkit.app" and replace it with your domain or subdomain (`myinstitution.com` or `interkit.myinstitution.com`) <br>☝ Important: Replace "mypassword" with a real password in the same line               | 
+| `Cloud config`    | Copy & Paste this script <pre>{cloudInit}</pre> <br> ☝ Important: Find the line `- ./env-configure.sh -d myinterkit.app -p mypassword` and replace "myinterkit.app" with your domain or subdomain (`myinstitution.com` or `interkit.myinstitution.com`) <br>☝ Important: Replace "mypassword" with a real password in the same line               | 
 | `Name`            | Chose a name, for example: "interkit" |
 
 

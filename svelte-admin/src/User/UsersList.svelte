@@ -35,6 +35,7 @@
   import ErrorFilled from "carbon-icons-svelte/lib/ErrorFilled.svelte";
   import ErrorOutline from "carbon-icons-svelte/lib/ErrorOutline.svelte";
   import MobileAdd from "carbon-icons-svelte/lib/MobileAdd.svelte"
+  import Reset from "carbon-icons-svelte/lib/Reset.svelte"
   import TableSplit from "carbon-icons-svelte/lib/TableSplit.svelte"  
   import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
   import UserSimulation from "carbon-icons-svelte/lib/UserSimulation.svelte"
@@ -284,6 +285,20 @@
     console.log('batchBlock result', { usersSelection, setBlocked, resultBlockMessages, resultBlockUser })
   }
 
+  const batchRequestReset = async () => {
+    const successful = [], erroneous = []
+    for (const userId of usersSelection) {
+      const resultRequestReset = await InterkitClient.call('user.setUserVar', {
+        projectId,
+        userId,
+        varName: 'resetRequested',
+        value: true
+      })
+      if (resultRequestReset) successful.push(userId); else erroneous.push(userId)
+    }
+    console.log('batchRequestReset', { successful, erroneous })
+  }
+
   const quickMsgSend = async () => {
     if (quickMsgIsRawPayload) {
       try {
@@ -474,6 +489,15 @@
             iconDescription="unblock"
             tooltipPosition="right"
             disabled={$currentProjectReadOnly}
+            />
+          <Button
+            size="small"
+            icon={Reset}
+            on:click={batchRequestReset}
+            disabled={!usersSelection.length || $currentProjectReadOnly}
+            iconDescription='request a reset on device'
+            tooltipPosition="top"
+            tooltipAlignment="end"
             />
           <Button
             size="small"

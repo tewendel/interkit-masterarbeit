@@ -274,6 +274,19 @@
     })
   }
 
+  const deleteUnseen = async () => {
+    if (!confirm('This will delete all messages that have not been seen by any user from the project. Are you sure?')) return
+    const result = await InterkitClient.call('messages.deleteUnseen', { projectId })
+    console.log('deleteUnseen result', result)
+  }
+
+  const deleteAll = async () => {
+    if (confirm('This weill delete all messages ever sent in this project. They will also dissapear from the users and devices. Are you sure?')) {
+      const result = await InterkitClient.call('messages.deleteAll', { projectId })
+      console.log('deleteAll result', result)
+    }
+  }
+
   let openShowHideColumns = false
   let dataTableToolbarBatchActionsActive = false
 
@@ -350,6 +363,16 @@
               on:click={() => { channelReports = !channelReports }}
               >
               <Checkbox checked={channelReports} labelText="only new reports" />
+            </ToolbarMenuItem>
+            <ToolbarMenuItem
+              on:click={deleteUnseen}
+              >
+              Delete Unseen Messages
+            </ToolbarMenuItem>            
+            <ToolbarMenuItem
+              on:click={deleteAll}
+              >
+              Delete All Messages
             </ToolbarMenuItem>
           </ToolbarMenu>
           <!--

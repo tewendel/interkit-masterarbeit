@@ -47,9 +47,9 @@ const processEvents = async (server) => {
   // retrieve the events;
   const events = scheduledEvents.data();
   const now = new Date();
-  if(events.length) {
-    console.log("scheduled events: ", events.length)
-  }
+  // if(events.length) {
+  //   console.log("scheduled events: ", events.length)
+  // }
   const eventsToProcess = events.filter(e => e.status == "scheduled" && e.execTime.getTime() < now.getTime())
   if(eventsToProcess.length) {
     console.log("now processing:", eventsToProcess);

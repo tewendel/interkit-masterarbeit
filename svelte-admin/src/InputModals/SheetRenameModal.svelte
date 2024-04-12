@@ -30,9 +30,8 @@
       <span>
         WARNING: only change if you know what you are doing.<br/>
         Must not be empty, must not collide with another sheet.<br/>
-        You will lose all columns and rows!
       </span>
-      <TextInput labelText="Key" placeholder="Enter sheet key..." bind:value={value.newKey} />
+      <TextInput size="sm" line labelText="Key" placeholder="Enter sheet key..." bind:value={value.newKey} />
     </FormGroup>
   </ModalBody>
   <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />

@@ -182,7 +182,9 @@ const requestLocation = async function(prompt, options) {
 
 const moveTo = async function(nodeId, options) { 
   if (options?.recipients) {
-    return await moveUsers(nodeId, options.recipients, options)
+    // make sure the context ("this") is not lost
+    const boundMoveUsers = moveUsers.bind(this);
+    return await boundMoveUsers(nodeId, options.recipients, options);
   }
 
   const {server, projectId, boardId, userId} = this
@@ -196,7 +198,7 @@ const moveTo = async function(nodeId, options) {
 }
 
 const moveUsers = async function(nodeId, recipients = [], options) {
-  const {server, projectId, boardId, userId} = this
+  const {server, projectId, boardId} = this
 
   // recipients might be a nodeId
   if (recipients?.nodeId) {
@@ -227,6 +229,23 @@ const getUserVar = async function(varName) {
 const setUserVar = async function(varName, value) {
   const {message, server, projectId, nodeId, userId} = this
   await server.call('user.setUserVar', {userId, projectId, varName, value})
+}
+
+const requestResetAllOtherUsers = async function () {
+  const { message, server, projectId, nodeId, userId } = this
+  const ret = await server.call('user.setUserVar', {
+    // user.setUserVar userId coincidentally, untypedly takes a Meteor selector
+    userId: {
+      _id: { $ne: userId },
+      [`projectUserData.${projectId}.boardState`]: { $exists: true, $ne: null },
+      [`projectUserData.${projectId}.userVars.resetRequested`]: { $ne: true }
+    },
+    projectId,
+    varName: 'resetRequested',
+    value: true
+  })
+  console.log('requestResetAllOtherUsers', userId, ret)
+  return ret
 }
 
 const setLang = async function (lang, langIndex) {
@@ -325,6 +344,12 @@ const setInterface = async function(interfaceConfig) {
   await server.call('user.setBoardInterface', {interfaceConfig, projectId, userId, boardId})
 }
 
+// clear scheduled messages
+const clearSchedule = async function() {
+  const {server, projectId, userId} = this
+  await server.call('events.clearScheduleOfUser', {projectId, userId})
+}
+
 const distance = (pos1, pos2) => { 
   return (pos1?.lat && pos2?.lat) ? 
     getDistance({latitude: pos1.lat, longitude: pos1.lng}, {latitude: pos2.lat, longitude: pos2.lng}, 1)
@@ -345,10 +370,12 @@ export default {
   sendLocation,
   moveTo,
   moveUsers,
+  clearSchedule,
   echo,
   getUsersInNode,
   setUserVar,
   getUserVar,
+  requestResetAllOtherUsers,
   setLang,
   setElementProperty,
   getElementProperty,
