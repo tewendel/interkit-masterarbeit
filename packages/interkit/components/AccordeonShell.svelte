@@ -2,7 +2,7 @@
 
   import Icon from "./Icon.svelte"
 
-  let state = "closed" // open | closed
+  export let state = "closed" // open | closed
 
   const toggleState = () => {
     if (state === "closed") 

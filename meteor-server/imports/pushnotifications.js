@@ -26,6 +26,9 @@
 import admin from 'firebase-admin'
 import fs from 'fs'
 import { Sheets, Rows } from './collections.js';
+import * as webpush from 'web-push'
+
+let webPushPublicKey
 
 /**
  * Idea behind is to have multiple "instances" of firebase in case meteor
@@ -78,6 +81,10 @@ const configFCMKey = 'firebaseAdminCredentials'
  * @default
  */
 const fallbackNotificationBody = '\u2709' // ENVELOPE
+
+const defaultWebPushSubject = 'https://interkit.app' // URL or mailto: address
+
+const defaultWebPushCredentialsPath = process.env.PWD + '/webpushcredentials.json'
 
 /**
  * Retrieve FCM credentials from the Database
@@ -141,11 +148,67 @@ const getFCMserviceAccount = (projectId) => {
   }
 }
 
+const getWebPushCredentialsFromFS = () => {
+  let path = process.env.WEBPUSH_CREDENTIALS_PATH
+  if (!path) {
+    path = defaultWebPushCredentialsPath
+    console.warn('webpush: credentials path not set, assuming default = CWD', path)
+  }
+  if (!fs.existsSync(path)) {
+    console.log('webpush: credentials path doesnt exist yet, creating', path)
+    try {
+      // we store them in a way that could be easily replaced by shell commands:
+      //  `npx web-push generate-vapid-keys --json > path.json`
+      const vapidKeys = webpush.generateVAPIDKeys()
+      fs.writeFileSync(path, JSON.stringify(vapidKeys), { mode: 0o600 })
+      console.log('webpush: credentials generated and stored', path, vapidKeys.publicKey)
+      return vapidKeys
+    } catch (e) {
+      console.error('webpush: credentials create failed', e)
+      return false
+    }
+  }
+  try {
+    console.log('webpush: reading credentials...', path)
+    let vapidKeys = fs.readFileSync(path)
+    vapidKeys = JSON.parse(vapidKeys)
+    return vapidKeys
+  } catch (e) {
+    console.error('webpush: credentials read failed', path, e)
+    return false
+  }
+}
+
+const setupWebPush = () => {
+  console.log('webpush: setup')
+  const credentials = getWebPushCredentialsFromFS()
+  webPushPublicKey = credentials.publicKey
+  let subject = process.env.WEBPUSH_SUBJECT // URL or mailto: address
+  if (!subject) {
+    subject = defaultWebPushSubject
+    console.warn('webpush: subject not set, assuming default', subject)
+  }
+  // webPushPublicKey = process.env.WEBPUSH_PUBLICKEY
+  // const privateKey = process.env.WEBPUSH_PRIVATEKEY
+  if (!credentials || !subject || !webPushPublicKey || !credentials.privateKey) {
+    if (credentials.privateKey) credentials.privateKey = 'REDACTED by server for error log'
+    console.log('webpush: subject/credentials not (fully?) provided, disabling', { subject, credentials })
+    return
+  }
+  try {
+    webpush.setVapidDetails(subject, webPushPublicKey, credentials.privateKey)
+    console.log('webpush: VAPID details set', { subject, webPushPublicKey })
+  } catch (e) {
+    console.error('webpush: subject/credentials error:', e)
+    return
+  }
+}
+
 /**
  * Set up "notification pushing" for a project
  * @param {string} projectId
  */
-const init = (projectId) => {
+const initFCM = (projectId) => {
   if (projectId in pushers) return pushers[projectId]
   const pusher = (() => {
     const serviceAccount = getFCMserviceAccount(projectId)
@@ -161,6 +224,63 @@ const init = (projectId) => {
   return pusher
 }
 
+const sendFCMMessages = ({ projectId, tokens, payload }) => {
+  if (tokens.length === 0) return
+  let messaging
+  try {
+    messaging = initFCM(projectId)
+    // console.log('FCM messaging OK', messaging)
+  } catch (err) {
+    console.error('error setting up push notifications, bailing', err)
+    return false
+  }
+  try {
+    messaging.sendMulticast({ // solo would be .send()
+      notification: {
+        body: payload.text || fallbackNotificationBody
+      },
+      // data: { foo: 'bar' }, // for "data" push message
+      tokens: recipientsRegistrationTokens
+    })
+      .then((response) => {
+        console.log(`message.send sent push ${response.successCount} successes`)
+        if (response.failureCount > 0) {
+          const failedTokens = []
+          response.responses.forEach((resp, idx) => {
+            if (!resp.success) {
+              failedTokens.push(recipientsRegistrationTokens[idx])
+            }
+          })
+          // TODO do something with failedTokens
+          console.error(`${response.failureCount} tokens failed: `, failedTokens)
+        }
+      })
+      // this catch might be not working, due to bad implementation?
+      // hence we double-wrap the whole thing in try-catch...
+      .catch((error) => { console.log('message.send push error', error) })
+  } catch (error) {
+    console.error('message.send push error', error)
+  }
+}
+
+const sendWebPushMessages = async ({ projectId, subscriptions, payload }) => {
+  if (subscriptions.length === 0) return
+  let successes = 0
+  let errors = 0
+  for (const subscription of subscriptions) {
+    await webpush.sendNotification(
+      subscription,
+      payload.text || fallbackNotificationBody
+    )
+      .then(() => successes++ )
+      .catch(e => { 
+        console.warn('pushnotifications: could not send web push message to', subscription, e)
+        errors++
+      })
+  }
+  console.log(`pushnotifications: webpush.sendNotification ${successes} successful, ${errors} errors`)
+}
+
 /**
  * Send push notifications
  * @param {string} projectId
@@ -171,75 +291,49 @@ const init = (projectId) => {
 const send = ({ projectId, Meteor, recipients, payload }) => {
   let messaging
   // note: Meteor needs a Date object, not a number
-  const heartbeatOld = new Date(new Date() - heartbeatOldMinAge)
-  const recipientsEligibleForPush = Meteor.users.find({
+  const heartbeatQuery = enableHeartbeat
+    ? { // ...with heartbeats older than...
+      [`projectUserData.${projectId}.lastHeartbeat`]: {
+        $lt: new Date(new Date() - heartbeatOldMinAge)
+      },
+    }
+    : {}
+  const recipientsWithRegistrationToken = Meteor.users.find({
     _id: { $in: recipients },
+    ...heartbeatQuery,
     [`projectUserData.${projectId}.pushnotificationRegistrationToken`]: {
       $not: { $in: [undefined, '', '(web)', '(userreset)'] }
-    },
-    ...(enableHeartbeat
-      ? {
-        // ...with heartbeats older than...
-        [`projectUserData.${projectId}.lastHeartbeat`]: {
-          $lt: heartbeatOld
-        },
-      }
-      : {}
-    )
+    }
   })
-  const recipientsRegistrationTokens = recipientsEligibleForPush.map(user =>
-    user.projectUserData?.[projectId]?.pushnotificationRegistrationToken
-  ).filter(token => !!token)
-  if (recipientsEligibleForPush.count() === 0) {
-    console.log('no eligible recipients, not sending push notifications')
-  } else if (recipientsRegistrationTokens.length === 0) {
-    console.warn('eligible recipients, but no tokens, not sending push notifications', { recipientsEligibleForPush })
-  } else {
-    console.log('recipientsEligibleForPush', recipientsEligibleForPush.count())
-    console.log('recipientsRegistrationTokens', recipientsRegistrationTokens)
-    try {
-      messaging = init(projectId)
-      // console.log('FCM messaging OK', messaging)
-    } catch (err) {
-      console.error('error setting up push notifications, bailing', err)
-      return false
+  const recipientsWithWebPushSubscription = Meteor.users.find({
+    _id: { $in: recipients },
+    ...heartbeatQuery,
+    webPushSubscription: {
+      $not: { $in: [undefined, '', '(web)', '(userreset)'] }
     }
-    try {
-      messaging.sendEachForMulticast({
-        notification: {
-          // TODO
-          // title: `Notification from ${projectId}`,
-          body: payload.text || fallbackNotificationBody
-        },
-        data: {
-          // foo: 'bar',
-        },
-        // solo would be token: string
-        tokens: recipientsRegistrationTokens
-      })
-        .then((response) => {
-          console.log(`message.send sent push ${response.successCount} successes`)
-          if (response.failureCount > 0) {
-            const failedTokens = []
-            response.responses.forEach((resp, idx) => {
-              if (!resp.success) {
-                failedTokens.push(recipientsRegistrationTokens[idx])
-              }
-            })
-            // TODO do something with failedTokens
-            console.error(`${response.failureCount} tokens failed: `, failedTokens)
-          }
-        })
-        // this catch might be not working, due to bad implementation?
-        // hence we double-wrap the whole thing in try-catch...
-        .catch((error) => { console.log('message.send push error', error) })
-    } catch (error) {
-      console.error('message.send push error', error)
-    }
-  }
+  })
+  const recipientsRegistrationTokens = recipientsWithRegistrationToken
+    .map(user => user.projectUserData?.[projectId]?.pushnotificationRegistrationToken)
+    .filter(token => !!token)
+  const recipientsWebPushSubscriptions = recipientsWithWebPushSubscription
+    .map(user => {
+      try {
+        return JSON.parse(user.webPushSubscription)
+      } catch (e) {
+        console.log('pushnotifications send, could not parse webPushSubscription of user', user)
+        return false
+      }
+    })
+    .filter(token => !!token)
+  console.log(`pushnotifications.send: ${recipientsRegistrationTokens.length} FCM registration tokens + ${recipientsWebPushSubscriptions.length} web push subscriptions`)
+  console.log({ recipientsRegistrationTokens, recipientsWebPushSubscriptions })
+  sendFCMMessages({ projectId, tokens: recipientsRegistrationTokens, payload })
+  sendWebPushMessages({ projectId, subscriptions: recipientsWebPushSubscriptions, payload })
 }
 
 export {
   send,
-  heartbeatOldMinAge
+  heartbeatOldMinAge,
+  setupWebPush,
+  webPushPublicKey
 }

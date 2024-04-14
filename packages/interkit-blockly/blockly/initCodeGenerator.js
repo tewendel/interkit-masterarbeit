@@ -37,7 +37,7 @@ export const initCodeGenerator = (Blockly, javascriptGenerator, blockObjects, wo
       // for "static-y string attributes" that start with a $
       if (value?.substr(0, 1) === '$') {
         // nasty nested ternary to avoid over-reliance on new-ish ?. because this is likely not babel-ed
-        return `${attributeName}={$lang ? ($translations[$lang] && $translations[$lang]["${value}"] ? $translations[$lang]["${value}"] : "${value.substr(1)}") : "…"}`
+        return `${attributeName}={$lang ? ($translations[$lang] && $translations[$lang]["${value}"] ? $translations[$lang]["${value}"] : "${value.substr(1)}") : ($translations.en && $translations.en["${value}"] ? $translations.en["${value}"] : "…")}`
       }
       // is this a sheetColumn reference?
       if (attributeName?.toLowerCase?.().indexOf('column') > -1 && value?.indexOf('/') > -1) {

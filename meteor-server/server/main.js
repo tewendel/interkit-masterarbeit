@@ -20,8 +20,12 @@ import './methods/themeMethods.js';
 import { Projects } from '../imports/collections.js';
 import { seedUser } from '../imports/userUtils.js';
 
+import { setupWebPush, webPushPublicKey } from '../imports/pushnotifications.js';
+
 Meteor.startup(() => {
   // code to run on server at startup
+  
+  setupWebPush();
 
   // see if there is an admin user, otherwise seed one
   seedUser('admin', process.env.ADMIN_PASSWORD, 'admin');
@@ -52,6 +56,12 @@ Meteor.startup(() => {
     { $set: { uiState : {} } },
     { multi: true }
   );
+
+  Projects.update(
+    {},
+    { $set: { webPushPublicKey } },
+    { multi: true }
+  )
 
   initUserActivity();
 

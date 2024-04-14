@@ -5,6 +5,10 @@ fields:
   - type: string
     name: languages
     help: List available language codes, for example "en,de". The first is the default language.
+  - type: checkbox
+    name: enableWebPush
+    defaultValue: "FALSE"
+    help: Enable Web Push to receive Story message notifications when installed as PWA.
   - type: string
     name: projectIdOverride
     help: For very specific setups, where you want to target a different interkit project with your app. Normally leave blank.
