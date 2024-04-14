@@ -221,28 +221,11 @@
   }
 
   async function sanitizeStreamOptions(options) {
-    if (options?.video?.facingMode) {
-      options.video.facingMode = await getSupportedFacingMode(options.video.facingMode);
-    }
+    // you may check if the requested capabilities exist, for example, and provide a fallback
+    // however, some information may be hard to get until permissions are granted
     return options;
   }
 
-  async function getSupportedFacingMode(requestedFacingMode) {
-    // check if a camera that supports "facing mode" is available, falls back otherwise
-    let devices = []
-    try {
-      devices = await navigator.mediaDevices.enumerateDevices();
-    } catch (error) {
-      console.log('Error enumerating devices', error);
-    }
-    const videoInputDevices = devices.filter(device => device.kind === 'videoinput');
-
-    const hasEnvironmentCamera = videoInputDevices.some(device => device.label.includes('back'));
-    if (requestedFacingMode === 'environment' && !hasEnvironmentCamera) {
-      console.log('No environment camera available, falling back to user camera')
-    }
-    return hasEnvironmentCamera && requestedFacingMode === 'environment' ? 'environment' : 'user';
-  }
 
   onMount(() => {
     init()
