@@ -212,6 +212,7 @@
   if (enableWebPush) {
     try {
       pushWeb.init()
+      webPushWasInitialized = true
     } catch (e) {
       /* iOS Safari (at least) will fail here with
        * "Push notification prompting can only be done from a user gesture"
