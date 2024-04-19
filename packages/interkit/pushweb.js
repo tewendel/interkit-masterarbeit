@@ -3,6 +3,8 @@ import { get } from 'svelte/store';
 
 console.log('webpush: loaded')
 
+var broadcastChannel
+
 const setup = () => {
   const userId = get(InterkitClient.userId)
   const publicKey = get(InterkitClient.webPushPublicKey)
@@ -29,15 +31,41 @@ const setup = () => {
       .catch(e => {
         console.error('webpush: registration/subscription error', e)
       })
+
   } catch (e) {
     console.warn('webpush: setup failed', JSON.stringify(e), e)
   }
+}
+
+const setupBroadcastChannel = projectId => {
+  broadcastChannel = new BroadcastChannel('interkit_' + projectId)
+  console.log('webpush: setupBroadcastChannel', projectId, broadcastChannel)
+  document.addEventListener('visibilitychange', () => {
+    const isTabHidden = document.visibilityState === 'hidden' ||
+      document.webkitVisibilityState === 'hidden' ||
+      document.hidden === true
+    console.log('webpush: visibilitychange, posting setShowWebPushNotification', !isTabHidden)
+    broadcastChannel.postMessage({
+      method: 'setShowWebPushNotification',
+      payload: !isTabHidden
+    })
+  })
 }
 
 const init = () => {
   // we need "both"; the listener will bail gracefully if the other is not set yet
   InterkitClient.webPushPublicKey.subscribe(() => setup())
   InterkitClient.userId.subscribe(() => setup())
+  if (get(InterkitClient.projectId)) {
+    console.log('webpush: got projectId immediately')
+    setupBroadcastChannel(get(InterkitClient.projectId))
+  } else {
+    console.log('webpush: didnt get projectId immediately, subscribing')
+    InterkitClient.projectId.subscribe(projectId => {
+      if (!projectId) return
+      setupBroadcastChannel(projectId)
+    })
+  }
 }
 
 const register = (registration, vapidPublicKey) => {
