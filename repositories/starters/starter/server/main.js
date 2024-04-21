@@ -57,3 +57,12 @@ setupHookHandling({
   server, 
   projectId
 })
+
+/* handle unhandled promise rejections */
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  if (reason instanceof Error) {
+    console.error(reason.stack);
+  }
+});
