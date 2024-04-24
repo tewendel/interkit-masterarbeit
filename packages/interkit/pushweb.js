@@ -5,14 +5,14 @@ console.log('webpush: loaded')
 
 var broadcastChannel
 
-const setup = () => {
+const setup = (isRetry) => {
   const userId = get(InterkitClient.userId)
   const publicKey = get(InterkitClient.webPushPublicKey)
   if (!userId || !publicKey) {
-    console.log('webpush: setup, userId or publicKey missing, bailing gracefully', { userId, publicKey })
+    console.log('webpush: setup, userId or publicKey missing, bailing gracefully', { userId, publicKey, isRetry })
     return
   }
-  console.log('webpush: setup')
+  console.log('webpush: setup', { isRetry })
   if (!navigator.serviceWorker) {
     console.warn('webpush: setup, no serviceWorker, bailing. Are you running in a secure context, https?', { 'navigator.serviceWorker': navigator.serviceWorker })
     return
@@ -30,8 +30,18 @@ const setup = () => {
       })
       .catch(e => {
         console.error('webpush: registration/subscription error', e)
+        if (isRetry) {
+          console.error('webpush: setup retry failed, giving up')
+        } else {
+          // here we know that uesrId and publicKey are there
+          // TODO: could additionally check for NotAllowedError
+          console.log('webpush: setup error, will retry after gesture (on click)')
+          document.addEventListener('click', () => {
+            console.log('webpush: got gesture, retrying setup')
+            setup(true)
+          }, { once: true })
+        }
       })
-
   } catch (e) {
     console.warn('webpush: setup failed', JSON.stringify(e), e)
   }
@@ -53,9 +63,14 @@ const setupBroadcastChannel = projectId => {
 }
 
 const init = () => {
+  // if (get(InterkitClient.webPushPublicKey) && get(InterkitClient.userId)) {
+  //   console.log('webpush: init, got webPushPublicKey and userId immediately, calling setup')
+  //   setup()
+  // } else {
   // we need "both"; the listener will bail gracefully if the other is not set yet
   InterkitClient.webPushPublicKey.subscribe(() => setup())
   InterkitClient.userId.subscribe(() => setup())
+  // }
   if (get(InterkitClient.projectId)) {
     console.log('webpush: got projectId immediately')
     setupBroadcastChannel(get(InterkitClient.projectId))

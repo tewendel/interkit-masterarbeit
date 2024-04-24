@@ -207,37 +207,10 @@
 
   import * as pushWeb from '../pushweb.js'
 
-  let webPushWasInitialized
-
-  if (enableWebPush) {
-    try {
-      pushWeb.init()
-      webPushWasInitialized = true
-    } catch (e) {
-      /* iOS Safari (at least) will fail here with
-       * "Push notification prompting can only be done from a user gesture"
-       * so we'll retry from AppBase on:click|once (window.confirm doesn't work)
-       */
-      console.warn('webpush: init from AppBaseAdvanced failed, will retry on gesture', e)
-      webPushWasInitialized = false
-    }
+  if (!enableWebPush) {
+    console.log('webpush: disabled by AppBaseAdvanced')
   } else {
-    console.log('AppBaseAdvanced: webpush: disabled')
-  }
-
-  const maybeRetryWebPushInit = () => {
-    if (!enableWebPush) return
-    if (webPushWasInitialized) {
-      console.log('webpush: maybeRetryWebPushInit already initialized, bailing')
-    } else {
-      console.log('webpush: maybeRetryWebPushInit retrying!')
-      try {
-        pushWeb.init()
-        webPushWasInitialized = true
-      } catch (e) {
-        console.error('webpush: init from maybeRetryWebPushInit failed')
-      }
-    }
+    pushWeb.init()
   }
 
   $: {
@@ -317,7 +290,7 @@
 
 <svelte:window on:popstate={popState} on:message={receiveMessage} />
 
-<div class="AppBase AppBaseAdvanced Theming" id="Theming" on:click|once={maybeRetryWebPushInit}>
+<div class="AppBase AppBaseAdvanced Theming" id="Theming">
   <Router {postMessage} {projectId}>
     <Styling
       isRootStyling
