@@ -44,10 +44,10 @@ const setupBroadcastChannel = projectId => {
     const isTabHidden = document.visibilityState === 'hidden' ||
       document.webkitVisibilityState === 'hidden' ||
       document.hidden === true
-    console.log('webpush: visibilitychange, posting setShowWebPushNotification', !isTabHidden)
+    console.log('webpush: visibilitychange, posting setShowWebPushNotification', isTabHidden)
     broadcastChannel.postMessage({
       method: 'setShowWebPushNotification',
-      payload: !isTabHidden
+      payload: isTabHidden
     })
   })
 }
