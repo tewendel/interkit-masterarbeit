@@ -100,7 +100,7 @@ const updateUsersVar = async (selector, projectId, varName, value) => {
 const getUserProjectData = (userId, projectId) => {
   const user = Meteor.users.findOne(userId);
   //console.log("getProjectUserData", user)
-  let data = user?.projectUserData[projectId];
+  let data = user?.projectUserData?.[projectId];
   if(!data) data = {}
   return data;
 }
