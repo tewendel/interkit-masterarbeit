@@ -4,7 +4,39 @@
 
 <!-- TOC will consume any paragraph here, leave blank -->
 
-## Notes
+## Primer
+
+Push notifications are sent from the server to a user's device.
+On the user's device, the app does not need to be running, or "awake".
+If the device is locked, the notification will arrive on the lock screen.
+A tap on the notification will launch the app.
+
+Interkit attempts to send push notifications for every Chat/Story message.
+It tries to avoid "unnecessery" notifications (i.e. when the user is actively using the app),
+by tab visibility heuristics (which can be wrong).
+
+Interkit implements two ways to receive notifications:
+
+1. classic/mobile
+    - as used in mobile apps for years
+    - provided by Capacitor
+    - works only for **compiled/native apps**
+    - available for iOS/Android
+    - requires a Google Firebase Account
+2. "Web Push"
+    - uses the new-ish [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
+    - uses the [web-push](https://www.npmjs.com/package/web-push) library
+    - works only in Progressive Web App = **PWA** mode - users *must* install the app / "add it to home screen", resp.  
+      (it kind of works on some desktop browser, too, but chaotically)
+    - this runs a service worker
+    - works well on Android/Chrome; **work in progress on iOS**
+      (the history of PWAs on iOS is complicated)
+    - does not require a Firebase Account;
+      it automagically uses gateways provided by the browser vendors
+
+## Push notifications, classic/mobile
+
+### Notes
 
 * You need to follow all of these steps for each individual project, see also the general [guide for building for native devices](/guides/native)
 * Please study the [Capacitor Push Notification API docs](https://capacitorjs.com/docs/apis/push-notifications#push-notifications-icon),
@@ -12,7 +44,7 @@
   E.g. you might want to look into channels, foreground/background quirks,
   and styling capabilities like badges, sounds...
 
-## Google Firebase Services setup
+### Google Firebase Services setup
 
 These are non-secret keys to link our app to the Firebase Cloud Messaging app instance.
 
@@ -30,13 +62,13 @@ These are non-secret keys to link our app to the Firebase Cloud Messaging app in
         1. Upon creation, you are prompted to download the credential file `google-services.json` – place it in `projects/yourproject/android/app/`  
           (A default file for the starter project is already there, overwrite it. It has to sit there, otherwise the empty app won't run, even when push notifications aren't used.)
 
-## Obtain APNs for iOS setup
+### Obtain APNs for iOS setup
 
 1. Go to your Apple Developer Account
 2. Generate an APNs key (Apple Push Notification service) there (https://developer.apple.com/account/resources/authkeys/list) Note: A maximum of 2 keys are allowed per Apple Developer Account, a key is supposed to serve "all your apps".
 3. Plug it into Firebase Console: Project Settings › Cloud Messageing › Apple app configuration › Apple apps › Fooproject › Upload…
 
-## Install the plugin
+### Install the plugin
 
 ```shell
 cd projects/yourproject
@@ -44,12 +76,12 @@ npm install --save @capacitor/push-notifications
 npx cap sync
 ```
 
-## Android setup
+### Android setup
 
 Not much else to do, but
 please also read "iOS setup" below and read the linked guide, it is helpful.
 
-## iOS setup
+### iOS setup
 
 * Do **not** follow the [API docs mini-guide](https://capacitorjs.com/docs/apis/push-notifications)
 * Do **not** follow the SDK guide on Firebase Console
@@ -117,7 +149,7 @@ If you are missing this specific capability, check if your Apple Developer Accou
 ![](/images/push_setup_ios_capability.jpg)
 
 
-## Provide credentials
+### Provide credentials
 
 These are private keys to be kept secret, get them from Firebase Console (Project settings › Service accounts › Firebase Admin SDK › Generate new private key -> it's ~2k of cert looking JSON). Provide them to the app:
 
@@ -130,7 +162,7 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
      2. in the project folder (found via `.env` `REPOSITORIES_PATH`),
         file name `firebase-admin.json`.
 
-## Push notification icon on Android
+### Push notification icon on Android
 
 (Not supported on iOS, it just uses the launcher icon)
 
@@ -153,4 +185,66 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
 * With more effort, full-color (over white-on-transparent) might be possible, or just re-coloring/hue-ing the white icon. Consider  
   [Firebase Docs](https://firebase.google.com/docs/cloud-messaging/android/client#manifest)  
   [this Stack Overflow Q](https://stackoverflow.com/q/37325051/629238)
+
+## Web Push notifications
+
+### Quick start
+
+- use the `AppBaseAdvanced` component, check `enableWebPush`
+- for good measure, add `AnonymousLogin` and `Chat` - this helps with debugging
+- build, save, publish your app
+- open it on a mobile device
+- the OS should ask you to Allow Notifications
+- add the app to your home screen (see also the `PWAHint` component)
+- launch the PWA by tapping the new icon on your home screen
+- minimize the app by tapping your home button or opening a different app
+- in the admin interface, under Project/Users, find your mobile user,
+  select the row, and click the "message" button to send them a test message
+- check your device to see if a message arrived
+
+### Credentials, encryption, "VAPID"
+
+When you first launch your interkit server, it will create a key pair (private+public).
+(These keys secure that only *your* server can send push notifications to *your* app.)
+
+The keys will be created by the `web-push` library and saved in a file,
+once per interkit server, and shared by all apps within this server.
+
+- If you do `npm run dev` from the command line,
+  look for a file `meteor-server/webpushcredentials.json`
+- If you're running via Docker, this is determined by the env var
+  `WEBPUSH_CREDENTIALS_PATH`, which defaults to `/var/credentials/webpush.json`
+
+### Setup, customization, hacking
+
+Interkit offers a barebones setup. To improve / hack on
+appearance (icon, sound, formatting)
+or functionality (e.g. when not to show a notification),
+your entry points are:
+
+- in your project
+    - `static/manifest.webmanifest` for titles etc.
+    - `sw.js` - the service worker which receives the Push event  
+      note also the `BroadcastChannel` to communicate with `pushweb.js`
+- `packages/interkit/`
+    - `pushweb.js` -- handles registering and the "push" subscription
+    - `components/AppBaseAdvanced.svelte` -- initializes clientside
+- `meteor-server/imports/pushnotifications.js` -- the serverside part of message selection and sending
+
+### Troubleshooting
+
+- Has the server created keys? (See above, "VAPID".)
+- Is your app really running as a PWA?
+    - It has to be served via https
+    - There should be no browser UI present
+    - Launch DevTools and check the Application tab
+      (this is browser-dependent and changing - search around)
+        - Is a Manifest present and detected? (with an Identity and an Icon etc.)
+        - Is a service worker `sw.js` registered? Some browsers will let you send a push message.
+- Check the logs via DevTools, they should be fairly verbose.
+    - look/filter for lines that start with `webpush:` and `SW` (*S*ervice *W*orker)
+- In the Project/Users table, find the device user, uncollapse/expand the row,
+  check if their object has a `webPushSubscription` entry.
+  It should be a string of a serialized JSON object that roughly looks like
+  an `{"endpoint":"https://...push...com/","keys":{...}}`
 
