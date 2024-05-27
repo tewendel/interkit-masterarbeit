@@ -190,11 +190,11 @@ These are private keys to be kept secret, get them from Firebase Console (Projec
 
 ### Quick start
 
-- use the `AppBaseAdvanced` component, check `enableWebPush`
-- for good measure, add `AnonymousLogin` and `Chat` - this helps with debugging
+- Use the `AppBaseAdvanced` component, check `enableWebPush`. Add `AnonymousLogin` and `Chat`; create one (default) `board1` under Story.  
+  Alternatively, start from the template `06-Chat-basics`, but swap `AppBase` for `AppBaseAdvanced` and check `enableWebPush`.
 - build, save, publish your app
 - open it on a mobile device
-- the OS should ask you to Allow Notifications
+- the OS might ask you to Allow Notifications
 - add the app to your home screen (see also the `PWAHint` component)
 - launch the PWA by tapping the new icon on your home screen
 - minimize the app by tapping your home button or opening a different app
