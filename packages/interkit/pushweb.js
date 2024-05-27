@@ -60,6 +60,12 @@ const setupBroadcastChannel = projectId => {
       payload: isTabHidden
     })
   })
+  const postTitle = () => broadcastChannel.postMessage({
+    method: 'setWebPushNotificationTitle',
+    payload: InterkitClient?.config?.project_slug || 'interkit'
+  })
+  postTitle()
+  InterkitClient.config.subscribe(() => postTitle())
 }
 
 const init = () => {

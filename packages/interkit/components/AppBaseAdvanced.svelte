@@ -210,7 +210,16 @@
   if (!enableWebPush) {
     console.log('webpush: disabled by AppBaseAdvanced')
   } else {
-    pushWeb.init()
+    console.log('webpush: enabled by AppBaseAdvanced')
+    try {
+      console.log('webpush: register serviceWorker sw.js SW')
+      navigator.serviceWorker.register('sw.js')
+        .then(r => console.log('webpush: serviceWorker registered', r))
+        .catch(e => console.log('webpush: serviceWorker registration failed', e))
+      pushWeb.init()
+    } catch (e) {
+      console.warn('webpush: serviceWorker.register failed', e)
+    }
   }
 
   $: {
