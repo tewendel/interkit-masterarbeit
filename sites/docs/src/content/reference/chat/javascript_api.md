@@ -282,7 +282,12 @@ api.sendSystem("The bus will arrive in 5 minutes", {
 })
 ```
 
-You can also get the explicit list of users in a node with `getUsersInNode({ channelKey, nodeId })`.
+You can also get the explicit list of users in a node with `api.getUsersInNode({ channelKey, nodeId })`. To get a list of userIds, map the users to their userIds.
+
+```js
+const users = await api.getUsersInNode({ channelKey: "board2", nodeId: "start" })
+const userIds = users.map(user => user._id)
+```
 
 ## Moving other players
 

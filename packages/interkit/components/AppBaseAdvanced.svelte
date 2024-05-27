@@ -207,10 +207,10 @@
 
   import * as pushWeb from '../pushweb.js'
 
-  if (enableWebPush) {
-    pushWeb.init()
+  if (!enableWebPush) {
+    console.log('webpush: disabled by AppBaseAdvanced')
   } else {
-    console.log('AppBaseAdvanced: webpush: disabled')
+    pushWeb.init()
   }
 
   $: {
