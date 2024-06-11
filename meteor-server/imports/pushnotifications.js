@@ -267,18 +267,22 @@ const sendWebPushMessages = async ({ projectId, subscriptions, payload }) => {
   if (subscriptions.length === 0) return
   let successes = 0
   let errors = 0
+  const ret1 = []
+  const ret2 = []
   for (const subscription of subscriptions) {
-    await webpush.sendNotification(
+    const ret = await webpush.sendNotification(
       subscription,
       payload.text || fallbackNotificationBody
     )
-      .then(() => successes++ )
+      .then((a) => { ret2.push(a); successes++ })
       .catch(e => { 
         console.warn('pushnotifications: could not send web push message to', subscription, e)
         errors++
       })
+    ret1.push(ret)
   }
   console.log(`pushnotifications: webpush.sendNotification ${successes} successful, ${errors} errors`)
+  console.log(`pushnotifications: webpush.sendNotification returned`, ret1, ret2)
 }
 
 /**
