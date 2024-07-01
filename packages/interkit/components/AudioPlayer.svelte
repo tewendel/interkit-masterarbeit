@@ -87,12 +87,11 @@
   }
   
   // mark elements as "listend to" after 10s of playback
-  const elementProperties = InterkitClient.getGlobalStore("elementProperties")
   const markElementListened = (time) => {
     if(time > 20) {
       let key = $audioPlayerElement?.key
-      if(key && !get(elementProperties)?.[key]?.checked) {
-        InterkitClient.setElementProperty(elementProperties, key, "checked", true)  
+      if(key && !InterkitClient.getElementProperty(key, "checked")) {
+        InterkitClient.setElementProperty(key, "checked", true)  
       }      
     }
   }
