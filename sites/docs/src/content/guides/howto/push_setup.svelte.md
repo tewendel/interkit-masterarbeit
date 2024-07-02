@@ -12,8 +12,7 @@ If the device is locked, the notification will arrive on the lock screen.
 A tap on the notification will launch the app.
 
 Interkit attempts to send push notifications for every Chat/Story message.
-It tries to avoid "unnecessery" notifications (i.e. when the user is actively using the app),
-by tab visibility heuristics (which can be wrong).
+It tries to avoid "unnecessery" notifications (i.e. when the user is actively using the app).
 
 Interkit implements two ways to receive notifications:
 
@@ -29,8 +28,15 @@ Interkit implements two ways to receive notifications:
     - works only in Progressive Web App = **PWA** mode - users *must* install the app / "add it to home screen", resp.  
       (it kind of works on some desktop browser, too, but chaotically)
     - this runs a service worker
-    - works well on Android/Chrome; **work in progress on iOS**
-      (the history of PWAs on iOS is complicated)
+    - works well on Android/Chrome
+    - works on iOS, with limitations:  
+      Usually, when user receives a push notification, but the app is active/focused
+      (`visibilityState === 'visible'`)
+      we do not show the notification.
+      This does **not** work on iOS, due to a
+      [bug in WebKit](https://bugs.webkit.org/show_bug.cgi?id=268797),
+      we believe. Once the bug is fixed, this should *just work* as expected.
+      The history of PWAs on iOS is… complicated.
     - does not require a Firebase Account;
       it automagically uses gateways provided by the browser vendors
 
@@ -219,13 +225,13 @@ once per interkit server, and shared by all apps within this server.
 
 Interkit offers a barebones setup. To improve / hack on
 appearance (icon, sound, formatting)
-or functionality (e.g. when not to show a notification),
+or functionality (e.g. when *exactly* not to show a notification),
 your entry points are:
 
 - in your project
     - `static/manifest.webmanifest` for titles etc.
     - `sw.js` - the service worker which receives the Push event  
-      note also the `BroadcastChannel` to communicate with `pushweb.js`
+      (note also the commented out recipes for `pushMessage` to communicate with `pushweb.js`)
 - `packages/interkit/`
     - `pushweb.js` -- handles registering and the "push" subscription
     - `components/AppBaseAdvanced.svelte` -- initializes clientside

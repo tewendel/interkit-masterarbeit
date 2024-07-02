@@ -3,7 +3,12 @@ import { get } from 'svelte/store';
 
 console.log('webpush: loaded')
 
-var broadcastChannel
+/* broadcast channel is not needed to update tab visibility and set notification title,
+ * it is also unreliable/broken on iOS currently (see starter's sw.js)
+ * but might be useful in the future
+ * or, use the simpler `navigator.serviceWorker.controller.postMessage` scheme
+ */
+// var broadcastChannel
 
 const setup = (isRetry) => {
   const userId = get(InterkitClient.userId)
@@ -47,6 +52,7 @@ const setup = (isRetry) => {
   }
 }
 
+/* broadcast channel setup, see above
 const setupBroadcastChannel = projectId => {
   broadcastChannel = new BroadcastChannel('interkit_' + projectId)
   console.log('webpush: setupBroadcastChannel', projectId, broadcastChannel)
@@ -67,6 +73,7 @@ const setupBroadcastChannel = projectId => {
   postTitle()
   InterkitClient.config.subscribe(() => postTitle())
 }
+*/
 
 const init = () => {
   // if (get(InterkitClient.webPushPublicKey) && get(InterkitClient.userId)) {
@@ -77,6 +84,7 @@ const init = () => {
   InterkitClient.webPushPublicKey.subscribe(() => setup())
   InterkitClient.userId.subscribe(() => setup())
   // }
+  /* broadcast channel setup, see above
   if (get(InterkitClient.projectId)) {
     console.log('webpush: got projectId immediately')
     setupBroadcastChannel(get(InterkitClient.projectId))
@@ -87,6 +95,7 @@ const init = () => {
       setupBroadcastChannel(projectId)
     })
   }
+  */
 }
 
 const register = (registration, vapidPublicKey) => {
