@@ -29,7 +29,7 @@ Interkit implements two ways to receive notifications:
       (it kind of works on some desktop browser, too, but chaotically)
     - this runs a service worker
     - works well on Android/Chrome
-    - works on iOS, with limitations:  
+    - works on iOS (16.4+), with limitations:  
       Usually, when user receives a push notification, but the app is active/focused
       (`visibilityState === 'visible'`)
       we do not show the notification.
