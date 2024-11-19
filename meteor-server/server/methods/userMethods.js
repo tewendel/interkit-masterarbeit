@@ -551,4 +551,57 @@ Meteor.methods({
     
     return true;
   },
+
+  exportProjectUsers: async function ({ projectId, format="json" }) {
+    if (!this.userId) {
+      console.warn("exportProjectUsers: missing userId");
+      return false;
+    }
+    const authorized = userIsInRoles(this.userId, ["admin", "author"])
+    if (!authorized) {
+      console.warn("exportProjectUsers: not authorized", this.userId);
+      return false;
+    }
+    const users = await Meteor.users.find(
+      { [`projectUserData.${projectId}`]: { $exists: true } },
+      { fields: { username: 1, email: 1, name: 1, projectUserData: { [projectId]:1}, createdAt: 1, status: 1 } }
+    ).fetch();
+    console.log("exportProjectUsers", users.length, projectId);
+    
+    if (format === "json") {
+      return JSON.stringify(users, null, 2);
+    } else if (format === "csv") {
+      // Convert the nested data into a flat structure
+      const flatUsers = users.map(user => ({
+        id: user._id,
+        username: user.username,
+        email: user.email || '',
+        name: user.name || '',
+        createdAt: user.createdAt ? new Date(user.createdAt).toISOString() : '',
+        userToken: user.projectUserData?.[projectId]?.userToken || '',
+        lastHeartbeat: user.projectUserData?.[projectId]?.lastHeartbeat ? new Date(user.projectUserData[projectId].lastHeartbeat).toISOString() : '',
+        lastLogin: user.status?.lastLogin?.date ? new Date(user.status.lastLogin.date).toISOString() : '',
+        userAgent: user.status?.lastLogin?.userAgent || '',
+        projectData: JSON.stringify(user.projectUserData?.[projectId] || {})
+      }));
+
+      // Create CSV header
+      const headers = Object.keys(flatUsers[0] || {});
+      const csvContent = [
+        headers.join(','),
+        ...flatUsers.map(user => 
+          headers.map(header => {
+            const value = user[header]?.toString() || '';
+            // Escape commas and quotes in the value
+            return value.includes(',') || value.includes('"') 
+              ? `"${value.replace(/"/g, '""')}"` 
+              : value;
+          }).join(',')
+        )
+      ].join('\n');
+
+      return csvContent;
+    }
+    return users;
+  },
 });

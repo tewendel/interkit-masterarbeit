@@ -40,7 +40,7 @@
   import UserOnline from "carbon-icons-svelte/lib/UserOnline.svelte"
   import UserSimulation from "carbon-icons-svelte/lib/UserSimulation.svelte"
   import UserAdmin from "carbon-icons-svelte/lib/UserAdmin.svelte"
-
+  
   import UserVarTableModal from './UserVarTableModal.svelte';
   import WatsonHealthStudySkip from 'carbon-icons-svelte/lib/WatsonHealthStudySkip.svelte'
 
@@ -377,6 +377,22 @@
       varEditorUser = users.find(u=>u._id == usersSelection[0])
     }
   }
+
+  async function downloadData(format = 'json') {
+    const result = await InterkitClient.call('exportProjectUsers', {projectId, format})
+    if (result) {
+      const mimeType = format === 'json' ? 'application/json' : 'text/csv';
+      const blob = new Blob([result], { type: mimeType });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `project-users-${projectId}.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+  }
   
 </script>
 
@@ -513,7 +529,13 @@
           <InlineLoading style={`flex: 1; padding-left: 1em; visibility: ${loading ? "visible" : "hidden"}`}/>
           <ToolbarMenu>
             <ToolbarMenuItem on:click={() => { openShowHideColumns = true }}>
-              toggle columns…
+              Toggle columns…
+            </ToolbarMenuItem>
+            <ToolbarMenuItem on:click={() => downloadData('json')}>
+              Download JSON
+            </ToolbarMenuItem>
+            <ToolbarMenuItem on:click={() => downloadData('csv')}>
+              Download CSV
             </ToolbarMenuItem>
           </ToolbarMenu>
           <Button

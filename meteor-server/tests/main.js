@@ -6,7 +6,7 @@ import "./publications/publication-projectUsers.js"
 import "./publications/publication-activeAdminUsers.js"
 import "./publications/publication-messagesPaginated.js"
 import "./publications/publication-messagesChannelReportsCount"
-
+import "./methods/users.exportProjectUsers.js"
 
 
 describe("meteor-svelte-test", function () {
