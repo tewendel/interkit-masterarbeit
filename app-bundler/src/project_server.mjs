@@ -4,8 +4,24 @@ import process from 'process';
 import { spawn } from 'child_process';
 import { getProjectPath } from "./filesystem.mjs"
 import interkit_server from "./interkit_server.mjs"
+import debounce from 'debounce'
 
 let servers = []
+
+// Store debounced initialization functions per project
+const debouncedInits = new Map()
+const DEBOUNCE_DELAY = 1000 // 1 second delay
+
+// Get or create a debounced init function for a project
+const getDebouncedInit = (projectId) => {
+  if (!debouncedInits.has(projectId)) {
+    debouncedInits.set(projectId, debounce(async () => {
+      console.log(`initializing project server for project ${projectId}`)
+      await interkit_server.call("project.projectServer.init", { projectId })
+    }, DEBOUNCE_DELAY))
+  }
+  return debouncedInits.get(projectId)
+}
 
 // react to change in projects
 async function updateProjectServers(projects) {
@@ -45,8 +61,7 @@ async function ensureProjectServers(projects) {
           }
         } else {
           // initalize project server
-          console.log(`initializing project server for project ${projectId}`)
-          await interkit_server.call("project.projectServer.init", { projectId })
+          await getDebouncedInit(projectId)()
           // setup & start project server
           // startServer(projectId) <-- will get trigeered by ensureProjectServers on the next run (NOTE: may crash if there is another change, needs improvements)
         }
