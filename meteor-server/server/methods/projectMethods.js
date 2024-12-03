@@ -80,6 +80,10 @@ Meteor.methods({
   'project.getWebPushPublicKey': async ({ projectId }) => {
     const project = await Projects.findOne({ _id: projectId })
     console.log('project.getWebPushPublicKey', project)
+    if (!project) {
+      console.warn("project.getWebPushPublicKey: project not found", projectId)
+      return null
+    }
     return project.webPushPublicKey
   },
 
