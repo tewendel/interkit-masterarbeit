@@ -1,0 +1,8 @@
+name: GlobalStoreDebugger
+title: GlobalStoreDebugger
+color: 230
+fields:
+- name: globalStore
+  type: string
+  defaultValue: audioPlayerElement
+toolboxCategory: Debug

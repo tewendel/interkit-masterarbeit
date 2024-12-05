@@ -4,7 +4,10 @@
 
 # ContextDebugger
 
-Shows information about a Svelte context currently available, for example "element" or "elements".
+Shows information about a Svelte context currently available. Examples:
+
+- `element`
+- `elements`
 
 <ComponentInfoYaml component="ContextDebugger" />
 

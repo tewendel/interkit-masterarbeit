@@ -1,0 +1,6 @@
+name: Ignore
+colour: "#000000"
+toolboxCategory: Debug
+fields: 
+  - name: default
+    type: slot

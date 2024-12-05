@@ -1,16 +1,16 @@
 
 <script>
-  import { getContext } from 'svelte'
+  import { InterkitClient, util } from '..'
 
-  export let context = "element"
-
-  let ctx = getContext(context)
+  export let globalStore = "audioPlayerElement"
 
   let content = null
   let type = "object"
 
-  if (ctx && ctx.subscribe) {
-    ctx.subscribe( c => {
+  const store = InterkitClient.getGlobalStore(globalStore)
+
+  if (store && store.subscribe) {
+    store.subscribe( c => {
       content = c
       if (typeof content === "array") {
         type = "list"
@@ -20,15 +20,12 @@
 </script>
 
 <div>
-  {#if ctx}
-    {#if !ctx.subscribe}
-      ("{context}" exists, but is not a store)
-    {/if}
+  {#if store}
 
     {#if type === "list"}
       {#if content}
         {#if content.length == 0}
-          {context} is an empty list
+          {globalStore} is an empty list
         {:else}
           <ul>
             {#if typeof content  === "array"}
@@ -54,16 +51,16 @@
       {/if}
     {:else}
       {#if content === undefined}
-        "{context}" exists, but its content is "undefined"
+        "{globalStore}" exists, but its content is "undefined"
       {:else if !content}
-        "{context}" exists, but is empty
+        "{globalStore}" exists, but is empty
       {:else}
-        <h4>"{context}"</h4>
+        <h4>"{globalStore}"</h4>
         {JSON.stringify(content, null, 2)}
       {/if}
     {/if}
   {:else}
-    "{context}" is not a context
+    "{globalStore}" is not a global store
   {/if}
 </div>
 
