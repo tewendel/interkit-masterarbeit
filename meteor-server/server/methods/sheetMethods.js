@@ -205,16 +205,14 @@ Meteor.methods({
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
     console.log(rowKey, projectId, colKey, newVal);
     if(rowKey && projectId && colKey) {
-      let row = Rows.findOne({key: rowKey, projectId})
-      if(row) {
-        let values = row.values
-        values[colKey] = newVal 
-       //console.log(value)
-        Rows.update({_id: row._id}, {$set: {values}});
-        // return the updated row
-        return Rows.findOne({ key: rowKey, projectId })
+      const result = Rows.update(
+        {key: rowKey, projectId},
+        {$set: {[`values.${colKey}`]: newVal}}
+      );
+      if(result) {
+        return Rows.findOne({key: rowKey, projectId});
       } else {
-        console.log("updateValue: row not found")
+        console.log("updateValue: row not found");
       }
     }
   },
@@ -222,13 +220,14 @@ Meteor.methods({
   'row.updateValues': ({rowKey, projectId, values}) => {
     console.log("row.updateValues", rowKey, projectId, values);
     if(rowKey && projectId && values) {
-      let row = Rows.findOne({key: rowKey, projectId})
-      if(row) {
-        Rows.update({_id: row._id}, {$set: {values}});
-        // return the updated row
-        return Rows.findOne({ key: rowKey, projectId })
+      const result = Rows.update(
+        {key: rowKey, projectId},
+        {$set: {values}}
+      );
+      if(result) {
+        return Rows.findOne({key: rowKey, projectId});
       } else {
-        console.log("updateValue: row not found")
+        console.log("updateValues: row not found");
       }
     }
   },
