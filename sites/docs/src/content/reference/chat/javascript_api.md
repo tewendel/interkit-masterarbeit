@@ -104,6 +104,24 @@ api.sendAudio("e4770840-3c2e-4eeb-b59b-a0e15e14190b")
 
 The first parameter is the media file key. To get the media file key, go to the Media tab, open ⋮ menu, copy key.
 
+Autoplay the audio when the message arrives
+```js
+api.sendAudio("mediafileKey", { autoplay: true })
+```
+
+You can send audio to the floating popout player using the `target` option. Hoewver, this is a bit different as the floating player does not expect a media file key but a database row and a column that contains the audio. Note that the `audioColumn` option is required and contains the key of the sheet 
+and the kay of the column, separated by a `/`.
+
+```js
+// Get the row from the database
+const element = await api.getRow("b7905d1c-b567-4801-80be-b7c6e749ad7a")
+api.sendAudio(null, { 
+  target: "popout", 
+  element: element, 
+  audioColumn: "elements/audio" 
+})
+```
+
 
 ### sendVideo
 
@@ -374,6 +392,11 @@ Load rows from a sheet
 ```js
 await api.getRows("elements")
 ```
+Load one row from a sheet (by row key)
+```js
+await api.getRow("rowKey")
+```
+
 
 Add a row to a sheet
 ```js
@@ -492,5 +515,3 @@ You can use sendTextT, sendChoiceT, sendSystemT shortcuts, equivalently
 api.sendTextT('Tschüß|Bye')
 api.sendChoiceT({ a: 'Ja|Yes', b: ['Nein', 'No'] })
 api.sendSystemT('Chat verlassen|Left the chat')
-```
-

@@ -134,7 +134,13 @@ const sendImage = async function (mediafileKey, options) {
 }
 
 const sendAudio = async function (mediafileKey, options) {
-  await sendMediaFile(this, "audio", mediafileKey, options)
+  // target options:
+  // - "inline" (default): plays in the inline player
+  // - "popout": plays in the floating audio player
+  await sendMediaFile(this, "audio", mediafileKey, {
+    ...options,
+    target: options?.target || "inline"
+  })
 }
 
 const sendVideo = async function (mediafileKey, options) {
@@ -324,6 +330,13 @@ const getRows = async function(sheetKey) {
   return rows;
 }
 
+// load a single row
+const getRow = async function(rowKey) {
+  const {server, projectId} = this
+  const row = await server.call('row.get', {key: rowKey, projectId})  
+  return row;
+}
+
 // create a new row with values
 const addRow = async function(sheetKey, values) {
   const {server, projectId} = this
@@ -381,6 +394,7 @@ export default {
   getElementProperty,
   setChannelProperty,
   getRows,
+  getRow,
   addRow,
   updateRow,
   setInterface,

@@ -7,11 +7,11 @@
   import Bubble from "./Bubble.svelte"
   import Button from "../Button.svelte";
   import Icon from "../Icon.svelte";
-  import InlineAudioButton from '../InlineAudioButton.svelte';
   import InlineVideoPlayer from '../InlineVideoPlayer.svelte';
   import MediaFileImage from '../MediaFileImage.svelte'
   import ChatImage from "./ChatImage.svelte"
   import ExternalMapAppButton from "../ExternalMapAppButton.svelte"
+  import MessageAudio from "./MessageAudio.svelte"
 
   const dispatch = createEventDispatcher();
 
@@ -167,11 +167,7 @@
             <ChatImage {message} />
           {/if}
         {:else if message?.payload?.type == "audio"}
-            <!-- TODO border-radiuses don't match -->
-            <InlineAudioButton
-              audioKeyDirect={message?.payload?.mediafileKey}
-              autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}
-            />
+          <MessageAudio {message} {userId} />
         {:else if message?.payload?.type == "video"}
             <InlineVideoPlayer
               mediafileKey={message?.payload?.mediafileKey}
