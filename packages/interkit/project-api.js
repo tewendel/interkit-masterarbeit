@@ -344,10 +344,16 @@ const addRow = async function(sheetKey, values) {
   await server.call('row.updateValues', {projectId, rowKey: rowKey.rowKey, values});
 }
 
-// update a row
+// update a row (replace row with provided values)
 const updateRow = async function(sheetKey, rowKey, values) {
   const {server, projectId} = this
   await server.call('row.updateValues', {projectId, rowKey, values});
+}
+
+// update row value (replace just one value)
+const updateRowValue = async function(sheetKey, rowKey, colKey, newVal) {
+  const {server, projectId} = this
+  await server.call('row.updateValue', {rowKey, projectId, colKey, newVal});
 }
 
 
@@ -397,6 +403,7 @@ export default {
   getRow,
   addRow,
   updateRow,
+  updateRowValue,
   setInterface,
   requestLocation,
   distance,

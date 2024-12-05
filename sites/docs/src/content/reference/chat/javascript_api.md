@@ -402,9 +402,15 @@ Add a row to a sheet
 ```js
 await api.addRow("elements", {title: "hello"})
 ```
-Update a row
+Update a row (replaces the whole row)
 ```js
 await api.updateRow("elements", "rowKey", {title: "bye"})
+```
+Update single values in a row (keeps existing values, only overwrites the one you provide)
+```js
+await api.updateRowValue("elements", "rowKey", "colKey", "value")
+//example:
+await api.updateRowValue("elements", "rowKey", "title", "bye")
 ```
 
 These operations read from the database, so await is needed.
