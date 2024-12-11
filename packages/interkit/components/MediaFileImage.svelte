@@ -26,6 +26,7 @@
   }
   const lookupMediafile = async (ref, data) => {
     let key = ref?.value;
+    console.log("lookupMediafile", key)
     if(key) {
       mediafile = await InterkitClient.getMediaFile(key);
     } else {

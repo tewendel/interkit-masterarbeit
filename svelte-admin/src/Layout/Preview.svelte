@@ -48,6 +48,7 @@
   let themed = true
   let localConfig = true
   let dummyData = false
+  let archiveMode = false
   let sharePublicUrl = true
   
   let iframeRef = null
@@ -118,6 +119,7 @@
     //console.log("currentProject", $currentProject)
     //console.log("localConfig", localConfig)
     query.set("dummyData", dummyData)
+    query.set("archiveMode", archiveMode)
     if (localConfig && $currentProject) {
       query.set("localConfigURL", bundleServerURL + "/localConfig/" + $currentProject.slug)
     } else {
@@ -356,6 +358,11 @@
       size="sm"
       labelText="Dummy Data"
       bind:toggled={dummyData}
+      />
+    <Toggle
+      size="sm"
+      labelText="Archive Mode"
+      bind:toggled={archiveMode}
       />
   </div>
 </Modal>

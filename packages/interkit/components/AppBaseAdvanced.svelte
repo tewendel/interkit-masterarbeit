@@ -13,7 +13,7 @@
   import Router from './Router.svelte'
   import Styling from './Styling.svelte'
   import Overlay from './Overlay.svelte'
-  
+
   export let languages
   export let enableWebPush
   export let projectIdOverride
@@ -82,7 +82,7 @@
   // the last term (and not not...) equals "show the retry button"
   // i.e. when we have the retry button, we don't need the hint
   // (which, as overlay, could block the button)
-  $: showNetworkHint = (showNetworkHintConnection || showNetworkHintNetwork) && !(!($projectId && initComplete) && connectionIssue)
+  $: showNetworkHint = (showNetworkHintConnection || showNetworkHintNetwork) && !$archiveMode && !(!($projectId && initComplete) && connectionIssue)
 
   Network.addListener('networkStatusChange', ({ connected }) => {
     console.log('AppBase networkStatusChange', { connected, issue: get(connectionIssue) })
@@ -108,6 +108,7 @@
   let projectId = InterkitClient.projectId;
   let connectionIssue = InterkitClient.connectionIssue;
   let clientConnected = InterkitClient.connected;
+  let archiveMode = InterkitClient.archiveMode;
 
   let postMessageOrigin
   $: {
@@ -332,7 +333,7 @@
           </div>
         {/if}
       </Overlay>
-      {#if showNetworkHint}
+      {#if showNetworkHint }
         {#if $$slots.networkHint}
           <div class="network-hint network-hint--custom">
             <slot name="networkHint"></slot>

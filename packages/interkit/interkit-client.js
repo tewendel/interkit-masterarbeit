@@ -25,6 +25,8 @@ let connectionIssue = writable(false);
 let connected = writable(false);
 
 let showDummyData = writable(false);
+let archiveMode = writable(false);
+let archiveData;
 
 let server;
 
@@ -168,6 +170,7 @@ const loadConfig = async () => {
       } catch(e) {
         console.log("error parsing config", e);
       }
+
     }
 
     // override loadTheme option that might be set in config
@@ -181,8 +184,32 @@ const loadConfig = async () => {
       _config.showDummyData = d
       showDummyData.set(d)
     }
+
+    if(params.get("archiveMode")) {
+      let d = params.get("archiveMode") == "true" ? true : false
+      archiveMode.set(d)
+      console.log("set archiveMode", d)
+    }
     
     config.set(_config);
+}
+
+// loads local archive data
+const loadArchiveData = async () => {
+  console.log("loading archiveData...")
+
+  const currentUrl = new URL(window.location.href);
+  const urlWithoutQuery = currentUrl.origin + currentUrl.pathname;
+  console.log(urlWithoutQuery);
+
+  const archiveDataResponse = await fetch(urlWithoutQuery + "/archive/db.json");
+  console.log("loaded archive data response", archiveDataResponse)
+  try {
+    archiveData = await archiveDataResponse.json()
+    console.log("loaded archiveData", archiveData)
+  } catch(e) {
+    console.log("error getting archiveData", e);
+  }
 }
 
 const fetchWithTimeout = async (resource, options={timeout: 8000}) => { 
@@ -221,17 +248,21 @@ const getProjectId = async () => {
       result = await fetchWithTimeout(url)
     } catch (e) {
       console.log(e);
-      if(!connectionAlert) {
+      if(!connectionAlert && !get(archiveMode)) {
         // alert("Diese App benötigt Internet-Zugriff. Bitte überprüfen Sie Ihre Verbindung.")
-        connectionAlert = true;
-        connectionIssue.set(true);
+        connectionAlert = true
+        connectionIssue.set(true)
+      }
+      if(get(archiveMode)) {
+        console.log("setting projectId via archive data")
+        _projectId = archiveData.project._id
       }
     }    
 
     if(result) {
       _projectId = await result.text();
     } else {
-      if (!connectionAlert) {
+      if (!connectionAlert && !get(archiveMode)) {
         alert("couldn't retrieve projectId from slug " + get(config)?.project_slug);
       }
     }
@@ -348,27 +379,51 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   }
   //console.log("getSub", col, pub, pubArgs)
 
-  if (!server) {
+  if (!server && !get(archiveMode)) {
     console.warn("server not initialised, aborting getSub");
     return
   }
 
-  // setup the subscription
-  sub.sub = server.sub(pub, [pubArgs]);
-  await sub.sub.ready();
-  //console.log("sub ready", pub, pubArgs)
+  let collection
+  let data = []
+  
+  if(server) {
+    // setup the subscription
+    sub.sub = server.sub(pub, [pubArgs]);
+    await sub.sub.ready();
+    //console.log("sub ready", pub, pubArgs)
 
-  if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
-  subscriptionCounter[pub] += 1;
-  //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
+    if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
+    subscriptionCounter[pub] += 1;
+    //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
 
-  let collection = server.collection(col).filter(cFilter)
-  let data = single ? collection.fetch()[0] : collection.fetch()
-  let dataRestored = restore_ids(data)
-
+    collection = server.collection(col).filter(cFilter)
+    data = single ? collection.fetch()[0] : collection.fetch()
+    console.log("initial data received for", col, pub, data) 
+  } 
+  
+  // if we are in archiveMode, we need to swap in the static collection for our rows
+  if(get(archiveMode) && archiveData && (col == "rows" || col == "mediafiles")) {
+    if(col == "rows") {
+      console.log("swapping in rows from archive")
+      data = archiveData.rows.filter(cFilter)
+    }
+    if(col == "mediafiles") {
+      console.log("swapping in mediafiles from archive")
+      data = archiveData.files.filter(cFilter)
+    }
+  }
+  
+  let dataRestored = get(archiveMode) ? data : restore_ids(data)
+  
   // write an initial fetch of the collection into the stores
   sub.data.set(dataRestored);
   sub.objects.set(util.rowsToObjects(dataRestored, columnMap));
+  
+  // if we're in archiveMode without a server, just return the non reactive sub with the data
+  if(!server) {
+    return sub
+  }
   
   // update the store through simpleDDP's onChange listener
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
@@ -407,7 +462,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       bufferedWritesFlushHandle = null;
     }
     bufferedWritesFlushHandle = setTimeout(() => updateAndFlush(newData), bufferedWritesInterval);
-    
+      
   })
 
   sub.stop = async () => {
@@ -549,7 +604,7 @@ const getMediaFileSubStore = async () => {
 
 const subscribeUserProjectDataStore = async () => {
   console.log("try subscribeUserProjectData", get(userId), get(projectId), userProjectDataSub)
-  if (!server || !get(userId) || !get(projectId)) {
+  if ((!server || !get(userId) || !get(projectId)) && !get(archiveMode)) {
     console.log("subscribeUserProjectDataStore aborting")
     return  
   }
@@ -695,11 +750,14 @@ const initApp = async options => {
   console.log('initApp')
   await initAuth()
   await loadConfig();
+  await loadArchiveData();
   if (options.projectId) {
     projectId.set(options.projectId);
   } else {
     await getProjectId();
   }
+
+  if(get(archiveMode)) return true;
 
   let updating = false;
   /* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
@@ -712,7 +770,7 @@ const initApp = async options => {
     const _publicKey = await server.call('project.getWebPushPublicKey', { projectId: get(projectId) })
     webPushPublicKey.set(_publicKey)
     return true;
-  }
+  }  
 }
 
 // create a user that is identified by a project specific userToken
@@ -860,11 +918,21 @@ const call = async (method, params = {}) => {
 const getMediaFile = async (key) => {
   if (key) {
     let store = await getMediaFileSubStore()
+    console.log("getMediaFile", get(store))
     let mediafile = get(store)?.find(m => m.meta.key == key)
+    console.log("getMediaFile", get(store), mediafile)
     if (mediafile) {
-      mediafile.link =
-        `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`
-    } else {
+      // get file from media server
+      if (!get(archiveMode)) {
+        mediafile.link =
+          `${get(config).INTERKIT_SERVER_URL}/cdn/storage/mediafiles/${mediafile._id}/original/${mediafile._id}.${mediafile.ext}`   
+      // get file from public directory
+      } else {
+        const currentUrl = new URL(window.location.href);
+        const urlWithoutQuery = currentUrl.origin + currentUrl.pathname;
+        console.log(urlWithoutQuery);
+        mediafile.link = `${urlWithoutQuery}/archive/media/${mediafile._id}.${mediafile.extension}`
+      }
       //console.log("mediafile not found", key, get(store))
     }
     return mediafile
@@ -1060,6 +1128,7 @@ const InterkitClient = {
   connected, // svelte store
   projectId,
   showDummyData,
+  archiveMode,
   userProjectDataStore,
   connectionIssue,
   connect,

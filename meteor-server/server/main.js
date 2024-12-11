@@ -77,11 +77,13 @@ import express from 'express';
 import { setupMediaServer } from '../imports/mediaServer.js';
 import { setupExportServer } from '../imports/exportServer.js'
 import { setupImportServer } from '../imports/importServer.js'
+import { setupArchiveServer } from '../imports/archiveServer.js'
 const app = express();
 app.use(cors());
 app.options('*', cors())
 setupMediaServer(app);
 setupExportServer(app);
 setupImportServer(app);
+setupArchiveServer(app);
 //WebApp.accessRule('*');
 WebApp.connectHandlers.use(app);

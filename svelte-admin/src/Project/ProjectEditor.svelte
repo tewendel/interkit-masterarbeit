@@ -31,6 +31,21 @@
   const makeDefaultProject = async () => await InterkitClient.call("project.makeDefaultProject", {projectId})
 
   const exportEndpoint = `${INTERKIT_SERVER_URL}/export/`
+  const archiveEndpoint = `${INTERKIT_SERVER_URL}/archive/`
+
+  const createArchive = async () => {
+    if(confirm("This will create a client-side static archive of the Database and overwrite any existing archive. Proceed?")) {
+      let url = archiveEndpoint + `?projectId=${projectId}`
+      let response = await fetch(url, {method: "GET"})
+      let json = await response.json();
+      console.log("archive response", json)
+      if(json.status == "success") {
+        alert("Client-side static archive of Database created in /static/archive")
+      } else {
+        alert("Error creating archive")
+      }
+    }
+  }
 
 </script>
 
@@ -68,29 +83,26 @@
   <h4>
     Default Project
   </h4>
-  <p>
     {#if $currentProject.isDefaultProject}
       This project is the default project served at 
       <a href={BundleServer.getServerURL()} target="_blank">
         {BundleServer.getServerURL()}
       </a>
     {:else}
-    <p>
+    <Button 
+        size="small"  
+        disabled={$currentProjectReadOnly}
+        on:click={makeDefaultProject}    
+      >Make this project the default project</Button>
+    <p style="margin-top: 0.5em;">
       The default project will be served at 
       <a href={BundleServer.getServerURL()} target="_blank">
         {BundleServer.getServerURL()}
       </a>
     </p>
-      <Button 
-        kind="ghost"
-        disabled={$currentProjectReadOnly}
-        on:click={makeDefaultProject}
-      >
-      Make this project the default project
-      </Button>
+      
     {/if}
-  </p>
-
+  
   <h4>Import/Export Database & Media</h4>
 
   <ImportProject {projectId} />
@@ -99,6 +111,12 @@
     size="small" 
     href={exportEndpoint + `?projectId=${projectId}`}
   >Export DB & Media (.zip)</Button>
+
+  <br><br>
+  <Button 
+    size="small"
+    on:click={createArchive} 
+  >Create Static Archive</Button>
 
   <h4>Project History</h4>
   <HistoryList {currentProject} />

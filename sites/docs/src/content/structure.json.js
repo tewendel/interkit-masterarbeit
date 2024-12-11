@@ -146,6 +146,10 @@ export const items = [
 						path: '/guides/howto/migrate_to_vite'
 					},
 					{
+						title: 'Create an archived static version of an app',
+						path: '/guides/howto/static_archive'
+					},
+					{
 						title: 'Troubleshooting',
 						path: '/guides/howto/troubleshooting'
 					}
