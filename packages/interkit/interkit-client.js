@@ -931,7 +931,7 @@ const getMediaFile = async (key) => {
         const currentUrl = new URL(window.location.href);
         const urlWithoutQuery = currentUrl.origin + currentUrl.pathname;
         console.log(urlWithoutQuery);
-        mediafile.link = `${urlWithoutQuery}/archive/media/${mediafile._id}.${mediafile.extension}`
+        mediafile.link = `${urlWithoutQuery}archive/media/${mediafile._id}.${mediafile.extension}`
       }
       //console.log("mediafile not found", key, get(store))
     }
