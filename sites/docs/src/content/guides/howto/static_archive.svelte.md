@@ -11,6 +11,7 @@ Example use cases:
 ## Current limitations
 
 Supported: database sheets and mediafiles
+
 Unsupported: user accounts, chat, actions that call the server
 
 ## Steps
@@ -22,3 +23,5 @@ Unsupported: user accounts, chat, actions that call the server
 * activate archive mode on an app by calling it with `?archiveMode=true` query parameter
 
 * to use outside of the dev environment, you need to publish your app once. This copies the archive from `static` to `public`
+
+* you can run your app by running a <a href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server" target="_blank">web server</a> inside the `public` directory
