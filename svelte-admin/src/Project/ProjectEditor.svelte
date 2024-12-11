@@ -31,12 +31,11 @@
   const makeDefaultProject = async () => await InterkitClient.call("project.makeDefaultProject", {projectId})
 
   const exportEndpoint = `${INTERKIT_SERVER_URL}/export/`
-  const archiveEndpoint = `${INTERKIT_SERVER_URL}/archive/`
+  const archiveEndpoint = BundleServer.getServerURL() + "/create_static_archive"
 
   const createArchive = async () => {
     if(confirm("This will create a client-side static archive of the Database and overwrite any existing archive. Proceed?")) {
-      let url = archiveEndpoint + `?projectId=${projectId}`
-      let response = await fetch(url, {method: "GET"})
+      let response = await fetch(archiveEndpoint + "/" + projectId, {method: "POST"})
       let json = await response.json();
       console.log("archive response", json)
       if(json.status == "success") {

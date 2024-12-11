@@ -19,6 +19,20 @@ const makeFilename = (prefix = "export", hostname = "unknownorigin", extension =
   return filename
 }
 
+const getArchive = async (req, res) => {
+  if (!req.query.projectId) {// TODO verify projectId string
+    res.sendStatus(400);
+    console.warn("invalid or missing projectId")
+    return
+  }
+  const projectId = req.query.projectId
+  console.log("getting archive of project data", projectId);
+
+  const data = await getAllOfProject(projectId)
+  res.send({data})
+
+}
+
 
 const exportData = async (req, res) => {
 
@@ -108,5 +122,8 @@ function fixFilename(file) {
 export const setupExportServer = (app) => {
   app.get('/export', async (req, res) => {
     exportData(req, res)
+  })
+  app.get('/archive', async (req, res) => {
+    getArchive(req, res)
   })
 }

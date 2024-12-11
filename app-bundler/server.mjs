@@ -22,6 +22,7 @@ import { get_yamls } from "./src/get_yamls.mjs";
 import { get_readme } from "./src/get_readme.mjs";
 import { get_themes_apply } from "./src/get_themes_apply.mjs";
 import { get_themes_remove } from "./src/get_themes_remove.mjs";
+import { create_static_archive } from "./src/create_static_archive.mjs";
 
 import { api as board_node_api } from "interkit/project-boards-nodes.js";
 import { api as project_files_api } from "./src/api_project_files.mjs";
@@ -29,6 +30,7 @@ import { api as project_files_api } from "./src/api_project_files.mjs";
 import { git_server_middleware } from "./src/git_server.mjs";
 
 import { startGarbageCollection } from "./src/cleanup.mjs";
+
 
 const PORT = process.env.PORT;
 
@@ -169,6 +171,9 @@ app.use("/git", git_server_middleware);
 // get app public files
 //app.get("/app/*", get_app_files);
 app.get("/*", get_app_files);
+
+// create static archive
+app.post("/create_static_archive/:projectId", create_static_archive);
 
 server.listen(PORT, () => console.log("listening on port " + PORT));
 
