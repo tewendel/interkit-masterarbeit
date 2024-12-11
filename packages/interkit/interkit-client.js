@@ -1,6 +1,8 @@
 import simpleDDP from 'simpleddp';
 import { simpleDDPLogin } from 'simpleddp-plugin-login';
 
+import { StaticArchiveServer } from './static-archive-server.js';
+
 import ws from 'isomorphic-ws';
 import { writable, get } from 'svelte/store';
 
@@ -75,11 +77,12 @@ let globalStores = {};
 let globalMethods = {};
 
 // restores the meteor style _id attribute on all elements in array or single object
+// if there aren't any .id attributes, it uses the hopefully existing ._id ones
 const restore_ids = (data) => {
   if(Array.isArray(data))
-    return data.map((e)=>{return {...e, _id: e.id}})
+    return data.map((e)=>{return {...e, _id: e.id ? e.id : e?._id}})
   if(typeof data == "object")
-    return {...data, _id: data.id}
+    return {...data, _id: data.id ? data.id : data?._id}
   return data;
 }
 
@@ -100,8 +103,13 @@ const connect = async (url) => {
     SocketConstructor: ws,
     reconnectInterval: 5000
   };
-  server = new simpleDDP(opts, [simpleDDPLogin]);
 
+  if(get(archiveMode)) {
+    server = new StaticArchiveServer(archiveData); // use client-side server simulation
+  } else {
+    server = new simpleDDP(opts, [simpleDDPLogin]); // connect to meteor
+  }
+  
   server.on('connected', async () => {
     console.log("server connected")
     connected.set(true);
@@ -204,8 +212,11 @@ const loadArchiveData = async () => {
 
   const archiveDataResponse = await fetch(urlWithoutQuery + "/archive/db.json");
   console.log("loaded archive data response", archiveDataResponse)
+  
   try {
     archiveData = await archiveDataResponse.json()
+    // change key of files to fit mediafiles publication
+    archiveData.mediafiles = archiveData.files
     console.log("loaded archiveData", archiveData)
   } catch(e) {
     console.log("error getting archiveData", e);
@@ -379,7 +390,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   }
   //console.log("getSub", col, pub, pubArgs)
 
-  if (!server && !get(archiveMode)) {
+  if (!server) {
     console.warn("server not initialised, aborting getSub");
     return
   }
@@ -387,43 +398,24 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   let collection
   let data = []
   
-  if(server) {
-    // setup the subscription
-    sub.sub = server.sub(pub, [pubArgs]);
-    await sub.sub.ready();
-    //console.log("sub ready", pub, pubArgs)
+  // setup the subscription
+  sub.sub = server.sub(pub, [pubArgs]);
+  await sub.sub.ready();
+  //console.log("sub ready", pub, pubArgs)
 
-    if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
-    subscriptionCounter[pub] += 1;
-    //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
+  if(!subscriptionCounter[pub]) subscriptionCounter[pub] = 0;
+  subscriptionCounter[pub] += 1;
+  //console.log("incremented subscriptionCounter", pub, subscriptionCounter[pub])
 
-    collection = server.collection(col).filter(cFilter)
-    data = single ? collection.fetch()[0] : collection.fetch()
-    console.log("initial data received for", col, pub, data) 
-  } 
+  collection = server.collection(col).filter(cFilter)
+  data = single ? collection.fetch()[0] : collection.fetch()
+  console.log("initial data received for", col, pub, data) 
   
-  // if we are in archiveMode, we need to swap in the static collection for our rows
-  if(get(archiveMode) && archiveData && (col == "rows" || col == "mediafiles")) {
-    if(col == "rows") {
-      console.log("swapping in rows from archive")
-      data = archiveData.rows.filter(cFilter)
-    }
-    if(col == "mediafiles") {
-      console.log("swapping in mediafiles from archive")
-      data = archiveData.files.filter(cFilter)
-    }
-  }
-  
-  let dataRestored = get(archiveMode) ? data : restore_ids(data)
+  let dataRestored = restore_ids(data)
   
   // write an initial fetch of the collection into the stores
   sub.data.set(dataRestored);
   sub.objects.set(util.rowsToObjects(dataRestored, columnMap));
-  
-  // if we're in archiveMode without a server, just return the non reactive sub with the data
-  if(!server) {
-    return sub
-  }
   
   // update the store through simpleDDP's onChange listener
   sub.reactiveCollection = single ? collection.reactive().one() : collection.reactive()
@@ -750,14 +742,13 @@ const initApp = async options => {
   console.log('initApp')
   await initAuth()
   await loadConfig();
-  await loadArchiveData();
+  await loadArchiveData(); // loads archive data, including projectId
+
   if (options.projectId) {
     projectId.set(options.projectId);
   } else {
     await getProjectId();
   }
-
-  if(get(archiveMode)) return true;
 
   let updating = false;
   /* TODO InterkitLiveReload is "unimplemented" since the update to Capacitor v5
