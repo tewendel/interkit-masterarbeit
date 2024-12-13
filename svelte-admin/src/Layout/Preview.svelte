@@ -129,7 +129,7 @@
     //console.log("query", query.toString())
     if (bundleServerURL) {
       previewURL = projectId ? bundleServerURL + "/dev/" + projectId + "/" + "?" + query : null
-      console.log('Layout/Preview', previewURL)
+      //console.log('Layout/Preview', previewURL)
       buildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" + "?" + query : null
       publicBuildURL = projectId ? bundleServerURL + "/app/" + projectId + "/" : null
       bundlezipURL = projectId ? bundleServerURL + "/bundlezip/" + projectId : null

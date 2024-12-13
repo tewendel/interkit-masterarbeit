@@ -217,7 +217,7 @@
     } else {
       chatInterface = config
     }
-    console.log("chatInterface updated", chatInterface)
+    //console.log("chatInterface updated", chatInterface)
   }
   const userProjectData = InterkitClient.userProjectDataStore;
   $: {
@@ -251,12 +251,12 @@
 
   beforeUpdate(() => {
     const offset = getScrollOffset();
-    console.log("beforeUpdate", offset)
+    //console.log("beforeUpdate", offset)
     doAutoScroll = offset < autoscrollOffsetPx;
   });
 
   afterUpdate(() => {
-    console.log("afterUpdate", getScrollOffset())
+    //console.log("afterUpdate", getScrollOffset())
     scrollDown();
   });
  
