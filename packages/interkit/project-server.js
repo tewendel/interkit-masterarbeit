@@ -1,5 +1,22 @@
+// these modules cannot be loaded if this is used in browser context
+let cpuUsage
+let boardNodeUtil
+(async () => {
+if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+      const processModule = await import('node:process');
+      cpuUsage = processModule.cpuUsage;
+
+      const pbnModule = await import('./project-boards-nodes.js');
+      boardNodeUtil = pbnModule.lib;
+  } else {
+      console.error('boardNodeUtil and cpuUsage is not available in the browser environment.');
+  }
+})();
+
+/*
+import { cpuUsage } from 'node:process'
 import { lib as boardNodeUtil } from './project-boards-nodes.js'
-import { cpuUsage } from 'node:process';
+*/
 
 const scheduledEventsProcessIntervalDelay = 2000
 const hookCronIntervalDelay = 10000
@@ -8,11 +25,12 @@ const monitoringInterval = 10000
 let boardData;
 
 const subscribeMessages = async (server, projectId) => {
-  // FIXME this subscription is irrelevant, isn't it?
+  // messages.unhandled sub excludes messages with handler origin
   let messagesSub = server.subscribe("messages.unhandled", { projectId });
   await messagesSub.ready();
 
   let reactiveMessagesCollection = server.collection('messages').reactive();
+  console.log("subscribeMessages reactiveMessagesCollection", reactiveMessagesCollection)
   return reactiveMessagesCollection
 }
 
@@ -204,7 +222,6 @@ const i18nifyApi = api => {
 
 // goes over users and boards and processes any pending arrivals
 const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, users, boards, boardData}) => {  
-  //console.log("processUserArrivals", users);
   
   for(let user of users) {
     if (!user?.projectUserData) continue; // skip user that don't have project, especially the projectserver login user
@@ -212,7 +229,6 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
     let userLang = user?.projectUserData[projectId]?.lang;
     let userLangIndex = user?.projectUserData[projectId]?.langIndex;
     
-    //console.log("boardState", user, boardState)
     if(!boardState) {
       //console.log("no boardState defined for this user - initialising...")
       boardState = await initialiseBoardState(server, projectId, user.id, boardData);
@@ -223,8 +239,12 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
 
       if(boardState?.[boardId]) {
 
+        console.log("processUserArrivals", user, boardState, boardId)
+
         // user is just arriving
         if(boardState[boardId].status == "arriving") {
+
+          //console.log("processUserArrivals arriving")
 
           // make sure we have the updated information on this to prevent multiple onArrive calls
           const updatedProjectData = await server.call("user.getProjectUserData", {userId: user.id, projectId})
@@ -289,8 +309,11 @@ const setupMessageHandling = async ({
     handlers, 
     projectApi, 
     server, 
-    projectId
+    projectId,
+    archiveData // optional, if we're in static archive context
   }) => {
+
+  console.log("setupMessageHandling", projectId)
 
   let handledMessageIds = [] // remember handled messages
   let reactiveMessagesCollection = await subscribeMessages(server, projectId)
@@ -299,19 +322,23 @@ const setupMessageHandling = async ({
   let reactiveUsersCollection = await subscribeUsers(server, projectId)
   // read boards from file system and get info for each
   
-  const boards = await boardNodeUtil.boards.list("./handlers");
-  // console.log("project server found boards: ", boards);
+  const boards = archiveData?.boards || await boardNodeUtil.boards.list("./handlers");
+  console.log("project server found boards: ", boards);
 
-  boardData = {};
-  for(let board of boards) {
-    boardData[board] = await boardNodeUtil.boards.readFromProject(projectId, board)
+  if(archiveData?.boardData) {
+    boardData = archiveData.boardData
+  } else {
+    boardData = {}
+    for(let board of boards) {
+      boardData[board] = await boardNodeUtil.boards.readFromProject(projectId, board)
+    }
   }
   // console.log("project server found board data: ", boardData);
 
   // this gets called many times, for each message that is found through the subscriptions
   reactiveMessagesCollection.onChange(async (messages) => {
 
-    // console.log("messages onChange", messages)
+    console.log("messages onChange", messages)
 
     // TODO: sort by date to ensure that the newest message is processed first
     const unhandledMessages = messages.filter(message => !handledMessageIds.includes(message.id))
@@ -324,6 +351,10 @@ const setupMessageHandling = async ({
     
     // handle each unhandled message
     for (let message of unhandledMessages) {
+      // ignore messages sent from handlers 
+      // (these should only be seen here in static archive context anyway, because specific subs currently don't work there) 
+      if(message.origin == "handler") continue
+
       console.log("handling message", message)
       
       let handledBy = []
@@ -407,7 +438,9 @@ const setupMessageHandling = async ({
   await processEvents(server);
   setInterval(()=>{processEvents(server)}, scheduledEventsProcessIntervalDelay);
 
-  startMonitoring({server, projectId})
+  if(cpuUsage) { // only do monitoring if we are in regular project server in node context
+    startMonitoring({server, projectId})
+  }
 }
 
 const setupHookHandling = async ({ hooks, projectApi, server, projectId }) => {

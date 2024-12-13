@@ -106,6 +106,7 @@ const connect = async (url) => {
 
   if(get(archiveMode)) {
     server = new StaticArchiveServer(archiveData); // use client-side server simulation
+    console.log("static archive server initialized", server)
   } else {
     server = new simpleDDP(opts, [simpleDDPLogin]); // connect to meteor
   }
@@ -197,6 +198,9 @@ const loadConfig = async () => {
       let d = params.get("archiveMode") == "true" ? true : false
       archiveMode.set(d)
       console.log("set archiveMode", d)
+      if(d) {
+        await loadArchiveData(); 
+      }
     }
     
     config.set(_config);
@@ -215,10 +219,10 @@ const loadArchiveData = async () => {
   
   try {
     archiveData = await archiveDataResponse.json()
-    // change key of files to fit mediafiles publication
-    archiveData.mediafiles = archiveData.files
+    archiveData.mediafiles = archiveData.files // change key of files to fit mediafiles publication
     console.log("loaded archiveData", archiveData)
   } catch(e) {
+    alert("no archive found")
     console.log("error getting archiveData", e);
   }
 }
@@ -251,6 +255,9 @@ const getProjectId = async () => {
   if(params.get("projectId")) {
     console.log("got projectId from url param, using that")
     _projectId = params.get("projectId");
+  } else if(get(archiveMode)) {
+    console.log("setting projectId via archive data")
+    _projectId = archiveData.project._id
   } else {
     console.log("trying to get projectId from server via slug", get(config)?.project_slug);
     let url = get(config)?.INTERKIT_BUNDLER_URL + "/project_id/" + get(config)?.project_slug
@@ -263,10 +270,6 @@ const getProjectId = async () => {
         // alert("Diese App benötigt Internet-Zugriff. Bitte überprüfen Sie Ihre Verbindung.")
         connectionAlert = true
         connectionIssue.set(true)
-      }
-      if(get(archiveMode)) {
-        console.log("setting projectId via archive data")
-        _projectId = archiveData.project._id
       }
     }    
 
@@ -388,7 +391,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
       pubArgs.projectId = get(projectId);
     }
   }
-  //console.log("getSub", col, pub, pubArgs)
+  console.log("getSub", col, pub, pubArgs)
 
   if (!server) {
     console.warn("server not initialised, aborting getSub");
@@ -409,7 +412,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 
   collection = server.collection(col).filter(cFilter)
   data = single ? collection.fetch()[0] : collection.fetch()
-  console.log("initial data received for", col, pub, data) 
+  //console.log("initial data received for", col, pub, data) 
   
   let dataRestored = restore_ids(data)
   
@@ -465,7 +468,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
 
     // remove the subscription from the subscriptions array
     subscriptions = subscriptions.filter(s => s != sub)
-    console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
+    // console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
 
     sub.reactiveCollection.stop()
     
@@ -480,7 +483,7 @@ const getSub = async (col, pub, pubArgs={}, cFilter=(a)=>true, single=false, col
   sub.status = "subscribed";
 
   subscriptions.push(sub);
-  console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
+  // console.log("InterkitClient: " + subscriptions.length + " subscriptions active")
 
   if(autoUnsubscribeKey) {
     const autoUnsubscribeId = `${autoUnsubscribeKey}-${col}-${pub}`;
@@ -596,7 +599,7 @@ const getMediaFileSubStore = async () => {
 
 const subscribeUserProjectDataStore = async () => {
   console.log("try subscribeUserProjectData", get(userId), get(projectId), userProjectDataSub)
-  if ((!server || !get(userId) || !get(projectId)) && !get(archiveMode)) {
+  if (!server || !get(userId) || !get(projectId)) {
     console.log("subscribeUserProjectDataStore aborting")
     return  
   }
@@ -742,8 +745,7 @@ const initApp = async options => {
   console.log('initApp')
   await initAuth()
   await loadConfig();
-  await loadArchiveData(); // loads archive data, including projectId
-
+  
   if (options.projectId) {
     projectId.set(options.projectId);
   } else {
@@ -893,7 +895,7 @@ const logout = async () => {
 const call = async (method, params = {}) => {
 
     if (config && params && !params?.projectId) {
-      console.log("adding projectId to method params", params, method, get(projectId))
+      //console.log("adding projectId to method params", params, method, get(projectId))
       params.projectId = get(projectId);
     }
 

@@ -101,7 +101,7 @@ const getNode = handle => fs.readFile(handle).then(file => file.toString())
 
 // this contains the utility functions
 const lib = {
-  boards: {}
+  boards: {projectBoardPath},
 }
 
 // this contains functions wrapped with expressify for use in express context (in bundler)
