@@ -165,8 +165,7 @@ export class StaticArchiveServer {
         break
       case "user.updateUserBoardArrivalState":
         let { boardId, nodeId, status } = params
-        let boardState = projectUserData.boardState
-        boardState[boardId] = {
+        projectUserData.boardState[boardId] = {
           nodeId,
           status
         }
