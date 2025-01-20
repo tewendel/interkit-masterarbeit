@@ -1,5 +1,6 @@
 import * as path from 'path'
-import { promises as fs } from 'fs'
+//import { promises as fs } from 'fs'
+import * as fs from 'node:fs/promises'
 import beautify from 'js-beautify'
 import { idRE } from './project-regex.js'
 
