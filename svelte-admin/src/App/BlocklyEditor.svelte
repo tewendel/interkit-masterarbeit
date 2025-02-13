@@ -34,6 +34,8 @@
   import CodeHighlighter from '../Atoms/CodeHighlighter.svelte';
   import ActionsEditor from './ActionsEditor.svelte';
 
+  import {CrossTabCopyPaste} from '@blockly/plugin-cross-tab-copy-paste';
+
   export let open;
   export let projectId;
 
@@ -45,6 +47,7 @@
   let blocklyXMLFile = "blocklyState.xml";
   let blocklyJsonFile = "blocklyState.json";
   let generatedCode = "";
+  let crossTabCopyPaste; // Store plugin instance
   
   let openInputModal = null; // which input modal to show
   let inputModalValue; // the current value of the modal
@@ -209,6 +212,17 @@
 
     console.log("initBlockly")
 
+    // Clean up previous plugin instance if it exists
+    if (crossTabCopyPaste) {
+      try {
+        // Unregister the menu items to prevent duplicate registration
+        Blockly.ContextMenuRegistry.registry.unregister('blockCopyToStorage');
+        Blockly.ContextMenuRegistry.registry.unregister('blockPasteFromStorage');
+      } catch (e) {
+        console.log('Menu items were already unregistered');
+      }
+    }
+
     const customFields = {
       SheetColumnField: initSheetColumnField(Blockly, updateSheetColumn),
       SheetIdField: initSheetIdField(Blockly, updateSheetId),
@@ -255,6 +269,15 @@
         scaleSpeed: 1.2,
         pinch: true
       },
+    });
+
+    // Initialize cross-tab copy-paste plugin
+    crossTabCopyPaste = new CrossTabCopyPaste();
+    crossTabCopyPaste.init({
+      contextMenu: true,
+      shortcut: true,
+    }, () => {
+      console.log('Error while pasting block');
     });
 
     //console.log(workspace)
@@ -330,6 +353,15 @@
     if (workspace) {
       workspace.dispose();
     }
+    // Clean up plugin when component is destroyed
+    if (crossTabCopyPaste) {
+      try {
+        Blockly.ContextMenuRegistry.registry.unregister('blockCopyToStorage');
+        Blockly.ContextMenuRegistry.registry.unregister('blockPasteFromStorage');
+      } catch (e) {
+        console.log('Menu items were already unregistered');
+      }
+    }
   });
 
   /*
@@ -348,7 +380,7 @@
   $: {
     console.log("BlocklyEditor projectId changed", projectId)
     updateProjectId()
-  }*/
+ }*/
 
   const save = async ()=>{
 
