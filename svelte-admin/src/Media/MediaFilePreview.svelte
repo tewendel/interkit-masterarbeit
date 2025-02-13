@@ -18,10 +18,11 @@
 
   $: {
     lookupMediafile(key, id)
-    if (large) { // reactivity through the back door
+    /*if (large) { // reactivity through the back door
       large = mediafile;
-    }
+    }*/
   }
+
   const lookupMediafile = async (key, id) => {
     mediafile = await InterkitClient.call("mediafile.get", {key, projectId});
     //console.log("loaded new mediafile for preview", mediafile)
@@ -30,24 +31,20 @@
   const enlarge = (mediafile) => {
     if (!enlargable) return
     console.log("enlarge", mediafile);
-    large = mediafile;
+    large = true;
   }
 
 </script>
 
 <a title={mediafile?.name} class="frame" class:enlargable class:border href={mediafile?.link} on:click|preventDefault={() => enlarge(mediafile)} on:keypress={() => enlarge(mediafile)}>
   {#if mediafile?.isAudio}
-    {#key mediafile}
-      <span class="audio">
-        <Music />
-      </span>
-    {/key}
+    <span class="audio">
+      <Music />
+    </span>
   {:else if mediafile?.isVideo}
-    {#key mediafile}
-      <video>
+    <video>
         <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
-      </video>
-    {/key}
+    </video>
   {:else if mediafile?.isImage}
       <img class="preview-image" src={encodeURI(mediafile.link)}/>
   {:else if mediafile?.type.split("/")?.[0] === "model"}
@@ -62,9 +59,9 @@
 </a>
 
 
-<Modal passiveModal bind:open={large} modalHeading={large?.name} on:open on:close>
+<Modal passiveModal bind:open={large} modalHeading={mediafile?.name} on:open on:close>
   {#if large}
-    <MediaFilePreviewLarge mediafile={large} />
+    <MediaFilePreviewLarge {mediafile} />
   {/if}
 </Modal>
 
@@ -72,6 +69,7 @@
 
 .frame {
   display: inline-flex;
+  overflow: hidden;
   overflow: hidden;
   width: 3em;
   height: 3em;
