@@ -342,6 +342,8 @@
 
   onMount(async () => {
     console.log("blockly onMount")
+    // Ensure tab is active before initializing Blockly
+    document.body.classList.add('appTabActive');
     initBlockly(); // run init onMount 
     blocklyDragHelperEl = document.getElementById('blocklyDragHelper') || document.createElement('div')
     blocklyDragHelperEl.id = 'blocklyDragHelper'
