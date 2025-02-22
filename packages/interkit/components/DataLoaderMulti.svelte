@@ -45,6 +45,8 @@
         let references = get(contextElement)?.values?.[util.colKey(referenceColumn)]?.rowKeys
         if(references) {
           data = data.filter(e => references.includes(e.key))
+        } else {
+          return []
         }
       // the contextElement and the referenceColumn are from different sheets
       } else {
