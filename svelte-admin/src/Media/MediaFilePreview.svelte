@@ -37,17 +37,15 @@
 
 <a title={mediafile?.name} class="frame" class:enlargable class:border href={mediafile?.link} on:click|preventDefault={() => enlarge(mediafile)} on:keypress={() => enlarge(mediafile)}>
   {#if mediafile?.isAudio}
-    {#key mediafile}
+    <!-- {#key mediafile} mediafile caused weird flickering behaviour here that made the button unclickable, might need another way to update thumb after change -->
       <span class="audio">
         <Music />
       </span>
-    {/key}
   {:else if mediafile?.isVideo}
-    {#key mediafile}
+    <!-- {#key mediafile} caused weird flickering behaviour here that made the button unclickable, might need another way to update thumb after change -->
       <video>
         <source src={encodeURI(mediafile.link)} type={mediafile["mime-type"]}>
       </video>
-    {/key}
   {:else if mediafile?.isImage}
       <img class="preview-image" src={encodeURI(mediafile.link)}/>
   {:else if mediafile?.type.split("/")?.[0] === "model"}
