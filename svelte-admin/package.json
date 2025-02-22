@@ -19,6 +19,7 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
+    "@blockly/plugin-cross-tab-copy-paste": "^2.0.21",
     "@carbon/styles": "^1.21.0",
     "@rollup/plugin-json": "^4.1.0",
     "@zerodevx/svelte-json-view": "^1.0.3",
