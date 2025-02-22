@@ -911,9 +911,9 @@ const call = async (method, params = {}) => {
 const getMediaFile = async (key) => {
   if (key) {
     let store = await getMediaFileSubStore()
-    console.log("getMediaFile", get(store))
+    //console.log("getMediaFile", get(store))
     let mediafile = get(store)?.find(m => m.meta.key == key)
-    console.log("getMediaFile", get(store), mediafile)
+    //console.log("getMediaFile", get(store), mediafile)
     if (mediafile) {
       // get file from media server
       if (!get(archiveMode)) {
