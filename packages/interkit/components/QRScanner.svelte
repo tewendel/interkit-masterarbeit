@@ -136,6 +136,7 @@
   }
   
   onMount(async () => {
+    console.log("onMound QR scanner")
     initCamera()
     await initRowSub();
     document.addEventListener('keydown', logKey);
@@ -143,6 +144,7 @@
   
   onDestroy(()=>{
     running = false;
+    document.removeEventListener('keydown', logKey);
     console.log("stopping video stream", mediaStream);
     if(!mediaStream) return;
     mediaStream.getTracks().forEach((track)=>{
