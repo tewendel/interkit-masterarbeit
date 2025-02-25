@@ -1,17 +1,19 @@
 <script>
   import { ButtonSet, Button, InlineNotification } from 'carbon-components-svelte'
-  import { Help, Reset, Save, Undo, TrashCan } from 'carbon-icons-svelte'
+  import { Help, Reset, Save, Undo, TrashCan, ViewMode_1 } from 'carbon-icons-svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
   import StyleTokensForm from '../InputModals/StyleTokensForm.svelte'
   import { docsGo } from '../docs.js'
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
 
+  export let modalPanelRightOpenSet = () => {}
+  export let currentStyleTokens
+
   let originalStyleTokens = $currentProject?.uiState?.styleTokens
   let initialStyleTokens = $currentProject?.uiState?.styleTokens
   let modified = false
   let equalsDefaults = true
-  let currentStyleTokens = originalStyleTokens ? {...originalStyleTokens} : {}
 
   $: {
     previewOverrideStyleTokens.set(currentStyleTokens)
@@ -86,6 +88,14 @@
         >
         Save
       </Button>
+      {#if modalPanelRightOpenSet}
+      <Button
+        icon={ViewMode_1}
+        kind="ghost"
+        iconDescription="Show Components preview"
+        on:click={() => modalPanelRightOpenSet(true)}
+        />
+    {/if}
     </ButtonSet>      
   </div>
   <div class="main-content">
@@ -116,16 +126,12 @@
             />
           {/if}
         {/if}
-
+        <h4>
+          Style Tokens
+        </h4>
         <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
       </div>
-      <div class="split-bottom">
-        <h4 class="split-bottom-header">
-          Component Preview
-        </h4>
-        Note that <code>scale</code> will have no effect on this preview.<br/>
-        <ComponentsShowcase {currentStyleTokens} />
-      </div>
+      
     </div>
   </div>
 </div>

@@ -59,22 +59,22 @@
     <div class="category">{category.replace(/^./, function(str){ return str.toUpperCase(); })}</div>
     {#each defs as definition}
       <div class="field">
+        <div class="value">
+          {#if definition.type === "color"}
+            <TextInput title={_value[definition.key]} type="color" bind:value={_value[definition.key]} on:change={update}/>
+          {:else if definition.type === "number"}
+            <NumberInput title={_value[definition.key]} step={0.05} bind:value={_value[definition.key]} on:change={update}/>
+          {:else if definition.type === "size"}
+            <TextInput title={_value[definition.key]} type="text" bind:value={_value[definition.key]} on:change={update}/>
+          {:else}
+            <TextInput title={_value[definition.key]} bind:value={_value[definition.key]} on:change={update}/>
+          {/if}
+        </div>        
         <div class="label">
           <div class="title" title={definition.key}>
             {camelToTitle(definition.key)}
           </div>
           <div class="help">{definition.help}</div>
-        </div>
-        <div class="value">
-          {#if definition.type === "color"}
-            <TextInput type="color" bind:value={_value[definition.key]} on:change={update}/>
-          {:else if definition.type === "number"}
-            <NumberInput step={0.05} bind:value={_value[definition.key]} on:change={update}/>
-          {:else if definition.type === "size"}
-            <TextInput type="text" bind:value={_value[definition.key]} on:change={update}/>
-          {:else}
-            <TextInput bind:value={_value[definition.key]} on:change={update}/>
-          {/if}
         </div>
       </div>
     {/each}
@@ -95,12 +95,15 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
+    gap: 16px;
   }
   .value {
-    flex: 1;
+    width: 30%;
+    max-width: 300px;
+    min-width: 100px;
   }
   .label {
-    width: 350px;
+    flex: 1;
   }
   .title {
 
