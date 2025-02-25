@@ -1,11 +1,12 @@
 <script>
-  import { ButtonSet, Button, InlineNotification } from 'carbon-components-svelte'
-  import { Help, Reset, Save, Undo, TrashCan, ViewMode_1 } from 'carbon-icons-svelte'
+  import { ButtonSet, Button, InlineNotification, TextArea, Accordion, AccordionItem } from 'carbon-components-svelte'
+  import { Help, Reset, Save, Undo, TrashCan, ViewMode_1, Copy } from 'carbon-icons-svelte'
   import ComponentsShowcase from './ComponentsShowcase.svelte'
   import StyleTokensForm from '../InputModals/StyleTokensForm.svelte'
   import { docsGo } from '../docs.js'
   import { BundleServer } from '../BundleServer.js'
   import { projectId, currentProject, previewOverrideStyleTokens, currentProjectReadOnly } from '../admin.js'
+  import definitions from '../../../packages/interkit/components/styleTokensConfig.json'
 
   export let modalPanelRightOpenSet = () => {}
   export let currentStyleTokens
@@ -14,9 +15,55 @@
   let initialStyleTokens = $currentProject?.uiState?.styleTokens
   let modified = false
   let equalsDefaults = true
+  let cssText = ''
 
   $: {
     previewOverrideStyleTokens.set(currentStyleTokens)
+  }
+
+  const camelToKebab = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+
+  const generateCssFromTokens = (tokens) => {
+    if (!tokens) return ''
+
+    // Group tokens by category
+    const tokensByCategory = definitions.reduce((acc, def) => {
+      if (!acc[def.category]) {
+        acc[def.category] = []
+      }
+      acc[def.category].push({
+        key: def.key,
+        cssKey: camelToKebab(def.key),
+        value: tokens[def.key] || def.defaultValue,
+        defaultValue: def.defaultValue,
+        type: def.type
+      })
+      return acc
+    }, {})
+
+    // Generate CSS with category comments
+    const cssSegments = []
+    for (const [category, items] of Object.entries(tokensByCategory)) {
+      cssSegments.push(`\n  /* ${category.charAt(0).toUpperCase() + category.slice(1)} */`)
+      for (const item of items) {
+        const line = `  --${item.cssKey}: ${item.value};`
+        if (item.value !== item.defaultValue) {
+          cssSegments.push(`${line}  /* changed from default: ${item.defaultValue} */`)
+        } else {
+          cssSegments.push(line)
+        }
+      }
+    }
+
+    return `#Theming * {${cssSegments.join('\n')}\n}`
+  }
+
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(cssText)
+  }
+
+  $: {
+    cssText = generateCssFromTokens(currentStyleTokens)
   }
 
   const save = async () => {
@@ -99,44 +146,66 @@
     </ButtonSet>      
   </div>
   <div class="main-content">
-    <div class="split-container">
-      <div class="split-top">
-
-        {#if originalStyleIsEmpty}
-          <InlineNotification
-            hideCloseButton
-            kind="info-square"
-            title="Default Style"
-            subtitle="This project uses the default values"
-          />
-        {:else}
-          {#if equalsDefaults}
-            <InlineNotification
-              hideCloseButton
-              kind="info-square"
-              title="Default Style"
-              subtitle="This project uses it's own style settings, but they are equal to the interkit defaults"
-            />
-          {:else}
-            <InlineNotification
-              hideCloseButton
-              kind="success"
-              title="Custom Style"
-              subtitle="This project uses styles settings that differ from the interkit defaults"
-            />
-          {/if}
-        {/if}
-        <h4>
-          Style Tokens
-        </h4>
-        <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
+    {#if originalStyleIsEmpty}
+      <InlineNotification
+        hideCloseButton
+        kind="info-square"
+        title="Default Style"
+        subtitle="This project uses the default values"
+      />
+    {:else}
+      {#if equalsDefaults}
+        <InlineNotification
+          hideCloseButton
+          kind="info-square"
+          title="Default Style"
+          subtitle="This project uses it's own style settings, but they are equal to the interkit defaults"
+        />
+      {:else}
+        <InlineNotification
+          hideCloseButton
+          kind="success"
+          title="Custom Style"
+          subtitle="This project uses styles settings that differ from the interkit defaults"
+        />
+      {/if}
+    {/if}
+    <h4>
+      Style Tokens
+    </h4>
+    <StyleTokensForm bind:value={currentStyleTokens} bind:equalsDefaults={equalsDefaults} />
+    
+    <div class="export-css">
+      <h4>
+        Generated CSS
+      </h4>
+      <div class="textarea-container">
+        <TextArea
+          hideLabel
+          placeholder="CSS will be generated based on your style tokens"
+          rows={15}
+          value={cssText}
+          readonly
+        />
+        <p class="helper-text">
+          Use this CSS in 'global.css` to permanently override the values in a custom theme.
+        </p>
+        <Button 
+          size="small"
+          icon={Copy}
+          iconDescription="Copy to clipboard"
+          on:click={copyToClipboard}
+        >
+          Copy CSS
+        </Button>
       </div>
-      
     </div>
   </div>
 </div>
 
-<style>
+<style lang="scss">
+  @use '@carbon/type';
+
   .main {
     display: flex;
     flex-direction: column;
@@ -149,26 +218,20 @@
   .main-content {
     flex: 1;
     padding: 0 .5rem;
-    height: 100%;
-    overflow: auto;
+    overflow-y: auto;
   }
-  .split-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  .export-css {
+    margin-top: 2rem;
   }
-  .split-top {
-    flex: 1;
-    overflow: auto;
+  .textarea-container {
+    padding: 1rem 0;
+    margin-bottom: 2rem;
   }
-  .split-bottom {
-    height:40%;
-    overflow: auto;
-    border-top: 1px solid black;
+  h4 {
+    margin: 2rem 0 1rem;
   }
-  .split-bottom-header {
-    margin: 0;
-    padding: 0;
-    padding-top: .5rem;
+  .helper-text {
+    @include type.type-style('helper-text-01');
+    margin: 1rem 0;
   }
 </style>
