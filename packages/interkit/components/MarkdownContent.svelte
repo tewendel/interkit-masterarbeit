@@ -99,4 +99,33 @@
     word-break: break-all;
   }
 
+  :global(.MarkdownContent video) {
+    width: 100%;
+  }
+
+  :global(.MarkdownContent audio) {
+    width: 100%;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+
+  /* Chrome and Safari */
+  :global(.MarkdownContent audio::-webkit-media-controls-panel) {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+  }
+  
+  :global(.MarkdownContent audio::-webkit-media-controls-play-button) {
+    background-color: var(--color-background-highlight);
+    border-radius: var(--border-radius-button);
+  }
+  
+  :global(.MarkdownContent audio::-webkit-media-controls-current-time-display),
+  :global(.MarkdownContent audio::-webkit-media-controls-time-remaining-display) {
+    color: var(--color-text);
+  }
+
+
 </style>
