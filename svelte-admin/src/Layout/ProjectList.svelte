@@ -173,6 +173,9 @@
           {#if row.isTemplate}
             <Tag>Template</Tag>
           {/if}
+          {#if row.isDefaultProject}
+            <Tag type="green">Default</Tag>
+          {/if}
           {row.name}
         </span>
         {#if row.uiState?.metafile?.description?.html}
