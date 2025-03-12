@@ -7,6 +7,8 @@
   export let postMessage
   export let projectId
 
+  const hashHistory = createHistory(createHashSource());
+
   // memory is the alternative to hash history, but does not keep the route on vite hmr
   const memoryHistory = createHistory(createMemorySource());
 
@@ -73,8 +75,6 @@
     }
   })
 
-  const hashHistory = createHistory(createHashSource());
-
   const followInitialRoute = () => {
     // this check is kinda dumb
     if (document.location.href.indexOf('/dev/') === -1) {
@@ -108,8 +108,17 @@
     followInitialRoute()
   }
 
+  let history
+  if (window.parent === window) {
+    console.log('Router not in iframe, using hashHistory')
+    history = hashHistory
+  } else {
+    console.log('Router in preview iframe, using memoryHistory')
+    history = memoryHistory
+  }
+
 </script>
 
-<Router history={memoryHistory} primary={false}>
+<Router history={history} primary={false}>
   <slot />
 </Router>
