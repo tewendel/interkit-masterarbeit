@@ -11,6 +11,7 @@
   import ExtraPropsModal from './ExtraPropsModal.svelte';
   import ObjectFitModal from './ObjectFitModal.svelte'
   import TextModal from './TextModal.svelte'
+  import QRCodeModal from './QRCodeModal.svelte'
   
   export let type = null
   export let value = {}
@@ -36,6 +37,7 @@
     "date": DateModal,
     "extraProps": ExtraPropsModal,
     "objectFit": ObjectFitModal,
+    "qrCode": QRCodeModal,
   }
 
 </script>

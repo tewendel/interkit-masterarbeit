@@ -249,7 +249,7 @@
       }
     }
 
-    if(["location", "sheetRef", "mediaFile", "optionSelect", "richText", "date"].includes(columnType)) {
+    if(["location", "sheetRef", "mediaFile", "optionSelect", "richText", "date", "qrCode"].includes(columnType)) {
       console.log("opening input modal", columnType)
       updateCell = cell;
       updateRow = row;

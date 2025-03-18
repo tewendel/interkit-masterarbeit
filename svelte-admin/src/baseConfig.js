@@ -10,6 +10,7 @@ export const columnTypes = {
   mediaFile: "MediaFile",
   number: "Number",
   optionSelect: "OptionSelect",
-  richText: "RichText"
+  richText: "RichText",
+  qrCode: "QRCode"
 }
   
