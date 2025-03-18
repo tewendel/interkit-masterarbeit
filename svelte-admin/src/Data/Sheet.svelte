@@ -267,6 +267,7 @@
       }
       if(columnType == "qrCode") {
         modalParams.rowKey = row.key
+        modalParams.sheetKey = sheetKey
       }
     }
   }
