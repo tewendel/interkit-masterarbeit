@@ -231,6 +231,12 @@
   }
 
   function popState(event) {
+    console.log("custom popState method in AppBaseAdvanced")
+    if (window.parent === window) {
+      console.log('not in iframe, bailing')
+      return
+    }
+    // is this currently in use??
     if (event && event.state && event.state.id) {
       const result = InterkitClient.restoreUiSnapshot(event.state.id)
       if (result === false) {
