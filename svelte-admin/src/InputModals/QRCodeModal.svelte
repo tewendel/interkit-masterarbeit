@@ -32,7 +32,19 @@ import {
   export let submit;
   export let close;
 
+  const setValue = (v) => {
+    value = {
+      type: "qrCode",
+      qrCode: textInputValue
+    }
+  }
+
   let textInputValue = value?.qrCode
+  if(!textInputValue) {
+    textInputValue = value
+    setValue(textInputValue)
+  }
+  console.log("textInputValue", textInputValue, value)
   let routePath;
   let publicBuildURL
   
@@ -61,17 +73,12 @@ import {
     }
   }
 
-  const setValue = (v) => {
-    value = {
-      type: "qrCode",
-      qrCode: textInputValue
-    }
-  }
-
   const textInputChange = () => {
+    console.log("textInputChange", textInputValue)
     setValue(textInputValue)
   }
-  const textInputKeyDown = () => {
+  const textInputKeyUp = () => {
+    console.log("textInputKeyDown", textInputValue)
     setValue(textInputValue)
   }
 
@@ -126,7 +133,7 @@ import {
 
     <CopyButton text={value?.qrCode} />
 
-    <TextInput size="small" placeholder="Enter QR-Code value..." bind:value={textInputValue} on:keydown={textInputKeyDown} on:change={textInputChange}/>
+    <TextInput size="small" placeholder="Enter QR-Code value..." bind:value={textInputValue} on:keyup={textInputKeyUp} on:change={textInputChange}/>
     
 
     <br>
