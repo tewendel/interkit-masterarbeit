@@ -39,7 +39,7 @@
     console.log("qr scanner found code", code)
   
     // try to find element by that key
-    let elementRows = $dataRows.filter(r => util.rowVal(r, elementKeyColumn) == code)
+    let elementRows = $dataRows.filter(r => util.rowVal(r, elementKeyColumn) == code || util.rowVal(r, elementKeyColumn)?.qrCode == code)
     console.log("qr scanner searching rows", elementRows)
   
     let elementRow = elementRows?.[0]

@@ -265,6 +265,9 @@
         console.log(currentColumn)
         modalParams.reference = currentColumn.reference
       }
+      if(columnType == "qrCode") {
+        modalParams.rowKey = row.key
+      }
     }
   }
 

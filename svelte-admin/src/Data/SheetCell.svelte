@@ -30,6 +30,10 @@
 
     <MediaFilePreview key={cell.value.value} {projectId} border/>
 
+  {:else if cell.value?.type == "qrCode"}
+
+    <QrCode value={cell.value?.qrCode} size="20"/>
+
   {:else if typeof cell.value == "number"}
 
     <span class="cell">
