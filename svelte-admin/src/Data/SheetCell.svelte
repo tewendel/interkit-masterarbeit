@@ -3,7 +3,7 @@
   import MediaFilePreview from '../Media/MediaFilePreview.svelte';
   import NotAvailable from 'carbon-icons-svelte/lib/NotAvailable.svelte'
 
-  import QrCode from "svelte-qrcode"
+  import QrCode from "../Atoms/QrCode.svelte"
 
   export let cell;
   export let refData;

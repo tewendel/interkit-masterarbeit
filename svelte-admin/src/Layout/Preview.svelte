@@ -1,5 +1,5 @@
 <script>
-  import QrCode from "svelte-qrcode"
+  import QrCode from "../Atoms/QrCode.svelte"
   import { InterkitClient } from 'interkit'
   import Convert from 'ansi-to-html'
   import { BundleServer, compileError, runtimeError, bundleProcessing, bundleNotBuilt, buildHash } from '../BundleServer.js'
@@ -392,6 +392,7 @@
                 <QrCode
                   value={sharePublicUrl ? publicBuildURL : previewURL}
                   padding={15}
+                  size={300}
                   />
               {/key}
               <br/>
@@ -427,7 +428,7 @@
       size="sm"
       labelText="Public URL"
       labelA="Preview"
-      labelB={"Published " + ($currentProject && $currentProject?.uiState?.lastBuildDate ? "("+new Date($currentProject.uiState.lastBuildDate).toLocaleString()+")" : null) }
+      labelB={"Published " + ($currentProject && $currentProject?.uiState?.lastBuildDate ? "("+new Date($currentProject.uiState.lastBuildDate).toLocaleString()+")" : "") }
       toggled on:toggle={(e) => sharePublicUrl = e.detail.toggled}
       />
   {/if}

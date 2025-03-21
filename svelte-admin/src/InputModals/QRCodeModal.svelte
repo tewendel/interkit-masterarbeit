@@ -16,7 +16,7 @@ import {
 
   } from "carbon-components-svelte";
 
-  import QrCode from "svelte-qrcode"
+  import QrCode from "../Atoms/QrCode.svelte"
   import { BundleServer } from '../BundleServer.js'
   import { onMount } from 'svelte'
 

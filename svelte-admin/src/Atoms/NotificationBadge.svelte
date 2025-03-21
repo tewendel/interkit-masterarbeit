@@ -9,7 +9,6 @@
   export let placeholder = false;
 
 </script>
-
 <span class="NotificationBadge {count || loading ? '' : 'zero'} {posAbs ? 'absolute' : 'inline'} {placeholder ? 'placeholder' : ''}" >
   {#if count && !loading}
     <span class="badge {type}">
