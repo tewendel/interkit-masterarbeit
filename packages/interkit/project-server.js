@@ -239,7 +239,8 @@ const doProcessUserArrivals = async ({server, projectId, projectApi, handlers, u
 
       if(boardState?.[boardId]) {
 
-        console.log("processUserArrivals", user, boardState, boardId)
+        // note that this log slows the admin because it creates a lot of large log entries:
+        //console.log("processUserArrivals", user, boardState, boardId)
 
         // user is just arriving
         if(boardState[boardId].status == "arriving") {
