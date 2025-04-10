@@ -7,6 +7,7 @@ export const Projects = new Mongo.Collection('projects');
 - slug
 - isDefaultProject <bool>
 - isTempalte <bool>
+- isFeatured <bool>
 - history [
     {
       event <string> // create_project, ...

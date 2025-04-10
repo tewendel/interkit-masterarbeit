@@ -26,6 +26,9 @@
   import QID from 'carbon-icons-svelte/lib/QID.svelte'
   import Template from 'carbon-icons-svelte/lib/Template.svelte'
   import WatsonHealthThumbnailPreview from 'carbon-icons-svelte/lib/WatsonHealthThumbnailPreview.svelte'
+  import Star from 'carbon-icons-svelte/lib/Star.svelte'
+  import StarFilled from 'carbon-icons-svelte/lib/StarFilled.svelte'
+  import Home from 'carbon-icons-svelte/lib/Home.svelte'
   
   export let projectRows
   export let previewProject
@@ -121,6 +124,10 @@
   const updateProjectSetIsTemplate = async (row, isTemplate) => {
     await InterkitClient.call('project.setIsTemplate', { projectId: row._id, isTemplate })
   }
+
+  const updateProjectSetIsFeatured = async (row, isFeatured) => {
+    await InterkitClient.call('project.setIsFeatured', { projectId: row._id, isFeatured })
+  }
   
 </script>  
 
@@ -174,7 +181,10 @@
             <Tag>Template</Tag>
           {/if}
           {#if row.isDefaultProject}
-            <Tag type="green">Default</Tag>
+            <Home fill="#444" style="vertical-align: baseline; margin-right: .3em; position:relative; top: .16em" title="Default Project" />
+          {/if}
+          {#if row.isFeatured}
+            <StarFilled fill="#f1c21b" style="vertical-align: baseline; margin-right: .3em; position:relative; top: .16em" title="Featured Project" />
           {/if}
           {row.name}
         </span>
@@ -259,6 +269,17 @@
             on:click={() => infoProject(row, 'project')}
             disabled={!row.uiState?.metafile?.project?.html}
             ><Information />&ensp;Project.md</OverflowMenuItem>
+            {#if row.isFeatured}
+            <OverflowMenuItem
+              hasDivider
+              on:click={() => updateProjectSetIsFeatured(row, false)}
+              ><StarFilled fill="#f1c21b" />&ensp;Unset&nbsp;featured</OverflowMenuItem>
+          {:else}
+            <OverflowMenuItem
+              hasDivider
+              on:click={() => updateProjectSetIsFeatured(row, true)}
+              ><Star />&ensp;Set&nbsp;featured</OverflowMenuItem>
+          {/if}            
           {#if $userIsRole?.admin}
             {#if row.isTemplate}
               <OverflowMenuItem

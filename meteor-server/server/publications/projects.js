@@ -37,6 +37,7 @@ Meteor.publish('projects.list', function() {
     slug: 1,
     isDefaultProject: 1,
     isTemplate: 1,
+    isFeatured: 1,
     history : userIsInRoles(this.userId, ['admin', 'author', 'bundler']),
     projectServer: {
       status: 1,

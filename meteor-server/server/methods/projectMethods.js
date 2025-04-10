@@ -77,6 +77,13 @@ Meteor.methods({
     }
   },
 
+  'project.setIsFeatured': async ({ projectId, isFeatured }) => {
+    console.log('project.setIsFeatured', projectId, isFeatured)
+    const res = Projects.update({ _id: projectId }, { $set: { isFeatured } })
+    console.log("setIsFeatured result", res)
+    return res
+  },
+
   'project.getWebPushPublicKey': async ({ projectId }) => {
     const project = await Projects.findOne({ _id: projectId })
     console.log('project.getWebPushPublicKey', project)
