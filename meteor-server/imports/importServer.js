@@ -30,106 +30,116 @@ const headers = (req, res, next) => {
   }
 */
 export const importData = async (req) => {
+  return new Promise((resolve, reject) => {
+    const errorMessages = []
 
-  const errorMessages = []
-
-  if (!req.file) {
-    return false;
-  }
-
-  let replace = false
-  let newProjectId = null
-
-  if (req.body.projectId) {
-    replace = true
-    newProjectId = req.body.projectId // TODO validate projectId
-  } else {
-    newProjectId = Random.id()
-  }
-
-  console.log(req.file)
-
-  const zip = new StreamZip({
-    file: req.file.path,
-    storeEntries: true
-  });
-
-  // Handle errors
-  zip.on('error', err => { console.log(err) });
-
-  zip.on('ready', async () => {
-    // list entries
-    console.log('Entries read: ' + zip.entriesCount);
-    for (const entry of Object.values(zip.entries())) {
-      const desc = entry.isDirectory ? 'directory' : `${entry.size} bytes`;
-      console.log(`Entry ${entry.name}: ${desc}`);
+    if (!req.file) {
+      return reject(new Error("No file provided"));
     }
 
-    // unzip meta
-    const json = zip.entryDataSync('meta.json');
-    const meta = JSON.parse(json)
+    let replace = false
+    let newProjectId = null
 
-    // unzip data
-    const bson = zip.entryDataSync('project.bson')//.toString();
-    const data = BSON.deserialize(bson)
-    
-    //console.log(meta, data)
+    if (req.body.projectId) {
+      replace = true
+      newProjectId = req.body.projectId // TODO validate projectId
+    } else {
+      newProjectId = Random.id()
+    }
 
-    console.log(`${replace ? "Replacing" : "Importing"} project "${meta.projectName}" to ${newProjectId}`)
+    console.log(req.file)
 
-    // clean up
-    if (replace) removeProjectMedia(newProjectId)
+    const zip = new StreamZip({
+      file: req.file.path,
+      storeEntries: true
+    });
 
-    // upload files with new filename
+    // Handle errors
+    zip.on('error', err => { 
+      console.log(err); 
+      reject(err);
+    });
 
-    const newFiles = []
-    if (data.files) {
-
-      for (file of data.files) {
-
-        console.log(`importing ${file.name}`)
-
-        try {
-          const fileBuffer = zip.entryDataSync('files/' + file.name);
-          const fileName = file.name
-          const fileType = file.type
-          const fileMeta = file.meta
-          const projectId = newProjectId
-          const newFile = await importProjectMediaFile(fileBuffer, fileName, fileType, projectId, fileMeta)
-          newFiles.push(newFile)
-          //console.log(newFile)
-
-        } catch (error) {
-          console.log("unzip error", error)
-          errorMessages.push("unzip error " + file.name)
+    zip.on('ready', async () => {
+      try {
+        // list entries
+        console.log('Entries read: ' + zip.entriesCount);
+        for (const entry of Object.values(zip.entries())) {
+          const desc = entry.isDirectory ? 'directory' : `${entry.size} bytes`;
+          console.log(`Entry ${entry.name}: ${desc}`);
         }
 
+        // unzip meta
+        const json = zip.entryDataSync('meta.json');
+        const meta = JSON.parse(json)
+
+        // unzip data
+        const bson = zip.entryDataSync('project.bson')//.toString();
+        const data = BSON.deserialize(bson)
+        
+        //console.log(meta, data)
+
+        console.log(`${replace ? "Replacing" : "Importing"} project "${meta.projectName}" to ${newProjectId}`)
+
+        // clean up
+        if (replace) removeProjectMedia(newProjectId)
+
+        // upload files with new filename
+
+        const newFiles = []
+        if (data.files) {
+
+          for (file of data.files) {
+
+            console.log(`importing ${file.name}`)
+
+            try {
+              const fileBuffer = zip.entryDataSync('files/' + file.name);
+              const fileName = file.name
+              const fileType = file.type
+              const fileMeta = file.meta
+              const projectId = newProjectId
+              const newFile = await importProjectMediaFile(fileBuffer, fileName, fileType, projectId, fileMeta)
+              newFiles.push(newFile)
+              //console.log(newFile)
+
+            } catch (error) {
+              console.log("unzip error", error)
+              errorMessages.push("unzip error " + file.name)
+            }
+
+          }
+        }
+        
+        //const project = data.project
+
+        const newProjectName = meta.filename ?
+          `${meta.projectName} (imported from ${meta.filename} at ${dateFormat(new Date(), "yyyy-mm-dd-HH-MM-ss")})`
+          : `${meta.projectName} (imported ${dateFormat(new Date(), "yyyy-mm-dd-HH-MM-ss")})`
+
+        // overwrite files with imported files
+        data.files = newFiles
+
+        if (replace) {
+          replaceProjectData(data, newProjectId, meta)
+        } else {
+          importProjectData(data, newProjectName, newProjectId, meta)
+        }
+
+        //console.log(project)
+
+        // Do not forget to close the file once you're done
+        zip.close()
+
+        const result = errorMessages.length > 0 ? {status: "partial", errors: errorMessages} : {status: "ok"}
+        resolve(result);
+      } catch (error) {
+        console.error("Error during import process:", error);
+        zip.close();
+        reject(error);  
       }
-    }
-    
-    //const project = data.project
-
-    const newProjectName = meta.filename ?
-      `${meta.projectName} (imported from ${meta.filename} at ${dateFormat(new Date(), "yyyy-mm-dd-HH-MM-ss")})`
-      : `${meta.projectName} (imported ${dateFormat(new Date(), "yyyy-mm-dd-HH-MM-ss")})`
-
-    // overwrite files with imported files
-    data.files = newFiles
-
-    if (replace) {
-      replaceProjectData(data, newProjectId, meta)
-    } else {
-      importProjectData(data, newProjectName, newProjectId, meta)
-    }
-
-    //console.log(project)
-
-    // Do not forget to close the file once you're done
-    zip.close()
-
-    return(errorMessages.length > 0 ? JSON.parse(errorMessages) : {status: "ok"})
+    });
   });
-
 }
 
 // wrapper for an express endpoint
@@ -148,19 +158,15 @@ const importDataEnpoint = async (req, res) => {
 
   //console.log(request.payload)
 
-  //return new Promise( resolve => {
-
-  const result = await importData(req);
-
-  if(!result) {
-    res.sendStatus(400);
-    return
-  } else {
-    res.status(200).send(result)
+  try {
+    const result = await importData(req);
+    // Always return 200 for successful processing, even with partial success
+    res.status(200).send(result);
     res.end();
+  } catch (error) {
+    console.error("Error in import endpoint:", error);
+    res.status(400).send({ error: error.message || "Import failed" });
   }
-
-  //})
 
   //const payload = {
   //  ...request.payload,
@@ -169,11 +175,10 @@ const importDataEnpoint = async (req, res) => {
   //console.log(payload)
   //insertProjectAsDuplicate(request.payload.data)
 
-}  
-  
+}
+
 export const setupImportServer = (app) => {
   app.post('/import', upload.single('importfile'), cors(), headers, async (req, res) => { // should be PUT, but PUT creates cors issues
     importDataEnpoint(req, res)
   })
 }
-
