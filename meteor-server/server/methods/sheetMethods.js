@@ -205,7 +205,15 @@ Meteor.methods({
   'row.updateValue': ({rowKey, projectId, colKey, newVal}) => {
     console.log(rowKey, projectId, colKey, newVal);
     if(rowKey && projectId && colKey) {
-      const result = Rows.update(
+      let result = false;
+      if (!newVal) {
+        // delete the value
+        result = Rows.update(
+          {key: rowKey, projectId},
+          {$unset: {[`values.${colKey}`]: 1}}
+        );
+      }
+      result = Rows.update(
         {key: rowKey, projectId},
         {$set: {[`values.${colKey}`]: newVal}}
       );

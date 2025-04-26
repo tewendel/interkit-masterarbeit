@@ -53,11 +53,11 @@
   </ModalBody>
   <ModalFooter 
     primaryButtonText="Save" 
-    secondaryButtons={[{ text: "Cancel" }, { text: "Delete" }]}
+    secondaryButtons={[{ text: "Cancel" }, { text: "Unlink" }]}
     primaryButtonDisabled={$currentProjectReadOnly}
     on:click:button--secondary={({ detail }) => {
       if (detail.text === "Cancel") close();
-      if (detail.text === "Delete") {
+      if (detail.text === "Unlink") {
         value = undefined;
         submit()
       };
