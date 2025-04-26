@@ -1082,10 +1082,10 @@ userId.subscribe((data)=>{
 //   }
 // })
 
-const playFloatingAudio = async (elementRow, audioColumn, autoplay=true) => {
+const playFloatingAudio = async (elementRow, audioColumn, autoplay=true, tracingData=null) => {
   const audioPlayerStatus = getGlobalStore("audioPlayerStatus")
   const audioPlayerElement = getGlobalStore("audioPlayerElement")
-  
+
   if(elementRow) {
     if(elementRow.key == get(audioPlayerElement)?.key) {
       // if this element is already in player, just toggle paused state
@@ -1105,12 +1105,71 @@ const playFloatingAudio = async (elementRow, audioColumn, autoplay=true) => {
         currentTime: 0,
         expanded: false,
         loading: true,
-        audioKey: util.rowVal(elementRow, audioColumn)?.value
-      })  
+        audioKey: util.rowVal(elementRow, audioColumn)?.value,
+        tracingData
+      })
+      
+
+      // Set up a subscription to monitor audio playback time and trigger trace points
+      if (tracingData) {
+
+        console.log("setting up audio tracing", tracingData)
+
+        const unsubscribe = audioPlayerStatus.subscribe(status => {
+          if (!status || !status.active) {
+            // Audio player was closed, unsubscribe
+            unsubscribe()
+            return
+          }
+          
+          if (!status.tracingData) return
+          
+          const currentTime = status.currentTime
+          const duration = status.duration
+
+          // Skip if duration is not available yet or if audio is not playing
+          if (!duration || status.paused) return
+          
+          // Check for specific time points
+          Object.entries(status.tracingData).forEach(([timeStr, val]) => {
+            const anchor = parseFloat(timeStr)
+            
+            // Skip if this point has already been triggered
+            if (val.messageSent) return
+            
+            let shouldTrigger = false
+            
+            if (anchor > 0) {
+              // For positive anchors: trigger once currentTime exceeds the anchor
+              shouldTrigger = currentTime >= anchor
+            } else {
+              // For negative anchors: count from the end of the audio
+              // Only trigger when we're close enough to the end
+              const timeFromEnd = duration + anchor // e.g., for -5, this is 5 seconds before the end
+              shouldTrigger = currentTime >= timeFromEnd
+            }
+            
+            if (shouldTrigger) {
+              // Get the message content from the trace data
+              const text = val.text
+              
+              console.log(`Audio trace point triggered: ${text} at ${anchor > 0 ? anchor + 's' : 'end' + anchor + 's'}`, val)
+              
+              // Mark this trace point as triggered in the object itself
+              status.tracingData[timeStr].messageSent = true
+              
+              // Update the status store to reflect the change
+              audioPlayerStatus.update(s => s)
+              
+              // send message
+              val.sendMessage()
+            }
+          })
+        })
+      }
     }
   }
 }
-
 
 const InterkitClient = {
   userId,

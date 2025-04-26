@@ -122,6 +122,25 @@ api.sendAudio(null, {
 })
 ```
 
+You can trace how the audio is playing by setting the `tracing` option, which works only for the floating popout player by now. 
+
+```js
+api.sendAudio(null, { 
+  target: "popout", 
+  element: element, 
+  audioColumn: "elements/audio", 
+  tracing: { "1": "start", "10": "sec10", "-1": "end" } 
+})
+```
+This will make the client send messages at 1s, 10s, and end of audio. The messages will be sent once the user reaches the tracing point. However, they may get sent again if the user reloads the message or the browser. You can handle the messages in the `onMessage` function:
+
+```js
+if (msg.payload.text == "end") {
+  // do something
+}
+```
+
+The message payload contains the `key` and `text` of the tracing entry, and `rowKey` of the row.
 
 ### sendVideo
 

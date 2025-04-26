@@ -9,6 +9,8 @@
 
   export let audioColumn // the column that holds the audio we want to play
   export let buttonOptions
+  export let autoplay = false
+  export let tracingData = false
 
   // get the data row from the element context
   let element = getContext("element");
@@ -29,7 +31,7 @@
   const play = async () => {
     console.log("AudioButon play", util.rowVal($element, audioColumn))
     //playAudio($element, audioColumn)
-    await InterkitClient.playFloatingAudio($element, audioColumn)
+    await InterkitClient.playFloatingAudio($element, audioColumn, autoplay, tracingData)
   }
 
 </script>

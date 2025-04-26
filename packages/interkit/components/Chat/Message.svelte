@@ -19,6 +19,7 @@
   export let preview = false
   export let submitChoice = () => {}
   export let submitLocation = () => {}
+  export let sendTracingMessage = () => {}
   export let isByUser = false
   export let lastFromSender = false
   export let previousMessage = null
@@ -167,7 +168,7 @@
             <ChatImage {message} />
           {/if}
         {:else if message?.payload?.type == "audio"}
-          <MessageAudio {message} {userId} />
+          <MessageAudio {message} {userId} {sendTracingMessage} />
         {:else if message?.payload?.type == "video"}
             <InlineVideoPlayer
               mediafileKey={message?.payload?.mediafileKey}

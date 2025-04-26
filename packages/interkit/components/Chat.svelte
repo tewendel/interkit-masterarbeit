@@ -345,6 +345,20 @@
     // console.log('report call ret', ret)
   }
 
+  const sendTracingMessage = async (text, meta) => {
+    const tracingMessage = {
+        sender: userId,
+        channel_key: boardId,
+        payload: {
+          type: "tracing", 
+          text,
+          ...meta
+        },
+        origin: "client"
+      }
+    return InterkitClient.call("message.send", tracingMessage)
+  }
+
   let typingShow = false
   let typingMessage;
   let typingMaxDuration
@@ -450,6 +464,7 @@
                   {message} 
                   {submitChoice} 
                   {submitLocation}
+                  {sendTracingMessage}
                   isByUser={message?.sender === userId} 
                   lastFromSender={message.sender !== $messageStore[index+1]?.sender || !$messageStore[index+1]}
                   previousMessage={$messageStore[index-1]}

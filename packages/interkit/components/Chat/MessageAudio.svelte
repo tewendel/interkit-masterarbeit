@@ -7,23 +7,36 @@
 
   export let message;
   export let userId;
+  export let sendTracingMessage = () => {};
   
   if (message?.payload?.options?.target === "popout") {
     const element = writable(message?.payload?.options?.element)
     setContext("element", element);
   }
 
-</script>
+  // tracing
+  // map from {key, value} to {key, {text: value.text, sendMessage: () => sendTracingMessage(value.text)}}
+  const tracingData = message?.payload?.options?.tracing
+    ? Object.fromEntries(
+        Object.entries(message?.payload?.options?.tracing).map(
+          ([key, value]) => [key, { text: value.text, sendMessage: () => sendTracingMessage(value.text, {
+            rowKey: message?.payload?.options?.element?.key,
+            key: key
+          }) }]
+        )
+      )
+    : null
 
-<!--pre style="word-break: break-all; font-size: 10px; width: 80vw; white-space: pre-wrap">
-{JSON.stringify(message?.payload)}
-</pre>
-<br/-->
+  console.log("MessageAudio tracing", message?.payload?.options?.tracing, tracingData)
+
+</script>
 
 {#if message?.payload?.options?.target === "popout"}
 
   <PopoutAudioButton
     audioColumn={message?.payload?.options?.audioColumn}
+    autoplay={message?.payload?.options?.autoplay && !(message?.seen || []).includes($userId)}
+    {tracingData}
   />
 {:else}
   <!-- TODO border-radiuses don't match -->

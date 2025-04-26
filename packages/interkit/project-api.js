@@ -137,9 +137,21 @@ const sendAudio = async function (mediafileKey, options) {
   // target options:
   // - "inline" (default): plays in the inline player
   // - "popout": plays in the floating audio player
+  // - "tracing": trigger messages at specific times
+  //   - Object with seconds as keys and messages as values
+  //   - Example: { 1: "start", 10: "sec10", -1: "end" } - sends messages at 1s, 10s, and end of audio
+  
   await sendMediaFile(this, "audio", mediafileKey, {
     ...options,
-    target: options?.target || "inline"
+    target: options?.target || "inline",
+    // transform tracing object to { time: { text: "message" } }
+    tracing: options?.tracing
+    ? Object.fromEntries(
+        Object.entries(options.tracing).map(
+          ([time, value]) => [time, { text: value }]
+        )
+      )
+    : null
   })
 }
 
