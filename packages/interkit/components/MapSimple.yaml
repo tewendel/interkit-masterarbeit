@@ -75,6 +75,10 @@ fields:
     - type: string
       name: closeButtonLabel
       defaultValue: "Schließen"
+    - type: number
+      name: defaultZoom
+      defaultValue: 13
+      help: "Default initial zoom level for the map"
   - type: "slot"
     name: "popup"  
     help: Contents of a popup that opens when a marker is tapped

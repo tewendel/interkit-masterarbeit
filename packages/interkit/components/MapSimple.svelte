@@ -25,6 +25,7 @@
   export let checkedProperty = "checked" // what property to use for the checkmark
   
   export let defaultLocation; // where to center the map [lat, lng]
+  export let defaultZoom = 13; // default zoom level for the map
   export let permissionNotification = "Die App hat keine Erlaubnis, ihre Position festzustellen. Unter Start > Einstellungen > FAQ finden Sie eine Anleitung, um die Erlaubnis für Ihr Gerät zu erteilen.";
   export let enableGeolocationHint = "Bitte aktivieren Sie ihren Standort."
   export let height; // height of the container
@@ -378,6 +379,7 @@
 
     <MapRenderer
       {defaultLocation}
+      {defaultZoom}
       {height}
       {showControls}
       {mapId}

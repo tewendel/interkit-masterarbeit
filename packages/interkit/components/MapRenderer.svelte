@@ -171,6 +171,8 @@
   // mode to show a single Element and center the map on that (used in qr scanner)
   export let singleElement;
 
+  export let defaultZoom = 13; // default zoom level for the map
+
   let defaultLocationLatLng = [51.505, -0.09];
   if(defaultLocation) {
     try {
@@ -462,7 +464,7 @@
       maxZoom: 20,
       attributionControl: false,
     }).setView(singleElement?.markerPositionsColumn ? singleElement.markerPositionsColumn : defaultLocationLatLng, 
-     singleElement ? 17 : 13);  
+     singleElement ? 17 : defaultZoom);  
 
     if(qrContext) {
       console.log("qrContext", qrContext)
