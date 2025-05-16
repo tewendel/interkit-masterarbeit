@@ -30,7 +30,7 @@ const subscribeMessages = async (server, projectId) => {
   await messagesSub.ready();
 
   let reactiveMessagesCollection = server.collection('messages').reactive();
-  console.log("subscribeMessages reactiveMessagesCollection", reactiveMessagesCollection)
+  //console.log("subscribeMessages reactiveMessagesCollection", reactiveMessagesCollection)
   return reactiveMessagesCollection
 }
 

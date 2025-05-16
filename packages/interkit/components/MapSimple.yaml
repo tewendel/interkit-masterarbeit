@@ -6,6 +6,10 @@ fields:
     - type: "string"
       name: "defaultLocation"
       help: "Where to center the map if a user's location cannot be found. Format: [lat, lng]"
+    - type: number
+      name: defaultZoom
+      defaultValue: 13
+      help: "Default initial zoom level for the map"
     - type: "sheetColumn"
       name: "markerPositionsColumn"
       columnType: "location"
@@ -75,10 +79,6 @@ fields:
     - type: string
       name: closeButtonLabel
       defaultValue: "Schließen"
-    - type: number
-      name: defaultZoom
-      defaultValue: 13
-      help: "Default initial zoom level for the map"
   - type: "slot"
     name: "popup"  
     help: Contents of a popup that opens when a marker is tapped

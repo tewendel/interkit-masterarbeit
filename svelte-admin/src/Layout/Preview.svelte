@@ -274,7 +274,7 @@
         style={iframeStyle}
         title="embedded app preview" 
         src={ appVariant == "dev" ? previewURL : buildURL }
-        allow="camera;microphone;geolocation;autoplay;accelerometer"
+        allow="camera;microphone;geolocation;autoplay;accelerometer;gyroscope"
         bind:this={iframeRef}
         data-build-hash={$buildHash}>
       </iframe>
