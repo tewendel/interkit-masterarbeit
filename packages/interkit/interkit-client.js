@@ -888,7 +888,7 @@ const logout = async () => {
     await server.logout();
     userId.set(null);
     localStorage.setItem('userId', null);
-    await Storage.set({ key: 'userAuth', value: JSON.stringify(null) })
+    await Preferences.set({ key: 'userAuth', value: JSON.stringify(null) })
   }
 
 // call a meteor method, add projectId to params if needed (allow method calls without params)
