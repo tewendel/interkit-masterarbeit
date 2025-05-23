@@ -25,8 +25,13 @@
 
   // this one lets you access the variables from the theme
   @use '@carbon/styles/scss/theme';
+  
+  // example:
+  color: theme.$text-primary;
+  background-color: theme.$background;
 
-  ... how to use it: https://github.com/carbon-design-system/carbon/tree/main/packages/styles
+  - docs: https://github.com/carbon-design-system/carbon/tree/main/packages/styles
+  - list of colors: https://github.com/carbon-design-system/carbon/blob/main/packages/themes/docs/sass.md#tokens
 */
 
 /* 
@@ -34,6 +39,7 @@
   ========================================
 
   - find label here https://carbondesignsystem.com/guidelines/typography/type-sets/
+  - list of types: https://github.com/carbon-design-system/carbon/blob/main/packages/type/docs/sass.md
   - example: body-compact-01
   - use it like this: 
     @use '@carbon/type';

@@ -11,15 +11,34 @@
   // blocks that appear as quick nav links at the bottom
   let quickNavTypes = ["Group", "AppBase", "Route", "DataRouteSingle", "DataRouteMulti", "ChatRoute"]
 
+  // how to group them
+  const groups = [
+    {
+      name: "AppBase",
+      types: ["AppBase"]
+    },
+    {
+      name: "Routes",
+      types: ["Route", "DataRouteSingle", "DataRouteMulti", "ChatRoute"]
+    },    
+    {
+      name: "Groups",
+      types: ["Group"]
+    }
+  ]
+
   $: {
     if(topBlocks) {
-      subtrees = topBlocks.filter(b => quickNavTypes.includes(b.type))
-      subtrees.sort(function(a, b) {
-        const A = quickNavblockToString(a)
-        const B = quickNavblockToString(b)
-        return (A < B) ? -1 : (A > B) ? 1 : 0;
-      })
-      //console.log("subtrees", subtrees)
+      subtrees = groups.map(group => ({
+        name: group.name,
+        blocks: topBlocks
+          .filter(b => group.types.includes(b.type))
+          .sort((a, b) => {
+            const A = quickNavblockToString(a);
+            const B = quickNavblockToString(b);
+            return (A < B) ? -1 : (A > B) ? 1 : 0;
+          })
+      })).filter(group => group.blocks.length > 0);
     } else {
       subtrees = [];
     }
@@ -60,39 +79,45 @@
 
 
 <div class="navigation-accordion">
-      {#if subtrees.length}
+  {#if subtrees.length}
+    {#each subtrees as group}
+      <div class="group">
+        <h4 class="group-title">{group.name}</h4>
         <ul>
-        {#each subtrees as subtree} 
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <li class="subtree" on:click={() => {panToSubtree(subtree)}}>
-            <span title={quickNavblockToString(subtree)}>
-              {quickNavblockToString(subtree)}
-            </span>
-            <div class="move-button">
-              <CenterIcon/>
-            </div>
-          </li>
-        {/each}
+          {#each group.blocks as subtree}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <li class="subtree" on:click={() => panToSubtree(subtree)}>
+              <span title={quickNavblockToString(subtree)}>
+                {quickNavblockToString(subtree)}
+              </span>
+              <div class="move-button">
+                <CenterIcon/>
+              </div>
+            </li>
+          {/each}
         </ul>
-      {/if}
-      {#if subtrees.length == 1}
-        <p>Groups and Routes will appear here as shortcuts that you can jump to. This is useful for larger projects.</p>
-        <!--Button
-            kind="ghost"
-            size="small"
-            tooltipPosition="top"
-            tooltipAlignment="end"
-            icon={Help}
-            on:click={referenceHelp}
-            iconDescription="docs"
-          /-->
-      {/if}
-    
+      </div>
+    {/each}
+  {:else}
+    <p>Groups and Routes will appear here as shortcuts that you can jump to. This is useful for larger projects.</p>
+  {/if}
 </div>
 
+<style lang="scss">
 
-
-<style>
+  @use '@carbon/styles/scss/theme';
+  @use '@carbon/type';
+.group {
+    margin-bottom: 1.5rem;
+}
+  
+.group-title {
+  @include type.type-style("heading-compact-01");
+  border-bottom: 2px solid theme.$border-subtle-03;
+  color: theme.$text-secondary;
+  padding: 4px;
+}
+  
   .navigation-accordion {
     margin-top: 1rem;
     padding: 5px;
