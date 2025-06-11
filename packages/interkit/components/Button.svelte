@@ -31,7 +31,8 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <button
     type="button"
-    on:click={()=>{if(!disabled) execute()}} 
+    on:click={(e) => !disabled && execute(e)}
+    on:click
     class={`${mainClass} Button Button--${type} Button--${size} Button--flex${flex} Button--height${height} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
     class:Button--disabled={disabled}
