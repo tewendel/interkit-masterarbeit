@@ -2,7 +2,7 @@
   
 </script>
 
-<div class="TabBar container">
+<div class="TabBar container" role="tablist">
   <div class="TabBar__Slider slider">
     <slot></slot>
   </div>

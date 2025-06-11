@@ -35,11 +35,13 @@
 
   <WithEffect {effect} let:execute>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div
+    <button
+      type="tab"
       class="NavButton container {withIcon} {active} {disabled ? "disabled" : ""}"
       class:NavButton--withicon={withIcon}
       class:NavButton--active={active}
       class:NavButton--disabled={disabled}
+      aria-selected={active}
       on:click={()=>{if(!disabled) execute()}}
       >
       {#if withIcon}
@@ -48,7 +50,7 @@
         </div>
       {/if}
       {#if text}<span class="NavButton__Text">{text}</span>{/if}
-    </div>
+    </button>
   </WithEffect>
 
 <style>

@@ -22,11 +22,14 @@
 
 <WithEffect {effect} {execOnMount} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div
+  <button
+    type="tab"
     on:click={execute}
     class="Tab container {active ? "active" : ""}"
     class:Tab--active={active}
-    >{text}</div>
+    aria-selected={active}
+    >{text}
+  </button>
 </WithEffect>
 
 <style>

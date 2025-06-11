@@ -1,4 +1,4 @@
-<div class="NavBar container">
+<div class="NavBar container" role="tablist">
   <slot/>
 </div>
 
