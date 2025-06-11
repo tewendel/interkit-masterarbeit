@@ -29,13 +29,15 @@
 
 <WithEffect {effect} let:execute>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <span
-    on:click
+  <button
+    type="button"
     on:click={()=>{if(!disabled) execute()}} 
     class={`${mainClass} Button Button--${type} Button--${size} Button--flex${flex} Button--height${height} button ${type} ${size} ${flex} height-${height} ${disabled ? "disabled": ""}`}
     class:primary={type==='primary'}
     class:Button--disabled={disabled}
     class:Button--selected={selected}
+    {disabled}
+    aria-disabled={disabled}    
   >
     <slot/>
     {#if $showDummyData && !dummyNoText}
@@ -43,7 +45,7 @@
     {:else}
       { text || "" }
     {/if}
-  </span>
+</button>
 </WithEffect>
 
 <style>
