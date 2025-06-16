@@ -19,6 +19,7 @@
   
   export let height = "fixed" // fixed | auto
   export let disabled = false;
+  export let ariaLabel = undefined;
   export let effect; // effect object used to decide what happens on click
   export let selected = false // used by Chat choice
   export let dummyNoText = false
@@ -39,6 +40,7 @@
     class:Button--selected={selected}
     {disabled}
     aria-disabled={disabled}    
+    aria-label={ariaLabel}
   >
     <slot/>
     {#if $showDummyData && !dummyNoText}

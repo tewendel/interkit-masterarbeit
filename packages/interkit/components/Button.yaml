@@ -34,6 +34,9 @@ fields:
     - name: disabled
       type: checkbox
       defaultValue: false
+    - type: string
+      name: ariaLabel
+      help: "A text for screen readers that describes the action of the button. Example: 'Go Back'"
     - type: effect
       name: effect
       help: "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
