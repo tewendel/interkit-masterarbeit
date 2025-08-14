@@ -441,7 +441,7 @@ Set or get a data annotation (formerly called element properties) about an eleme
 The first parameter is the row key, the second the annotation name, the third, the value you want to set.
 
 ```js
-await api.setElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered", true)
+await api.setElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered", "true")
 await api.getElementProperty("f00ba420-0123-4567-89abcdef012356789", "discovered")
 ```
 
