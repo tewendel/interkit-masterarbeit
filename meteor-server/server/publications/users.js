@@ -22,6 +22,7 @@ Meteor.publish('projectUsersPaginated', function({
   const allowedSortKeys = ["createdAt", "username", "blocked", "projectUserData.userToken"];
   const query = { 
     [`projectUserData.${projectId}`] : { $exists:true },
+    username: { $ne: "bundler" },
     ...searchQuery && {$or: [
       // search in id
       {_id: { $regex: searchQuery, $options: 'i' }},

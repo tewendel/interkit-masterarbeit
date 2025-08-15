@@ -177,7 +177,12 @@ Meteor.methods({
 
   "users.delete": async function (ids) {
     console.log("deleteProjectUsers", ids);
-    const result = await Meteor.users.remove({ _id: { $in: ids } });
+
+    const result = await Meteor.users.remove({ 
+      _id: { $in: ids },
+      username: { $ne: "bundler" }
+    });  
+
     return result;
   },
 
