@@ -15,6 +15,7 @@
   import Overlay from './Overlay.svelte'
 
   export let languages
+  export let appTitle
   export let enableWebPush
   export let projectIdOverride
   languages = languages && languages.split ? languages.split(',') : false
@@ -470,7 +471,9 @@
 <!-- reset styles -->
 
 <svelte:head>
-  <title>{$config?.project_slug}</title>
+  {#if appTitle || $config?.project_slug}
+    <title>{appTitle || $config?.project_slug}</title>
+  {/if}
 
   {#if $config?.INTERKIT_APP_LOAD_THEME}
     <link rel='stylesheet' href="theme/global.css">

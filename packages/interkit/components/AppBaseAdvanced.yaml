@@ -5,6 +5,9 @@ fields:
   - type: string
     name: languages
     help: List available language codes, for example "en,de". The first is the default language.
+  - type: string
+    name: appTitle
+    help: The title of the app, displayed in the browser tab.
   - type: checkbox
     name: enableWebPush
     defaultValue: "FALSE"
