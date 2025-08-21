@@ -414,6 +414,10 @@ await api.getRows("elements")
 Load one row from a sheet (by row key)
 ```js
 await api.getRow("rowKey")
+
+// example
+const row = await api.getRow("5b215bca-6eb7-4662-91e9-c731492e2cd7") // row key
+api.sendText(row.values["1f9fdb09-d532-4df5-9fb7-4913a5b3243f"]) // column key
 ```
 
 
