@@ -429,7 +429,11 @@ Update a row (replaces the whole row)
 ```js
 await api.updateRow("elements", "rowKey", {title: "bye"})
 ```
-Update single values in a row (keeps existing values, only overwrites the one you provide)
+Update some values in a row (keeps existing values, only overwrites the ones you provide)
+```js
+await api.updateSomeRowValues("elements", "rowKey", {title: "new title", status: "active"})
+```
+Update a single value in a row (keeps existing values, only overwrites the one you provide)
 ```js
 await api.updateRowValue("elements", "rowKey", "colKey", "value")
 //example:

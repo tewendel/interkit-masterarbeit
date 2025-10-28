@@ -225,6 +225,27 @@ Meteor.methods({
     }
   },
 
+  'row.updateSomeValues': ({rowKey, projectId, values}) => {
+    console.log("row.updateSomeValues", rowKey, projectId, values);
+    if(rowKey && projectId && values) {
+      // Create update object using dot notation to only update provided fields
+      const updateFields = {};
+      Object.keys(values).forEach(colKey => {
+        updateFields[`values.${colKey}`] = values[colKey];
+      });
+      
+      const result = Rows.update(
+        {key: rowKey, projectId},
+        {$set: updateFields}
+      );
+      if(result) {
+        return Rows.findOne({key: rowKey, projectId});
+      } else {
+        console.log("updateSomeValues: row not found");
+      }
+    }
+  },
+
   'row.updateValues': ({rowKey, projectId, values}) => {
     console.log("row.updateValues", rowKey, projectId, values);
     if(rowKey && projectId && values) {

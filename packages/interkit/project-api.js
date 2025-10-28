@@ -368,6 +368,12 @@ const updateRowValue = async function(sheetKey, rowKey, colKey, newVal) {
   await server.call('row.updateValue', {rowKey, projectId, colKey, newVal});
 }
 
+// update some row values (only overwrites provided values, keeps existing ones)
+const updateSomeRowValues = async function(sheetKey, rowKey, values) {
+  const {server, projectId} = this
+  await server.call('row.updateSomeValues', {projectId, rowKey, values});
+}
+
 
 // set interface for this board
 const setInterface = async function(interfaceConfig) {
@@ -416,6 +422,7 @@ export default {
   addRow,
   updateRow,
   updateRowValue,
+  updateSomeRowValues,
   setInterface,
   requestLocation,
   distance,
