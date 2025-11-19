@@ -1,163 +1,53 @@
-# Interkit
+````markdown
+# Masterarbeit mit Interkit
 
-Interkit is a flexible authoring system for browser-based real world experiences, playful urban interactions, location-based games, and more. 
+Dieses Repository enthält das Setup und die Projektdaten die Masterarbeit  
+**„<TITEL>“** von **<TERESA WENDEL>**.
 
-*It is has been released as open source software*
+Es basiert auf dem Open-Source-Projekt **Interkit**  
+(Original-Repository: https://gitlab.interkit.app/interkit/interkit-experiments).
 
-More information: https://interkit.app  
-Documentation: https://docs.interkit.app
+---
 
-Interkit is being developed in the context of the [Offene Welten](https://offenewelten.de/) project (in the framework of Digitalfonds der Kulturstiftung des Bundes).
+## Abgrenzung: Fremdleistung vs. Eigenleistung
 
-![interkit admin interface](./interkit_teaser.png)
+### Fremdleistung (nicht von mir entwickelt)
 
-### overview
+Die folgenden Bestandteile stammen im Wesentlichen aus dem offiziellen Interkit-Projekt
+und sind **nicht** meine Eigenentwicklung:
 
-- meteor-server reads and writes project files to repositories 
-- svelte-admin is the authoring tool (Redaktionssystem)
-- app-bundler compiles and bundles projects
-- **check the readmes in individual components for setup and running**
+- das Interkit-Framework selbst (Server, Admin-Interface, Bundler, Docker-Setup)
+- Starter-Templates und Beispielprojekte in  
+  `repositories/starters/`
+- generische Build- und Konfigurationsdateien, soweit sie aus dem Interkit-Repo übernommen wurden
 
-### quick start
+Diese Teile werden im Rahmen der Masterarbeit **nur verwendet**, nicht als eigene Entwicklung beansprucht.
+Alle Rechte und das Copyright verbleiben bei den ursprünglichen Autor:innen von Interkit.
 
-1) install all packages
+### Eigenleistung im Rahmen der Masterarbeit
 
-````
-npm install
-````
 
-you may additionally need to install meteor with
+---
 
-````
-npm install -g meteor
-````
+## Projektstruktur
 
-2) update .env files in /app-bundler, /meteor-server, /svelte-admin (see READMEs in those folders for details)
 
-3) create folder /repositories/projects
+---
 
-4) run the relevant systems in one shell
+## Voraussetzungen
 
-````
-npm run dev
-````
 
-````
-open http://localhost:5000
-````
+---
 
-#### run via tunnel (experimental)
+## Lokale Entwicklung (Docker)
 
-If you want to test the app on another device inside your local network and have it access your local server, you can use [localtunnel](https://localtunnel.me/)
+
+---
+
+## Lizenzhinweis
+
+Die Lizenzbedingungen von Interkit sind im Original-Repository einzusehen:
+[https://gitlab.interkit.app/interkit/interkit-experiments](https://gitlab.interkit.app/interkit/interkit-experiments)
+
 
 ```
-npm install -g localtunnel
-npm run dev:tunnel
-```
-It should open 2 urls in the browser, you need to click the button on both for the warning to disappear.  
-Then use the QR code "web preview" to open the the app on your device.
-
-### deploy
-
-````
-cp docker-compose.env.live.example .env
-vi .env
-docker network create frontproxy
-docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d
-````
-
-#### optional: enable automatic db dumps
-
-````
-docker-compose -f docker-compose-backup.yml up -d
-````
-
-
-#### security considerations
-
-- ⚠️ Make sure that `INTERKIT_BUNDLER_PASSWORD` in `.env` contains a random string
-- you can use `openssl rand -hex 16` to generate a random string
-- it is used to authenticate the connection from bundler to server
-- repeat `docker-compose -f docker-compose.yml -f docker-compose-proxy-live.yml up -d` after changing the password on a running system
-
-
-### deploy multiple versions on one server instance for staging
-
-````
-# clone interkits
-git clone ... interkit1
-git clone ... interkit2
-
-# start reverse proxy
-cd interkit1
-docker network create frontproxy
-docker-compose -f docker-compose-proxy-staging.yml up -d
-cd ..
-
-# start instance 1
-cd interkit1
-cp docker-compose.env.live.example .env
-vi .env
-docker-compose up -d
-cd ..
-
-# start instance 2
-cd interkit2
-cp docker-compose.env.live.example .env
-vi .env
-docker-compose up -d
-````
-
-### deploy a self-deleting playground
-
-1. deploy a regular instance
-2. make `playground-reset-containers.sh` in the same path as `docker-compose.yml`
-3. in crontab, add: `0 5 * * * /home/username/playground-reset-containers.sh "tomorrow 05:00"`
-
-### increase file watcher limit
-
-If your systems hosts many projects, you may need to increase the file watcher limit.
-
-Run this on the host system:
-
-````
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-echo fs.inotify.max_user_instances=8192 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
-````
-
-### deploy locally
-````
-docker network create frontproxy
-docker-compose -f docker-compose-proxy-local.yml -f docker-compose.yml --env-file docker-compose.env.local.example up
-open http://admin.localhost
-````
-
-### build & deploy locally
-````
-docker network create frontproxy
-docker-compose -f docker-compose-proxy-local.yml up -d
-INTERKIT_IMAGE_TAG=local docker-compose build
-INTERKIT_IMAGE_TAG=local docker-compose --env-file docker-compose.env.local.example up 
-open http://admin.localhost
-````
-
-### update
-
-````
-git pull
-docker build -f Dockerfile.interkit-packages -t interkit/interkit-packages:latest .
-docker-compose up -d --build
-````
-
-### Contributing
-
-Development takes place on our gitlab server at https://gitlab.interkit.app
-
-Feel free to contact us. See contact information on http://interkit.app
-
-Also check the `contribute` section in the docs for some early hints on how to extend interkit https://docs.interkit.app/guides/contribute/docs
-
-### LICENCE
-
-MIT License
