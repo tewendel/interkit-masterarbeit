@@ -1,8 +1,74 @@
-**/node_modules/
-**/vite.config.js.timestamp-*
-/public/build/
-/.env
-
+# ----------------------
+# OS / Editor-Kram
+# ----------------------
 .DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
 
-.rgignore
+# ----------------------
+# Node / JS allgemein
+# ----------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Lockfiles lieber versionieren, damit Builds reproduzierbar sind
+# (deshalb KEIN ignore von package-lock.json / pnpm-lock.yaml / yarn.lock)
+
+# ----------------------
+# Meteor
+# ----------------------
+.meteor/local/
+repositories/projects/*/.meteor/local/
+
+# ----------------------
+# Interkit-Projekte: Build- & Cache-Ordner
+# (Quellcode der Projekte wird NICHT ignoriert)
+# ----------------------
+repositories/projects/*/node_modules/
+repositories/projects/*/.svelte-kit/
+repositories/projects/*/.parcel-cache/
+repositories/projects/*/.next/
+repositories/projects/*/dist/
+repositories/projects/*/build/
+repositories/projects/*/out/
+repositories/projects/*/.DS_Store
+
+# ggf. Test-Coverage
+coverage/
+
+# ----------------------
+# Docker / Runtime / Logs
+# ----------------------
+*.log
+logs/
+
+# Falls du mal lokal Datenordner anlegst:
+docker-data/
+tmp/
+
+# ----------------------
+# Umgebungsvariablen / Secrets
+# ----------------------
+.env
+.env.*
+!.env.example
+
+docker-compose.env.*
+!docker-compose.env.local.example
+!docker-compose.env.live.example
+
+# ----------------------
+# Dumps / Backups
+# ----------------------
+dump/
+backups/
+*.bak
+*.backup
+
+# Interkit media files (Uploads etc.)
+repositories/mediafiles/

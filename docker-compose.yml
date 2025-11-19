@@ -42,7 +42,7 @@ services:
       - default
 
   mongo:
-    image: bitnami/mongodb:6.0
+    image: bitnami/mongodb:latest
     restart: always
     volumes:
       - db-data:/bitnami/mongodb
@@ -100,7 +100,7 @@ services:
     expose:
       - 4000
     volumes:
-      - projects:/var/repositories/projects
+      - ./repositories/projects:/var/repositories/projects
     environment:
       PORT: 4000
       ADMIN_PASSWORD: $INTERKIT_ADMIN_PASSWORD
@@ -130,6 +130,6 @@ networks:
 
 volumes:
   db-data:
-  projects:
+  #projects:
   mediafiles:
   credentials:
