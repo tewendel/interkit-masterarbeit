@@ -1,4 +1,3 @@
-````markdown
 # Masterarbeit mit Interkit
 
 Dieses Repository enthält das Setup und die Projektdaten die Masterarbeit  
