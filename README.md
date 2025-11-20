@@ -1,6 +1,6 @@
 # Masterarbeit mit Interkit
 
-Dieses Repository enthält das Setup und die Projektdaten die Masterarbeit  
+Dieses Repository enthält das Setup und die Projektdaten für die Masterarbeit  
 **„<TITEL>“** von **<TERESA WENDEL>**.
 
 Es basiert auf dem Open-Source-Projekt **Interkit**  
@@ -48,5 +48,3 @@ Alle Rechte und das Copyright verbleiben bei den ursprünglichen Autor:innen von
 Die Lizenzbedingungen von Interkit sind im Original-Repository einzusehen:
 [https://gitlab.interkit.app/interkit/interkit-experiments](https://gitlab.interkit.app/interkit/interkit-experiments)
 
-
-```

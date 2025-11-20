@@ -1,0 +1,9 @@
+{
+  "project_slug": "audioguide_voegel",
+  "bundle_version": "0.1",
+  "INTERKIT_APP_LOAD_THEME": true,
+  "INTERKIT_BUNDLER_URL": "http://app.localhost",
+  "INTERKIT_SERVER_WEBSOCKETS_URL": "ws://api.localhost/websocket",
+  "INTERKIT_SERVER_URL": "http://api.localhost",
+  "INTERKIT_ADMIN_URL": "http://admin.localhost"
+}

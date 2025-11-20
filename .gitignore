@@ -1,5 +1,5 @@
 # ----------------------
-# OS / Editor-Kram
+# OS / Editor
 # ----------------------
 .DS_Store
 Thumbs.db
@@ -16,8 +16,7 @@ npm-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Lockfiles lieber versionieren, damit Builds reproduzierbar sind
-# (deshalb KEIN ignore von package-lock.json / pnpm-lock.yaml / yarn.lock)
+# Lockfiles 
 
 # ----------------------
 # Meteor
@@ -27,7 +26,6 @@ repositories/projects/*/.meteor/local/
 
 # ----------------------
 # Interkit-Projekte: Build- & Cache-Ordner
-# (Quellcode der Projekte wird NICHT ignoriert)
 # ----------------------
 repositories/projects/*/node_modules/
 repositories/projects/*/.svelte-kit/
@@ -47,7 +45,7 @@ coverage/
 *.log
 logs/
 
-# Falls du mal lokal Datenordner anlegst:
+# Lokale Datenordner:
 docker-data/
 tmp/
 

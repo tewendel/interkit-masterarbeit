@@ -1,3 +1,5 @@
 media/
-projects/
-! projects/.gitkeep
+projects/*
+!projects/.gitkeep
+!projects/8HQbW3NPRFFdPR5Ni
+!projects/8HQbW3NPRFFdPR5Ni/**

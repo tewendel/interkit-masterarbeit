@@ -1,0 +1,15 @@
+name: ProjectComponentExample
+title: ProjectComponentExample
+colour: 100
+fields:
+  - type: string
+    name: text
+  - type: options
+    name: options
+    options:
+      # first option should match the preset value in svelte
+      - red
+      - yellow
+  - type: slot
+    name: default
+toolboxCategory: Project
