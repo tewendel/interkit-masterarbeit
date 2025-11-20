@@ -3,23 +3,538 @@
     "languageVersion": 0,
     "blocks": [
       {
-        "type": "AppBase",
-        "id": "ZRUHk3aCGOiRK+,1oTYx",
-        "x": 187,
-        "y": 86,
+        "type": "Group",
+        "id": "T.pTq{6;StUnT=e_|2Bp",
+        "x": 514,
+        "y": 557,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
-          "languages": ""
+          "name": "bottomBar"
         },
         "inputs": {
           "default": {
             "block": {
-              "type": "StaticText",
-              "id": "@4W.$?xEjcU(4#wPM7)z",
+              "type": "NavBar",
+              "id": "9ZQ!4vFo$G,U*%-xm~jD",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "NavButton",
+                    "id": "FuFNwNUDApi)]tdCkGu,",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "disabled",
+                            "type": "checkbox",
+                            "defaultValue": false
+                          },
+                          {
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Icon",
+                          "id": "GXs}@]rxM*_T+WT=xO|s",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "type": "Thin-Dashboard",
+                            "inverse": false
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "NavButton",
+                        "id": "!/9~?$|KC]z~^t|@PvOe",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "name": "disabled",
+                                "type": "checkbox",
+                                "defaultValue": false
+                              },
+                              {
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "Icon",
+                              "id": "y=SGh^okc:hf;imFqAJZ",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "type": "Thin-Layer",
+                                "inverse": false
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "NavButton",
+                            "id": "u1Na56bP:=S5[|bqE5{%",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "text": "",
+                              "extraProps": {
+                                "props": [
+                                  {
+                                    "name": "disabled",
+                                    "type": "checkbox",
+                                    "defaultValue": false
+                                  },
+                                  {
+                                    "type": "effect",
+                                    "name": "effect",
+                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                                  }
+                                ]
+                              }
+                            },
+                            "inputs": {
+                              "default": {
+                                "block": {
+                                  "type": "Icon",
+                                  "id": "0bZ#v_C=;?o4+qk8AgEr",
+                                  "data": "{\"origin\":\"interkit\"}",
+                                  "fields": {
+                                    "type": "Thin-Hint",
+                                    "inverse": false
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "qb1%(#Zw==f^??I4=x0L",
+        "x": 161,
+        "y": 547,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "topBar"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "HorizontalSpacer",
+              "id": "Ic3(I(Xv?zeSOs(!lH,!",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "left": {
+                  "block": {
+                    "type": "Spacing",
+                    "id": "K^t`5t3+S7hzCS5fEYCk",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "extraProps": {
+                        "props": [
+                          {
+                            "name": "top",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "tiny",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl",
+                              "xxl"
+                            ]
+                          },
+                          {
+                            "name": "right",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "tiny",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl",
+                              "xxl"
+                            ]
+                          },
+                          {
+                            "name": "bottom",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "tiny",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl",
+                              "xxl"
+                            ]
+                          },
+                          {
+                            "name": "left",
+                            "type": "options",
+                            "options": [
+                              "none",
+                              "tiny",
+                              "xs",
+                              "s",
+                              "m",
+                              "l",
+                              "xl",
+                              "xxl"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Image",
+                          "id": "g%zk!V8)~u9.A3`?Luks",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "mediafileKey",
+                                  "type": "string",
+                                  "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                },
+                                {
+                                  "name": "altText",
+                                  "type": "string",
+                                  "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
+                                },
+                                {
+                                  "name": "imageColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "mediaFile",
+                                  "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above."
+                                },
+                                {
+                                  "name": "altColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "string",
+                                  "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those."
+                                },
+                                {
+                                  "name": "width",
+                                  "type": "string",
+                                  "defaultValue": "100%"
+                                },
+                                {
+                                  "name": "height",
+                                  "type": "string"
+                                },
+                                {
+                                  "name": "customStyle",
+                                  "type": "string"
+                                },
+                                {
+                                  "name": "classes",
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "block": {
+                    "type": "LangSwitch",
+                    "id": "p6!m7pyG)hH/,z_6+cIH",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "label": "",
+                      "reloadAfterSwitch": "yes"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "Button",
+                        "id": "Qn9WCrNDk,-LO`A~+jFO",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "text": "",
+                          "extraProps": {
+                            "props": [
+                              {
+                                "name": "type",
+                                "type": "options",
+                                "options": [
+                                  "secondary",
+                                  "primary",
+                                  "ghost",
+                                  "link",
+                                  "danger"
+                                ],
+                                "defaultValue": "secondary",
+                                "help": "Appearance of the button."
+                              },
+                              {
+                                "name": "size",
+                                "type": "options",
+                                "options": [
+                                  "small",
+                                  "medium",
+                                  "large"
+                                ],
+                                "defaultValue": "small",
+                                "help": "Large, medium or small."
+                              },
+                              {
+                                "name": "flex",
+                                "type": "options",
+                                "options": [
+                                  "normal",
+                                  "fill"
+                                ],
+                                "defaultValue": "normal",
+                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                              },
+                              {
+                                "name": "disabled",
+                                "type": "checkbox",
+                                "defaultValue": false
+                              },
+                              {
+                                "type": "string",
+                                "name": "ariaLabel",
+                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                              },
+                              {
+                                "type": "effect",
+                                "name": "effect",
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                              }
+                            ]
+                          }
+                        },
+                        "inputs": {
+                          "default": {
+                            "block": {
+                              "type": "Icon",
+                              "id": "Z8!^p]aIJ*6ld7xEc-8A",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "type": "Thin-Menu",
+                                "inverse": false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "AslBk~W$Uw$KAGy6.|=0",
+        "x": 474,
+        "y": -146,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "`zoH-*M/Gk7]rv.1BB8B",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "T/VRhv1ubrf1R8~;Bk7j",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "topBar"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "[I6#]TR1dA5K:Q~PMEC.",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "SectionShell",
+                          "id": "bJ!N-h3~-4lpwx0jAW+@",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "Spacing",
+                                "id": "cp@?jZ7SKA4k67y9Ha#C",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "name": "top",
+                                        "type": "options",
+                                        "options": [
+                                          "none",
+                                          "tiny",
+                                          "xs",
+                                          "s",
+                                          "m",
+                                          "l",
+                                          "xl",
+                                          "xxl"
+                                        ]
+                                      },
+                                      {
+                                        "name": "right",
+                                        "type": "options",
+                                        "options": [
+                                          "none",
+                                          "tiny",
+                                          "xs",
+                                          "s",
+                                          "m",
+                                          "l",
+                                          "xl",
+                                          "xxl"
+                                        ]
+                                      },
+                                      {
+                                        "name": "bottom",
+                                        "type": "options",
+                                        "options": [
+                                          "none",
+                                          "tiny",
+                                          "xs",
+                                          "s",
+                                          "m",
+                                          "l",
+                                          "xl",
+                                          "xxl"
+                                        ]
+                                      },
+                                      {
+                                        "name": "left",
+                                        "type": "options",
+                                        "options": [
+                                          "none",
+                                          "tiny",
+                                          "xs",
+                                          "s",
+                                          "m",
+                                          "l",
+                                          "xl",
+                                          "xxl"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": ")0igX+Lq!xa:^wS}58)Z",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomBar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "o}h.LA}i9e7WD#3[dNE5",
+        "x": 1796,
+        "y": 54,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/impressum",
+          "keepAlive": false
+        }
+      },
+      {
+        "type": "AppBaseAdvanced",
+        "id": "yZ3zr~HGLf}~)|.#,TAk",
+        "x": 149,
+        "y": -100,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "languages": "de,en",
+          "appTitle": "",
+          "enableWebPush": false,
+          "projectIdOverride": "",
+          "extraProps": {
+            "props": [
+              {
+                "type": "string",
+                "name": "desktopFallbackMinWidth",
+                "help": "The minimum device width that should see the desktop fallback slot, presumably something larger than the typical mobile device. Expects a CSS distance value, including unit, e.g. 600px or 48em.",
+                "defaultValue": "600px"
+              }
+            ]
+          }
+        },
+        "inputs": {
+          "viewport": {
+            "block": {
+              "type": "RouteConnector",
+              "id": ";^Zdg_h##fl1r@@MV7tg",
               "data": "{\"origin\":\"interkit\"}",
               "fields": {
-                "text": "Welcome",
-                "tag": "h1"
+                "path": "/"
               }
             }
           }
