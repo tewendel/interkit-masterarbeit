@@ -220,52 +220,118 @@
                     "inputs": {
                       "default": {
                         "block": {
-                          "type": "Image",
-                          "id": "g%zk!V8)~u9.A3`?Luks",
+                          "type": "TextFormat",
+                          "id": "I|Q#[r8LG;I+q6$u[}2,",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "extraProps": {
                               "props": [
                                 {
-                                  "name": "mediafileKey",
-                                  "type": "string",
-                                  "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "headline-3"
                                 },
                                 {
-                                  "name": "altText",
-                                  "type": "string",
-                                  "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
-                                },
-                                {
-                                  "name": "imageColumn",
-                                  "type": "sheetColumn",
-                                  "columnType": "mediaFile",
-                                  "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above."
-                                },
-                                {
-                                  "name": "altColumn",
-                                  "type": "sheetColumn",
-                                  "columnType": "string",
-                                  "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those."
-                                },
-                                {
-                                  "name": "width",
-                                  "type": "string",
-                                  "defaultValue": "100%"
-                                },
-                                {
-                                  "name": "height",
-                                  "type": "string"
-                                },
-                                {
-                                  "name": "customStyle",
-                                  "type": "string"
-                                },
-                                {
-                                  "name": "classes",
-                                  "type": "string"
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
                                 }
                               ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "lv.Cmfqxy5;Sly_S/}z*",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$app_title"
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "Image",
+                              "id": "g%zk!V8)~u9.A3`?Luks",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "extraProps": {
+                                  "props": [
+                                    {
+                                      "name": "mediafileKey",
+                                      "type": "string",
+                                      "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                    },
+                                    {
+                                      "name": "altText",
+                                      "type": "string",
+                                      "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
+                                    },
+                                    {
+                                      "name": "imageColumn",
+                                      "type": "sheetColumn",
+                                      "columnType": "mediaFile",
+                                      "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above."
+                                    },
+                                    {
+                                      "name": "altColumn",
+                                      "type": "sheetColumn",
+                                      "columnType": "string",
+                                      "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those."
+                                    },
+                                    {
+                                      "name": "width",
+                                      "type": "string",
+                                      "defaultValue": "100%"
+                                    },
+                                    {
+                                      "name": "height",
+                                      "type": "string"
+                                    },
+                                    {
+                                      "name": "customStyle",
+                                      "type": "string"
+                                    },
+                                    {
+                                      "name": "classes",
+                                      "type": "string"
+                                    }
+                                  ]
+                                }
+                              }
                             }
                           }
                         }
@@ -280,7 +346,7 @@
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "label": "",
-                      "reloadAfterSwitch": "yes"
+                      "reloadAfterSwitch": "no"
                     },
                     "next": {
                       "block": {
@@ -302,7 +368,8 @@
                                   "danger"
                                 ],
                                 "defaultValue": "secondary",
-                                "help": "Appearance of the button."
+                                "help": "Appearance of the button.",
+                                "id": "type"
                               },
                               {
                                 "name": "size",
@@ -313,7 +380,8 @@
                                   "large"
                                 ],
                                 "defaultValue": "small",
-                                "help": "Large, medium or small."
+                                "help": "Large, medium or small.",
+                                "id": "size"
                               },
                               {
                                 "name": "flex",
@@ -323,22 +391,30 @@
                                   "fill"
                                 ],
                                 "defaultValue": "normal",
-                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                "id": "flex"
                               },
                               {
                                 "name": "disabled",
                                 "type": "checkbox",
-                                "defaultValue": false
+                                "defaultValue": false,
+                                "id": "disabled"
                               },
                               {
                                 "type": "string",
                                 "name": "ariaLabel",
-                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                "id": "ariaLabel"
                               },
                               {
                                 "type": "effect",
                                 "name": "effect",
-                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "id": "effect",
+                                "value": {
+                                  "effectType": "route",
+                                  "path": "/menu"
+                                }
                               }
                             ]
                           }
@@ -495,17 +571,6 @@
         }
       },
       {
-        "type": "Route",
-        "id": "o}h.LA}i9e7WD#3[dNE5",
-        "x": 1796,
-        "y": 54,
-        "data": "{\"origin\":\"interkit\"}",
-        "fields": {
-          "path": "/impressum",
-          "keepAlive": false
-        }
-      },
-      {
         "type": "AppBaseAdvanced",
         "id": "yZ3zr~HGLf}~)|.#,TAk",
         "x": 149,
@@ -530,11 +595,345 @@
         "inputs": {
           "viewport": {
             "block": {
-              "type": "RouteConnector",
-              "id": ";^Zdg_h##fl1r@@MV7tg",
+              "type": "AnonymousLogin",
+              "id": "b-OYT9$7l+z~eaNs5cG|",
               "data": "{\"origin\":\"interkit\"}",
               "fields": {
-                "path": "/"
+                "extraProps": {
+                  "props": [
+                    {
+                      "type": "string",
+                      "name": "defaultLang",
+                      "defaultValue": "en"
+                    },
+                    {
+                      "type": "string",
+                      "name": "defaultLangIndex",
+                      "defaultValue": 0
+                    }
+                  ]
+                }
+              },
+              "inputs": {
+                "default": {
+                  "block": {
+                    "type": "RouteConnector",
+                    "id": ";^Zdg_h##fl1r@@MV7tg",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "path": "/"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "RouteConnector",
+                        "id": ":xs-pnHM#:SnFXYj2,c(",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "path": "/menu"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "RouteConnector",
+                            "id": "f4Ii}F~~Rq41|3L{yuZY",
+                            "data": "{\"origin\":\"interkit\"}",
+                            "fields": {
+                              "path": "/imprint"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "l4Pr|R(,~F[Li344%{9K",
+        "x": 828,
+        "y": -153,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/menu",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "%N,2{~iAi$z%(94gnP~5",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "AaD4w:PgYS$o.7UFP4Je",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "backButton"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ListItem",
+                    "id": "SSPa:ITEb;6_OnwthgHG",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "$imprint",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "effect",
+                            "name": "effect",
+                            "type": "effect",
+                            "value": {
+                              "effectType": "route",
+                              "path": "/imprint"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Group",
+        "id": "a0F~Hu@~GNE3NhDE:.L:",
+        "x": 874,
+        "y": 572,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "name": "backButton"
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "HorizontalSpacer",
+              "id": "Xa;l1DPqWuNF1%H_/Qhy",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "left": {
+                  "block": {
+                    "type": "Button",
+                    "id": "ymo$tDl_QX1bo{B!s(vu",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "text": "",
+                      "extraProps": {
+                        "props": [
+                          {
+                            "id": "type",
+                            "name": "type",
+                            "type": "options",
+                            "options": [
+                              "secondary",
+                              "primary",
+                              "ghost",
+                              "link",
+                              "danger"
+                            ],
+                            "defaultValue": "secondary",
+                            "help": "Appearance of the button."
+                          },
+                          {
+                            "id": "size",
+                            "name": "size",
+                            "type": "options",
+                            "options": [
+                              "small",
+                              "medium",
+                              "large"
+                            ],
+                            "defaultValue": "small",
+                            "help": "Large, medium or small."
+                          },
+                          {
+                            "id": "flex",
+                            "name": "flex",
+                            "type": "options",
+                            "options": [
+                              "normal",
+                              "fill"
+                            ],
+                            "defaultValue": "normal",
+                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                          },
+                          {
+                            "id": "disabled",
+                            "name": "disabled",
+                            "type": "checkbox",
+                            "defaultValue": false
+                          },
+                          {
+                            "id": "ariaLabel",
+                            "type": "string",
+                            "name": "ariaLabel",
+                            "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                          },
+                          {
+                            "id": "effect",
+                            "type": "effect",
+                            "name": "effect",
+                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                            "value": {
+                              "effectType": "back"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "Icon",
+                          "id": "89FO{P;.CxF,}!k@HL8E",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "type": "Thin-Arrow-Left",
+                            "inverse": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "r2z9DxJXm?DLVHBGybi*",
+        "x": 1112,
+        "y": -157,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/imprint",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "w4U6ejTJFXaI4NKW}GX4",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "r!HvsT=t.W3ag}R51=30",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "backButton"
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "Ado46eM!UB~Pe@0zf31z",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataLoaderSingle",
+                          "id": "uErv6B:7X@SXEK(5c1P+",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "id": "sheet",
+                                  "name": "sheet",
+                                  "type": "sheetId",
+                                  "help": "Select the sheet you want to load data from.",
+                                  "value": {
+                                    "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                    "text": "menu"
+                                  }
+                                },
+                                {
+                                  "id": "rowKey",
+                                  "name": "rowKey",
+                                  "type": "string",
+                                  "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                  "value": ""
+                                },
+                                {
+                                  "id": "customKeyColumn",
+                                  "name": "customKeyColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "string",
+                                  "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                  "value": {
+                                    "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                    "text": "menu/undefined",
+                                    "columnKey": "_id"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataCell",
+                                "id": "Hq(HAu]kc;EzMENTuEOq",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "id": "column",
+                                        "name": "column",
+                                        "type": "sheetColumn",
+                                        "columnType": "richText",
+                                        "defaultValue": "settings/content",
+                                        "value": {
+                                          "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                          "columnKey": "menu$lang",
+                                          "text": "menu/menu$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "format",
+                                        "name": "format",
+                                        "type": "options",
+                                        "options": [
+                                          "richText",
+                                          "string"
+                                        ],
+                                        "defaultValue": "richText"
+                                      },
+                                      {
+                                        "id": "centerContent",
+                                        "name": "centerContent",
+                                        "type": "checkbox",
+                                        "defaultValue": false,
+                                        "value": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
