@@ -69,14 +69,19 @@
                           "extraProps": {
                             "props": [
                               {
+                                "id": "disabled",
                                 "name": "disabled",
                                 "type": "checkbox",
                                 "defaultValue": false
                               },
                               {
+                                "id": "effect",
                                 "type": "effect",
                                 "name": "effect",
-                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
+                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                "value": {
+                                  "effectType": "back"
+                                }
                               }
                             ]
                           }
@@ -507,7 +512,7 @@
                                             "type": "string",
                                             "help": "Add the key of an image directly. You can find it from the media section.",
                                             "id": "imageKey",
-                                            "value": "3d34da00-3166-4f84-8762-511e125aaa66"
+                                            "value": "b910238c-edf8-499e-b187-6a7cef0912a6"
                                           },
                                           {
                                             "name": "label",
@@ -844,6 +849,26 @@
                                     "data": "{\"origin\":\"interkit\"}",
                                     "fields": {
                                       "path": "/exhibition"
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "RouteConnector",
+                                        "id": "h:EOeA6{Aasjav!=g].?",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "fields": {
+                                          "path": "/exhibition_artworks"
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "RouteConnector",
+                                            "id": "HdEp[]TZOvx,RYa5g#dm",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "path": "/help"
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -911,10 +936,10 @@
                     "next": {
                       "block": {
                         "type": "ListItem",
-                        "id": "P!0zo)uDS8eq5w0%=hwG",
+                        "id": "53pvoMC6`iYJI1Xhw(HF",
                         "data": "{\"origin\":\"interkit\"}",
                         "fields": {
-                          "text": "$privacy",
+                          "text": "$help",
                           "extraProps": {
                             "props": [
                               {
@@ -923,7 +948,7 @@
                                 "id": "effect",
                                 "value": {
                                   "effectType": "route",
-                                  "path": "/privacy"
+                                  "path": "/help"
                                 }
                               }
                             ]
@@ -932,10 +957,10 @@
                         "next": {
                           "block": {
                             "type": "ListItem",
-                            "id": "SSPa:ITEb;6_OnwthgHG",
+                            "id": "P!0zo)uDS8eq5w0%=hwG",
                             "data": "{\"origin\":\"interkit\"}",
                             "fields": {
-                              "text": "$imprint",
+                              "text": "$privacy",
                               "extraProps": {
                                 "props": [
                                   {
@@ -944,10 +969,33 @@
                                     "id": "effect",
                                     "value": {
                                       "effectType": "route",
-                                      "path": "/imprint"
+                                      "path": "/privacy"
                                     }
                                   }
                                 ]
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "ListItem",
+                                "id": "SSPa:ITEb;6_OnwthgHG",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$imprint",
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "name": "effect",
+                                        "type": "effect",
+                                        "id": "effect",
+                                        "value": {
+                                          "effectType": "route",
+                                          "path": "/imprint"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
                               }
                             }
                           }
@@ -1348,8 +1396,8 @@
       {
         "type": "Route",
         "id": "l3S*=SfoAF^H5C$wJR!3",
-        "x": 1691,
-        "y": -167,
+        "x": 2078,
+        "y": -350,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/exhibition",
@@ -1358,25 +1406,44 @@
         "inputs": {
           "default": {
             "block": {
-              "type": "LayoutShell",
-              "id": "pUKXj(z3ipG;yJo4kOQo",
+              "type": "LayoutShellAudio",
+              "id": ")l=LvKd--+5z+r0C6N:~",
               "data": "{\"origin\":\"interkit\"}",
               "inputs": {
                 "TopBar": {
                   "block": {
-                    "type": "GroupConnector",
-                    "id": ")cC/n/y=Os7;P1Crnq=A",
+                    "type": "HorizontalSpacer",
+                    "id": "B5-l=#H=TfF_VTK{mkrK",
                     "data": "{\"origin\":\"interkit\"}",
-                    "fields": {
-                      "name": "backButton"
-                    },
-                    "next": {
-                      "block": {
-                        "type": "GroupConnector",
-                        "id": "KAdtRR/yh~93ID7C34[1",
-                        "data": "{\"origin\":\"interkit\"}",
-                        "fields": {
-                          "name": "topBar"
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": ")cC/n/y=Os7;P1Crnq=A",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "[Nl=kvCDK[lYF5,bhf=5",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "$exhibition_title"
+                          }
+                        }
+                      },
+                      "right": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "KAdtRR/yh~93ID7C34[1",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "topBar"
+                          }
                         }
                       }
                     }
@@ -1396,51 +1463,686 @@
                           "inputs": {
                             "default": {
                               "block": {
-                                "type": "CenterModal",
-                                "id": "mF_^U%onoild[pT3-L=R",
+                                "type": "AccordeonShell",
+                                "id": "qbHx~eD8;SfN]:gxa9gk",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "inputs": {
+                                  "label": {
+                                    "block": {
+                                      "type": "Label",
+                                      "id": ")x@4mh:R}0@toB_EqdI=",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "id": "type",
+                                              "name": "type",
+                                              "type": "options",
+                                              "options": [
+                                                "text",
+                                                "icon"
+                                              ],
+                                              "value": "icon"
+                                            },
+                                            {
+                                              "id": "variant",
+                                              "name": "variant",
+                                              "type": "options",
+                                              "options": [
+                                                "strong",
+                                                "normal",
+                                                "soft"
+                                              ],
+                                              "value": "normal"
+                                            },
+                                            {
+                                              "id": "content",
+                                              "type": "string",
+                                              "name": "content"
+                                            },
+                                            {
+                                              "id": "icon",
+                                              "type": "options",
+                                              "name": "icon",
+                                              "options": [
+                                                "Thin-AR",
+                                                "Thin-Archiv",
+                                                "Thin-Arrow-Left",
+                                                "Thin-Arrow-Right",
+                                                "Thin-Bookmark",
+                                                "Thin-Camera",
+                                                "Thin-Chat",
+                                                "Thin-Check",
+                                                "Thin-Close-Circle",
+                                                "Thin-Close",
+                                                "Thin-Copy",
+                                                "Thin-Dashboard",
+                                                "Thin-Dropdown-Up",
+                                                "Thin-Dropdown",
+                                                "Thin-Filter",
+                                                "Thin-Forward-15",
+                                                "Thin-FullScreen",
+                                                "Thin-Hint",
+                                                "Thin-Layer",
+                                                "Thin-Location",
+                                                "Thin-Map",
+                                                "Thin-Menu",
+                                                "Thin-Microphone",
+                                                "Thin-Minus",
+                                                "Thin-Pause",
+                                                "Thin-Phaenomen",
+                                                "Thin-Play",
+                                                "Thin-Plus",
+                                                "Thin-Position",
+                                                "Thin-QR-Scan",
+                                                "Thin-Replay-30",
+                                                "Thin-Settings",
+                                                "Thin-Social",
+                                                "Thin-to_Gallery",
+                                                "Thin-zoom-In",
+                                                "Full-AR",
+                                                "Full-Archiv",
+                                                "Full-Bookmark",
+                                                "Full-Camera",
+                                                "Full-Chat",
+                                                "Full-Check",
+                                                "Full-Close-Circle",
+                                                "Full-Copy",
+                                                "Full-Dashboard",
+                                                "Full-Date",
+                                                "Full-Drag",
+                                                "Full-FullScreen",
+                                                "Full-GroupChat",
+                                                "Full-Help",
+                                                "Full-Layer",
+                                                "Full-List",
+                                                "Full-Location",
+                                                "Full-Map",
+                                                "Full-Menu",
+                                                "Full-Microphone",
+                                                "Full-More-1",
+                                                "Full-More",
+                                                "Full-Pause",
+                                                "Full-Phaenomen",
+                                                "Full-Play",
+                                                "Full-QR-Scan",
+                                                "Full-Send",
+                                                "Full-Settings",
+                                                "Full-SingleChat",
+                                                "Full-Social",
+                                                "Full-Splitscreen",
+                                                "Full-Warning",
+                                                "Full-to_Gallery"
+                                              ],
+                                              "help": "Select an icon.",
+                                              "value": "Full-More"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "next": {
+                                        "block": {
+                                          "type": "StaticText",
+                                          "id": "gcxc{w9g1vx0a[3~ywK.",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "text": "$button_more"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "content": {
+                                    "block": {
+                                      "type": "DataLoaderSingle",
+                                      "id": "EVV}g9imXW8IGpkcW^B/",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "fields": {
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "name": "sheet",
+                                              "type": "sheetId",
+                                              "help": "Select the sheet you want to load data from.",
+                                              "id": "sheet",
+                                              "value": {
+                                                "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                                "text": "menu"
+                                              }
+                                            },
+                                            {
+                                              "name": "rowKey",
+                                              "type": "string",
+                                              "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                              "id": "rowKey",
+                                              "value": "019f8964-fde8-4da1-8ea5-e75315104b6b"
+                                            },
+                                            {
+                                              "name": "customKeyColumn",
+                                              "type": "sheetColumn",
+                                              "columnType": "string",
+                                              "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                              "id": "customKeyColumn",
+                                              "value": {
+                                                "sheetKey": "empty",
+                                                "text": ""
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "inputs": {
+                                        "default": {
+                                          "block": {
+                                            "type": "DataCell",
+                                            "id": "!xeQ^@[_KHqE:KX98:]d",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "extraProps": {
+                                                "props": [
+                                                  {
+                                                    "name": "column",
+                                                    "type": "sheetColumn",
+                                                    "columnType": "richText",
+                                                    "defaultValue": "settings/content",
+                                                    "id": "column",
+                                                    "value": {
+                                                      "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                                      "columnKey": "menu$lang",
+                                                      "text": "menu/menu$lang",
+                                                      "columnType": "string"
+                                                    }
+                                                  },
+                                                  {
+                                                    "name": "format",
+                                                    "type": "options",
+                                                    "options": [
+                                                      "richText",
+                                                      "string"
+                                                    ],
+                                                    "defaultValue": "richText",
+                                                    "id": "format"
+                                                  },
+                                                  {
+                                                    "name": "centerContent",
+                                                    "type": "checkbox",
+                                                    "defaultValue": false,
+                                                    "id": "centerContent",
+                                                    "value": false
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "SectionShell",
+                              "id": ".xV]*ZP?F!Wj8zTqa+iE",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "DataLoaderMulti",
+                                    "id": "_GH6XmD5T:]#n4hNpXB9",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "sheetKey": {
+                                        "value": {
+                                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "text": "exhibition"
+                                        }
+                                      },
+                                      "extraProps": {
+                                        "props": [
+                                          {
+                                            "id": "sortColumn",
+                                            "name": "sortColumn",
+                                            "type": "sheetColumn",
+                                            "value": {
+                                              "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                              "columnKey": "03ea6de3-b639-414d-af4c-1cd9abf9c931",
+                                              "text": "exhibition/contentKey",
+                                              "columnType": "string"
+                                            }
+                                          },
+                                          {
+                                            "id": "hideColumn",
+                                            "name": "hideColumn",
+                                            "type": "sheetColumn",
+                                            "value": {
+                                              "sheetKey": "empty",
+                                              "text": ""
+                                            }
+                                          },
+                                          {
+                                            "id": "includeOnlyAnnotated",
+                                            "name": "includeOnlyAnnotated",
+                                            "type": "string",
+                                            "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                            "value": ""
+                                          },
+                                          {
+                                            "id": "excludeAnnotated",
+                                            "name": "excludeAnnotated",
+                                            "type": "string",
+                                            "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                            "value": "checked"
+                                          },
+                                          {
+                                            "id": "discoverableColumn",
+                                            "name": "discoverableColumn",
+                                            "type": "sheetColumn",
+                                            "defaultValue": "elements/discoverable",
+                                            "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below",
+                                            "value": {
+                                              "sheetKey": "elements",
+                                              "columnKey": "discoverable",
+                                              "text": "elements/discoverable"
+                                            }
+                                          },
+                                          {
+                                            "id": "discoverAnnotation",
+                                            "name": "discoverAnnotation",
+                                            "type": "string",
+                                            "defaultValue": "discovered",
+                                            "help": "The data annotation to use for discovering elements."
+                                          },
+                                          {
+                                            "id": "referenceColumn",
+                                            "name": "referenceColumn",
+                                            "type": "sheetColumn",
+                                            "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context.",
+                                            "value": {
+                                              "sheetKey": "empty",
+                                              "text": ""
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "inputs": {
+                                      "default": {
+                                        "block": {
+                                          "type": "SectionShell",
+                                          "id": "}?Q%[k%q^?(k|Hlk@CG!",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "inputs": {
+                                            "default": {
+                                              "block": {
+                                                "type": "DataList",
+                                                "id": "*yLwV=gTr0`Q:1W/~C/s",
+                                                "data": "{\"origin\":\"interkit\"}",
+                                                "inputs": {
+                                                  "dataElement": {
+                                                    "block": {
+                                                      "type": "DataCard",
+                                                      "id": "wkA-5_]j?%`}NY@,k37~",
+                                                      "data": "{\"origin\":\"interkit\"}",
+                                                      "fields": {
+                                                        "extraProps": {
+                                                          "props": [
+                                                            {
+                                                              "id": "variant",
+                                                              "name": "variant",
+                                                              "type": "options",
+                                                              "options": [
+                                                                "full",
+                                                                "large",
+                                                                "medium",
+                                                                "small"
+                                                              ],
+                                                              "defaultValue": "full",
+                                                              "value": "small"
+                                                            },
+                                                            {
+                                                              "id": "rightArrow",
+                                                              "name": "rightArrow",
+                                                              "type": "checkbox",
+                                                              "help": "Display the right arrow next to the headline",
+                                                              "value": false
+                                                            },
+                                                            {
+                                                              "id": "effect",
+                                                              "name": "effect",
+                                                              "type": "effect",
+                                                              "help": "What should happen when you tap on the card",
+                                                              "value": {
+                                                                "effectType": "dataRouteSingle",
+                                                                "path": "/exhibition_artworks"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "imageColumn",
+                                                              "name": "imageColumn",
+                                                              "type": "sheetColumn",
+                                                              "columnType": "mediaFile",
+                                                              "defaultValue": "elements/image",
+                                                              "value": {
+                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                "columnKey": "image$lang",
+                                                                "text": "exhibition/image$lang",
+                                                                "columnType": "mediaFile"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "headlineColumn",
+                                                              "name": "headlineColumn",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/headline",
+                                                              "value": {
+                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                "columnKey": "title$lang",
+                                                                "text": "exhibition/title$lang",
+                                                                "columnType": "string"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "label1Column",
+                                                              "name": "label1Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/label1",
+                                                              "value": {
+                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
+                                                                "text": "exhibition/artist",
+                                                                "columnType": "string"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "subtitle1Column",
+                                                              "name": "subtitle1Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/subtitle1",
+                                                              "value": {
+                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                "columnKey": "date$lang",
+                                                                "text": "exhibition/date$lang",
+                                                                "columnType": "string"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "label2Column",
+                                                              "name": "label2Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/label2",
+                                                              "value": {
+                                                                "sheetKey": "elements",
+                                                                "columnKey": "label2",
+                                                                "text": "elements/label2"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "subtitle2Column",
+                                                              "name": "subtitle2Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/subtitle2",
+                                                              "value": {
+                                                                "sheetKey": "elements",
+                                                                "columnKey": "subtitle2",
+                                                                "text": "elements/subtitle2"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "label3Column",
+                                                              "name": "label3Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/label3",
+                                                              "value": {
+                                                                "sheetKey": "elements",
+                                                                "columnKey": "label3",
+                                                                "text": "elements/label3"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "subtitle3Column",
+                                                              "name": "subtitle3Column",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/subtitle3",
+                                                              "value": {
+                                                                "sheetKey": "elements",
+                                                                "columnKey": "subtitle3",
+                                                                "text": "elements/subtitle3"
+                                                              }
+                                                            },
+                                                            {
+                                                              "id": "descriptionColumn",
+                                                              "name": "descriptionColumn",
+                                                              "type": "sheetColumn",
+                                                              "defaultValue": "elements/description",
+                                                              "value": {
+                                                                "sheetKey": "elements",
+                                                                "columnKey": "description",
+                                                                "text": "elements/description"
+                                                              }
+                                                            }
+                                                          ]
+                                                        }
+                                                      },
+                                                      "inputs": {
+                                                        "chips": {
+                                                          "block": {
+                                                            "type": "PopoutAudioButton",
+                                                            "id": "~=.l49$*,#Fe~7Ne-i(%",
+                                                            "data": "{\"origin\":\"interkit\"}",
+                                                            "fields": {
+                                                              "extraProps": {
+                                                                "props": [
+                                                                  {
+                                                                    "id": "audioColumn",
+                                                                    "name": "audioColumn",
+                                                                    "type": "sheetColumn",
+                                                                    "defaultValue": "elements/audio",
+                                                                    "help": "The column containing the audio file to play",
+                                                                    "value": {
+                                                                      "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                      "columnKey": "audio$lang",
+                                                                      "text": "exhibition/audio$lang",
+                                                                      "columnType": "mediaFile"
+                                                                    }
+                                                                  },
+                                                                  {
+                                                                    "id": "buttonOptions",
+                                                                    "name": "buttonOptions",
+                                                                    "type": "buttonOptions",
+                                                                    "value": {
+                                                                      "text": "",
+                                                                      "type": "secondary",
+                                                                      "size": "small",
+                                                                      "flex": "fill"
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Player": {
+                  "block": {
+                    "type": "AudioPlayer",
+                    "id": "93sz7or|B@].(oVWU):y",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "audioColumn": {
+                        "value": {
+                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang",
+                          "text": "exhibition/audio$lang"
+                        }
+                      },
+                      "titleColumn": {
+                        "value": {
+                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang",
+                          "text": "exhibition/title$lang"
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": ":jV|V8vDGl:Kl|BziE5J",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomBar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "Bm]MwPntJ,$Al%Y=U)Ok",
+        "x": 1802,
+        "y": -169,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/help",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "V?}v^=I:ofm-%!omYkrk",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "GdJxXK3ck)~K@6O[,mz:",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "backButton"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "GroupConnector",
+                        "id": "amdU_Ku^Mq_n)4B+}/3i",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "name": "topBar"
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "mC0R+4],Wa2)L}-p`,/i",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataLoaderSingle",
+                          "id": "Vxjs.TNS#?/NwuI`#y)p",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "sheet",
+                                  "type": "sheetId",
+                                  "help": "Select the sheet you want to load data from.",
+                                  "id": "sheet",
+                                  "value": {
+                                    "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                    "text": "menu"
+                                  }
+                                },
+                                {
+                                  "name": "rowKey",
+                                  "type": "string",
+                                  "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                  "id": "rowKey",
+                                  "value": "d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
+                                },
+                                {
+                                  "name": "customKeyColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "string",
+                                  "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                  "id": "customKeyColumn",
+                                  "value": {
+                                    "sheetKey": "empty",
+                                    "text": "",
+                                    "columnKey": "menu$lang",
+                                    "columnType": "string"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataCell",
+                                "id": "zRZCC0!(vcj@pgE,H6tj",
                                 "data": "{\"origin\":\"interkit\"}",
                                 "fields": {
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "size",
-                                        "name": "size",
+                                        "name": "column",
+                                        "type": "sheetColumn",
+                                        "columnType": "richText",
+                                        "defaultValue": "settings/content",
+                                        "id": "column",
+                                        "value": {
+                                          "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                          "columnKey": "menu$lang",
+                                          "text": "menu/menu$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "name": "format",
                                         "type": "options",
                                         "options": [
-                                          "large",
-                                          "medium",
-                                          "small"
+                                          "richText",
+                                          "string"
                                         ],
-                                        "value": "large"
+                                        "defaultValue": "richText",
+                                        "id": "format"
                                       },
                                       {
-                                        "id": "imageKey",
-                                        "name": "imageKey",
-                                        "type": "string",
-                                        "help": "Add the key of an image directly. You can find it from the media section.",
-                                        "value": "3d34da00-3166-4f84-8762-511e125aaa66"
-                                      },
-                                      {
-                                        "id": "label",
-                                        "name": "label",
-                                        "type": "string"
-                                      },
-                                      {
-                                        "id": "headline",
-                                        "name": "headline",
-                                        "type": "string",
-                                        "value": "$exhibition_title"
-                                      },
-                                      {
-                                        "id": "prompt",
-                                        "name": "prompt",
-                                        "type": "string"
-                                      },
-                                      {
-                                        "id": "description",
-                                        "name": "description",
-                                        "type": "string",
-                                        "value": "$exhibition_text"
+                                        "name": "centerContent",
+                                        "type": "checkbox",
+                                        "defaultValue": false,
+                                        "id": "centerContent",
+                                        "value": false
                                       }
                                     ]
                                   }
@@ -1452,11 +2154,483 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "DataRouteSingle",
+        "id": "HfApGuz|8`PDl?CvJ:Ca",
+        "x": 2441,
+        "y": -243,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/exhibition_artworks",
+          "sheet": {
+            "value": {
+              "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+              "text": "exhibition"
+            }
+          }
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShellAudio",
+              "id": "d};Na3~ATfs-tEGVWJd[",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "qi^Adan]DU{n;yKY}@k1",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "u%EDm?[)Vts-Fm/R8-Mm",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "StaticText",
+                          "id": "L,{l9(,Jg]MIkUql@jGk",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "text": "$exhibition_title"
+                          }
+                        }
+                      },
+                      "right": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "ZadeHNIRif!.;X{$7E`(",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "topBar"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "@AR8G;lO{~/`s7~d[MP(",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "SectionShell",
+                          "id": "I}c=/[r.}Z_OGUrknw)A",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataCard",
+                                "id": "RF[wI1z4m83${90Zv(.%",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "id": "variant",
+                                        "name": "variant",
+                                        "type": "options",
+                                        "options": [
+                                          "full",
+                                          "large",
+                                          "medium",
+                                          "small"
+                                        ],
+                                        "defaultValue": "full",
+                                        "value": "full"
+                                      },
+                                      {
+                                        "id": "rightArrow",
+                                        "name": "rightArrow",
+                                        "type": "checkbox",
+                                        "help": "Display the right arrow next to the headline"
+                                      },
+                                      {
+                                        "id": "effect",
+                                        "name": "effect",
+                                        "type": "effect",
+                                        "help": "What should happen when you tap on the card"
+                                      },
+                                      {
+                                        "id": "imageColumn",
+                                        "name": "imageColumn",
+                                        "type": "sheetColumn",
+                                        "columnType": "mediaFile",
+                                        "defaultValue": "elements/image",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "image$lang",
+                                          "text": "exhibition/image$lang",
+                                          "columnType": "mediaFile"
+                                        }
+                                      },
+                                      {
+                                        "id": "headlineColumn",
+                                        "name": "headlineColumn",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/headline",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "title$lang",
+                                          "text": "exhibition/title$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "label1Column",
+                                        "name": "label1Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/label1",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
+                                          "text": "exhibition/artist",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "subtitle1Column",
+                                        "name": "subtitle1Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/subtitle1",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "date$lang",
+                                          "text": "exhibition/date$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "label2Column",
+                                        "name": "label2Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/label2",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "material$lang",
+                                          "text": "exhibition/material$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "subtitle2Column",
+                                        "name": "subtitle2Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/subtitle2",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "size$lang",
+                                          "text": "exhibition/size$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "label3Column",
+                                        "name": "label3Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/label3",
+                                        "value": {
+                                          "sheetKey": "empty",
+                                          "columnKey": "empty",
+                                          "text": "",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "subtitle3Column",
+                                        "name": "subtitle3Column",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/subtitle3",
+                                        "value": {
+                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                          "columnKey": "institution$lang",
+                                          "text": "exhibition/institution$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "id": "descriptionColumn",
+                                        "name": "descriptionColumn",
+                                        "type": "sheetColumn",
+                                        "defaultValue": "elements/description",
+                                        "value": {
+                                          "sheetKey": "empty",
+                                          "columnKey": "transcript$lang",
+                                          "text": "",
+                                          "columnType": "richText"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                "inputs": {
+                                  "content": {
+                                    "block": {
+                                      "type": "HorizontalSpacer",
+                                      "id": "nL4]OH!j*O74w@s[tf7k",
+                                      "data": "{\"origin\":\"interkit\"}",
+                                      "inputs": {
+                                        "left": {
+                                          "block": {
+                                            "type": "PopoutAudioButton",
+                                            "id": "J=%]T8G.t6D7M`}XfBoL",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "fields": {
+                                              "extraProps": {
+                                                "props": [
+                                                  {
+                                                    "name": "audioColumn",
+                                                    "type": "sheetColumn",
+                                                    "defaultValue": "elements/audio",
+                                                    "help": "The column containing the audio file to play",
+                                                    "id": "audioColumn",
+                                                    "value": {
+                                                      "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                      "columnKey": "audio$lang",
+                                                      "text": "exhibition/audio$lang",
+                                                      "columnType": "mediaFile"
+                                                    }
+                                                  },
+                                                  {
+                                                    "name": "buttonOptions",
+                                                    "type": "buttonOptions",
+                                                    "id": "buttonOptions"
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "right": {
+                                          "block": {
+                                            "type": "AccordeonShell",
+                                            "id": "kfvdCj])9A]AH5PV{X;5",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "inputs": {
+                                              "label": {
+                                                "block": {
+                                                  "type": "Label",
+                                                  "id": "J|jp$9orSumvLe[pC{#{",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "id": "type",
+                                                          "name": "type",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "text",
+                                                            "icon"
+                                                          ],
+                                                          "value": "icon"
+                                                        },
+                                                        {
+                                                          "id": "variant",
+                                                          "name": "variant",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "strong",
+                                                            "normal",
+                                                            "soft"
+                                                          ],
+                                                          "value": "normal"
+                                                        },
+                                                        {
+                                                          "id": "content",
+                                                          "type": "string",
+                                                          "name": "content",
+                                                          "value": ""
+                                                        },
+                                                        {
+                                                          "id": "icon",
+                                                          "type": "options",
+                                                          "name": "icon",
+                                                          "options": [
+                                                            "Thin-AR",
+                                                            "Thin-Archiv",
+                                                            "Thin-Arrow-Left",
+                                                            "Thin-Arrow-Right",
+                                                            "Thin-Bookmark",
+                                                            "Thin-Camera",
+                                                            "Thin-Chat",
+                                                            "Thin-Check",
+                                                            "Thin-Close-Circle",
+                                                            "Thin-Close",
+                                                            "Thin-Copy",
+                                                            "Thin-Dashboard",
+                                                            "Thin-Dropdown-Up",
+                                                            "Thin-Dropdown",
+                                                            "Thin-Filter",
+                                                            "Thin-Forward-15",
+                                                            "Thin-FullScreen",
+                                                            "Thin-Hint",
+                                                            "Thin-Layer",
+                                                            "Thin-Location",
+                                                            "Thin-Map",
+                                                            "Thin-Menu",
+                                                            "Thin-Microphone",
+                                                            "Thin-Minus",
+                                                            "Thin-Pause",
+                                                            "Thin-Phaenomen",
+                                                            "Thin-Play",
+                                                            "Thin-Plus",
+                                                            "Thin-Position",
+                                                            "Thin-QR-Scan",
+                                                            "Thin-Replay-30",
+                                                            "Thin-Settings",
+                                                            "Thin-Social",
+                                                            "Thin-to_Gallery",
+                                                            "Thin-zoom-In",
+                                                            "Full-AR",
+                                                            "Full-Archiv",
+                                                            "Full-Bookmark",
+                                                            "Full-Camera",
+                                                            "Full-Chat",
+                                                            "Full-Check",
+                                                            "Full-Close-Circle",
+                                                            "Full-Copy",
+                                                            "Full-Dashboard",
+                                                            "Full-Date",
+                                                            "Full-Drag",
+                                                            "Full-FullScreen",
+                                                            "Full-GroupChat",
+                                                            "Full-Help",
+                                                            "Full-Layer",
+                                                            "Full-List",
+                                                            "Full-Location",
+                                                            "Full-Map",
+                                                            "Full-Menu",
+                                                            "Full-Microphone",
+                                                            "Full-More-1",
+                                                            "Full-More",
+                                                            "Full-Pause",
+                                                            "Full-Phaenomen",
+                                                            "Full-Play",
+                                                            "Full-QR-Scan",
+                                                            "Full-Send",
+                                                            "Full-Settings",
+                                                            "Full-SingleChat",
+                                                            "Full-Social",
+                                                            "Full-Splitscreen",
+                                                            "Full-Warning",
+                                                            "Full-to_Gallery"
+                                                          ],
+                                                          "help": "Select an icon.",
+                                                          "value": "Full-More-1"
+                                                        }
+                                                      ]
+                                                    }
+                                                  },
+                                                  "next": {
+                                                    "block": {
+                                                      "type": "StaticText",
+                                                      "id": "$Z^z7sDH22ru1*o4=J=~",
+                                                      "data": "{\"origin\":\"interkit\"}",
+                                                      "fields": {
+                                                        "text": "$button_transcript"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "content": {
+                                                "block": {
+                                                  "type": "DataCell",
+                                                  "id": "xU3!Pz-0=;m7M_m~_UNh",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "name": "column",
+                                                          "type": "sheetColumn",
+                                                          "columnType": "richText",
+                                                          "defaultValue": "settings/content",
+                                                          "id": "column",
+                                                          "value": {
+                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                            "columnKey": "transcript$lang",
+                                                            "text": "exhibition/transcript$lang",
+                                                            "columnType": "richText"
+                                                          }
+                                                        },
+                                                        {
+                                                          "name": "format",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "richText",
+                                                            "string"
+                                                          ],
+                                                          "defaultValue": "richText",
+                                                          "id": "format"
+                                                        },
+                                                        {
+                                                          "name": "centerContent",
+                                                          "type": "checkbox",
+                                                          "defaultValue": false,
+                                                          "id": "centerContent"
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Player": {
+                  "block": {
+                    "type": "AudioPlayer",
+                    "id": "_[Q6bZc9uNoN/45hZr#I",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "audioColumn": {
+                        "value": {
+                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang",
+                          "text": "exhibition/audio$lang"
+                        }
+                      },
+                      "titleColumn": {
+                        "value": {
+                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang",
+                          "text": "exhibition/title$lang"
+                        }
+                      }
+                    }
+                  }
                 },
                 "BottomBar": {
                   "block": {
                     "type": "GroupConnector",
-                    "id": ":jV|V8vDGl:Kl|BziE5J",
+                    "id": ",*bS0Hs6_ekkSN9]K3VF",
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "name": "bottomBar"
