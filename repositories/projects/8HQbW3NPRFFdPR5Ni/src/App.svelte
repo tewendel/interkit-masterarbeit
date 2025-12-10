@@ -28,6 +28,7 @@ import PopoutAudioButton from "interkit/components/PopoutAudioButton.svelte";
 import Route from "interkit/components/Route.svelte";
 import ScrollContainer from "interkit/components/ScrollContainer.svelte";
 import SectionShell from "interkit/components/SectionShell.svelte";
+import Spacing from "interkit/components/Spacing.svelte";
 import StaticText from "interkit/components/StaticText.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
 import styleTokens from "./styleTokens.json";
@@ -413,50 +414,99 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     >
       <SectionShell
       >
-        <DataCard
-           variant="full"
-              effect={undefined}
-           imageColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "image$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/image$lang"}   headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-           subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
-        <svelte:fragment slot="chips">
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          <HorizontalSpacer
-          >
-          <svelte:fragment slot="left">
+        <Spacing
+           top="s"
+           right="s"
+           bottom="s"
+           left="s"
+        >
+          <DataCard
+             variant="full"
+                effect={undefined}
+             imageColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "image$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/image$lang"}   headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+             subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+          <svelte:fragment slot="chips">
+          </svelte:fragment>
+          <svelte:fragment slot="content">
             <PopoutAudioButton
-               audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={undefined}
+               audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={{"text":"","type":"secondary","size":"medium","flex":"fill"}}
             >
             </PopoutAudioButton>
           </svelte:fragment>
-          <svelte:fragment slot="center">
-          </svelte:fragment>
-          <svelte:fragment slot="right">
-            <AccordeonShell
-            >
-            <svelte:fragment slot="label">
-              <Label
-                 type="icon"
-                 variant="normal"
-                    icon="Full-More-1"
-              >
-              </Label>
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$button_transcript"] ? $translations[$lang]["$button_transcript"] : "button_transcript") : ($translations.en && $translations.en["$button_transcript"] ? $translations.en["$button_transcript"] : "…")}>
-              </StaticText>
-            </svelte:fragment>
-            <svelte:fragment slot="content">
-              <DataCell
-                 column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
-                 centerContent={false}
-              >
-              </DataCell>
-            </svelte:fragment>
-            </AccordeonShell>
-          </svelte:fragment>
-          </HorizontalSpacer>
+          </DataCard>
+        </Spacing>
+      </SectionShell>
+      <SectionShell
+      >
+        <AccordeonShell
+        >
+        <svelte:fragment slot="label">
+          <Label
+             type="icon"
+             variant="normal"
+                icon="Full-More-1"
+          >
+          </Label>
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$button_transcript"] ? $translations[$lang]["$button_transcript"] : "button_transcript") : ($translations.en && $translations.en["$button_transcript"] ? $translations.en["$button_transcript"] : "…")}>
+          </StaticText>
         </svelte:fragment>
-        </DataCard>
+        <svelte:fragment slot="content">
+          <DataCell
+             column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </svelte:fragment>
+        </AccordeonShell>
+      </SectionShell>
+      <SectionShell
+      >
+        <Spacing
+           top="s"
+           right="s"
+           bottom="s"
+           left="s"
+        >
+          <TextFormat
+             interfaceFormat="headline-5"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_text"] ? $translations[$lang]["$feelings_text"] : "feelings_text") : ($translations.en && $translations.en["$feelings_text"] ? $translations.en["$feelings_text"] : "…")}>
+            </StaticText>
+          </TextFormat>
+          <ButtonBar
+             justify="left"
+             helpText={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_description"] ? $translations[$lang]["$feelings_description"] : "feelings_description") : "…"}>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+                  effect={undefined}
+            >
+              <Icon
+                 type="Thin-Minus"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+                  effect={undefined}
+            >
+              <Icon
+                 type="Thin-Plus"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </Spacing>
       </SectionShell>
     </ScrollContainer>
   </svelte:fragment>
@@ -1228,50 +1278,99 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         >
           <SectionShell
           >
-            <DataCard
-               variant="full"
-                  effect={undefined}
-               imageColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "image$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/image$lang"}   headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-               subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
-            <svelte:fragment slot="chips">
-            </svelte:fragment>
-            <svelte:fragment slot="content">
-              <HorizontalSpacer
-              >
-              <svelte:fragment slot="left">
+            <Spacing
+               top="s"
+               right="s"
+               bottom="s"
+               left="s"
+            >
+              <DataCard
+                 variant="full"
+                    effect={undefined}
+                 imageColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "image$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/image$lang"}   headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+              <svelte:fragment slot="chips">
+              </svelte:fragment>
+              <svelte:fragment slot="content">
                 <PopoutAudioButton
-                   audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={undefined}
+                   audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={{"text":"","type":"secondary","size":"medium","flex":"fill"}}
                 >
                 </PopoutAudioButton>
               </svelte:fragment>
-              <svelte:fragment slot="center">
-              </svelte:fragment>
-              <svelte:fragment slot="right">
-                <AccordeonShell
-                >
-                <svelte:fragment slot="label">
-                  <Label
-                     type="icon"
-                     variant="normal"
-                        icon="Full-More-1"
-                  >
-                  </Label>
-                  <StaticText
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$button_transcript"] ? $translations[$lang]["$button_transcript"] : "button_transcript") : ($translations.en && $translations.en["$button_transcript"] ? $translations.en["$button_transcript"] : "…")}>
-                  </StaticText>
-                </svelte:fragment>
-                <svelte:fragment slot="content">
-                  <DataCell
-                     column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
-                     centerContent={false}
-                  >
-                  </DataCell>
-                </svelte:fragment>
-                </AccordeonShell>
-              </svelte:fragment>
-              </HorizontalSpacer>
+              </DataCard>
+            </Spacing>
+          </SectionShell>
+          <SectionShell
+          >
+            <AccordeonShell
+            >
+            <svelte:fragment slot="label">
+              <Label
+                 type="icon"
+                 variant="normal"
+                    icon="Full-More-1"
+              >
+              </Label>
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$button_transcript"] ? $translations[$lang]["$button_transcript"] : "button_transcript") : ($translations.en && $translations.en["$button_transcript"] ? $translations.en["$button_transcript"] : "…")}>
+              </StaticText>
             </svelte:fragment>
-            </DataCard>
+            <svelte:fragment slot="content">
+              <DataCell
+                 column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
+                 centerContent={false}
+              >
+              </DataCell>
+            </svelte:fragment>
+            </AccordeonShell>
+          </SectionShell>
+          <SectionShell
+          >
+            <Spacing
+               top="s"
+               right="s"
+               bottom="s"
+               left="s"
+            >
+              <TextFormat
+                 interfaceFormat="headline-5"
+                 contentFormat="none"
+              >
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_text"] ? $translations[$lang]["$feelings_text"] : "feelings_text") : ($translations.en && $translations.en["$feelings_text"] ? $translations.en["$feelings_text"] : "…")}>
+                </StaticText>
+              </TextFormat>
+              <ButtonBar
+                 justify="left"
+                 helpText={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_description"] ? $translations[$lang]["$feelings_description"] : "feelings_description") : "…"}>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                      effect={undefined}
+                >
+                  <Icon
+                     type="Thin-Minus"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                      effect={undefined}
+                >
+                  <Icon
+                     type="Thin-Plus"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+              </ButtonBar>
+            </Spacing>
           </SectionShell>
         </ScrollContainer>
       </svelte:fragment>
