@@ -1,7 +1,7 @@
-# Masterarbeit mit Interkit
+# Masterarbeit X Interkit
 
 Dieses Repository enthält das Setup und die Projektdaten für die Masterarbeit  
-**„<TITEL>“** von **<TERESA WENDEL>**.
+„Digitale Vermittlung im Museum: Potenziale offener Systeme am Beispiel von interkit. Eine Fallstudie zur Anwendung und Weiterentwicklung am Museum für Gegenwartskunst Siegen (AT)“ von Teresa Wendel.
 
 Es basiert auf dem Open-Source-Projekt **Interkit**  
 (Original-Repository: https://gitlab.interkit.app/interkit/interkit-experiments).
@@ -25,21 +25,25 @@ Alle Rechte und das Copyright verbleiben bei den ursprünglichen Autor:innen von
 
 ### Eigenleistung im Rahmen der Masterarbeit
 
+...
 
 ---
 
 ## Projektstruktur
 
+...
 
 ---
 
 ## Voraussetzungen
 
+...
 
 ---
 
 ## Lokale Entwicklung (Docker)
 
+...
 
 ---
 
