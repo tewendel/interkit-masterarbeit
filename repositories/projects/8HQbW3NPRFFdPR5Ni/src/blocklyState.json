@@ -1620,7 +1620,6 @@
                                                         "extraProps": {
                                                           "props": [
                                                             {
-                                                              "id": "variant",
                                                               "name": "variant",
                                                               "type": "options",
                                                               "options": [
@@ -1630,31 +1629,32 @@
                                                                 "small"
                                                               ],
                                                               "defaultValue": "full",
+                                                              "id": "variant",
                                                               "value": "small"
                                                             },
                                                             {
-                                                              "id": "rightArrow",
                                                               "name": "rightArrow",
                                                               "type": "checkbox",
                                                               "help": "Display the right arrow next to the headline",
+                                                              "id": "rightArrow",
                                                               "value": false
                                                             },
                                                             {
-                                                              "id": "effect",
                                                               "name": "effect",
                                                               "type": "effect",
                                                               "help": "What should happen when you tap on the card",
+                                                              "id": "effect",
                                                               "value": {
                                                                 "effectType": "dataRouteSingle",
                                                                 "path": "/exhibition_artworks"
                                                               }
                                                             },
                                                             {
-                                                              "id": "imageColumn",
                                                               "name": "imageColumn",
                                                               "type": "sheetColumn",
                                                               "columnType": "mediaFile",
                                                               "defaultValue": "elements/image",
+                                                              "id": "imageColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -1663,10 +1663,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "headlineColumn",
                                                               "name": "headlineColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/headline",
+                                                              "id": "headlineColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "title$lang",
@@ -1675,10 +1675,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label1Column",
                                                               "name": "label1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label1",
+                                                              "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
@@ -1687,10 +1687,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle1Column",
                                                               "name": "subtitle1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle1",
+                                                              "id": "subtitle1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "date$lang",
@@ -1699,10 +1699,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label2Column",
                                                               "name": "label2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label2",
+                                                              "id": "label2Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "label2",
@@ -1710,10 +1710,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle2Column",
                                                               "name": "subtitle2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle2",
+                                                              "id": "subtitle2Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle2",
@@ -1721,10 +1721,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label3Column",
                                                               "name": "label3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label3",
+                                                              "id": "label3Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "label3",
@@ -1732,10 +1732,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle3Column",
                                                               "name": "subtitle3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle3",
+                                                              "id": "subtitle3Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle3",
@@ -1743,10 +1743,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "descriptionColumn",
                                                               "name": "descriptionColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/description",
+                                                              "id": "descriptionColumn",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "description",
@@ -2141,7 +2141,6 @@
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "justify",
                                         "name": "justify",
                                         "type": "options",
                                         "options": [
@@ -2151,13 +2150,14 @@
                                         ],
                                         "defaultValue": "left",
                                         "help": "Where the buttons in the bar are justified",
+                                        "id": "justify",
                                         "value": "center"
                                       },
                                       {
-                                        "id": "helpText",
                                         "name": "helpText",
                                         "type": "string",
-                                        "help": "An explanation text below the buttonBar"
+                                        "help": "An explanation text below the buttonBar",
+                                        "id": "helpText"
                                       }
                                     ]
                                   }
@@ -2184,7 +2184,6 @@
                                               "extraProps": {
                                                 "props": [
                                                   {
-                                                    "id": "type",
                                                     "name": "type",
                                                     "type": "options",
                                                     "options": [
@@ -2196,10 +2195,10 @@
                                                     ],
                                                     "defaultValue": "secondary",
                                                     "help": "Appearance of the button.",
+                                                    "id": "type",
                                                     "value": "primary"
                                                   },
                                                   {
-                                                    "id": "size",
                                                     "name": "size",
                                                     "type": "options",
                                                     "options": [
@@ -2208,10 +2207,10 @@
                                                       "large"
                                                     ],
                                                     "defaultValue": "small",
-                                                    "help": "Large, medium or small."
+                                                    "help": "Large, medium or small.",
+                                                    "id": "size"
                                                   },
                                                   {
-                                                    "id": "flex",
                                                     "name": "flex",
                                                     "type": "options",
                                                     "options": [
@@ -2219,25 +2218,26 @@
                                                       "fill"
                                                     ],
                                                     "defaultValue": "normal",
-                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                    "id": "flex"
                                                   },
                                                   {
-                                                    "id": "disabled",
                                                     "name": "disabled",
                                                     "type": "checkbox",
-                                                    "defaultValue": false
+                                                    "defaultValue": false,
+                                                    "id": "disabled"
                                                   },
                                                   {
-                                                    "id": "ariaLabel",
                                                     "type": "string",
                                                     "name": "ariaLabel",
-                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                    "id": "ariaLabel"
                                                   },
                                                   {
-                                                    "id": "effect",
                                                     "type": "effect",
                                                     "name": "effect",
                                                     "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                    "id": "effect",
                                                     "value": {
                                                       "effectType": "setUIKey",
                                                       "value": "guide",
@@ -2259,7 +2259,6 @@
                                               "extraProps": {
                                                 "props": [
                                                   {
-                                                    "id": "type",
                                                     "name": "type",
                                                     "type": "options",
                                                     "options": [
@@ -2271,10 +2270,10 @@
                                                     ],
                                                     "defaultValue": "secondary",
                                                     "help": "Appearance of the button.",
+                                                    "id": "type",
                                                     "value": "ghost"
                                                   },
                                                   {
-                                                    "id": "size",
                                                     "name": "size",
                                                     "type": "options",
                                                     "options": [
@@ -2283,10 +2282,10 @@
                                                       "large"
                                                     ],
                                                     "defaultValue": "small",
-                                                    "help": "Large, medium or small."
+                                                    "help": "Large, medium or small.",
+                                                    "id": "size"
                                                   },
                                                   {
-                                                    "id": "flex",
                                                     "name": "flex",
                                                     "type": "options",
                                                     "options": [
@@ -2294,25 +2293,26 @@
                                                       "fill"
                                                     ],
                                                     "defaultValue": "normal",
-                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                    "id": "flex"
                                                   },
                                                   {
-                                                    "id": "disabled",
                                                     "name": "disabled",
                                                     "type": "checkbox",
-                                                    "defaultValue": false
+                                                    "defaultValue": false,
+                                                    "id": "disabled"
                                                   },
                                                   {
-                                                    "id": "ariaLabel",
                                                     "type": "string",
                                                     "name": "ariaLabel",
-                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                    "id": "ariaLabel"
                                                   },
                                                   {
-                                                    "id": "effect",
                                                     "type": "effect",
                                                     "name": "effect",
                                                     "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                    "id": "effect",
                                                     "value": {
                                                       "effectType": "setUIKey",
                                                       "value": "guide",
@@ -2346,7 +2346,6 @@
                                                   "extraProps": {
                                                     "props": [
                                                       {
-                                                        "id": "type",
                                                         "name": "type",
                                                         "type": "options",
                                                         "options": [
@@ -2358,10 +2357,10 @@
                                                         ],
                                                         "defaultValue": "secondary",
                                                         "help": "Appearance of the button.",
+                                                        "id": "type",
                                                         "value": "primary"
                                                       },
                                                       {
-                                                        "id": "size",
                                                         "name": "size",
                                                         "type": "options",
                                                         "options": [
@@ -2370,10 +2369,10 @@
                                                           "large"
                                                         ],
                                                         "defaultValue": "small",
-                                                        "help": "Large, medium or small."
+                                                        "help": "Large, medium or small.",
+                                                        "id": "size"
                                                       },
                                                       {
-                                                        "id": "flex",
                                                         "name": "flex",
                                                         "type": "options",
                                                         "options": [
@@ -2381,25 +2380,26 @@
                                                           "fill"
                                                         ],
                                                         "defaultValue": "normal",
-                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                        "id": "flex"
                                                       },
                                                       {
-                                                        "id": "disabled",
                                                         "name": "disabled",
                                                         "type": "checkbox",
-                                                        "defaultValue": false
+                                                        "defaultValue": false,
+                                                        "id": "disabled"
                                                       },
                                                       {
-                                                        "id": "ariaLabel",
                                                         "type": "string",
                                                         "name": "ariaLabel",
-                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                        "id": "ariaLabel"
                                                       },
                                                       {
-                                                        "id": "effect",
                                                         "type": "effect",
                                                         "name": "effect",
                                                         "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                        "id": "effect",
                                                         "value": {
                                                           "effectType": "setUIKey",
                                                           "value": "data",
@@ -2421,7 +2421,6 @@
                                                   "extraProps": {
                                                     "props": [
                                                       {
-                                                        "id": "type",
                                                         "name": "type",
                                                         "type": "options",
                                                         "options": [
@@ -2433,10 +2432,10 @@
                                                         ],
                                                         "defaultValue": "secondary",
                                                         "help": "Appearance of the button.",
+                                                        "id": "type",
                                                         "value": "ghost"
                                                       },
                                                       {
-                                                        "id": "size",
                                                         "name": "size",
                                                         "type": "options",
                                                         "options": [
@@ -2445,10 +2444,10 @@
                                                           "large"
                                                         ],
                                                         "defaultValue": "small",
-                                                        "help": "Large, medium or small."
+                                                        "help": "Large, medium or small.",
+                                                        "id": "size"
                                                       },
                                                       {
-                                                        "id": "flex",
                                                         "name": "flex",
                                                         "type": "options",
                                                         "options": [
@@ -2456,25 +2455,26 @@
                                                           "fill"
                                                         ],
                                                         "defaultValue": "normal",
-                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                        "id": "flex"
                                                       },
                                                       {
-                                                        "id": "disabled",
                                                         "name": "disabled",
                                                         "type": "checkbox",
-                                                        "defaultValue": false
+                                                        "defaultValue": false,
+                                                        "id": "disabled"
                                                       },
                                                       {
-                                                        "id": "ariaLabel",
                                                         "type": "string",
                                                         "name": "ariaLabel",
-                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                        "id": "ariaLabel"
                                                       },
                                                       {
-                                                        "id": "effect",
                                                         "type": "effect",
                                                         "name": "effect",
                                                         "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                        "id": "effect",
                                                         "value": {
                                                           "effectType": "setUIKey",
                                                           "value": "data",
@@ -2512,7 +2512,6 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "top",
                                                   "name": "top",
                                                   "type": "options",
                                                   "options": [
@@ -2525,10 +2524,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "top",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "right",
                                                   "name": "right",
                                                   "type": "options",
                                                   "options": [
@@ -2541,10 +2540,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "right",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "bottom",
                                                   "name": "bottom",
                                                   "type": "options",
                                                   "options": [
@@ -2557,10 +2556,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "bottom",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "left",
                                                   "name": "left",
                                                   "type": "options",
                                                   "options": [
@@ -2573,6 +2572,7 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "left",
                                                   "value": "s"
                                                 }
                                               ]
@@ -2588,7 +2588,6 @@
                                                   "extraProps": {
                                                     "props": [
                                                       {
-                                                        "id": "interfaceFormat",
                                                         "type": "options",
                                                         "name": "interfaceFormat",
                                                         "options": [
@@ -2609,10 +2608,10 @@
                                                         ],
                                                         "defaultValue": "none",
                                                         "help": "Use these formats to select typography for parts of the interface.",
+                                                        "id": "interfaceFormat",
                                                         "value": "headline-3"
                                                       },
                                                       {
-                                                        "id": "contentFormat",
                                                         "type": "options",
                                                         "name": "contentFormat",
                                                         "options": [
@@ -2626,7 +2625,8 @@
                                                           "body-2"
                                                         ],
                                                         "defaultValue": "none",
-                                                        "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                                        "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                                        "id": "contentFormat"
                                                       }
                                                     ]
                                                   }
@@ -2661,7 +2661,6 @@
                                                       "extraProps": {
                                                         "props": [
                                                           {
-                                                            "id": "top",
                                                             "name": "top",
                                                             "type": "options",
                                                             "options": [
@@ -2674,10 +2673,10 @@
                                                               "xl",
                                                               "xxl"
                                                             ],
+                                                            "id": "top",
                                                             "value": "s"
                                                           },
                                                           {
-                                                            "id": "right",
                                                             "name": "right",
                                                             "type": "options",
                                                             "options": [
@@ -2690,10 +2689,10 @@
                                                               "xl",
                                                               "xxl"
                                                             ],
+                                                            "id": "right",
                                                             "value": "s"
                                                           },
                                                           {
-                                                            "id": "bottom",
                                                             "name": "bottom",
                                                             "type": "options",
                                                             "options": [
@@ -2706,10 +2705,10 @@
                                                               "xl",
                                                               "xxl"
                                                             ],
+                                                            "id": "bottom",
                                                             "value": "s"
                                                           },
                                                           {
-                                                            "id": "left",
                                                             "name": "left",
                                                             "type": "options",
                                                             "options": [
@@ -2722,6 +2721,7 @@
                                                               "xl",
                                                               "xxl"
                                                             ],
+                                                            "id": "left",
                                                             "value": "s"
                                                           }
                                                         ]
@@ -2737,7 +2737,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "variant",
                                                                   "name": "variant",
                                                                   "type": "options",
                                                                   "options": [
@@ -2747,26 +2746,27 @@
                                                                     "small"
                                                                   ],
                                                                   "defaultValue": "full",
+                                                                  "id": "variant",
                                                                   "value": "full"
                                                                 },
                                                                 {
-                                                                  "id": "rightArrow",
                                                                   "name": "rightArrow",
                                                                   "type": "checkbox",
-                                                                  "help": "Display the right arrow next to the headline"
+                                                                  "help": "Display the right arrow next to the headline",
+                                                                  "id": "rightArrow"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "name": "effect",
                                                                   "type": "effect",
-                                                                  "help": "What should happen when you tap on the card"
+                                                                  "help": "What should happen when you tap on the card",
+                                                                  "id": "effect"
                                                                 },
                                                                 {
-                                                                  "id": "imageColumn",
                                                                   "name": "imageColumn",
                                                                   "type": "sheetColumn",
                                                                   "columnType": "mediaFile",
                                                                   "defaultValue": "elements/image",
+                                                                  "id": "imageColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -2775,10 +2775,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "headlineColumn",
                                                                   "name": "headlineColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/headline",
+                                                                  "id": "headlineColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "title$lang",
@@ -2787,10 +2787,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label1Column",
                                                                   "name": "label1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label1",
+                                                                  "id": "label1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
@@ -2799,10 +2799,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle1Column",
                                                                   "name": "subtitle1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle1",
+                                                                  "id": "subtitle1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "date$lang",
@@ -2811,10 +2811,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label2Column",
                                                                   "name": "label2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label2",
+                                                                  "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "material$lang",
@@ -2823,10 +2823,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle2Column",
                                                                   "name": "subtitle2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle2",
+                                                                  "id": "subtitle2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "size$lang",
@@ -2835,10 +2835,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label3Column",
                                                                   "name": "label3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
+                                                                  "id": "label3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "empty",
@@ -2847,10 +2847,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle3Column",
                                                                   "name": "subtitle3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle3",
+                                                                  "id": "subtitle3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "institution$lang",
@@ -2859,10 +2859,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "descriptionColumn",
                                                                   "name": "descriptionColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/description",
+                                                                  "id": "descriptionColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "transcript$lang",
@@ -2918,7 +2918,6 @@
                                                                       "extraProps": {
                                                                         "props": [
                                                                           {
-                                                                            "id": "top",
                                                                             "name": "top",
                                                                             "type": "options",
                                                                             "options": [
@@ -2931,10 +2930,10 @@
                                                                               "xl",
                                                                               "xxl"
                                                                             ],
+                                                                            "id": "top",
                                                                             "value": "m"
                                                                           },
                                                                           {
-                                                                            "id": "right",
                                                                             "name": "right",
                                                                             "type": "options",
                                                                             "options": [
@@ -2947,10 +2946,10 @@
                                                                               "xl",
                                                                               "xxl"
                                                                             ],
+                                                                            "id": "right",
                                                                             "value": "none"
                                                                           },
                                                                           {
-                                                                            "id": "bottom",
                                                                             "name": "bottom",
                                                                             "type": "options",
                                                                             "options": [
@@ -2963,10 +2962,10 @@
                                                                               "xl",
                                                                               "xxl"
                                                                             ],
+                                                                            "id": "bottom",
                                                                             "value": "none"
                                                                           },
                                                                           {
-                                                                            "id": "left",
                                                                             "name": "left",
                                                                             "type": "options",
                                                                             "options": [
@@ -2979,6 +2978,7 @@
                                                                               "xl",
                                                                               "xxl"
                                                                             ],
+                                                                            "id": "left",
                                                                             "value": "none"
                                                                           }
                                                                         ]
@@ -3045,6 +3045,825 @@
                                                                             }
                                                                           }
                                                                         }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          },
+                                                          "next": {
+                                                            "block": {
+                                                              "type": "IfUIKey",
+                                                              "id": "{qL*FO[hhkUkf)27QL`g",
+                                                              "data": "{\"origin\":\"interkit\"}",
+                                                              "fields": {
+                                                                "storeType": "UIKey",
+                                                                "key": "overlayImage",
+                                                                "value": "1"
+                                                              },
+                                                              "inputs": {
+                                                                "iftrue": {
+                                                                  "block": {
+                                                                    "type": "OverlayFull",
+                                                                    "id": "R);MPl)%%RX=x(|ZuM6T",
+                                                                    "data": "{\"origin\":\"interkit\"}",
+                                                                    "fields": {
+                                                                      "extraProps": {
+                                                                        "props": [
+                                                                          {
+                                                                            "id": "closeEffect",
+                                                                            "name": "closeEffect",
+                                                                            "type": "effect",
+                                                                            "help": "What should happen when close button is tapped",
+                                                                            "value": {
+                                                                              "effectType": "setUIKey",
+                                                                              "value": "0",
+                                                                              "key": "overlayImage"
+                                                                            }
+                                                                          },
+                                                                          {
+                                                                            "id": "customStyle",
+                                                                            "type": "string",
+                                                                            "name": "customStyle",
+                                                                            "help": "A css style, eg 'background-color: white;'"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    },
+                                                                    "inputs": {
+                                                                      "default": {
+                                                                        "block": {
+                                                                          "type": "Image",
+                                                                          "id": "]9lNNLLaQg|jy.:A]s9@",
+                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "fields": {
+                                                                            "extraProps": {
+                                                                              "props": [
+                                                                                {
+                                                                                  "name": "mediafileKey",
+                                                                                  "type": "string",
+                                                                                  "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                  "id": "mediafileKey"
+                                                                                },
+                                                                                {
+                                                                                  "name": "altText",
+                                                                                  "type": "string",
+                                                                                  "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                  "id": "altText"
+                                                                                },
+                                                                                {
+                                                                                  "name": "imageColumn",
+                                                                                  "type": "sheetColumn",
+                                                                                  "columnType": "mediaFile",
+                                                                                  "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                  "id": "imageColumn",
+                                                                                  "value": {
+                                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                    "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
+                                                                                    "text": "exhibition/image_1",
+                                                                                    "columnType": "mediaFile"
+                                                                                  }
+                                                                                },
+                                                                                {
+                                                                                  "name": "altColumn",
+                                                                                  "type": "sheetColumn",
+                                                                                  "columnType": "string",
+                                                                                  "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                  "id": "altColumn",
+                                                                                  "value": {
+                                                                                    "sheetKey": "empty",
+                                                                                    "text": ""
+                                                                                  }
+                                                                                },
+                                                                                {
+                                                                                  "name": "width",
+                                                                                  "type": "string",
+                                                                                  "defaultValue": "100%",
+                                                                                  "id": "width"
+                                                                                },
+                                                                                {
+                                                                                  "name": "height",
+                                                                                  "type": "string",
+                                                                                  "id": "height"
+                                                                                },
+                                                                                {
+                                                                                  "name": "customStyle",
+                                                                                  "type": "string",
+                                                                                  "id": "customStyle"
+                                                                                },
+                                                                                {
+                                                                                  "name": "classes",
+                                                                                  "type": "string",
+                                                                                  "id": "classes"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                "else": {
+                                                                  "block": {
+                                                                    "type": "IfUIKey",
+                                                                    "id": "-L1(0y=.Zr=IOG)3!|J8",
+                                                                    "data": "{\"origin\":\"interkit\"}",
+                                                                    "fields": {
+                                                                      "storeType": "UIKey",
+                                                                      "key": "overlayImage",
+                                                                      "value": "2"
+                                                                    },
+                                                                    "inputs": {
+                                                                      "iftrue": {
+                                                                        "block": {
+                                                                          "type": "OverlayFull",
+                                                                          "id": "q@jE$k=S:Os4:GcQ=FP#",
+                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "fields": {
+                                                                            "extraProps": {
+                                                                              "props": [
+                                                                                {
+                                                                                  "id": "closeEffect",
+                                                                                  "name": "closeEffect",
+                                                                                  "type": "effect",
+                                                                                  "help": "What should happen when close button is tapped",
+                                                                                  "value": {
+                                                                                    "effectType": "setUIKey",
+                                                                                    "value": "0",
+                                                                                    "key": "overlayImage"
+                                                                                  }
+                                                                                },
+                                                                                {
+                                                                                  "id": "customStyle",
+                                                                                  "type": "string",
+                                                                                  "name": "customStyle",
+                                                                                  "help": "A css style, eg 'background-color: white;'"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          },
+                                                                          "inputs": {
+                                                                            "default": {
+                                                                              "block": {
+                                                                                "type": "Image",
+                                                                                "id": "}g7U2!.vi?$R(eeb.n=d",
+                                                                                "data": "{\"origin\":\"interkit\"}",
+                                                                                "fields": {
+                                                                                  "extraProps": {
+                                                                                    "props": [
+                                                                                      {
+                                                                                        "name": "mediafileKey",
+                                                                                        "type": "string",
+                                                                                        "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                        "id": "mediafileKey"
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "altText",
+                                                                                        "type": "string",
+                                                                                        "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                        "id": "altText"
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "imageColumn",
+                                                                                        "type": "sheetColumn",
+                                                                                        "columnType": "mediaFile",
+                                                                                        "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                        "id": "imageColumn",
+                                                                                        "value": {
+                                                                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                          "columnKey": "9e8c6ee5-4ce6-4eed-844b-c9739fb50885",
+                                                                                          "text": "exhibition/image_2",
+                                                                                          "columnType": "mediaFile"
+                                                                                        }
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "altColumn",
+                                                                                        "type": "sheetColumn",
+                                                                                        "columnType": "string",
+                                                                                        "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                        "id": "altColumn",
+                                                                                        "value": {
+                                                                                          "sheetKey": "empty",
+                                                                                          "text": ""
+                                                                                        }
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "width",
+                                                                                        "type": "string",
+                                                                                        "defaultValue": "100%",
+                                                                                        "id": "width"
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "height",
+                                                                                        "type": "string",
+                                                                                        "id": "height"
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "customStyle",
+                                                                                        "type": "string",
+                                                                                        "id": "customStyle"
+                                                                                      },
+                                                                                      {
+                                                                                        "name": "classes",
+                                                                                        "type": "string",
+                                                                                        "id": "classes"
+                                                                                      }
+                                                                                    ]
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      "else": {
+                                                                        "block": {
+                                                                          "type": "IfUIKey",
+                                                                          "id": "x5N|(!o(`r$Sr}9Zq?;K",
+                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "fields": {
+                                                                            "storeType": "UIKey",
+                                                                            "key": "overlayImage",
+                                                                            "value": "3"
+                                                                          },
+                                                                          "inputs": {
+                                                                            "iftrue": {
+                                                                              "block": {
+                                                                                "type": "OverlayFull",
+                                                                                "id": "=b?j-vV7j+YMoe%g0_4:",
+                                                                                "data": "{\"origin\":\"interkit\"}",
+                                                                                "fields": {
+                                                                                  "extraProps": {
+                                                                                    "props": [
+                                                                                      {
+                                                                                        "id": "closeEffect",
+                                                                                        "name": "closeEffect",
+                                                                                        "type": "effect",
+                                                                                        "help": "What should happen when close button is tapped",
+                                                                                        "value": {
+                                                                                          "effectType": "setUIKey",
+                                                                                          "value": "0",
+                                                                                          "key": "overlayImage"
+                                                                                        }
+                                                                                      },
+                                                                                      {
+                                                                                        "id": "customStyle",
+                                                                                        "type": "string",
+                                                                                        "name": "customStyle",
+                                                                                        "help": "A css style, eg 'background-color: white;'"
+                                                                                      }
+                                                                                    ]
+                                                                                  }
+                                                                                },
+                                                                                "inputs": {
+                                                                                  "default": {
+                                                                                    "block": {
+                                                                                      "type": "Image",
+                                                                                      "id": "}O6*iUZ?_[vFNfGZ!|*x",
+                                                                                      "data": "{\"origin\":\"interkit\"}",
+                                                                                      "fields": {
+                                                                                        "extraProps": {
+                                                                                          "props": [
+                                                                                            {
+                                                                                              "name": "mediafileKey",
+                                                                                              "type": "string",
+                                                                                              "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                              "id": "mediafileKey"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "altText",
+                                                                                              "type": "string",
+                                                                                              "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                              "id": "altText"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "imageColumn",
+                                                                                              "type": "sheetColumn",
+                                                                                              "columnType": "mediaFile",
+                                                                                              "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                              "id": "imageColumn",
+                                                                                              "value": {
+                                                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                                "columnKey": "48789c75-cff9-4a91-863f-387de78adea8",
+                                                                                                "text": "exhibition/image_3",
+                                                                                                "columnType": "mediaFile"
+                                                                                              }
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "altColumn",
+                                                                                              "type": "sheetColumn",
+                                                                                              "columnType": "string",
+                                                                                              "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                              "id": "altColumn",
+                                                                                              "value": {
+                                                                                                "sheetKey": "empty",
+                                                                                                "text": ""
+                                                                                              }
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "width",
+                                                                                              "type": "string",
+                                                                                              "defaultValue": "100%",
+                                                                                              "id": "width"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "height",
+                                                                                              "type": "string",
+                                                                                              "id": "height"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "customStyle",
+                                                                                              "type": "string",
+                                                                                              "id": "customStyle"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "classes",
+                                                                                              "type": "string",
+                                                                                              "id": "classes"
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "next": {
+                                                                "block": {
+                                                                  "type": "ColumnShell",
+                                                                  "id": "v]Tk8EOFw}16Z6(w?AIj",
+                                                                  "data": "{\"origin\":\"interkit\"}",
+                                                                  "fields": {
+                                                                    "columns": "3"
+                                                                  },
+                                                                  "inputs": {
+                                                                    "col1": {
+                                                                      "block": {
+                                                                        "type": "Button",
+                                                                        "id": "33BgIQSmuC*SA%o~ZX~7",
+                                                                        "data": "{\"origin\":\"interkit\"}",
+                                                                        "fields": {
+                                                                          "text": "",
+                                                                          "extraProps": {
+                                                                            "props": [
+                                                                              {
+                                                                                "name": "type",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "secondary",
+                                                                                  "primary",
+                                                                                  "ghost",
+                                                                                  "link",
+                                                                                  "danger"
+                                                                                ],
+                                                                                "defaultValue": "secondary",
+                                                                                "help": "Appearance of the button.",
+                                                                                "id": "type",
+                                                                                "value": "link"
+                                                                              },
+                                                                              {
+                                                                                "name": "size",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "small",
+                                                                                  "medium",
+                                                                                  "large"
+                                                                                ],
+                                                                                "defaultValue": "small",
+                                                                                "help": "Large, medium or small.",
+                                                                                "id": "size",
+                                                                                "value": "large"
+                                                                              },
+                                                                              {
+                                                                                "name": "flex",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "normal",
+                                                                                  "fill"
+                                                                                ],
+                                                                                "defaultValue": "normal",
+                                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                                "id": "flex",
+                                                                                "value": "fill"
+                                                                              },
+                                                                              {
+                                                                                "name": "disabled",
+                                                                                "type": "checkbox",
+                                                                                "defaultValue": false,
+                                                                                "id": "disabled"
+                                                                              },
+                                                                              {
+                                                                                "type": "string",
+                                                                                "name": "ariaLabel",
+                                                                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                                "id": "ariaLabel"
+                                                                              },
+                                                                              {
+                                                                                "type": "effect",
+                                                                                "name": "effect",
+                                                                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                                "id": "effect",
+                                                                                "value": {
+                                                                                  "effectType": "setUIKey",
+                                                                                  "value": "1",
+                                                                                  "key": "overlayImage"
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        },
+                                                                        "inputs": {
+                                                                          "default": {
+                                                                            "block": {
+                                                                              "type": "Image",
+                                                                              "id": "%hX]ZHDhp!-89)S?3NVk",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "extraProps": {
+                                                                                  "props": [
+                                                                                    {
+                                                                                      "name": "mediafileKey",
+                                                                                      "type": "string",
+                                                                                      "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                      "id": "mediafileKey"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altText",
+                                                                                      "type": "string",
+                                                                                      "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                      "id": "altText"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "imageColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "mediaFile",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                      "id": "imageColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                        "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
+                                                                                        "text": "exhibition/image_1",
+                                                                                        "columnType": "mediaFile"
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "string",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                      "id": "altColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "empty",
+                                                                                        "text": ""
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "width",
+                                                                                      "type": "string",
+                                                                                      "defaultValue": "100%",
+                                                                                      "id": "width"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "height",
+                                                                                      "type": "string",
+                                                                                      "id": "height"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "customStyle",
+                                                                                      "type": "string",
+                                                                                      "id": "customStyle"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "classes",
+                                                                                      "type": "string",
+                                                                                      "id": "classes"
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "col2": {
+                                                                      "block": {
+                                                                        "type": "Button",
+                                                                        "id": "`);2AtiXH4]PL}n.gmdW",
+                                                                        "data": "{\"origin\":\"interkit\"}",
+                                                                        "fields": {
+                                                                          "text": "",
+                                                                          "extraProps": {
+                                                                            "props": [
+                                                                              {
+                                                                                "name": "type",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "secondary",
+                                                                                  "primary",
+                                                                                  "ghost",
+                                                                                  "link",
+                                                                                  "danger"
+                                                                                ],
+                                                                                "defaultValue": "secondary",
+                                                                                "help": "Appearance of the button.",
+                                                                                "id": "type",
+                                                                                "value": "link"
+                                                                              },
+                                                                              {
+                                                                                "name": "size",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "small",
+                                                                                  "medium",
+                                                                                  "large"
+                                                                                ],
+                                                                                "defaultValue": "small",
+                                                                                "help": "Large, medium or small.",
+                                                                                "id": "size",
+                                                                                "value": "large"
+                                                                              },
+                                                                              {
+                                                                                "name": "flex",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "normal",
+                                                                                  "fill"
+                                                                                ],
+                                                                                "defaultValue": "normal",
+                                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                                "id": "flex",
+                                                                                "value": "fill"
+                                                                              },
+                                                                              {
+                                                                                "name": "disabled",
+                                                                                "type": "checkbox",
+                                                                                "defaultValue": false,
+                                                                                "id": "disabled"
+                                                                              },
+                                                                              {
+                                                                                "type": "string",
+                                                                                "name": "ariaLabel",
+                                                                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                                "id": "ariaLabel"
+                                                                              },
+                                                                              {
+                                                                                "type": "effect",
+                                                                                "name": "effect",
+                                                                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                                "id": "effect",
+                                                                                "value": {
+                                                                                  "effectType": "setUIKey",
+                                                                                  "value": "2",
+                                                                                  "key": "overlayImage"
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        },
+                                                                        "inputs": {
+                                                                          "default": {
+                                                                            "block": {
+                                                                              "type": "Image",
+                                                                              "id": "axOAbVh,+1+@W5kUlRkl",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "extraProps": {
+                                                                                  "props": [
+                                                                                    {
+                                                                                      "name": "mediafileKey",
+                                                                                      "type": "string",
+                                                                                      "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                      "id": "mediafileKey"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altText",
+                                                                                      "type": "string",
+                                                                                      "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                      "id": "altText"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "imageColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "mediaFile",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                      "id": "imageColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                        "columnKey": "9e8c6ee5-4ce6-4eed-844b-c9739fb50885",
+                                                                                        "text": "exhibition/image_2",
+                                                                                        "columnType": "mediaFile"
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "string",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                      "id": "altColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "empty",
+                                                                                        "text": ""
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "width",
+                                                                                      "type": "string",
+                                                                                      "defaultValue": "100%",
+                                                                                      "id": "width"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "height",
+                                                                                      "type": "string",
+                                                                                      "id": "height"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "customStyle",
+                                                                                      "type": "string",
+                                                                                      "id": "customStyle"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "classes",
+                                                                                      "type": "string",
+                                                                                      "id": "classes"
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "col3": {
+                                                                      "block": {
+                                                                        "type": "Button",
+                                                                        "id": "BdRr]2$P8e8T]aMn}?cl",
+                                                                        "data": "{\"origin\":\"interkit\"}",
+                                                                        "fields": {
+                                                                          "text": "",
+                                                                          "extraProps": {
+                                                                            "props": [
+                                                                              {
+                                                                                "name": "type",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "secondary",
+                                                                                  "primary",
+                                                                                  "ghost",
+                                                                                  "link",
+                                                                                  "danger"
+                                                                                ],
+                                                                                "defaultValue": "secondary",
+                                                                                "help": "Appearance of the button.",
+                                                                                "id": "type",
+                                                                                "value": "link"
+                                                                              },
+                                                                              {
+                                                                                "name": "size",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "small",
+                                                                                  "medium",
+                                                                                  "large"
+                                                                                ],
+                                                                                "defaultValue": "small",
+                                                                                "help": "Large, medium or small.",
+                                                                                "id": "size",
+                                                                                "value": "large"
+                                                                              },
+                                                                              {
+                                                                                "name": "flex",
+                                                                                "type": "options",
+                                                                                "options": [
+                                                                                  "normal",
+                                                                                  "fill"
+                                                                                ],
+                                                                                "defaultValue": "normal",
+                                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                                "id": "flex",
+                                                                                "value": "fill"
+                                                                              },
+                                                                              {
+                                                                                "name": "disabled",
+                                                                                "type": "checkbox",
+                                                                                "defaultValue": false,
+                                                                                "id": "disabled"
+                                                                              },
+                                                                              {
+                                                                                "type": "string",
+                                                                                "name": "ariaLabel",
+                                                                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                                "id": "ariaLabel"
+                                                                              },
+                                                                              {
+                                                                                "type": "effect",
+                                                                                "name": "effect",
+                                                                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                                "id": "effect",
+                                                                                "value": {
+                                                                                  "effectType": "setUIKey",
+                                                                                  "value": "3",
+                                                                                  "key": "overlayImage"
+                                                                                }
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        },
+                                                                        "inputs": {
+                                                                          "default": {
+                                                                            "block": {
+                                                                              "type": "Image",
+                                                                              "id": "7_qd3X3dHaRzMttfZNqu",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "extraProps": {
+                                                                                  "props": [
+                                                                                    {
+                                                                                      "name": "mediafileKey",
+                                                                                      "type": "string",
+                                                                                      "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                      "id": "mediafileKey"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altText",
+                                                                                      "type": "string",
+                                                                                      "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                      "id": "altText"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "imageColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "mediaFile",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                      "id": "imageColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                        "columnKey": "48789c75-cff9-4a91-863f-387de78adea8",
+                                                                                        "text": "exhibition/image_3",
+                                                                                        "columnType": "mediaFile"
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "altColumn",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "string",
+                                                                                      "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                      "id": "altColumn",
+                                                                                      "value": {
+                                                                                        "sheetKey": "empty",
+                                                                                        "text": ""
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "width",
+                                                                                      "type": "string",
+                                                                                      "defaultValue": "100%",
+                                                                                      "id": "width"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "height",
+                                                                                      "type": "string",
+                                                                                      "id": "height"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "customStyle",
+                                                                                      "type": "string",
+                                                                                      "id": "customStyle"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "classes",
+                                                                                      "type": "string",
+                                                                                      "id": "classes"
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "next": {
+                                                                    "block": {
+                                                                      "type": "IfUIKey",
+                                                                      "id": ";J{d=pjTlgD3y^7dTi]k",
+                                                                      "data": "{\"origin\":\"interkit\"}",
+                                                                      "fields": {
+                                                                        "storeType": "UIKey",
+                                                                        "key": "",
+                                                                        "value": ""
                                                                       }
                                                                     }
                                                                   }
@@ -3223,7 +4042,7 @@
                                                                           "defaultValue": "left",
                                                                           "help": "Where the buttons in the bar are justified",
                                                                           "id": "justify",
-                                                                          "value": "left"
+                                                                          "value": "center"
                                                                         },
                                                                         {
                                                                           "name": "helpText",
@@ -3582,7 +4401,6 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "top",
                                                   "name": "top",
                                                   "type": "options",
                                                   "options": [
@@ -3595,10 +4413,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "top",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "right",
                                                   "name": "right",
                                                   "type": "options",
                                                   "options": [
@@ -3611,10 +4429,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "right",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "bottom",
                                                   "name": "bottom",
                                                   "type": "options",
                                                   "options": [
@@ -3627,10 +4445,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "bottom",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "left",
                                                   "name": "left",
                                                   "type": "options",
                                                   "options": [
@@ -3643,6 +4461,7 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "left",
                                                   "value": "s"
                                                 }
                                               ]
@@ -3658,7 +4477,6 @@
                                                   "extraProps": {
                                                     "props": [
                                                       {
-                                                        "id": "interfaceFormat",
                                                         "type": "options",
                                                         "name": "interfaceFormat",
                                                         "options": [
@@ -3679,10 +4497,10 @@
                                                         ],
                                                         "defaultValue": "none",
                                                         "help": "Use these formats to select typography for parts of the interface.",
+                                                        "id": "interfaceFormat",
                                                         "value": "headline-3"
                                                       },
                                                       {
-                                                        "id": "contentFormat",
                                                         "type": "options",
                                                         "name": "contentFormat",
                                                         "options": [
@@ -3696,7 +4514,8 @@
                                                           "body-2"
                                                         ],
                                                         "defaultValue": "none",
-                                                        "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                                        "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                                        "id": "contentFormat"
                                                       }
                                                     ]
                                                   }
@@ -3799,7 +4618,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "variant",
                                                                   "name": "variant",
                                                                   "type": "options",
                                                                   "options": [
@@ -3809,26 +4627,27 @@
                                                                     "small"
                                                                   ],
                                                                   "defaultValue": "full",
+                                                                  "id": "variant",
                                                                   "value": "medium"
                                                                 },
                                                                 {
-                                                                  "id": "rightArrow",
                                                                   "name": "rightArrow",
                                                                   "type": "checkbox",
-                                                                  "help": "Display the right arrow next to the headline"
+                                                                  "help": "Display the right arrow next to the headline",
+                                                                  "id": "rightArrow"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "name": "effect",
                                                                   "type": "effect",
-                                                                  "help": "What should happen when you tap on the card"
+                                                                  "help": "What should happen when you tap on the card",
+                                                                  "id": "effect"
                                                                 },
                                                                 {
-                                                                  "id": "imageColumn",
                                                                   "name": "imageColumn",
                                                                   "type": "sheetColumn",
                                                                   "columnType": "mediaFile",
                                                                   "defaultValue": "elements/image",
+                                                                  "id": "imageColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -3837,10 +4656,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "headlineColumn",
                                                                   "name": "headlineColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/headline",
+                                                                  "id": "headlineColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "title$lang",
@@ -3849,10 +4668,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label1Column",
                                                                   "name": "label1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label1",
+                                                                  "id": "label1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
@@ -3861,10 +4680,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle1Column",
                                                                   "name": "subtitle1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle1",
+                                                                  "id": "subtitle1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "date$lang",
@@ -3873,10 +4692,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label2Column",
                                                                   "name": "label2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label2",
+                                                                  "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "material$lang",
@@ -3885,10 +4704,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle2Column",
                                                                   "name": "subtitle2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle2",
+                                                                  "id": "subtitle2Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "size$lang",
@@ -3897,10 +4716,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label3Column",
                                                                   "name": "label3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
+                                                                  "id": "label3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "empty",
@@ -3909,10 +4728,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle3Column",
                                                                   "name": "subtitle3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle3",
+                                                                  "id": "subtitle3Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "institution$lang",
@@ -3921,10 +4740,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "descriptionColumn",
                                                                   "name": "descriptionColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/description",
+                                                                  "id": "descriptionColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "transcript$lang",
@@ -3933,6 +4752,65 @@
                                                                   }
                                                                 }
                                                               ]
+                                                            }
+                                                          },
+                                                          "inputs": {
+                                                            "content": {
+                                                              "block": {
+                                                                "type": "AccordeonShell",
+                                                                "id": "0|TDpAisO0VfS(,T5SBe",
+                                                                "data": "{\"origin\":\"interkit\"}",
+                                                                "inputs": {
+                                                                  "label": {
+                                                                    "block": {
+                                                                      "type": "StaticText",
+                                                                      "id": "7z=E.^cC1vo`dI{}V`$e",
+                                                                      "data": "{\"origin\":\"interkit\"}",
+                                                                      "fields": {
+                                                                        "text": "$artist_context"
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                "next": {
+                                                                  "block": {
+                                                                    "type": "AccordeonShell",
+                                                                    "id": "E{O%1EbAeD@eClJ9@2Q9",
+                                                                    "data": "{\"origin\":\"interkit\"}",
+                                                                    "inputs": {
+                                                                      "label": {
+                                                                        "block": {
+                                                                          "type": "StaticText",
+                                                                          "id": "YtC#DWv3!4s+Ps{w$0sL",
+                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "fields": {
+                                                                            "text": "$bird_context"
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "next": {
+                                                                      "block": {
+                                                                        "type": "AccordeonShell",
+                                                                        "id": "@Zhi2as$?81@ugjnGrC]",
+                                                                        "data": "{\"origin\":\"interkit\"}",
+                                                                        "inputs": {
+                                                                          "label": {
+                                                                            "block": {
+                                                                              "type": "StaticText",
+                                                                              "id": "ob=c8]8vj*6J?D;h/dE[",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "text": "$artwork_context"
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
                                                             }
                                                           }
                                                         }

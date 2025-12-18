@@ -8,6 +8,7 @@ import AudioPlayer from "interkit/components/AudioPlayer.svelte";
 import Button from "interkit/components/Button.svelte";
 import ButtonBar from "interkit/components/ButtonBar.svelte";
 import CenterModal from "interkit/components/CenterModal.svelte";
+import ColumnShell from "interkit/components/ColumnShell.svelte";
 import DataCard from "interkit/components/DataCard.svelte";
 import DataCell from "interkit/components/DataCell.svelte";
 import DataList from "interkit/components/DataList.svelte";
@@ -25,6 +26,7 @@ import LayoutShellAudio from "interkit/components/LayoutShellAudio.svelte";
 import ListItem from "interkit/components/ListItem.svelte";
 import NavBar from "interkit/components/NavBar.svelte";
 import NavButton from "interkit/components/NavButton.svelte";
+import OverlayFull from "interkit/components/OverlayFull.svelte";
 import PopoutAudioButton from "interkit/components/PopoutAudioButton.svelte";
 import Route from "interkit/components/Route.svelte";
 import ScrollContainer from "interkit/components/ScrollContainer.svelte";
@@ -515,6 +517,120 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </Spacing>
               </svelte:fragment>
               </DataCard>
+              <IfUIKey
+                 storeType="UIKey"
+                 key="overlayImage"
+                 value="1"
+              >
+              <svelte:fragment slot="iftrue">
+                <OverlayFull
+                   closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                   >
+                  <Image
+                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                        width="100%"
+                           >
+                  </Image>
+                </OverlayFull>
+              </svelte:fragment>
+              <svelte:fragment slot="else">
+                <IfUIKey
+                   storeType="UIKey"
+                   key="overlayImage"
+                   value="2"
+                >
+                <svelte:fragment slot="iftrue">
+                  <OverlayFull
+                     closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                     >
+                    <Image
+                             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                          width="100%"
+                             >
+                    </Image>
+                  </OverlayFull>
+                </svelte:fragment>
+                <svelte:fragment slot="else">
+                  <IfUIKey
+                     storeType="UIKey"
+                     key="overlayImage"
+                     value="3"
+                  >
+                  <svelte:fragment slot="iftrue">
+                    <OverlayFull
+                       closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                       >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                            width="100%"
+                               >
+                      </Image>
+                    </OverlayFull>
+                  </svelte:fragment>
+                  <svelte:fragment slot="else">
+                  </svelte:fragment>
+                  </IfUIKey>
+                </svelte:fragment>
+                </IfUIKey>
+              </svelte:fragment>
+              </IfUIKey>
+              <ColumnShell
+                 columns="3"
+              >
+              <svelte:fragment slot="col1">
+                <Button
+                      type="link"
+                   size="large"
+                   flex="fill"
+                   disabled={false}
+                      effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                >
+                  <Image
+                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                        width="100%"
+                           >
+                  </Image>
+                </Button>
+              </svelte:fragment>
+              <svelte:fragment slot="col2">
+                <Button
+                      type="link"
+                   size="large"
+                   flex="fill"
+                   disabled={false}
+                      effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                >
+                  <Image
+                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                        width="100%"
+                           >
+                  </Image>
+                </Button>
+              </svelte:fragment>
+              <svelte:fragment slot="col3">
+                <Button
+                      type="link"
+                   size="large"
+                   flex="fill"
+                   disabled={false}
+                      effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                >
+                  <Image
+                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                        width="100%"
+                           >
+                  </Image>
+                </Button>
+              </svelte:fragment>
+              </ColumnShell>
+              <IfUIKey
+                 storeType="UIKey"
+                    >
+              <svelte:fragment slot="iftrue">
+              </svelte:fragment>
+              <svelte:fragment slot="else">
+              </svelte:fragment>
+              </IfUIKey>
             </Spacing>
           </SectionShell>
           <SectionShell
@@ -534,7 +650,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </StaticText>
               </TextFormat>
               <ButtonBar
-                 justify="left"
+                 justify="center"
                  helpText={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_description"] ? $translations[$lang]["$feelings_description"] : "feelings_description") : "…"}>
                 <Button
                    text="😊"
@@ -614,6 +730,36 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
+                <AccordeonShell
+                >
+                <svelte:fragment slot="label">
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artist_context"] ? $translations[$lang]["$artist_context"] : "artist_context") : ($translations.en && $translations.en["$artist_context"] ? $translations.en["$artist_context"] : "…")}>
+                  </StaticText>
+                </svelte:fragment>
+                <svelte:fragment slot="content">
+                </svelte:fragment>
+                </AccordeonShell>
+                <AccordeonShell
+                >
+                <svelte:fragment slot="label">
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context"] ? $translations[$lang]["$bird_context"] : "bird_context") : ($translations.en && $translations.en["$bird_context"] ? $translations.en["$bird_context"] : "…")}>
+                  </StaticText>
+                </svelte:fragment>
+                <svelte:fragment slot="content">
+                </svelte:fragment>
+                </AccordeonShell>
+                <AccordeonShell
+                >
+                <svelte:fragment slot="label">
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                  </StaticText>
+                </svelte:fragment>
+                <svelte:fragment slot="content">
+                </svelte:fragment>
+                </AccordeonShell>
               </svelte:fragment>
               </DataCard>
             </Spacing>
@@ -1481,6 +1627,120 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </Spacing>
                   </svelte:fragment>
                   </DataCard>
+                  <IfUIKey
+                     storeType="UIKey"
+                     key="overlayImage"
+                     value="1"
+                  >
+                  <svelte:fragment slot="iftrue">
+                    <OverlayFull
+                       closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                       >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                            width="100%"
+                               >
+                      </Image>
+                    </OverlayFull>
+                  </svelte:fragment>
+                  <svelte:fragment slot="else">
+                    <IfUIKey
+                       storeType="UIKey"
+                       key="overlayImage"
+                       value="2"
+                    >
+                    <svelte:fragment slot="iftrue">
+                      <OverlayFull
+                         closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                         >
+                        <Image
+                                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                              width="100%"
+                                 >
+                        </Image>
+                      </OverlayFull>
+                    </svelte:fragment>
+                    <svelte:fragment slot="else">
+                      <IfUIKey
+                         storeType="UIKey"
+                         key="overlayImage"
+                         value="3"
+                      >
+                      <svelte:fragment slot="iftrue">
+                        <OverlayFull
+                           closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
+                           >
+                          <Image
+                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                                width="100%"
+                                   >
+                          </Image>
+                        </OverlayFull>
+                      </svelte:fragment>
+                      <svelte:fragment slot="else">
+                      </svelte:fragment>
+                      </IfUIKey>
+                    </svelte:fragment>
+                    </IfUIKey>
+                  </svelte:fragment>
+                  </IfUIKey>
+                  <ColumnShell
+                     columns="3"
+                  >
+                  <svelte:fragment slot="col1">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  <svelte:fragment slot="col2">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  <svelte:fragment slot="col3">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  </ColumnShell>
+                  <IfUIKey
+                     storeType="UIKey"
+                        >
+                  <svelte:fragment slot="iftrue">
+                  </svelte:fragment>
+                  <svelte:fragment slot="else">
+                  </svelte:fragment>
+                  </IfUIKey>
                 </Spacing>
               </SectionShell>
               <SectionShell
@@ -1500,7 +1760,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </StaticText>
                   </TextFormat>
                   <ButtonBar
-                     justify="left"
+                     justify="center"
                      helpText={$lang ? ($translations[$lang] && $translations[$lang]["$feelings_description"] ? $translations[$lang]["$feelings_description"] : "feelings_description") : "…"}>
                     <Button
                        text="😊"
@@ -1580,6 +1840,36 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
+                    <AccordeonShell
+                    >
+                    <svelte:fragment slot="label">
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artist_context"] ? $translations[$lang]["$artist_context"] : "artist_context") : ($translations.en && $translations.en["$artist_context"] ? $translations.en["$artist_context"] : "…")}>
+                      </StaticText>
+                    </svelte:fragment>
+                    <svelte:fragment slot="content">
+                    </svelte:fragment>
+                    </AccordeonShell>
+                    <AccordeonShell
+                    >
+                    <svelte:fragment slot="label">
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context"] ? $translations[$lang]["$bird_context"] : "bird_context") : ($translations.en && $translations.en["$bird_context"] ? $translations.en["$bird_context"] : "…")}>
+                      </StaticText>
+                    </svelte:fragment>
+                    <svelte:fragment slot="content">
+                    </svelte:fragment>
+                    </AccordeonShell>
+                    <AccordeonShell
+                    >
+                    <svelte:fragment slot="label">
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                      </StaticText>
+                    </svelte:fragment>
+                    <svelte:fragment slot="content">
+                    </svelte:fragment>
+                    </AccordeonShell>
                   </svelte:fragment>
                   </DataCard>
                 </Spacing>
