@@ -3072,10 +3072,10 @@
                                                                       "extraProps": {
                                                                         "props": [
                                                                           {
-                                                                            "id": "closeEffect",
                                                                             "name": "closeEffect",
                                                                             "type": "effect",
                                                                             "help": "What should happen when close button is tapped",
+                                                                            "id": "closeEffect",
                                                                             "value": {
                                                                               "effectType": "setUIKey",
                                                                               "value": "0",
@@ -3083,10 +3083,10 @@
                                                                             }
                                                                           },
                                                                           {
-                                                                            "id": "customStyle",
                                                                             "type": "string",
                                                                             "name": "customStyle",
-                                                                            "help": "A css style, eg 'background-color: white;'"
+                                                                            "help": "A css style, eg 'background-color: white;'",
+                                                                            "id": "customStyle"
                                                                           }
                                                                         ]
                                                                       }
@@ -3185,10 +3185,10 @@
                                                                             "extraProps": {
                                                                               "props": [
                                                                                 {
-                                                                                  "id": "closeEffect",
                                                                                   "name": "closeEffect",
                                                                                   "type": "effect",
                                                                                   "help": "What should happen when close button is tapped",
+                                                                                  "id": "closeEffect",
                                                                                   "value": {
                                                                                     "effectType": "setUIKey",
                                                                                     "value": "0",
@@ -3196,10 +3196,10 @@
                                                                                   }
                                                                                 },
                                                                                 {
-                                                                                  "id": "customStyle",
                                                                                   "type": "string",
                                                                                   "name": "customStyle",
-                                                                                  "help": "A css style, eg 'background-color: white;'"
+                                                                                  "help": "A css style, eg 'background-color: white;'",
+                                                                                  "id": "customStyle"
                                                                                 }
                                                                               ]
                                                                             }
@@ -3298,10 +3298,10 @@
                                                                                   "extraProps": {
                                                                                     "props": [
                                                                                       {
-                                                                                        "id": "closeEffect",
                                                                                         "name": "closeEffect",
                                                                                         "type": "effect",
                                                                                         "help": "What should happen when close button is tapped",
+                                                                                        "id": "closeEffect",
                                                                                         "value": {
                                                                                           "effectType": "setUIKey",
                                                                                           "value": "0",
@@ -3309,10 +3309,10 @@
                                                                                         }
                                                                                       },
                                                                                       {
-                                                                                        "id": "customStyle",
                                                                                         "type": "string",
                                                                                         "name": "customStyle",
-                                                                                        "help": "A css style, eg 'background-color: white;'"
+                                                                                        "help": "A css style, eg 'background-color: white;'",
+                                                                                        "id": "customStyle"
                                                                                       }
                                                                                     ]
                                                                                   }
@@ -3864,517 +3864,6 @@
                                                                         "storeType": "UIKey",
                                                                         "key": "",
                                                                         "value": ""
-                                                                      }
-                                                                    }
-                                                                  }
-                                                                }
-                                                              }
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              },
-                                              "next": {
-                                                "block": {
-                                                  "type": "SectionShell",
-                                                  "id": "Sy3sO:i$1QCPoR4@ix/r",
-                                                  "data": "{\"origin\":\"interkit\"}",
-                                                  "inputs": {
-                                                    "default": {
-                                                      "block": {
-                                                        "type": "Spacing",
-                                                        "id": "RZLD/v_[8|Ey8O+tZm(!",
-                                                        "data": "{\"origin\":\"interkit\"}",
-                                                        "fields": {
-                                                          "extraProps": {
-                                                            "props": [
-                                                              {
-                                                                "name": "top",
-                                                                "type": "options",
-                                                                "options": [
-                                                                  "none",
-                                                                  "tiny",
-                                                                  "xs",
-                                                                  "s",
-                                                                  "m",
-                                                                  "l",
-                                                                  "xl",
-                                                                  "xxl"
-                                                                ],
-                                                                "id": "top",
-                                                                "value": "s"
-                                                              },
-                                                              {
-                                                                "name": "right",
-                                                                "type": "options",
-                                                                "options": [
-                                                                  "none",
-                                                                  "tiny",
-                                                                  "xs",
-                                                                  "s",
-                                                                  "m",
-                                                                  "l",
-                                                                  "xl",
-                                                                  "xxl"
-                                                                ],
-                                                                "id": "right",
-                                                                "value": "s"
-                                                              },
-                                                              {
-                                                                "name": "bottom",
-                                                                "type": "options",
-                                                                "options": [
-                                                                  "none",
-                                                                  "tiny",
-                                                                  "xs",
-                                                                  "s",
-                                                                  "m",
-                                                                  "l",
-                                                                  "xl",
-                                                                  "xxl"
-                                                                ],
-                                                                "id": "bottom",
-                                                                "value": "s"
-                                                              },
-                                                              {
-                                                                "name": "left",
-                                                                "type": "options",
-                                                                "options": [
-                                                                  "none",
-                                                                  "tiny",
-                                                                  "xs",
-                                                                  "s",
-                                                                  "m",
-                                                                  "l",
-                                                                  "xl",
-                                                                  "xxl"
-                                                                ],
-                                                                "id": "left",
-                                                                "value": "s"
-                                                              }
-                                                            ]
-                                                          }
-                                                        },
-                                                        "inputs": {
-                                                          "default": {
-                                                            "block": {
-                                                              "type": "TextFormat",
-                                                              "id": "PG0Fh[Q=|SA9EnieIj`A",
-                                                              "data": "{\"origin\":\"interkit\"}",
-                                                              "fields": {
-                                                                "extraProps": {
-                                                                  "props": [
-                                                                    {
-                                                                      "type": "options",
-                                                                      "name": "interfaceFormat",
-                                                                      "options": [
-                                                                        "none",
-                                                                        "headline-1",
-                                                                        "headline-2",
-                                                                        "headline-3",
-                                                                        "headline-4",
-                                                                        "headline-5",
-                                                                        "body-1",
-                                                                        "body-2",
-                                                                        "subtitle-1",
-                                                                        "subtitle-2",
-                                                                        "button",
-                                                                        "caption",
-                                                                        "caption-bold",
-                                                                        "overline"
-                                                                      ],
-                                                                      "defaultValue": "none",
-                                                                      "help": "Use these formats to select typography for parts of the interface.",
-                                                                      "id": "interfaceFormat",
-                                                                      "value": "headline-5"
-                                                                    },
-                                                                    {
-                                                                      "type": "options",
-                                                                      "name": "contentFormat",
-                                                                      "options": [
-                                                                        "none",
-                                                                        "headline-1",
-                                                                        "headline-2",
-                                                                        "headline-3",
-                                                                        "headline-4",
-                                                                        "headline-5",
-                                                                        "body-1",
-                                                                        "body-2"
-                                                                      ],
-                                                                      "defaultValue": "none",
-                                                                      "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
-                                                                      "id": "contentFormat"
-                                                                    }
-                                                                  ]
-                                                                }
-                                                              },
-                                                              "inputs": {
-                                                                "default": {
-                                                                  "block": {
-                                                                    "type": "StaticText",
-                                                                    "id": "//j+a1#90y.whEJz:tRk",
-                                                                    "data": "{\"origin\":\"interkit\"}",
-                                                                    "fields": {
-                                                                      "text": "$feelings_text"
-                                                                    }
-                                                                  }
-                                                                }
-                                                              },
-                                                              "next": {
-                                                                "block": {
-                                                                  "type": "ButtonBar",
-                                                                  "id": "c751pTaTP5i(7yA0ws=h",
-                                                                  "data": "{\"origin\":\"interkit\"}",
-                                                                  "fields": {
-                                                                    "extraProps": {
-                                                                      "props": [
-                                                                        {
-                                                                          "name": "justify",
-                                                                          "type": "options",
-                                                                          "options": [
-                                                                            "left",
-                                                                            "center",
-                                                                            "right"
-                                                                          ],
-                                                                          "defaultValue": "left",
-                                                                          "help": "Where the buttons in the bar are justified",
-                                                                          "id": "justify",
-                                                                          "value": "center"
-                                                                        },
-                                                                        {
-                                                                          "name": "helpText",
-                                                                          "type": "string",
-                                                                          "help": "An explanation text below the buttonBar",
-                                                                          "id": "helpText",
-                                                                          "value": "$feelings_description"
-                                                                        }
-                                                                      ]
-                                                                    }
-                                                                  },
-                                                                  "inputs": {
-                                                                    "default": {
-                                                                      "block": {
-                                                                        "type": "Button",
-                                                                        "id": "wngiKaY.vW[hpRI-kX|P",
-                                                                        "data": "{\"origin\":\"interkit\"}",
-                                                                        "fields": {
-                                                                          "text": "😊",
-                                                                          "extraProps": {
-                                                                            "props": [
-                                                                              {
-                                                                                "name": "type",
-                                                                                "type": "options",
-                                                                                "options": [
-                                                                                  "secondary",
-                                                                                  "primary",
-                                                                                  "ghost",
-                                                                                  "link",
-                                                                                  "danger"
-                                                                                ],
-                                                                                "defaultValue": "secondary",
-                                                                                "help": "Appearance of the button.",
-                                                                                "id": "type"
-                                                                              },
-                                                                              {
-                                                                                "name": "size",
-                                                                                "type": "options",
-                                                                                "options": [
-                                                                                  "small",
-                                                                                  "medium",
-                                                                                  "large"
-                                                                                ],
-                                                                                "defaultValue": "small",
-                                                                                "help": "Large, medium or small.",
-                                                                                "id": "size",
-                                                                                "value": "small"
-                                                                              },
-                                                                              {
-                                                                                "name": "flex",
-                                                                                "type": "options",
-                                                                                "options": [
-                                                                                  "normal",
-                                                                                  "fill"
-                                                                                ],
-                                                                                "defaultValue": "normal",
-                                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                                                "id": "flex"
-                                                                              },
-                                                                              {
-                                                                                "name": "disabled",
-                                                                                "type": "checkbox",
-                                                                                "defaultValue": false,
-                                                                                "id": "disabled"
-                                                                              },
-                                                                              {
-                                                                                "type": "string",
-                                                                                "name": "ariaLabel",
-                                                                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                                                "id": "ariaLabel"
-                                                                              },
-                                                                              {
-                                                                                "type": "effect",
-                                                                                "name": "effect",
-                                                                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
-                                                                                "id": "effect"
-                                                                              }
-                                                                            ]
-                                                                          }
-                                                                        },
-                                                                        "next": {
-                                                                          "block": {
-                                                                            "type": "Button",
-                                                                            "id": "7yZ1mKgP:)$l!39x9HQF",
-                                                                            "data": "{\"origin\":\"interkit\"}",
-                                                                            "fields": {
-                                                                              "text": "🤔",
-                                                                              "extraProps": {
-                                                                                "props": [
-                                                                                  {
-                                                                                    "name": "type",
-                                                                                    "type": "options",
-                                                                                    "options": [
-                                                                                      "secondary",
-                                                                                      "primary",
-                                                                                      "ghost",
-                                                                                      "link",
-                                                                                      "danger"
-                                                                                    ],
-                                                                                    "defaultValue": "secondary",
-                                                                                    "help": "Appearance of the button."
-                                                                                  },
-                                                                                  {
-                                                                                    "name": "size",
-                                                                                    "type": "options",
-                                                                                    "options": [
-                                                                                      "small",
-                                                                                      "medium",
-                                                                                      "large"
-                                                                                    ],
-                                                                                    "defaultValue": "small",
-                                                                                    "help": "Large, medium or small."
-                                                                                  },
-                                                                                  {
-                                                                                    "name": "flex",
-                                                                                    "type": "options",
-                                                                                    "options": [
-                                                                                      "normal",
-                                                                                      "fill"
-                                                                                    ],
-                                                                                    "defaultValue": "normal",
-                                                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
-                                                                                  },
-                                                                                  {
-                                                                                    "name": "disabled",
-                                                                                    "type": "checkbox",
-                                                                                    "defaultValue": false
-                                                                                  },
-                                                                                  {
-                                                                                    "type": "string",
-                                                                                    "name": "ariaLabel",
-                                                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
-                                                                                  },
-                                                                                  {
-                                                                                    "type": "effect",
-                                                                                    "name": "effect",
-                                                                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
-                                                                                  }
-                                                                                ]
-                                                                              }
-                                                                            },
-                                                                            "next": {
-                                                                              "block": {
-                                                                                "type": "Button",
-                                                                                "id": "jrHlT.:K*wix8ml^kT,Z",
-                                                                                "data": "{\"origin\":\"interkit\"}",
-                                                                                "fields": {
-                                                                                  "text": "😐",
-                                                                                  "extraProps": {
-                                                                                    "props": [
-                                                                                      {
-                                                                                        "name": "type",
-                                                                                        "type": "options",
-                                                                                        "options": [
-                                                                                          "secondary",
-                                                                                          "primary",
-                                                                                          "ghost",
-                                                                                          "link",
-                                                                                          "danger"
-                                                                                        ],
-                                                                                        "defaultValue": "secondary",
-                                                                                        "help": "Appearance of the button."
-                                                                                      },
-                                                                                      {
-                                                                                        "name": "size",
-                                                                                        "type": "options",
-                                                                                        "options": [
-                                                                                          "small",
-                                                                                          "medium",
-                                                                                          "large"
-                                                                                        ],
-                                                                                        "defaultValue": "small",
-                                                                                        "help": "Large, medium or small."
-                                                                                      },
-                                                                                      {
-                                                                                        "name": "flex",
-                                                                                        "type": "options",
-                                                                                        "options": [
-                                                                                          "normal",
-                                                                                          "fill"
-                                                                                        ],
-                                                                                        "defaultValue": "normal",
-                                                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
-                                                                                      },
-                                                                                      {
-                                                                                        "name": "disabled",
-                                                                                        "type": "checkbox",
-                                                                                        "defaultValue": false
-                                                                                      },
-                                                                                      {
-                                                                                        "type": "string",
-                                                                                        "name": "ariaLabel",
-                                                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
-                                                                                      },
-                                                                                      {
-                                                                                        "type": "effect",
-                                                                                        "name": "effect",
-                                                                                        "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
-                                                                                      }
-                                                                                    ]
-                                                                                  }
-                                                                                },
-                                                                                "next": {
-                                                                                  "block": {
-                                                                                    "type": "Button",
-                                                                                    "id": "Uv!O#Z+yU2)=-r`_[v6o",
-                                                                                    "data": "{\"origin\":\"interkit\"}",
-                                                                                    "fields": {
-                                                                                      "text": "😢",
-                                                                                      "extraProps": {
-                                                                                        "props": [
-                                                                                          {
-                                                                                            "name": "type",
-                                                                                            "type": "options",
-                                                                                            "options": [
-                                                                                              "secondary",
-                                                                                              "primary",
-                                                                                              "ghost",
-                                                                                              "link",
-                                                                                              "danger"
-                                                                                            ],
-                                                                                            "defaultValue": "secondary",
-                                                                                            "help": "Appearance of the button."
-                                                                                          },
-                                                                                          {
-                                                                                            "name": "size",
-                                                                                            "type": "options",
-                                                                                            "options": [
-                                                                                              "small",
-                                                                                              "medium",
-                                                                                              "large"
-                                                                                            ],
-                                                                                            "defaultValue": "small",
-                                                                                            "help": "Large, medium or small."
-                                                                                          },
-                                                                                          {
-                                                                                            "name": "flex",
-                                                                                            "type": "options",
-                                                                                            "options": [
-                                                                                              "normal",
-                                                                                              "fill"
-                                                                                            ],
-                                                                                            "defaultValue": "normal",
-                                                                                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
-                                                                                          },
-                                                                                          {
-                                                                                            "name": "disabled",
-                                                                                            "type": "checkbox",
-                                                                                            "defaultValue": false
-                                                                                          },
-                                                                                          {
-                                                                                            "type": "string",
-                                                                                            "name": "ariaLabel",
-                                                                                            "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
-                                                                                          },
-                                                                                          {
-                                                                                            "type": "effect",
-                                                                                            "name": "effect",
-                                                                                            "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
-                                                                                          }
-                                                                                        ]
-                                                                                      }
-                                                                                    },
-                                                                                    "next": {
-                                                                                      "block": {
-                                                                                        "type": "Button",
-                                                                                        "id": "H[ION$CN-bzCRk1R{bM7",
-                                                                                        "data": "{\"origin\":\"interkit\"}",
-                                                                                        "fields": {
-                                                                                          "text": "😦",
-                                                                                          "extraProps": {
-                                                                                            "props": [
-                                                                                              {
-                                                                                                "name": "type",
-                                                                                                "type": "options",
-                                                                                                "options": [
-                                                                                                  "secondary",
-                                                                                                  "primary",
-                                                                                                  "ghost",
-                                                                                                  "link",
-                                                                                                  "danger"
-                                                                                                ],
-                                                                                                "defaultValue": "secondary",
-                                                                                                "help": "Appearance of the button."
-                                                                                              },
-                                                                                              {
-                                                                                                "name": "size",
-                                                                                                "type": "options",
-                                                                                                "options": [
-                                                                                                  "small",
-                                                                                                  "medium",
-                                                                                                  "large"
-                                                                                                ],
-                                                                                                "defaultValue": "small",
-                                                                                                "help": "Large, medium or small."
-                                                                                              },
-                                                                                              {
-                                                                                                "name": "flex",
-                                                                                                "type": "options",
-                                                                                                "options": [
-                                                                                                  "normal",
-                                                                                                  "fill"
-                                                                                                ],
-                                                                                                "defaultValue": "normal",
-                                                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
-                                                                                              },
-                                                                                              {
-                                                                                                "name": "disabled",
-                                                                                                "type": "checkbox",
-                                                                                                "defaultValue": false
-                                                                                              },
-                                                                                              {
-                                                                                                "type": "string",
-                                                                                                "name": "ariaLabel",
-                                                                                                "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
-                                                                                              },
-                                                                                              {
-                                                                                                "type": "effect",
-                                                                                                "name": "effect",
-                                                                                                "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables."
-                                                                                              }
-                                                                                            ]
-                                                                                          }
-                                                                                        }
-                                                                                      }
-                                                                                    }
-                                                                                  }
-                                                                                }
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                        }
                                                                       }
                                                                     }
                                                                   }
