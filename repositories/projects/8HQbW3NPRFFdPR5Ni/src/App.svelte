@@ -484,7 +484,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="full"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
                  subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}               >
               <svelte:fragment slot="chips">
               </svelte:fragment>
@@ -508,7 +508,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </svelte:fragment>
                   <svelte:fragment slot="content">
                     <DataCell
-                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}   format="richText"
                        centerContent={false}
                     >
                     </DataCell>
@@ -658,7 +658,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="medium"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/empty"
                  subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
               <svelte:fragment slot="chips">
               </svelte:fragment>
@@ -695,6 +695,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </AccordeonShell>
               </svelte:fragment>
               </DataCard>
+              <Button
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
+              >
+              </Button>
             </Spacing>
           </SectionShell>
         </svelte:fragment>
@@ -1527,7 +1535,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="full"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
                      subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}               >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
@@ -1551,7 +1559,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </svelte:fragment>
                       <svelte:fragment slot="content">
                         <DataCell
-                           column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "transcript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/transcript$lang"}   format="richText"
+                           column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}   format="richText"
                            centerContent={false}
                         >
                         </DataCell>
@@ -1701,7 +1709,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="medium"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/empty"
                      subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
@@ -1738,6 +1746,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </AccordeonShell>
                   </svelte:fragment>
                   </DataCard>
+                  <Button
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
+                     size="small"
+                     flex="normal"
+                     disabled={false}
+                        effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
+                  >
+                  </Button>
                 </Spacing>
               </SectionShell>
             </svelte:fragment>
