@@ -80,7 +80,8 @@
                                 "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
                                 "id": "effect",
                                 "value": {
-                                  "effectType": "back"
+                                  "effectType": "route",
+                                  "path": "/exhibition"
                                 }
                               }
                             ]
@@ -1620,6 +1621,7 @@
                                                         "extraProps": {
                                                           "props": [
                                                             {
+                                                              "id": "variant",
                                                               "name": "variant",
                                                               "type": "options",
                                                               "options": [
@@ -1629,32 +1631,31 @@
                                                                 "small"
                                                               ],
                                                               "defaultValue": "full",
-                                                              "id": "variant",
                                                               "value": "small"
                                                             },
                                                             {
+                                                              "id": "rightArrow",
                                                               "name": "rightArrow",
                                                               "type": "checkbox",
                                                               "help": "Display the right arrow next to the headline",
-                                                              "id": "rightArrow",
                                                               "value": false
                                                             },
                                                             {
+                                                              "id": "effect",
                                                               "name": "effect",
                                                               "type": "effect",
                                                               "help": "What should happen when you tap on the card",
-                                                              "id": "effect",
                                                               "value": {
                                                                 "effectType": "dataRouteSingle",
                                                                 "path": "/exhibition_artworks"
                                                               }
                                                             },
                                                             {
+                                                              "id": "imageColumn",
                                                               "name": "imageColumn",
                                                               "type": "sheetColumn",
                                                               "columnType": "mediaFile",
                                                               "defaultValue": "elements/image",
-                                                              "id": "imageColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -1663,46 +1664,45 @@
                                                               }
                                                             },
                                                             {
+                                                              "id": "headlineColumn",
                                                               "name": "headlineColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/headline",
-                                                              "id": "headlineColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "title$lang",
-                                                                "text": "exhibition/title$lang",
+                                                                "columnKey": "objectTitle$lang",
+                                                                "text": "exhibition/objectTitle$lang",
                                                                 "columnType": "string"
                                                               }
                                                             },
                                                             {
+                                                              "id": "label1Column",
                                                               "name": "label1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label1",
-                                                              "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
-                                                                "text": "exhibition/artist",
+                                                                "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                "text": "exhibition/person",
                                                                 "columnType": "string"
                                                               }
                                                             },
                                                             {
+                                                              "id": "subtitle1Column",
                                                               "name": "subtitle1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle1",
-                                                              "id": "subtitle1Column",
                                                               "value": {
-                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                "sheetKey": "empty",
                                                                 "columnKey": "date$lang",
-                                                                "text": "exhibition/date$lang",
-                                                                "columnType": "string"
+                                                                "text": ""
                                                               }
                                                             },
                                                             {
+                                                              "id": "label2Column",
                                                               "name": "label2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label2",
-                                                              "id": "label2Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "label2",
@@ -1710,10 +1710,10 @@
                                                               }
                                                             },
                                                             {
+                                                              "id": "subtitle2Column",
                                                               "name": "subtitle2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle2",
-                                                              "id": "subtitle2Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle2",
@@ -1721,10 +1721,10 @@
                                                               }
                                                             },
                                                             {
+                                                              "id": "label3Column",
                                                               "name": "label3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label3",
-                                                              "id": "label3Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "label3",
@@ -1732,10 +1732,10 @@
                                                               }
                                                             },
                                                             {
+                                                              "id": "subtitle3Column",
                                                               "name": "subtitle3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle3",
-                                                              "id": "subtitle3Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle3",
@@ -1743,10 +1743,10 @@
                                                               }
                                                             },
                                                             {
+                                                              "id": "descriptionColumn",
                                                               "name": "descriptionColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/description",
-                                                              "id": "descriptionColumn",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "description",
@@ -2793,8 +2793,8 @@
                                                                   "defaultValue": "elements/label1",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "0f4534fd-8d9e-4162-a24d-629395419a54",
-                                                                    "text": "exhibition/materialUri",
+                                                                    "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                    "text": "exhibition/person",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -2805,8 +2805,8 @@
                                                                   "defaultValue": "elements/subtitle1",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "date$lang",
-                                                                    "text": "exhibition/date$lang",
+                                                                    "columnKey": "dateDisplay$lang",
+                                                                    "text": "exhibition/dateDisplay$lang",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -3010,11 +3010,11 @@
                                                                                   "extraProps": {
                                                                                     "props": [
                                                                                       {
-                                                                                        "id": "column",
                                                                                         "name": "column",
                                                                                         "type": "sheetColumn",
                                                                                         "columnType": "richText",
                                                                                         "defaultValue": "settings/content",
+                                                                                        "id": "column",
                                                                                         "value": {
                                                                                           "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                           "columnKey": "objectDescription$lang",
@@ -3023,20 +3023,20 @@
                                                                                         }
                                                                                       },
                                                                                       {
-                                                                                        "id": "format",
                                                                                         "name": "format",
                                                                                         "type": "options",
                                                                                         "options": [
                                                                                           "richText",
                                                                                           "string"
                                                                                         ],
-                                                                                        "defaultValue": "richText"
+                                                                                        "defaultValue": "richText",
+                                                                                        "id": "format"
                                                                                       },
                                                                                       {
-                                                                                        "id": "centerContent",
                                                                                         "name": "centerContent",
                                                                                         "type": "checkbox",
-                                                                                        "defaultValue": false
+                                                                                        "defaultValue": false,
+                                                                                        "id": "centerContent"
                                                                                       }
                                                                                     ]
                                                                                   }
@@ -4163,8 +4163,8 @@
                                                                   "defaultValue": "elements/label1",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "empty",
-                                                                    "text": "",
+                                                                    "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                    "text": "exhibition/person",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -4175,8 +4175,8 @@
                                                                   "defaultValue": "elements/subtitle1",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "date$lang",
-                                                                    "text": "exhibition/date$lang",
+                                                                    "columnKey": "dateDisplay$lang",
+                                                                    "text": "exhibition/dateDisplay$lang",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -4187,8 +4187,8 @@
                                                                   "defaultValue": "elements/label2",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "material$lang",
-                                                                    "text": "exhibition/material$lang",
+                                                                    "columnKey": "materialsTechniquesDisplay$lang",
+                                                                    "text": "exhibition/materialsTechniquesDisplay$lang",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -4199,8 +4199,8 @@
                                                                   "defaultValue": "elements/subtitle2",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                    "columnKey": "size$lang",
-                                                                    "text": "exhibition/size$lang",
+                                                                    "columnKey": "measurementsDisplay$lang",
+                                                                    "text": "exhibition/measurementsDisplay$lang",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -4210,9 +4210,9 @@
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
                                                                   "value": {
-                                                                    "sheetKey": "empty",
-                                                                    "columnKey": "empty",
-                                                                    "text": "",
+                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                    "columnKey": "05f91944-0978-4061-bcee-f39584e6fbaf",
+                                                                    "text": "exhibition/inventoryNumber",
                                                                     "columnType": "string"
                                                                   }
                                                                 },
@@ -4311,7 +4311,6 @@
                                                                 "extraProps": {
                                                                   "props": [
                                                                     {
-                                                                      "id": "type",
                                                                       "name": "type",
                                                                       "type": "options",
                                                                       "options": [
@@ -4322,10 +4321,10 @@
                                                                         "danger"
                                                                       ],
                                                                       "defaultValue": "secondary",
-                                                                      "help": "Appearance of the button."
+                                                                      "help": "Appearance of the button.",
+                                                                      "id": "type"
                                                                     },
                                                                     {
-                                                                      "id": "size",
                                                                       "name": "size",
                                                                       "type": "options",
                                                                       "options": [
@@ -4334,10 +4333,10 @@
                                                                         "large"
                                                                       ],
                                                                       "defaultValue": "small",
-                                                                      "help": "Large, medium or small."
+                                                                      "help": "Large, medium or small.",
+                                                                      "id": "size"
                                                                     },
                                                                     {
-                                                                      "id": "flex",
                                                                       "name": "flex",
                                                                       "type": "options",
                                                                       "options": [
@@ -4345,25 +4344,26 @@
                                                                         "fill"
                                                                       ],
                                                                       "defaultValue": "normal",
-                                                                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                      "id": "flex"
                                                                     },
                                                                     {
-                                                                      "id": "disabled",
                                                                       "name": "disabled",
                                                                       "type": "checkbox",
-                                                                      "defaultValue": false
+                                                                      "defaultValue": false,
+                                                                      "id": "disabled"
                                                                     },
                                                                     {
-                                                                      "id": "ariaLabel",
                                                                       "type": "string",
                                                                       "name": "ariaLabel",
-                                                                      "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                                      "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                      "id": "ariaLabel"
                                                                     },
                                                                     {
-                                                                      "id": "effect",
                                                                       "type": "effect",
                                                                       "name": "effect",
                                                                       "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                      "id": "effect",
                                                                       "value": {
                                                                         "effectType": "link",
                                                                         "url": "static/exports/mgk-fuer-die-voegel-metadata-v1.csv"

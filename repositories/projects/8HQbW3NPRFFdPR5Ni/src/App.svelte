@@ -165,8 +165,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  rightArrow={false}
                  effect={{"effectType":"dataRouteSingle","path":"/exhibition_artworks"}}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column="elements/label2"
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                    label2Column="elements/label2"
                  subtitle2Column="elements/subtitle2"
                  label3Column="elements/label3"
                  subtitle3Column="elements/subtitle3"
@@ -210,7 +210,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         </NavButton>
         <NavButton
               disabled={false}
-           effect={{"effectType":"back"}}
+           effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
              type="Thin-Layer"
@@ -484,8 +484,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="full"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}               >
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
@@ -658,8 +658,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="medium"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/empty"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   label3Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                 subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
@@ -730,7 +731,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         </NavButton>
         <NavButton
               disabled={false}
-           effect={{"effectType":"back"}}
+           effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
              type="Thin-Layer"
@@ -1308,8 +1309,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      rightArrow={false}
                      effect={{"effectType":"dataRouteSingle","path":"/exhibition_artworks"}}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column="elements/label2"
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                        label2Column="elements/label2"
                      subtitle2Column="elements/subtitle2"
                      label3Column="elements/label3"
                      subtitle3Column="elements/subtitle3"
@@ -1353,7 +1354,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             </NavButton>
             <NavButton
                   disabled={false}
-               effect={{"effectType":"back"}}
+               effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
                  type="Thin-Layer"
@@ -1535,8 +1536,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="full"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0f4534fd-8d9e-4162-a24d-629395419a54"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}               >
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
@@ -1709,8 +1710,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="medium"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/empty"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "date$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/date$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "material$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/material$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "size$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/size$lang"}      subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   label3Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                     subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
@@ -1781,7 +1783,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             </NavButton>
             <NavButton
                   disabled={false}
-               effect={{"effectType":"back"}}
+               effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
                  type="Thin-Layer"
