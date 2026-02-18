@@ -526,11 +526,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 <OverlayFull
                    closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                    >
-                  <Image
-                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                        width="100%"
-                           >
-                  </Image>
+                  <ScrollContainer
+                  >
+                    <Image
+                             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                          width="100%"
+                             >
+                    </Image>
+                  </ScrollContainer>
                 </OverlayFull>
               </svelte:fragment>
               <svelte:fragment slot="else">
@@ -543,11 +546,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   <OverlayFull
                      closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                      >
-                    <Image
-                             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-                          width="100%"
-                             >
-                    </Image>
+                    <ScrollContainer
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                            width="100%"
+                               >
+                      </Image>
+                    </ScrollContainer>
                   </OverlayFull>
                 </svelte:fragment>
                 <svelte:fragment slot="else">
@@ -560,11 +566,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     <OverlayFull
                        closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                        >
-                      <Image
-                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-                            width="100%"
-                               >
-                      </Image>
+                      <ScrollContainer
+                      >
+                        <Image
+                                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                              width="100%"
+                                 >
+                        </Image>
+                      </ScrollContainer>
                     </OverlayFull>
                   </svelte:fragment>
                   <svelte:fragment slot="else">
@@ -623,14 +632,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </Button>
               </svelte:fragment>
               </ColumnShell>
-              <IfUIKey
-                 storeType="UIKey"
-                    >
-              <svelte:fragment slot="iftrue">
-              </svelte:fragment>
-              <svelte:fragment slot="else">
-              </svelte:fragment>
-              </IfUIKey>
             </Spacing>
           </SectionShell>
         </svelte:fragment>
@@ -1578,11 +1579,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     <OverlayFull
                        closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                        >
-                      <Image
-                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                            width="100%"
-                               >
-                      </Image>
+                      <ScrollContainer
+                      >
+                        <Image
+                                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                              width="100%"
+                                 >
+                        </Image>
+                      </ScrollContainer>
                     </OverlayFull>
                   </svelte:fragment>
                   <svelte:fragment slot="else">
@@ -1595,11 +1599,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       <OverlayFull
                          closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                          >
-                        <Image
-                                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-                              width="100%"
-                                 >
-                        </Image>
+                        <ScrollContainer
+                        >
+                          <Image
+                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                                width="100%"
+                                   >
+                          </Image>
+                        </ScrollContainer>
                       </OverlayFull>
                     </svelte:fragment>
                     <svelte:fragment slot="else">
@@ -1612,11 +1619,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                         <OverlayFull
                            closeEffect={{"effectType":"setUIKey","value":"0","key":"overlayImage"}}
                            >
-                          <Image
-                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-                                width="100%"
-                                   >
-                          </Image>
+                          <ScrollContainer
+                          >
+                            <Image
+                                     imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                                  width="100%"
+                                     >
+                            </Image>
+                          </ScrollContainer>
                         </OverlayFull>
                       </svelte:fragment>
                       <svelte:fragment slot="else">
@@ -1675,14 +1685,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </Button>
                   </svelte:fragment>
                   </ColumnShell>
-                  <IfUIKey
-                     storeType="UIKey"
-                        >
-                  <svelte:fragment slot="iftrue">
-                  </svelte:fragment>
-                  <svelte:fragment slot="else">
-                  </svelte:fragment>
-                  </IfUIKey>
                 </Spacing>
               </SectionShell>
             </svelte:fragment>
