@@ -673,6 +673,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/personID"
+                     format="richText"
+                     centerContent={false}
+                  >
+                  </DataCell>
                 </svelte:fragment>
                 </AccordeonShell>
                 <AccordeonShell
@@ -683,6 +689,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/ad594afc-25f2-412f-843d-0cb3b5ce8739"
+                     format="richText"
+                     centerContent={false}
+                  >
+                  </DataCell>
                 </svelte:fragment>
                 </AccordeonShell>
                 <AccordeonShell
@@ -693,6 +705,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
+                     format="richText"
+                     centerContent={false}
+                  >
+                  </DataCell>
                 </svelte:fragment>
                 </AccordeonShell>
               </svelte:fragment>
@@ -1726,6 +1744,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/personID"
+                         format="richText"
+                         centerContent={false}
+                      >
+                      </DataCell>
                     </svelte:fragment>
                     </AccordeonShell>
                     <AccordeonShell
@@ -1736,6 +1760,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/ad594afc-25f2-412f-843d-0cb3b5ce8739"
+                         format="richText"
+                         centerContent={false}
+                      >
+                      </DataCell>
                     </svelte:fragment>
                     </AccordeonShell>
                     <AccordeonShell
@@ -1746,6 +1776,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
+                         format="richText"
+                         centerContent={false}
+                      >
+                      </DataCell>
                     </svelte:fragment>
                     </AccordeonShell>
                   </svelte:fragment>

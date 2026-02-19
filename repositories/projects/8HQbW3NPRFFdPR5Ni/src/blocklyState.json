@@ -2737,7 +2737,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "variant",
                                                                   "name": "variant",
                                                                   "type": "options",
                                                                   "options": [
@@ -2747,26 +2746,27 @@
                                                                     "small"
                                                                   ],
                                                                   "defaultValue": "full",
+                                                                  "id": "variant",
                                                                   "value": "full"
                                                                 },
                                                                 {
-                                                                  "id": "rightArrow",
                                                                   "name": "rightArrow",
                                                                   "type": "checkbox",
-                                                                  "help": "Display the right arrow next to the headline"
+                                                                  "help": "Display the right arrow next to the headline",
+                                                                  "id": "rightArrow"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "name": "effect",
                                                                   "type": "effect",
-                                                                  "help": "What should happen when you tap on the card"
+                                                                  "help": "What should happen when you tap on the card",
+                                                                  "id": "effect"
                                                                 },
                                                                 {
-                                                                  "id": "imageColumn",
                                                                   "name": "imageColumn",
                                                                   "type": "sheetColumn",
                                                                   "columnType": "mediaFile",
                                                                   "defaultValue": "elements/image",
+                                                                  "id": "imageColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -2775,10 +2775,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "headlineColumn",
                                                                   "name": "headlineColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/headline",
+                                                                  "id": "headlineColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "objectTitle$lang",
@@ -2787,10 +2787,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label1Column",
                                                                   "name": "label1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label1",
+                                                                  "id": "label1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
@@ -2799,10 +2799,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle1Column",
                                                                   "name": "subtitle1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle1",
+                                                                  "id": "subtitle1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "dateDisplay$lang",
@@ -2811,10 +2811,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label2Column",
                                                                   "name": "label2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label2",
+                                                                  "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "material$lang",
@@ -2823,10 +2823,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle2Column",
                                                                   "name": "subtitle2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle2",
+                                                                  "id": "subtitle2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "size$lang",
@@ -2835,10 +2835,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label3Column",
                                                                   "name": "label3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
+                                                                  "id": "label3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "empty",
@@ -2847,10 +2847,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle3Column",
                                                                   "name": "subtitle3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle3",
+                                                                  "id": "subtitle3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "institution$lang",
@@ -2859,10 +2859,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "descriptionColumn",
                                                                   "name": "descriptionColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/description",
+                                                                  "id": "descriptionColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "objectDescription$lang",
@@ -3072,10 +3072,10 @@
                                                                       "extraProps": {
                                                                         "props": [
                                                                           {
-                                                                            "id": "closeEffect",
                                                                             "name": "closeEffect",
                                                                             "type": "effect",
                                                                             "help": "What should happen when close button is tapped",
+                                                                            "id": "closeEffect",
                                                                             "value": {
                                                                               "effectType": "setUIKey",
                                                                               "value": "0",
@@ -3083,10 +3083,10 @@
                                                                             }
                                                                           },
                                                                           {
-                                                                            "id": "customStyle",
                                                                             "type": "string",
                                                                             "name": "customStyle",
-                                                                            "help": "A css style, eg 'background-color: white;'"
+                                                                            "help": "A css style, eg 'background-color: white;'",
+                                                                            "id": "customStyle"
                                                                           }
                                                                         ]
                                                                       }
@@ -3107,23 +3107,23 @@
                                                                                   "extraProps": {
                                                                                     "props": [
                                                                                       {
-                                                                                        "id": "mediafileKey",
                                                                                         "name": "mediafileKey",
                                                                                         "type": "string",
-                                                                                        "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                                                                        "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                        "id": "mediafileKey"
                                                                                       },
                                                                                       {
-                                                                                        "id": "altText",
                                                                                         "name": "altText",
                                                                                         "type": "string",
-                                                                                        "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
+                                                                                        "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                        "id": "altText"
                                                                                       },
                                                                                       {
-                                                                                        "id": "imageColumn",
                                                                                         "name": "imageColumn",
                                                                                         "type": "sheetColumn",
                                                                                         "columnType": "mediaFile",
                                                                                         "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                        "id": "imageColumn",
                                                                                         "value": {
                                                                                           "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                           "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -3132,37 +3132,37 @@
                                                                                         }
                                                                                       },
                                                                                       {
-                                                                                        "id": "altColumn",
                                                                                         "name": "altColumn",
                                                                                         "type": "sheetColumn",
                                                                                         "columnType": "string",
                                                                                         "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                        "id": "altColumn",
                                                                                         "value": {
                                                                                           "sheetKey": "empty",
                                                                                           "text": ""
                                                                                         }
                                                                                       },
                                                                                       {
-                                                                                        "id": "width",
                                                                                         "name": "width",
                                                                                         "type": "string",
                                                                                         "defaultValue": "100%",
+                                                                                        "id": "width",
                                                                                         "value": "100%"
                                                                                       },
                                                                                       {
-                                                                                        "id": "height",
                                                                                         "name": "height",
-                                                                                        "type": "string"
+                                                                                        "type": "string",
+                                                                                        "id": "height"
                                                                                       },
                                                                                       {
-                                                                                        "id": "customStyle",
                                                                                         "name": "customStyle",
-                                                                                        "type": "string"
+                                                                                        "type": "string",
+                                                                                        "id": "customStyle"
                                                                                       },
                                                                                       {
-                                                                                        "id": "classes",
                                                                                         "name": "classes",
-                                                                                        "type": "string"
+                                                                                        "type": "string",
+                                                                                        "id": "classes"
                                                                                       }
                                                                                     ]
                                                                                   }
@@ -3195,10 +3195,10 @@
                                                                             "extraProps": {
                                                                               "props": [
                                                                                 {
-                                                                                  "id": "closeEffect",
                                                                                   "name": "closeEffect",
                                                                                   "type": "effect",
                                                                                   "help": "What should happen when close button is tapped",
+                                                                                  "id": "closeEffect",
                                                                                   "value": {
                                                                                     "effectType": "setUIKey",
                                                                                     "value": "0",
@@ -3206,10 +3206,10 @@
                                                                                   }
                                                                                 },
                                                                                 {
-                                                                                  "id": "customStyle",
                                                                                   "type": "string",
                                                                                   "name": "customStyle",
-                                                                                  "help": "A css style, eg 'background-color: white;'"
+                                                                                  "help": "A css style, eg 'background-color: white;'",
+                                                                                  "id": "customStyle"
                                                                                 }
                                                                               ]
                                                                             }
@@ -3230,23 +3230,23 @@
                                                                                         "extraProps": {
                                                                                           "props": [
                                                                                             {
-                                                                                              "id": "mediafileKey",
                                                                                               "name": "mediafileKey",
                                                                                               "type": "string",
-                                                                                              "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                                                                              "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                              "id": "mediafileKey"
                                                                                             },
                                                                                             {
-                                                                                              "id": "altText",
                                                                                               "name": "altText",
                                                                                               "type": "string",
-                                                                                              "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
+                                                                                              "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                              "id": "altText"
                                                                                             },
                                                                                             {
-                                                                                              "id": "imageColumn",
                                                                                               "name": "imageColumn",
                                                                                               "type": "sheetColumn",
                                                                                               "columnType": "mediaFile",
                                                                                               "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                              "id": "imageColumn",
                                                                                               "value": {
                                                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                                 "columnKey": "9e8c6ee5-4ce6-4eed-844b-c9739fb50885",
@@ -3255,37 +3255,37 @@
                                                                                               }
                                                                                             },
                                                                                             {
-                                                                                              "id": "altColumn",
                                                                                               "name": "altColumn",
                                                                                               "type": "sheetColumn",
                                                                                               "columnType": "string",
                                                                                               "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                              "id": "altColumn",
                                                                                               "value": {
                                                                                                 "sheetKey": "empty",
                                                                                                 "text": ""
                                                                                               }
                                                                                             },
                                                                                             {
-                                                                                              "id": "width",
                                                                                               "name": "width",
                                                                                               "type": "string",
                                                                                               "defaultValue": "100%",
+                                                                                              "id": "width",
                                                                                               "value": "100%"
                                                                                             },
                                                                                             {
-                                                                                              "id": "height",
                                                                                               "name": "height",
-                                                                                              "type": "string"
+                                                                                              "type": "string",
+                                                                                              "id": "height"
                                                                                             },
                                                                                             {
-                                                                                              "id": "customStyle",
                                                                                               "name": "customStyle",
-                                                                                              "type": "string"
+                                                                                              "type": "string",
+                                                                                              "id": "customStyle"
                                                                                             },
                                                                                             {
-                                                                                              "id": "classes",
                                                                                               "name": "classes",
-                                                                                              "type": "string"
+                                                                                              "type": "string",
+                                                                                              "id": "classes"
                                                                                             }
                                                                                           ]
                                                                                         }
@@ -3318,10 +3318,10 @@
                                                                                   "extraProps": {
                                                                                     "props": [
                                                                                       {
-                                                                                        "id": "closeEffect",
                                                                                         "name": "closeEffect",
                                                                                         "type": "effect",
                                                                                         "help": "What should happen when close button is tapped",
+                                                                                        "id": "closeEffect",
                                                                                         "value": {
                                                                                           "effectType": "setUIKey",
                                                                                           "value": "0",
@@ -3329,10 +3329,10 @@
                                                                                         }
                                                                                       },
                                                                                       {
-                                                                                        "id": "customStyle",
                                                                                         "type": "string",
                                                                                         "name": "customStyle",
-                                                                                        "help": "A css style, eg 'background-color: white;'"
+                                                                                        "help": "A css style, eg 'background-color: white;'",
+                                                                                        "id": "customStyle"
                                                                                       }
                                                                                     ]
                                                                                   }
@@ -3353,23 +3353,23 @@
                                                                                               "extraProps": {
                                                                                                 "props": [
                                                                                                   {
-                                                                                                    "id": "mediafileKey",
                                                                                                     "name": "mediafileKey",
                                                                                                     "type": "string",
-                                                                                                    "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
+                                                                                                    "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
+                                                                                                    "id": "mediafileKey"
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "altText",
                                                                                                     "name": "altText",
                                                                                                     "type": "string",
-                                                                                                    "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
+                                                                                                    "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
+                                                                                                    "id": "altText"
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "imageColumn",
                                                                                                     "name": "imageColumn",
                                                                                                     "type": "sheetColumn",
                                                                                                     "columnType": "mediaFile",
                                                                                                     "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
+                                                                                                    "id": "imageColumn",
                                                                                                     "value": {
                                                                                                       "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                                       "columnKey": "48789c75-cff9-4a91-863f-387de78adea8",
@@ -3378,37 +3378,37 @@
                                                                                                     }
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "altColumn",
                                                                                                     "name": "altColumn",
                                                                                                     "type": "sheetColumn",
                                                                                                     "columnType": "string",
                                                                                                     "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
+                                                                                                    "id": "altColumn",
                                                                                                     "value": {
                                                                                                       "sheetKey": "empty",
                                                                                                       "text": ""
                                                                                                     }
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "width",
                                                                                                     "name": "width",
                                                                                                     "type": "string",
                                                                                                     "defaultValue": "100%",
+                                                                                                    "id": "width",
                                                                                                     "value": "100%"
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "height",
                                                                                                     "name": "height",
-                                                                                                    "type": "string"
+                                                                                                    "type": "string",
+                                                                                                    "id": "height"
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "customStyle",
                                                                                                     "name": "customStyle",
-                                                                                                    "type": "string"
+                                                                                                    "type": "string",
+                                                                                                    "id": "customStyle"
                                                                                                   },
                                                                                                   {
-                                                                                                    "id": "classes",
                                                                                                     "name": "classes",
-                                                                                                    "type": "string"
+                                                                                                    "type": "string",
+                                                                                                    "id": "classes"
                                                                                                   }
                                                                                                 ]
                                                                                               }
@@ -4125,7 +4125,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "variant",
                                                                   "name": "variant",
                                                                   "type": "options",
                                                                   "options": [
@@ -4135,26 +4134,27 @@
                                                                     "small"
                                                                   ],
                                                                   "defaultValue": "full",
+                                                                  "id": "variant",
                                                                   "value": "medium"
                                                                 },
                                                                 {
-                                                                  "id": "rightArrow",
                                                                   "name": "rightArrow",
                                                                   "type": "checkbox",
-                                                                  "help": "Display the right arrow next to the headline"
+                                                                  "help": "Display the right arrow next to the headline",
+                                                                  "id": "rightArrow"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "name": "effect",
                                                                   "type": "effect",
-                                                                  "help": "What should happen when you tap on the card"
+                                                                  "help": "What should happen when you tap on the card",
+                                                                  "id": "effect"
                                                                 },
                                                                 {
-                                                                  "id": "imageColumn",
                                                                   "name": "imageColumn",
                                                                   "type": "sheetColumn",
                                                                   "columnType": "mediaFile",
                                                                   "defaultValue": "elements/image",
+                                                                  "id": "imageColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -4163,10 +4163,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "headlineColumn",
                                                                   "name": "headlineColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/headline",
+                                                                  "id": "headlineColumn",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "objectTitle$lang",
@@ -4175,10 +4175,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label1Column",
                                                                   "name": "label1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label1",
+                                                                  "id": "label1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
@@ -4187,10 +4187,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle1Column",
                                                                   "name": "subtitle1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle1",
+                                                                  "id": "subtitle1Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "dateDisplay$lang",
@@ -4199,10 +4199,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label2Column",
                                                                   "name": "label2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label2",
+                                                                  "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "materialsTechniquesDisplay$lang",
@@ -4211,10 +4211,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle2Column",
                                                                   "name": "subtitle2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle2",
+                                                                  "id": "subtitle2Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "measurementsDisplay$lang",
@@ -4223,10 +4223,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label3Column",
                                                                   "name": "label3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
+                                                                  "id": "label3Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "05f91944-0978-4061-bcee-f39584e6fbaf",
@@ -4235,10 +4235,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle3Column",
                                                                   "name": "subtitle3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle3",
+                                                                  "id": "subtitle3Column",
                                                                   "value": {
                                                                     "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                     "columnKey": "institution$lang",
@@ -4247,10 +4247,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "descriptionColumn",
                                                                   "name": "descriptionColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/description",
+                                                                  "id": "descriptionColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "transcript$lang",
@@ -4276,6 +4276,50 @@
                                                                         "text": "$artist_context"
                                                                       }
                                                                     }
+                                                                  },
+                                                                  "content": {
+                                                                    "block": {
+                                                                      "type": "DataCell",
+                                                                      "id": "JOK]UNG=3`q.G+s}$we*",
+                                                                      "data": "{\"origin\":\"interkit\"}",
+                                                                      "fields": {
+                                                                        "extraProps": {
+                                                                          "props": [
+                                                                            {
+                                                                              "name": "column",
+                                                                              "type": "sheetColumn",
+                                                                              "columnType": "richText",
+                                                                              "defaultValue": "settings/content",
+                                                                              "id": "column",
+                                                                              "value": {
+                                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                "columnKey": "personID",
+                                                                                "text": "exhibition/personID",
+                                                                                "columnType": "richText"
+                                                                              }
+                                                                            },
+                                                                            {
+                                                                              "name": "format",
+                                                                              "type": "options",
+                                                                              "options": [
+                                                                                "richText",
+                                                                                "string"
+                                                                              ],
+                                                                              "defaultValue": "richText",
+                                                                              "id": "format",
+                                                                              "value": "richText"
+                                                                            },
+                                                                            {
+                                                                              "name": "centerContent",
+                                                                              "type": "checkbox",
+                                                                              "defaultValue": false,
+                                                                              "id": "centerContent",
+                                                                              "value": false
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      }
+                                                                    }
                                                                   }
                                                                 },
                                                                 "next": {
@@ -4293,6 +4337,49 @@
                                                                             "text": "$bird_context"
                                                                           }
                                                                         }
+                                                                      },
+                                                                      "content": {
+                                                                        "block": {
+                                                                          "type": "DataCell",
+                                                                          "id": "^6^:e#G1C_%Pb^n?6%#a",
+                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "fields": {
+                                                                            "extraProps": {
+                                                                              "props": [
+                                                                                {
+                                                                                  "name": "column",
+                                                                                  "type": "sheetColumn",
+                                                                                  "columnType": "richText",
+                                                                                  "defaultValue": "settings/content",
+                                                                                  "id": "column",
+                                                                                  "value": {
+                                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                    "columnKey": "ad594afc-25f2-412f-843d-0cb3b5ce8739",
+                                                                                    "text": "exhibition/subjectKeyword",
+                                                                                    "columnType": "string"
+                                                                                  }
+                                                                                },
+                                                                                {
+                                                                                  "name": "format",
+                                                                                  "type": "options",
+                                                                                  "options": [
+                                                                                    "richText",
+                                                                                    "string"
+                                                                                  ],
+                                                                                  "defaultValue": "richText",
+                                                                                  "id": "format",
+                                                                                  "value": "richText"
+                                                                                },
+                                                                                {
+                                                                                  "name": "centerContent",
+                                                                                  "type": "checkbox",
+                                                                                  "defaultValue": false,
+                                                                                  "id": "centerContent"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          }
+                                                                        }
                                                                       }
                                                                     },
                                                                     "next": {
@@ -4308,6 +4395,49 @@
                                                                               "data": "{\"origin\":\"interkit\"}",
                                                                               "fields": {
                                                                                 "text": "$artwork_context"
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "content": {
+                                                                            "block": {
+                                                                              "type": "DataCell",
+                                                                              "id": "^Z,5C*R41i_Ykc5/4XBs",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "extraProps": {
+                                                                                  "props": [
+                                                                                    {
+                                                                                      "name": "column",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "richText",
+                                                                                      "defaultValue": "settings/content",
+                                                                                      "id": "column",
+                                                                                      "value": {
+                                                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                        "columnKey": "e735b0c9-b3c8-4df8-8da6-b8d1101a56f2",
+                                                                                        "text": "exhibition/objectType",
+                                                                                        "columnType": "string"
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "format",
+                                                                                      "type": "options",
+                                                                                      "options": [
+                                                                                        "richText",
+                                                                                        "string"
+                                                                                      ],
+                                                                                      "defaultValue": "richText",
+                                                                                      "id": "format",
+                                                                                      "value": "richText"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "centerContent",
+                                                                                      "type": "checkbox",
+                                                                                      "defaultValue": false,
+                                                                                      "id": "centerContent"
+                                                                                    }
+                                                                                  ]
+                                                                                }
                                                                               }
                                                                             }
                                                                           }
