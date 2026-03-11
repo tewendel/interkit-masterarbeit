@@ -31,6 +31,7 @@ import PopoutAudioButton from "interkit/components/PopoutAudioButton.svelte";
 import Route from "interkit/components/Route.svelte";
 import ScrollContainer from "interkit/components/ScrollContainer.svelte";
 import SectionShell from "interkit/components/SectionShell.svelte";
+import SlideInModal from "interkit/components/SlideInModal.svelte";
 import Spacing from "interkit/components/Spacing.svelte";
 import StaticText from "interkit/components/StaticText.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
@@ -119,18 +120,39 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     >
       <SectionShell
       >
+        <TextFormat
+           interfaceFormat="none"
+           contentFormat="headline-2"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_artworks"] ? $translations[$lang]["$exhibition_artworks"] : "exhibition_artworks") : ($translations.en && $translations.en["$exhibition_artworks"] ? $translations.en["$exhibition_artworks"] : "…")}>
+          </StaticText>
+        </TextFormat>
+        <TextFormat
+           interfaceFormat="none"
+           contentFormat="body-2"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$open_artwork"] ? $translations[$lang]["$open_artwork"] : "open_artwork") : ($translations.en && $translations.en["$open_artwork"] ? $translations.en["$open_artwork"] : "…")}>
+          </StaticText>
+        </TextFormat>
         <AccordeonShell
         >
         <svelte:fragment slot="label">
           <Label
              type="icon"
              variant="normal"
-                icon="Full-More"
+             content={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : "…"}   icon="Full-More"
           >
           </Label>
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$button_more"] ? $translations[$lang]["$button_more"] : "button_more") : ($translations.en && $translations.en["$button_more"] ? $translations.en["$button_more"] : "…")}>
-          </StaticText>
+          <TextFormat
+             interfaceFormat="none"
+             contentFormat="body-2"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+            </StaticText>
+          </TextFormat>
         </svelte:fragment>
         <svelte:fragment slot="content">
           <DataLoaderSingle
@@ -288,16 +310,24 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              text={$lang ? ($translations[$lang] && $translations[$lang]["$app_title"] ? $translations[$lang]["$app_title"] : "app_title") : ($translations.en && $translations.en["$app_title"] ? $translations.en["$app_title"] : "…")}>
           </StaticText>
         </TextFormat>
+        <TextFormat
+           interfaceFormat="body-1"
+           contentFormat="none"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$landing_context"] ? $translations[$lang]["$landing_context"] : "landing_context") : ($translations.en && $translations.en["$landing_context"] ? $translations.en["$landing_context"] : "…")}>
+          </StaticText>
+        </TextFormat>
       </SectionShell>
       <SectionShell
       >
         <CenterModal
            size="large"
            imageKey="b910238c-edf8-499e-b187-6a7cef0912a6"
-              headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}      >
+           label={$lang ? ($translations[$lang] && $translations[$lang]["$date"] ? $translations[$lang]["$date"] : "date") : "…"}   headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   >
         <svelte:fragment slot="buttons">
           <Button
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$button_more"] ? $translations[$lang]["$button_more"] : "button_more") : ($translations.en && $translations.en["$button_more"] ? $translations.en["$button_more"] : "…")}   type="secondary"
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$discover_artworks"] ? $translations[$lang]["$discover_artworks"] : "discover_artworks") : ($translations.en && $translations.en["$discover_artworks"] ? $translations.en["$discover_artworks"] : "…")}   type="secondary"
              size="medium"
              flex="fill"
              disabled={false}
@@ -457,21 +487,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            value="guide"
         >
         <svelte:fragment slot="iftrue">
-          <Spacing
-             top="s"
-             right="s"
-             bottom="s"
-             left="s"
-          >
-            <TextFormat
-               interfaceFormat="headline-3"
-               contentFormat="none"
-            >
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$guide_mode"] ? $translations[$lang]["$guide_mode"] : "guide_mode") : ($translations.en && $translations.en["$guide_mode"] ? $translations.en["$guide_mode"] : "…")}>
-              </StaticText>
-            </TextFormat>
-          </Spacing>
           <SectionShell
           >
             <Spacing
@@ -583,74 +598,67 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </IfUIKey>
               </svelte:fragment>
               </IfUIKey>
-              <ColumnShell
-                 columns="3"
+              <SectionShell
               >
-              <svelte:fragment slot="col1">
-                <Button
-                      type="link"
-                   size="large"
-                   flex="fill"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
-                >
-                  <Image
-                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                        width="100%"
-                           >
-                  </Image>
-                </Button>
-              </svelte:fragment>
-              <svelte:fragment slot="col2">
-                <Button
-                      type="link"
-                   size="large"
-                   flex="fill"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
-                >
-                  <Image
-                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-                        width="100%"
-                           >
-                  </Image>
-                </Button>
-              </svelte:fragment>
-              <svelte:fragment slot="col3">
-                <Button
-                      type="link"
-                   size="large"
-                   flex="fill"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
-                >
-                  <Image
-                           imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-                        width="100%"
-                           >
-                  </Image>
-                </Button>
-              </svelte:fragment>
-              </ColumnShell>
+                <SlideInModal
+                      headline={$lang ? ($translations[$lang] && $translations[$lang]["$enlarge_image"] ? $translations[$lang]["$enlarge_image"] : "enlarge_image") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$tap_to_enlarge"] ? $translations[$lang]["$tap_to_enlarge"] : "tap_to_enlarge") : "…"}   >
+                <svelte:fragment slot="buttons">
+                  <ColumnShell
+                     columns="3"
+                  >
+                  <svelte:fragment slot="col1">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  <svelte:fragment slot="col2">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  <svelte:fragment slot="col3">
+                    <Button
+                          type="link"
+                       size="large"
+                       flex="fill"
+                       disabled={false}
+                          effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                    >
+                      <Image
+                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                            width="100%"
+                               >
+                      </Image>
+                    </Button>
+                  </svelte:fragment>
+                  </ColumnShell>
+                </svelte:fragment>
+                </SlideInModal>
+              </SectionShell>
             </Spacing>
           </SectionShell>
         </svelte:fragment>
         <svelte:fragment slot="else">
-          <Spacing
-             top="s"
-             right="s"
-             bottom="s"
-             left="s"
-          >
-            <TextFormat
-               interfaceFormat="headline-3"
-               contentFormat="none"
-            >
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$data_mode"] ? $translations[$lang]["$data_mode"] : "data_mode") : ($translations.en && $translations.en["$data_mode"] ? $translations.en["$data_mode"] : "…")}>
-              </StaticText>
-            </TextFormat>
-          </Spacing>
           <SectionShell
           >
             <Spacing
@@ -660,11 +668,64 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
                  headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   label3Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
-                 subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
+                <DataCell
+                   column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+                <DataCell
+                   column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+                <DataCell
+                   column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+              </svelte:fragment>
+              </DataCard>
+            </Spacing>
+          </SectionShell>
+          <SectionShell
+          >
+            <Spacing
+                        >
+              <DataCard
+                 variant="medium"
+                    effect={undefined}
+                                         >
+              <svelte:fragment slot="chips">
+              </svelte:fragment>
+              <svelte:fragment slot="content">
+                <TextFormat
+                   interfaceFormat="none"
+                   contentFormat="headline-5"
+                >
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$context"] ? $translations[$lang]["$context"] : "context") : ($translations.en && $translations.en["$context"] ? $translations.en["$context"] : "…")}>
+                  </StaticText>
+                </TextFormat>
+                <AccordeonShell
+                >
+                <svelte:fragment slot="label">
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                  </StaticText>
+                </svelte:fragment>
+                <svelte:fragment slot="content">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
+                     format="richText"
+                     centerContent={false}
+                  >
+                  </DataCell>
+                </svelte:fragment>
+                </AccordeonShell>
                 <AccordeonShell
                 >
                 <svelte:fragment slot="label">
@@ -697,33 +758,24 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </DataCell>
                 </svelte:fragment>
                 </AccordeonShell>
-                <AccordeonShell
-                >
-                <svelte:fragment slot="label">
-                  <StaticText
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
-                  </StaticText>
-                </svelte:fragment>
-                <svelte:fragment slot="content">
-                  <DataCell
-                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
-                     format="richText"
-                     centerContent={false}
-                  >
-                  </DataCell>
-                </svelte:fragment>
-                </AccordeonShell>
               </svelte:fragment>
               </DataCard>
-              <Button
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
-                 size="small"
-                 flex="normal"
-                 disabled={false}
-                    effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
-              >
-              </Button>
             </Spacing>
+            <SectionShell
+            >
+              <Spacing
+                 top="m"
+                       >
+                <Button
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                      effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
+                >
+                </Button>
+              </Spacing>
+            </SectionShell>
           </SectionShell>
         </svelte:fragment>
         </IfUIKey>
@@ -970,16 +1022,24 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$app_title"] ? $translations[$lang]["$app_title"] : "app_title") : ($translations.en && $translations.en["$app_title"] ? $translations.en["$app_title"] : "…")}>
               </StaticText>
             </TextFormat>
+            <TextFormat
+               interfaceFormat="body-1"
+               contentFormat="none"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$landing_context"] ? $translations[$lang]["$landing_context"] : "landing_context") : ($translations.en && $translations.en["$landing_context"] ? $translations.en["$landing_context"] : "…")}>
+              </StaticText>
+            </TextFormat>
           </SectionShell>
           <SectionShell
           >
             <CenterModal
                size="large"
                imageKey="b910238c-edf8-499e-b187-6a7cef0912a6"
-                  headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}      >
+               label={$lang ? ($translations[$lang] && $translations[$lang]["$date"] ? $translations[$lang]["$date"] : "date") : "…"}   headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   >
             <svelte:fragment slot="buttons">
               <Button
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$button_more"] ? $translations[$lang]["$button_more"] : "button_more") : ($translations.en && $translations.en["$button_more"] ? $translations.en["$button_more"] : "…")}   type="secondary"
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$discover_artworks"] ? $translations[$lang]["$discover_artworks"] : "discover_artworks") : ($translations.en && $translations.en["$discover_artworks"] ? $translations.en["$discover_artworks"] : "…")}   type="secondary"
                  size="medium"
                  flex="fill"
                  disabled={false}
@@ -1282,18 +1342,39 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         >
           <SectionShell
           >
+            <TextFormat
+               interfaceFormat="none"
+               contentFormat="headline-2"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_artworks"] ? $translations[$lang]["$exhibition_artworks"] : "exhibition_artworks") : ($translations.en && $translations.en["$exhibition_artworks"] ? $translations.en["$exhibition_artworks"] : "…")}>
+              </StaticText>
+            </TextFormat>
+            <TextFormat
+               interfaceFormat="none"
+               contentFormat="body-2"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$open_artwork"] ? $translations[$lang]["$open_artwork"] : "open_artwork") : ($translations.en && $translations.en["$open_artwork"] ? $translations.en["$open_artwork"] : "…")}>
+              </StaticText>
+            </TextFormat>
             <AccordeonShell
             >
             <svelte:fragment slot="label">
               <Label
                  type="icon"
                  variant="normal"
-                    icon="Full-More"
+                 content={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : "…"}   icon="Full-More"
               >
               </Label>
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$button_more"] ? $translations[$lang]["$button_more"] : "button_more") : ($translations.en && $translations.en["$button_more"] ? $translations.en["$button_more"] : "…")}>
-              </StaticText>
+              <TextFormat
+                 interfaceFormat="none"
+                 contentFormat="body-2"
+              >
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+                </StaticText>
+              </TextFormat>
             </svelte:fragment>
             <svelte:fragment slot="content">
               <DataLoaderSingle
@@ -1528,21 +1609,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                value="guide"
             >
             <svelte:fragment slot="iftrue">
-              <Spacing
-                 top="s"
-                 right="s"
-                 bottom="s"
-                 left="s"
-              >
-                <TextFormat
-                   interfaceFormat="headline-3"
-                   contentFormat="none"
-                >
-                  <StaticText
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$guide_mode"] ? $translations[$lang]["$guide_mode"] : "guide_mode") : ($translations.en && $translations.en["$guide_mode"] ? $translations.en["$guide_mode"] : "…")}>
-                  </StaticText>
-                </TextFormat>
-              </Spacing>
               <SectionShell
               >
                 <Spacing
@@ -1654,74 +1720,67 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </IfUIKey>
                   </svelte:fragment>
                   </IfUIKey>
-                  <ColumnShell
-                     columns="3"
+                  <SectionShell
                   >
-                  <svelte:fragment slot="col1">
-                    <Button
-                          type="link"
-                       size="large"
-                       flex="fill"
-                       disabled={false}
-                          effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
-                    >
-                      <Image
-                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                            width="100%"
-                               >
-                      </Image>
-                    </Button>
-                  </svelte:fragment>
-                  <svelte:fragment slot="col2">
-                    <Button
-                          type="link"
-                       size="large"
-                       flex="fill"
-                       disabled={false}
-                          effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
-                    >
-                      <Image
-                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-                            width="100%"
-                               >
-                      </Image>
-                    </Button>
-                  </svelte:fragment>
-                  <svelte:fragment slot="col3">
-                    <Button
-                          type="link"
-                       size="large"
-                       flex="fill"
-                       disabled={false}
-                          effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
-                    >
-                      <Image
-                               imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-                            width="100%"
-                               >
-                      </Image>
-                    </Button>
-                  </svelte:fragment>
-                  </ColumnShell>
+                    <SlideInModal
+                          headline={$lang ? ($translations[$lang] && $translations[$lang]["$enlarge_image"] ? $translations[$lang]["$enlarge_image"] : "enlarge_image") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$tap_to_enlarge"] ? $translations[$lang]["$tap_to_enlarge"] : "tap_to_enlarge") : "…"}   >
+                    <svelte:fragment slot="buttons">
+                      <ColumnShell
+                         columns="3"
+                      >
+                      <svelte:fragment slot="col1">
+                        <Button
+                              type="link"
+                           size="large"
+                           flex="fill"
+                           disabled={false}
+                              effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                        >
+                          <Image
+                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
+                                width="100%"
+                                   >
+                          </Image>
+                        </Button>
+                      </svelte:fragment>
+                      <svelte:fragment slot="col2">
+                        <Button
+                              type="link"
+                           size="large"
+                           flex="fill"
+                           disabled={false}
+                              effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                        >
+                          <Image
+                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
+                                width="100%"
+                                   >
+                          </Image>
+                        </Button>
+                      </svelte:fragment>
+                      <svelte:fragment slot="col3">
+                        <Button
+                              type="link"
+                           size="large"
+                           flex="fill"
+                           disabled={false}
+                              effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                        >
+                          <Image
+                                   imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
+                                width="100%"
+                                   >
+                          </Image>
+                        </Button>
+                      </svelte:fragment>
+                      </ColumnShell>
+                    </svelte:fragment>
+                    </SlideInModal>
+                  </SectionShell>
                 </Spacing>
               </SectionShell>
             </svelte:fragment>
             <svelte:fragment slot="else">
-              <Spacing
-                 top="s"
-                 right="s"
-                 bottom="s"
-                 left="s"
-              >
-                <TextFormat
-                   interfaceFormat="headline-3"
-                   contentFormat="none"
-                >
-                  <StaticText
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$data_mode"] ? $translations[$lang]["$data_mode"] : "data_mode") : ($translations.en && $translations.en["$data_mode"] ? $translations.en["$data_mode"] : "…")}>
-                  </StaticText>
-                </TextFormat>
-              </Spacing>
               <SectionShell
               >
                 <Spacing
@@ -1731,11 +1790,64 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
                      headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}   label2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   subtitle2Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   label3Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
-                     subtitle3Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   >
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
+                    <DataCell
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "materialsTechniquesDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/materialsTechniquesDisplay$lang"}   format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                    <DataCell
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "measurementsDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/measurementsDisplay$lang"}   format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                    <DataCell
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "institution$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/institution$lang"}   format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                  </svelte:fragment>
+                  </DataCard>
+                </Spacing>
+              </SectionShell>
+              <SectionShell
+              >
+                <Spacing
+                            >
+                  <DataCard
+                     variant="medium"
+                        effect={undefined}
+                                             >
+                  <svelte:fragment slot="chips">
+                  </svelte:fragment>
+                  <svelte:fragment slot="content">
+                    <TextFormat
+                       interfaceFormat="none"
+                       contentFormat="headline-5"
+                    >
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$context"] ? $translations[$lang]["$context"] : "context") : ($translations.en && $translations.en["$context"] ? $translations.en["$context"] : "…")}>
+                      </StaticText>
+                    </TextFormat>
+                    <AccordeonShell
+                    >
+                    <svelte:fragment slot="label">
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                      </StaticText>
+                    </svelte:fragment>
+                    <svelte:fragment slot="content">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
+                         format="richText"
+                         centerContent={false}
+                      >
+                      </DataCell>
+                    </svelte:fragment>
+                    </AccordeonShell>
                     <AccordeonShell
                     >
                     <svelte:fragment slot="label">
@@ -1768,33 +1880,24 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </DataCell>
                     </svelte:fragment>
                     </AccordeonShell>
-                    <AccordeonShell
-                    >
-                    <svelte:fragment slot="label">
-                      <StaticText
-                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
-                      </StaticText>
-                    </svelte:fragment>
-                    <svelte:fragment slot="content">
-                      <DataCell
-                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
-                         format="richText"
-                         centerContent={false}
-                      >
-                      </DataCell>
-                    </svelte:fragment>
-                    </AccordeonShell>
                   </svelte:fragment>
                   </DataCard>
-                  <Button
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
-                     size="small"
-                     flex="normal"
-                     disabled={false}
-                        effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
-                  >
-                  </Button>
                 </Spacing>
+                <SectionShell
+                >
+                  <Spacing
+                     top="m"
+                           >
+                    <Button
+                       text={$lang ? ($translations[$lang] && $translations[$lang]["$download_metadata"] ? $translations[$lang]["$download_metadata"] : "download_metadata") : ($translations.en && $translations.en["$download_metadata"] ? $translations.en["$download_metadata"] : "…")}   type="secondary"
+                       size="small"
+                       flex="normal"
+                       disabled={false}
+                          effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v1.csv"}}
+                    >
+                    </Button>
+                  </Spacing>
+                </SectionShell>
               </SectionShell>
             </svelte:fragment>
             </IfUIKey>
