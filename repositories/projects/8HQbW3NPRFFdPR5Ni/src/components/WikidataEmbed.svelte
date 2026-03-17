@@ -1,38 +1,9 @@
 <script>
-  import { onMount } from 'svelte'
-  import { InterkitClient } from 'interkit'
+  export let title = "Wikidata-Kontext"
+  export let qid = ""
+  export let height = "45vh"
 
-  export let qidColumn = 'personID_wikidata'
-  export let sheetKey = 'exhibition'
-  export let rowKey = ''
-  export let title = 'Wikidata-Kontext'
-  export let width = '100%'
-  export let height = '50vh'
-
-  let rowStore
-  let row
-  let qid = ''
-  let iframeSrc = ''
-  let error = ''
-
-  function normalizeQid(value) {
-    if (!value) return ''
-
-    const trimmed = String(value).trim()
-
-    // akzeptiert Q538534
-    if (/^Q\d+$/i.test(trimmed)) {
-      return trimmed.toUpperCase()
-    }
-
-    // akzeptiert volle Wikidata-URI wie https://www.wikidata.org/wiki/Q538534
-    const match = trimmed.match(/Q\d+/i)
-    if (match) {
-      return match[0].toUpperCase()
-    }
-
-    return ''
-  }
+  let iframeSrc = ""
 
   function buildQuery(qid) {
     return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?gnd WHERE {
@@ -44,60 +15,26 @@
 }`
   }
 
-  function buildEmbedUrl(query) {
-    return `https://query.wikidata.org/embed.html#${encodeURIComponent(query)}`
-  }
-
-  async function loadRow() {
-    try {
-      error = ''
-
-      if (!rowKey) {
-        error = 'Kein rowKey übergeben.'
-        return
-      }
-
-      rowStore = await InterkitClient.getRowStore(sheetKey, rowKey)
-    } catch (e) {
-      error = 'Datensatz konnte nicht geladen werden.'
-      console.error(e)
-    }
-  }
-
-  onMount(async () => {
-    await loadRow()
-  })
-
-  $: if (rowStore) {
-    row = $rowStore
-  }
-
-  $: if (row && row.values) {
-    qid = normalizeQid(row.values[qidColumn])
-  }
-
   $: if (qid) {
     const query = buildQuery(qid)
-    iframeSrc = buildEmbedUrl(query)
+    iframeSrc = `https://query.wikidata.org/embed.html#${encodeURIComponent(query)}`
   } else {
-    iframeSrc = ''
+    iframeSrc = ""
   }
 </script>
 
 {#if title}
-  <h3>{title}</h3>
+  <h4>{title}</h4>
 {/if}
 
-{#if error}
-  <p>{error}</p>
-{:else if !qid}
-  <p>Keine gültige Wikidata-QID gefunden.</p>
-{:else}
+{#if iframeSrc}
   <iframe
     title="Wikidata SPARQL Embed"
     src={iframeSrc}
-    style={`width: ${width}; height: ${height}; border: none;`}
+    style={`width: 100%; height: ${height}; border: none;`}
     referrerpolicy="origin"
     sandbox="allow-scripts allow-same-origin allow-popups">
   </iframe>
+{:else}
+  <p>Keine Wikidata-QID vorhanden.</p>
 {/if}

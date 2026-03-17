@@ -1368,7 +1368,6 @@
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "interfaceFormat",
                                         "type": "options",
                                         "name": "interfaceFormat",
                                         "options": [
@@ -1388,10 +1387,10 @@
                                           "overline"
                                         ],
                                         "defaultValue": "none",
-                                        "help": "Use these formats to select typography for parts of the interface."
+                                        "help": "Use these formats to select typography for parts of the interface.",
+                                        "id": "interfaceFormat"
                                       },
                                       {
-                                        "id": "contentFormat",
                                         "type": "options",
                                         "name": "contentFormat",
                                         "options": [
@@ -1406,6 +1405,7 @@
                                         ],
                                         "defaultValue": "none",
                                         "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                        "id": "contentFormat",
                                         "value": "headline-2"
                                       }
                                     ]
@@ -1432,7 +1432,6 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "interfaceFormat",
                                             "type": "options",
                                             "name": "interfaceFormat",
                                             "options": [
@@ -1452,10 +1451,10 @@
                                               "overline"
                                             ],
                                             "defaultValue": "none",
-                                            "help": "Use these formats to select typography for parts of the interface."
+                                            "help": "Use these formats to select typography for parts of the interface.",
+                                            "id": "interfaceFormat"
                                           },
                                           {
-                                            "id": "contentFormat",
                                             "type": "options",
                                             "name": "contentFormat",
                                             "options": [
@@ -1470,6 +1469,7 @@
                                             ],
                                             "defaultValue": "none",
                                             "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                            "id": "contentFormat",
                                             "value": "body-2"
                                           }
                                         ]
@@ -4716,43 +4716,63 @@
                                                                       },
                                                                       "content": {
                                                                         "block": {
-                                                                          "type": "DataCell",
-                                                                          "id": "Uc_-B{jssIcA|ED)84IN",
-                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "type": "WikidataEmbed",
+                                                                          "id": "H+5QPO(HMx0ov%M4`U%q",
+                                                                          "data": "{\"origin\":\".\"}",
                                                                           "fields": {
-                                                                            "extraProps": {
-                                                                              "props": [
-                                                                                {
-                                                                                  "name": "column",
-                                                                                  "type": "sheetColumn",
-                                                                                  "columnType": "richText",
-                                                                                  "defaultValue": "settings/content",
-                                                                                  "id": "column",
-                                                                                  "value": {
-                                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                    "columnKey": "e735b0c9-b3c8-4df8-8da6-b8d1101a56f2",
-                                                                                    "text": "exhibition/objectType",
-                                                                                    "columnType": "string"
-                                                                                  }
-                                                                                },
-                                                                                {
-                                                                                  "name": "format",
-                                                                                  "type": "options",
-                                                                                  "options": [
-                                                                                    "richText",
-                                                                                    "string"
-                                                                                  ],
-                                                                                  "defaultValue": "richText",
-                                                                                  "id": "format",
-                                                                                  "value": "richText"
-                                                                                },
-                                                                                {
-                                                                                  "name": "centerContent",
-                                                                                  "type": "checkbox",
-                                                                                  "defaultValue": false,
-                                                                                  "id": "centerContent"
+                                                                            "qidColumn": {
+                                                                              "value": {
+                                                                                "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/0bd3017e-e54c-4909-aa13-89a9153b40a5",
+                                                                                "text": "exhibition/personID_wikidata"
+                                                                              }
+                                                                            },
+                                                                            "sheetKey": "exhibition",
+                                                                            "rowKey": "274dbd6c-f7f3-4cdf-b30f-8386ba02d809",
+                                                                            "title": "Wikidata-Kontext",
+                                                                            "width": "100%",
+                                                                            "height": "50vh"
+                                                                          },
+                                                                          "next": {
+                                                                            "block": {
+                                                                              "type": "DataCell",
+                                                                              "id": "Uc_-B{jssIcA|ED)84IN",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "fields": {
+                                                                                "extraProps": {
+                                                                                  "props": [
+                                                                                    {
+                                                                                      "name": "column",
+                                                                                      "type": "sheetColumn",
+                                                                                      "columnType": "richText",
+                                                                                      "defaultValue": "settings/content",
+                                                                                      "id": "column",
+                                                                                      "value": {
+                                                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                        "columnKey": "e735b0c9-b3c8-4df8-8da6-b8d1101a56f2",
+                                                                                        "text": "exhibition/objectType",
+                                                                                        "columnType": "string"
+                                                                                      }
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "format",
+                                                                                      "type": "options",
+                                                                                      "options": [
+                                                                                        "richText",
+                                                                                        "string"
+                                                                                      ],
+                                                                                      "defaultValue": "richText",
+                                                                                      "id": "format",
+                                                                                      "value": "richText"
+                                                                                    },
+                                                                                    {
+                                                                                      "name": "centerContent",
+                                                                                      "type": "checkbox",
+                                                                                      "defaultValue": false,
+                                                                                      "id": "centerContent"
+                                                                                    }
+                                                                                  ]
                                                                                 }
-                                                                              ]
+                                                                              }
                                                                             }
                                                                           }
                                                                         }
@@ -4783,11 +4803,11 @@
                                                                                 "extraProps": {
                                                                                   "props": [
                                                                                     {
-                                                                                      "id": "column",
                                                                                       "name": "column",
                                                                                       "type": "sheetColumn",
                                                                                       "columnType": "richText",
                                                                                       "defaultValue": "settings/content",
+                                                                                      "id": "column",
                                                                                       "value": {
                                                                                         "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                         "columnKey": "personID",
@@ -4796,7 +4816,6 @@
                                                                                       }
                                                                                     },
                                                                                     {
-                                                                                      "id": "format",
                                                                                       "name": "format",
                                                                                       "type": "options",
                                                                                       "options": [
@@ -4804,13 +4823,14 @@
                                                                                         "string"
                                                                                       ],
                                                                                       "defaultValue": "richText",
+                                                                                      "id": "format",
                                                                                       "value": "richText"
                                                                                     },
                                                                                     {
-                                                                                      "id": "centerContent",
                                                                                       "name": "centerContent",
                                                                                       "type": "checkbox",
                                                                                       "defaultValue": false,
+                                                                                      "id": "centerContent",
                                                                                       "value": false
                                                                                     }
                                                                                   ]
