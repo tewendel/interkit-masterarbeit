@@ -1,0 +1,34 @@
+name: WikidataEmbed
+title: Wikidata Embed
+colour: 210
+toolboxCategory: Project
+fields:
+  - type: sheetColumn
+    name: qidColumn
+    columnType: string
+    help: "Spalte mit der Wikidata-QID, z. B. personID_wikidata"
+
+  - type: string
+    name: sheetKey
+    defaultValue: exhibition
+    help: "Name des Sheets, standardmäßig exhibition"
+
+  - type: string
+    name: rowKey
+    defaultValue: ""
+    help: "Optional: Row Key des aktuellen Datensatzes, wenn die Komponente die Zeile selbst laden soll"
+
+  - type: string
+    name: title
+    defaultValue: "Wikidata-Kontext"
+    help: "Optionale Überschrift über dem Embed"
+
+  - type: string
+    name: width
+    defaultValue: "100%"
+    help: "CSS-Breite des iframe"
+
+  - type: string
+    name: height
+    defaultValue: "50vh"
+    help: "CSS-Höhe des iframe"
