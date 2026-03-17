@@ -1,0 +1,17 @@
+name: WikidataEmbedSubject
+title: Wikidata Embed Subject
+colour: 210
+toolboxCategory: Project
+fields:
+  - type: string
+    name: title
+    defaultValue: "Wikidata-Kontext"
+
+  - type: string
+    name: qidColumn
+    defaultValue: "subjectKeyword_wikidata"
+    help: "Column Key der Wikidata-QID-Spalte"
+
+  - type: string
+    name: height
+    defaultValue: "45vh"

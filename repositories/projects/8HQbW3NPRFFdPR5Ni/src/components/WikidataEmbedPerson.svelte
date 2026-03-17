@@ -1,26 +1,29 @@
 <script>
+  import { getContext } from "svelte"
+
   export let title = "Wikidata-Kontext"
-  export let qid = ""
+  export let qidColumn = "personID_wikidata"
   export let height = "45vh"
 
-  let iframeSrc = ""
+  const element = getContext("element")
 
   function buildQuery(qid) {
-    return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?gnd WHERE {
+    return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?gnd ?pic WHERE {
   VALUES ?person { wd:${qid} }
   OPTIONAL { ?person wdt:P569 ?birth. }
   OPTIONAL { ?person wdt:P570 ?death. }
   OPTIONAL { ?person wdt:P227 ?gnd. }
+  OPTIONAL { ?person wdt:P18 ?pic. }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en". }
 }`
   }
 
-  $: if (qid) {
-    const query = buildQuery(qid)
-    iframeSrc = `https://query.wikidata.org/embed.html#${encodeURIComponent(query)}`
-  } else {
-    iframeSrc = ""
-  }
+  $: values = $element?.values || {}
+  $: qid = values[qidColumn] || ""
+
+  $: iframeSrc = qid
+    ? `https://query.wikidata.org/embed.html#${encodeURIComponent(buildQuery(qid))}`
+    : ""
 </script>
 
 {#if title}

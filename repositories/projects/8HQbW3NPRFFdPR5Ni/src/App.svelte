@@ -35,7 +35,8 @@ import SlideInModal from "interkit/components/SlideInModal.svelte";
 import Spacing from "interkit/components/Spacing.svelte";
 import StaticText from "interkit/components/StaticText.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
-import WikidataEmbed from "./components/WikidataEmbed.svelte";
+import WikidataEmbedPerson from "./components/WikidataEmbedPerson.svelte";
+import WikidataEmbedSubject from "./components/WikidataEmbedSubject.svelte";
 import styleTokens from "./styleTokens.json";
 globalThis.styleTokens = styleTokens;
 console.log('AppBase styleTokens', styleTokens);
@@ -719,15 +720,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <WikidataEmbed
-                     qidColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0bd3017e-e54c-4909-aa13-89a9153b40a5"
-                     sheetKey="exhibition"
-                     rowKey="274dbd6c-f7f3-4cdf-b30f-8386ba02d809"
-                     title="Wikidata-Kontext"
-                     width="100%"
-                     height="50vh"
-                  >
-                  </WikidataEmbed>
                   <DataCell
                      column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
                      format="richText"
@@ -744,12 +736,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <DataCell
-                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/personID"
-                     format="richText"
-                     centerContent={false}
+                  <WikidataEmbedPerson
+                     title="Wikidata-Kontext"
+                     qidColumn="personID_wikidata"
+                     height="45vh"
                   >
-                  </DataCell>
+                  </WikidataEmbedPerson>
                 </svelte:fragment>
                 </AccordeonShell>
                 <AccordeonShell
@@ -760,12 +752,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <DataCell
-                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/ad594afc-25f2-412f-843d-0cb3b5ce8739"
-                     format="richText"
-                     centerContent={false}
+                  <WikidataEmbedSubject
+                     title="Wikidata-Kontext"
+                     qidColumn="subjectKeyword_wikidata"
+                     height="45vh"
                   >
-                  </DataCell>
+                  </WikidataEmbedSubject>
                 </svelte:fragment>
                 </AccordeonShell>
               </svelte:fragment>
@@ -1850,15 +1842,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <WikidataEmbed
-                         qidColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/0bd3017e-e54c-4909-aa13-89a9153b40a5"
-                         sheetKey="exhibition"
-                         rowKey="274dbd6c-f7f3-4cdf-b30f-8386ba02d809"
-                         title="Wikidata-Kontext"
-                         width="100%"
-                         height="50vh"
-                      >
-                      </WikidataEmbed>
                       <DataCell
                          column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
                          format="richText"
@@ -1875,12 +1858,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <DataCell
-                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/personID"
-                         format="richText"
-                         centerContent={false}
+                      <WikidataEmbedPerson
+                         title="Wikidata-Kontext"
+                         qidColumn="personID_wikidata"
+                         height="45vh"
                       >
-                      </DataCell>
+                      </WikidataEmbedPerson>
                     </svelte:fragment>
                     </AccordeonShell>
                     <AccordeonShell
@@ -1891,12 +1874,12 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <DataCell
-                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/ad594afc-25f2-412f-843d-0cb3b5ce8739"
-                         format="richText"
-                         centerContent={false}
+                      <WikidataEmbedSubject
+                         title="Wikidata-Kontext"
+                         qidColumn="subjectKeyword_wikidata"
+                         height="45vh"
                       >
-                      </DataCell>
+                      </WikidataEmbedSubject>
                     </svelte:fragment>
                     </AccordeonShell>
                   </svelte:fragment>
