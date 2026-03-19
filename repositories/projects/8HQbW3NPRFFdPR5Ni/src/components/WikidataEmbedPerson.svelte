@@ -8,13 +8,16 @@
   const element = getContext("element")
 
   function buildQuery(qid) {
-    return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?gnd ?pic WHERE {
-  VALUES ?person { wd:${qid} }
+    return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?placeOfBirth ?placeOfBirthLabel ?gnd ?pic WHERE {
+  VALUES ?person { 
+    wd:${qid} 
+  }
   OPTIONAL { ?person wdt:P569 ?birth. }
   OPTIONAL { ?person wdt:P570 ?death. }
+  OPTIONAL { ?person wdt:P19 ?placeOfBirth. }
   OPTIONAL { ?person wdt:P227 ?gnd. }
   OPTIONAL { ?person wdt:P18 ?pic. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en". }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de,en". }
 }`
   }
 

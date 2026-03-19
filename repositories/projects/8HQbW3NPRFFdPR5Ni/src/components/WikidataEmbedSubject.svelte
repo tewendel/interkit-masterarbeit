@@ -7,56 +7,56 @@
 
   const element = getContext("element")
 
-  function buildQuery(qid) {
-    return `SELECT ?subject ?subjectLabel ?subjectDescription
-       ?parentTaxon ?parentTaxonLabel
-       ?habitat ?habitatLabel
-       ?status ?statusLabel
-       ?audio
-WHERE {
-  VALUES ?subject { wd:${qid} }
+   function buildValues(qidString) {
+    if (!qidString) return ""
 
-  OPTIONAL {
-    SELECT ?subject ?parentTaxon WHERE {
-      VALUES ?subject { wd:${qid} }
-      ?subject wdt:P171 ?parentTaxon .
-    }
-    LIMIT 1
+    const qids = qidString
+      .split(";")
+      .map(q => q.trim())
+      .filter(q => q)
+
+    return qids.map(q => `wd:${q}`).join(" ")
   }
 
-  OPTIONAL {
-    SELECT ?subject ?habitat WHERE {
-      VALUES ?subject { wd:${qid} }
-      ?subject wdt:P2974 ?habitat .
-    }
-    LIMIT 1
-  }
+  function buildQuery(qidString) {
+    const values = buildValues(qidString)
 
-  OPTIONAL {
-    SELECT ?subject ?status WHERE {
-      VALUES ?subject { wd:${qid} }
-      ?subject wdt:P141 ?status .
-    }
-    LIMIT 1
+    return `SELECT ?subject ?subjectLabel ?subjectDescription ?parentTaxon ?parentTaxonLabel ?status ?statusLabel ?pic ?audio WHERE {
+  VALUES ?subject {
+    ${values} 
   }
-
+  OPTIONAL { ?subject wdt:P171 ?parentTaxon. }
+  OPTIONAL { ?subject wdt:P141 ?status. }
   OPTIONAL {
-    SELECT ?subject ?audio WHERE {
-      VALUES ?subject { wd:${qid} }
-      ?subject wdt:P51 ?audio .
+    {
+      SELECT ?subject (SAMPLE(?pic0) AS ?pic) WHERE {
+        VALUES ?subject { 
+          ${values} 
+        }
+        ?subject wdt:P18 ?pic0 .
+      }
+      GROUP BY ?subject
     }
-    LIMIT 1
   }
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en". }
+  OPTIONAL {
+    {
+      SELECT ?subject (SAMPLE(?audio0) AS ?audio) WHERE {
+        VALUES ?subject { 
+          ${values} 
+        }
+        ?subject wdt:P51 ?audio0 .
+      }
+      GROUP BY ?subject
+    }
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de,en". }
 }`
   }
 
   $: values = $element?.values || {}
-  $: qid = values[qidColumn] || ""
-
-  $: iframeSrc = qid
-    ? `https://query.wikidata.org/embed.html#${encodeURIComponent(buildQuery(qid))}`
+  $: qidString = values[qidColumn] || ""
+  $: iframeSrc = qidString
+    ? `https://query.wikidata.org/embed.html#${encodeURIComponent(buildQuery(qidString))}`
     : ""
 </script>
 
