@@ -21,36 +21,24 @@
   function buildQuery(qidString) {
     const values = buildValues(qidString)
 
-    return `SELECT ?subject ?subjectLabel ?subjectDescription ?parentTaxon ?parentTaxonLabel ?status ?statusLabel ?pic ?audio WHERE {
-  VALUES ?subject {
+    return `#defaultView:ImageGrid
+SELECT DISTINCT ?item ?itemLabel ?itemDescription ?creator ?creatorLabel ?date ?image WHERE {
+  VALUES ?theme {
     ${values} 
   }
-  OPTIONAL { ?subject wdt:P171 ?parentTaxon. }
-  OPTIONAL { ?subject wdt:P141 ?status. }
-  OPTIONAL {
-    {
-      SELECT ?subject (SAMPLE(?pic0) AS ?pic) WHERE {
-        VALUES ?subject { 
-          ${values} 
-        }
-        ?subject wdt:P18 ?pic0 .
-      }
-      GROUP BY ?subject
-    }
-  }
-  OPTIONAL {
-    {
-      SELECT ?subject (SAMPLE(?audio0) AS ?audio) WHERE {
-        VALUES ?subject { 
-          ${values} 
-        }
-        ?subject wdt:P51 ?audio0 .
-      }
-      GROUP BY ?subject
-    }
-  }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de,en". }
-}`
+  { ?item wdt:P180 ?theme. }
+  UNION
+  { ?item wdt:P921 ?theme. }
+  UNION
+  { ?item wdt:P31 ?theme. }
+  UNION
+  { ?item wdt:P279 ?theme. }
+  ?item wdt:P18 ?image.
+  OPTIONAL { ?item wdt:P170 ?creator. }
+  OPTIONAL { ?item wdt:P571 ?date. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de,en,mul". }
+}
+LIMIT 24`
   }
 
   $: values = $element?.values || {}

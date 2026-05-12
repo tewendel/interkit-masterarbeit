@@ -8,7 +8,7 @@
   const element = getContext("element")
 
   function buildQuery(qid) {
-    return `SELECT ?person ?personLabel ?personDescription ?birth ?death ?placeOfBirth ?placeOfBirthLabel ?gnd ?pic WHERE {
+    return `SELECT ?person ?personLabel ?birth ?death ?placeOfBirth ?placeOfBirthLabel ?gnd ?pic WHERE {
   VALUES ?person { 
     wd:${qid} 
   }

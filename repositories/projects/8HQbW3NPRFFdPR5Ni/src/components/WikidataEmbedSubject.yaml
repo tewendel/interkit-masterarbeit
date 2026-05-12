@@ -10,7 +10,7 @@ fields:
   - type: string
     name: qidColumn
     defaultValue: "subjectKeyword_wikidata"
-    help: "Column Key der Wikidata-QID-Spalte"
+    help: "Column Key der Wikidata-QID-Spalte. Mehrere QIDs können mit Semikolon getrennt werden."
 
   - type: string
     name: height
