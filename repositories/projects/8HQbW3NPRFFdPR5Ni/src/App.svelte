@@ -19,6 +19,7 @@ import HorizontalSpacer from "interkit/components/HorizontalSpacer.svelte";
 import Icon from "interkit/components/Icon.svelte";
 import IfUIKey from "interkit/components/IfUIKey.svelte";
 import Image from "interkit/components/Image.svelte";
+import InlineAudioButton from "interkit/components/InlineAudioButton.svelte";
 import Label from "interkit/components/Label.svelte";
 import LangSwitch from "interkit/components/LangSwitch.svelte";
 import LayoutShell from "interkit/components/LayoutShell.svelte";
@@ -34,6 +35,8 @@ import SectionShell from "interkit/components/SectionShell.svelte";
 import SlideInModal from "interkit/components/SlideInModal.svelte";
 import Spacing from "interkit/components/Spacing.svelte";
 import StaticText from "interkit/components/StaticText.svelte";
+import Tab from "interkit/components/Tab.svelte";
+import TabBar from "interkit/components/TabBar.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
 import WikidataEmbedPerson from "./components/WikidataEmbedPerson.svelte";
 import WikidataEmbedSubject from "./components/WikidataEmbedSubject.svelte";
@@ -247,105 +250,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
   </LayoutShellAudio>
 </Route>
 
-<Route
-   path="/"
-   keepAlive={false}
->
-  <LayoutShell
-  >
-  <svelte:fragment slot="TopBar">
-    <HorizontalSpacer
-    >
-    <svelte:fragment slot="left">
-      <Image
-         mediafileKey="08f9aa8a-aafe-4fde-9e06-f2c43b6f17b5"
-                  width="50%"
-               >
-      </Image>
-    </svelte:fragment>
-    <svelte:fragment slot="center">
-    </svelte:fragment>
-    <svelte:fragment slot="right">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-          <ButtonBar
-             justify="right"
-             >
-            <LangSwitch
-                  reloadAfterSwitch="yes"
-            >
-            </LangSwitch>
-            <Button
-                  type="secondary"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"route","path":"/menu"}}
-            >
-              <Icon
-                 type="Full-Menu"
-                 inverse={false}
-              >
-              </Icon>
-            </Button>
-          </ButtonBar>
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    </HorizontalSpacer>
-  </svelte:fragment>
-  <svelte:fragment slot="Content">
-    <ScrollContainer
-    >
-      <SectionShell
-      >
-        <TextFormat
-           interfaceFormat="headline-3"
-           contentFormat="none"
-        >
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$app_title"] ? $translations[$lang]["$app_title"] : "app_title") : ($translations.en && $translations.en["$app_title"] ? $translations.en["$app_title"] : "…")}>
-          </StaticText>
-        </TextFormat>
-        <TextFormat
-           interfaceFormat="body-1"
-           contentFormat="none"
-        >
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$landing_context"] ? $translations[$lang]["$landing_context"] : "landing_context") : ($translations.en && $translations.en["$landing_context"] ? $translations.en["$landing_context"] : "…")}>
-          </StaticText>
-        </TextFormat>
-      </SectionShell>
-      <SectionShell
-      >
-        <CenterModal
-           size="large"
-           imageKey="b910238c-edf8-499e-b187-6a7cef0912a6"
-           label={$lang ? ($translations[$lang] && $translations[$lang]["$date"] ? $translations[$lang]["$date"] : "date") : "…"}   headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   >
-        <svelte:fragment slot="buttons">
-          <Button
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$discover_artworks"] ? $translations[$lang]["$discover_artworks"] : "discover_artworks") : ($translations.en && $translations.en["$discover_artworks"] ? $translations.en["$discover_artworks"] : "…")}   type="secondary"
-             size="medium"
-             flex="fill"
-             disabled={false}
-                effect={{"effectType":"route","path":"/exhibition"}}
-          >
-          </Button>
-        </svelte:fragment>
-        </CenterModal>
-      </SectionShell>
-    </ScrollContainer>
-  </svelte:fragment>
-  <svelte:fragment slot="BottomBar">
-  </svelte:fragment>
-  </LayoutShell>
-</Route>
-
 <DataRouteSingle
    path="/exhibition_artworks"
    sheet="3d764bfb-ebf1-4e17-b756-e819c1d8794c"
@@ -427,62 +331,17 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
          bottom="s"
          left="s"
       >
-        <ButtonBar
-           justify="center"
-           >
-          <IfUIKey
-             storeType="UIKey"
-             key="mode"
-             value="guide"
-          >
-          <svelte:fragment slot="iftrue">
-            <Button
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$button_audioguide"] ? $translations[$lang]["$button_audioguide"] : "button_audioguide") : ($translations.en && $translations.en["$button_audioguide"] ? $translations.en["$button_audioguide"] : "…")}   type="primary"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
-            >
-            </Button>
-          </svelte:fragment>
-          <svelte:fragment slot="else">
-            <Button
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$button_audioguide"] ? $translations[$lang]["$button_audioguide"] : "button_audioguide") : ($translations.en && $translations.en["$button_audioguide"] ? $translations.en["$button_audioguide"] : "…")}   type="ghost"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
-            >
-            </Button>
-          </svelte:fragment>
-          </IfUIKey>
-          <IfUIKey
-             storeType="UIKey"
-             key="mode"
-             value="data"
-          >
-          <svelte:fragment slot="iftrue">
-            <Button
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$data"] ? $translations[$lang]["$data"] : "data") : ($translations.en && $translations.en["$data"] ? $translations.en["$data"] : "…")}   type="primary"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
-            >
-            </Button>
-          </svelte:fragment>
-          <svelte:fragment slot="else">
-            <Button
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$data"] ? $translations[$lang]["$data"] : "data") : ($translations.en && $translations.en["$data"] ? $translations.en["$data"] : "…")}   type="ghost"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
-            >
-            </Button>
-          </svelte:fragment>
-          </IfUIKey>
-        </ButtonBar>
+        <TabBar
+        >
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$guide_mode"] ? $translations[$lang]["$guide_mode"] : "guide_mode") : ($translations.en && $translations.en["$guide_mode"] ? $translations.en["$guide_mode"] : "…")}   effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
+             >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$data_mode"] ? $translations[$lang]["$data_mode"] : "data_mode") : ($translations.en && $translations.en["$data_mode"] ? $translations.en["$data_mode"] : "…")}   effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
+             >
+          </Tab>
+        </TabBar>
         <IfUIKey
            storeType="UIKey"
            key="mode"
@@ -506,10 +365,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
-                <PopoutAudioButton
-                   audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={{"text":"","type":"secondary","size":"medium","flex":"fill"}}
+                <InlineAudioButton
+                   audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   hideSkipControls={false}
                 >
-                </PopoutAudioButton>
+                </InlineAudioButton>
                 <Spacing
                    top="m"
                    right="none"
@@ -786,7 +645,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
   </svelte:fragment>
   <svelte:fragment slot="Player">
     <AudioPlayer
-       audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   titleColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}>
+       audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   titleColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}>
     </AudioPlayer>
   </svelte:fragment>
   <svelte:fragment slot="BottomBar">
@@ -816,6 +675,105 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
   </svelte:fragment>
   </LayoutShellAudio>
 </DataRouteSingle>
+
+<Route
+   path="/"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+      <Image
+         mediafileKey="08f9aa8a-aafe-4fde-9e06-f2c43b6f17b5"
+                  width="50%"
+               >
+      </Image>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+                  effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <ScrollContainer
+    >
+      <SectionShell
+      >
+        <TextFormat
+           interfaceFormat="headline-3"
+           contentFormat="none"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$app_title"] ? $translations[$lang]["$app_title"] : "app_title") : ($translations.en && $translations.en["$app_title"] ? $translations.en["$app_title"] : "…")}>
+          </StaticText>
+        </TextFormat>
+        <TextFormat
+           interfaceFormat="body-1"
+           contentFormat="none"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$landing_context"] ? $translations[$lang]["$landing_context"] : "landing_context") : ($translations.en && $translations.en["$landing_context"] ? $translations.en["$landing_context"] : "…")}>
+          </StaticText>
+        </TextFormat>
+      </SectionShell>
+      <SectionShell
+      >
+        <CenterModal
+           size="large"
+           imageKey="b910238c-edf8-499e-b187-6a7cef0912a6"
+           label={$lang ? ($translations[$lang] && $translations[$lang]["$date"] ? $translations[$lang]["$date"] : "date") : "…"}   headline={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : "…"}   prompt={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   >
+        <svelte:fragment slot="buttons">
+          <Button
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$discover_artworks"] ? $translations[$lang]["$discover_artworks"] : "discover_artworks") : ($translations.en && $translations.en["$discover_artworks"] ? $translations.en["$discover_artworks"] : "…")}   type="secondary"
+             size="medium"
+             flex="fill"
+             disabled={false}
+                effect={{"effectType":"route","path":"/exhibition"}}
+          >
+          </Button>
+        </svelte:fragment>
+        </CenterModal>
+      </SectionShell>
+    </ScrollContainer>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
 
 <Route
    path="/menu"
@@ -1549,62 +1507,17 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              bottom="s"
              left="s"
           >
-            <ButtonBar
-               justify="center"
-               >
-              <IfUIKey
-                 storeType="UIKey"
-                 key="mode"
-                 value="guide"
-              >
-              <svelte:fragment slot="iftrue">
-                <Button
-                   text={$lang ? ($translations[$lang] && $translations[$lang]["$button_audioguide"] ? $translations[$lang]["$button_audioguide"] : "button_audioguide") : ($translations.en && $translations.en["$button_audioguide"] ? $translations.en["$button_audioguide"] : "…")}   type="primary"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
-                >
-                </Button>
-              </svelte:fragment>
-              <svelte:fragment slot="else">
-                <Button
-                   text={$lang ? ($translations[$lang] && $translations[$lang]["$button_audioguide"] ? $translations[$lang]["$button_audioguide"] : "button_audioguide") : ($translations.en && $translations.en["$button_audioguide"] ? $translations.en["$button_audioguide"] : "…")}   type="ghost"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
-                >
-                </Button>
-              </svelte:fragment>
-              </IfUIKey>
-              <IfUIKey
-                 storeType="UIKey"
-                 key="mode"
-                 value="data"
-              >
-              <svelte:fragment slot="iftrue">
-                <Button
-                   text={$lang ? ($translations[$lang] && $translations[$lang]["$data"] ? $translations[$lang]["$data"] : "data") : ($translations.en && $translations.en["$data"] ? $translations.en["$data"] : "…")}   type="primary"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
-                >
-                </Button>
-              </svelte:fragment>
-              <svelte:fragment slot="else">
-                <Button
-                   text={$lang ? ($translations[$lang] && $translations[$lang]["$data"] ? $translations[$lang]["$data"] : "data") : ($translations.en && $translations.en["$data"] ? $translations.en["$data"] : "…")}   type="ghost"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                      effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
-                >
-                </Button>
-              </svelte:fragment>
-              </IfUIKey>
-            </ButtonBar>
+            <TabBar
+            >
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$guide_mode"] ? $translations[$lang]["$guide_mode"] : "guide_mode") : ($translations.en && $translations.en["$guide_mode"] ? $translations.en["$guide_mode"] : "…")}   effect={{"effectType":"setUIKey","value":"guide","key":"mode"}}
+                 >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$data_mode"] ? $translations[$lang]["$data_mode"] : "data_mode") : ($translations.en && $translations.en["$data_mode"] ? $translations.en["$data_mode"] : "…")}   effect={{"effectType":"setUIKey","value":"data","key":"mode"}}
+                 >
+              </Tab>
+            </TabBar>
             <IfUIKey
                storeType="UIKey"
                key="mode"
@@ -1628,10 +1541,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
-                    <PopoutAudioButton
-                       audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   buttonOptions={{"text":"","type":"secondary","size":"medium","flex":"fill"}}
+                    <InlineAudioButton
+                       audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   hideSkipControls={false}
                     >
-                    </PopoutAudioButton>
+                    </InlineAudioButton>
                     <Spacing
                        top="m"
                        right="none"
@@ -1908,7 +1821,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       </svelte:fragment>
       <svelte:fragment slot="Player">
         <AudioPlayer
-           audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   titleColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang"}>
+           audioColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang"}   titleColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}>
         </AudioPlayer>
       </svelte:fragment>
       <svelte:fragment slot="BottomBar">

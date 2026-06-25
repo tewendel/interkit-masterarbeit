@@ -2248,9 +2248,9 @@
       },
       {
         "type": "DataRouteSingle",
-        "id": "HfApGuz|8`PDl?CvJ:Ca",
-        "x": 2441,
-        "y": -243,
+        "id": "ea,x-F3Zs_oe{)f|,za]",
+        "x": 2555,
+        "y": -360,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/exhibition_artworks",
@@ -2265,19 +2265,19 @@
           "default": {
             "block": {
               "type": "LayoutShellAudio",
-              "id": "d};Na3~ATfs-tEGVWJd[",
+              "id": "Nrud_ece9zV#8ot/a#HQ",
               "data": "{\"origin\":\"interkit\"}",
               "inputs": {
                 "TopBar": {
                   "block": {
                     "type": "HorizontalSpacer",
-                    "id": "qi^Adan]DU{n;yKY}@k1",
+                    "id": "F0|TtxHNfC|]-#t{tnD?",
                     "data": "{\"origin\":\"interkit\"}",
                     "inputs": {
                       "left": {
                         "block": {
                           "type": "GroupConnector",
-                          "id": "u%EDm?[)Vts-Fm/R8-Mm",
+                          "id": "yd=*#@x3aF!Q8GTqW{{:",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "name": "backButton"
@@ -2287,7 +2287,7 @@
                       "center": {
                         "block": {
                           "type": "StaticText",
-                          "id": "L,{l9(,Jg]MIkUql@jGk",
+                          "id": "RO;BOqM/@a[~WQ[YrG_L",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "text": "$exhibition_title"
@@ -2297,7 +2297,7 @@
                       "right": {
                         "block": {
                           "type": "GroupConnector",
-                          "id": "ZadeHNIRif!.;X{$7E`(",
+                          "id": "oD:l^%A:/VX3d[Q6xHMC",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "name": "topBar"
@@ -2310,18 +2310,19 @@
                 "Content": {
                   "block": {
                     "type": "ScrollContainer",
-                    "id": "@AR8G;lO{~/`s7~d[MP(",
+                    "id": "Fc#tJ8GQjbiSZVczuuOf",
                     "data": "{\"origin\":\"interkit\"}",
                     "inputs": {
                       "default": {
                         "block": {
                           "type": "Spacing",
-                          "id": "D=)8M!4^z+o!zay~9*pe",
+                          "id": "nlzu9rSRUHd,evpG#N2G",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "extraProps": {
                               "props": [
                                 {
+                                  "id": "top",
                                   "name": "top",
                                   "type": "options",
                                   "options": [
@@ -2334,10 +2335,10 @@
                                     "xl",
                                     "xxl"
                                   ],
-                                  "id": "top",
                                   "value": "s"
                                 },
                                 {
+                                  "id": "right",
                                   "name": "right",
                                   "type": "options",
                                   "options": [
@@ -2350,10 +2351,10 @@
                                     "xl",
                                     "xxl"
                                   ],
-                                  "id": "right",
                                   "value": "s"
                                 },
                                 {
+                                  "id": "bottom",
                                   "name": "bottom",
                                   "type": "options",
                                   "options": [
@@ -2366,10 +2367,10 @@
                                     "xl",
                                     "xxl"
                                   ],
-                                  "id": "bottom",
                                   "value": "s"
                                 },
                                 {
+                                  "id": "left",
                                   "name": "left",
                                   "type": "options",
                                   "options": [
@@ -2382,7 +2383,6 @@
                                     "xl",
                                     "xxl"
                                   ],
-                                  "id": "left",
                                   "value": "s"
                                 }
                               ]
@@ -2391,357 +2391,66 @@
                           "inputs": {
                             "default": {
                               "block": {
-                                "type": "ButtonBar",
-                                "id": "eB})!)^_w;KNx3/k)4u:",
+                                "type": "TabBar",
+                                "id": "$nR*Mfmn}X=8:wIRP`34",
                                 "data": "{\"origin\":\"interkit\"}",
-                                "fields": {
-                                  "extraProps": {
-                                    "props": [
-                                      {
-                                        "name": "justify",
-                                        "type": "options",
-                                        "options": [
-                                          "left",
-                                          "center",
-                                          "right"
-                                        ],
-                                        "defaultValue": "left",
-                                        "help": "Where the buttons in the bar are justified",
-                                        "id": "justify",
-                                        "value": "center"
-                                      },
-                                      {
-                                        "name": "helpText",
-                                        "type": "string",
-                                        "help": "An explanation text below the buttonBar",
-                                        "id": "helpText"
-                                      }
-                                    ]
-                                  }
-                                },
                                 "inputs": {
                                   "default": {
                                     "block": {
-                                      "type": "IfUIKey",
-                                      "id": "$0$XSXQio[DTFiDa#CXc",
+                                      "type": "Tab",
+                                      "id": ".MM(vrzh1bN8nL;~-n7J",
                                       "data": "{\"origin\":\"interkit\"}",
                                       "fields": {
-                                        "storeType": "UIKey",
-                                        "key": "mode",
-                                        "value": "guide"
-                                      },
-                                      "inputs": {
-                                        "iftrue": {
-                                          "block": {
-                                            "type": "Button",
-                                            "id": "WRF/2f8b/Xo-!-_EQpnL",
-                                            "data": "{\"origin\":\"interkit\"}",
-                                            "fields": {
-                                              "text": "$button_audioguide",
-                                              "extraProps": {
-                                                "props": [
-                                                  {
-                                                    "name": "type",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "secondary",
-                                                      "primary",
-                                                      "ghost",
-                                                      "link",
-                                                      "danger"
-                                                    ],
-                                                    "defaultValue": "secondary",
-                                                    "help": "Appearance of the button.",
-                                                    "id": "type",
-                                                    "value": "primary"
-                                                  },
-                                                  {
-                                                    "name": "size",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "small",
-                                                      "medium",
-                                                      "large"
-                                                    ],
-                                                    "defaultValue": "small",
-                                                    "help": "Large, medium or small.",
-                                                    "id": "size"
-                                                  },
-                                                  {
-                                                    "name": "flex",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "normal",
-                                                      "fill"
-                                                    ],
-                                                    "defaultValue": "normal",
-                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                    "id": "flex"
-                                                  },
-                                                  {
-                                                    "name": "disabled",
-                                                    "type": "checkbox",
-                                                    "defaultValue": false,
-                                                    "id": "disabled"
-                                                  },
-                                                  {
-                                                    "type": "string",
-                                                    "name": "ariaLabel",
-                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                    "id": "ariaLabel"
-                                                  },
-                                                  {
-                                                    "type": "effect",
-                                                    "name": "effect",
-                                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
-                                                    "id": "effect",
-                                                    "value": {
-                                                      "effectType": "setUIKey",
-                                                      "value": "guide",
-                                                      "key": "mode"
-                                                    }
-                                                  }
-                                                ]
+                                        "text": "$guide_mode",
+                                        "extraProps": {
+                                          "props": [
+                                            {
+                                              "type": "effect",
+                                              "name": "effect",
+                                              "help": "The type of effect (or action) the tab should trigger when pressed. Usually used with Route.",
+                                              "id": "effect",
+                                              "value": {
+                                                "effectType": "setUIKey",
+                                                "value": "guide",
+                                                "key": "mode"
                                               }
+                                            },
+                                            {
+                                              "type": "checkbox",
+                                              "name": "execOnMount",
+                                              "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                                              "id": "execOnMount"
                                             }
-                                          }
-                                        },
-                                        "else": {
-                                          "block": {
-                                            "type": "Button",
-                                            "id": "cjveD{Q.WG?4|fNsz*DG",
-                                            "data": "{\"origin\":\"interkit\"}",
-                                            "fields": {
-                                              "text": "$button_audioguide",
-                                              "extraProps": {
-                                                "props": [
-                                                  {
-                                                    "name": "type",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "secondary",
-                                                      "primary",
-                                                      "ghost",
-                                                      "link",
-                                                      "danger"
-                                                    ],
-                                                    "defaultValue": "secondary",
-                                                    "help": "Appearance of the button.",
-                                                    "id": "type",
-                                                    "value": "ghost"
-                                                  },
-                                                  {
-                                                    "name": "size",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "small",
-                                                      "medium",
-                                                      "large"
-                                                    ],
-                                                    "defaultValue": "small",
-                                                    "help": "Large, medium or small.",
-                                                    "id": "size"
-                                                  },
-                                                  {
-                                                    "name": "flex",
-                                                    "type": "options",
-                                                    "options": [
-                                                      "normal",
-                                                      "fill"
-                                                    ],
-                                                    "defaultValue": "normal",
-                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                    "id": "flex"
-                                                  },
-                                                  {
-                                                    "name": "disabled",
-                                                    "type": "checkbox",
-                                                    "defaultValue": false,
-                                                    "id": "disabled"
-                                                  },
-                                                  {
-                                                    "type": "string",
-                                                    "name": "ariaLabel",
-                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                    "id": "ariaLabel"
-                                                  },
-                                                  {
-                                                    "type": "effect",
-                                                    "name": "effect",
-                                                    "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
-                                                    "id": "effect",
-                                                    "value": {
-                                                      "effectType": "setUIKey",
-                                                      "value": "guide",
-                                                      "key": "mode"
-                                                    }
-                                                  }
-                                                ]
-                                              }
-                                            }
-                                          }
+                                          ]
                                         }
                                       },
                                       "next": {
                                         "block": {
-                                          "type": "IfUIKey",
-                                          "id": "I=wJerN|-0i^+/GdZTw_",
+                                          "type": "Tab",
+                                          "id": "5O.{,%alrZ@mL=^!csj:",
                                           "data": "{\"origin\":\"interkit\"}",
                                           "fields": {
-                                            "storeType": "UIKey",
-                                            "key": "mode",
-                                            "value": "data"
-                                          },
-                                          "inputs": {
-                                            "iftrue": {
-                                              "block": {
-                                                "type": "Button",
-                                                "id": "t`I5W;fr=aYQHod{Pcsk",
-                                                "data": "{\"origin\":\"interkit\"}",
-                                                "fields": {
-                                                  "text": "$data",
-                                                  "extraProps": {
-                                                    "props": [
-                                                      {
-                                                        "name": "type",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "secondary",
-                                                          "primary",
-                                                          "ghost",
-                                                          "link",
-                                                          "danger"
-                                                        ],
-                                                        "defaultValue": "secondary",
-                                                        "help": "Appearance of the button.",
-                                                        "id": "type",
-                                                        "value": "primary"
-                                                      },
-                                                      {
-                                                        "name": "size",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "small",
-                                                          "medium",
-                                                          "large"
-                                                        ],
-                                                        "defaultValue": "small",
-                                                        "help": "Large, medium or small.",
-                                                        "id": "size"
-                                                      },
-                                                      {
-                                                        "name": "flex",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "normal",
-                                                          "fill"
-                                                        ],
-                                                        "defaultValue": "normal",
-                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                        "id": "flex"
-                                                      },
-                                                      {
-                                                        "name": "disabled",
-                                                        "type": "checkbox",
-                                                        "defaultValue": false,
-                                                        "id": "disabled"
-                                                      },
-                                                      {
-                                                        "type": "string",
-                                                        "name": "ariaLabel",
-                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                        "id": "ariaLabel"
-                                                      },
-                                                      {
-                                                        "type": "effect",
-                                                        "name": "effect",
-                                                        "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
-                                                        "id": "effect",
-                                                        "value": {
-                                                          "effectType": "setUIKey",
-                                                          "value": "data",
-                                                          "key": "mode"
-                                                        }
-                                                      }
-                                                    ]
+                                            "text": "$data_mode",
+                                            "extraProps": {
+                                              "props": [
+                                                {
+                                                  "type": "effect",
+                                                  "name": "effect",
+                                                  "help": "The type of effect (or action) the tab should trigger when pressed. Usually used with Route.",
+                                                  "id": "effect",
+                                                  "value": {
+                                                    "effectType": "setUIKey",
+                                                    "value": "data",
+                                                    "key": "mode"
                                                   }
+                                                },
+                                                {
+                                                  "type": "checkbox",
+                                                  "name": "execOnMount",
+                                                  "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                                                  "id": "execOnMount"
                                                 }
-                                              }
-                                            },
-                                            "else": {
-                                              "block": {
-                                                "type": "Button",
-                                                "id": "I2oR5)t1#0Vk;~gZe=]K",
-                                                "data": "{\"origin\":\"interkit\"}",
-                                                "fields": {
-                                                  "text": "$data",
-                                                  "extraProps": {
-                                                    "props": [
-                                                      {
-                                                        "name": "type",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "secondary",
-                                                          "primary",
-                                                          "ghost",
-                                                          "link",
-                                                          "danger"
-                                                        ],
-                                                        "defaultValue": "secondary",
-                                                        "help": "Appearance of the button.",
-                                                        "id": "type",
-                                                        "value": "ghost"
-                                                      },
-                                                      {
-                                                        "name": "size",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "small",
-                                                          "medium",
-                                                          "large"
-                                                        ],
-                                                        "defaultValue": "small",
-                                                        "help": "Large, medium or small.",
-                                                        "id": "size"
-                                                      },
-                                                      {
-                                                        "name": "flex",
-                                                        "type": "options",
-                                                        "options": [
-                                                          "normal",
-                                                          "fill"
-                                                        ],
-                                                        "defaultValue": "normal",
-                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                        "id": "flex"
-                                                      },
-                                                      {
-                                                        "name": "disabled",
-                                                        "type": "checkbox",
-                                                        "defaultValue": false,
-                                                        "id": "disabled"
-                                                      },
-                                                      {
-                                                        "type": "string",
-                                                        "name": "ariaLabel",
-                                                        "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                        "id": "ariaLabel"
-                                                      },
-                                                      {
-                                                        "type": "effect",
-                                                        "name": "effect",
-                                                        "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
-                                                        "id": "effect",
-                                                        "value": {
-                                                          "effectType": "setUIKey",
-                                                          "value": "data",
-                                                          "key": "mode"
-                                                        }
-                                                      }
-                                                    ]
-                                                  }
-                                                }
-                                              }
+                                              ]
                                             }
                                           }
                                         }
@@ -2752,7 +2461,7 @@
                                 "next": {
                                   "block": {
                                     "type": "IfUIKey",
-                                    "id": "4_4Fkm=N[mz0O(MMr7wl",
+                                    "id": "GHeO{X$869g8.ehb9}tk",
                                     "data": "{\"origin\":\"interkit\"}",
                                     "fields": {
                                       "storeType": "UIKey",
@@ -2763,13 +2472,13 @@
                                       "iftrue": {
                                         "block": {
                                           "type": "SectionShell",
-                                          "id": "E97IeOK@I3UnIyluo;]@",
+                                          "id": "Eg_7{o[Nj[E2fS68XzY~",
                                           "data": "{\"origin\":\"interkit\"}",
                                           "inputs": {
                                             "default": {
                                               "block": {
                                                 "type": "Spacing",
-                                                "id": "Vv.O%RU7kyXS@F^Dhg{V",
+                                                "id": "HtIW!sgeHqpEz4|iwy:h",
                                                 "data": "{\"origin\":\"interkit\"}",
                                                 "fields": {
                                                   "extraProps": {
@@ -2845,7 +2554,7 @@
                                                   "default": {
                                                     "block": {
                                                       "type": "DataCard",
-                                                      "id": "=,44Y1Y+e7Lv(f{zM_SW",
+                                                      "id": "LT,xq]p~vechCdYf~X~M",
                                                       "data": "{\"origin\":\"interkit\"}",
                                                       "fields": {
                                                         "extraProps": {
@@ -2990,43 +2699,22 @@
                                                       "inputs": {
                                                         "content": {
                                                           "block": {
-                                                            "type": "PopoutAudioButton",
-                                                            "id": "/Q2u:e/a3R;8={d4vxD0",
+                                                            "type": "InlineAudioButton",
+                                                            "id": "`tBFIiS24^fjqRQ@uMWD",
                                                             "data": "{\"origin\":\"interkit\"}",
                                                             "fields": {
-                                                              "extraProps": {
-                                                                "props": [
-                                                                  {
-                                                                    "name": "audioColumn",
-                                                                    "type": "sheetColumn",
-                                                                    "defaultValue": "elements/audio",
-                                                                    "help": "The column containing the audio file to play",
-                                                                    "id": "audioColumn",
-                                                                    "value": {
-                                                                      "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                      "columnKey": "audio$lang",
-                                                                      "text": "exhibition/audio$lang",
-                                                                      "columnType": "mediaFile"
-                                                                    }
-                                                                  },
-                                                                  {
-                                                                    "name": "buttonOptions",
-                                                                    "type": "buttonOptions",
-                                                                    "id": "buttonOptions",
-                                                                    "value": {
-                                                                      "text": "",
-                                                                      "type": "secondary",
-                                                                      "size": "medium",
-                                                                      "flex": "fill"
-                                                                    }
-                                                                  }
-                                                                ]
-                                                              }
+                                                              "audioColumn": {
+                                                                "value": {
+                                                                  "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audio$lang",
+                                                                  "text": "exhibition/audio$lang"
+                                                                }
+                                                              },
+                                                              "hideSkipControls": false
                                                             },
                                                             "next": {
                                                               "block": {
                                                                 "type": "Spacing",
-                                                                "id": "_E!]DhLnVI#=9%kwlKv2",
+                                                                "id": "`Xk6t+[W5l}m.@EH;mP(",
                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                 "fields": {
                                                                   "extraProps": {
@@ -3102,13 +2790,13 @@
                                                                   "default": {
                                                                     "block": {
                                                                       "type": "AccordeonShell",
-                                                                      "id": "WQSQ5qLwi.iYT[*@A?,^",
+                                                                      "id": "VSenR#J5_[L~sl[U[j}(",
                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                       "inputs": {
                                                                         "label": {
                                                                           "block": {
                                                                             "type": "StaticText",
-                                                                            "id": "q-Mo5a[y(U#A2d%(Kc^c",
+                                                                            "id": "s*FA:G/.)%Vt83a6oPW1",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "fields": {
                                                                               "text": "$button_transcript"
@@ -3118,7 +2806,7 @@
                                                                         "content": {
                                                                           "block": {
                                                                             "type": "DataCell",
-                                                                            "id": "`y8On*8Hwsl]7NsfzK[y",
+                                                                            "id": "1r{TPd:jki%9JcNEB/K3",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "fields": {
                                                                               "extraProps": {
@@ -3169,7 +2857,7 @@
                                                       "next": {
                                                         "block": {
                                                           "type": "IfUIKey",
-                                                          "id": "{qL*FO[hhkUkf)27QL`g",
+                                                          "id": "]zsa#Vz?Wji]n%,xP^#o",
                                                           "data": "{\"origin\":\"interkit\"}",
                                                           "fields": {
                                                             "storeType": "UIKey",
@@ -3180,7 +2868,7 @@
                                                             "iftrue": {
                                                               "block": {
                                                                 "type": "OverlayFull",
-                                                                "id": "R);MPl)%%RX=x(|ZuM6T",
+                                                                "id": "$kgf2.Ow3;]H}Xq|;ea8",
                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                 "fields": {
                                                                   "extraProps": {
@@ -3209,13 +2897,13 @@
                                                                   "default": {
                                                                     "block": {
                                                                       "type": "ScrollContainer",
-                                                                      "id": "kGA(bAI$-*/CKBrff+hY",
+                                                                      "id": "c,t3cV~Fb7DJUp@~_j3y",
                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                       "inputs": {
                                                                         "default": {
                                                                           "block": {
                                                                             "type": "Image",
-                                                                            "id": "]9lNNLLaQg|jy.:A]s9@",
+                                                                            "id": "vg]2|eL{,J/+l=fbZ%Bq",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "fields": {
                                                                               "extraProps": {
@@ -3292,7 +2980,7 @@
                                                             "else": {
                                                               "block": {
                                                                 "type": "IfUIKey",
-                                                                "id": "-L1(0y=.Zr=IOG)3!|J8",
+                                                                "id": "feF-r}(p$WslqcTofUA2",
                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                 "fields": {
                                                                   "storeType": "UIKey",
@@ -3303,7 +2991,7 @@
                                                                   "iftrue": {
                                                                     "block": {
                                                                       "type": "OverlayFull",
-                                                                      "id": "q@jE$k=S:Os4:GcQ=FP#",
+                                                                      "id": "5h5;%#rn2ihk50:RNh?=",
                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                       "fields": {
                                                                         "extraProps": {
@@ -3332,13 +3020,13 @@
                                                                         "default": {
                                                                           "block": {
                                                                             "type": "ScrollContainer",
-                                                                            "id": "fzFeR}Hc^t0c3)?a{sAh",
+                                                                            "id": "Ulk2?`*NiE}#9Rd3qENE",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "inputs": {
                                                                               "default": {
                                                                                 "block": {
                                                                                   "type": "Image",
-                                                                                  "id": "}g7U2!.vi?$R(eeb.n=d",
+                                                                                  "id": "4]E_^T}mOX*81w7z4|ZV",
                                                                                   "data": "{\"origin\":\"interkit\"}",
                                                                                   "fields": {
                                                                                     "extraProps": {
@@ -3415,7 +3103,7 @@
                                                                   "else": {
                                                                     "block": {
                                                                       "type": "IfUIKey",
-                                                                      "id": "x5N|(!o(`r$Sr}9Zq?;K",
+                                                                      "id": "D;r:dwMNC8+iLr4_|p,J",
                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                       "fields": {
                                                                         "storeType": "UIKey",
@@ -3426,16 +3114,16 @@
                                                                         "iftrue": {
                                                                           "block": {
                                                                             "type": "OverlayFull",
-                                                                            "id": "=b?j-vV7j+YMoe%g0_4:",
+                                                                            "id": ";o.v-ptr|aR/Vz9?:fqF",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "fields": {
                                                                               "extraProps": {
                                                                                 "props": [
                                                                                   {
+                                                                                    "id": "closeEffect",
                                                                                     "name": "closeEffect",
                                                                                     "type": "effect",
                                                                                     "help": "What should happen when close button is tapped",
-                                                                                    "id": "closeEffect",
                                                                                     "value": {
                                                                                       "effectType": "setUIKey",
                                                                                       "value": "0",
@@ -3443,10 +3131,10 @@
                                                                                     }
                                                                                   },
                                                                                   {
+                                                                                    "id": "customStyle",
                                                                                     "type": "string",
                                                                                     "name": "customStyle",
-                                                                                    "help": "A css style, eg 'background-color: white;'",
-                                                                                    "id": "customStyle"
+                                                                                    "help": "A css style, eg 'background-color: white;'"
                                                                                   }
                                                                                 ]
                                                                               }
@@ -3455,35 +3143,35 @@
                                                                               "default": {
                                                                                 "block": {
                                                                                   "type": "ScrollContainer",
-                                                                                  "id": "Hf{aH-[-mQpI)R4KQiv-",
+                                                                                  "id": "x{TA!^hILf!!zCW?8eCm",
                                                                                   "data": "{\"origin\":\"interkit\"}",
                                                                                   "inputs": {
                                                                                     "default": {
                                                                                       "block": {
                                                                                         "type": "Image",
-                                                                                        "id": "}O6*iUZ?_[vFNfGZ!|*x",
+                                                                                        "id": "uFRkt:L-n,*lMjF(j3DF",
                                                                                         "data": "{\"origin\":\"interkit\"}",
                                                                                         "fields": {
                                                                                           "extraProps": {
                                                                                             "props": [
                                                                                               {
+                                                                                                "id": "mediafileKey",
                                                                                                 "name": "mediafileKey",
                                                                                                 "type": "string",
-                                                                                                "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
-                                                                                                "id": "mediafileKey"
+                                                                                                "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below."
                                                                                               },
                                                                                               {
+                                                                                                "id": "altText",
                                                                                                 "name": "altText",
                                                                                                 "type": "string",
-                                                                                                "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
-                                                                                                "id": "altText"
+                                                                                                "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
                                                                                               },
                                                                                               {
+                                                                                                "id": "imageColumn",
                                                                                                 "name": "imageColumn",
                                                                                                 "type": "sheetColumn",
                                                                                                 "columnType": "mediaFile",
                                                                                                 "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
-                                                                                                "id": "imageColumn",
                                                                                                 "value": {
                                                                                                   "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                                   "columnKey": "48789c75-cff9-4a91-863f-387de78adea8",
@@ -3492,37 +3180,38 @@
                                                                                                 }
                                                                                               },
                                                                                               {
+                                                                                                "id": "altColumn",
                                                                                                 "name": "altColumn",
                                                                                                 "type": "sheetColumn",
                                                                                                 "columnType": "string",
                                                                                                 "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
-                                                                                                "id": "altColumn",
                                                                                                 "value": {
                                                                                                   "sheetKey": "empty",
                                                                                                   "text": ""
                                                                                                 }
                                                                                               },
                                                                                               {
+                                                                                                "id": "width",
                                                                                                 "name": "width",
                                                                                                 "type": "string",
                                                                                                 "defaultValue": "100%",
-                                                                                                "id": "width",
                                                                                                 "value": "100%"
                                                                                               },
                                                                                               {
+                                                                                                "id": "height",
                                                                                                 "name": "height",
                                                                                                 "type": "string",
-                                                                                                "id": "height"
+                                                                                                "value": ""
                                                                                               },
                                                                                               {
+                                                                                                "id": "customStyle",
                                                                                                 "name": "customStyle",
-                                                                                                "type": "string",
-                                                                                                "id": "customStyle"
+                                                                                                "type": "string"
                                                                                               },
                                                                                               {
+                                                                                                "id": "classes",
                                                                                                 "name": "classes",
-                                                                                                "type": "string",
-                                                                                                "id": "classes"
+                                                                                                "type": "string"
                                                                                               }
                                                                                             ]
                                                                                           }
@@ -3545,13 +3234,13 @@
                                                           "next": {
                                                             "block": {
                                                               "type": "SectionShell",
-                                                              "id": "0m91mfdYBWgP3R1kPOvV",
+                                                              "id": ")qx;+y`;+mf~Mej3YS8|",
                                                               "data": "{\"origin\":\"interkit\"}",
                                                               "inputs": {
                                                                 "default": {
                                                                   "block": {
                                                                     "type": "SlideInModal",
-                                                                    "id": "E4Hf~.!(e9xZYhScAnau",
+                                                                    "id": "HSRELNABI#|mH0gl!S%1",
                                                                     "data": "{\"origin\":\"interkit\"}",
                                                                     "fields": {
                                                                       "extraProps": {
@@ -3587,7 +3276,7 @@
                                                                       "buttons": {
                                                                         "block": {
                                                                           "type": "ColumnShell",
-                                                                          "id": "v]Tk8EOFw}16Z6(w?AIj",
+                                                                          "id": "6r6@A_)/t`bA1YQ7L5p~",
                                                                           "data": "{\"origin\":\"interkit\"}",
                                                                           "fields": {
                                                                             "columns": "3"
@@ -3596,7 +3285,7 @@
                                                                             "col1": {
                                                                               "block": {
                                                                                 "type": "Button",
-                                                                                "id": "33BgIQSmuC*SA%o~ZX~7",
+                                                                                "id": "H=SF;KKd]S+2+aHn;6k3",
                                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                                 "fields": {
                                                                                   "text": "",
@@ -3672,7 +3361,7 @@
                                                                                   "default": {
                                                                                     "block": {
                                                                                       "type": "Image",
-                                                                                      "id": "%hX]ZHDhp!-89)S?3NVk",
+                                                                                      "id": "4s_Is~LeFf!=;__-P)o_",
                                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                                       "fields": {
                                                                                         "extraProps": {
@@ -3745,7 +3434,7 @@
                                                                             "col2": {
                                                                               "block": {
                                                                                 "type": "Button",
-                                                                                "id": "`);2AtiXH4]PL}n.gmdW",
+                                                                                "id": "yTf2I)(4(9NtU.81-n!?",
                                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                                 "fields": {
                                                                                   "text": "",
@@ -3821,7 +3510,7 @@
                                                                                   "default": {
                                                                                     "block": {
                                                                                       "type": "Image",
-                                                                                      "id": "axOAbVh,+1+@W5kUlRkl",
+                                                                                      "id": "D@PGgQ~TDj=+-7q~b)Tn",
                                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                                       "fields": {
                                                                                         "extraProps": {
@@ -3894,7 +3583,7 @@
                                                                             "col3": {
                                                                               "block": {
                                                                                 "type": "Button",
-                                                                                "id": "BdRr]2$P8e8T]aMn}?cl",
+                                                                                "id": "%yWMEQhvQ.Q:.9U]8rMU",
                                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                                 "fields": {
                                                                                   "text": "",
@@ -3970,7 +3659,7 @@
                                                                                   "default": {
                                                                                     "block": {
                                                                                       "type": "Image",
-                                                                                      "id": "7_qd3X3dHaRzMttfZNqu",
+                                                                                      "id": "t[S@@Z3G4VAwzERCI/Qg",
                                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                                       "fields": {
                                                                                         "extraProps": {
@@ -4062,13 +3751,13 @@
                                       "else": {
                                         "block": {
                                           "type": "SectionShell",
-                                          "id": "P/*/8sk=iQGPd(i/~qi5",
+                                          "id": "?Wncmad3}1.A-9G5IBxT",
                                           "data": "{\"origin\":\"interkit\"}",
                                           "inputs": {
                                             "default": {
                                               "block": {
                                                 "type": "Spacing",
-                                                "id": "bws9}1W_z;G):(_`@f(a",
+                                                "id": "%V1PP,xzx^ZNp2kU/?tM",
                                                 "data": "{\"origin\":\"interkit\"}",
                                                 "fields": {
                                                   "extraProps": {
@@ -4136,7 +3825,7 @@
                                                   "default": {
                                                     "block": {
                                                       "type": "DataCard",
-                                                      "id": "E8#)0A:dA0-uIPV~#7f#",
+                                                      "id": "W[oi|Gk{0DZX$oik/;O`",
                                                       "data": "{\"origin\":\"interkit\"}",
                                                       "fields": {
                                                         "extraProps": {
@@ -4281,7 +3970,7 @@
                                                         "content": {
                                                           "block": {
                                                             "type": "DataCell",
-                                                            "id": ".;_?NhzE,5H^d#OZ%Q;S",
+                                                            "id": "9N;p2:rV+zV!ZF]ET940",
                                                             "data": "{\"origin\":\"interkit\"}",
                                                             "fields": {
                                                               "extraProps": {
@@ -4322,7 +4011,7 @@
                                                             "next": {
                                                               "block": {
                                                                 "type": "DataCell",
-                                                                "id": "`!$DHmj]!:s]=QB|,@P_",
+                                                                "id": "zb6zf2!agKEd[[6I*o9P",
                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                 "fields": {
                                                                   "extraProps": {
@@ -4363,7 +4052,7 @@
                                                                 "next": {
                                                                   "block": {
                                                                     "type": "DataCell",
-                                                                    "id": "?LQMyA?!rjJ1U6R8^l*|",
+                                                                    "id": "V@xa8-|fG4w=pIh#4;TV",
                                                                     "data": "{\"origin\":\"interkit\"}",
                                                                     "fields": {
                                                                       "extraProps": {
@@ -4417,13 +4106,13 @@
                                           "next": {
                                             "block": {
                                               "type": "SectionShell",
-                                              "id": "^~F.R7sJ`PI~jxY51p)z",
+                                              "id": "e+d87h*e%5#,~3M]N=se",
                                               "data": "{\"origin\":\"interkit\"}",
                                               "inputs": {
                                                 "default": {
                                                   "block": {
                                                     "type": "Spacing",
-                                                    "id": "$!8oaQY[3!B+/@,cf%5A",
+                                                    "id": "LF:.5PhvnvO=K.;q`K4S",
                                                     "data": "{\"origin\":\"interkit\"}",
                                                     "fields": {
                                                       "extraProps": {
@@ -4491,7 +4180,7 @@
                                                       "default": {
                                                         "block": {
                                                           "type": "DataCard",
-                                                          "id": "O.mISN_:JL(!~}vK!5za",
+                                                          "id": "T0lAq8=N9+0);+ojC7wz",
                                                           "data": "{\"origin\":\"interkit\"}",
                                                           "fields": {
                                                             "extraProps": {
@@ -4636,7 +4325,7 @@
                                                             "content": {
                                                               "block": {
                                                                 "type": "TextFormat",
-                                                                "id": "rizsJBFMKa?q3$LOx}W}",
+                                                                "id": "(d9eGomI8DvgY~8(P3,a",
                                                                 "data": "{\"origin\":\"interkit\"}",
                                                                 "fields": {
                                                                   "extraProps": {
@@ -4690,7 +4379,7 @@
                                                                   "default": {
                                                                     "block": {
                                                                       "type": "StaticText",
-                                                                      "id": "A93B9|pd/7ggB_k~ZVSq",
+                                                                      "id": "Qo:-h:Xnh)[9IX;_Rf%V",
                                                                       "data": "{\"origin\":\"interkit\"}",
                                                                       "fields": {
                                                                         "text": "$context"
@@ -4701,13 +4390,13 @@
                                                                 "next": {
                                                                   "block": {
                                                                     "type": "AccordeonShell",
-                                                                    "id": "I*NK6SgXo$~MYAm~F_Yl",
+                                                                    "id": "3E6mF2|#,s_47=YfNWO5",
                                                                     "data": "{\"origin\":\"interkit\"}",
                                                                     "inputs": {
                                                                       "label": {
                                                                         "block": {
                                                                           "type": "StaticText",
-                                                                          "id": "~K0-0U?Ym[`ioLlEZ:{8",
+                                                                          "id": "XBYuUrxR;K5)X/lKkSr-",
                                                                           "data": "{\"origin\":\"interkit\"}",
                                                                           "fields": {
                                                                             "text": "$artwork_context"
@@ -4717,7 +4406,7 @@
                                                                       "content": {
                                                                         "block": {
                                                                           "type": "DataCell",
-                                                                          "id": "Uc_-B{jssIcA|ED)84IN",
+                                                                          "id": "Tc.DmrOiH6*eBcv46a8z",
                                                                           "data": "{\"origin\":\"interkit\"}",
                                                                           "fields": {
                                                                             "extraProps": {
@@ -4761,13 +4450,13 @@
                                                                     "next": {
                                                                       "block": {
                                                                         "type": "AccordeonShell",
-                                                                        "id": "uf`3fUAa6KSc!du7yQwf",
+                                                                        "id": "}TX3K!]Tk~:q1[7a!M|x",
                                                                         "data": "{\"origin\":\"interkit\"}",
                                                                         "inputs": {
                                                                           "label": {
                                                                             "block": {
                                                                               "type": "StaticText",
-                                                                              "id": "0t34uk}.xqL@a}@JS^DI",
+                                                                              "id": "dswx*m-)x_Q|(r_Q0M*8",
                                                                               "data": "{\"origin\":\"interkit\"}",
                                                                               "fields": {
                                                                                 "text": "$artist_context"
@@ -4777,7 +4466,7 @@
                                                                           "content": {
                                                                             "block": {
                                                                               "type": "WikidataEmbedPerson",
-                                                                              "id": "BXCW#xU[@[Gn?]uKEH}N",
+                                                                              "id": "*uii1)MKn+kUfghJ;*?R",
                                                                               "data": "{\"origin\":\".\"}",
                                                                               "fields": {
                                                                                 "title": "Wikidata-Kontext",
@@ -4790,13 +4479,13 @@
                                                                         "next": {
                                                                           "block": {
                                                                             "type": "AccordeonShell",
-                                                                            "id": "U_zca)`6z}daC+[q:!aL",
+                                                                            "id": "DNt1]SqS.x^?KjKW]CYm",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "inputs": {
                                                                               "label": {
                                                                                 "block": {
                                                                                   "type": "StaticText",
-                                                                                  "id": "Geah64tu?1#K,PMfik_J",
+                                                                                  "id": "WW9W5.5`+?QIXD8M21:j",
                                                                                   "data": "{\"origin\":\"interkit\"}",
                                                                                   "fields": {
                                                                                     "text": "$bird_context"
@@ -4806,7 +4495,7 @@
                                                                               "content": {
                                                                                 "block": {
                                                                                   "type": "WikidataEmbedSubject",
-                                                                                  "id": ";](O~4=Qd,%EzY6Wy./p",
+                                                                                  "id": "6,sznk`Bi!y|Y1+Xx@e4",
                                                                                   "data": "{\"origin\":\".\"}",
                                                                                   "fields": {
                                                                                     "title": "Wikidata-Kontext",
@@ -4831,13 +4520,13 @@
                                                     "next": {
                                                       "block": {
                                                         "type": "SectionShell",
-                                                        "id": "Q[%b*:n*hM_0GpozRiG:",
+                                                        "id": "D}{%}WA~BV^aVe$Z5mJ7",
                                                         "data": "{\"origin\":\"interkit\"}",
                                                         "inputs": {
                                                           "default": {
                                                             "block": {
                                                               "type": "Spacing",
-                                                              "id": ":U{aH=:,n%3M`IiO3tLn",
+                                                              "id": "vrqled=9j)9{LDo`_GEn",
                                                               "data": "{\"origin\":\"interkit\"}",
                                                               "fields": {
                                                                 "extraProps": {
@@ -4910,7 +4599,7 @@
                                                                 "default": {
                                                                   "block": {
                                                                     "type": "Button",
-                                                                    "id": "HjiPzwpV$E/3`AcXFed[",
+                                                                    "id": "1xXuQwX^36tX).CmPD69",
                                                                     "data": "{\"origin\":\"interkit\"}",
                                                                     "fields": {
                                                                       "text": "$download_metadata",
@@ -5007,7 +4696,7 @@
                 "Player": {
                   "block": {
                     "type": "AudioPlayer",
-                    "id": "_[Q6bZc9uNoN/45hZr#I",
+                    "id": "SLN)kpGv(`Jh3uc[@cVH",
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "audioColumn": {
@@ -5018,8 +4707,8 @@
                       },
                       "titleColumn": {
                         "value": {
-                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/title$lang",
-                          "text": "exhibition/title$lang"
+                          "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang",
+                          "text": "exhibition/objectTitle$lang"
                         }
                       }
                     }
@@ -5028,7 +4717,7 @@
                 "BottomBar": {
                   "block": {
                     "type": "GroupConnector",
-                    "id": ",*bS0Hs6_ekkSN9]K3VF",
+                    "id": "Lhk72Gp34S~D,#)}~Wp~",
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "name": "bottomBar"
