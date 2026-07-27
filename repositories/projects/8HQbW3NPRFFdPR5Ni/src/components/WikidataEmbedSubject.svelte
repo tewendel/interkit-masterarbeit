@@ -3,7 +3,7 @@
 
   export let title = "Wikidata-Kontext"
   export let qidColumn = "subjectKeyword_wikidata"
-  export let height = "45vh"
+  export let height = "65vh"
 
   const element = getContext("element")
 
@@ -22,23 +22,18 @@
     const values = buildValues(qidString)
 
     return `#defaultView:ImageGrid
-SELECT DISTINCT ?item ?itemLabel ?itemDescription ?creator ?creatorLabel ?date ?image WHERE {
+SELECT DISTINCT ?item ?itemLabel ?itemDescription (SAMPLE(?imageValue) AS ?image) WHERE {
   VALUES ?theme {
     ${values} 
   }
   { ?item wdt:P180 ?theme. }
   UNION
   { ?item wdt:P921 ?theme. }
-  UNION
-  { ?item wdt:P31 ?theme. }
-  UNION
-  { ?item wdt:P279 ?theme. }
-  ?item wdt:P18 ?image.
-  OPTIONAL { ?item wdt:P170 ?creator. }
-  OPTIONAL { ?item wdt:P571 ?date. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de,en,mul". }
+  ?item wdt:P18 ?imageValue.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en,mul". }
 }
-LIMIT 24`
+GROUP BY ?item ?itemLabel ?itemDescription
+ORDER BY ?item`
   }
 
   $: values = $element?.values || {}
@@ -54,12 +49,19 @@ LIMIT 24`
 
 {#if iframeSrc}
   <iframe
-    title="Wikidata SPARQL Embed"
+    title={title || "Wikidata-Ergebnisse"}
     src={iframeSrc}
-    style={`width: 100%; height: ${height}; border: none;`}
-    referrerpolicy="origin"
+    loading="lazy"
+    style={`
+      display: block;
+      width: 100%;
+      height: ${height};
+      min-height: 520px;
+      border: none;
+    `}
+    referrerpolicy="no-referrer"
     sandbox="allow-scripts allow-same-origin allow-popups">
   </iframe>
 {:else}
-  <p>Keine Wikidata-QID vorhanden.</p>
+  <p>Keine gültige Wikidata-URI vorhanden.</p>
 {/if}

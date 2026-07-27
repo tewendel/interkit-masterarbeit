@@ -5,13 +5,13 @@ toolboxCategory: Project
 fields:
   - type: string
     name: title
-    defaultValue: "Wikidata-Kontext"
+    defaultValue: "Werke und Objekte mit demselben Motiv in Wikidata"
 
   - type: string
     name: qidColumn
     defaultValue: "subjectKeyword_wikidata"
-    help: "Column Key der Wikidata-QID-Spalte. Mehrere QIDs können mit Semikolon getrennt werden."
+    help: "Column Key der subjectKeyword-Spalte. Mehrere URIs können mit Semikolon getrennt werden."
 
   - type: string
     name: height
-    defaultValue: "45vh"
+    defaultValue: "65vh"
