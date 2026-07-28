@@ -1,5 +1,5 @@
-name: WikidataEmbedSubject
-title: Wikidata Embed Subject
+name: WikidataEmbedSubjectNew
+title: Wikidata Embed Subject New
 colour: 210
 toolboxCategory: Project
 fields:
@@ -9,7 +9,7 @@ fields:
 
   - type: string
     name: qidColumn
-    defaultValue: "subjectKeyword_wikidata"
+    defaultValue: "subjectKeyword"
     help: "Column Key der subjectKeyword-Spalte. Mehrere URIs können mit Semikolon getrennt werden."
 
   - type: string

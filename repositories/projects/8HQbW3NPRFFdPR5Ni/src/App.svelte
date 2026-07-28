@@ -38,8 +38,9 @@ import StaticText from "interkit/components/StaticText.svelte";
 import Tab from "interkit/components/Tab.svelte";
 import TabBar from "interkit/components/TabBar.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
-import WikidataEmbedPerson from "./components/WikidataEmbedPerson.svelte";
-import WikidataEmbedSubject from "./components/WikidataEmbedSubject.svelte";
+import WikidataEmbedPersonNew from "./components/WikidataEmbedPersonNew.svelte";
+import WikidataEmbedSubjectBird from "./components/WikidataEmbedSubjectBird.svelte";
+import WikidataEmbedSubjectNew from "./components/WikidataEmbedSubjectNew.svelte";
 import styleTokens from "./styleTokens.json";
 globalThis.styleTokens = styleTokens;
 console.log('AppBase styleTokens', styleTokens);
@@ -106,7 +107,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-                  effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -308,7 +309,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-                  effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -403,32 +404,15 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 >
                 <svelte:fragment slot="label">
                   <StaticText
-                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
-                  </StaticText>
-                </svelte:fragment>
-                <svelte:fragment slot="content">
-                  <DataCell
-                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
-                     format="richText"
-                     centerContent={false}
-                  >
-                  </DataCell>
-                </svelte:fragment>
-                </AccordeonShell>
-                <AccordeonShell
-                >
-                <svelte:fragment slot="label">
-                  <StaticText
                      text={$lang ? ($translations[$lang] && $translations[$lang]["$artist_context"] ? $translations[$lang]["$artist_context"] : "artist_context") : ($translations.en && $translations.en["$artist_context"] ? $translations.en["$artist_context"] : "…")}>
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <WikidataEmbedPerson
+                  <WikidataEmbedPersonNew
                      title="Wikidata-Kontext"
-                     qidColumn="personID_wikidata"
-                     height="45vh"
+                     personIdColumn="personID"
                   >
-                  </WikidataEmbedPerson>
+                  </WikidataEmbedPersonNew>
                 </svelte:fragment>
                 </AccordeonShell>
                 <AccordeonShell
@@ -439,11 +423,32 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <WikidataEmbedSubject
-                     title={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context_info"] ? $translations[$lang]["$bird_context_info"] : "bird_context_info") : ($translations.en && $translations.en["$bird_context_info"] ? $translations.en["$bird_context_info"] : "…")}   qidColumn="subjectKeyword_wikidata"
-                     height="65vh"
+                  <SectionShell
                   >
-                  </WikidataEmbedSubject>
+                    <WikidataEmbedSubjectBird
+                       title={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context_info"] ? $translations[$lang]["$bird_context_info"] : "bird_context_info") : ($translations.en && $translations.en["$bird_context_info"] ? $translations.en["$bird_context_info"] : "…")}   qidColumn="subjectKeyword"
+                       height="65vh"
+                    >
+                    </WikidataEmbedSubjectBird>
+                  </SectionShell>
+                  <SectionShell
+                  >
+                    <WikidataEmbedSubjectNew
+                       title={$lang ? ($translations[$lang] && $translations[$lang]["$motif_context_info"] ? $translations[$lang]["$motif_context_info"] : "motif_context_info") : ($translations.en && $translations.en["$motif_context_info"] ? $translations.en["$motif_context_info"] : "…")}   qidColumn="subjectKeyword"
+                       height="65vh"
+                    >
+                    </WikidataEmbedSubjectNew>
+                  </SectionShell>
+                </svelte:fragment>
+                </AccordeonShell>
+                <AccordeonShell
+                >
+                <svelte:fragment slot="label">
+                  <StaticText
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                  </StaticText>
+                </svelte:fragment>
+                <svelte:fragment slot="content">
                 </svelte:fragment>
                 </AccordeonShell>
                 <SectionShell
@@ -724,7 +729,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-                  effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -772,7 +777,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="medium"
              flex="fill"
              disabled={false}
-                effect={{"effectType":"route","path":"/exhibition"}}
+             ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   effect={{"effectType":"route","path":"/exhibition"}}
           >
           </Button>
         </svelte:fragment>
@@ -846,6 +851,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     >
     </ListItem>
     <ListItem
+       text={$lang ? ($translations[$lang] && $translations[$lang]["$about"] ? $translations[$lang]["$about"] : "about") : ($translations.en && $translations.en["$about"] ? $translations.en["$about"] : "…")}   effect={{"effectType":"route","path":"/about"}}
+    >
+    </ListItem>
+    <ListItem
        text={$lang ? ($translations[$lang] && $translations[$lang]["$imprint"] ? $translations[$lang]["$imprint"] : "imprint") : ($translations.en && $translations.en["$imprint"] ? $translations.en["$imprint"] : "…")}   effect={{"effectType":"route","path":"/imprint"}}
     >
     </ListItem>
@@ -903,7 +912,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"route","path":"/menu"}}
+             ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
           >
             <Icon
                type="Full-Menu"
@@ -982,7 +991,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                      effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1030,7 +1039,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="medium"
                  flex="fill"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/exhibition"}}
+                 ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$app_context"] ? $translations[$lang]["$app_context"] : "app_context") : "…"}   effect={{"effectType":"route","path":"/exhibition"}}
               >
               </Button>
             </svelte:fragment>
@@ -1103,6 +1112,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         >
         </ListItem>
         <ListItem
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$about"] ? $translations[$lang]["$about"] : "about") : ($translations.en && $translations.en["$about"] ? $translations.en["$about"] : "…")}   effect={{"effectType":"route","path":"/about"}}
+        >
+        </ListItem>
+        <ListItem
            text={$lang ? ($translations[$lang] && $translations[$lang]["$imprint"] ? $translations[$lang]["$imprint"] : "imprint") : ($translations.en && $translations.en["$imprint"] ? $translations.en["$imprint"] : "…")}   effect={{"effectType":"route","path":"/imprint"}}
         >
         </ListItem>
@@ -1159,7 +1172,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/menu"}}
+                 ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
               >
                 <Icon
                    type="Full-Menu"
@@ -1238,7 +1251,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/menu"}}
+                 ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
               >
                 <Icon
                    type="Full-Menu"
@@ -1256,6 +1269,85 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <DataLoaderSingle
              sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
              rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </ScrollContainer>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+      </svelte:fragment>
+      </LayoutShell>
+    </Route>
+    <Route
+       path="/about"
+       keepAlive={false}
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+          <HorizontalSpacer
+          >
+          <svelte:fragment slot="left">
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+                  effect={{"effectType":"back"}}
+            >
+              <Icon
+                 type="Thin-Arrow-Left"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </svelte:fragment>
+          <svelte:fragment slot="center">
+          </svelte:fragment>
+          <svelte:fragment slot="right">
+          </svelte:fragment>
+          </HorizontalSpacer>
+          <HorizontalSpacer
+          >
+          <svelte:fragment slot="left">
+          </svelte:fragment>
+          <svelte:fragment slot="center">
+          </svelte:fragment>
+          <svelte:fragment slot="right">
+            <ButtonBar
+               justify="right"
+               >
+              <LangSwitch
+                    reloadAfterSwitch="yes"
+              >
+              </LangSwitch>
+              <Button
+                    type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                 ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+              >
+                <Icon
+                   type="Full-Menu"
+                   inverse={false}
+                >
+                </Icon>
+              </Button>
+            </ButtonBar>
+          </svelte:fragment>
+          </HorizontalSpacer>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <ScrollContainer
+        >
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
              >
             <DataCell
                column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
@@ -1327,7 +1419,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                      effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1528,7 +1620,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                      effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1623,32 +1715,15 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     >
                     <svelte:fragment slot="label">
                       <StaticText
-                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
-                      </StaticText>
-                    </svelte:fragment>
-                    <svelte:fragment slot="content">
-                      <DataCell
-                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e735b0c9-b3c8-4df8-8da6-b8d1101a56f2"
-                         format="richText"
-                         centerContent={false}
-                      >
-                      </DataCell>
-                    </svelte:fragment>
-                    </AccordeonShell>
-                    <AccordeonShell
-                    >
-                    <svelte:fragment slot="label">
-                      <StaticText
                          text={$lang ? ($translations[$lang] && $translations[$lang]["$artist_context"] ? $translations[$lang]["$artist_context"] : "artist_context") : ($translations.en && $translations.en["$artist_context"] ? $translations.en["$artist_context"] : "…")}>
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <WikidataEmbedPerson
+                      <WikidataEmbedPersonNew
                          title="Wikidata-Kontext"
-                         qidColumn="personID_wikidata"
-                         height="45vh"
+                         personIdColumn="personID"
                       >
-                      </WikidataEmbedPerson>
+                      </WikidataEmbedPersonNew>
                     </svelte:fragment>
                     </AccordeonShell>
                     <AccordeonShell
@@ -1659,11 +1734,32 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <WikidataEmbedSubject
-                         title={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context_info"] ? $translations[$lang]["$bird_context_info"] : "bird_context_info") : ($translations.en && $translations.en["$bird_context_info"] ? $translations.en["$bird_context_info"] : "…")}   qidColumn="subjectKeyword_wikidata"
-                         height="65vh"
+                      <SectionShell
                       >
-                      </WikidataEmbedSubject>
+                        <WikidataEmbedSubjectBird
+                           title={$lang ? ($translations[$lang] && $translations[$lang]["$bird_context_info"] ? $translations[$lang]["$bird_context_info"] : "bird_context_info") : ($translations.en && $translations.en["$bird_context_info"] ? $translations.en["$bird_context_info"] : "…")}   qidColumn="subjectKeyword"
+                           height="65vh"
+                        >
+                        </WikidataEmbedSubjectBird>
+                      </SectionShell>
+                      <SectionShell
+                      >
+                        <WikidataEmbedSubjectNew
+                           title={$lang ? ($translations[$lang] && $translations[$lang]["$motif_context_info"] ? $translations[$lang]["$motif_context_info"] : "motif_context_info") : ($translations.en && $translations.en["$motif_context_info"] ? $translations.en["$motif_context_info"] : "…")}   qidColumn="subjectKeyword"
+                           height="65vh"
+                        >
+                        </WikidataEmbedSubjectNew>
+                      </SectionShell>
+                    </svelte:fragment>
+                    </AccordeonShell>
+                    <AccordeonShell
+                    >
+                    <svelte:fragment slot="label">
+                      <StaticText
+                         text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_context"] ? $translations[$lang]["$artwork_context"] : "artwork_context") : ($translations.en && $translations.en["$artwork_context"] ? $translations.en["$artwork_context"] : "…")}>
+                      </StaticText>
+                    </svelte:fragment>
+                    <svelte:fragment slot="content">
                     </svelte:fragment>
                     </AccordeonShell>
                     <SectionShell
@@ -1953,7 +2049,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/menu"}}
+                 ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
               >
                 <Icon
                    type="Full-Menu"
@@ -2040,7 +2136,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"route","path":"/menu"}}
+             ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
           >
             <Icon
                type="Full-Menu"
@@ -2058,6 +2154,86 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <DataLoaderSingle
          sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
          rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+         >
+        <DataCell
+           column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+           centerContent={false}
+        >
+        </DataCell>
+      </DataLoaderSingle>
+    </ScrollContainer>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/about"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+      <HorizontalSpacer
+      >
+      <svelte:fragment slot="left">
+        <Button
+              type="secondary"
+           size="small"
+           flex="normal"
+           disabled={false}
+              effect={{"effectType":"back"}}
+        >
+          <Icon
+             type="Thin-Arrow-Left"
+             inverse={false}
+          >
+          </Icon>
+        </Button>
+      </svelte:fragment>
+      <svelte:fragment slot="center">
+      </svelte:fragment>
+      <svelte:fragment slot="right">
+      </svelte:fragment>
+      </HorizontalSpacer>
+      <HorizontalSpacer
+      >
+      <svelte:fragment slot="left">
+      </svelte:fragment>
+      <svelte:fragment slot="center">
+      </svelte:fragment>
+      <svelte:fragment slot="right">
+        <ButtonBar
+           justify="right"
+           >
+          <LangSwitch
+                reloadAfterSwitch="yes"
+          >
+          </LangSwitch>
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+             ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+          >
+            <Icon
+               type="Full-Menu"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </ButtonBar>
+      </svelte:fragment>
+      </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <ScrollContainer
+    >
+      <DataLoaderSingle
+         sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+         rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
          >
         <DataCell
            column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
@@ -2120,7 +2296,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"route","path":"/menu"}}
+             ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
           >
             <Icon
                type="Full-Menu"

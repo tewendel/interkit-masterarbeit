@@ -1,0 +1,14 @@
+name: WikidataEmbedPersonNew
+title: Wikidata Person Neu
+colour: 210
+toolboxCategory: Project
+
+fields:
+  - type: string
+    name: title
+    defaultValue: "Wikidata-Kontext"
+
+  - type: string
+    name: personIdColumn
+    defaultValue: "personID"
+    help: "Spalte mit GND- oder Wikidata-URI"

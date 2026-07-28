@@ -221,7 +221,8 @@
                                       "type": "string",
                                       "name": "ariaLabel",
                                       "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                      "id": "ariaLabel"
+                                      "id": "ariaLabel",
+                                      "value": "$menu"
                                     },
                                     {
                                       "type": "effect",
@@ -630,7 +631,8 @@
                                                   "type": "string",
                                                   "name": "ariaLabel",
                                                   "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                  "id": "ariaLabel"
+                                                  "id": "ariaLabel",
+                                                  "value": "$app_context"
                                                 },
                                                 {
                                                   "type": "effect",
@@ -887,26 +889,36 @@
                                 "next": {
                                   "block": {
                                     "type": "RouteConnector",
-                                    "id": "S6V5kXLhvH[HI/Ien:[O",
+                                    "id": "?z*^(F8VKEls=c0yyE67",
                                     "data": "{\"origin\":\"interkit\"}",
                                     "fields": {
-                                      "path": "/exhibition"
+                                      "path": "/about"
                                     },
                                     "next": {
                                       "block": {
                                         "type": "RouteConnector",
-                                        "id": "h:EOeA6{Aasjav!=g].?",
+                                        "id": "S6V5kXLhvH[HI/Ien:[O",
                                         "data": "{\"origin\":\"interkit\"}",
                                         "fields": {
-                                          "path": "/exhibition_artworks"
+                                          "path": "/exhibition"
                                         },
                                         "next": {
                                           "block": {
                                             "type": "RouteConnector",
-                                            "id": "HdEp[]TZOvx,RYa5g#dm",
+                                            "id": "h:EOeA6{Aasjav!=g].?",
                                             "data": "{\"origin\":\"interkit\"}",
                                             "fields": {
-                                              "path": "/help"
+                                              "path": "/exhibition_artworks"
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "RouteConnector",
+                                                "id": "HdEp[]TZOvx,RYa5g#dm",
+                                                "data": "{\"origin\":\"interkit\"}",
+                                                "fields": {
+                                                  "path": "/help"
+                                                }
+                                              }
                                             }
                                           }
                                         }
@@ -1020,10 +1032,10 @@
                             "next": {
                               "block": {
                                 "type": "ListItem",
-                                "id": "SSPa:ITEb;6_OnwthgHG",
+                                "id": "8hHMfpPai)u;1e,F;TEy",
                                 "data": "{\"origin\":\"interkit\"}",
                                 "fields": {
-                                  "text": "$imprint",
+                                  "text": "$about",
                                   "extraProps": {
                                     "props": [
                                       {
@@ -1032,10 +1044,33 @@
                                         "id": "effect",
                                         "value": {
                                           "effectType": "route",
-                                          "path": "/imprint"
+                                          "path": "/about"
                                         }
                                       }
                                     ]
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "ListItem",
+                                    "id": "SSPa:ITEb;6_OnwthgHG",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "fields": {
+                                      "text": "$imprint",
+                                      "extraProps": {
+                                        "props": [
+                                          {
+                                            "name": "effect",
+                                            "type": "effect",
+                                            "id": "effect",
+                                            "value": {
+                                              "effectType": "route",
+                                              "path": "/imprint"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
                                   }
                                 }
                               }
@@ -1398,7 +1433,7 @@
                                         "value": {
                                           "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                           "columnKey": "menu$lang",
-                                          "text": "menu/menu$lang",
+                                          "text": "translation_rich/menu$lang",
                                           "columnType": "string"
                                         }
                                       },
@@ -3255,59 +3290,27 @@
                                                                 "next": {
                                                                   "block": {
                                                                     "type": "AccordeonShell",
-                                                                    "id": "3E6mF2|#,s_47=YfNWO5",
+                                                                    "id": "}TX3K!]Tk~:q1[7a!M|x",
                                                                     "data": "{\"origin\":\"interkit\"}",
                                                                     "inputs": {
                                                                       "label": {
                                                                         "block": {
                                                                           "type": "StaticText",
-                                                                          "id": "XBYuUrxR;K5)X/lKkSr-",
+                                                                          "id": "dswx*m-)x_Q|(r_Q0M*8",
                                                                           "data": "{\"origin\":\"interkit\"}",
                                                                           "fields": {
-                                                                            "text": "$artwork_context"
+                                                                            "text": "$artist_context"
                                                                           }
                                                                         }
                                                                       },
                                                                       "content": {
                                                                         "block": {
-                                                                          "type": "DataCell",
-                                                                          "id": "Tc.DmrOiH6*eBcv46a8z",
-                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                          "type": "WikidataEmbedPersonNew",
+                                                                          "id": "z;o[,b(MC9.h?CCy94BN",
+                                                                          "data": "{\"origin\":\".\"}",
                                                                           "fields": {
-                                                                            "extraProps": {
-                                                                              "props": [
-                                                                                {
-                                                                                  "name": "column",
-                                                                                  "type": "sheetColumn",
-                                                                                  "columnType": "richText",
-                                                                                  "defaultValue": "settings/content",
-                                                                                  "id": "column",
-                                                                                  "value": {
-                                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                    "columnKey": "e735b0c9-b3c8-4df8-8da6-b8d1101a56f2",
-                                                                                    "text": "exhibition/objectType",
-                                                                                    "columnType": "string"
-                                                                                  }
-                                                                                },
-                                                                                {
-                                                                                  "name": "format",
-                                                                                  "type": "options",
-                                                                                  "options": [
-                                                                                    "richText",
-                                                                                    "string"
-                                                                                  ],
-                                                                                  "defaultValue": "richText",
-                                                                                  "id": "format",
-                                                                                  "value": "richText"
-                                                                                },
-                                                                                {
-                                                                                  "name": "centerContent",
-                                                                                  "type": "checkbox",
-                                                                                  "defaultValue": false,
-                                                                                  "id": "centerContent"
-                                                                                }
-                                                                              ]
-                                                                            }
+                                                                            "title": "Wikidata-Kontext",
+                                                                            "personIdColumn": "personID"
                                                                           }
                                                                         }
                                                                       }
@@ -3315,28 +3318,58 @@
                                                                     "next": {
                                                                       "block": {
                                                                         "type": "AccordeonShell",
-                                                                        "id": "}TX3K!]Tk~:q1[7a!M|x",
+                                                                        "id": "DNt1]SqS.x^?KjKW]CYm",
                                                                         "data": "{\"origin\":\"interkit\"}",
                                                                         "inputs": {
                                                                           "label": {
                                                                             "block": {
                                                                               "type": "StaticText",
-                                                                              "id": "dswx*m-)x_Q|(r_Q0M*8",
+                                                                              "id": "WW9W5.5`+?QIXD8M21:j",
                                                                               "data": "{\"origin\":\"interkit\"}",
                                                                               "fields": {
-                                                                                "text": "$artist_context"
+                                                                                "text": "$bird_context"
                                                                               }
                                                                             }
                                                                           },
                                                                           "content": {
                                                                             "block": {
-                                                                              "type": "WikidataEmbedPerson",
-                                                                              "id": "*uii1)MKn+kUfghJ;*?R",
-                                                                              "data": "{\"origin\":\".\"}",
-                                                                              "fields": {
-                                                                                "title": "Wikidata-Kontext",
-                                                                                "qidColumn": "personID_wikidata",
-                                                                                "height": "45vh"
+                                                                              "type": "SectionShell",
+                                                                              "id": "{RkhaRz+G|a0r[dPwr@6",
+                                                                              "data": "{\"origin\":\"interkit\"}",
+                                                                              "inputs": {
+                                                                                "default": {
+                                                                                  "block": {
+                                                                                    "type": "WikidataEmbedSubjectBird",
+                                                                                    "id": "gpWa6~b*h8cWhqaX{6X5",
+                                                                                    "data": "{\"origin\":\".\"}",
+                                                                                    "fields": {
+                                                                                      "title": "$bird_context_info",
+                                                                                      "qidColumn": "subjectKeyword",
+                                                                                      "height": "65vh"
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              },
+                                                                              "next": {
+                                                                                "block": {
+                                                                                  "type": "SectionShell",
+                                                                                  "id": "-rf)bg!]W%SAC!Mkz7]p",
+                                                                                  "data": "{\"origin\":\"interkit\"}",
+                                                                                  "inputs": {
+                                                                                    "default": {
+                                                                                      "block": {
+                                                                                        "type": "WikidataEmbedSubjectNew",
+                                                                                        "id": "g;.C1qQrE9GF)gB(iw}f",
+                                                                                        "data": "{\"origin\":\".\"}",
+                                                                                        "fields": {
+                                                                                          "title": "$motif_context_info",
+                                                                                          "qidColumn": "subjectKeyword",
+                                                                                          "height": "65vh"
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
                                                                               }
                                                                             }
                                                                           }
@@ -3344,28 +3377,16 @@
                                                                         "next": {
                                                                           "block": {
                                                                             "type": "AccordeonShell",
-                                                                            "id": "DNt1]SqS.x^?KjKW]CYm",
+                                                                            "id": "3E6mF2|#,s_47=YfNWO5",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "inputs": {
                                                                               "label": {
                                                                                 "block": {
                                                                                   "type": "StaticText",
-                                                                                  "id": "WW9W5.5`+?QIXD8M21:j",
+                                                                                  "id": "XBYuUrxR;K5)X/lKkSr-",
                                                                                   "data": "{\"origin\":\"interkit\"}",
                                                                                   "fields": {
-                                                                                    "text": "$bird_context"
-                                                                                  }
-                                                                                }
-                                                                              },
-                                                                              "content": {
-                                                                                "block": {
-                                                                                  "type": "WikidataEmbedSubject",
-                                                                                  "id": "4h:^*eAH8uR|}m.`5s+B",
-                                                                                  "data": "{\"origin\":\".\"}",
-                                                                                  "fields": {
-                                                                                    "title": "$bird_context_info",
-                                                                                    "qidColumn": "subjectKeyword_wikidata",
-                                                                                    "height": "65vh"
+                                                                                    "text": "$artwork_context"
                                                                                   }
                                                                                 }
                                                                               }
@@ -4940,6 +4961,145 @@
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "name": "bottomBar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "=iT]`![2h-{)7+Tf!1q`",
+        "x": 1638,
+        "y": -165,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/about",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "_!UP_B+4)T@!hff0lKrJ",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "OG*giw({tWq-WE=v)RZ7",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "backButton"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "GroupConnector",
+                        "id": "5SoqD(H%[!oh]rKOZ}]e",
+                        "data": "{\"origin\":\"interkit\"}",
+                        "fields": {
+                          "name": "topBar"
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "T+nbBdCBQ*vW-2aMJ}`C",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "DataLoaderSingle",
+                          "id": "NE2WuFW{HQRf.3,2mwa$",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "name": "sheet",
+                                  "type": "sheetId",
+                                  "help": "Select the sheet you want to load data from.",
+                                  "id": "sheet",
+                                  "value": {
+                                    "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                    "text": "translation_rich"
+                                  }
+                                },
+                                {
+                                  "name": "rowKey",
+                                  "type": "string",
+                                  "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                  "id": "rowKey",
+                                  "value": "ace5405f-595e-434d-92e4-c3c7ebcce5f8"
+                                },
+                                {
+                                  "name": "customKeyColumn",
+                                  "type": "sheetColumn",
+                                  "columnType": "string",
+                                  "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                  "id": "customKeyColumn",
+                                  "value": {
+                                    "sheetKey": "empty",
+                                    "text": "",
+                                    "columnKey": "menu$lang",
+                                    "columnType": "string"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "DataCell",
+                                "id": "w1sg9bL1MBSB7yaLp2,$",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "extraProps": {
+                                    "props": [
+                                      {
+                                        "name": "column",
+                                        "type": "sheetColumn",
+                                        "columnType": "richText",
+                                        "defaultValue": "settings/content",
+                                        "id": "column",
+                                        "value": {
+                                          "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
+                                          "columnKey": "menu$lang",
+                                          "text": "translation_rich/menu$lang",
+                                          "columnType": "string"
+                                        }
+                                      },
+                                      {
+                                        "name": "format",
+                                        "type": "options",
+                                        "options": [
+                                          "richText",
+                                          "string"
+                                        ],
+                                        "defaultValue": "richText",
+                                        "id": "format"
+                                      },
+                                      {
+                                        "name": "centerContent",
+                                        "type": "checkbox",
+                                        "defaultValue": false,
+                                        "id": "centerContent",
+                                        "value": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }

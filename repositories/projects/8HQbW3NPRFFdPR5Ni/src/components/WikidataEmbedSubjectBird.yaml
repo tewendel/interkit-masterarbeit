@@ -1,15 +1,15 @@
-name: WikidataEmbedSubject
-title: Wikidata Embed Subject
+name: WikidataEmbedSubjectBird
+title: Wikidata Embed Subject Bird
 colour: 210
 toolboxCategory: Project
 fields:
   - type: string
     name: title
-    defaultValue: "Wikidata-Kontext"
+    defaultValue: "Werke und Objekte mit demselben Motiv in Wikidata"
 
   - type: string
     name: qidColumn
-    defaultValue: "subjectKeyword_wikidata"
+    defaultValue: "subjectKeyword"
     help: "Column Key der subjectKeyword-Spalte. Mehrere URIs können mit Semikolon getrennt werden."
 
   - type: string
