@@ -8,7 +8,7 @@ fields:
     defaultValue: "Wikidata-Kontext"
 
   - type: string
-    name: qidColumn
+    name: subjectKeywordColumn
     defaultValue: "subjectKeyword"
     help: "Column Key der subjectKeyword-Spalte. Mehrere URIs können mit Semikolon getrennt werden."
 
