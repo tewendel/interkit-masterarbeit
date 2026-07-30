@@ -528,7 +528,6 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "size",
                                             "name": "size",
                                             "type": "options",
                                             "options": [
@@ -536,37 +535,38 @@
                                               "medium",
                                               "small"
                                             ],
+                                            "id": "size",
                                             "value": "large"
                                           },
                                           {
-                                            "id": "imageKey",
                                             "name": "imageKey",
                                             "type": "string",
                                             "help": "Add the key of an image directly. You can find it from the media section.",
+                                            "id": "imageKey",
                                             "value": "b910238c-edf8-499e-b187-6a7cef0912a6"
                                           },
                                           {
-                                            "id": "label",
                                             "name": "label",
                                             "type": "string",
+                                            "id": "label",
                                             "value": "$exhibition_date"
                                           },
                                           {
-                                            "id": "headline",
                                             "name": "headline",
                                             "type": "string",
+                                            "id": "headline",
                                             "value": "$exhibition_title"
                                           },
                                           {
-                                            "id": "prompt",
                                             "name": "prompt",
                                             "type": "string",
+                                            "id": "prompt",
                                             "value": "$home_exhibition_prompt"
                                           },
                                           {
-                                            "id": "description",
                                             "name": "description",
                                             "type": "string",
+                                            "id": "description",
                                             "value": ""
                                           }
                                         ]
@@ -583,7 +583,6 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "type",
                                                   "name": "type",
                                                   "type": "options",
                                                   "options": [
@@ -594,10 +593,10 @@
                                                     "danger"
                                                   ],
                                                   "defaultValue": "secondary",
-                                                  "help": "Appearance of the button."
+                                                  "help": "Appearance of the button.",
+                                                  "id": "type"
                                                 },
                                                 {
-                                                  "id": "size",
                                                   "name": "size",
                                                   "type": "options",
                                                   "options": [
@@ -607,10 +606,10 @@
                                                   ],
                                                   "defaultValue": "small",
                                                   "help": "Large, medium or small.",
+                                                  "id": "size",
                                                   "value": "medium"
                                                 },
                                                 {
-                                                  "id": "flex",
                                                   "name": "flex",
                                                   "type": "options",
                                                   "options": [
@@ -619,26 +618,27 @@
                                                   ],
                                                   "defaultValue": "normal",
                                                   "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                  "id": "flex",
                                                   "value": "fill"
                                                 },
                                                 {
-                                                  "id": "disabled",
                                                   "name": "disabled",
                                                   "type": "checkbox",
-                                                  "defaultValue": false
+                                                  "defaultValue": false,
+                                                  "id": "disabled"
                                                 },
                                                 {
-                                                  "id": "ariaLabel",
                                                   "type": "string",
                                                   "name": "ariaLabel",
                                                   "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                  "id": "ariaLabel",
                                                   "value": ""
                                                 },
                                                 {
-                                                  "id": "effect",
                                                   "type": "effect",
                                                   "name": "effect",
                                                   "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                  "id": "effect",
                                                   "value": {
                                                     "effectType": "route",
                                                     "path": "/exhibition"
@@ -668,7 +668,6 @@
                                           "extraProps": {
                                             "props": [
                                               {
-                                                "id": "size",
                                                 "name": "size",
                                                 "type": "options",
                                                 "options": [
@@ -676,37 +675,38 @@
                                                   "medium",
                                                   "small"
                                                 ],
+                                                "id": "size",
                                                 "value": "medium"
                                               },
                                               {
-                                                "id": "imageKey",
                                                 "name": "imageKey",
                                                 "type": "string",
                                                 "help": "Add the key of an image directly. You can find it from the media section.",
+                                                "id": "imageKey",
                                                 "value": ""
                                               },
                                               {
-                                                "id": "label",
                                                 "name": "label",
                                                 "type": "string",
+                                                "id": "label",
                                                 "value": "$nav_about"
                                               },
                                               {
-                                                "id": "headline",
                                                 "name": "headline",
                                                 "type": "string",
+                                                "id": "headline",
                                                 "value": "$nav_project"
                                               },
                                               {
-                                                "id": "prompt",
                                                 "name": "prompt",
                                                 "type": "string",
+                                                "id": "prompt",
                                                 "value": "$home_project_prompt"
                                               },
                                               {
-                                                "id": "description",
                                                 "name": "description",
                                                 "type": "string",
+                                                "id": "description",
                                                 "value": ""
                                               }
                                             ]
@@ -723,7 +723,6 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "type",
                                                       "name": "type",
                                                       "type": "options",
                                                       "options": [
@@ -734,10 +733,10 @@
                                                         "danger"
                                                       ],
                                                       "defaultValue": "secondary",
-                                                      "help": "Appearance of the button."
+                                                      "help": "Appearance of the button.",
+                                                      "id": "type"
                                                     },
                                                     {
-                                                      "id": "size",
                                                       "name": "size",
                                                       "type": "options",
                                                       "options": [
@@ -747,10 +746,10 @@
                                                       ],
                                                       "defaultValue": "small",
                                                       "help": "Large, medium or small.",
+                                                      "id": "size",
                                                       "value": "medium"
                                                     },
                                                     {
-                                                      "id": "flex",
                                                       "name": "flex",
                                                       "type": "options",
                                                       "options": [
@@ -759,25 +758,26 @@
                                                       ],
                                                       "defaultValue": "normal",
                                                       "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                      "id": "flex",
                                                       "value": "fill"
                                                     },
                                                     {
-                                                      "id": "disabled",
                                                       "name": "disabled",
                                                       "type": "checkbox",
-                                                      "defaultValue": false
+                                                      "defaultValue": false,
+                                                      "id": "disabled"
                                                     },
                                                     {
-                                                      "id": "ariaLabel",
                                                       "type": "string",
                                                       "name": "ariaLabel",
-                                                      "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                      "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                      "id": "ariaLabel"
                                                     },
                                                     {
-                                                      "id": "effect",
                                                       "type": "effect",
                                                       "name": "effect",
                                                       "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                      "id": "effect",
                                                       "value": {
                                                         "effectType": "route",
                                                         "path": "/about"
@@ -917,6 +917,16 @@
                                                 "data": "{\"origin\":\"interkit\"}",
                                                 "fields": {
                                                   "path": "/help"
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "RouteConnector",
+                                                    "id": "f:DO%3oT)u[%WO{i4jXr",
+                                                    "data": "{\"origin\":\"interkit\"}",
+                                                    "fields": {
+                                                      "path": "/rights"
+                                                    }
+                                                  }
                                                 }
                                               }
                                             }
@@ -958,11 +968,86 @@
               "inputs": {
                 "TopBar": {
                   "block": {
-                    "type": "GroupConnector",
-                    "id": "AaD4w:PgYS$o.7UFP4Je",
+                    "type": "HorizontalSpacer",
+                    "id": "H|B9y4S0u8g^^lEyZ*ae",
                     "data": "{\"origin\":\"interkit\"}",
-                    "fields": {
-                      "name": "backButton"
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "IY{.e8tG+*b/_T=`!6-.",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "(o2FX%sTx7VRvs{1h1E,",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": ",@l/6(!kl;!zft_gW$F$",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 },
@@ -976,9 +1061,9 @@
                       "extraProps": {
                         "props": [
                           {
-                            "id": "effect",
                             "name": "effect",
                             "type": "effect",
+                            "id": "effect",
                             "value": {
                               "effectType": "route",
                               "path": "/"
@@ -1053,10 +1138,10 @@
                                 "next": {
                                   "block": {
                                     "type": "ListItem",
-                                    "id": "SSPa:ITEb;6_OnwthgHG",
+                                    "id": "`uhjt07#7mc0hx$7[Z2A",
                                     "data": "{\"origin\":\"interkit\"}",
                                     "fields": {
-                                      "text": "$nav_imprint",
+                                      "text": "$nav_rights",
                                       "extraProps": {
                                         "props": [
                                           {
@@ -1065,10 +1150,33 @@
                                             "id": "effect",
                                             "value": {
                                               "effectType": "route",
-                                              "path": "/imprint"
+                                              "path": "/rights"
                                             }
                                           }
                                         ]
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "ListItem",
+                                        "id": "SSPa:ITEb;6_OnwthgHG",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "fields": {
+                                          "text": "$nav_imprint",
+                                          "extraProps": {
+                                            "props": [
+                                              {
+                                                "name": "effect",
+                                                "type": "effect",
+                                                "id": "effect",
+                                                "value": {
+                                                  "effectType": "route",
+                                                  "path": "/imprint"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
                                       }
                                     }
                                   }
@@ -1237,11 +1345,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "Dbp-:]Y(;]~TvV7E5u|3",
+                          "type": "TextFormat",
+                          "id": "mw1y:w878ux0rBE6BPUR",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "l)DA`JJp-!a??0VG6ktb",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -1337,28 +1501,28 @@
                                 "extraProps": {
                                   "props": [
                                     {
-                                      "id": "sheet",
                                       "name": "sheet",
                                       "type": "sheetId",
                                       "help": "Select the sheet you want to load data from.",
+                                      "id": "sheet",
                                       "value": {
                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                         "text": "translation_rich"
                                       }
                                     },
                                     {
-                                      "id": "rowKey",
                                       "name": "rowKey",
                                       "type": "string",
                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                      "id": "rowKey",
                                       "value": "00998218-291f-4856-97be-f3a6bebabee2"
                                     },
                                     {
-                                      "id": "customKeyColumn",
                                       "name": "customKeyColumn",
                                       "type": "sheetColumn",
                                       "columnType": "string",
                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                      "id": "customKeyColumn",
                                       "value": {
                                         "sheetKey": "empty",
                                         "columnKey": "menu$lang",
@@ -1379,11 +1543,11 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "column",
                                             "name": "column",
                                             "type": "sheetColumn",
                                             "columnType": "richText",
                                             "defaultValue": "settings/content",
+                                            "id": "column",
                                             "value": {
                                               "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                               "columnKey": "menu$lang",
@@ -1392,20 +1556,20 @@
                                             }
                                           },
                                           {
-                                            "id": "format",
                                             "name": "format",
                                             "type": "options",
                                             "options": [
                                               "richText",
                                               "string"
                                             ],
-                                            "defaultValue": "richText"
+                                            "defaultValue": "richText",
+                                            "id": "format"
                                           },
                                           {
-                                            "id": "centerContent",
                                             "name": "centerContent",
                                             "type": "checkbox",
-                                            "defaultValue": false
+                                            "defaultValue": false,
+                                            "id": "centerContent"
                                           }
                                         ]
                                       }
@@ -1470,11 +1634,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "OPV3Chn+7`aD5vE@gd8%",
+                          "type": "TextFormat",
+                          "id": "$QSa7vz*$0_Ti)98hcPC",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "V8Zsm4l:(?egibEWvZ`8",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -1672,8 +1892,8 @@
       {
         "type": "Route",
         "id": "l3S*=SfoAF^H5C$wJR!3",
-        "x": 2078,
-        "y": -350,
+        "x": 2555,
+        "y": -187,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/exhibition",
@@ -1704,11 +1924,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "[Nl=kvCDK[lYF5,bhf=5",
+                          "type": "TextFormat",
+                          "id": "O,Enfd,9v(%*(fH!9pwh",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "}C=qk}VW!6YG:Oi|K:q2",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -1880,17 +2156,16 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "type",
                                                       "name": "type",
                                                       "type": "options",
                                                       "options": [
                                                         "text",
                                                         "icon"
                                                       ],
+                                                      "id": "type",
                                                       "value": "icon"
                                                     },
                                                     {
-                                                      "id": "variant",
                                                       "name": "variant",
                                                       "type": "options",
                                                       "options": [
@@ -1898,16 +2173,16 @@
                                                         "normal",
                                                         "soft"
                                                       ],
+                                                      "id": "variant",
                                                       "value": "normal"
                                                     },
                                                     {
-                                                      "id": "content",
                                                       "type": "string",
                                                       "name": "content",
+                                                      "id": "content",
                                                       "value": ""
                                                     },
                                                     {
-                                                      "id": "icon",
                                                       "type": "options",
                                                       "name": "icon",
                                                       "options": [
@@ -1981,6 +2256,7 @@
                                                         "Full-to_Gallery"
                                                       ],
                                                       "help": "Select an icon.",
+                                                      "id": "icon",
                                                       "value": "Full-More"
                                                     }
                                                   ]
@@ -1995,7 +2271,6 @@
                                                     "extraProps": {
                                                       "props": [
                                                         {
-                                                          "id": "interfaceFormat",
                                                           "type": "options",
                                                           "name": "interfaceFormat",
                                                           "options": [
@@ -2015,10 +2290,10 @@
                                                             "overline"
                                                           ],
                                                           "defaultValue": "none",
-                                                          "help": "Use these formats to select typography for parts of the interface."
+                                                          "help": "Use these formats to select typography for parts of the interface.",
+                                                          "id": "interfaceFormat"
                                                         },
                                                         {
-                                                          "id": "contentFormat",
                                                           "type": "options",
                                                           "name": "contentFormat",
                                                           "options": [
@@ -2033,6 +2308,7 @@
                                                           ],
                                                           "defaultValue": "none",
                                                           "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                                          "id": "contentFormat",
                                                           "value": "body-2"
                                                         }
                                                       ]
@@ -2063,28 +2339,28 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "sheet",
                                                       "name": "sheet",
                                                       "type": "sheetId",
                                                       "help": "Select the sheet you want to load data from.",
+                                                      "id": "sheet",
                                                       "value": {
                                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                         "text": "translation_rich"
                                                       }
                                                     },
                                                     {
-                                                      "id": "rowKey",
                                                       "name": "rowKey",
                                                       "type": "string",
                                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                                      "id": "rowKey",
                                                       "value": "019f8964-fde8-4da1-8ea5-e75315104b6b"
                                                     },
                                                     {
-                                                      "id": "customKeyColumn",
                                                       "name": "customKeyColumn",
                                                       "type": "sheetColumn",
                                                       "columnType": "string",
                                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                                      "id": "customKeyColumn",
                                                       "value": {
                                                         "sheetKey": "empty",
                                                         "text": ""
@@ -2103,11 +2379,11 @@
                                                       "extraProps": {
                                                         "props": [
                                                           {
-                                                            "id": "column",
                                                             "name": "column",
                                                             "type": "sheetColumn",
                                                             "columnType": "richText",
                                                             "defaultValue": "settings/content",
+                                                            "id": "column",
                                                             "value": {
                                                               "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                               "columnKey": "menu$lang",
@@ -2116,20 +2392,20 @@
                                                             }
                                                           },
                                                           {
-                                                            "id": "format",
                                                             "name": "format",
                                                             "type": "options",
                                                             "options": [
                                                               "richText",
                                                               "string"
                                                             ],
-                                                            "defaultValue": "richText"
+                                                            "defaultValue": "richText",
+                                                            "id": "format"
                                                           },
                                                           {
-                                                            "id": "centerContent",
                                                             "name": "centerContent",
                                                             "type": "checkbox",
                                                             "defaultValue": false,
+                                                            "id": "centerContent",
                                                             "value": false
                                                           }
                                                         ]
@@ -2169,9 +2445,9 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "sortColumn",
                                             "name": "sortColumn",
                                             "type": "sheetColumn",
+                                            "id": "sortColumn",
                                             "value": {
                                               "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                               "columnKey": "03ea6de3-b639-414d-af4c-1cd9abf9c931",
@@ -2179,34 +2455,34 @@
                                             }
                                           },
                                           {
-                                            "id": "hideColumn",
                                             "name": "hideColumn",
                                             "type": "sheetColumn",
+                                            "id": "hideColumn",
                                             "value": {
                                               "sheetKey": "empty",
                                               "text": ""
                                             }
                                           },
                                           {
-                                            "id": "includeOnlyAnnotated",
                                             "name": "includeOnlyAnnotated",
                                             "type": "string",
                                             "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                            "id": "includeOnlyAnnotated",
                                             "value": ""
                                           },
                                           {
-                                            "id": "excludeAnnotated",
                                             "name": "excludeAnnotated",
                                             "type": "string",
                                             "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\".",
+                                            "id": "excludeAnnotated",
                                             "value": "checked"
                                           },
                                           {
-                                            "id": "discoverableColumn",
                                             "name": "discoverableColumn",
                                             "type": "sheetColumn",
                                             "defaultValue": "elements/discoverable",
                                             "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below",
+                                            "id": "discoverableColumn",
                                             "value": {
                                               "sheetKey": "elements",
                                               "columnKey": "discoverable",
@@ -2214,18 +2490,18 @@
                                             }
                                           },
                                           {
-                                            "id": "discoverAnnotation",
                                             "name": "discoverAnnotation",
                                             "type": "string",
                                             "defaultValue": "discovered",
                                             "help": "The data annotation to use for discovering elements.",
+                                            "id": "discoverAnnotation",
                                             "value": "discovered"
                                           },
                                           {
-                                            "id": "referenceColumn",
                                             "name": "referenceColumn",
                                             "type": "sheetColumn",
                                             "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context.",
+                                            "id": "referenceColumn",
                                             "value": {
                                               "sheetKey": "empty",
                                               "text": ""
@@ -2256,7 +2532,6 @@
                                                         "extraProps": {
                                                           "props": [
                                                             {
-                                                              "id": "variant",
                                                               "name": "variant",
                                                               "type": "options",
                                                               "options": [
@@ -2266,31 +2541,32 @@
                                                                 "small"
                                                               ],
                                                               "defaultValue": "full",
+                                                              "id": "variant",
                                                               "value": "small"
                                                             },
                                                             {
-                                                              "id": "rightArrow",
                                                               "name": "rightArrow",
                                                               "type": "checkbox",
                                                               "help": "Display the right arrow next to the headline",
+                                                              "id": "rightArrow",
                                                               "value": false
                                                             },
                                                             {
-                                                              "id": "effect",
                                                               "name": "effect",
                                                               "type": "effect",
                                                               "help": "What should happen when you tap on the card",
+                                                              "id": "effect",
                                                               "value": {
                                                                 "effectType": "dataRouteSingle",
                                                                 "path": "/exhibition_artworks"
                                                               }
                                                             },
                                                             {
-                                                              "id": "imageColumn",
                                                               "name": "imageColumn",
                                                               "type": "sheetColumn",
                                                               "columnType": "mediaFile",
                                                               "defaultValue": "elements/image",
+                                                              "id": "imageColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -2299,10 +2575,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "headlineColumn",
                                                               "name": "headlineColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/headline",
+                                                              "id": "headlineColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "objectTitle$lang",
@@ -2311,10 +2587,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label1Column",
                                                               "name": "label1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label1",
+                                                              "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
@@ -2323,10 +2599,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle1Column",
                                                               "name": "subtitle1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle1",
+                                                              "id": "subtitle1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "dateDisplay$lang",
@@ -2335,10 +2611,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label2Column",
                                                               "name": "label2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label2",
+                                                              "id": "label2Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "dateDisplay$lang",
@@ -2347,10 +2623,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle2Column",
                                                               "name": "subtitle2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle2",
+                                                              "id": "subtitle2Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle2",
@@ -2358,10 +2634,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label3Column",
                                                               "name": "label3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label3",
+                                                              "id": "label3Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "dateDisplay$lang",
@@ -2370,10 +2646,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle3Column",
                                                               "name": "subtitle3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle3",
+                                                              "id": "subtitle3Column",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "subtitle3",
@@ -2381,10 +2657,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "descriptionColumn",
                                                               "name": "descriptionColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/description",
+                                                              "id": "descriptionColumn",
                                                               "value": {
                                                                 "sheetKey": "elements",
                                                                 "columnKey": "description",
@@ -2501,8 +2777,8 @@
       {
         "type": "Route",
         "id": "Bm]MwPntJ,$Al%Y=U)Ok",
-        "x": 1860,
-        "y": -157,
+        "x": 1665,
+        "y": -113,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/help",
@@ -2533,11 +2809,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "lXXtfj~g1qa(8PVLy/lk",
+                          "type": "TextFormat",
+                          "id": "8P2gaQa^6:(R]nIqdAsE",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "=AFo@L4G2oOJNp1VDYJf",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -2569,7 +2901,6 @@
                             "extraProps": {
                               "props": [
                                 {
-                                  "id": "interfaceFormat",
                                   "type": "options",
                                   "name": "interfaceFormat",
                                   "options": [
@@ -2590,10 +2921,10 @@
                                   ],
                                   "defaultValue": "none",
                                   "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
                                   "value": "headline-2"
                                 },
                                 {
-                                  "id": "contentFormat",
                                   "type": "options",
                                   "name": "contentFormat",
                                   "options": [
@@ -2607,7 +2938,8 @@
                                     "body-2"
                                   ],
                                   "defaultValue": "none",
-                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both."
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
                                 }
                               ]
                             }
@@ -2633,28 +2965,28 @@
                                 "extraProps": {
                                   "props": [
                                     {
-                                      "id": "sheet",
                                       "name": "sheet",
                                       "type": "sheetId",
                                       "help": "Select the sheet you want to load data from.",
+                                      "id": "sheet",
                                       "value": {
                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                         "text": "translation_rich"
                                       }
                                     },
                                     {
-                                      "id": "rowKey",
                                       "name": "rowKey",
                                       "type": "string",
                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                      "id": "rowKey",
                                       "value": "d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
                                     },
                                     {
-                                      "id": "customKeyColumn",
                                       "name": "customKeyColumn",
                                       "type": "sheetColumn",
                                       "columnType": "string",
                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                      "id": "customKeyColumn",
                                       "value": {
                                         "sheetKey": "empty",
                                         "text": "",
@@ -2675,11 +3007,11 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "column",
                                             "name": "column",
                                             "type": "sheetColumn",
                                             "columnType": "richText",
                                             "defaultValue": "settings/content",
+                                            "id": "column",
                                             "value": {
                                               "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                               "columnKey": "menu$lang",
@@ -2688,20 +3020,20 @@
                                             }
                                           },
                                           {
-                                            "id": "format",
                                             "name": "format",
                                             "type": "options",
                                             "options": [
                                               "richText",
                                               "string"
                                             ],
-                                            "defaultValue": "richText"
+                                            "defaultValue": "richText",
+                                            "id": "format"
                                           },
                                           {
-                                            "id": "centerContent",
                                             "name": "centerContent",
                                             "type": "checkbox",
                                             "defaultValue": false,
+                                            "id": "centerContent",
                                             "value": false
                                           }
                                         ]
@@ -2735,8 +3067,8 @@
       {
         "type": "DataRouteSingle",
         "id": "ea,x-F3Zs_oe{)f|,za]",
-        "x": 2555,
-        "y": -360,
+        "x": 3009,
+        "y": -212,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/exhibition_artworks",
@@ -2772,11 +3104,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "RO;BOqM/@a[~WQ[YrG_L",
+                          "type": "TextFormat",
+                          "id": "4=$5:S4~d=D.9[tPB%wg",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "X1O:-G^!O1Grp+jOeL(B",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -2891,10 +3279,10 @@
                                         "extraProps": {
                                           "props": [
                                             {
-                                              "id": "effect",
                                               "type": "effect",
                                               "name": "effect",
                                               "help": "The type of effect (or action) the tab should trigger when pressed. Usually used with Route.",
+                                              "id": "effect",
                                               "value": {
                                                 "effectType": "setUIKey",
                                                 "value": "guide",
@@ -2902,10 +3290,10 @@
                                               }
                                             },
                                             {
-                                              "id": "execOnMount",
                                               "type": "checkbox",
                                               "name": "execOnMount",
                                               "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                                              "id": "execOnMount",
                                               "value": true
                                             }
                                           ]
@@ -3394,7 +3782,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "variant",
                                                                   "name": "variant",
                                                                   "type": "options",
                                                                   "options": [
@@ -3404,26 +3791,27 @@
                                                                     "small"
                                                                   ],
                                                                   "defaultValue": "full",
+                                                                  "id": "variant",
                                                                   "value": "medium"
                                                                 },
                                                                 {
-                                                                  "id": "rightArrow",
                                                                   "name": "rightArrow",
                                                                   "type": "checkbox",
-                                                                  "help": "Display the right arrow next to the headline"
+                                                                  "help": "Display the right arrow next to the headline",
+                                                                  "id": "rightArrow"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "name": "effect",
                                                                   "type": "effect",
-                                                                  "help": "What should happen when you tap on the card"
+                                                                  "help": "What should happen when you tap on the card",
+                                                                  "id": "effect"
                                                                 },
                                                                 {
-                                                                  "id": "imageColumn",
                                                                   "name": "imageColumn",
                                                                   "type": "sheetColumn",
                                                                   "columnType": "mediaFile",
                                                                   "defaultValue": "elements/image",
+                                                                  "id": "imageColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -3432,10 +3820,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "headlineColumn",
                                                                   "name": "headlineColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/headline",
+                                                                  "id": "headlineColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "objectTitle$lang",
@@ -3444,10 +3832,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label1Column",
                                                                   "name": "label1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label1",
+                                                                  "id": "label1Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
@@ -3456,10 +3844,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle1Column",
                                                                   "name": "subtitle1Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle1",
+                                                                  "id": "subtitle1Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "dateDisplay$lang",
@@ -3468,10 +3856,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label2Column",
                                                                   "name": "label2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label2",
+                                                                  "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "materialsTechniquesDisplay$lang",
@@ -3480,10 +3868,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle2Column",
                                                                   "name": "subtitle2Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle2",
+                                                                  "id": "subtitle2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "measurementsDisplay$lang",
@@ -3492,10 +3880,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "label3Column",
                                                                   "name": "label3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/label3",
+                                                                  "id": "label3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "05f91944-0978-4061-bcee-f39584e6fbaf",
@@ -3504,10 +3892,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "subtitle3Column",
                                                                   "name": "subtitle3Column",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/subtitle3",
+                                                                  "id": "subtitle3Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "institution$lang",
@@ -3516,10 +3904,10 @@
                                                                   }
                                                                 },
                                                                 {
-                                                                  "id": "descriptionColumn",
                                                                   "name": "descriptionColumn",
                                                                   "type": "sheetColumn",
                                                                   "defaultValue": "elements/description",
+                                                                  "id": "descriptionColumn",
                                                                   "value": {
                                                                     "sheetKey": "empty",
                                                                     "columnKey": "transcript$lang",
@@ -3539,7 +3927,6 @@
                                                                   "extraProps": {
                                                                     "props": [
                                                                       {
-                                                                        "id": "interfaceFormat",
                                                                         "type": "options",
                                                                         "name": "interfaceFormat",
                                                                         "options": [
@@ -3560,10 +3947,10 @@
                                                                         ],
                                                                         "defaultValue": "none",
                                                                         "help": "Use these formats to select typography for parts of the interface.",
+                                                                        "id": "interfaceFormat",
                                                                         "value": "none"
                                                                       },
                                                                       {
-                                                                        "id": "contentFormat",
                                                                         "type": "options",
                                                                         "name": "contentFormat",
                                                                         "options": [
@@ -3578,6 +3965,7 @@
                                                                         ],
                                                                         "defaultValue": "none",
                                                                         "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                                                        "id": "contentFormat",
                                                                         "value": "headline-4"
                                                                       }
                                                                     ]
@@ -3610,7 +3998,6 @@
                                                                             "extraProps": {
                                                                               "props": [
                                                                                 {
-                                                                                  "id": "interfaceFormat",
                                                                                   "type": "options",
                                                                                   "name": "interfaceFormat",
                                                                                   "options": [
@@ -3630,10 +4017,10 @@
                                                                                     "overline"
                                                                                   ],
                                                                                   "defaultValue": "none",
-                                                                                  "help": "Use these formats to select typography for parts of the interface."
+                                                                                  "help": "Use these formats to select typography for parts of the interface.",
+                                                                                  "id": "interfaceFormat"
                                                                                 },
                                                                                 {
-                                                                                  "id": "contentFormat",
                                                                                   "type": "options",
                                                                                   "name": "contentFormat",
                                                                                   "options": [
@@ -3648,6 +4035,7 @@
                                                                                   ],
                                                                                   "defaultValue": "none",
                                                                                   "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                                                                  "id": "contentFormat",
                                                                                   "value": "body-2"
                                                                                 }
                                                                               ]
@@ -3720,7 +4108,7 @@
                                                                                   "fields": {
                                                                                     "title": "$bird_context_info",
                                                                                     "subjectKeywordColumn": "subjectKeyword",
-                                                                                    "height": "65vh"
+                                                                                    "height": "40vh"
                                                                                   }
                                                                                 }
                                                                               }
@@ -3866,7 +4254,6 @@
                                                         "extraProps": {
                                                           "props": [
                                                             {
-                                                              "id": "variant",
                                                               "name": "variant",
                                                               "type": "options",
                                                               "options": [
@@ -3876,26 +4263,27 @@
                                                                 "small"
                                                               ],
                                                               "defaultValue": "full",
+                                                              "id": "variant",
                                                               "value": "full"
                                                             },
                                                             {
-                                                              "id": "rightArrow",
                                                               "name": "rightArrow",
                                                               "type": "checkbox",
-                                                              "help": "Display the right arrow next to the headline"
+                                                              "help": "Display the right arrow next to the headline",
+                                                              "id": "rightArrow"
                                                             },
                                                             {
-                                                              "id": "effect",
                                                               "name": "effect",
                                                               "type": "effect",
-                                                              "help": "What should happen when you tap on the card"
+                                                              "help": "What should happen when you tap on the card",
+                                                              "id": "effect"
                                                             },
                                                             {
-                                                              "id": "imageColumn",
                                                               "name": "imageColumn",
                                                               "type": "sheetColumn",
                                                               "columnType": "mediaFile",
                                                               "defaultValue": "elements/image",
+                                                              "id": "imageColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
@@ -3904,10 +4292,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "headlineColumn",
                                                               "name": "headlineColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/headline",
+                                                              "id": "headlineColumn",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "objectTitle$lang",
@@ -3916,10 +4304,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label1Column",
                                                               "name": "label1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label1",
+                                                              "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
@@ -3928,10 +4316,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle1Column",
                                                               "name": "subtitle1Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle1",
+                                                              "id": "subtitle1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "dateDisplay$lang",
@@ -3940,10 +4328,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label2Column",
                                                               "name": "label2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label2",
+                                                              "id": "label2Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "material$lang",
@@ -3952,10 +4340,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle2Column",
                                                               "name": "subtitle2Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle2",
+                                                              "id": "subtitle2Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "size$lang",
@@ -3964,10 +4352,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "label3Column",
                                                               "name": "label3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/label3",
+                                                              "id": "label3Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "empty",
@@ -3976,10 +4364,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "subtitle3Column",
                                                               "name": "subtitle3Column",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/subtitle3",
+                                                              "id": "subtitle3Column",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "institution$lang",
@@ -3988,10 +4376,10 @@
                                                               }
                                                             },
                                                             {
-                                                              "id": "descriptionColumn",
                                                               "name": "descriptionColumn",
                                                               "type": "sheetColumn",
                                                               "defaultValue": "elements/description",
+                                                              "id": "descriptionColumn",
                                                               "value": {
                                                                 "sheetKey": "empty",
                                                                 "columnKey": "objectDescription$lang",
@@ -4118,11 +4506,11 @@
                                                                               "extraProps": {
                                                                                 "props": [
                                                                                   {
-                                                                                    "id": "column",
                                                                                     "name": "column",
                                                                                     "type": "sheetColumn",
                                                                                     "columnType": "richText",
                                                                                     "defaultValue": "settings/content",
+                                                                                    "id": "column",
                                                                                     "value": {
                                                                                       "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                                       "columnKey": "objectDescription$lang",
@@ -4131,20 +4519,20 @@
                                                                                     }
                                                                                   },
                                                                                   {
-                                                                                    "id": "format",
                                                                                     "name": "format",
                                                                                     "type": "options",
                                                                                     "options": [
                                                                                       "richText",
                                                                                       "string"
                                                                                     ],
-                                                                                    "defaultValue": "richText"
+                                                                                    "defaultValue": "richText",
+                                                                                    "id": "format"
                                                                                   },
                                                                                   {
-                                                                                    "id": "centerContent",
                                                                                     "name": "centerContent",
                                                                                     "type": "checkbox",
-                                                                                    "defaultValue": false
+                                                                                    "defaultValue": false,
+                                                                                    "id": "centerContent"
                                                                                   }
                                                                                 ]
                                                                               }
@@ -4552,27 +4940,27 @@
                                                                       "extraProps": {
                                                                         "props": [
                                                                           {
-                                                                            "id": "label",
                                                                             "name": "label",
                                                                             "type": "string",
+                                                                            "id": "label",
                                                                             "value": ""
                                                                           },
                                                                           {
-                                                                            "id": "headline",
                                                                             "name": "headline",
                                                                             "type": "string",
+                                                                            "id": "headline",
                                                                             "value": "$artwork_gallery_title"
                                                                           },
                                                                           {
-                                                                            "id": "prompt",
                                                                             "name": "prompt",
                                                                             "type": "string",
+                                                                            "id": "prompt",
                                                                             "value": "$artwork_gallery_prompt"
                                                                           },
                                                                           {
-                                                                            "id": "description",
                                                                             "name": "description",
                                                                             "type": "string",
+                                                                            "id": "description",
                                                                             "value": ""
                                                                           }
                                                                         ]
@@ -5104,8 +5492,8 @@
       {
         "type": "Route",
         "id": "=iT]`![2h-{)7+Tf!1q`",
-        "x": 1576,
-        "y": -150,
+        "x": 1971,
+        "y": -120,
         "data": "{\"origin\":\"interkit\"}",
         "fields": {
           "path": "/about",
@@ -5136,11 +5524,67 @@
                       },
                       "center": {
                         "block": {
-                          "type": "StaticText",
-                          "id": "_^8X=;-|FCS^_;o*8_{)",
+                          "type": "TextFormat",
+                          "id": "y-B^3$//][9:yK7#O+ho",
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
-                            "text": "$exhibition_title"
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "Z`oARnDty=SEuN~{YSbi",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -5284,11 +5728,11 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "column",
                                                   "name": "column",
                                                   "type": "sheetColumn",
                                                   "columnType": "richText",
                                                   "defaultValue": "settings/content",
+                                                  "id": "column",
                                                   "value": {
                                                     "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                     "columnKey": "menu$lang",
@@ -5297,20 +5741,20 @@
                                                   }
                                                 },
                                                 {
-                                                  "id": "format",
                                                   "name": "format",
                                                   "type": "options",
                                                   "options": [
                                                     "richText",
                                                     "string"
                                                   ],
-                                                  "defaultValue": "richText"
+                                                  "defaultValue": "richText",
+                                                  "id": "format"
                                                 },
                                                 {
-                                                  "id": "centerContent",
                                                   "name": "centerContent",
                                                   "type": "checkbox",
                                                   "defaultValue": false,
+                                                  "id": "centerContent",
                                                   "value": false
                                                 }
                                               ]
@@ -5337,28 +5781,28 @@
                                           "extraProps": {
                                             "props": [
                                               {
-                                                "id": "sheet",
                                                 "name": "sheet",
                                                 "type": "sheetId",
                                                 "help": "Select the sheet you want to load data from.",
+                                                "id": "sheet",
                                                 "value": {
                                                   "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                   "text": "translation_rich"
                                                 }
                                               },
                                               {
-                                                "id": "rowKey",
                                                 "name": "rowKey",
                                                 "type": "string",
                                                 "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                                "id": "rowKey",
                                                 "value": "ace5405f-595e-434d-92e4-c3c7ebcce5f8"
                                               },
                                               {
-                                                "id": "customKeyColumn",
                                                 "name": "customKeyColumn",
                                                 "type": "sheetColumn",
                                                 "columnType": "string",
                                                 "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                                "id": "customKeyColumn",
                                                 "value": {
                                                   "sheetKey": "empty",
                                                   "text": "",
@@ -5379,11 +5823,11 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "column",
                                                       "name": "column",
                                                       "type": "sheetColumn",
                                                       "columnType": "richText",
                                                       "defaultValue": "settings/content",
+                                                      "id": "column",
                                                       "value": {
                                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                         "columnKey": "menu$lang",
@@ -5392,20 +5836,20 @@
                                                       }
                                                     },
                                                     {
-                                                      "id": "format",
                                                       "name": "format",
                                                       "type": "options",
                                                       "options": [
                                                         "richText",
                                                         "string"
                                                       ],
-                                                      "defaultValue": "richText"
+                                                      "defaultValue": "richText",
+                                                      "id": "format"
                                                     },
                                                     {
-                                                      "id": "centerContent",
                                                       "name": "centerContent",
                                                       "type": "checkbox",
                                                       "defaultValue": false,
+                                                      "id": "centerContent",
                                                       "value": false
                                                     }
                                                   ]
@@ -5424,7 +5868,6 @@
                                               "extraProps": {
                                                 "props": [
                                                   {
-                                                    "id": "type",
                                                     "name": "type",
                                                     "type": "options",
                                                     "options": [
@@ -5435,10 +5878,10 @@
                                                       "danger"
                                                     ],
                                                     "defaultValue": "secondary",
-                                                    "help": "Appearance of the button."
+                                                    "help": "Appearance of the button.",
+                                                    "id": "type"
                                                   },
                                                   {
-                                                    "id": "size",
                                                     "name": "size",
                                                     "type": "options",
                                                     "options": [
@@ -5447,10 +5890,10 @@
                                                       "large"
                                                     ],
                                                     "defaultValue": "small",
-                                                    "help": "Large, medium or small."
+                                                    "help": "Large, medium or small.",
+                                                    "id": "size"
                                                   },
                                                   {
-                                                    "id": "flex",
                                                     "name": "flex",
                                                     "type": "options",
                                                     "options": [
@@ -5458,25 +5901,26 @@
                                                       "fill"
                                                     ],
                                                     "defaultValue": "normal",
-                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                    "id": "flex"
                                                   },
                                                   {
-                                                    "id": "disabled",
                                                     "name": "disabled",
                                                     "type": "checkbox",
-                                                    "defaultValue": false
+                                                    "defaultValue": false,
+                                                    "id": "disabled"
                                                   },
                                                   {
-                                                    "id": "ariaLabel",
                                                     "type": "string",
                                                     "name": "ariaLabel",
-                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'"
+                                                    "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                    "id": "ariaLabel"
                                                   },
                                                   {
-                                                    "id": "effect",
                                                     "type": "effect",
                                                     "name": "effect",
                                                     "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                    "id": "effect",
                                                     "value": {
                                                       "effectType": "link",
                                                       "url": "static/exports/mgk-fuer-die-voegel-metadata-v2.csv"
@@ -5503,6 +5947,736 @@
                   "block": {
                     "type": "GroupConnector",
                     "id": "6qj(kj)dm}^S@F**z)D*",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "fields": {
+                      "name": "bottomBar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Route",
+        "id": "QGqO={,4GrhLm-aW4?T{",
+        "x": 2256,
+        "y": -133,
+        "data": "{\"origin\":\"interkit\"}",
+        "fields": {
+          "path": "/rights",
+          "keepAlive": false
+        },
+        "inputs": {
+          "default": {
+            "block": {
+              "type": "LayoutShell",
+              "id": "M:6G~6(b|3W+Bd4ns}HH",
+              "data": "{\"origin\":\"interkit\"}",
+              "inputs": {
+                "TopBar": {
+                  "block": {
+                    "type": "HorizontalSpacer",
+                    "id": "~CIl6x@|GB)9SNj;40y[",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "left": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "R_O3;`WqJs[TceHjS-KZ",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "backButton"
+                          }
+                        }
+                      },
+                      "center": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "^$*,}#uqDkgGgl%7W~3Q",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "caption-bold"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": "clTyRjq01J;xw?JmC8an",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$exhibition_title"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "block": {
+                          "type": "GroupConnector",
+                          "id": "$:Ntl!a;56p(?%RQ5H7;",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "name": "topBar"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Content": {
+                  "block": {
+                    "type": "ScrollContainer",
+                    "id": "2B;;fij?sQPCF!?)F~70",
+                    "data": "{\"origin\":\"interkit\"}",
+                    "inputs": {
+                      "default": {
+                        "block": {
+                          "type": "TextFormat",
+                          "id": "bmc,}s$!k8;+9ZXvZ=sB",
+                          "data": "{\"origin\":\"interkit\"}",
+                          "fields": {
+                            "extraProps": {
+                              "props": [
+                                {
+                                  "type": "options",
+                                  "name": "interfaceFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2",
+                                    "subtitle-1",
+                                    "subtitle-2",
+                                    "button",
+                                    "caption",
+                                    "caption-bold",
+                                    "overline"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for parts of the interface.",
+                                  "id": "interfaceFormat",
+                                  "value": "headline-2"
+                                },
+                                {
+                                  "type": "options",
+                                  "name": "contentFormat",
+                                  "options": [
+                                    "none",
+                                    "headline-1",
+                                    "headline-2",
+                                    "headline-3",
+                                    "headline-4",
+                                    "headline-5",
+                                    "body-1",
+                                    "body-2"
+                                  ],
+                                  "defaultValue": "none",
+                                  "help": "Use these formats to select typography for additional content. Use either interface or content formats, not both.",
+                                  "id": "contentFormat"
+                                }
+                              ]
+                            }
+                          },
+                          "inputs": {
+                            "default": {
+                              "block": {
+                                "type": "StaticText",
+                                "id": ")|C.9-!?z[}q8;+?N}/P",
+                                "data": "{\"origin\":\"interkit\"}",
+                                "fields": {
+                                  "text": "$nav_rights"
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "DataLoaderMulti",
+                              "id": "2LNO9]{jWP,1%cH21H!(",
+                              "data": "{\"origin\":\"interkit\"}",
+                              "fields": {
+                                "sheetKey": {
+                                  "value": {
+                                    "value": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                    "text": "exhibition"
+                                  }
+                                },
+                                "extraProps": {
+                                  "props": [
+                                    {
+                                      "name": "sortColumn",
+                                      "type": "sheetColumn"
+                                    },
+                                    {
+                                      "name": "hideColumn",
+                                      "type": "sheetColumn"
+                                    },
+                                    {
+                                      "name": "includeOnlyAnnotated",
+                                      "type": "string",
+                                      "help": "Filter to only include elements that have a Data Annotation set to \"true\", for example \"bookmarked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                    },
+                                    {
+                                      "name": "excludeAnnotated",
+                                      "type": "string",
+                                      "help": "Filter to exclude elements that have a Data Annotation set to \"true\", for example \"checked\". You can list multiple anotations with \"checked, bookmarked\"."
+                                    },
+                                    {
+                                      "name": "discoverableColumn",
+                                      "type": "sheetColumn",
+                                      "defaultValue": "elements/discoverable",
+                                      "help": "When you set discoverability to true, elements are hidden by default, until the receive the data annotation specified below"
+                                    },
+                                    {
+                                      "name": "discoverAnnotation",
+                                      "type": "string",
+                                      "defaultValue": "discovered",
+                                      "help": "The data annotation to use for discovering elements."
+                                    },
+                                    {
+                                      "name": "referenceColumn",
+                                      "type": "sheetColumn",
+                                      "help": "The column that contains references to the elements we want to select. Which element to use is determined through the \"element\" context."
+                                    }
+                                  ]
+                                }
+                              },
+                              "inputs": {
+                                "default": {
+                                  "block": {
+                                    "type": "DataList",
+                                    "id": ",)wval_4!r#xF6.01?#s",
+                                    "data": "{\"origin\":\"interkit\"}",
+                                    "inputs": {
+                                      "dataElement": {
+                                        "block": {
+                                          "type": "DataCard",
+                                          "id": "N6==V0K9dFz13;_o32S`",
+                                          "data": "{\"origin\":\"interkit\"}",
+                                          "fields": {
+                                            "extraProps": {
+                                              "props": [
+                                                {
+                                                  "id": "variant",
+                                                  "name": "variant",
+                                                  "type": "options",
+                                                  "options": [
+                                                    "full",
+                                                    "large",
+                                                    "medium",
+                                                    "small"
+                                                  ],
+                                                  "defaultValue": "full",
+                                                  "value": "small"
+                                                },
+                                                {
+                                                  "id": "rightArrow",
+                                                  "name": "rightArrow",
+                                                  "type": "checkbox",
+                                                  "help": "Display the right arrow next to the headline"
+                                                },
+                                                {
+                                                  "id": "effect",
+                                                  "name": "effect",
+                                                  "type": "effect",
+                                                  "help": "What should happen when you tap on the card"
+                                                },
+                                                {
+                                                  "id": "imageColumn",
+                                                  "name": "imageColumn",
+                                                  "type": "sheetColumn",
+                                                  "columnType": "mediaFile",
+                                                  "defaultValue": "elements/image",
+                                                  "value": {
+                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                    "columnKey": "100b14b4-e56e-444a-b789-d606b71c7405",
+                                                    "text": "exhibition/image_1",
+                                                    "columnType": "mediaFile"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "headlineColumn",
+                                                  "name": "headlineColumn",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/headline",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "headline",
+                                                    "text": "elements/headline"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "label1Column",
+                                                  "name": "label1Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label1",
+                                                  "value": {
+                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                    "columnKey": "objectTitle$lang",
+                                                    "text": "exhibition/objectTitle$lang",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "subtitle1Column",
+                                                  "name": "subtitle1Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle1",
+                                                  "value": {
+                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                    "columnKey": "dcd2ce58-c690-451c-af6d-4f2c342f519d",
+                                                    "text": "exhibition/rightsHolderOfMediaFile_image_1",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "label2Column",
+                                                  "name": "label2Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label2",
+                                                  "value": {
+                                                    "sheetKey": "empty",
+                                                    "columnKey": "77ebda4b-07bb-42cd-b957-8537d1b5f017",
+                                                    "text": "",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "subtitle2Column",
+                                                  "name": "subtitle2Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle2",
+                                                  "value": {
+                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                    "columnKey": "1737ab8e-82ae-4845-8904-9c2b6a3daf19",
+                                                    "text": "exhibition/usageRightsOfMediaFile_image_2",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "label3Column",
+                                                  "name": "label3Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/label3",
+                                                  "value": {
+                                                    "sheetKey": "empty",
+                                                    "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
+                                                    "text": "",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "subtitle3Column",
+                                                  "name": "subtitle3Column",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/subtitle3",
+                                                  "value": {
+                                                    "sheetKey": "empty",
+                                                    "columnKey": "empty",
+                                                    "text": "",
+                                                    "columnType": "string"
+                                                  }
+                                                },
+                                                {
+                                                  "id": "descriptionColumn",
+                                                  "name": "descriptionColumn",
+                                                  "type": "sheetColumn",
+                                                  "defaultValue": "elements/description",
+                                                  "value": {
+                                                    "sheetKey": "elements",
+                                                    "columnKey": "description",
+                                                    "text": "elements/description"
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "DataList",
+                                        "id": "XO[9y%/:1puM-c/O3W:~",
+                                        "data": "{\"origin\":\"interkit\"}",
+                                        "inputs": {
+                                          "dataElement": {
+                                            "block": {
+                                              "type": "DataCard",
+                                              "id": "Q]zQAc-!vqf@I;Z8=xOP",
+                                              "data": "{\"origin\":\"interkit\"}",
+                                              "fields": {
+                                                "extraProps": {
+                                                  "props": [
+                                                    {
+                                                      "id": "variant",
+                                                      "name": "variant",
+                                                      "type": "options",
+                                                      "options": [
+                                                        "full",
+                                                        "large",
+                                                        "medium",
+                                                        "small"
+                                                      ],
+                                                      "defaultValue": "full",
+                                                      "value": "small"
+                                                    },
+                                                    {
+                                                      "id": "rightArrow",
+                                                      "name": "rightArrow",
+                                                      "type": "checkbox",
+                                                      "help": "Display the right arrow next to the headline"
+                                                    },
+                                                    {
+                                                      "id": "effect",
+                                                      "name": "effect",
+                                                      "type": "effect",
+                                                      "help": "What should happen when you tap on the card"
+                                                    },
+                                                    {
+                                                      "id": "imageColumn",
+                                                      "name": "imageColumn",
+                                                      "type": "sheetColumn",
+                                                      "columnType": "mediaFile",
+                                                      "defaultValue": "elements/image",
+                                                      "value": {
+                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                        "columnKey": "9e8c6ee5-4ce6-4eed-844b-c9739fb50885",
+                                                        "text": "exhibition/image_2",
+                                                        "columnType": "mediaFile"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "headlineColumn",
+                                                      "name": "headlineColumn",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/headline",
+                                                      "value": {
+                                                        "sheetKey": "elements",
+                                                        "columnKey": "headline",
+                                                        "text": "elements/headline"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "label1Column",
+                                                      "name": "label1Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/label1",
+                                                      "value": {
+                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                        "columnKey": "objectTitle$lang",
+                                                        "text": "exhibition/objectTitle$lang",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "subtitle1Column",
+                                                      "name": "subtitle1Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/subtitle1",
+                                                      "value": {
+                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                        "columnKey": "1a597e8d-1c77-43d7-bf22-0a924ecd128a",
+                                                        "text": "exhibition/rightsHolderOfMediaFile_image_2",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "label2Column",
+                                                      "name": "label2Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/label2",
+                                                      "value": {
+                                                        "sheetKey": "empty",
+                                                        "columnKey": "1737ab8e-82ae-4845-8904-9c2b6a3daf19",
+                                                        "text": "",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "subtitle2Column",
+                                                      "name": "subtitle2Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/subtitle2",
+                                                      "value": {
+                                                        "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                        "columnKey": "1737ab8e-82ae-4845-8904-9c2b6a3daf19",
+                                                        "text": "exhibition/usageRightsOfMediaFile_image_2",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "label3Column",
+                                                      "name": "label3Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/label3",
+                                                      "value": {
+                                                        "sheetKey": "empty",
+                                                        "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
+                                                        "text": "",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "subtitle3Column",
+                                                      "name": "subtitle3Column",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/subtitle3",
+                                                      "value": {
+                                                        "sheetKey": "empty",
+                                                        "columnKey": "empty",
+                                                        "text": "",
+                                                        "columnType": "string"
+                                                      }
+                                                    },
+                                                    {
+                                                      "id": "descriptionColumn",
+                                                      "name": "descriptionColumn",
+                                                      "type": "sheetColumn",
+                                                      "defaultValue": "elements/description",
+                                                      "value": {
+                                                        "sheetKey": "elements",
+                                                        "columnKey": "description",
+                                                        "text": "elements/description"
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "DataList",
+                                            "id": "wHcib.f@_FVu~cYS:h,1",
+                                            "data": "{\"origin\":\"interkit\"}",
+                                            "inputs": {
+                                              "dataElement": {
+                                                "block": {
+                                                  "type": "DataCard",
+                                                  "id": "a.$+_JNa*sr6?hLT{jQP",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "extraProps": {
+                                                      "props": [
+                                                        {
+                                                          "id": "variant",
+                                                          "name": "variant",
+                                                          "type": "options",
+                                                          "options": [
+                                                            "full",
+                                                            "large",
+                                                            "medium",
+                                                            "small"
+                                                          ],
+                                                          "defaultValue": "full",
+                                                          "value": "small"
+                                                        },
+                                                        {
+                                                          "id": "rightArrow",
+                                                          "name": "rightArrow",
+                                                          "type": "checkbox",
+                                                          "help": "Display the right arrow next to the headline"
+                                                        },
+                                                        {
+                                                          "id": "effect",
+                                                          "name": "effect",
+                                                          "type": "effect",
+                                                          "help": "What should happen when you tap on the card"
+                                                        },
+                                                        {
+                                                          "id": "imageColumn",
+                                                          "name": "imageColumn",
+                                                          "type": "sheetColumn",
+                                                          "columnType": "mediaFile",
+                                                          "defaultValue": "elements/image",
+                                                          "value": {
+                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                            "columnKey": "48789c75-cff9-4a91-863f-387de78adea8",
+                                                            "text": "exhibition/image_3",
+                                                            "columnType": "mediaFile"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "headlineColumn",
+                                                          "name": "headlineColumn",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/headline",
+                                                          "value": {
+                                                            "sheetKey": "elements",
+                                                            "columnKey": "headline",
+                                                            "text": "elements/headline"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "label1Column",
+                                                          "name": "label1Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/label1",
+                                                          "value": {
+                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                            "columnKey": "objectTitle$lang",
+                                                            "text": "exhibition/objectTitle$lang",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "subtitle1Column",
+                                                          "name": "subtitle1Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/subtitle1",
+                                                          "value": {
+                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                            "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
+                                                            "text": "exhibition/rightsHolderOfMediaFile_image_3",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "label2Column",
+                                                          "name": "label2Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/label2",
+                                                          "value": {
+                                                            "sheetKey": "empty",
+                                                            "columnKey": "16022cd3-f675-467d-bfc0-aa35cb50417e",
+                                                            "text": "",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "subtitle2Column",
+                                                          "name": "subtitle2Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/subtitle2",
+                                                          "value": {
+                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                            "columnKey": "16022cd3-f675-467d-bfc0-aa35cb50417e",
+                                                            "text": "exhibition/usageRightsOfMediaFile_image_3",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "label3Column",
+                                                          "name": "label3Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/label3",
+                                                          "value": {
+                                                            "sheetKey": "empty",
+                                                            "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
+                                                            "text": "",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "subtitle3Column",
+                                                          "name": "subtitle3Column",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/subtitle3",
+                                                          "value": {
+                                                            "sheetKey": "empty",
+                                                            "columnKey": "empty",
+                                                            "text": "",
+                                                            "columnType": "string"
+                                                          }
+                                                        },
+                                                        {
+                                                          "id": "descriptionColumn",
+                                                          "name": "descriptionColumn",
+                                                          "type": "sheetColumn",
+                                                          "defaultValue": "elements/description",
+                                                          "value": {
+                                                            "sheetKey": "elements",
+                                                            "columnKey": "description",
+                                                            "text": "elements/description"
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "emptyElement": {
+                                                "block": {
+                                                  "type": "StaticText",
+                                                  "id": "yj[B+~Ahn|Zk9?F1*oAq",
+                                                  "data": "{\"origin\":\"interkit\"}",
+                                                  "fields": {
+                                                    "text": "$action_data_unavailable"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BottomBar": {
+                  "block": {
+                    "type": "GroupConnector",
+                    "id": "=YOSnR[3D|T?D}l]xx%S",
                     "data": "{\"origin\":\"interkit\"}",
                     "fields": {
                       "name": "bottomBar"

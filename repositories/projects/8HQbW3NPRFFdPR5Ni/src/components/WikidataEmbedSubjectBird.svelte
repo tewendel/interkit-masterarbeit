@@ -125,13 +125,13 @@ ORDER BY ?scientificName`
 <style>
   .birds {
     display: grid;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .bird {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: flex-start;
   }
 
@@ -142,19 +142,19 @@ ORDER BY ?scientificName`
 
 
   img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
   }
 
   audio {
   display: block;
   width: 100%;
   max-width: 350px;
-  margin-top: 0.6rem;
+  margin-top: 0.3rem;
 }
 
   p {
-    margin: 0.4rem 0;
+    margin: 0.3rem 0;
   }
 </style>
