@@ -31,10 +31,7 @@ SELECT ?person ?personLabel ?birth ?death ?birthPlaceLabel ?image WHERE {
   OPTIONAL { ?person wdt:P570 ?death. }
   OPTIONAL { ?person wdt:P19 ?birthPlace. }
   OPTIONAL { ?person wdt:P18 ?image. }
-
-  SERVICE wikibase:label {
-    bd:serviceParam wikibase:language "de".
-  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en,mul". }  
 }
 LIMIT 1`
 

@@ -20,7 +20,6 @@ import Icon from "interkit/components/Icon.svelte";
 import IfUIKey from "interkit/components/IfUIKey.svelte";
 import Image from "interkit/components/Image.svelte";
 import InlineAudioButton from "interkit/components/InlineAudioButton.svelte";
-import Label from "interkit/components/Label.svelte";
 import LangSwitch from "interkit/components/LangSwitch.svelte";
 import LayoutShell from "interkit/components/LayoutShell.svelte";
 import LayoutShellAudio from "interkit/components/LayoutShellAudio.svelte";
@@ -152,7 +151,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="medium"
              flex="fill"
              disabled={false}
-                effect={{"effectType":"route","path":"/about"}}
+                effect={{"effectType":"route","path":"/about_project"}}
           >
           </Button>
         </svelte:fragment>
@@ -227,10 +226,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     </ListItem>
     <ListItem
        text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_privacy"] ? $translations[$lang]["$nav_privacy"] : "nav_privacy") : ($translations.en && $translations.en["$nav_privacy"] ? $translations.en["$nav_privacy"] : "…")}   effect={{"effectType":"route","path":"/privacy"}}
-    >
-    </ListItem>
-    <ListItem
-       text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_rights"] ? $translations[$lang]["$nav_rights"] : "nav_rights") : ($translations.en && $translations.en["$nav_rights"] ? $translations.en["$nav_rights"] : "…")}   effect={{"effectType":"route","path":"/rights"}}
     >
     </ListItem>
     <ListItem
@@ -344,8 +339,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     </HorizontalSpacer>
   </svelte:fragment>
   <svelte:fragment slot="Content">
-    <ScrollContainer
+    <LayoutShell
     >
+    <svelte:fragment slot="TopBar">
       <TextFormat
          interfaceFormat="headline-2"
          contentFormat="none"
@@ -354,17 +350,25 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_imprint"] ? $translations[$lang]["$nav_imprint"] : "nav_imprint") : ($translations.en && $translations.en["$nav_imprint"] ? $translations.en["$nav_imprint"] : "…")}>
         </StaticText>
       </TextFormat>
-      <DataLoaderSingle
-         sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-         rowKey="00998218-291f-4856-97be-f3a6bebabee2"
-         >
-        <DataCell
-           column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-           centerContent={false}
-        >
-        </DataCell>
-      </DataLoaderSingle>
-    </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="00998218-291f-4856-97be-f3a6bebabee2"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
   </svelte:fragment>
   <svelte:fragment slot="BottomBar">
       <NavBar
@@ -507,7 +511,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="medium"
                  flex="fill"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/about"}}
+                    effect={{"effectType":"route","path":"/about_project"}}
               >
               </Button>
             </svelte:fragment>
@@ -581,10 +585,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         </ListItem>
         <ListItem
            text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_privacy"] ? $translations[$lang]["$nav_privacy"] : "nav_privacy") : ($translations.en && $translations.en["$nav_privacy"] ? $translations.en["$nav_privacy"] : "…")}   effect={{"effectType":"route","path":"/privacy"}}
-        >
-        </ListItem>
-        <ListItem
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_rights"] ? $translations[$lang]["$nav_rights"] : "nav_rights") : ($translations.en && $translations.en["$nav_rights"] ? $translations.en["$nav_rights"] : "…")}   effect={{"effectType":"route","path":"/rights"}}
         >
         </ListItem>
         <ListItem
@@ -697,8 +697,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         </HorizontalSpacer>
       </svelte:fragment>
       <svelte:fragment slot="Content">
-        <ScrollContainer
+        <LayoutShell
         >
+        <svelte:fragment slot="TopBar">
           <TextFormat
              interfaceFormat="headline-2"
              contentFormat="none"
@@ -707,17 +708,25 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_imprint"] ? $translations[$lang]["$nav_imprint"] : "nav_imprint") : ($translations.en && $translations.en["$nav_imprint"] ? $translations.en["$nav_imprint"] : "…")}>
             </StaticText>
           </TextFormat>
-          <DataLoaderSingle
-             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-             rowKey="00998218-291f-4856-97be-f3a6bebabee2"
-             >
-            <DataCell
-               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-               centerContent={false}
-            >
-            </DataCell>
-          </DataLoaderSingle>
-        </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
+          >
+            <DataLoaderSingle
+               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+               rowKey="00998218-291f-4856-97be-f3a6bebabee2"
+               >
+              <DataCell
+                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                 centerContent={false}
+              >
+              </DataCell>
+            </DataLoaderSingle>
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
       </svelte:fragment>
       <svelte:fragment slot="BottomBar">
           <NavBar
@@ -824,8 +833,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         </HorizontalSpacer>
       </svelte:fragment>
       <svelte:fragment slot="Content">
-        <ScrollContainer
+        <LayoutShell
         >
+        <svelte:fragment slot="TopBar">
           <TextFormat
              interfaceFormat="headline-2"
              contentFormat="none"
@@ -834,17 +844,161 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_privacy"] ? $translations[$lang]["$nav_privacy"] : "nav_privacy") : ($translations.en && $translations.en["$nav_privacy"] ? $translations.en["$nav_privacy"] : "…")}>
             </StaticText>
           </TextFormat>
-          <DataLoaderSingle
-             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-             rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
-             >
-            <DataCell
-               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-               centerContent={false}
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
+          >
+            <DataLoaderSingle
+               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+               rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+               >
+              <DataCell
+                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                 centerContent={false}
+              >
+              </DataCell>
+            </DataLoaderSingle>
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+          <NavBar
+          >
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/"}}
             >
-            </DataCell>
-          </DataLoaderSingle>
-        </ScrollContainer>
+              <Icon
+                 type="Thin-Dashboard"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/exhibition"}}
+            >
+              <Icon
+                 type="Thin-Layer"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+          </NavBar>
+      </svelte:fragment>
+      </LayoutShell>
+    </Route>
+    <Route
+       path="/help"
+       keepAlive={false}
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+              <Button
+                    type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"back"}}
+              >
+                <Icon
+                   type="Thin-Arrow-Left"
+                   inverse={false}
+                >
+                </Icon>
+              </Button>
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+          <TextFormat
+             interfaceFormat="caption-bold"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+              <ButtonBar
+                 justify="right"
+                 >
+                <LangSwitch
+                      reloadAfterSwitch="yes"
+                >
+                </LangSwitch>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                >
+                  <Icon
+                     type="Full-Menu"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+              </ButtonBar>
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        </HorizontalSpacer>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <LayoutShell
+        >
+        <svelte:fragment slot="TopBar">
+          <TextFormat
+             interfaceFormat="headline-2"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_help"] ? $translations[$lang]["$nav_help"] : "nav_help") : ($translations.en && $translations.en["$nav_help"] ? $translations.en["$nav_help"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
+          >
+            <DataLoaderSingle
+               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+               rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
+               >
+              <DataCell
+                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                 centerContent={false}
+              >
+              </DataCell>
+            </DataLoaderSingle>
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
       </svelte:fragment>
       <svelte:fragment slot="BottomBar">
           <NavBar
@@ -953,6 +1107,149 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <svelte:fragment slot="Content">
         <ScrollContainer
         >
+          <LayoutShell
+          >
+          <svelte:fragment slot="TopBar">
+            <TextFormat
+               interfaceFormat="headline-2"
+               contentFormat="none"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+              </StaticText>
+            </TextFormat>
+          </svelte:fragment>
+          <svelte:fragment slot="Content">
+            <TabBar
+            >
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={true}
+              >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+                 >
+              </Tab>
+            </TabBar>
+          </svelte:fragment>
+          <svelte:fragment slot="BottomBar">
+          </svelte:fragment>
+          </LayoutShell>
+        </ScrollContainer>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+          <NavBar
+          >
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/"}}
+            >
+              <Icon
+                 type="Thin-Dashboard"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/exhibition"}}
+            >
+              <Icon
+                 type="Thin-Layer"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+          </NavBar>
+      </svelte:fragment>
+      </LayoutShell>
+    </Route>
+    <Route
+       path="/about_project"
+       keepAlive={false}
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+              <Button
+                    type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"back"}}
+              >
+                <Icon
+                   type="Thin-Arrow-Left"
+                   inverse={false}
+                >
+                </Icon>
+              </Button>
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+          <TextFormat
+             interfaceFormat="caption-bold"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+              <ButtonBar
+                 justify="right"
+                 >
+                <LangSwitch
+                      reloadAfterSwitch="yes"
+                >
+                </LangSwitch>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                >
+                  <Icon
+                     type="Full-Menu"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+              </ButtonBar>
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        </HorizontalSpacer>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <LayoutShell
+        >
+        <svelte:fragment slot="TopBar">
           <TextFormat
              interfaceFormat="headline-2"
              contentFormat="none"
@@ -961,11 +1258,35 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
             </StaticText>
           </TextFormat>
-          <AccordeonShell
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
           >
-          <svelte:fragment slot="label">
-          </svelte:fragment>
-          <svelte:fragment slot="content">
+            <TabBar
+            >
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={false}
+              >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 execOnMount={true}
+              >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+                 >
+              </Tab>
+            </TabBar>
+            <TextFormat
+               interfaceFormat="none"
+               contentFormat="headline-2"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
+              </StaticText>
+            </TextFormat>
             <DataLoaderSingle
                sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
                rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
@@ -976,13 +1297,317 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               >
               </DataCell>
             </DataLoaderSingle>
-          </svelte:fragment>
-          </AccordeonShell>
-          <AccordeonShell
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+          <NavBar
           >
-          <svelte:fragment slot="label">
-          </svelte:fragment>
-          <svelte:fragment slot="content">
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/"}}
+            >
+              <Icon
+                 type="Thin-Dashboard"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/exhibition"}}
+            >
+              <Icon
+                 type="Thin-Layer"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+          </NavBar>
+      </svelte:fragment>
+      </LayoutShell>
+    </Route>
+    <Route
+       path="/about_exhibition"
+       keepAlive={false}
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+              <Button
+                    type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"back"}}
+              >
+                <Icon
+                   type="Thin-Arrow-Left"
+                   inverse={false}
+                >
+                </Icon>
+              </Button>
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+          <TextFormat
+             interfaceFormat="caption-bold"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+              <ButtonBar
+                 justify="right"
+                 >
+                <LangSwitch
+                      reloadAfterSwitch="yes"
+                >
+                </LangSwitch>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                >
+                  <Icon
+                     type="Full-Menu"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+              </ButtonBar>
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        </HorizontalSpacer>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <LayoutShell
+        >
+        <svelte:fragment slot="TopBar">
+          <TextFormat
+             interfaceFormat="headline-2"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
+          >
+            <TabBar
+            >
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={true}
+              >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+                 >
+              </Tab>
+            </TabBar>
+            <TextFormat
+               interfaceFormat="none"
+               contentFormat="headline-2"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+              </StaticText>
+            </TextFormat>
+            <DataLoaderSingle
+               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+               rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
+               >
+              <DataCell
+                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                 centerContent={false}
+              >
+              </DataCell>
+            </DataLoaderSingle>
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+          <NavBar
+          >
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/"}}
+            >
+              <Icon
+                 type="Thin-Dashboard"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+            <NavButton
+                  disabled={false}
+               effect={{"effectType":"route","path":"/exhibition"}}
+            >
+              <Icon
+                 type="Thin-Layer"
+                 inverse={false}
+              >
+              </Icon>
+            </NavButton>
+          </NavBar>
+      </svelte:fragment>
+      </LayoutShell>
+    </Route>
+    <Route
+       path="/about_data"
+       keepAlive={false}
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+              <Button
+                    type="secondary"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"back"}}
+              >
+                <Icon
+                   type="Thin-Arrow-Left"
+                   inverse={false}
+                >
+                </Icon>
+              </Button>
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+          <TextFormat
+             interfaceFormat="caption-bold"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+            <HorizontalSpacer
+            >
+            <svelte:fragment slot="left">
+            </svelte:fragment>
+            <svelte:fragment slot="center">
+            </svelte:fragment>
+            <svelte:fragment slot="right">
+              <ButtonBar
+                 justify="right"
+                 >
+                <LangSwitch
+                      reloadAfterSwitch="yes"
+                >
+                </LangSwitch>
+                <Button
+                      type="secondary"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                >
+                  <Icon
+                     type="Full-Menu"
+                     inverse={false}
+                  >
+                  </Icon>
+                </Button>
+              </ButtonBar>
+            </svelte:fragment>
+            </HorizontalSpacer>
+        </svelte:fragment>
+        </HorizontalSpacer>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <LayoutShell
+        >
+        <svelte:fragment slot="TopBar">
+          <TextFormat
+             interfaceFormat="headline-2"
+             contentFormat="none"
+          >
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+            </StaticText>
+          </TextFormat>
+        </svelte:fragment>
+        <svelte:fragment slot="Content">
+          <ScrollContainer
+          >
+            <TabBar
+            >
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={false}
+              >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 >
+              </Tab>
+              <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+                 execOnMount={true}
+              >
+              </Tab>
+            </TabBar>
+            <TextFormat
+               interfaceFormat="none"
+               contentFormat="headline-2"
+            >
+              <StaticText
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
+              </StaticText>
+            </TextFormat>
             <DataLoaderSingle
                sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
                rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
@@ -1001,9 +1626,11 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
             >
             </Button>
-          </svelte:fragment>
-          </AccordeonShell>
-        </ScrollContainer>
+          </ScrollContainer>
+        </svelte:fragment>
+        <svelte:fragment slot="BottomBar">
+        </svelte:fragment>
+        </LayoutShell>
       </svelte:fragment>
       <svelte:fragment slot="BottomBar">
           <NavBar
@@ -1130,37 +1757,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_artworks_intro"] ? $translations[$lang]["$exhibition_artworks_intro"] : "exhibition_artworks_intro") : ($translations.en && $translations.en["$exhibition_artworks_intro"] ? $translations.en["$exhibition_artworks_intro"] : "…")}>
               </StaticText>
             </TextFormat>
-            <AccordeonShell
+            <Button
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}   type="secondary"
+               size="medium"
+               flex="fill"
+               disabled={false}
+                  effect={{"effectType":"route","path":"/about_exhibition"}}
             >
-            <svelte:fragment slot="label">
-              <Label
-                 type="icon"
-                 variant="normal"
-                    icon="Full-More"
-              >
-              </Label>
-              <TextFormat
-                 interfaceFormat="none"
-                 contentFormat="body-2"
-              >
-                <StaticText
-                   text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_about_title"] ? $translations[$lang]["$exhibition_about_title"] : "exhibition_about_title") : ($translations.en && $translations.en["$exhibition_about_title"] ? $translations.en["$exhibition_about_title"] : "…")}>
-                </StaticText>
-              </TextFormat>
-            </svelte:fragment>
-            <svelte:fragment slot="content">
-              <DataLoaderSingle
-                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-                 rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
-                 >
-                <DataCell
-                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                   centerContent={false}
-                >
-                </DataCell>
-              </DataLoaderSingle>
-            </svelte:fragment>
-            </AccordeonShell>
+            </Button>
           </SectionShell>
           <SectionShell
           >
@@ -1452,6 +2056,17 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </svelte:fragment>
                   </DataCard>
                 </Spacing>
+                <SectionShell
+                >
+                  <Button
+                     text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}   type="secondary"
+                     size="medium"
+                     flex="normal"
+                     disabled={false}
+                        effect={{"effectType":"route","path":"/about_data"}}
+                  >
+                  </Button>
+                </SectionShell>
               </SectionShell>
             </svelte:fragment>
             <svelte:fragment slot="else">
@@ -1623,6 +2238,34 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     </svelte:fragment>
                     </SlideInModal>
                   </SectionShell>
+                  <AccordeonShell
+                  >
+                  <svelte:fragment slot="label">
+                    <StaticText
+                       text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_rights"] ? $translations[$lang]["$artwork_rights"] : "artwork_rights") : ($translations.en && $translations.en["$artwork_rights"] ? $translations.en["$artwork_rights"] : "…")}>
+                    </StaticText>
+                  </svelte:fragment>
+                  <svelte:fragment slot="content">
+                    <DataCell
+                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
+                       format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                    <DataCell
+                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
+                       format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                    <DataCell
+                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
+                       format="string"
+                       centerContent={false}
+                    >
+                    </DataCell>
+                  </svelte:fragment>
+                  </AccordeonShell>
                 </Spacing>
               </SectionShell>
             </svelte:fragment>
@@ -1662,322 +2305,6 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       </svelte:fragment>
       </LayoutShellAudio>
     </DataRouteSingle>
-    <Route
-       path="/help"
-       keepAlive={false}
-    >
-      <LayoutShell
-      >
-      <svelte:fragment slot="TopBar">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-            <HorizontalSpacer
-            >
-            <svelte:fragment slot="left">
-              <Button
-                    type="secondary"
-                 size="small"
-                 flex="normal"
-                 disabled={false}
-                    effect={{"effectType":"back"}}
-              >
-                <Icon
-                   type="Thin-Arrow-Left"
-                   inverse={false}
-                >
-                </Icon>
-              </Button>
-            </svelte:fragment>
-            <svelte:fragment slot="center">
-            </svelte:fragment>
-            <svelte:fragment slot="right">
-            </svelte:fragment>
-            </HorizontalSpacer>
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-          <TextFormat
-             interfaceFormat="caption-bold"
-             contentFormat="none"
-          >
-            <StaticText
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
-            </StaticText>
-          </TextFormat>
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-            <HorizontalSpacer
-            >
-            <svelte:fragment slot="left">
-            </svelte:fragment>
-            <svelte:fragment slot="center">
-            </svelte:fragment>
-            <svelte:fragment slot="right">
-              <ButtonBar
-                 justify="right"
-                 >
-                <LangSwitch
-                      reloadAfterSwitch="yes"
-                >
-                </LangSwitch>
-                <Button
-                      type="secondary"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
-                >
-                  <Icon
-                     type="Full-Menu"
-                     inverse={false}
-                  >
-                  </Icon>
-                </Button>
-              </ButtonBar>
-            </svelte:fragment>
-            </HorizontalSpacer>
-        </svelte:fragment>
-        </HorizontalSpacer>
-      </svelte:fragment>
-      <svelte:fragment slot="Content">
-        <ScrollContainer
-        >
-          <TextFormat
-             interfaceFormat="headline-2"
-             contentFormat="none"
-          >
-            <StaticText
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_help"] ? $translations[$lang]["$nav_help"] : "nav_help") : ($translations.en && $translations.en["$nav_help"] ? $translations.en["$nav_help"] : "…")}>
-            </StaticText>
-          </TextFormat>
-          <DataLoaderSingle
-             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-             rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
-             >
-            <DataCell
-               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-               centerContent={false}
-            >
-            </DataCell>
-          </DataLoaderSingle>
-        </ScrollContainer>
-      </svelte:fragment>
-      <svelte:fragment slot="BottomBar">
-          <NavBar
-          >
-            <NavButton
-                  disabled={false}
-               effect={{"effectType":"route","path":"/"}}
-            >
-              <Icon
-                 type="Thin-Dashboard"
-                 inverse={false}
-              >
-              </Icon>
-            </NavButton>
-            <NavButton
-                  disabled={false}
-               effect={{"effectType":"route","path":"/exhibition"}}
-            >
-              <Icon
-                 type="Thin-Layer"
-                 inverse={false}
-              >
-              </Icon>
-            </NavButton>
-          </NavBar>
-      </svelte:fragment>
-      </LayoutShell>
-    </Route>
-    <Route
-       path="/rights"
-       keepAlive={false}
-    >
-      <LayoutShell
-      >
-      <svelte:fragment slot="TopBar">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-            <HorizontalSpacer
-            >
-            <svelte:fragment slot="left">
-              <Button
-                    type="secondary"
-                 size="small"
-                 flex="normal"
-                 disabled={false}
-                    effect={{"effectType":"back"}}
-              >
-                <Icon
-                   type="Thin-Arrow-Left"
-                   inverse={false}
-                >
-                </Icon>
-              </Button>
-            </svelte:fragment>
-            <svelte:fragment slot="center">
-            </svelte:fragment>
-            <svelte:fragment slot="right">
-            </svelte:fragment>
-            </HorizontalSpacer>
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-          <TextFormat
-             interfaceFormat="caption-bold"
-             contentFormat="none"
-          >
-            <StaticText
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
-            </StaticText>
-          </TextFormat>
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-            <HorizontalSpacer
-            >
-            <svelte:fragment slot="left">
-            </svelte:fragment>
-            <svelte:fragment slot="center">
-            </svelte:fragment>
-            <svelte:fragment slot="right">
-              <ButtonBar
-                 justify="right"
-                 >
-                <LangSwitch
-                      reloadAfterSwitch="yes"
-                >
-                </LangSwitch>
-                <Button
-                      type="secondary"
-                   size="small"
-                   flex="normal"
-                   disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
-                >
-                  <Icon
-                     type="Full-Menu"
-                     inverse={false}
-                  >
-                  </Icon>
-                </Button>
-              </ButtonBar>
-            </svelte:fragment>
-            </HorizontalSpacer>
-        </svelte:fragment>
-        </HorizontalSpacer>
-      </svelte:fragment>
-      <svelte:fragment slot="Content">
-        <ScrollContainer
-        >
-          <TextFormat
-             interfaceFormat="headline-2"
-             contentFormat="none"
-          >
-            <StaticText
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_rights"] ? $translations[$lang]["$nav_rights"] : "nav_rights") : ($translations.en && $translations.en["$nav_rights"] ? $translations.en["$nav_rights"] : "…")}>
-            </StaticText>
-          </TextFormat>
-          <DataLoaderMulti
-             sheetKey="3d764bfb-ebf1-4e17-b756-e819c1d8794c"
-                         discoverableColumn="elements/discoverable"
-             discoverAnnotation="discovered"
-             >
-            <DataList
-            >
-            <svelte:fragment slot="dataElement">
-              <DataCard
-                 variant="small"
-                    effect={undefined}
-                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn="elements/headline"
-                 label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
-                    subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1737ab8e-82ae-4845-8904-9c2b6a3daf19"
-                       descriptionColumn="elements/description"
-              >
-              <svelte:fragment slot="chips">
-              </svelte:fragment>
-              <svelte:fragment slot="content">
-              </svelte:fragment>
-              </DataCard>
-            </svelte:fragment>
-            <svelte:fragment slot="emptyElement">
-            </svelte:fragment>
-            </DataList>
-            <DataList
-            >
-            <svelte:fragment slot="dataElement">
-              <DataCard
-                 variant="small"
-                    effect={undefined}
-                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-                 headlineColumn="elements/headline"
-                 label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
-                    subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1737ab8e-82ae-4845-8904-9c2b6a3daf19"
-                       descriptionColumn="elements/description"
-              >
-              <svelte:fragment slot="chips">
-              </svelte:fragment>
-              <svelte:fragment slot="content">
-              </svelte:fragment>
-              </DataCard>
-            </svelte:fragment>
-            <svelte:fragment slot="emptyElement">
-            </svelte:fragment>
-            </DataList>
-            <DataList
-            >
-            <svelte:fragment slot="dataElement">
-              <DataCard
-                 variant="small"
-                    effect={undefined}
-                 imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-                 headlineColumn="elements/headline"
-                 label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
-                    subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/16022cd3-f675-467d-bfc0-aa35cb50417e"
-                       descriptionColumn="elements/description"
-              >
-              <svelte:fragment slot="chips">
-              </svelte:fragment>
-              <svelte:fragment slot="content">
-              </svelte:fragment>
-              </DataCard>
-            </svelte:fragment>
-            <svelte:fragment slot="emptyElement">
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$action_data_unavailable"] ? $translations[$lang]["$action_data_unavailable"] : "action_data_unavailable") : ($translations.en && $translations.en["$action_data_unavailable"] ? $translations.en["$action_data_unavailable"] : "…")}>
-              </StaticText>
-            </svelte:fragment>
-            </DataList>
-          </DataLoaderMulti>
-        </ScrollContainer>
-      </svelte:fragment>
-      <svelte:fragment slot="BottomBar">
-          <NavBar
-          >
-            <NavButton
-                  disabled={false}
-               effect={{"effectType":"route","path":"/"}}
-            >
-              <Icon
-                 type="Thin-Dashboard"
-                 inverse={false}
-              >
-              </Icon>
-            </NavButton>
-            <NavButton
-                  disabled={false}
-               effect={{"effectType":"route","path":"/exhibition"}}
-            >
-              <Icon
-                 type="Thin-Layer"
-                 inverse={false}
-              >
-              </Icon>
-            </NavButton>
-          </NavBar>
-      </svelte:fragment>
-      </LayoutShell>
-    </Route>
   </AnonymousLogin>
 </svelte:fragment>
 <svelte:fragment slot="desktopFallback">
@@ -2064,8 +2391,9 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     </HorizontalSpacer>
   </svelte:fragment>
   <svelte:fragment slot="Content">
-    <ScrollContainer
+    <LayoutShell
     >
+    <svelte:fragment slot="TopBar">
       <TextFormat
          interfaceFormat="headline-2"
          contentFormat="none"
@@ -2074,17 +2402,798 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_privacy"] ? $translations[$lang]["$nav_privacy"] : "nav_privacy") : ($translations.en && $translations.en["$nav_privacy"] ? $translations.en["$nav_privacy"] : "…")}>
         </StaticText>
       </TextFormat>
-      <DataLoaderSingle
-         sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-         rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
-         >
-        <DataCell
-           column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-           centerContent={false}
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/"}}
         >
-        </DataCell>
-      </DataLoaderSingle>
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/exhibition"}}
+        >
+          <Icon
+             type="Thin-Layer"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/help"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+                effect={{"effectType":"back"}}
+          >
+            <Icon
+               type="Thin-Arrow-Left"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+      <TextFormat
+         interfaceFormat="caption-bold"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <LayoutShell
+    >
+    <svelte:fragment slot="TopBar">
+      <TextFormat
+         interfaceFormat="headline-2"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_help"] ? $translations[$lang]["$nav_help"] : "nav_help") : ($translations.en && $translations.en["$nav_help"] ? $translations.en["$nav_help"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/exhibition"}}
+        >
+          <Icon
+             type="Thin-Layer"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/about"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+                effect={{"effectType":"back"}}
+          >
+            <Icon
+               type="Thin-Arrow-Left"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+      <TextFormat
+         interfaceFormat="caption-bold"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <ScrollContainer
+    >
+      <LayoutShell
+      >
+      <svelte:fragment slot="TopBar">
+        <TextFormat
+           interfaceFormat="headline-2"
+           contentFormat="none"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+          </StaticText>
+        </TextFormat>
+      </svelte:fragment>
+      <svelte:fragment slot="Content">
+        <TabBar
+        >
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={true}
+          >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+             >
+          </Tab>
+        </TabBar>
+      </svelte:fragment>
+      <svelte:fragment slot="BottomBar">
+      </svelte:fragment>
+      </LayoutShell>
     </ScrollContainer>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/exhibition"}}
+        >
+          <Icon
+             type="Thin-Layer"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/about_exhibition"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+                effect={{"effectType":"back"}}
+          >
+            <Icon
+               type="Thin-Arrow-Left"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+      <TextFormat
+         interfaceFormat="caption-bold"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <LayoutShell
+    >
+    <svelte:fragment slot="TopBar">
+      <TextFormat
+         interfaceFormat="headline-2"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <TabBar
+        >
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={true}
+          >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+             >
+          </Tab>
+        </TabBar>
+        <TextFormat
+           interfaceFormat="none"
+           contentFormat="headline-2"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+          </StaticText>
+        </TextFormat>
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/exhibition"}}
+        >
+          <Icon
+             type="Thin-Layer"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/about_project"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+                effect={{"effectType":"back"}}
+          >
+            <Icon
+               type="Thin-Arrow-Left"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+      <TextFormat
+         interfaceFormat="caption-bold"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <LayoutShell
+    >
+    <svelte:fragment slot="TopBar">
+      <TextFormat
+         interfaceFormat="headline-2"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <TabBar
+        >
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={false}
+          >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             execOnMount={true}
+          >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+             >
+          </Tab>
+        </TabBar>
+        <TextFormat
+           interfaceFormat="none"
+           contentFormat="headline-2"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
+          </StaticText>
+        </TextFormat>
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
+  </svelte:fragment>
+  <svelte:fragment slot="BottomBar">
+      <NavBar
+      >
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/"}}
+        >
+          <Icon
+             type="Thin-Dashboard"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+        <NavButton
+              disabled={false}
+           effect={{"effectType":"route","path":"/exhibition"}}
+        >
+          <Icon
+             type="Thin-Layer"
+             inverse={false}
+          >
+          </Icon>
+        </NavButton>
+      </NavBar>
+  </svelte:fragment>
+  </LayoutShell>
+</Route>
+
+<Route
+   path="/about_data"
+   keepAlive={false}
+>
+  <LayoutShell
+  >
+  <svelte:fragment slot="TopBar">
+    <HorizontalSpacer
+    >
+    <svelte:fragment slot="left">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+          <Button
+                type="secondary"
+             size="small"
+             flex="normal"
+             disabled={false}
+                effect={{"effectType":"back"}}
+          >
+            <Icon
+               type="Thin-Arrow-Left"
+               inverse={false}
+            >
+            </Icon>
+          </Button>
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    <svelte:fragment slot="center">
+      <TextFormat
+         interfaceFormat="caption-bold"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+        <HorizontalSpacer
+        >
+        <svelte:fragment slot="left">
+        </svelte:fragment>
+        <svelte:fragment slot="center">
+        </svelte:fragment>
+        <svelte:fragment slot="right">
+          <ButtonBar
+             justify="right"
+             >
+            <LangSwitch
+                  reloadAfterSwitch="yes"
+            >
+            </LangSwitch>
+            <Button
+                  type="secondary"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+            >
+              <Icon
+                 type="Full-Menu"
+                 inverse={false}
+              >
+              </Icon>
+            </Button>
+          </ButtonBar>
+        </svelte:fragment>
+        </HorizontalSpacer>
+    </svelte:fragment>
+    </HorizontalSpacer>
+  </svelte:fragment>
+  <svelte:fragment slot="Content">
+    <LayoutShell
+    >
+    <svelte:fragment slot="TopBar">
+      <TextFormat
+         interfaceFormat="headline-2"
+         contentFormat="none"
+      >
+        <StaticText
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
+        </StaticText>
+      </TextFormat>
+    </svelte:fragment>
+    <svelte:fragment slot="Content">
+      <ScrollContainer
+      >
+        <TabBar
+        >
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={false}
+          >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             >
+          </Tab>
+          <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
+             execOnMount={true}
+          >
+          </Tab>
+        </TabBar>
+        <TextFormat
+           interfaceFormat="none"
+           contentFormat="headline-2"
+        >
+          <StaticText
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
+          </StaticText>
+        </TextFormat>
+        <DataLoaderSingle
+           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
+           >
+          <DataCell
+             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+             centerContent={false}
+          >
+          </DataCell>
+        </DataLoaderSingle>
+        <Button
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
+           size="small"
+           flex="normal"
+           disabled={false}
+              effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+        >
+        </Button>
+      </ScrollContainer>
+    </svelte:fragment>
+    <svelte:fragment slot="BottomBar">
+    </svelte:fragment>
+    </LayoutShell>
   </svelte:fragment>
   <svelte:fragment slot="BottomBar">
       <NavBar
@@ -2327,6 +3436,17 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </svelte:fragment>
               </DataCard>
             </Spacing>
+            <SectionShell
+            >
+              <Button
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}   type="secondary"
+                 size="medium"
+                 flex="normal"
+                 disabled={false}
+                    effect={{"effectType":"route","path":"/about_data"}}
+              >
+              </Button>
+            </SectionShell>
           </SectionShell>
         </svelte:fragment>
         <svelte:fragment slot="else">
@@ -2498,6 +3618,34 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </svelte:fragment>
                 </SlideInModal>
               </SectionShell>
+              <AccordeonShell
+              >
+              <svelte:fragment slot="label">
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$artwork_rights"] ? $translations[$lang]["$artwork_rights"] : "artwork_rights") : ($translations.en && $translations.en["$artwork_rights"] ? $translations.en["$artwork_rights"] : "…")}>
+                </StaticText>
+              </svelte:fragment>
+              <svelte:fragment slot="content">
+                <DataCell
+                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
+                   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+                <DataCell
+                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
+                   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+                <DataCell
+                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
+                   format="string"
+                   centerContent={false}
+                >
+                </DataCell>
+              </svelte:fragment>
+              </AccordeonShell>
             </Spacing>
           </SectionShell>
         </svelte:fragment>
@@ -2636,37 +3784,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_artworks_intro"] ? $translations[$lang]["$exhibition_artworks_intro"] : "exhibition_artworks_intro") : ($translations.en && $translations.en["$exhibition_artworks_intro"] ? $translations.en["$exhibition_artworks_intro"] : "…")}>
           </StaticText>
         </TextFormat>
-        <AccordeonShell
+        <Button
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}   type="secondary"
+           size="medium"
+           flex="fill"
+           disabled={false}
+              effect={{"effectType":"route","path":"/about_exhibition"}}
         >
-        <svelte:fragment slot="label">
-          <Label
-             type="icon"
-             variant="normal"
-                icon="Full-More"
-          >
-          </Label>
-          <TextFormat
-             interfaceFormat="none"
-             contentFormat="body-2"
-          >
-            <StaticText
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_about_title"] ? $translations[$lang]["$exhibition_about_title"] : "exhibition_about_title") : ($translations.en && $translations.en["$exhibition_about_title"] ? $translations.en["$exhibition_about_title"] : "…")}>
-            </StaticText>
-          </TextFormat>
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          <DataLoaderSingle
-             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-             rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
-             >
-            <DataCell
-               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-               centerContent={false}
-            >
-            </DataCell>
-          </DataLoaderSingle>
-        </svelte:fragment>
-        </AccordeonShell>
+        </Button>
       </SectionShell>
       <SectionShell
       >
@@ -2744,482 +3869,4 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       </NavBar>
   </svelte:fragment>
   </LayoutShellAudio>
-</Route>
-
-<Route
-   path="/help"
-   keepAlive={false}
->
-  <LayoutShell
-  >
-  <svelte:fragment slot="TopBar">
-    <HorizontalSpacer
-    >
-    <svelte:fragment slot="left">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-          <Button
-                type="secondary"
-             size="small"
-             flex="normal"
-             disabled={false}
-                effect={{"effectType":"back"}}
-          >
-            <Icon
-               type="Thin-Arrow-Left"
-               inverse={false}
-            >
-            </Icon>
-          </Button>
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    <svelte:fragment slot="center">
-      <TextFormat
-         interfaceFormat="caption-bold"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
-        </StaticText>
-      </TextFormat>
-    </svelte:fragment>
-    <svelte:fragment slot="right">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-          <ButtonBar
-             justify="right"
-             >
-            <LangSwitch
-                  reloadAfterSwitch="yes"
-            >
-            </LangSwitch>
-            <Button
-                  type="secondary"
-               size="small"
-               flex="normal"
-               disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
-            >
-              <Icon
-                 type="Full-Menu"
-                 inverse={false}
-              >
-              </Icon>
-            </Button>
-          </ButtonBar>
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    </HorizontalSpacer>
-  </svelte:fragment>
-  <svelte:fragment slot="Content">
-    <ScrollContainer
-    >
-      <TextFormat
-         interfaceFormat="headline-2"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_help"] ? $translations[$lang]["$nav_help"] : "nav_help") : ($translations.en && $translations.en["$nav_help"] ? $translations.en["$nav_help"] : "…")}>
-        </StaticText>
-      </TextFormat>
-      <DataLoaderSingle
-         sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-         rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
-         >
-        <DataCell
-           column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-           centerContent={false}
-        >
-        </DataCell>
-      </DataLoaderSingle>
-    </ScrollContainer>
-  </svelte:fragment>
-  <svelte:fragment slot="BottomBar">
-      <NavBar
-      >
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/"}}
-        >
-          <Icon
-             type="Thin-Dashboard"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/exhibition"}}
-        >
-          <Icon
-             type="Thin-Layer"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-      </NavBar>
-  </svelte:fragment>
-  </LayoutShell>
-</Route>
-
-<Route
-   path="/about"
-   keepAlive={false}
->
-  <LayoutShell
-  >
-  <svelte:fragment slot="TopBar">
-    <HorizontalSpacer
-    >
-    <svelte:fragment slot="left">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-          <Button
-                type="secondary"
-             size="small"
-             flex="normal"
-             disabled={false}
-                effect={{"effectType":"back"}}
-          >
-            <Icon
-               type="Thin-Arrow-Left"
-               inverse={false}
-            >
-            </Icon>
-          </Button>
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    <svelte:fragment slot="center">
-      <TextFormat
-         interfaceFormat="caption-bold"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
-        </StaticText>
-      </TextFormat>
-    </svelte:fragment>
-    <svelte:fragment slot="right">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-          <ButtonBar
-             justify="right"
-             >
-            <LangSwitch
-                  reloadAfterSwitch="yes"
-            >
-            </LangSwitch>
-            <Button
-                  type="secondary"
-               size="small"
-               flex="normal"
-               disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
-            >
-              <Icon
-                 type="Full-Menu"
-                 inverse={false}
-              >
-              </Icon>
-            </Button>
-          </ButtonBar>
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    </HorizontalSpacer>
-  </svelte:fragment>
-  <svelte:fragment slot="Content">
-    <ScrollContainer
-    >
-      <TextFormat
-         interfaceFormat="headline-2"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about"] ? $translations[$lang]["$nav_about"] : "nav_about") : ($translations.en && $translations.en["$nav_about"] ? $translations.en["$nav_about"] : "…")}>
-        </StaticText>
-      </TextFormat>
-      <AccordeonShell
-      >
-      <svelte:fragment slot="label">
-      </svelte:fragment>
-      <svelte:fragment slot="content">
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
-          >
-          </DataCell>
-        </DataLoaderSingle>
-      </svelte:fragment>
-      </AccordeonShell>
-      <AccordeonShell
-      >
-      <svelte:fragment slot="label">
-      </svelte:fragment>
-      <svelte:fragment slot="content">
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
-          >
-          </DataCell>
-        </DataLoaderSingle>
-        <Button
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
-           size="small"
-           flex="normal"
-           disabled={false}
-              effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
-        >
-        </Button>
-      </svelte:fragment>
-      </AccordeonShell>
-    </ScrollContainer>
-  </svelte:fragment>
-  <svelte:fragment slot="BottomBar">
-      <NavBar
-      >
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/"}}
-        >
-          <Icon
-             type="Thin-Dashboard"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/exhibition"}}
-        >
-          <Icon
-             type="Thin-Layer"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-      </NavBar>
-  </svelte:fragment>
-  </LayoutShell>
-</Route>
-
-<Route
-   path="/rights"
-   keepAlive={false}
->
-  <LayoutShell
-  >
-  <svelte:fragment slot="TopBar">
-    <HorizontalSpacer
-    >
-    <svelte:fragment slot="left">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-          <Button
-                type="secondary"
-             size="small"
-             flex="normal"
-             disabled={false}
-                effect={{"effectType":"back"}}
-          >
-            <Icon
-               type="Thin-Arrow-Left"
-               inverse={false}
-            >
-            </Icon>
-          </Button>
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    <svelte:fragment slot="center">
-      <TextFormat
-         interfaceFormat="caption-bold"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$exhibition_title"] ? $translations[$lang]["$exhibition_title"] : "exhibition_title") : ($translations.en && $translations.en["$exhibition_title"] ? $translations.en["$exhibition_title"] : "…")}>
-        </StaticText>
-      </TextFormat>
-    </svelte:fragment>
-    <svelte:fragment slot="right">
-        <HorizontalSpacer
-        >
-        <svelte:fragment slot="left">
-        </svelte:fragment>
-        <svelte:fragment slot="center">
-        </svelte:fragment>
-        <svelte:fragment slot="right">
-          <ButtonBar
-             justify="right"
-             >
-            <LangSwitch
-                  reloadAfterSwitch="yes"
-            >
-            </LangSwitch>
-            <Button
-                  type="secondary"
-               size="small"
-               flex="normal"
-               disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
-            >
-              <Icon
-                 type="Full-Menu"
-                 inverse={false}
-              >
-              </Icon>
-            </Button>
-          </ButtonBar>
-        </svelte:fragment>
-        </HorizontalSpacer>
-    </svelte:fragment>
-    </HorizontalSpacer>
-  </svelte:fragment>
-  <svelte:fragment slot="Content">
-    <ScrollContainer
-    >
-      <TextFormat
-         interfaceFormat="headline-2"
-         contentFormat="none"
-      >
-        <StaticText
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_rights"] ? $translations[$lang]["$nav_rights"] : "nav_rights") : ($translations.en && $translations.en["$nav_rights"] ? $translations.en["$nav_rights"] : "…")}>
-        </StaticText>
-      </TextFormat>
-      <DataLoaderMulti
-         sheetKey="3d764bfb-ebf1-4e17-b756-e819c1d8794c"
-                     discoverableColumn="elements/discoverable"
-         discoverAnnotation="discovered"
-         >
-        <DataList
-        >
-        <svelte:fragment slot="dataElement">
-          <DataCard
-             variant="small"
-                effect={undefined}
-             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-             headlineColumn="elements/headline"
-             label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
-                subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1737ab8e-82ae-4845-8904-9c2b6a3daf19"
-                   descriptionColumn="elements/description"
-          >
-          <svelte:fragment slot="chips">
-          </svelte:fragment>
-          <svelte:fragment slot="content">
-          </svelte:fragment>
-          </DataCard>
-        </svelte:fragment>
-        <svelte:fragment slot="emptyElement">
-        </svelte:fragment>
-        </DataList>
-        <DataList
-        >
-        <svelte:fragment slot="dataElement">
-          <DataCard
-             variant="small"
-                effect={undefined}
-             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
-             headlineColumn="elements/headline"
-             label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
-                subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1737ab8e-82ae-4845-8904-9c2b6a3daf19"
-                   descriptionColumn="elements/description"
-          >
-          <svelte:fragment slot="chips">
-          </svelte:fragment>
-          <svelte:fragment slot="content">
-          </svelte:fragment>
-          </DataCard>
-        </svelte:fragment>
-        <svelte:fragment slot="emptyElement">
-        </svelte:fragment>
-        </DataList>
-        <DataList
-        >
-        <svelte:fragment slot="dataElement">
-          <DataCard
-             variant="small"
-                effect={undefined}
-             imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
-             headlineColumn="elements/headline"
-             label1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   subtitle1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
-                subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/16022cd3-f675-467d-bfc0-aa35cb50417e"
-                   descriptionColumn="elements/description"
-          >
-          <svelte:fragment slot="chips">
-          </svelte:fragment>
-          <svelte:fragment slot="content">
-          </svelte:fragment>
-          </DataCard>
-        </svelte:fragment>
-        <svelte:fragment slot="emptyElement">
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$action_data_unavailable"] ? $translations[$lang]["$action_data_unavailable"] : "action_data_unavailable") : ($translations.en && $translations.en["$action_data_unavailable"] ? $translations.en["$action_data_unavailable"] : "…")}>
-          </StaticText>
-        </svelte:fragment>
-        </DataList>
-      </DataLoaderMulti>
-    </ScrollContainer>
-  </svelte:fragment>
-  <svelte:fragment slot="BottomBar">
-      <NavBar
-      >
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/"}}
-        >
-          <Icon
-             type="Thin-Dashboard"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-        <NavButton
-              disabled={false}
-           effect={{"effectType":"route","path":"/exhibition"}}
-        >
-          <Icon
-             type="Thin-Layer"
-             inverse={false}
-          >
-          </Icon>
-        </NavButton>
-      </NavBar>
-  </svelte:fragment>
-  </LayoutShell>
 </Route>

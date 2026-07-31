@@ -27,8 +27,6 @@ SELECT ?item ?itemLabel ?itemDescription (SAMPLE(?imageValue) AS ?image) WHERE {
     ${values} 
   }
   { ?item wdt:P180 ?theme. }
-  UNION
-  { ?item wdt:P921 ?theme. }
   ?item wdt:P18 ?imageValue.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en,mul". }
 }

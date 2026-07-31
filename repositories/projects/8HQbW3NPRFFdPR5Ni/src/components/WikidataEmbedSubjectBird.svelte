@@ -35,15 +35,13 @@
       .join(" UNION ")
 
     const query = `
-SELECT ?item ?scientificName
-       (SAMPLE(?imageValue) AS ?image)
-       (SAMPLE(?audioValue) AS ?audio)
-WHERE {
+SELECT ?item ?scientificName (SAMPLE(?imageValue) AS ?image) (SAMPLE(?audioValue) AS ?audio) WHERE {
   ${search}
 
   OPTIONAL { ?item wdt:P225 ?scientificName. }
   OPTIONAL { ?item wdt:P18 ?imageValue. }
   OPTIONAL { ?item wdt:P51 ?audioValue. }
+
 }
 GROUP BY ?item ?scientificName
 ORDER BY ?scientificName`
