@@ -86,7 +86,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -134,7 +135,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="medium"
              flex="fill"
              disabled={false}
-                effect={{"effectType":"route","path":"/exhibition"}}
+             ariaLabel="Discover artworks"
+             effect={{"effectType":"route","path":"/exhibition"}}
           >
           </Button>
         </svelte:fragment>
@@ -151,7 +153,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="medium"
              flex="fill"
              disabled={false}
-                effect={{"effectType":"route","path":"/about_project"}}
+             ariaLabel="Learn more"
+             effect={{"effectType":"route","path":"/about_project"}}
           >
           </Button>
         </svelte:fragment>
@@ -182,7 +185,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -237,7 +241,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -247,7 +251,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -279,7 +283,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -324,7 +329,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -354,16 +360,23 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     <svelte:fragment slot="Content">
       <ScrollContainer
       >
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="00998218-291f-4856-97be-f3a6bebabee2"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
-          >
-          </DataCell>
-        </DataLoaderSingle>
+        <Spacing
+           top="s"
+           right="s"
+           bottom="s"
+           left="s"
+        >
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="00998218-291f-4856-97be-f3a6bebabee2"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </Spacing>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -374,7 +387,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -384,7 +397,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -407,7 +420,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
 <svelte:fragment slot="viewport">
   <AnonymousLogin
      defaultLang="de"
-     >
+     defaultLangIndex="1"
+  >
     <Route
        path="/"
        keepAlive={false}
@@ -446,7 +460,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -494,7 +509,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="medium"
                  flex="fill"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/exhibition"}}
+                 ariaLabel="Discover artworks"
+                 effect={{"effectType":"route","path":"/exhibition"}}
               >
               </Button>
             </svelte:fragment>
@@ -511,7 +527,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="medium"
                  flex="fill"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/about_project"}}
+                 ariaLabel="Learn more"
+                 effect={{"effectType":"route","path":"/about_project"}}
               >
               </Button>
             </svelte:fragment>
@@ -541,7 +558,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -596,7 +614,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -606,7 +624,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -637,7 +655,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -682,7 +701,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -712,16 +732,23 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <svelte:fragment slot="Content">
           <ScrollContainer
           >
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="00998218-291f-4856-97be-f3a6bebabee2"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
-              >
-              </DataCell>
-            </DataLoaderSingle>
+            <Spacing
+               top="s"
+               right="s"
+               bottom="s"
+               left="s"
+            >
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="00998218-291f-4856-97be-f3a6bebabee2"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+            </Spacing>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -732,7 +759,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -742,7 +769,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -773,7 +800,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -818,7 +846,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -848,16 +877,37 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <svelte:fragment slot="Content">
           <ScrollContainer
           >
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
-              >
-              </DataCell>
-            </DataLoaderSingle>
+            <Spacing
+               top="s"
+               right="s"
+               bottom="s"
+               left="s"
+            >
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+              <Spacing
+                 top="s"
+                       >
+                <Button
+                   text="Google Fonts"
+                   type="secondary"
+                   size="medium"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel="Link Google Fonts"
+                   effect={{"effectType":"linkTargetBlank","url":"https://fonts.google.com/faq#privacy"}}
+                >
+                </Button>
+              </Spacing>
+            </Spacing>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -868,7 +918,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -878,7 +928,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -909,7 +959,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -954,7 +1005,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -984,16 +1036,23 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <svelte:fragment slot="Content">
           <ScrollContainer
           >
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
-              >
-              </DataCell>
-            </DataLoaderSingle>
+            <Spacing
+               top="s"
+               right="s"
+               bottom="s"
+               left="s"
+            >
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+            </Spacing>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -1004,7 +1063,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1014,7 +1073,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1045,7 +1104,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1090,7 +1150,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1123,13 +1184,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             <TabBar
             >
               <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
                  execOnMount={true}
               >
               </Tab>
               <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-                 >
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={false}
+              >
               </Tab>
               <Tab
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
@@ -1146,7 +1208,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1156,7 +1218,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1187,7 +1249,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1232,7 +1295,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1265,13 +1329,13 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             <TabBar
             >
               <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
-                 execOnMount={false}
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 execOnMount={true}
               >
               </Tab>
               <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-                 execOnMount={true}
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+                 execOnMount={false}
               >
               </Tab>
               <Tab
@@ -1279,24 +1343,72 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  >
               </Tab>
             </TabBar>
-            <TextFormat
-               interfaceFormat="none"
-               contentFormat="headline-2"
+            <Spacing
+               top="m"
+               right="s"
+               bottom="s"
+               left="s"
             >
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
-              </StaticText>
-            </TextFormat>
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
+              <TextFormat
+                 interfaceFormat="none"
+                 contentFormat="headline-2"
               >
-              </DataCell>
-            </DataLoaderSingle>
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
+                </StaticText>
+              </TextFormat>
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+            </Spacing>
+            <Spacing
+               top="s"
+               right="s"
+               bottom="m"
+               left="s"
+            >
+              <ButtonBar
+                 justify="center"
+                 >
+                <Button
+                   text="Interkit"
+                   type="link"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel="Link interkit.app"
+                   effect={{"effectType":"linkTargetBlank","url":"https://www.interkit.app/"}}
+                >
+                </Button>
+                <Button
+                   text="Minimaldatensatz"
+                   type="link"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel="Link Minimaldatensatz-Empfehlung"
+                   effect={{"effectType":"linkTargetBlank","url":"https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"}}
+                >
+                </Button>
+                <Button
+                   text="MGKSiegen"
+                   type="link"
+                   size="small"
+                   flex="normal"
+                   disabled={false}
+                   ariaLabel="Link MGK Siegen"
+                   effect={{"effectType":"linkTargetBlank","url":"https://www.mgksiegen.de/de/"}}
+                >
+                </Button>
+              </ButtonBar>
+            </Spacing>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -1307,7 +1419,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1317,7 +1429,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1348,7 +1460,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1393,7 +1506,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1426,37 +1540,44 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             <TabBar
             >
               <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 >
+              </Tab>
+              <Tab
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
                  execOnMount={true}
               >
-              </Tab>
-              <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-                 >
               </Tab>
               <Tab
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
                  >
               </Tab>
             </TabBar>
-            <TextFormat
-               interfaceFormat="none"
-               contentFormat="headline-2"
+            <Spacing
+               top="m"
+               right="s"
+               bottom="s"
+               left="s"
             >
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
-              </StaticText>
-            </TextFormat>
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
+              <TextFormat
+                 interfaceFormat="none"
+                 contentFormat="headline-2"
               >
-              </DataCell>
-            </DataLoaderSingle>
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+                </StaticText>
+              </TextFormat>
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+            </Spacing>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -1467,7 +1588,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1477,7 +1598,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1508,7 +1629,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1553,7 +1675,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1586,13 +1709,13 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             <TabBar
             >
               <Tab
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+                 >
+              </Tab>
+              <Tab
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
                  execOnMount={false}
               >
-              </Tab>
-              <Tab
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-                 >
               </Tab>
               <Tab
                  text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
@@ -1600,32 +1723,91 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               >
               </Tab>
             </TabBar>
-            <TextFormat
-               interfaceFormat="none"
-               contentFormat="headline-2"
+            <Spacing
+               top="m"
+               right="s"
+               bottom="s"
+               left="s"
             >
-              <StaticText
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
-              </StaticText>
-            </TextFormat>
-            <DataLoaderSingle
-               sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-               rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-               >
-              <DataCell
-                 column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-                 centerContent={false}
+              <TextFormat
+                 interfaceFormat="none"
+                 contentFormat="headline-2"
               >
-              </DataCell>
-            </DataLoaderSingle>
-            <Button
-               text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
-               size="small"
-               flex="normal"
-               disabled={false}
-                  effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+                <StaticText
+                   text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
+                </StaticText>
+              </TextFormat>
+              <DataLoaderSingle
+                 sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+                 rowKey="3125d2d2-67a4-4d80-b336-d689ab2b82af"
+                 >
+                <DataCell
+                   column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+                   centerContent={false}
+                >
+                </DataCell>
+              </DataLoaderSingle>
+            </Spacing>
+            <Spacing
+               top="s"
+               right="m"
+               bottom="m"
+               left="m"
             >
-            </Button>
+              <Button
+                 text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
+                 size="medium"
+                 flex="fill"
+                 disabled={false}
+                 ariaLabel="Download metadata"
+                 effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+              >
+              </Button>
+            </Spacing>
+            <ButtonBar
+               justify="center"
+               >
+              <Button
+                 text="Minimaldatensatz"
+                 type="link"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                 ariaLabel="Link Minimaldatensatz-Empfehlung"
+                 effect={{"effectType":"linkTargetBlank","url":"https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"}}
+              >
+              </Button>
+              <Button
+                 text="GND"
+                 type="link"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                 ariaLabel="Link GND"
+                 effect={{"effectType":"linkTargetBlank","url":"https://www.dnb.de/DE/Professionell/Standardisierung/GND/gnd_node.html"}}
+              >
+              </Button>
+              <Button
+                 text="AAT"
+                 type="link"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                 ariaLabel="Link AAT"
+                 effect={{"effectType":"linkTargetBlank","url":"https://www.getty.edu/research/tools/vocabularies/aat/"}}
+              >
+              </Button>
+              <Button
+                 text="Wikidata"
+                 type="link"
+                 size="small"
+                 flex="normal"
+                 disabled={false}
+                 ariaLabel="Link Wikidata"
+                 effect={{"effectType":"linkTargetBlank","url":"https://www.wikidata.org/wiki/Wikidata:Main_Page"}}
+              >
+              </Button>
+            </ButtonBar>
           </ScrollContainer>
         </svelte:fragment>
         <svelte:fragment slot="BottomBar">
@@ -1636,7 +1818,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1646,7 +1828,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1677,7 +1859,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1722,7 +1905,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1762,7 +1946,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="medium"
                flex="fill"
                disabled={false}
-                  effect={{"effectType":"route","path":"/about_exhibition"}}
+               ariaLabel="About the exhibition"
+               effect={{"effectType":"route","path":"/about_exhibition"}}
             >
             </Button>
           </SectionShell>
@@ -1820,7 +2005,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -1830,7 +2015,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -1861,7 +2046,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="small"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"back"}}
+                 ariaLabel="Back"
+                 effect={{"effectType":"back"}}
               >
                 <Icon
                    type="Thin-Arrow-Left"
@@ -1906,7 +2092,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                    size="small"
                    flex="normal"
                    disabled={false}
-                   ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+                   ariaLabel="Navigation menu"
+                   effect={{"effectType":"route","path":"/menu"}}
                 >
                   <Icon
                      type="Full-Menu"
@@ -1956,7 +2143,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
                      headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                           >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
@@ -2063,7 +2251,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      size="medium"
                      flex="normal"
                      disabled={false}
-                        effect={{"effectType":"route","path":"/about_data"}}
+                     ariaLabel="About the data"
+                     effect={{"effectType":"route","path":"/about_data"}}
                   >
                   </Button>
                 </SectionShell>
@@ -2195,7 +2384,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                            size="large"
                            flex="fill"
                            disabled={false}
-                              effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                           ariaLabel="Image 1"
+                           effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
                         >
                           <Image
                                    imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
@@ -2210,7 +2400,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                            size="large"
                            flex="fill"
                            disabled={false}
-                              effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                           ariaLabel="Image 2"
+                           effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
                         >
                           <Image
                                    imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
@@ -2225,7 +2416,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                            size="large"
                            flex="fill"
                            disabled={false}
-                              effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                           ariaLabel="Image 3"
+                           effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
                         >
                           <Image
                                    imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
@@ -2282,7 +2474,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           <NavBar
           >
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/"}}
             >
               <Icon
@@ -2292,7 +2484,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Icon>
             </NavButton>
             <NavButton
-                  disabled={false}
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
                effect={{"effectType":"route","path":"/exhibition"}}
             >
               <Icon
@@ -2331,7 +2523,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -2376,7 +2569,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -2406,16 +2600,37 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     <svelte:fragment slot="Content">
       <ScrollContainer
       >
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
-          >
-          </DataCell>
-        </DataLoaderSingle>
+        <Spacing
+           top="s"
+           right="s"
+           bottom="s"
+           left="s"
+        >
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="e19c4c01-02cf-4183-ad37-56089a4cfcf3"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+          <Spacing
+             top="s"
+                   >
+            <Button
+               text="Google Fonts"
+               type="secondary"
+               size="medium"
+               flex="normal"
+               disabled={false}
+               ariaLabel="Link Google Fonts"
+               effect={{"effectType":"linkTargetBlank","url":"https://fonts.google.com/faq#privacy"}}
+            >
+            </Button>
+          </Spacing>
+        </Spacing>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -2426,7 +2641,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -2436,7 +2651,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -2468,7 +2683,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -2513,7 +2729,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -2543,16 +2760,23 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     <svelte:fragment slot="Content">
       <ScrollContainer
       >
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
-          >
-          </DataCell>
-        </DataLoaderSingle>
+        <Spacing
+           top="s"
+           right="s"
+           bottom="s"
+           left="s"
+        >
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="d8b9ddc4-e99b-4e96-ace7-90efbdf6be95"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </Spacing>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -2563,7 +2787,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -2573,7 +2797,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -2605,7 +2829,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -2650,7 +2875,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -2683,13 +2909,14 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <TabBar
         >
           <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
              execOnMount={true}
           >
           </Tab>
           <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-             >
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={false}
+          >
           </Tab>
           <Tab
              text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
@@ -2706,7 +2933,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -2716,7 +2943,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -2748,7 +2975,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -2793,7 +3021,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -2826,37 +3055,44 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <TabBar
         >
           <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             >
+          </Tab>
+          <Tab
              text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
              execOnMount={true}
           >
-          </Tab>
-          <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-             >
           </Tab>
           <Tab
              text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
              >
           </Tab>
         </TabBar>
-        <TextFormat
-           interfaceFormat="none"
-           contentFormat="headline-2"
+        <Spacing
+           top="m"
+           right="s"
+           bottom="s"
+           left="s"
         >
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
-          </StaticText>
-        </TextFormat>
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
+          <TextFormat
+             interfaceFormat="none"
+             contentFormat="headline-2"
           >
-          </DataCell>
-        </DataLoaderSingle>
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$about_exhibition"] ? $translations[$lang]["$about_exhibition"] : "about_exhibition") : ($translations.en && $translations.en["$about_exhibition"] ? $translations.en["$about_exhibition"] : "…")}>
+            </StaticText>
+          </TextFormat>
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="019f8964-fde8-4da1-8ea5-e75315104b6b"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </Spacing>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -2867,7 +3103,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -2877,7 +3113,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -2909,7 +3145,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -2954,7 +3191,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -2987,13 +3225,13 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <TabBar
         >
           <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
-             execOnMount={false}
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             execOnMount={true}
           >
           </Tab>
           <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-             execOnMount={true}
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
+             execOnMount={false}
           >
           </Tab>
           <Tab
@@ -3001,24 +3239,72 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              >
           </Tab>
         </TabBar>
-        <TextFormat
-           interfaceFormat="none"
-           contentFormat="headline-2"
+        <Spacing
+           top="m"
+           right="s"
+           bottom="s"
+           left="s"
         >
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
-          </StaticText>
-        </TextFormat>
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
+          <TextFormat
+             interfaceFormat="none"
+             contentFormat="headline-2"
           >
-          </DataCell>
-        </DataLoaderSingle>
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$about_project"] ? $translations[$lang]["$about_project"] : "about_project") : ($translations.en && $translations.en["$about_project"] ? $translations.en["$about_project"] : "…")}>
+            </StaticText>
+          </TextFormat>
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </Spacing>
+        <Spacing
+           top="s"
+           right="s"
+           bottom="m"
+           left="s"
+        >
+          <ButtonBar
+             justify="center"
+             >
+            <Button
+               text="Interkit"
+               type="link"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel="Link interkit.app"
+               effect={{"effectType":"linkTargetBlank","url":"https://www.interkit.app/"}}
+            >
+            </Button>
+            <Button
+               text="Minimaldatensatz"
+               type="link"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel="Link Minimaldatensatz-Empfehlung"
+               effect={{"effectType":"linkTargetBlank","url":"https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"}}
+            >
+            </Button>
+            <Button
+               text="MGKSiegen"
+               type="link"
+               size="small"
+               flex="normal"
+               disabled={false}
+               ariaLabel="Link MGK Siegen"
+               effect={{"effectType":"linkTargetBlank","url":"https://www.mgksiegen.de/de/"}}
+            >
+            </Button>
+          </ButtonBar>
+        </Spacing>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -3029,7 +3315,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -3039,7 +3325,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -3071,7 +3357,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -3116,7 +3403,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -3149,13 +3437,13 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <TabBar
         >
           <Tab
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
+             >
+          </Tab>
+          <Tab
              text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   effect={{"effectType":"route","path":"/about_exhibition"}}
              execOnMount={false}
           >
-          </Tab>
-          <Tab
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_project"] ? $translations[$lang]["$nav_about_project"] : "nav_about_project") : ($translations.en && $translations.en["$nav_about_project"] ? $translations.en["$nav_about_project"] : "…")}   effect={{"effectType":"route","path":"/about_project"}}
-             >
           </Tab>
           <Tab
              text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_data"] ? $translations[$lang]["$nav_about_data"] : "nav_about_data") : ($translations.en && $translations.en["$nav_about_data"] ? $translations.en["$nav_about_data"] : "…")}   effect={{"effectType":"route","path":"/about_data"}}
@@ -3163,32 +3451,91 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           >
           </Tab>
         </TabBar>
-        <TextFormat
-           interfaceFormat="none"
-           contentFormat="headline-2"
+        <Spacing
+           top="m"
+           right="s"
+           bottom="s"
+           left="s"
         >
-          <StaticText
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
-          </StaticText>
-        </TextFormat>
-        <DataLoaderSingle
-           sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
-           rowKey="ace5405f-595e-434d-92e4-c3c7ebcce5f8"
-           >
-          <DataCell
-             column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
-             centerContent={false}
+          <TextFormat
+             interfaceFormat="none"
+             contentFormat="headline-2"
           >
-          </DataCell>
-        </DataLoaderSingle>
-        <Button
-           text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
-           size="small"
-           flex="normal"
-           disabled={false}
-              effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+            <StaticText
+               text={$lang ? ($translations[$lang] && $translations[$lang]["$about_data"] ? $translations[$lang]["$about_data"] : "about_data") : ($translations.en && $translations.en["$about_data"] ? $translations.en["$about_data"] : "…")}>
+            </StaticText>
+          </TextFormat>
+          <DataLoaderSingle
+             sheet="c6d3fe70-03f6-46ca-9e78-7541448d9e0f"
+             rowKey="3125d2d2-67a4-4d80-b336-d689ab2b82af"
+             >
+            <DataCell
+               column={$lang ? "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/" + "menu$lang".replace("$lang", "$" + $lang) : "c6d3fe70-03f6-46ca-9e78-7541448d9e0f/menu$lang"}   format="richText"
+               centerContent={false}
+            >
+            </DataCell>
+          </DataLoaderSingle>
+        </Spacing>
+        <Spacing
+           top="s"
+           right="m"
+           bottom="m"
+           left="m"
         >
-        </Button>
+          <Button
+             text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
+             size="medium"
+             flex="fill"
+             disabled={false}
+             ariaLabel="Download metadata"
+             effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+          >
+          </Button>
+        </Spacing>
+        <ButtonBar
+           justify="center"
+           >
+          <Button
+             text="Minimaldatensatz"
+             type="link"
+             size="small"
+             flex="normal"
+             disabled={false}
+             ariaLabel="Link Minimaldatensatz-Empfehlung"
+             effect={{"effectType":"linkTargetBlank","url":"https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"}}
+          >
+          </Button>
+          <Button
+             text="GND"
+             type="link"
+             size="small"
+             flex="normal"
+             disabled={false}
+             ariaLabel="Link GND"
+             effect={{"effectType":"linkTargetBlank","url":"https://www.dnb.de/DE/Professionell/Standardisierung/GND/gnd_node.html"}}
+          >
+          </Button>
+          <Button
+             text="AAT"
+             type="link"
+             size="small"
+             flex="normal"
+             disabled={false}
+             ariaLabel="Link AAT"
+             effect={{"effectType":"linkTargetBlank","url":"https://www.getty.edu/research/tools/vocabularies/aat/"}}
+          >
+          </Button>
+          <Button
+             text="Wikidata"
+             type="link"
+             size="small"
+             flex="normal"
+             disabled={false}
+             ariaLabel="Link Wikidata"
+             effect={{"effectType":"linkTargetBlank","url":"https://www.wikidata.org/wiki/Wikidata:Main_Page"}}
+          >
+          </Button>
+        </ButtonBar>
       </ScrollContainer>
     </svelte:fragment>
     <svelte:fragment slot="BottomBar">
@@ -3199,7 +3546,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -3209,7 +3556,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -3241,7 +3588,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -3286,7 +3634,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -3336,7 +3685,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
                  headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                       >
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
@@ -3443,7 +3793,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  size="medium"
                  flex="normal"
                  disabled={false}
-                    effect={{"effectType":"route","path":"/about_data"}}
+                 ariaLabel="About the data"
+                 effect={{"effectType":"route","path":"/about_data"}}
               >
               </Button>
             </SectionShell>
@@ -3575,7 +3926,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                        size="large"
                        flex="fill"
                        disabled={false}
-                          effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
+                       ariaLabel="Image 1"
+                       effect={{"effectType":"setUIKey","value":"1","key":"overlayImage"}}
                     >
                       <Image
                                imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
@@ -3590,7 +3942,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                        size="large"
                        flex="fill"
                        disabled={false}
-                          effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
+                       ariaLabel="Image 2"
+                       effect={{"effectType":"setUIKey","value":"2","key":"overlayImage"}}
                     >
                       <Image
                                imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/9e8c6ee5-4ce6-4eed-844b-c9739fb50885"
@@ -3605,7 +3958,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                        size="large"
                        flex="fill"
                        disabled={false}
-                          effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
+                       ariaLabel="Image 3"
+                       effect={{"effectType":"setUIKey","value":"3","key":"overlayImage"}}
                     >
                       <Image
                                imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/48789c75-cff9-4a91-863f-387de78adea8"
@@ -3662,7 +4016,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -3672,7 +4026,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
@@ -3704,7 +4058,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              size="small"
              flex="normal"
              disabled={false}
-                effect={{"effectType":"back"}}
+             ariaLabel="Back"
+             effect={{"effectType":"back"}}
           >
             <Icon
                type="Thin-Arrow-Left"
@@ -3749,7 +4104,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                size="small"
                flex="normal"
                disabled={false}
-               ariaLabel={$lang ? ($translations[$lang] && $translations[$lang]["$menu"] ? $translations[$lang]["$menu"] : "menu") : "…"}   effect={{"effectType":"route","path":"/menu"}}
+               ariaLabel="Navigation menu"
+               effect={{"effectType":"route","path":"/menu"}}
             >
               <Icon
                  type="Full-Menu"
@@ -3789,7 +4145,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            size="medium"
            flex="fill"
            disabled={false}
-              effect={{"effectType":"route","path":"/about_exhibition"}}
+           ariaLabel="About the exhibition"
+           effect={{"effectType":"route","path":"/about_exhibition"}}
         >
         </Button>
       </SectionShell>
@@ -3847,7 +4204,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
       <NavBar
       >
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_home"] ? $translations[$lang]["$nav_home"] : "nav_home") : ($translations.en && $translations.en["$nav_home"] ? $translations.en["$nav_home"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/"}}
         >
           <Icon
@@ -3857,7 +4214,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Icon>
         </NavButton>
         <NavButton
-              disabled={false}
+           text={$lang ? ($translations[$lang] && $translations[$lang]["$nav_about_exhibition"] ? $translations[$lang]["$nav_about_exhibition"] : "nav_about_exhibition") : ($translations.en && $translations.en["$nav_about_exhibition"] ? $translations.en["$nav_about_exhibition"] : "…")}   disabled={false}
            effect={{"effectType":"route","path":"/exhibition"}}
         >
           <Icon
