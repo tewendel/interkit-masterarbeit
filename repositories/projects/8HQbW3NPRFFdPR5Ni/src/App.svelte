@@ -24,6 +24,7 @@ import LangSwitch from "interkit/components/LangSwitch.svelte";
 import LayoutShell from "interkit/components/LayoutShell.svelte";
 import LayoutShellAudio from "interkit/components/LayoutShellAudio.svelte";
 import ListItem from "interkit/components/ListItem.svelte";
+import MetadataDownload from "./components/MetadataDownload.svelte";
 import NavBar from "interkit/components/NavBar.svelte";
 import NavButton from "interkit/components/NavButton.svelte";
 import OverlayFull from "interkit/components/OverlayFull.svelte";
@@ -34,6 +35,7 @@ import SectionShell from "interkit/components/SectionShell.svelte";
 import SlideInModal from "interkit/components/SlideInModal.svelte";
 import Spacing from "interkit/components/Spacing.svelte";
 import StaticText from "interkit/components/StaticText.svelte";
+import Styling from "interkit/components/Styling.svelte";
 import Tab from "interkit/components/Tab.svelte";
 import TabBar from "interkit/components/TabBar.svelte";
 import TextFormat from "interkit/components/TextFormat.svelte";
@@ -419,8 +421,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
 >
 <svelte:fragment slot="viewport">
   <AnonymousLogin
-     defaultLang="de"
-     defaultLangIndex="1"
+        defaultLangIndex="0"
   >
     <Route
        path="/"
@@ -1754,15 +1755,15 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                bottom="m"
                left="m"
             >
-              <Button
-                 text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
-                 size="medium"
-                 flex="fill"
-                 disabled={false}
-                 ariaLabel="Download metadata"
-                 effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+              <Styling
+                 styleTokens={{"colorText":"#4954ee","colorTextStrong":"#000000","colorTextSoft":"#4C4C4C","colorTextLink":"#2D40A1","colorBackground":"#FFFFFF","colorBackgroundHighlight":"#E5E5E5","colorBackgroundBackdrop":"#F2F2F2","colorBorder":"#999999","colorDummyAsset":"#FFDBD3","colorTextButtonPressed":"#000000","colorBackgroundButtonPressed":"#B2B2B2","colorTextButtonDanger":"#000000","colorBackgroundButtonDanger":"#FF6A49","colorBackgroundButtonDangerPressed":"#FFA996","colorTextButtonPrimary":"#FFFFFF","colorTextButtonPrimaryPressed":"#FFFFFF","colorBackgroundButtonPrimary":"#000000","colorBackgroundButtonPrimaryPressed":"#4C4C4C","colorBorderButtonPrimary":"#000000","colorBorderButtonPrimaryPressed":"#000000","colorBackgroundLabel1":"#B2B2B2","colorTextLabel1":"#000000","colorBackgroundChatMe":"#FFFFFF","colorBackgroundChatOther":"#F2F2F2","colorPagination":"#000000","borderWidth":"1px","borderRadius":"1rem","borderRadiusButton":"1rem","borderRadiusLabel":"0.5rem","boxShadow":"0 0 1px rgba(0, 0, 0, 0.5)","googleFont":"Inter:wght@400;500;600;700;900","googleFont2":"Inter:wght@400;500;600;700;900","fontFamilyInterface":"Inter, sans-serif","fontFamilyContent":"Inter, sans-serif","fontHeadline1":"400 3rem/3.5rem var(--font-family-interface)","fontHeadline2":"400 1.875rem/2.25rem var(--font-family-interface)","fontHeadline3":"400 1.5rem/1.75rem var(--font-family-interface)","fontHeadline4":"400 1.25rem/1.5rem var(--font-family-interface)","fontHeadline5":"700 1rem/1.5rem var(--font-family-interface)","fontBody1":"400 1rem/1.5rem var(--font-family-interface)","fontBody2":"400 0.875rem/1.3125rem var(--font-family-interface)","fontSubtitle1":"400 1rem/1.3125rem var(--font-family-interface)","fontSubtitle2":"500 0.875rem/1.125rem var(--font-family-interface)","fontButton":"600 0.75rem/1rem var(--font-family-interface)","fontCaption":"400 0.75rem/1rem var(--font-family-interface)","fontCaptionBold":"700 0.75rem/1rem var(--font-family-interface)","fontOverline":"500 0.625rem/0.75rem var(--font-family-interface)","fontContentHeadline1":"900 3rem/3.5rem var(--font-family-content)","fontContentHeadline2":"900 1.875rem/2.25rem var(--font-family-content)","fontContentHeadline3":"900 1.5rem/1.75rem var(--font-family-content)","fontContentHeadline4":"900 1.25rem/1.5rem var(--font-family-content)","fontContentHeadline5":"700 1rem/1.5rem var(--font-family-content)","fontContentBody1":"400 1rem/1.5rem var(--font-family-content)","fontContentBody2":"400 0.875rem/1.5rem var(--font-family-content)","letterSpacingHeadline1":"0","letterSpacingHeadline2":"-0.03125rem","letterSpacingHeadline3":"-0.015625rem","letterSpacingHeadline4":"-0.015625rem","letterSpacingHeadline5":"0","letterSpacingBody1":"0.015625rem","letterSpacingBody2":"0.015625rem","letterSpacingSubtitle1":"0.009375rem","letterSpacingSubtitle2":"0.00625rem","letterSpacingButton":"0","letterSpacingCaption":"0","letterSpacingCaptionBold":"0","letterSpacingOverline":"0","letterSpacingContentHeadline1":"-0.0625rem","letterSpacingContentHeadline2":"-0.03125rem","letterSpacingContentHeadline3":"-0.03125rem","letterSpacingContentHeadline4":"0","letterSpacingContentHeadline5":"-0.02rem","letterSpacingContentBody1":"-0.015625rem","letterSpacingContentBody2":"0","scale":1,"distanceScaleFactor":1,"inset":"var(--distance-scale-factor)","insetX":"var(--inset)","insetY":"var(--inset)","outsetX":"var(--distance-scale-factor)","outsetY":"var(--distance-scale-factor)"}}
               >
-              </Button>
+                <MetadataDownload
+                   label={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   sheetKey="3d764bfb-ebf1-4e17-b756-e819c1d8794c"
+                   filename="fuer-die-voegel_metadata"
+                >
+                </MetadataDownload>
+              </Styling>
             </Spacing>
             <ButtonBar
                justify="center"
@@ -1970,7 +1971,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      rightArrow={false}
                      effect={{"effectType":"dataRouteSingle","path":"/exhibition_artworks"}}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
                      subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="elements/subtitle2"
                         subtitle3Column="elements/subtitle3"
                      descriptionColumn="elements/description"
@@ -2142,8 +2143,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="medium"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/inventoryNumber"
                            >
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
@@ -2234,6 +2235,11 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
+                      <DataCell
+                         column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "subjectKeywordDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/subjectKeywordDisplay$lang"}   format="string"
+                         centerContent={false}
+                      >
+                      </DataCell>
                       <WikidataEmbedSubjectNew
                          title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
                          height="65vh"
@@ -2271,8 +2277,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                      variant="full"
                         effect={undefined}
                      imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
+                     headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
+                     subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               descriptionColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}>
                   <svelte:fragment slot="chips">
                   </svelte:fragment>
                   <svelte:fragment slot="content">
@@ -2295,7 +2301,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </svelte:fragment>
                       <svelte:fragment slot="content">
                         <DataCell
-                           column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}   format="richText"
+                           column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audioTranscript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audioTranscript$lang"}   format="richText"
                            centerContent={false}
                         >
                         </DataCell>
@@ -2439,23 +2445,38 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </svelte:fragment>
                   <svelte:fragment slot="content">
                     <DataCell
-                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
-                       format="string"
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "creditline$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/creditline$lang"}   format="richText"
                        centerContent={false}
                     >
                     </DataCell>
-                    <DataCell
-                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
-                       format="string"
-                       centerContent={false}
+                    <ColumnShell
+                       columns="3"
                     >
-                    </DataCell>
-                    <DataCell
-                       column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
-                       format="string"
-                       centerContent={false}
-                    >
-                    </DataCell>
+                    <svelte:fragment slot="col1">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
+                         format="string"
+                         centerContent={false}
+                      >
+                      </DataCell>
+                    </svelte:fragment>
+                    <svelte:fragment slot="col2">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
+                         format="string"
+                         centerContent={false}
+                      >
+                      </DataCell>
+                    </svelte:fragment>
+                    <svelte:fragment slot="col3">
+                      <DataCell
+                         column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
+                         format="string"
+                         centerContent={false}
+                      >
+                      </DataCell>
+                    </svelte:fragment>
+                    </ColumnShell>
                   </svelte:fragment>
                   </AccordeonShell>
                 </Spacing>
@@ -3482,15 +3503,15 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            bottom="m"
            left="m"
         >
-          <Button
-             text={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   type="secondary"
-             size="medium"
-             flex="fill"
-             disabled={false}
-             ariaLabel="Download metadata"
-             effect={{"effectType":"link","url":"static/exports/mgk-fuer-die-voegel-metadata-v2.csv"}}
+          <Styling
+             styleTokens={{"colorText":"#4954ee","colorTextStrong":"#000000","colorTextSoft":"#4C4C4C","colorTextLink":"#2D40A1","colorBackground":"#FFFFFF","colorBackgroundHighlight":"#E5E5E5","colorBackgroundBackdrop":"#F2F2F2","colorBorder":"#999999","colorDummyAsset":"#FFDBD3","colorTextButtonPressed":"#000000","colorBackgroundButtonPressed":"#B2B2B2","colorTextButtonDanger":"#000000","colorBackgroundButtonDanger":"#FF6A49","colorBackgroundButtonDangerPressed":"#FFA996","colorTextButtonPrimary":"#FFFFFF","colorTextButtonPrimaryPressed":"#FFFFFF","colorBackgroundButtonPrimary":"#000000","colorBackgroundButtonPrimaryPressed":"#4C4C4C","colorBorderButtonPrimary":"#000000","colorBorderButtonPrimaryPressed":"#000000","colorBackgroundLabel1":"#B2B2B2","colorTextLabel1":"#000000","colorBackgroundChatMe":"#FFFFFF","colorBackgroundChatOther":"#F2F2F2","colorPagination":"#000000","borderWidth":"1px","borderRadius":"1rem","borderRadiusButton":"1rem","borderRadiusLabel":"0.5rem","boxShadow":"0 0 1px rgba(0, 0, 0, 0.5)","googleFont":"Inter:wght@400;500;600;700;900","googleFont2":"Inter:wght@400;500;600;700;900","fontFamilyInterface":"Inter, sans-serif","fontFamilyContent":"Inter, sans-serif","fontHeadline1":"400 3rem/3.5rem var(--font-family-interface)","fontHeadline2":"400 1.875rem/2.25rem var(--font-family-interface)","fontHeadline3":"400 1.5rem/1.75rem var(--font-family-interface)","fontHeadline4":"400 1.25rem/1.5rem var(--font-family-interface)","fontHeadline5":"700 1rem/1.5rem var(--font-family-interface)","fontBody1":"400 1rem/1.5rem var(--font-family-interface)","fontBody2":"400 0.875rem/1.3125rem var(--font-family-interface)","fontSubtitle1":"400 1rem/1.3125rem var(--font-family-interface)","fontSubtitle2":"500 0.875rem/1.125rem var(--font-family-interface)","fontButton":"600 0.75rem/1rem var(--font-family-interface)","fontCaption":"400 0.75rem/1rem var(--font-family-interface)","fontCaptionBold":"700 0.75rem/1rem var(--font-family-interface)","fontOverline":"500 0.625rem/0.75rem var(--font-family-interface)","fontContentHeadline1":"900 3rem/3.5rem var(--font-family-content)","fontContentHeadline2":"900 1.875rem/2.25rem var(--font-family-content)","fontContentHeadline3":"900 1.5rem/1.75rem var(--font-family-content)","fontContentHeadline4":"900 1.25rem/1.5rem var(--font-family-content)","fontContentHeadline5":"700 1rem/1.5rem var(--font-family-content)","fontContentBody1":"400 1rem/1.5rem var(--font-family-content)","fontContentBody2":"400 0.875rem/1.5rem var(--font-family-content)","letterSpacingHeadline1":"0","letterSpacingHeadline2":"-0.03125rem","letterSpacingHeadline3":"-0.015625rem","letterSpacingHeadline4":"-0.015625rem","letterSpacingHeadline5":"0","letterSpacingBody1":"0.015625rem","letterSpacingBody2":"0.015625rem","letterSpacingSubtitle1":"0.009375rem","letterSpacingSubtitle2":"0.00625rem","letterSpacingButton":"0","letterSpacingCaption":"0","letterSpacingCaptionBold":"0","letterSpacingOverline":"0","letterSpacingContentHeadline1":"-0.0625rem","letterSpacingContentHeadline2":"-0.03125rem","letterSpacingContentHeadline3":"-0.03125rem","letterSpacingContentHeadline4":"0","letterSpacingContentHeadline5":"-0.02rem","letterSpacingContentBody1":"-0.015625rem","letterSpacingContentBody2":"0","scale":1,"distanceScaleFactor":1,"inset":"var(--distance-scale-factor)","insetX":"var(--inset)","insetY":"var(--inset)","outsetX":"var(--distance-scale-factor)","outsetY":"var(--distance-scale-factor)"}}
           >
-          </Button>
+            <MetadataDownload
+               label={$lang ? ($translations[$lang] && $translations[$lang]["$project_metadata_download"] ? $translations[$lang]["$project_metadata_download"] : "project_metadata_download") : ($translations.en && $translations.en["$project_metadata_download"] ? $translations.en["$project_metadata_download"] : "…")}   sheetKey="3d764bfb-ebf1-4e17-b756-e819c1d8794c"
+               filename="fuer-die-voegel_metadata"
+            >
+            </MetadataDownload>
+          </Styling>
         </Spacing>
         <ButtonBar
            justify="center"
@@ -3684,8 +3705,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="medium"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/05f91944-0978-4061-bcee-f39584e6fbaf"
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/inventoryNumber"
                        >
               <svelte:fragment slot="chips">
               </svelte:fragment>
@@ -3776,6 +3797,11 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
+                  <DataCell
+                     column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "subjectKeywordDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/subjectKeywordDisplay$lang"}   format="string"
+                     centerContent={false}
+                  >
+                  </DataCell>
                   <WikidataEmbedSubjectNew
                      title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
                      height="65vh"
@@ -3813,8 +3839,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  variant="full"
                     effect={undefined}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
-                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               >
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
+                 subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}               descriptionColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}>
               <svelte:fragment slot="chips">
               </svelte:fragment>
               <svelte:fragment slot="content">
@@ -3837,7 +3863,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </svelte:fragment>
                   <svelte:fragment slot="content">
                     <DataCell
-                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectDescription$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectDescription$lang"}   format="richText"
+                       column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "audioTranscript$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/audioTranscript$lang"}   format="richText"
                        centerContent={false}
                     >
                     </DataCell>
@@ -3981,23 +4007,38 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </svelte:fragment>
               <svelte:fragment slot="content">
                 <DataCell
-                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
-                   format="string"
+                   column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "creditline$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/creditline$lang"}   format="richText"
                    centerContent={false}
                 >
                 </DataCell>
-                <DataCell
-                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
-                   format="string"
-                   centerContent={false}
+                <ColumnShell
+                   columns="3"
                 >
-                </DataCell>
-                <DataCell
-                   column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
-                   format="string"
-                   centerContent={false}
-                >
-                </DataCell>
+                <svelte:fragment slot="col1">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/dcd2ce58-c690-451c-af6d-4f2c342f519d"
+                     format="string"
+                     centerContent={false}
+                  >
+                  </DataCell>
+                </svelte:fragment>
+                <svelte:fragment slot="col2">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/1a597e8d-1c77-43d7-bf22-0a924ecd128a"
+                     format="string"
+                     centerContent={false}
+                  >
+                  </DataCell>
+                </svelte:fragment>
+                <svelte:fragment slot="col3">
+                  <DataCell
+                     column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/e08e4dcb-da3f-46f2-a197-31ac53f6fde8"
+                     format="string"
+                     centerContent={false}
+                  >
+                  </DataCell>
+                </svelte:fragment>
+                </ColumnShell>
               </svelte:fragment>
               </AccordeonShell>
             </Spacing>
@@ -4169,7 +4210,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  rightArrow={false}
                  effect={{"effectType":"dataRouteSingle","path":"/exhibition_artworks"}}
                  imageColumn="3d764bfb-ebf1-4e17-b756-e819c1d8794c/100b14b4-e56e-444a-b789-d606b71c7405"
-                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/f608ac90-fd01-47fe-9e03-c847df23e950"
+                 headlineColumn={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "objectTitle$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/objectTitle$lang"}   label1Column="3d764bfb-ebf1-4e17-b756-e819c1d8794c/person"
                  subtitle1Column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "dateDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/dateDisplay$lang"}      subtitle2Column="elements/subtitle2"
                     subtitle3Column="elements/subtitle3"
                  descriptionColumn="elements/description"

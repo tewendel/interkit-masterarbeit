@@ -843,14 +843,14 @@
                       "name": "defaultLang",
                       "defaultValue": "en",
                       "id": "defaultLang",
-                      "value": "de"
+                      "value": ""
                     },
                     {
                       "type": "string",
                       "name": "defaultLangIndex",
                       "defaultValue": 0,
                       "id": "defaultLangIndex",
-                      "value": "1"
+                      "value": "0"
                     }
                   ]
                 }
@@ -1125,9 +1125,9 @@
                               "extraProps": {
                                 "props": [
                                   {
-                                    "id": "effect",
                                     "name": "effect",
                                     "type": "effect",
+                                    "id": "effect",
                                     "value": {
                                       "effectType": "route",
                                       "path": "/about"
@@ -1509,7 +1509,6 @@
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "top",
                                         "name": "top",
                                         "type": "options",
                                         "options": [
@@ -1522,10 +1521,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "top",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "right",
                                         "name": "right",
                                         "type": "options",
                                         "options": [
@@ -1538,10 +1537,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "right",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "bottom",
                                         "name": "bottom",
                                         "type": "options",
                                         "options": [
@@ -1554,10 +1553,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "bottom",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "left",
                                         "name": "left",
                                         "type": "options",
                                         "options": [
@@ -1570,6 +1569,7 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "left",
                                         "value": "s"
                                       }
                                     ]
@@ -1886,7 +1886,6 @@
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "top",
                                         "name": "top",
                                         "type": "options",
                                         "options": [
@@ -1899,10 +1898,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "top",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "right",
                                         "name": "right",
                                         "type": "options",
                                         "options": [
@@ -1915,10 +1914,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "right",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "bottom",
                                         "name": "bottom",
                                         "type": "options",
                                         "options": [
@@ -1931,10 +1930,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "bottom",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "left",
                                         "name": "left",
                                         "type": "options",
                                         "options": [
@@ -1947,6 +1946,7 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "left",
                                         "value": "s"
                                       }
                                     ]
@@ -2048,7 +2048,6 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "top",
                                                   "name": "top",
                                                   "type": "options",
                                                   "options": [
@@ -2061,10 +2060,10 @@
                                                     "xl",
                                                     "xxl"
                                                   ],
+                                                  "id": "top",
                                                   "value": "s"
                                                 },
                                                 {
-                                                  "id": "right",
                                                   "name": "right",
                                                   "type": "options",
                                                   "options": [
@@ -2076,10 +2075,10 @@
                                                     "l",
                                                     "xl",
                                                     "xxl"
-                                                  ]
+                                                  ],
+                                                  "id": "right"
                                                 },
                                                 {
-                                                  "id": "bottom",
                                                   "name": "bottom",
                                                   "type": "options",
                                                   "options": [
@@ -2091,10 +2090,10 @@
                                                     "l",
                                                     "xl",
                                                     "xxl"
-                                                  ]
+                                                  ],
+                                                  "id": "bottom"
                                                 },
                                                 {
-                                                  "id": "left",
                                                   "name": "left",
                                                   "type": "options",
                                                   "options": [
@@ -2106,7 +2105,8 @@
                                                     "l",
                                                     "xl",
                                                     "xxl"
-                                                  ]
+                                                  ],
+                                                  "id": "left"
                                                 }
                                               ]
                                             }
@@ -2122,7 +2122,6 @@
                                                   "extraProps": {
                                                     "props": [
                                                       {
-                                                        "id": "type",
                                                         "name": "type",
                                                         "type": "options",
                                                         "options": [
@@ -2134,10 +2133,10 @@
                                                         ],
                                                         "defaultValue": "secondary",
                                                         "help": "Appearance of the button.",
+                                                        "id": "type",
                                                         "value": "secondary"
                                                       },
                                                       {
-                                                        "id": "size",
                                                         "name": "size",
                                                         "type": "options",
                                                         "options": [
@@ -2147,10 +2146,10 @@
                                                         ],
                                                         "defaultValue": "small",
                                                         "help": "Large, medium or small.",
+                                                        "id": "size",
                                                         "value": "medium"
                                                       },
                                                       {
-                                                        "id": "flex",
                                                         "name": "flex",
                                                         "type": "options",
                                                         "options": [
@@ -2158,26 +2157,27 @@
                                                           "fill"
                                                         ],
                                                         "defaultValue": "normal",
-                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                        "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                        "id": "flex"
                                                       },
                                                       {
-                                                        "id": "disabled",
                                                         "name": "disabled",
                                                         "type": "checkbox",
-                                                        "defaultValue": false
+                                                        "defaultValue": false,
+                                                        "id": "disabled"
                                                       },
                                                       {
-                                                        "id": "ariaLabel",
                                                         "type": "string",
                                                         "name": "ariaLabel",
                                                         "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                        "id": "ariaLabel",
                                                         "value": "Link Google Fonts"
                                                       },
                                                       {
-                                                        "id": "effect",
                                                         "type": "effect",
                                                         "name": "effect",
                                                         "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                        "id": "effect",
                                                         "value": {
                                                           "effectType": "linkTargetBlank",
                                                           "url": "https://fonts.google.com/faq#privacy"
@@ -2720,7 +2720,7 @@
                                                               "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                "columnKey": "person",
                                                                 "text": "exhibition/person",
                                                                 "columnType": "string"
                                                               }
@@ -3100,7 +3100,6 @@
                                   "extraProps": {
                                     "props": [
                                       {
-                                        "id": "top",
                                         "name": "top",
                                         "type": "options",
                                         "options": [
@@ -3113,10 +3112,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "top",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "right",
                                         "name": "right",
                                         "type": "options",
                                         "options": [
@@ -3129,10 +3128,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "right",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "bottom",
                                         "name": "bottom",
                                         "type": "options",
                                         "options": [
@@ -3145,10 +3144,10 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "bottom",
                                         "value": "s"
                                       },
                                       {
-                                        "id": "left",
                                         "name": "left",
                                         "type": "options",
                                         "options": [
@@ -3161,6 +3160,7 @@
                                           "xl",
                                           "xxl"
                                         ],
+                                        "id": "left",
                                         "value": "s"
                                       }
                                     ]
@@ -3698,7 +3698,7 @@
                                                               "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                "columnKey": "person",
                                                                 "text": "exhibition/person",
                                                                 "columnType": "string"
                                                               }
@@ -3733,7 +3733,7 @@
                                                               "id": "subtitle2Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "05f91944-0978-4061-bcee-f39584e6fbaf",
+                                                                "columnKey": "inventoryNumber",
                                                                 "text": "exhibition/inventoryNumber",
                                                                 "columnType": "string"
                                                               }
@@ -4076,7 +4076,7 @@
                                                                   "id": "label2Column",
                                                                   "value": {
                                                                     "sheetKey": "empty",
-                                                                    "columnKey": "materialsTechniquesDisplay$lang",
+                                                                    "columnKey": "person",
                                                                     "text": "",
                                                                     "columnType": "string"
                                                                   }
@@ -4345,13 +4345,57 @@
                                                                                   },
                                                                                   "content": {
                                                                                     "block": {
-                                                                                      "type": "WikidataEmbedSubjectNew",
-                                                                                      "id": "g;.C1qQrE9GF)gB(iw}f",
-                                                                                      "data": "{\"origin\":\".\"}",
+                                                                                      "type": "DataCell",
+                                                                                      "id": "~zz$R]WBUTLZ}:(LlX5I",
+                                                                                      "data": "{\"origin\":\"interkit\"}",
                                                                                       "fields": {
-                                                                                        "title": "$context_subject_prompt",
-                                                                                        "subjectKeywordColumn": "subjectKeyword",
-                                                                                        "height": "65vh"
+                                                                                        "extraProps": {
+                                                                                          "props": [
+                                                                                            {
+                                                                                              "name": "column",
+                                                                                              "type": "sheetColumn",
+                                                                                              "columnType": "richText",
+                                                                                              "defaultValue": "settings/content",
+                                                                                              "id": "column",
+                                                                                              "value": {
+                                                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                                "columnKey": "subjectKeywordDisplay$lang",
+                                                                                                "text": "exhibition/subjectKeywordDisplay$lang",
+                                                                                                "columnType": "string"
+                                                                                              }
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "format",
+                                                                                              "type": "options",
+                                                                                              "options": [
+                                                                                                "richText",
+                                                                                                "string"
+                                                                                              ],
+                                                                                              "defaultValue": "richText",
+                                                                                              "id": "format",
+                                                                                              "value": "string"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "centerContent",
+                                                                                              "type": "checkbox",
+                                                                                              "defaultValue": false,
+                                                                                              "id": "centerContent",
+                                                                                              "value": false
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      },
+                                                                                      "next": {
+                                                                                        "block": {
+                                                                                          "type": "WikidataEmbedSubjectNew",
+                                                                                          "id": "g;.C1qQrE9GF)gB(iw}f",
+                                                                                          "data": "{\"origin\":\".\"}",
+                                                                                          "fields": {
+                                                                                            "title": "$context_subject_prompt",
+                                                                                            "subjectKeywordColumn": "subjectKeyword",
+                                                                                            "height": "65vh"
+                                                                                          }
+                                                                                        }
                                                                                       }
                                                                                     }
                                                                                   }
@@ -4608,7 +4652,7 @@
                                                               "id": "label1Column",
                                                               "value": {
                                                                 "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                "columnKey": "f608ac90-fd01-47fe-9e03-c847df23e950",
+                                                                "columnKey": "person",
                                                                 "text": "exhibition/person",
                                                                 "columnType": "string"
                                                               }
@@ -4679,9 +4723,9 @@
                                                               "defaultValue": "elements/description",
                                                               "id": "descriptionColumn",
                                                               "value": {
-                                                                "sheetKey": "empty",
+                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
                                                                 "columnKey": "objectDescription$lang",
-                                                                "text": "",
+                                                                "text": "exhibition/objectDescription$lang",
                                                                 "columnType": "richText"
                                                               }
                                                             }
@@ -4811,8 +4855,8 @@
                                                                                     "id": "column",
                                                                                     "value": {
                                                                                       "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                      "columnKey": "objectDescription$lang",
-                                                                                      "text": "exhibition/objectDescription$lang",
+                                                                                      "columnKey": "audioTranscript$lang",
+                                                                                      "text": "exhibition/audioTranscript$lang",
                                                                                       "columnType": "richText"
                                                                                     }
                                                                                   },
@@ -5750,7 +5794,7 @@
                                                                     "content": {
                                                                       "block": {
                                                                         "type": "DataCell",
-                                                                        "id": "RyFx|ihyFN=3CK2#~YN{",
+                                                                        "id": "dfc+qBCIV~3vq:%nc,.i",
                                                                         "data": "{\"origin\":\"interkit\"}",
                                                                         "fields": {
                                                                           "extraProps": {
@@ -5763,8 +5807,8 @@
                                                                                 "id": "column",
                                                                                 "value": {
                                                                                   "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                  "columnKey": "dcd2ce58-c690-451c-af6d-4f2c342f519d",
-                                                                                  "text": "exhibition/rightsHolderOfMediaFile_image_1",
+                                                                                  "columnKey": "creditline$lang",
+                                                                                  "text": "exhibition/creditline$lang",
                                                                                   "columnType": "string"
                                                                                 }
                                                                               },
@@ -5776,8 +5820,7 @@
                                                                                   "string"
                                                                                 ],
                                                                                 "defaultValue": "richText",
-                                                                                "id": "format",
-                                                                                "value": "string"
+                                                                                "id": "format"
                                                                               },
                                                                               {
                                                                                 "name": "centerContent",
@@ -5790,84 +5833,139 @@
                                                                         },
                                                                         "next": {
                                                                           "block": {
-                                                                            "type": "DataCell",
-                                                                            "id": "/][Lt?QpAF!vbwGS6fOZ",
+                                                                            "type": "ColumnShell",
+                                                                            "id": "4C%yQbySX!44$b2kfH{=",
                                                                             "data": "{\"origin\":\"interkit\"}",
                                                                             "fields": {
-                                                                              "extraProps": {
-                                                                                "props": [
-                                                                                  {
-                                                                                    "name": "column",
-                                                                                    "type": "sheetColumn",
-                                                                                    "columnType": "richText",
-                                                                                    "defaultValue": "settings/content",
-                                                                                    "id": "column",
-                                                                                    "value": {
-                                                                                      "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                      "columnKey": "1a597e8d-1c77-43d7-bf22-0a924ecd128a",
-                                                                                      "text": "exhibition/rightsHolderOfMediaFile_image_2",
-                                                                                      "columnType": "string"
-                                                                                    }
-                                                                                  },
-                                                                                  {
-                                                                                    "name": "format",
-                                                                                    "type": "options",
-                                                                                    "options": [
-                                                                                      "richText",
-                                                                                      "string"
-                                                                                    ],
-                                                                                    "defaultValue": "richText",
-                                                                                    "id": "format",
-                                                                                    "value": "string"
-                                                                                  },
-                                                                                  {
-                                                                                    "name": "centerContent",
-                                                                                    "type": "checkbox",
-                                                                                    "defaultValue": false,
-                                                                                    "id": "centerContent"
-                                                                                  }
-                                                                                ]
-                                                                              }
+                                                                              "columns": "3"
                                                                             },
-                                                                            "next": {
-                                                                              "block": {
-                                                                                "type": "DataCell",
-                                                                                "id": "zja]BL9D.,p/|{@R]5::",
-                                                                                "data": "{\"origin\":\"interkit\"}",
-                                                                                "fields": {
-                                                                                  "extraProps": {
-                                                                                    "props": [
-                                                                                      {
-                                                                                        "name": "column",
-                                                                                        "type": "sheetColumn",
-                                                                                        "columnType": "richText",
-                                                                                        "defaultValue": "settings/content",
-                                                                                        "id": "column",
-                                                                                        "value": {
-                                                                                          "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                          "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
-                                                                                          "text": "exhibition/rightsHolderOfMediaFile_image_3",
-                                                                                          "columnType": "string"
+                                                                            "inputs": {
+                                                                              "col1": {
+                                                                                "block": {
+                                                                                  "type": "DataCell",
+                                                                                  "id": "RyFx|ihyFN=3CK2#~YN{",
+                                                                                  "data": "{\"origin\":\"interkit\"}",
+                                                                                  "fields": {
+                                                                                    "extraProps": {
+                                                                                      "props": [
+                                                                                        {
+                                                                                          "name": "column",
+                                                                                          "type": "sheetColumn",
+                                                                                          "columnType": "richText",
+                                                                                          "defaultValue": "settings/content",
+                                                                                          "id": "column",
+                                                                                          "value": {
+                                                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                            "columnKey": "dcd2ce58-c690-451c-af6d-4f2c342f519d",
+                                                                                            "text": "exhibition/rightsHolderOfMediaFile_image_1",
+                                                                                            "columnType": "string"
+                                                                                          }
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "format",
+                                                                                          "type": "options",
+                                                                                          "options": [
+                                                                                            "richText",
+                                                                                            "string"
+                                                                                          ],
+                                                                                          "defaultValue": "richText",
+                                                                                          "id": "format",
+                                                                                          "value": "string"
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "centerContent",
+                                                                                          "type": "checkbox",
+                                                                                          "defaultValue": false,
+                                                                                          "id": "centerContent"
                                                                                         }
-                                                                                      },
-                                                                                      {
-                                                                                        "name": "format",
-                                                                                        "type": "options",
-                                                                                        "options": [
-                                                                                          "richText",
-                                                                                          "string"
-                                                                                        ],
-                                                                                        "defaultValue": "richText",
-                                                                                        "id": "format",
-                                                                                        "value": "string"
-                                                                                      },
-                                                                                      {
-                                                                                        "name": "centerContent",
-                                                                                        "type": "checkbox",
-                                                                                        "defaultValue": false,
-                                                                                        "id": "centerContent"
-                                                                                      }
-                                                                                    ]
+                                                                                      ]
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              },
+                                                                              "col2": {
+                                                                                "block": {
+                                                                                  "type": "DataCell",
+                                                                                  "id": "/][Lt?QpAF!vbwGS6fOZ",
+                                                                                  "data": "{\"origin\":\"interkit\"}",
+                                                                                  "fields": {
+                                                                                    "extraProps": {
+                                                                                      "props": [
+                                                                                        {
+                                                                                          "name": "column",
+                                                                                          "type": "sheetColumn",
+                                                                                          "columnType": "richText",
+                                                                                          "defaultValue": "settings/content",
+                                                                                          "id": "column",
+                                                                                          "value": {
+                                                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                            "columnKey": "1a597e8d-1c77-43d7-bf22-0a924ecd128a",
+                                                                                            "text": "exhibition/rightsHolderOfMediaFile_image_2",
+                                                                                            "columnType": "string"
+                                                                                          }
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "format",
+                                                                                          "type": "options",
+                                                                                          "options": [
+                                                                                            "richText",
+                                                                                            "string"
+                                                                                          ],
+                                                                                          "defaultValue": "richText",
+                                                                                          "id": "format",
+                                                                                          "value": "string"
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "centerContent",
+                                                                                          "type": "checkbox",
+                                                                                          "defaultValue": false,
+                                                                                          "id": "centerContent"
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              },
+                                                                              "col3": {
+                                                                                "block": {
+                                                                                  "type": "DataCell",
+                                                                                  "id": "zja]BL9D.,p/|{@R]5::",
+                                                                                  "data": "{\"origin\":\"interkit\"}",
+                                                                                  "fields": {
+                                                                                    "extraProps": {
+                                                                                      "props": [
+                                                                                        {
+                                                                                          "name": "column",
+                                                                                          "type": "sheetColumn",
+                                                                                          "columnType": "richText",
+                                                                                          "defaultValue": "settings/content",
+                                                                                          "id": "column",
+                                                                                          "value": {
+                                                                                            "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                            "columnKey": "e08e4dcb-da3f-46f2-a197-31ac53f6fde8",
+                                                                                            "text": "exhibition/rightsHolderOfMediaFile_image_3",
+                                                                                            "columnType": "string"
+                                                                                          }
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "format",
+                                                                                          "type": "options",
+                                                                                          "options": [
+                                                                                            "richText",
+                                                                                            "string"
+                                                                                          ],
+                                                                                          "defaultValue": "richText",
+                                                                                          "id": "format",
+                                                                                          "value": "string"
+                                                                                        },
+                                                                                        {
+                                                                                          "name": "centerContent",
+                                                                                          "type": "checkbox",
+                                                                                          "defaultValue": false,
+                                                                                          "id": "centerContent"
+                                                                                        }
+                                                                                      ]
+                                                                                    }
                                                                                   }
                                                                                 }
                                                                               }
@@ -6144,20 +6242,20 @@
                                         "extraProps": {
                                           "props": [
                                             {
-                                              "id": "effect",
                                               "type": "effect",
                                               "name": "effect",
                                               "help": "The type of effect (or action) the tab should trigger when pressed. Usually used with Route.",
+                                              "id": "effect",
                                               "value": {
                                                 "effectType": "route",
                                                 "path": "/about_project"
                                               }
                                             },
                                             {
-                                              "id": "execOnMount",
                                               "type": "checkbox",
                                               "name": "execOnMount",
                                               "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                                              "id": "execOnMount",
                                               "value": true
                                             }
                                           ]
@@ -6173,20 +6271,20 @@
                                             "extraProps": {
                                               "props": [
                                                 {
-                                                  "id": "effect",
                                                   "type": "effect",
                                                   "name": "effect",
                                                   "help": "The type of effect (or action) the tab should trigger when pressed. Usually used with Route.",
+                                                  "id": "effect",
                                                   "value": {
                                                     "effectType": "route",
                                                     "path": "/about_exhibition"
                                                   }
                                                 },
                                                 {
-                                                  "id": "execOnMount",
                                                   "type": "checkbox",
                                                   "name": "execOnMount",
                                                   "help": "Runs the effect once when the button is rendered (for example to set a default value)",
+                                                  "id": "execOnMount",
                                                   "value": false
                                                 }
                                               ]
@@ -6548,7 +6646,6 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "top",
                                             "name": "top",
                                             "type": "options",
                                             "options": [
@@ -6561,10 +6658,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "top",
                                             "value": "m"
                                           },
                                           {
-                                            "id": "right",
                                             "name": "right",
                                             "type": "options",
                                             "options": [
@@ -6577,10 +6674,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "right",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "bottom",
                                             "name": "bottom",
                                             "type": "options",
                                             "options": [
@@ -6593,10 +6690,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "bottom",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "left",
                                             "name": "left",
                                             "type": "options",
                                             "options": [
@@ -6609,6 +6706,7 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "left",
                                             "value": "s"
                                           }
                                         ]
@@ -6688,28 +6786,28 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "sheet",
                                                       "name": "sheet",
                                                       "type": "sheetId",
                                                       "help": "Select the sheet you want to load data from.",
+                                                      "id": "sheet",
                                                       "value": {
                                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                         "text": "translation_rich"
                                                       }
                                                     },
                                                     {
-                                                      "id": "rowKey",
                                                       "name": "rowKey",
                                                       "type": "string",
                                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                                      "id": "rowKey",
                                                       "value": "ace5405f-595e-434d-92e4-c3c7ebcce5f8"
                                                     },
                                                     {
-                                                      "id": "customKeyColumn",
                                                       "name": "customKeyColumn",
                                                       "type": "sheetColumn",
                                                       "columnType": "string",
                                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                                      "id": "customKeyColumn",
                                                       "value": {
                                                         "sheetKey": "empty",
                                                         "text": "",
@@ -6730,11 +6828,11 @@
                                                       "extraProps": {
                                                         "props": [
                                                           {
-                                                            "id": "column",
                                                             "name": "column",
                                                             "type": "sheetColumn",
                                                             "columnType": "richText",
                                                             "defaultValue": "settings/content",
+                                                            "id": "column",
                                                             "value": {
                                                               "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                               "columnKey": "menu$lang",
@@ -6743,20 +6841,20 @@
                                                             }
                                                           },
                                                           {
-                                                            "id": "format",
                                                             "name": "format",
                                                             "type": "options",
                                                             "options": [
                                                               "richText",
                                                               "string"
                                                             ],
-                                                            "defaultValue": "richText"
+                                                            "defaultValue": "richText",
+                                                            "id": "format"
                                                           },
                                                           {
-                                                            "id": "centerContent",
                                                             "name": "centerContent",
                                                             "type": "checkbox",
                                                             "defaultValue": false,
+                                                            "id": "centerContent",
                                                             "value": false
                                                           }
                                                         ]
@@ -6779,7 +6877,6 @@
                                           "extraProps": {
                                             "props": [
                                               {
-                                                "id": "top",
                                                 "name": "top",
                                                 "type": "options",
                                                 "options": [
@@ -6792,10 +6889,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "top",
                                                 "value": "s"
                                               },
                                               {
-                                                "id": "right",
                                                 "name": "right",
                                                 "type": "options",
                                                 "options": [
@@ -6808,10 +6905,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "right",
                                                 "value": "s"
                                               },
                                               {
-                                                "id": "bottom",
                                                 "name": "bottom",
                                                 "type": "options",
                                                 "options": [
@@ -6824,10 +6921,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "bottom",
                                                 "value": "m"
                                               },
                                               {
-                                                "id": "left",
                                                 "name": "left",
                                                 "type": "options",
                                                 "options": [
@@ -6840,6 +6937,7 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "left",
                                                 "value": "s"
                                               }
                                             ]
@@ -6855,7 +6953,6 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "justify",
                                                       "name": "justify",
                                                       "type": "options",
                                                       "options": [
@@ -6865,13 +6962,14 @@
                                                       ],
                                                       "defaultValue": "left",
                                                       "help": "Where the buttons in the bar are justified",
+                                                      "id": "justify",
                                                       "value": "center"
                                                     },
                                                     {
-                                                      "id": "helpText",
                                                       "name": "helpText",
                                                       "type": "string",
-                                                      "help": "An explanation text below the buttonBar"
+                                                      "help": "An explanation text below the buttonBar",
+                                                      "id": "helpText"
                                                     }
                                                   ]
                                                 }
@@ -6887,7 +6985,6 @@
                                                       "extraProps": {
                                                         "props": [
                                                           {
-                                                            "id": "type",
                                                             "name": "type",
                                                             "type": "options",
                                                             "options": [
@@ -6899,10 +6996,10 @@
                                                             ],
                                                             "defaultValue": "secondary",
                                                             "help": "Appearance of the button.",
+                                                            "id": "type",
                                                             "value": "link"
                                                           },
                                                           {
-                                                            "id": "size",
                                                             "name": "size",
                                                             "type": "options",
                                                             "options": [
@@ -6911,10 +7008,10 @@
                                                               "large"
                                                             ],
                                                             "defaultValue": "small",
-                                                            "help": "Large, medium or small."
+                                                            "help": "Large, medium or small.",
+                                                            "id": "size"
                                                           },
                                                           {
-                                                            "id": "flex",
                                                             "name": "flex",
                                                             "type": "options",
                                                             "options": [
@@ -6922,26 +7019,27 @@
                                                               "fill"
                                                             ],
                                                             "defaultValue": "normal",
-                                                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                            "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                            "id": "flex"
                                                           },
                                                           {
-                                                            "id": "disabled",
                                                             "name": "disabled",
                                                             "type": "checkbox",
-                                                            "defaultValue": false
+                                                            "defaultValue": false,
+                                                            "id": "disabled"
                                                           },
                                                           {
-                                                            "id": "ariaLabel",
                                                             "type": "string",
                                                             "name": "ariaLabel",
                                                             "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                            "id": "ariaLabel",
                                                             "value": "Link interkit.app"
                                                           },
                                                           {
-                                                            "id": "effect",
                                                             "type": "effect",
                                                             "name": "effect",
                                                             "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                            "id": "effect",
                                                             "value": {
                                                               "effectType": "linkTargetBlank",
                                                               "url": "https://www.interkit.app/"
@@ -6960,7 +7058,6 @@
                                                           "extraProps": {
                                                             "props": [
                                                               {
-                                                                "id": "type",
                                                                 "name": "type",
                                                                 "type": "options",
                                                                 "options": [
@@ -6972,10 +7069,10 @@
                                                                 ],
                                                                 "defaultValue": "secondary",
                                                                 "help": "Appearance of the button.",
+                                                                "id": "type",
                                                                 "value": "link"
                                                               },
                                                               {
-                                                                "id": "size",
                                                                 "name": "size",
                                                                 "type": "options",
                                                                 "options": [
@@ -6985,10 +7082,10 @@
                                                                 ],
                                                                 "defaultValue": "small",
                                                                 "help": "Large, medium or small.",
+                                                                "id": "size",
                                                                 "value": "small"
                                                               },
                                                               {
-                                                                "id": "flex",
                                                                 "name": "flex",
                                                                 "type": "options",
                                                                 "options": [
@@ -6996,26 +7093,27 @@
                                                                   "fill"
                                                                 ],
                                                                 "defaultValue": "normal",
-                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                                "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                "id": "flex"
                                                               },
                                                               {
-                                                                "id": "disabled",
                                                                 "name": "disabled",
                                                                 "type": "checkbox",
-                                                                "defaultValue": false
+                                                                "defaultValue": false,
+                                                                "id": "disabled"
                                                               },
                                                               {
-                                                                "id": "ariaLabel",
                                                                 "type": "string",
                                                                 "name": "ariaLabel",
                                                                 "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                "id": "ariaLabel",
                                                                 "value": "Link Minimaldatensatz-Empfehlung"
                                                               },
                                                               {
-                                                                "id": "effect",
                                                                 "type": "effect",
                                                                 "name": "effect",
                                                                 "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                "id": "effect",
                                                                 "value": {
                                                                   "effectType": "linkTargetBlank",
                                                                   "url": "https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"
@@ -7034,7 +7132,6 @@
                                                               "extraProps": {
                                                                 "props": [
                                                                   {
-                                                                    "id": "type",
                                                                     "name": "type",
                                                                     "type": "options",
                                                                     "options": [
@@ -7046,10 +7143,10 @@
                                                                     ],
                                                                     "defaultValue": "secondary",
                                                                     "help": "Appearance of the button.",
+                                                                    "id": "type",
                                                                     "value": "link"
                                                                   },
                                                                   {
-                                                                    "id": "size",
                                                                     "name": "size",
                                                                     "type": "options",
                                                                     "options": [
@@ -7058,10 +7155,10 @@
                                                                       "large"
                                                                     ],
                                                                     "defaultValue": "small",
-                                                                    "help": "Large, medium or small."
+                                                                    "help": "Large, medium or small.",
+                                                                    "id": "size"
                                                                   },
                                                                   {
-                                                                    "id": "flex",
                                                                     "name": "flex",
                                                                     "type": "options",
                                                                     "options": [
@@ -7069,26 +7166,27 @@
                                                                       "fill"
                                                                     ],
                                                                     "defaultValue": "normal",
-                                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                                    "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                    "id": "flex"
                                                                   },
                                                                   {
-                                                                    "id": "disabled",
                                                                     "name": "disabled",
                                                                     "type": "checkbox",
-                                                                    "defaultValue": false
+                                                                    "defaultValue": false,
+                                                                    "id": "disabled"
                                                                   },
                                                                   {
-                                                                    "id": "ariaLabel",
                                                                     "type": "string",
                                                                     "name": "ariaLabel",
                                                                     "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                    "id": "ariaLabel",
                                                                     "value": "Link MGK Siegen"
                                                                   },
                                                                   {
-                                                                    "id": "effect",
                                                                     "type": "effect",
                                                                     "name": "effect",
                                                                     "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                    "id": "effect",
                                                                     "value": {
                                                                       "effectType": "linkTargetBlank",
                                                                       "url": "https://www.mgksiegen.de/de/"
@@ -7432,7 +7530,6 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "top",
                                             "name": "top",
                                             "type": "options",
                                             "options": [
@@ -7445,10 +7542,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "top",
                                             "value": "m"
                                           },
                                           {
-                                            "id": "right",
                                             "name": "right",
                                             "type": "options",
                                             "options": [
@@ -7461,10 +7558,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "right",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "bottom",
                                             "name": "bottom",
                                             "type": "options",
                                             "options": [
@@ -7477,10 +7574,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "bottom",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "left",
                                             "name": "left",
                                             "type": "options",
                                             "options": [
@@ -7493,6 +7590,7 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "left",
                                             "value": "s"
                                           }
                                         ]
@@ -7572,28 +7670,28 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "sheet",
                                                       "name": "sheet",
                                                       "type": "sheetId",
                                                       "help": "Select the sheet you want to load data from.",
+                                                      "id": "sheet",
                                                       "value": {
                                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                         "text": "translation_rich"
                                                       }
                                                     },
                                                     {
-                                                      "id": "rowKey",
                                                       "name": "rowKey",
                                                       "type": "string",
                                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                                      "id": "rowKey",
                                                       "value": "3125d2d2-67a4-4d80-b336-d689ab2b82af"
                                                     },
                                                     {
-                                                      "id": "customKeyColumn",
                                                       "name": "customKeyColumn",
                                                       "type": "sheetColumn",
                                                       "columnType": "string",
                                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                                      "id": "customKeyColumn",
                                                       "value": {
                                                         "sheetKey": "empty",
                                                         "text": "",
@@ -7614,11 +7712,11 @@
                                                       "extraProps": {
                                                         "props": [
                                                           {
-                                                            "id": "column",
                                                             "name": "column",
                                                             "type": "sheetColumn",
                                                             "columnType": "richText",
                                                             "defaultValue": "settings/content",
+                                                            "id": "column",
                                                             "value": {
                                                               "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                               "columnKey": "menu$lang",
@@ -7627,20 +7725,20 @@
                                                             }
                                                           },
                                                           {
-                                                            "id": "format",
                                                             "name": "format",
                                                             "type": "options",
                                                             "options": [
                                                               "richText",
                                                               "string"
                                                             ],
-                                                            "defaultValue": "richText"
+                                                            "defaultValue": "richText",
+                                                            "id": "format"
                                                           },
                                                           {
-                                                            "id": "centerContent",
                                                             "name": "centerContent",
                                                             "type": "checkbox",
                                                             "defaultValue": false,
+                                                            "id": "centerContent",
                                                             "value": false
                                                           }
                                                         ]
@@ -7663,7 +7761,6 @@
                                           "extraProps": {
                                             "props": [
                                               {
-                                                "id": "top",
                                                 "name": "top",
                                                 "type": "options",
                                                 "options": [
@@ -7676,10 +7773,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "top",
                                                 "value": "s"
                                               },
                                               {
-                                                "id": "right",
                                                 "name": "right",
                                                 "type": "options",
                                                 "options": [
@@ -7692,10 +7789,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "right",
                                                 "value": "m"
                                               },
                                               {
-                                                "id": "bottom",
                                                 "name": "bottom",
                                                 "type": "options",
                                                 "options": [
@@ -7708,10 +7805,10 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "bottom",
                                                 "value": "m"
                                               },
                                               {
-                                                "id": "left",
                                                 "name": "left",
                                                 "type": "options",
                                                 "options": [
@@ -7724,6 +7821,7 @@
                                                   "xl",
                                                   "xxl"
                                                 ],
+                                                "id": "left",
                                                 "value": "m"
                                               }
                                             ]
@@ -7732,77 +7830,115 @@
                                         "inputs": {
                                           "default": {
                                             "block": {
-                                              "type": "Button",
-                                              "id": "{o]0wA0`=T%+/:{fNcCw",
+                                              "type": "Styling",
+                                              "id": "hs]HeY+@_)O-^M=^3Y-R",
                                               "data": "{\"origin\":\"interkit\"}",
                                               "fields": {
-                                                "text": "$project_metadata_download",
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "type",
-                                                      "name": "type",
-                                                      "type": "options",
-                                                      "options": [
-                                                        "secondary",
-                                                        "primary",
-                                                        "ghost",
-                                                        "link",
-                                                        "danger"
-                                                      ],
-                                                      "defaultValue": "secondary",
-                                                      "help": "Appearance of the button.",
-                                                      "value": "secondary"
-                                                    },
-                                                    {
-                                                      "id": "size",
-                                                      "name": "size",
-                                                      "type": "options",
-                                                      "options": [
-                                                        "small",
-                                                        "medium",
-                                                        "large"
-                                                      ],
-                                                      "defaultValue": "small",
-                                                      "help": "Large, medium or small.",
-                                                      "value": "medium"
-                                                    },
-                                                    {
-                                                      "id": "flex",
-                                                      "name": "flex",
-                                                      "type": "options",
-                                                      "options": [
-                                                        "normal",
-                                                        "fill"
-                                                      ],
-                                                      "defaultValue": "normal",
-                                                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
-                                                      "value": "fill"
-                                                    },
-                                                    {
-                                                      "id": "disabled",
-                                                      "name": "disabled",
-                                                      "type": "checkbox",
-                                                      "defaultValue": false
-                                                    },
-                                                    {
-                                                      "id": "ariaLabel",
-                                                      "type": "string",
-                                                      "name": "ariaLabel",
-                                                      "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
-                                                      "value": "Download metadata"
-                                                    },
-                                                    {
-                                                      "id": "effect",
-                                                      "type": "effect",
-                                                      "name": "effect",
-                                                      "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                      "id": "styleTokens",
+                                                      "name": "styleTokens",
+                                                      "type": "styleTokens",
                                                       "value": {
-                                                        "effectType": "link",
-                                                        "url": "static/exports/mgk-fuer-die-voegel-metadata-v2.csv"
+                                                        "colorText": "#4954ee",
+                                                        "colorTextStrong": "#000000",
+                                                        "colorTextSoft": "#4C4C4C",
+                                                        "colorTextLink": "#2D40A1",
+                                                        "colorBackground": "#FFFFFF",
+                                                        "colorBackgroundHighlight": "#E5E5E5",
+                                                        "colorBackgroundBackdrop": "#F2F2F2",
+                                                        "colorBorder": "#999999",
+                                                        "colorDummyAsset": "#FFDBD3",
+                                                        "colorTextButtonPressed": "#000000",
+                                                        "colorBackgroundButtonPressed": "#B2B2B2",
+                                                        "colorTextButtonDanger": "#000000",
+                                                        "colorBackgroundButtonDanger": "#FF6A49",
+                                                        "colorBackgroundButtonDangerPressed": "#FFA996",
+                                                        "colorTextButtonPrimary": "#FFFFFF",
+                                                        "colorTextButtonPrimaryPressed": "#FFFFFF",
+                                                        "colorBackgroundButtonPrimary": "#000000",
+                                                        "colorBackgroundButtonPrimaryPressed": "#4C4C4C",
+                                                        "colorBorderButtonPrimary": "#000000",
+                                                        "colorBorderButtonPrimaryPressed": "#000000",
+                                                        "colorBackgroundLabel1": "#B2B2B2",
+                                                        "colorTextLabel1": "#000000",
+                                                        "colorBackgroundChatMe": "#FFFFFF",
+                                                        "colorBackgroundChatOther": "#F2F2F2",
+                                                        "colorPagination": "#000000",
+                                                        "borderWidth": "1px",
+                                                        "borderRadius": "1rem",
+                                                        "borderRadiusButton": "1rem",
+                                                        "borderRadiusLabel": "0.5rem",
+                                                        "boxShadow": "0 0 1px rgba(0, 0, 0, 0.5)",
+                                                        "googleFont": "Inter:wght@400;500;600;700;900",
+                                                        "googleFont2": "Inter:wght@400;500;600;700;900",
+                                                        "fontFamilyInterface": "Inter, sans-serif",
+                                                        "fontFamilyContent": "Inter, sans-serif",
+                                                        "fontHeadline1": "400 3rem/3.5rem var(--font-family-interface)",
+                                                        "fontHeadline2": "400 1.875rem/2.25rem var(--font-family-interface)",
+                                                        "fontHeadline3": "400 1.5rem/1.75rem var(--font-family-interface)",
+                                                        "fontHeadline4": "400 1.25rem/1.5rem var(--font-family-interface)",
+                                                        "fontHeadline5": "700 1rem/1.5rem var(--font-family-interface)",
+                                                        "fontBody1": "400 1rem/1.5rem var(--font-family-interface)",
+                                                        "fontBody2": "400 0.875rem/1.3125rem var(--font-family-interface)",
+                                                        "fontSubtitle1": "400 1rem/1.3125rem var(--font-family-interface)",
+                                                        "fontSubtitle2": "500 0.875rem/1.125rem var(--font-family-interface)",
+                                                        "fontButton": "600 0.75rem/1rem var(--font-family-interface)",
+                                                        "fontCaption": "400 0.75rem/1rem var(--font-family-interface)",
+                                                        "fontCaptionBold": "700 0.75rem/1rem var(--font-family-interface)",
+                                                        "fontOverline": "500 0.625rem/0.75rem var(--font-family-interface)",
+                                                        "fontContentHeadline1": "900 3rem/3.5rem var(--font-family-content)",
+                                                        "fontContentHeadline2": "900 1.875rem/2.25rem var(--font-family-content)",
+                                                        "fontContentHeadline3": "900 1.5rem/1.75rem var(--font-family-content)",
+                                                        "fontContentHeadline4": "900 1.25rem/1.5rem var(--font-family-content)",
+                                                        "fontContentHeadline5": "700 1rem/1.5rem var(--font-family-content)",
+                                                        "fontContentBody1": "400 1rem/1.5rem var(--font-family-content)",
+                                                        "fontContentBody2": "400 0.875rem/1.5rem var(--font-family-content)",
+                                                        "letterSpacingHeadline1": "0",
+                                                        "letterSpacingHeadline2": "-0.03125rem",
+                                                        "letterSpacingHeadline3": "-0.015625rem",
+                                                        "letterSpacingHeadline4": "-0.015625rem",
+                                                        "letterSpacingHeadline5": "0",
+                                                        "letterSpacingBody1": "0.015625rem",
+                                                        "letterSpacingBody2": "0.015625rem",
+                                                        "letterSpacingSubtitle1": "0.009375rem",
+                                                        "letterSpacingSubtitle2": "0.00625rem",
+                                                        "letterSpacingButton": "0",
+                                                        "letterSpacingCaption": "0",
+                                                        "letterSpacingCaptionBold": "0",
+                                                        "letterSpacingOverline": "0",
+                                                        "letterSpacingContentHeadline1": "-0.0625rem",
+                                                        "letterSpacingContentHeadline2": "-0.03125rem",
+                                                        "letterSpacingContentHeadline3": "-0.03125rem",
+                                                        "letterSpacingContentHeadline4": "0",
+                                                        "letterSpacingContentHeadline5": "-0.02rem",
+                                                        "letterSpacingContentBody1": "-0.015625rem",
+                                                        "letterSpacingContentBody2": "0",
+                                                        "scale": 1,
+                                                        "distanceScaleFactor": 1,
+                                                        "inset": "var(--distance-scale-factor)",
+                                                        "insetX": "var(--inset)",
+                                                        "insetY": "var(--inset)",
+                                                        "outsetX": "var(--distance-scale-factor)",
+                                                        "outsetY": "var(--distance-scale-factor)"
                                                       }
                                                     }
                                                   ]
+                                                }
+                                              },
+                                              "inputs": {
+                                                "default": {
+                                                  "block": {
+                                                    "type": "MetadataDownload",
+                                                    "id": "B~Q.5+QZvmSP=?.UAJmC",
+                                                    "data": "{\"origin\":\".\"}",
+                                                    "fields": {
+                                                      "label": "$project_metadata_download",
+                                                      "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                      "filename": "fuer-die-voegel_metadata"
+                                                    }
+                                                  }
                                                 }
                                               }
                                             }
@@ -7849,7 +7985,6 @@
                                                     "extraProps": {
                                                       "props": [
                                                         {
-                                                          "id": "type",
                                                           "name": "type",
                                                           "type": "options",
                                                           "options": [
@@ -7861,10 +7996,10 @@
                                                           ],
                                                           "defaultValue": "secondary",
                                                           "help": "Appearance of the button.",
+                                                          "id": "type",
                                                           "value": "link"
                                                         },
                                                         {
-                                                          "id": "size",
                                                           "name": "size",
                                                           "type": "options",
                                                           "options": [
@@ -7873,10 +8008,10 @@
                                                             "large"
                                                           ],
                                                           "defaultValue": "small",
-                                                          "help": "Large, medium or small."
+                                                          "help": "Large, medium or small.",
+                                                          "id": "size"
                                                         },
                                                         {
-                                                          "id": "flex",
                                                           "name": "flex",
                                                           "type": "options",
                                                           "options": [
@@ -7884,26 +8019,27 @@
                                                             "fill"
                                                           ],
                                                           "defaultValue": "normal",
-                                                          "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                          "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                          "id": "flex"
                                                         },
                                                         {
-                                                          "id": "disabled",
                                                           "name": "disabled",
                                                           "type": "checkbox",
-                                                          "defaultValue": false
+                                                          "defaultValue": false,
+                                                          "id": "disabled"
                                                         },
                                                         {
-                                                          "id": "ariaLabel",
                                                           "type": "string",
                                                           "name": "ariaLabel",
                                                           "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                          "id": "ariaLabel",
                                                           "value": "Link Minimaldatensatz-Empfehlung"
                                                         },
                                                         {
-                                                          "id": "effect",
                                                           "type": "effect",
                                                           "name": "effect",
                                                           "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                          "id": "effect",
                                                           "value": {
                                                             "effectType": "linkTargetBlank",
                                                             "url": "https://www.smb.museum/museen-einrichtungen/institut-fuer-museumsforschung/forschung/forschungsprojekte/minimaldatensatz/"
@@ -7922,7 +8058,6 @@
                                                         "extraProps": {
                                                           "props": [
                                                             {
-                                                              "id": "type",
                                                               "name": "type",
                                                               "type": "options",
                                                               "options": [
@@ -7934,10 +8069,10 @@
                                                               ],
                                                               "defaultValue": "secondary",
                                                               "help": "Appearance of the button.",
+                                                              "id": "type",
                                                               "value": "link"
                                                             },
                                                             {
-                                                              "id": "size",
                                                               "name": "size",
                                                               "type": "options",
                                                               "options": [
@@ -7946,10 +8081,10 @@
                                                                 "large"
                                                               ],
                                                               "defaultValue": "small",
-                                                              "help": "Large, medium or small."
+                                                              "help": "Large, medium or small.",
+                                                              "id": "size"
                                                             },
                                                             {
-                                                              "id": "flex",
                                                               "name": "flex",
                                                               "type": "options",
                                                               "options": [
@@ -7957,26 +8092,27 @@
                                                                 "fill"
                                                               ],
                                                               "defaultValue": "normal",
-                                                              "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                              "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                              "id": "flex"
                                                             },
                                                             {
-                                                              "id": "disabled",
                                                               "name": "disabled",
                                                               "type": "checkbox",
-                                                              "defaultValue": false
+                                                              "defaultValue": false,
+                                                              "id": "disabled"
                                                             },
                                                             {
-                                                              "id": "ariaLabel",
                                                               "type": "string",
                                                               "name": "ariaLabel",
                                                               "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                              "id": "ariaLabel",
                                                               "value": "Link GND"
                                                             },
                                                             {
-                                                              "id": "effect",
                                                               "type": "effect",
                                                               "name": "effect",
                                                               "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                              "id": "effect",
                                                               "value": {
                                                                 "effectType": "linkTargetBlank",
                                                                 "url": "https://www.dnb.de/DE/Professionell/Standardisierung/GND/gnd_node.html"
@@ -7995,7 +8131,6 @@
                                                             "extraProps": {
                                                               "props": [
                                                                 {
-                                                                  "id": "type",
                                                                   "name": "type",
                                                                   "type": "options",
                                                                   "options": [
@@ -8007,10 +8142,10 @@
                                                                   ],
                                                                   "defaultValue": "secondary",
                                                                   "help": "Appearance of the button.",
+                                                                  "id": "type",
                                                                   "value": "link"
                                                                 },
                                                                 {
-                                                                  "id": "size",
                                                                   "name": "size",
                                                                   "type": "options",
                                                                   "options": [
@@ -8019,10 +8154,10 @@
                                                                     "large"
                                                                   ],
                                                                   "defaultValue": "small",
-                                                                  "help": "Large, medium or small."
+                                                                  "help": "Large, medium or small.",
+                                                                  "id": "size"
                                                                 },
                                                                 {
-                                                                  "id": "flex",
                                                                   "name": "flex",
                                                                   "type": "options",
                                                                   "options": [
@@ -8030,26 +8165,27 @@
                                                                     "fill"
                                                                   ],
                                                                   "defaultValue": "normal",
-                                                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                                  "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                  "id": "flex"
                                                                 },
                                                                 {
-                                                                  "id": "disabled",
                                                                   "name": "disabled",
                                                                   "type": "checkbox",
-                                                                  "defaultValue": false
+                                                                  "defaultValue": false,
+                                                                  "id": "disabled"
                                                                 },
                                                                 {
-                                                                  "id": "ariaLabel",
                                                                   "type": "string",
                                                                   "name": "ariaLabel",
                                                                   "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                  "id": "ariaLabel",
                                                                   "value": "Link AAT"
                                                                 },
                                                                 {
-                                                                  "id": "effect",
                                                                   "type": "effect",
                                                                   "name": "effect",
                                                                   "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                  "id": "effect",
                                                                   "value": {
                                                                     "effectType": "linkTargetBlank",
                                                                     "url": "https://www.getty.edu/research/tools/vocabularies/aat/"
@@ -8068,7 +8204,6 @@
                                                                 "extraProps": {
                                                                   "props": [
                                                                     {
-                                                                      "id": "type",
                                                                       "name": "type",
                                                                       "type": "options",
                                                                       "options": [
@@ -8080,10 +8215,10 @@
                                                                       ],
                                                                       "defaultValue": "secondary",
                                                                       "help": "Appearance of the button.",
+                                                                      "id": "type",
                                                                       "value": "link"
                                                                     },
                                                                     {
-                                                                      "id": "size",
                                                                       "name": "size",
                                                                       "type": "options",
                                                                       "options": [
@@ -8092,10 +8227,10 @@
                                                                         "large"
                                                                       ],
                                                                       "defaultValue": "small",
-                                                                      "help": "Large, medium or small."
+                                                                      "help": "Large, medium or small.",
+                                                                      "id": "size"
                                                                     },
                                                                     {
-                                                                      "id": "flex",
                                                                       "name": "flex",
                                                                       "type": "options",
                                                                       "options": [
@@ -8103,26 +8238,27 @@
                                                                         "fill"
                                                                       ],
                                                                       "defaultValue": "normal",
-                                                                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used."
+                                                                      "help": "If used in the slot of a flex-supported parent component, determines how the available space is used.",
+                                                                      "id": "flex"
                                                                     },
                                                                     {
-                                                                      "id": "disabled",
                                                                       "name": "disabled",
                                                                       "type": "checkbox",
-                                                                      "defaultValue": false
+                                                                      "defaultValue": false,
+                                                                      "id": "disabled"
                                                                     },
                                                                     {
-                                                                      "id": "ariaLabel",
                                                                       "type": "string",
                                                                       "name": "ariaLabel",
                                                                       "help": "A text for screen readers that describes the action of the button. Example: 'Go Back'",
+                                                                      "id": "ariaLabel",
                                                                       "value": "Link Wikidata"
                                                                     },
                                                                     {
-                                                                      "id": "effect",
                                                                       "type": "effect",
                                                                       "name": "effect",
                                                                       "help": "The type of effect (or action) the button should trigger. It can interact with the Routes; act as an HTML link; trigger into actions.js or set various variables.",
+                                                                      "id": "effect",
                                                                       "value": {
                                                                         "effectType": "linkTargetBlank",
                                                                         "url": "https://www.wikidata.org/wiki/Wikidata:Main_Page"
@@ -8466,7 +8602,6 @@
                                       "extraProps": {
                                         "props": [
                                           {
-                                            "id": "top",
                                             "name": "top",
                                             "type": "options",
                                             "options": [
@@ -8479,10 +8614,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "top",
                                             "value": "m"
                                           },
                                           {
-                                            "id": "right",
                                             "name": "right",
                                             "type": "options",
                                             "options": [
@@ -8495,10 +8630,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "right",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "bottom",
                                             "name": "bottom",
                                             "type": "options",
                                             "options": [
@@ -8511,10 +8646,10 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "bottom",
                                             "value": "s"
                                           },
                                           {
-                                            "id": "left",
                                             "name": "left",
                                             "type": "options",
                                             "options": [
@@ -8527,6 +8662,7 @@
                                               "xl",
                                               "xxl"
                                             ],
+                                            "id": "left",
                                             "value": "s"
                                           }
                                         ]
@@ -8606,28 +8742,28 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "sheet",
                                                       "name": "sheet",
                                                       "type": "sheetId",
                                                       "help": "Select the sheet you want to load data from.",
+                                                      "id": "sheet",
                                                       "value": {
                                                         "sheetKey": "c6d3fe70-03f6-46ca-9e78-7541448d9e0f",
                                                         "text": "translation_rich"
                                                       }
                                                     },
                                                     {
-                                                      "id": "rowKey",
                                                       "name": "rowKey",
                                                       "type": "string",
                                                       "help": "The value of the key in the row you want to select. If no customKeyColumn is specified, uses the row key.",
+                                                      "id": "rowKey",
                                                       "value": "019f8964-fde8-4da1-8ea5-e75315104b6b"
                                                     },
                                                     {
-                                                      "id": "customKeyColumn",
                                                       "name": "customKeyColumn",
                                                       "type": "sheetColumn",
                                                       "columnType": "string",
                                                       "help": "Optional: Specify a column on your sheet that you want to use to identify the row. This column should contain unique values.",
+                                                      "id": "customKeyColumn",
                                                       "value": {
                                                         "sheetKey": "empty",
                                                         "text": ""

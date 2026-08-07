@@ -1,0 +1,15 @@
+name: MetadataDownload
+title: Metadaten-Download
+colour: 210
+
+fields:
+  - type: string
+    name: label
+
+  - type: string
+    name: sheetKey
+
+  - type: string
+    name: filename
+
+toolboxCategory: Project
