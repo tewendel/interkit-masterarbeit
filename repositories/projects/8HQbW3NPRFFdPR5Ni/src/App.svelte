@@ -62,8 +62,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     <svelte:fragment slot="left">
       <Image
          mediafileKey="031a15d2-f7b8-48d0-8c0e-ed26b7ffda58"
-                  width="40%"
-         height="25%"
+                  width="20%"
+         height="20%"
             >
       </Image>
     </svelte:fragment>
@@ -81,7 +81,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -324,7 +324,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -422,7 +422,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
 >
 <svelte:fragment slot="viewport">
   <AnonymousLogin
-        defaultLangIndex="0"
+     defaultLang="en"
+     defaultLangIndex="0"
   >
     <Route
        path="/"
@@ -436,8 +437,8 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         <svelte:fragment slot="left">
           <Image
              mediafileKey="031a15d2-f7b8-48d0-8c0e-ed26b7ffda58"
-                      width="40%"
-             height="25%"
+                      width="20%"
+             height="20%"
                 >
           </Image>
         </svelte:fragment>
@@ -455,7 +456,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -696,7 +697,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -841,7 +842,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1000,7 +1001,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1145,7 +1146,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1290,7 +1291,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1501,7 +1502,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1670,7 +1671,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1900,7 +1901,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -2087,7 +2088,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -2584,7 +2585,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -2744,7 +2745,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -2890,7 +2891,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3036,7 +3037,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3206,7 +3207,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3418,7 +3419,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3649,7 +3650,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -4139,7 +4140,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button

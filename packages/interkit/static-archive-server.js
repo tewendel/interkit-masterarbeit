@@ -149,7 +149,7 @@ export class StaticArchiveServer {
             _id: "archiveUser",
             id: "archiveUser",
             projectUserData: {
-              [this.projectId]: {}
+              [this.projectId]: params?.projectData || {}
             }
           })
         }

@@ -163,7 +163,7 @@
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "label": "",
-                            "reloadAfterSwitch": "yes"
+                            "reloadAfterSwitch": "no"
                           },
                           "next": {
                             "block": {
@@ -333,13 +333,13 @@
                                   "name": "width",
                                   "type": "string",
                                   "defaultValue": "100%",
-                                  "value": "40%"
+                                  "value": "20%"
                                 },
                                 {
                                   "id": "height",
                                   "name": "height",
                                   "type": "string",
-                                  "value": "25%"
+                                  "value": "20%"
                                 },
                                 {
                                   "id": "customStyle",
@@ -844,7 +844,7 @@
                       "name": "defaultLang",
                       "defaultValue": "en",
                       "id": "defaultLang",
-                      "value": ""
+                      "value": "en"
                     },
                     {
                       "type": "string",
