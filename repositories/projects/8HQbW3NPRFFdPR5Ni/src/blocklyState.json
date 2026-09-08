@@ -294,61 +294,62 @@
                             "extraProps": {
                               "props": [
                                 {
+                                  "id": "mediafileKey",
                                   "name": "mediafileKey",
                                   "type": "string",
                                   "help": "Use the key of a media file directly. Leave blank if this Image is within a DataLoader and set imageColumn below.",
-                                  "id": "mediafileKey",
-                                  "value": "08f9aa8a-aafe-4fde-9e06-f2c43b6f17b5"
+                                  "value": "031a15d2-f7b8-48d0-8c0e-ed26b7ffda58"
                                 },
                                 {
+                                  "id": "altText",
                                   "name": "altText",
                                   "type": "string",
-                                  "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader.",
-                                  "id": "altText"
+                                  "help": "alt text (alternative textual description for accessibility). Leave blank if you want to use the alt text set for the file via Media tab, or if you want to use altColumn (below) and within a DataLoader."
                                 },
                                 {
+                                  "id": "imageColumn",
                                   "name": "imageColumn",
                                   "type": "sheetColumn",
                                   "columnType": "mediaFile",
                                   "help": "The column on the element context (for example DataLoaderSingle) containing the image file. This will override the mediafileKey above.",
-                                  "id": "imageColumn",
                                   "value": {
                                     "sheetKey": "empty",
                                     "text": ""
                                   }
                                 },
                                 {
+                                  "id": "altColumn",
                                   "name": "altColumn",
                                   "type": "sheetColumn",
                                   "columnType": "string",
                                   "help": "The column on the element context (for example DataLoaderSingle) containing the alt text. This will override both alt text set via Media tab or altText above; unconnect to use those.",
-                                  "id": "altColumn",
                                   "value": {
                                     "sheetKey": "empty",
                                     "text": ""
                                   }
                                 },
                                 {
+                                  "id": "width",
                                   "name": "width",
                                   "type": "string",
                                   "defaultValue": "100%",
-                                  "id": "width",
-                                  "value": "50%"
+                                  "value": "40%"
                                 },
                                 {
+                                  "id": "height",
                                   "name": "height",
                                   "type": "string",
-                                  "id": "height"
+                                  "value": "25%"
                                 },
                                 {
+                                  "id": "customStyle",
                                   "name": "customStyle",
-                                  "type": "string",
-                                  "id": "customStyle"
+                                  "type": "string"
                                 },
                                 {
+                                  "id": "classes",
                                   "name": "classes",
-                                  "type": "string",
-                                  "id": "classes"
+                                  "type": "string"
                                 }
                               ]
                             }
@@ -7837,9 +7838,9 @@
                                                 "extraProps": {
                                                   "props": [
                                                     {
-                                                      "id": "styleTokens",
                                                       "name": "styleTokens",
                                                       "type": "styleTokens",
+                                                      "id": "styleTokens",
                                                       "value": {
                                                         "colorText": "#4954ee",
                                                         "colorTextStrong": "#000000",

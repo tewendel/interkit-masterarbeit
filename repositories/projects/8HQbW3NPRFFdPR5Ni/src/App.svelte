@@ -61,9 +61,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
     >
     <svelte:fragment slot="left">
       <Image
-         mediafileKey="08f9aa8a-aafe-4fde-9e06-f2c43b6f17b5"
-                  width="50%"
-               >
+         mediafileKey="031a15d2-f7b8-48d0-8c0e-ed26b7ffda58"
+                  width="40%"
+         height="25%"
+            >
       </Image>
     </svelte:fragment>
     <svelte:fragment slot="center">
@@ -434,9 +435,10 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
         >
         <svelte:fragment slot="left">
           <Image
-             mediafileKey="08f9aa8a-aafe-4fde-9e06-f2c43b6f17b5"
-                      width="50%"
-                   >
+             mediafileKey="031a15d2-f7b8-48d0-8c0e-ed26b7ffda58"
+                      width="40%"
+             height="25%"
+                >
           </Image>
         </svelte:fragment>
         <svelte:fragment slot="center">
