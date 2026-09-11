@@ -1383,7 +1383,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  >
                 <Button
                    text="Interkit"
-                   type="link"
+                   type="secondary"
                    size="small"
                    flex="normal"
                    disabled={false}
@@ -1393,7 +1393,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </Button>
                 <Button
                    text="Minimaldatensatz"
-                   type="link"
+                   type="secondary"
                    size="small"
                    flex="normal"
                    disabled={false}
@@ -1403,7 +1403,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                 </Button>
                 <Button
                    text="MGKSiegen"
-                   type="link"
+                   type="secondary"
                    size="small"
                    flex="normal"
                    disabled={false}
@@ -1773,7 +1773,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                >
               <Button
                  text="Minimaldatensatz"
-                 type="link"
+                 type="secondary"
                  size="small"
                  flex="normal"
                  disabled={false}
@@ -1783,7 +1783,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Button>
               <Button
                  text="GND"
-                 type="link"
+                 type="secondary"
                  size="small"
                  flex="normal"
                  disabled={false}
@@ -1793,7 +1793,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Button>
               <Button
                  text="AAT"
-                 type="link"
+                 type="secondary"
                  size="small"
                  flex="normal"
                  disabled={false}
@@ -1803,7 +1803,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
               </Button>
               <Button
                  text="Wikidata"
-                 type="link"
+                 type="secondary"
                  size="small"
                  flex="normal"
                  disabled={false}
@@ -3299,7 +3299,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              >
             <Button
                text="Interkit"
-               type="link"
+               type="secondary"
                size="small"
                flex="normal"
                disabled={false}
@@ -3309,7 +3309,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             </Button>
             <Button
                text="Minimaldatensatz"
-               type="link"
+               type="secondary"
                size="small"
                flex="normal"
                disabled={false}
@@ -3319,7 +3319,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
             </Button>
             <Button
                text="MGKSiegen"
-               type="link"
+               type="secondary"
                size="small"
                flex="normal"
                disabled={false}
@@ -3521,7 +3521,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
            >
           <Button
              text="Minimaldatensatz"
-             type="link"
+             type="secondary"
              size="small"
              flex="normal"
              disabled={false}
@@ -3531,7 +3531,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Button>
           <Button
              text="GND"
-             type="link"
+             type="secondary"
              size="small"
              flex="normal"
              disabled={false}
@@ -3541,7 +3541,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Button>
           <Button
              text="AAT"
-             type="link"
+             type="secondary"
              size="small"
              flex="normal"
              disabled={false}
@@ -3551,7 +3551,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
           </Button>
           <Button
              text="Wikidata"
-             type="link"
+             type="secondary"
              size="small"
              flex="normal"
              disabled={false}
