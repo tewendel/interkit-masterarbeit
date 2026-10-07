@@ -1,17 +1,14 @@
 name: WikidataEmbedPerson
-title: Wikidata Embed Person
+title: Wikidata Person
 colour: 210
 toolboxCategory: Project
+
 fields:
   - type: string
     name: title
     defaultValue: "Wikidata-Kontext"
 
   - type: string
-    name: qidColumn
-    defaultValue: "personID_wikidata"
-    help: "Column Key der Wikidata-QID-Spalte"
-
-  - type: string
-    name: height
-    defaultValue: "45vh"
+    name: personIdColumn
+    defaultValue: "personID"
+    help: "Spalte mit GND- oder Wikidata-URI"
