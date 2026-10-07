@@ -1,6 +1,9 @@
 <script>
 import initActions from "./actions.js";
 import { t, translations, lang } from 'interkit/i18n.js';
+if (!$lang) {
+  lang.set('de');
+}
 import AccordeonShell from "interkit/components/AccordeonShell.svelte";
 import AnonymousLogin from "interkit/components/AnonymousLogin.svelte";
 import AppBaseAdvanced from "interkit/components/AppBaseAdvanced.svelte";
@@ -81,7 +84,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -324,7 +327,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -422,7 +425,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
 >
 <svelte:fragment slot="viewport">
   <AnonymousLogin
-     defaultLang="en"
+     defaultLang="de"
      defaultLangIndex="0"
   >
     <Route
@@ -456,7 +459,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -697,7 +700,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -842,7 +845,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1015,7 +1018,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1160,7 +1163,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1305,7 +1308,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1516,7 +1519,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1685,7 +1688,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -1915,7 +1918,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -2102,7 +2105,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                  justify="right"
                  >
                 <LangSwitch
-                      reloadAfterSwitch="yes"
+                      reloadAfterSwitch="no"
                 >
                 </LangSwitch>
                 <Button
@@ -2252,16 +2255,16 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                       </StaticText>
                     </svelte:fragment>
                     <svelte:fragment slot="content">
-                      <WikidataEmbedSubject
-                         title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
-                         height="65vh"
-                      >
-                      </WikidataEmbedSubject>
                       <DataCell
                          column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "subjectKeywordDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/subjectKeywordDisplay$lang"}   format="string"
                          centerContent={false}
                       >
                       </DataCell>
+                      <WikidataEmbedSubject
+                         title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
+                         height="65vh"
+                      >
+                      </WikidataEmbedSubject>
                     </svelte:fragment>
                     </AccordeonShell>
                   </svelte:fragment>
@@ -2599,7 +2602,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -2773,7 +2776,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -2919,7 +2922,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3065,7 +3068,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3235,7 +3238,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3447,7 +3450,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3678,7 +3681,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button
@@ -3828,16 +3831,16 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
                   </StaticText>
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  <WikidataEmbedSubject
-                     title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
-                     height="65vh"
-                  >
-                  </WikidataEmbedSubject>
                   <DataCell
                      column={$lang ? "3d764bfb-ebf1-4e17-b756-e819c1d8794c/" + "subjectKeywordDisplay$lang".replace("$lang", "$" + $lang) : "3d764bfb-ebf1-4e17-b756-e819c1d8794c/subjectKeywordDisplay$lang"}   format="string"
                      centerContent={false}
                   >
                   </DataCell>
+                  <WikidataEmbedSubject
+                     title={$lang ? ($translations[$lang] && $translations[$lang]["$context_subject_prompt"] ? $translations[$lang]["$context_subject_prompt"] : "context_subject_prompt") : ($translations.en && $translations.en["$context_subject_prompt"] ? $translations.en["$context_subject_prompt"] : "…")}   subjectKeywordColumn="subjectKeyword"
+                     height="65vh"
+                  >
+                  </WikidataEmbedSubject>
                 </svelte:fragment>
                 </AccordeonShell>
               </svelte:fragment>
@@ -4168,7 +4171,7 @@ console.log('AppBase i18n', { t, $translations, translations, $lang, lang });
              justify="right"
              >
             <LangSwitch
-                  reloadAfterSwitch="yes"
+                  reloadAfterSwitch="no"
             >
             </LangSwitch>
             <Button

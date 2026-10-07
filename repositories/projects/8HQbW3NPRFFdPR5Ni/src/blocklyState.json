@@ -687,17 +687,17 @@
                 "extraProps": {
                   "props": [
                     {
+                      "id": "defaultLang",
                       "type": "string",
                       "name": "defaultLang",
                       "defaultValue": "en",
-                      "id": "defaultLang",
-                      "value": "en"
+                      "value": "de"
                     },
                     {
+                      "id": "defaultLangIndex",
                       "type": "string",
                       "name": "defaultLangIndex",
                       "defaultValue": 0,
-                      "id": "defaultLangIndex",
                       "value": "0"
                     }
                   ]
@@ -4303,55 +4303,55 @@
                                                                                   },
                                                                                   "content": {
                                                                                     "block": {
-                                                                                      "type": "WikidataEmbedSubject",
-                                                                                      "id": "60;8_)tj?w$~^6a!J*_T",
-                                                                                      "data": "{\"origin\":\".\"}",
+                                                                                      "type": "DataCell",
+                                                                                      "id": "~zz$R]WBUTLZ}:(LlX5I",
+                                                                                      "data": "{\"origin\":\"interkit\"}",
                                                                                       "fields": {
-                                                                                        "title": "$context_subject_prompt",
-                                                                                        "subjectKeywordColumn": "subjectKeyword",
-                                                                                        "height": "65vh"
+                                                                                        "extraProps": {
+                                                                                          "props": [
+                                                                                            {
+                                                                                              "name": "column",
+                                                                                              "type": "sheetColumn",
+                                                                                              "columnType": "richText",
+                                                                                              "defaultValue": "settings/content",
+                                                                                              "id": "column",
+                                                                                              "value": {
+                                                                                                "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
+                                                                                                "columnKey": "subjectKeywordDisplay$lang",
+                                                                                                "text": "exhibition/subjectKeywordDisplay$lang",
+                                                                                                "columnType": "string"
+                                                                                              }
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "format",
+                                                                                              "type": "options",
+                                                                                              "options": [
+                                                                                                "richText",
+                                                                                                "string"
+                                                                                              ],
+                                                                                              "defaultValue": "richText",
+                                                                                              "id": "format",
+                                                                                              "value": "string"
+                                                                                            },
+                                                                                            {
+                                                                                              "name": "centerContent",
+                                                                                              "type": "checkbox",
+                                                                                              "defaultValue": false,
+                                                                                              "id": "centerContent",
+                                                                                              "value": false
+                                                                                            }
+                                                                                          ]
+                                                                                        }
                                                                                       },
                                                                                       "next": {
                                                                                         "block": {
-                                                                                          "type": "DataCell",
-                                                                                          "id": "~zz$R]WBUTLZ}:(LlX5I",
-                                                                                          "data": "{\"origin\":\"interkit\"}",
+                                                                                          "type": "WikidataEmbedSubject",
+                                                                                          "id": "60;8_)tj?w$~^6a!J*_T",
+                                                                                          "data": "{\"origin\":\".\"}",
                                                                                           "fields": {
-                                                                                            "extraProps": {
-                                                                                              "props": [
-                                                                                                {
-                                                                                                  "name": "column",
-                                                                                                  "type": "sheetColumn",
-                                                                                                  "columnType": "richText",
-                                                                                                  "defaultValue": "settings/content",
-                                                                                                  "id": "column",
-                                                                                                  "value": {
-                                                                                                    "sheetKey": "3d764bfb-ebf1-4e17-b756-e819c1d8794c",
-                                                                                                    "columnKey": "subjectKeywordDisplay$lang",
-                                                                                                    "text": "exhibition/subjectKeywordDisplay$lang",
-                                                                                                    "columnType": "string"
-                                                                                                  }
-                                                                                                },
-                                                                                                {
-                                                                                                  "name": "format",
-                                                                                                  "type": "options",
-                                                                                                  "options": [
-                                                                                                    "richText",
-                                                                                                    "string"
-                                                                                                  ],
-                                                                                                  "defaultValue": "richText",
-                                                                                                  "id": "format",
-                                                                                                  "value": "string"
-                                                                                                },
-                                                                                                {
-                                                                                                  "name": "centerContent",
-                                                                                                  "type": "checkbox",
-                                                                                                  "defaultValue": false,
-                                                                                                  "id": "centerContent",
-                                                                                                  "value": false
-                                                                                                }
-                                                                                              ]
-                                                                                            }
+                                                                                            "title": "$context_subject_prompt",
+                                                                                            "subjectKeywordColumn": "subjectKeyword",
+                                                                                            "height": "65vh"
                                                                                           }
                                                                                         }
                                                                                       }
@@ -8859,7 +8859,7 @@
                           "data": "{\"origin\":\"interkit\"}",
                           "fields": {
                             "label": "",
-                            "reloadAfterSwitch": "yes"
+                            "reloadAfterSwitch": "no"
                           },
                           "next": {
                             "block": {
