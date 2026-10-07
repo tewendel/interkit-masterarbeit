@@ -14,6 +14,7 @@ COPY ${BUILD_SOURCE_PATH} ./
 RUN npm ci && npm cache clean --force
 
 # build
+ENV NODE_OPTIONS="--max-old-space-size=2560"
 RUN npm run build
 
 # clean
