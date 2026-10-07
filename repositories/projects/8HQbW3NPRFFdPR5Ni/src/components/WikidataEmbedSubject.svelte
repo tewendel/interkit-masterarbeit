@@ -2,24 +2,24 @@
   import { getContext } from "svelte"
 
   export let title = "Wikidata-Kontext"
-  export let qidColumn = "subjectKeyword_wikidata"
+  export let uriColumn = "subjectKeyword"
   export let height = "65vh"
 
   const element = getContext("element")
 
-   function buildValues(qidString) {
-    if (!qidString) return ""
+  function buildValues(uriString) {
+    if (!uriString) return ""
 
-    const qids = qidString
+    const uris = uriString
       .split(";")
-      .map(q => q.trim())
-      .filter(q => q)
+      .map(uri => uri.trim())
+      .filter(uri => uri)
 
-    return qids.map(q => `wd:${q}`).join(" ")
+    return uris.map(uri => `<${uri}>`).join(" ")
   }
 
-  function buildQuery(qidString) {
-    const values = buildValues(qidString)
+  function buildQuery(uriString) {
+    const values = buildValues(uriString)
 
     return `#defaultView:ImageGrid
 SELECT ?item ?itemLabel ?itemDescription (SAMPLE(?imageValue) AS ?image) WHERE {
@@ -27,8 +27,6 @@ SELECT ?item ?itemLabel ?itemDescription (SAMPLE(?imageValue) AS ?image) WHERE {
     ${values} 
   }
   { ?item wdt:P180 ?theme. }
-  UNION
-  { ?item wdt:P921 ?theme. }
   ?item wdt:P18 ?imageValue.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en,mul". }
 }
@@ -37,9 +35,9 @@ ORDER BY ?item`
   }
 
   $: values = $element?.values || {}
-  $: qidString = values[qidColumn] || ""
-  $: iframeSrc = qidString
-    ? `https://query.wikidata.org/embed.html#${encodeURIComponent(buildQuery(qidString))}`
+  $: uriString = values[uriColumn] || ""
+  $: iframeSrc = uriString
+    ? `https://query.wikidata.org/embed.html#${encodeURIComponent(buildQuery(uriString))}`
     : ""
 </script>
 
