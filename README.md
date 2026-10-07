@@ -7,7 +7,7 @@ Es dokumentiert die technische Umsetzung des Projekts und macht es möglich die 
 Interkit ist ein bestehendes Open Source-System und bildet die technische Grundlage des Projekts:
 https://gitlab.interkit.app/interkit/interkit-experiments
 
-Die projektspezifische Anwendung befindet sich unter:
+Die Projektdateien der Anwendung befindet sich unter:
 
 repositories/projects/8HQbW3NPRFFdPR5Ni/
 
@@ -19,6 +19,8 @@ https://tewendel.github.io/fdv-app-static/?archiveMode=true
 ---
 
 ## Lokale Ausführung
+
+Für die lokale Ausführung des Interkit-Authoring-Systems einschließlich des Projekts `audioguide_voegel` ist der Branch `begutachtung` vorgesehen.
 
 ### Voraussetzungen
 
@@ -36,7 +38,7 @@ Benötigt werden:
 Repository klonen:
 
 ```sh
-git clone https://github.com/tewendel/interkit-masterarbeit.git
+git clone --branch begutachtung https://github.com/tewendel/interkit-masterarbeit.git
 cd interkit-masterarbeit
 ```
 
@@ -75,9 +77,7 @@ Das Projekt erscheint dort unter:
 audioguide_voegel
 ```
 
-Klick auf Edit oder Preview, um das Projekt aufzurufen.
-
-Um die Vorschau zu laden rechts einmal auf Relaod oder Reset klicken.
+Über **Edit** kann das Projekt im Authoring-System geöffnet werden. Falls die Vorschau nicht unmittelbar geladen wird, kann sie über **Reload** bzw. **Reset** neu geladen werden.
 
 Die Anwendung ist lokal anschließend hier erreichbar:
 
